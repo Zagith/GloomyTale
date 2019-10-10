@@ -188,7 +188,7 @@ namespace WingsEmu.World
 
 
                 PacketFactory.Initialize<WalkPacket>();
-                string ip = Environment.GetEnvironmentVariable("SERVER_IP") ?? "127.0.0.1";
+                string ip = Environment.GetEnvironmentVariable("SERVER_IP") ?? "25.61.169.67";
                 _port = Convert.ToInt32(Environment.GetEnvironmentVariable("SERVER_PORT") ?? "1337");
 
 

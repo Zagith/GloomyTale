@@ -136,7 +136,7 @@ namespace WingsEmu.Login
                         // initialize PacketSerialization
                         PacketFactory.Initialize<WalkPacket>();
 
-                        var server = new LoginServer(IPAddress.Any, port, new BasicSpamProtector());
+                        var server = new LoginServer("25.61.169.67", port, new BasicSpamProtector());
                         server.Start();
 
                         for (;;)

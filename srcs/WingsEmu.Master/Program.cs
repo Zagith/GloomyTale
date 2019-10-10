@@ -81,7 +81,7 @@ namespace WingsEmu.Master
         private static void Main()
         {
             PrintHeader();
-            DotEnv.Config(false, "server.env");
+            DotEnv.Config(false, "world.env");
             using (IContainer coreContainer = InitializePlugins())
             {
                 var gameBuilder = new ContainerBuilder();

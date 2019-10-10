@@ -20,9 +20,10 @@ namespace WingsEmu.Login
         private readonly ISpamProtector _spamProtector;
         private readonly SessionManager _sessionManager = new SessionManager(typeof(LoginPacketHandler), false);
 
-        public LoginServer(IPAddress address, int port, ISpamProtector spamProtector) : base(address, port)
+        public LoginServer(string address, int port, ISpamProtector spamProtector) : base(address, port)
         {
             _spamProtector = spamProtector;
+
         }
 
         protected override void OnConnected(TcpSession session)

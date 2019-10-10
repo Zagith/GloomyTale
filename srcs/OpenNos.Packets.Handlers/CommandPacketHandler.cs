@@ -1508,7 +1508,7 @@ namespace WingsEmu.PacketHandlers
             // TODO: OPTIMIZE!
             if (Session.Account.Authority >= AuthorityType.GameMaster)
             {
-                List<Type> classes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(t => t.GetTypes()).Where(t => t.IsClass && t.Namespace == "OpenNos.Packets.CommandPackets")
+                List<Type> classes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(t => t.GetTypes()).Where(t => t.IsClass && t.Namespace == "WingsEmu.Packets.CommandPackets")
                     .OrderBy(x => x.Name)
                     .ToList();
                 foreach (Type type in classes)
