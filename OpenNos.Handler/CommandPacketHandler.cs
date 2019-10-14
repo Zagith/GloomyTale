@@ -294,19 +294,19 @@ namespace OpenNos.Handler
         //    switch (chpacket.ch)
         //    {
         //        case 1:
-        //            Session.Character.ChangeChannel("213.202.255.99", puerto, 3);
+        //            Session.Character.ChangeChannel("25.61.169.67", puerto, 3);
         //            break;
         //        case 2:
-        //            Session.Character.ChangeChannel("213.202.255.99", puerto + '1', 3);
+        //            Session.Character.ChangeChannel("25.61.169.67", puerto + '1', 3);
         //            break;
         //        case 3:
-        //            Session.Character.ChangeChannel("213.202.255.99", puerto + '2', 3);
+        //            Session.Character.ChangeChannel("25.61.169.67", puerto + '2', 3);
         //            break;
         //        case 4:
-        //            Session.Character.ChangeChannel("213.202.255.99", puerto + '3', 3);
+        //            Session.Character.ChangeChannel("25.61.169.67", puerto + '3', 3);
         //            break;
         //        case 5:
-        //            Session.Character.ChangeChannel("213.202.255.99", puerto + '4', 3);
+        //            Session.Character.ChangeChannel("25.61.169.67", puerto + '4', 3);
         //            break;
         //    }
         //    
