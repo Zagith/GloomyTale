@@ -71,6 +71,7 @@
     <Compile Include="BazaarListType.cs" />
     <Compile Include="BuffType.cs" />
     <Compile Include="CellonOptionType.cs" />
+    <Compile Include="ChatType.cs" />
     <Compile Include="CostumeWingsType.cs" />
     <Compile Include="EntityType.cs" />
     <Compile Include="EventActionType.cs" />

@@ -71,6 +71,8 @@ namespace OpenNos.DAL.EF
 
         public virtual DbSet<ItemInstance> ItemInstance { get; set; }
 
+        public virtual DbSet<LogCommands> LogCommands { get; set; }
+
         public virtual DbSet<Mail> Mail { get; set; }
 
         public virtual DbSet<MaintenanceLog> MaintenanceLog { get; set; }

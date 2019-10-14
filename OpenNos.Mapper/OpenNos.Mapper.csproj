@@ -59,6 +59,8 @@
     <Compile Include="Mappers\FamilyMapper.cs" />
     <Compile Include="Mappers\GeneralLogMapper.cs" />
     <Compile Include="Mappers\ItemMapper.cs" />
+    <Compile Include="Mappers\LogChatMapper.cs" />
+    <Compile Include="Mappers\LogCommandsMapper.cs" />
     <Compile Include="Mappers\MailMapper.cs" />
     <Compile Include="Mappers\MaintenanceLogMapper.cs" />
     <Compile Include="Mappers\MapMapper.cs" />
