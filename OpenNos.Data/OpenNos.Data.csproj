@@ -76,6 +76,8 @@
     <Compile Include="CharacterQuestDTO.cs" />
     <Compile Include="LogChatDTO.cs" />
     <Compile Include="LogCommandsDTO.cs" />
+    <Compile Include="LogDropDTO.cs" />
+    <Compile Include="LogPutItemDTO.cs" />
     <Compile Include="MaintenanceLogDTO.cs" />
     <Compile Include="PartnerSkillDTO.cs" />
     <Compile Include="QuestDTO.cs" />

@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.DAL.EF
+namespace OpenNos.Data
 {
-    public class LogDrop
+    public class LogPutItemDTO
     {
-        [Key]
         public long LogId { get; set; }
-
-        public virtual Character Character { get; set; }
 
         public long? CharacterId { get; set; }
 
         public short ItemVNum { get; set; }
-
-        [MaxLength(255)]
-        public string ItemName { get; set; }
 
         public short Amount { get; set; }
 
@@ -29,7 +22,6 @@ namespace OpenNos.DAL.EF
 
         public byte Y { get; set; }
 
-        [MaxLength(255)]
         public string IpAddress { get; set; }
 
         public DateTime Timestamp { get; set; }

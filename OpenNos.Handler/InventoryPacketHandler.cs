@@ -947,6 +947,7 @@ namespace OpenNos.Handler
 
                                             Logger.LogUserEvent("CHARACTER_ITEM_GET", Session.GenerateIdentity(),
                                                 $"[GetItem]IIId: {inv.Id} ItemVNum: {inv.ItemVNum} Amount: {amount}");
+                                            LogHelper.Instance.InsertDropLog(inv, Session.CurrentMapInstance, Session.Character.CharacterId, amount, Session.IpAddress);
                                         }
                                         else
                                         {
@@ -1163,6 +1164,7 @@ namespace OpenNos.Handler
 
                             Logger.LogUserEvent("CHARACTER_ITEM_DROP", Session.GenerateIdentity(),
                                 $"[PutItem]IIId: {invitem.Id} ItemVNum: {droppedItem.ItemVNum} Amount: {droppedItem.Amount} MapId: {Session.CurrentMapInstance.Map.MapId} MapX: {droppedItem.PositionX} MapY: {droppedItem.PositionY}");
+                            LogHelper.Instance.InsertPutItemLog(droppedItem, Session.CurrentMapInstance, Session.Character.CharacterId, Session.IpAddress); 
                             Session.CurrentMapInstance?.Broadcast(
                                 $"drop {droppedItem.ItemVNum} {droppedItem.TransportId} {droppedItem.PositionX} {droppedItem.PositionY} {droppedItem.Amount} 0 -1");
                         }

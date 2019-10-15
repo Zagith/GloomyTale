@@ -54,6 +54,40 @@ namespace OpenNos.GameObject.Helpers
             };
             DAOFactory.LogChatDAO.InsertOrUpdate(ref log);
         }
+
+        public void InsertDropLog(ItemInstance inv, MapInstance map, long characterId, short amount, string ipAddress)
+        {
+            var log = new LogDropDTO
+            {
+                CharacterId = characterId,
+                ItemVNum = inv.ItemVNum,
+                ItemName = inv.Item.Name,
+                Amount = amount,
+                Map = map.Map.MapId,
+                X = map.MapIndexX,
+                Y = map.MapIndexY,
+                IpAddress = ipAddress,
+                Timestamp = DateTime.Now
+            };
+            DAOFactory.LogDropDAO.InsertOrUpdate(ref log);
+        }
+
+        public void InsertPutItemLog(MapItem inv, MapInstance map, long characterId, string ipAddress)
+        {
+            var log = new LogPutItemDTO
+            {
+                CharacterId = characterId,
+                ItemVNum = inv.ItemVNum,
+                Amount = inv.Amount,
+                Map = map.Map.MapId,
+                X = map.MapIndexX,
+                Y = map.MapIndexY,
+                IpAddress = ipAddress,
+                Timestamp = DateTime.Now
+            };
+            DAOFactory.LogPutItemDAO.InsertOrUpdate(ref log);
+        }
+
         #region Singleton
 
         private static LogHelper _instance;
