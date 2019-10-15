@@ -10,7 +10,7 @@ namespace OpenNos.DAL.Interface
 {
     public interface ILogCommandsDAO
     {
-        SaveResult InsertOrUpdate(ref LogCommandsDTO questLog);
+        LogCommandsDTO Insert(LogCommandsDTO generalLog);
 
         LogCommandsDTO LoadById(long id);
 

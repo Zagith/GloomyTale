@@ -16,48 +16,23 @@ namespace OpenNos.DAL.DAO
 {
     public class LogCommandsDAO : ILogCommandsDAO
     {
-        public SaveResult InsertOrUpdate(ref LogCommandsDTO quest)
+        public LogCommandsDTO Insert(LogCommandsDTO generalLog)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    long questId = quest.CommandId;
-                    long? characterId = quest.CharacterId;
-                    LogCommands entity = context.LogCommands.FirstOrDefault(c => c.CommandId.Equals(questId) && c.CharacterId.Equals(characterId));
-
-                    if (entity == null)
+                    LogCommands entity = new LogCommands();
+                    Mapper.Mappers.LogCommandsMapper.ToLogCommands(generalLog, entity);
+                    context.LogCommands.Add(entity);
+                    context.SaveChanges();
+                    if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(entity, generalLog))
                     {
-                        quest = Insert(quest, context);
-                        return SaveResult.Inserted;
+                        return generalLog;
                     }
 
-                    quest.CommandId = entity.CommandId;
-                    quest = Update(entity, quest, context);
-                    return SaveResult.Updated;
+                    return null;
                 }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-                return SaveResult.Error;
-            }
-        }
-
-        public LogCommandsDTO Insert(LogCommandsDTO questLog, OpenNosContext context)
-        {
-            try
-            {
-                LogCommands entity = new LogCommands();
-                Mapper.Mappers.LogCommandsMapper.ToLogCommands(questLog, entity);
-                context.LogCommands.Add(entity);
-                context.SaveChanges();
-                if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(entity, questLog))
-                {
-                    return questLog;
-                }
-
-                return null;
             }
             catch (Exception e)
             {

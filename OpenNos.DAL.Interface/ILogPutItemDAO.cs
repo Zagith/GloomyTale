@@ -10,7 +10,7 @@ namespace OpenNos.DAL.Interface
 {
     public interface ILogPutItemDAO
     {
-        SaveResult InsertOrUpdate(ref LogPutItemDTO questLog);
+        LogPutItemDTO Insert(LogPutItemDTO generalLog);
 
         LogPutItemDTO LoadById(long id);
 

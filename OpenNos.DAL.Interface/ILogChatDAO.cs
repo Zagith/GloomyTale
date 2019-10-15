@@ -10,7 +10,7 @@ namespace OpenNos.DAL.Interface
 {
     public interface ILogChatDAO
     {
-        SaveResult InsertOrUpdate(ref LogChatDTO questLog);
+        LogChatDTO Insert(LogChatDTO generalLog);
 
         LogChatDTO LoadById(long id);
 

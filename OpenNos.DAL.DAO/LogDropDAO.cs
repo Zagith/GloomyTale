@@ -13,55 +13,30 @@ namespace OpenNos.DAL.DAO
 {
     public class LogDropDAO : ILogDropDAO
     {
-        public SaveResult InsertOrUpdate(ref LogDropDTO quest)
+        public LogDropDTO Insert(LogDropDTO generalLog)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    long questId = quest.LogId;
-                    long? characterId = quest.CharacterId;
-                    LogDrop entity = context.LogDrop.FirstOrDefault(c => c.LogId.Equals(questId) && c.CharacterId.Equals(characterId));
-
-                    if (entity == null)
+                    LogDrop entity = new LogDrop();
+                    Mapper.Mappers.LogDropMapper.ToLogDrop(generalLog, entity);
+                    context.LogDrop.Add(entity);
+                    context.SaveChanges();
+                    if (Mapper.Mappers.LogDropMapper.ToLogDropDTO(entity, generalLog))
                     {
-                        quest = Insert(quest, context);
-                        return SaveResult.Inserted;
+                        return generalLog;
                     }
 
-                    quest.LogId = entity.LogId;
-                    quest = Update(entity, quest, context);
-                    return SaveResult.Updated;
+                    return null;
                 }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-                return SaveResult.Error;
-            }
-        }
-
-        public LogDropDTO Insert(LogDropDTO questLog, OpenNosContext context)
-        {
-            try
-            {
-                LogDrop entity = new LogDrop();
-                Mapper.Mappers.LogDropMapper.ToLogDrop(questLog, entity);
-                context.LogDrop.Add(entity);
-                context.SaveChanges();
-                if (Mapper.Mappers.LogDropMapper.ToLogDropDTO(entity, questLog))
-                {
-                    return questLog;
-                }
-
-                return null;
             }
             catch (Exception e)
             {
                 Logger.Error(e);
                 return null;
             }
-        }
+        }        
 
         public LogDropDTO Update(LogDrop old, LogDropDTO replace, OpenNosContext context)
         {

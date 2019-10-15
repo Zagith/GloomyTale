@@ -15,48 +15,23 @@ namespace OpenNos.DAL.DAO
 {
     public class LogPutItemDAO : ILogPutItemDAO
     {
-        public SaveResult InsertOrUpdate(ref LogPutItemDTO quest)
+        public LogPutItemDTO Insert(LogPutItemDTO generalLog)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    long questId = quest.LogId;
-                    long? characterId = quest.CharacterId;
-                    LogPutItem entity = context.LogPutItem.FirstOrDefault(c => c.LogId.Equals(questId) && c.CharacterId.Equals(characterId));
-
-                    if (entity == null)
+                    LogPutItem entity = new LogPutItem();
+                    Mapper.Mappers.LogPutItemMapper.ToLogPutItem(generalLog, entity);
+                    context.LogPutItem.Add(entity);
+                    context.SaveChanges();
+                    if (Mapper.Mappers.LogPutItemMapper.ToLogPutItemDTO(entity, generalLog))
                     {
-                        quest = Insert(quest, context);
-                        return SaveResult.Inserted;
+                        return generalLog;
                     }
 
-                    quest.LogId = entity.LogId;
-                    quest = Update(entity, quest, context);
-                    return SaveResult.Updated;
+                    return null;
                 }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-                return SaveResult.Error;
-            }
-        }
-
-        public LogPutItemDTO Insert(LogPutItemDTO questLog, OpenNosContext context)
-        {
-            try
-            {
-                LogPutItem entity = new LogPutItem();
-                Mapper.Mappers.LogPutItemMapper.ToLogPutItem(questLog, entity);
-                context.LogPutItem.Add(entity);
-                context.SaveChanges();
-                if (Mapper.Mappers.LogPutItemMapper.ToLogPutItemDTO(entity, questLog))
-                {
-                    return questLog;
-                }
-
-                return null;
             }
             catch (Exception e)
             {

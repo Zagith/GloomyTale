@@ -39,7 +39,7 @@ namespace OpenNos.GameObject.Helpers
                 IpAddress = ipAddress,
                 Timestamp = DateTime.Now
             };
-            DAOFactory.LogCommandsDAO.InsertOrUpdate(ref command);
+            DAOFactory.LogCommandsDAO.Insert(command);
         }
 
         public void InsertChatLog(ChatType type, long characterId, string message, string ipAddress)
@@ -52,7 +52,7 @@ namespace OpenNos.GameObject.Helpers
                 ChatType = type,
                 Timestamp = DateTime.Now
             };
-            DAOFactory.LogChatDAO.InsertOrUpdate(ref log);
+            DAOFactory.LogChatDAO.Insert(log);
         }
 
         public void InsertDropLog(ItemInstance inv, MapInstance map, long characterId, short amount, string ipAddress)
@@ -69,7 +69,7 @@ namespace OpenNos.GameObject.Helpers
                 IpAddress = ipAddress,
                 Timestamp = DateTime.Now
             };
-            DAOFactory.LogDropDAO.InsertOrUpdate(ref log);
+            DAOFactory.LogDropDAO.Insert(log);
         }
 
         public void InsertPutItemLog(MapItem inv, MapInstance map, long characterId, string ipAddress)
@@ -85,7 +85,7 @@ namespace OpenNos.GameObject.Helpers
                 IpAddress = ipAddress,
                 Timestamp = DateTime.Now
             };
-            DAOFactory.LogPutItemDAO.InsertOrUpdate(ref log);
+            DAOFactory.LogPutItemDAO.Insert(log);
         }
 
         #region Singleton

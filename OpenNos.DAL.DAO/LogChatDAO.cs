@@ -15,48 +15,23 @@ namespace OpenNos.DAL.DAO
 {
     public class LogChatDAO : ILogChatDAO
     {
-        public SaveResult InsertOrUpdate(ref LogChatDTO quest)
+        public LogChatDTO Insert(LogChatDTO generalLog)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    long questId = quest.LogId;
-                    long? characterId = quest.CharacterId;
-                    LogChat entity = context.LogChat.FirstOrDefault(c => c.LogId.Equals(questId) && c.CharacterId.Equals(characterId));
-
-                    if (entity == null)
+                    LogChat entity = new LogChat();
+                    Mapper.Mappers.LogChatMapper.ToLogChat(generalLog, entity);
+                    context.LogChat.Add(entity);
+                    context.SaveChanges();
+                    if (Mapper.Mappers.LogChatMapper.ToLogChatDTO(entity, generalLog))
                     {
-                        quest = Insert(quest, context);
-                        return SaveResult.Inserted;
+                        return generalLog;
                     }
 
-                    quest.LogId = entity.LogId;
-                    quest = Update(entity, quest, context);
-                    return SaveResult.Updated;
+                    return null;
                 }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-                return SaveResult.Error;
-            }
-        }
-
-        public LogChatDTO Insert(LogChatDTO questLog, OpenNosContext context)
-        {
-            try
-            {
-                LogChat entity = new LogChat();
-                Mapper.Mappers.LogChatMapper.ToLogChat(questLog, entity);
-                context.LogChat.Add(entity);
-                context.SaveChanges();
-                if (Mapper.Mappers.LogChatMapper.ToLogChatDTO(entity, questLog))
-                {
-                    return questLog;
-                }
-
-                return null;
             }
             catch (Exception e)
             {

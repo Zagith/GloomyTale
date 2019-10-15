@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace OpenNos.DAL.Interface
 {
     public interface ILogDropDAO
-    {
-        SaveResult InsertOrUpdate(ref LogDropDTO questLog);
-
+    {        
         LogDropDTO LoadById(long id);
+
+        LogDropDTO Insert(LogDropDTO generalLog);
 
         IEnumerable<LogDropDTO> LoadByCharacterId(long id);
     }
