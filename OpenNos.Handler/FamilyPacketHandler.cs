@@ -273,6 +273,7 @@ namespace OpenNos.Handler
                 {
                     ccmsg = $"[{Session.Account.Authority.ToString()} {Session.Character.Name}]:{msg}";
                 }
+                LogHelper.Instance.InsertChatLog(ChatType.Family, Session.Character.CharacterId, familyChatPacket.Message, Session.IpAddress);
 
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {

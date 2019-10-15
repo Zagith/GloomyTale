@@ -540,6 +540,10 @@ namespace OpenNos.Handler
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("FRIEND_OFFLINE")));
                 }
+                else
+                {
+                    LogHelper.Instance.InsertChatLog(ChatType.Friend, Session.Character.CharacterId, message, Session.IpAddress);
+                }
             }
         }
 
@@ -1065,6 +1069,7 @@ namespace OpenNos.Handler
 
                 ServerManager.Instance.Broadcast(Session, Session.Character.GenerateSpk(groupSayPacket.Message, 3),
                     ReceiverType.Group);
+                LogHelper.Instance.InsertChatLog(ChatType.Friend, Session.Character.CharacterId, groupSayPacket.Message, Session.IpAddress);
             }
         }
 
@@ -1844,7 +1849,7 @@ namespace OpenNos.Handler
                         {
                             Session.Character.Inventory.RemoveItemAmount(speakerVNum);
                         }
-
+                        LogHelper.Instance.InsertChatLog(ChatType.Speaker, Session.Character.CharacterId, message, Session.IpAddress);
                         if (ServerManager.Instance.ChannelId == 51)
                         {
                             ServerManager.Instance.Broadcast(Session, sayPacket, ReceiverType.AllExceptMeAct4);
@@ -1883,7 +1888,7 @@ namespace OpenNos.Handler
                             {
                                 message = message.Substring(0, 60);
                             }
-
+                            LogHelper.Instance.InsertChatLog(ChatType.Speaker, Session.Character.CharacterId, message, Session.IpAddress);
                             Session.Character.BubbleMessage = message;
                             Session.Character.BubbleMessageEnd = DateTime.Now.AddMinutes(30);
                             Session.SendPacket($"csp_r {Session.Character.BubbleMessage}");
@@ -2966,6 +2971,8 @@ namespace OpenNos.Handler
             }
             else
             {
+                LogHelper.Instance.InsertChatLog(ChatType.General, Session.Character.CharacterId, message, Session.IpAddress);
+
                 byte type = CharacterHelper.AuthorityChatColor(Session.Character.Authority);
 
                 ConcurrentBag<ArenaTeamMember> member = null;
@@ -3686,6 +3693,10 @@ namespace OpenNos.Handler
                 {
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("USER_NOT_CONNECTED")));
+                }
+                else
+                {
+                    LogHelper.Instance.InsertChatLog(ChatType.Whisper, Session.Character.CharacterId, message, Session.IpAddress);
                 }
             }
             catch (Exception e)

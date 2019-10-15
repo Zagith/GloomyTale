@@ -90,6 +90,10 @@
     <Compile Include="BoxItem.cs" />
     <Compile Include="CellonOption.cs" />
     <Compile Include="CharacterQuest.cs" />
+    <Compile Include="LogChat.cs" />
+    <Compile Include="LogCommands.cs" />
+    <Compile Include="LogDrop.cs" />
+    <Compile Include="LogPutItem.cs" />
     <Compile Include="MaintenanceLog.cs" />
     <Compile Include="Migrations\201904261626285_OpenNos.cs" />
     <Compile Include="Migrations\201904261626285_OpenNos.Designer.cs">
@@ -110,6 +114,10 @@
     <Compile Include="Migrations\201909151303167_locksystem-zro.cs" />
     <Compile Include="Migrations\201909151303167_locksystem-zro.Designer.cs">
       <DependentUpon>201909151303167_locksystem-zro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910151034494_Antares01.cs" />
+    <Compile Include="Migrations\201910151034494_Antares01.designer.cs">
+      <DependentUpon>201910151034494_Antares01.cs</DependentUpon>
     </Compile>
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="Quest.cs" />
@@ -212,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909151303167_locksystem-zro.resx">
       <DependentUpon>201909151303167_locksystem-zro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910151034494_Antares01.resx">
+      <DependentUpon>201910151034494_Antares01.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

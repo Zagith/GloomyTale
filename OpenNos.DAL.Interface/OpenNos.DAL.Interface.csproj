@@ -92,6 +92,10 @@
     <Compile Include="ICharacterRelationDAO.cs" />
     <Compile Include="IComboDAO.cs" />
     <Compile Include="IDropDAO.cs" />
+    <Compile Include="ILogChatDAO.cs" />
+    <Compile Include="ILogCommandsDAO.cs" />
+    <Compile Include="ILogDropDAO.cs" />
+    <Compile Include="ILogPutItemDAO.cs" />
     <Compile Include="IMaintenanceLogDAO.cs" />
     <Compile Include="IMateDAO.cs" />
     <Compile Include="IMinilandObjectDAO.cs" />
