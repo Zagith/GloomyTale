@@ -73,6 +73,8 @@ namespace OpenNos.DAL.EF
 
         public virtual DbSet<LogCommands> LogCommands { get; set; }
 
+        public virtual DbSet<LogChat> LogChat { get; set; }
+
         public virtual DbSet<Mail> Mail { get; set; }
 
         public virtual DbSet<MaintenanceLog> MaintenanceLog { get; set; }

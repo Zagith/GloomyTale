@@ -69,6 +69,7 @@
     <Compile Include="GeneralLogDAO.cs" />
     <Compile Include="ItemDAO.cs" />
     <Compile Include="ItemInstanceDAO.cs" />
+    <Compile Include="LogChatDAO.cs" />
     <Compile Include="LogCommandsDAO.cs" />
     <Compile Include="MailDAO.cs" />
     <Compile Include="MaintenanceLogDAO.cs" />

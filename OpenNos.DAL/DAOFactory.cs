@@ -40,6 +40,7 @@ namespace OpenNos.DAL
         private static IItemDAO _itemDAO;
         private static IItemInstanceDAO _itemInstanceDAO;
         private static ILogCommandsDAO _logCommandsDAO;
+        private static ILogChatDAO _logChatDAO;
         private static IMailDAO _mailDAO;
         private static IMaintenanceLogDAO _maintenanceLogDAO;
         private static IMapDAO _mapDAO;
@@ -121,6 +122,8 @@ namespace OpenNos.DAL
         public static IMaintenanceLogDAO MaintenanceLogDAO => _maintenanceLogDAO ?? (_maintenanceLogDAO = new MaintenanceLogDAO());
 
         public static ILogCommandsDAO LogCommandsDAO => _logCommandsDAO ?? (_logCommandsDAO = new LogCommandsDAO());
+
+        public static ILogChatDAO LogChatDAO => _logChatDAO ?? (_logChatDAO = new LogChatDAO());
 
         public static IMapDAO MapDAO => _mapDAO ?? (_mapDAO = new MapDAO());
 

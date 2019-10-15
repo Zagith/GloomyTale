@@ -4,6 +4,7 @@ using OpenNos.Data;
 using OpenNos.DAL;
 using OpenNos.GameObject.Networking;
 using System.Collections.Generic;
+using OpenNos.Domain;
 
 namespace OpenNos.GameObject.Helpers
 {
@@ -39,6 +40,19 @@ namespace OpenNos.GameObject.Helpers
                 Timestamp = DateTime.Now
             };
             DAOFactory.LogCommandsDAO.InsertOrUpdate(ref command);
+        }
+
+        public void InsertChatLog(ChatType type, long characterId, string message, string ipAddress)
+        {
+            var log = new LogChatDTO
+            {
+                CharacterId = characterId,
+                ChatMessage = message,
+                IpAddress = ipAddress,
+                ChatType = type,
+                Timestamp = DateTime.Now
+            };
+            DAOFactory.LogChatDAO.InsertOrUpdate(ref log);
         }
         #region Singleton
 
