@@ -9,14 +9,6 @@ namespace OpenNos.GameObject.Helpers
 {
     public class LogHelper
     {
-        public LogHelper()
-        {
-            QuestLogList = new List<QuestLogDTO>();
-            RaidLogList = new List<RaidLogDTO>();
-            LogCommandsList = new List<LogCommandsDTO>();
-            ChatLogList = new List<LogChatDTO>();
-        }
-
         public void InsertQuestLog(long characterId, string ipAddress, long questId, DateTime lastDaily)
         {
             var log = new QuestLogDTO

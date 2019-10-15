@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OpenNos.Domain
 {
-    class ChatType
+    public enum ChatType : byte
     {
     }
 }

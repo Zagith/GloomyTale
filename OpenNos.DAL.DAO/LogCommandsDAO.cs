@@ -1,10 +1,12 @@
 ﻿using OpenNos.Core;
 using OpenNos.DAL.EF;
 using OpenNos.DAL.EF.Helpers;
+using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using OpenNos.Data.Enums;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -12,28 +14,26 @@ using System.Threading.Tasks;
 
 namespace OpenNos.DAL.DAO
 {
-    class LogCommandsDAO
+    public class LogCommandsDAO : ILogCommandsDAO
     {
-        #region Methods
-
-
-        public SaveResult InsertOrUpdate(ref LogCommandsDTO mail)
+        public SaveResult InsertOrUpdate(ref LogCommandsDTO quest)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    long mailId = mail.CommandId;
-                    LogCommands entity = context.LogCommands.FirstOrDefault(c => c.CommandId.Equals(mailId));
+                    long questId = quest.CommandId;
+                    long? characterId = quest.CharacterId;
+                    LogCommands entity = context.LogCommands.FirstOrDefault(c => c.CommandId.Equals(questId) && c.CharacterId.Equals(characterId));
 
                     if (entity == null)
                     {
-                        mail = insert(mail, context);
+                        quest = Insert(quest, context);
                         return SaveResult.Inserted;
                     }
 
-                    mail.CommandId = entity.CommandId;
-                    mail = update(entity, mail, context);
+                    quest.CommandId = entity.CommandId;
+                    quest = Update(entity, quest, context);
                     return SaveResult.Updated;
                 }
             }
@@ -44,29 +44,52 @@ namespace OpenNos.DAL.DAO
             }
         }
 
-        public IEnumerable<LogCommandsDTO> LoadAll()
+        public LogCommandsDTO Insert(LogCommandsDTO questLog, OpenNosContext context)
         {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            try
             {
-                List<LogCommandsDTO> result = new List<LogCommandsDTO>();
-                foreach (LogCommands mail in context.LogCommands)
+                LogCommands entity = new LogCommands();
+                Mapper.Mappers.LogCommandsMapper.ToLogCommands(questLog, entity);
+                context.LogCommands.Add(entity);
+                context.SaveChanges();
+                if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(entity, questLog))
                 {
-                    LogCommandsDTO dto = new LogCommandsDTO();
-                    Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(mail, dto);
-                    result.Add(dto);
+                    return questLog;
                 }
-                return result;
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                return null;
             }
         }
 
-        public LogCommandsDTO LoadById(long mailId)
+        public LogCommandsDTO Update(LogCommands old, LogCommandsDTO replace, OpenNosContext context)
+        {
+            if (old != null)
+            {
+                Mapper.Mappers.LogCommandsMapper.ToLogCommands(replace, old);
+                context.Entry(old).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(old, replace))
+            {
+                return replace;
+            }
+
+            return null;
+        }
+
+        public LogCommandsDTO LoadById(long id)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
                     LogCommandsDTO dto = new LogCommandsDTO();
-                    if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(context.LogCommands.FirstOrDefault(i => i.CommandId.Equals(mailId)), dto))
+                    if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(context.LogCommands.FirstOrDefault(i => i.CommandId.Equals(id)), dto))
                     {
                         return dto;
                     }
@@ -81,88 +104,19 @@ namespace OpenNos.DAL.DAO
             }
         }
 
-        public IEnumerable<MailDTO> LoadSentByCharacter(long characterId)
+        public IEnumerable<LogCommandsDTO> LoadByCharacterId(long characterId)
         {
-            //Where(s => s.SenderId == CharacterId && s.IsSenderCopy && MailList.All(m => m.Value.MailId != s.MailId))
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MailDTO> result = new List<MailDTO>();
-                foreach (Mail mail in context.Mail.Where(s => s.SenderId == characterId && s.IsSenderCopy).Take(40))
+                List<LogCommandsDTO> result = new List<LogCommandsDTO>();
+                foreach (LogCommands questLog in context.LogCommands.Where(s => s.CharacterId == characterId))
                 {
-                    MailDTO dto = new MailDTO();
-                    Mapper.Mappers.MailMapper.ToMailDTO(mail, dto);
+                    LogCommandsDTO dto = new LogCommandsDTO();
+                    Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(questLog, dto);
                     result.Add(dto);
                 }
                 return result;
             }
         }
-
-        public IEnumerable<MailDTO> LoadSentToCharacter(long characterId)
-        {
-            //s => s.ReceiverId == CharacterId && !s.IsSenderCopy && MailList.All(m => m.Value.MailId != s.MailId)).Take(50)
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
-            {
-                List<MailDTO> result = new List<MailDTO>();
-                foreach (Mail mail in context.Mail.Where(s => s.ReceiverId == characterId && !s.IsSenderCopy).Take(40))
-                {
-                    MailDTO dto = new MailDTO();
-                    Mapper.Mappers.MailMapper.ToMailDTO(mail, dto);
-                    result.Add(dto);
-                }
-                return result;
-            }
-        }
-
-        private static LogCommandsDTO insert(LogCommandsDTO mail, OpenNosContext context)
-        {
-            try
-            {
-                LogCommands entity = new LogCommands();
-                Mapper.Mappers.LogCommandsMapper.ToLogCommands(mail, entity);
-                context.LogCommands.Add(entity);
-                context.SaveChanges();
-                if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(entity, mail))
-                {
-                    return mail;
-                }
-
-                return null;
-            }
-            catch (DbEntityValidationException dbEx)
-            {
-                Exception raise = dbEx;
-                foreach (DbEntityValidationResult validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (DbValidationError validationError in validationErrors.ValidationErrors)
-                    {
-                        // raise a new exception nesting the current instance as InnerException
-                        Logger.Error(new InvalidOperationException($"{validationErrors.Entry.Entity}:{validationError.ErrorMessage}", raise));
-                    }
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-                return null;
-            }
-        }
-
-        private static LogCommandsDTO update(LogCommands entity, LogCommandsDTO respawn, OpenNosContext context)
-        {
-            if (entity != null)
-            {
-                Mapper.Mappers.LogCommandsMapper.ToLogCommands(respawn, entity);
-                context.SaveChanges();
-            }
-            if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(entity, respawn))
-            {
-                return respawn;
-            }
-
-            return null;
-        }
-
-        #endregion
     }
 }
