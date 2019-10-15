@@ -92,6 +92,7 @@
     <Compile Include="CharacterQuest.cs" />
     <Compile Include="LogChat.cs" />
     <Compile Include="LogCommands.cs" />
+    <Compile Include="LogDrop.cs" />
     <Compile Include="MaintenanceLog.cs" />
     <Compile Include="Migrations\201904261626285_OpenNos.cs" />
     <Compile Include="Migrations\201904261626285_OpenNos.Designer.cs">

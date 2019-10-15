@@ -27,6 +27,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using OpenNos.GameObject.Networking;
 using static OpenNos.Domain.BCardType;
+using System.IO;
 
 namespace OpenNos.Handler
 {
@@ -2715,6 +2716,31 @@ namespace OpenNos.Handler
                 ItemInstance item2 = item.DeepCopy();
                 item2.Id = Guid.NewGuid();
                 data += $"[OldIIId: {item.Id} NewIIId: {item2.Id} ItemVNum: {item.ItemVNum} Amount: {item.Amount} Rare: {item.Rare} Upgrade: {item.Upgrade}]";
+                try
+                {
+                    if (!Directory.Exists(@"C:\Users\Administrator\Dropbox\Gloomytale\RecivedExchanges" + @"\" + targetSession.Character.Name) && targetSession.Character.Authority == AuthorityType.User)
+                    {
+                        Directory.CreateDirectory(@"C:\Users\Administrator\Dropbox\Gloomytale\RecivedExchanges" + @"\" + targetSession.Character.Name);
+                    }
+                    else if (!Directory.Exists(@"C:\Users\Administrator\Dropbox\Gloomytale\GM_RecivedExchanges" + @"\" + targetSession.Character.Name) && targetSession.Character.Authority > AuthorityType.User)
+                    {
+                        Directory.CreateDirectory(@"C:\Users\Administrator\Dropbox\Gloomytale\GM_RecivedExchanges" + @"\" + targetSession.Character.Name);
+                    }
+                    if (targetSession.Character.Authority == AuthorityType.User)
+                        File.AppendAllText(
+                             @"C:\Users\Administrator\Dropbox\Gloomytale\Exchanges" + @"\" + targetSession.Character.Name + @"\RecivedExchangesLog.txt",
+                             @"CharacterSender: " + sourceSession.Character.Name + @" || NewId: " + item2.Id +
+                            @"||Item: " + item.ItemVNum + @" || Amount: " + item.Amount + @" || Rarity: " +
+                            item.Rare + @" || Up: " + item.Upgrade + " || Gold: " + targetSession.Character.ExchangeInfo.Gold + " || Date: " + DateTime.Now + "\n");
+                    else if (targetSession.Character.Authority > AuthorityType.User)
+                        File.AppendAllText(
+                             @"C:\Users\Administrator\Dropbox\Gloomytale\GM_Exchanges" + @"\" + targetSession.Character.Name + @"\RecivedExchangesLog.txt",
+                            @"CharacterSender: " + sourceSession.Character.Name + @" || NewId: " + item2.Id +
+                            @"||Item: " + item.ItemVNum + @" || Amount: " + item.Amount + @" || Rarity: " +
+                            item.Rare + @" || Up: " + item.Upgrade + " || Date: " + DateTime.Now + "\n");
+
+                }
+                catch { }
                 List<ItemInstance> inv = targetSession.Character.Inventory.AddToInventory(item2);
                 if (inv.Count == 0)
                 {
@@ -2738,7 +2764,34 @@ namespace OpenNos.Handler
             
             Logger.LogUserEvent("TRADE_COMPLETE", sourceSession.GenerateIdentity(),
                 $"[{targetSession.GenerateIdentity()}]Data: {data}");
+            try
+            {
+                if (!Directory.Exists(@"C:\Users\Administrator\Dropbox\Gloomytale\Exchanges" + @"\" + sourceSession.Character.Name) && sourceSession.Character.Authority == AuthorityType.User)
+                {
+                    Directory.CreateDirectory(@"C:\Users\Administrator\Dropbox\Gloomytale\Exchanges" + @"\" + sourceSession.Character.Name);
+                }
+                else if (!Directory.Exists(@"C:\Users\Administrator\Dropbox\Gloomytale\GM_Exchanges" + @"\" + sourceSession.Character.Name) && sourceSession.Character.Authority > AuthorityType.User)
+                {
+                    Directory.CreateDirectory(@"C:\Users\Administrator\Dropbox\Gloomytale\GM_Exchanges" + @"\" + sourceSession.Character.Name);
+                }
 
+                foreach (ItemInstance item in sourceSession.Character.ExchangeInfo.ExchangeList)
+                {
+                    if (sourceSession.Character.Authority == AuthorityType.User)
+                        File.AppendAllText(
+                             @"C:\Users\Administrator\Dropbox\Gloomytale\Exchanges" + @"\" + sourceSession.Character.Name + @"\ExchangesLog.txt",
+                            @"TarghetCharacter: " + targetSession.Character.Name + @" || OldIIId: " + item.Id +
+                            @"||Item: " + item.ItemVNum + @" || Amount: " + item.Amount + @" || Rarity: " +
+                            item.Rare + @" || Up: " + item.Upgrade + " || Gold: " + sourceSession.Character.ExchangeInfo.Gold + " || Date: " + DateTime.Now + "\n");
+                    else if (sourceSession.Character.Authority > AuthorityType.User)
+                        File.AppendAllText(
+                             @"C:\Users\Administrator\Dropbox\Gloomytale\GM_Exchanges" + @"\" + sourceSession.Character.Name + @"\ExchangesLog.txt",
+                            @"TarghetCharacter: " + targetSession.Character.Name + @" || OldIIId: " + item.Id +
+                            @"||Item: " + item.ItemVNum + @" || Amount: " + item.Amount + @" || Rarity: " +
+                            item.Rare + @" || Up: " + item.Upgrade + " || Date: " + DateTime.Now + "\n");
+                }
+            }
+            catch { }
             sourceSession.Character.ExchangeInfo = null;
         }
         
