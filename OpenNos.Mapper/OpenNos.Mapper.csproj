@@ -47,6 +47,7 @@
     <Compile Include="Mappers\BCardMapper.cs" />
     <Compile Include="Mappers\BoxItemMapper.cs" />
     <Compile Include="Mappers\CharacterQuestMapper.cs" />
+    <Compile Include="Mappers\CharacterTitleMapper.cs" />
     <Compile Include="Mappers\ItemInstanceMapper.cs" />
     <Compile Include="Mappers\CardMapper.cs" />
     <Compile Include="Mappers\CellonOptionMapper.cs" />

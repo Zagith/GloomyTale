@@ -150,6 +150,7 @@
     <Compile Include="Packets\CommandPackets\SetLockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UnlockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UserLogPacket.cs" />
+    <Compile Include="Packets\CustomPackets\TitlePacket.cs" />
     <Compile Include="PartnerSp.cs" />
     <Compile Include="Packets\BscPacket.cs" />
     <Compile Include="Packets\ClientPackets\BlPacket.cs" />

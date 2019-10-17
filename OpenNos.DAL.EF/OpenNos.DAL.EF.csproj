@@ -90,6 +90,7 @@
     <Compile Include="BoxItem.cs" />
     <Compile Include="CellonOption.cs" />
     <Compile Include="CharacterQuest.cs" />
+    <Compile Include="CharacterTitle.cs" />
     <Compile Include="LogChat.cs" />
     <Compile Include="LogCommands.cs" />
     <Compile Include="LogDrop.cs" />
