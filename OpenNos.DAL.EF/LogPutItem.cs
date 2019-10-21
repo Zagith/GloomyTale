@@ -20,9 +20,9 @@ namespace OpenNos.DAL.EF
 
         public short Map { get; set; }
 
-        public byte X { get; set; }
+        public short X { get; set; }
 
-        public byte Y { get; set; }
+        public short Y { get; set; }
 
         [MaxLength(255)]
         public string IpAddress { get; set; }

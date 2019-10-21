@@ -633,7 +633,7 @@ namespace OpenNos.GameObject
                 {
                     try
                     {
-                        File.AppendAllText($"C:\\{Account.Name.Replace(" ", "")}.txt", packet + "\n");
+                        File.AppendAllText($"C:\\OpenNos\\{Account.Name.Replace(" ", "")}.txt", packet + "\n");
                     }
                     catch (Exception ex)
                     {

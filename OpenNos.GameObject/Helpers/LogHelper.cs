@@ -55,33 +55,33 @@ namespace OpenNos.GameObject.Helpers
             DAOFactory.LogChatDAO.Insert(log);
         }
 
-        public void InsertDropLog(ItemInstance inv, MapInstance map, long characterId, short amount, string ipAddress)
+        public void InsertDropLog(ItemInstance inv, ClientSession character, short amount, string ipAddress)
         {
             var log = new LogDropDTO
             {
-                CharacterId = characterId,
+                CharacterId = character.Character.CharacterId,
                 ItemVNum = inv.ItemVNum,
                 ItemName = inv.Item.Name,
                 Amount = amount,
-                Map = map.Map.MapId,
-                X = map.MapIndexX,
-                Y = map.MapIndexY,
+                Map = character.Character.MapId,
+                X = character.Character.MapX,
+                Y = character.Character.MapY,
                 IpAddress = ipAddress,
                 Timestamp = DateTime.Now
             };
             DAOFactory.LogDropDAO.Insert(log);
         }
 
-        public void InsertPutItemLog(MapItem inv, MapInstance map, long characterId, string ipAddress)
+        public void InsertPutItemLog(MapItem inv, ClientSession character, string ipAddress)
         {
             var log = new LogPutItemDTO
             {
-                CharacterId = characterId,
+                CharacterId = character.Character.CharacterId,
                 ItemVNum = inv.ItemVNum,
                 Amount = inv.Amount,
-                Map = map.Map.MapId,
-                X = map.MapIndexX,
-                Y = map.MapIndexY,
+                Map = character.Character.MapId,
+                X = character.Character.MapX,
+                Y = character.Character.MapY,
                 IpAddress = ipAddress,
                 Timestamp = DateTime.Now
             };
