@@ -51,6 +51,8 @@ namespace OpenNos.DAL.EF
 
         public virtual DbSet<CharacterRelation> CharacterRelation { get; set; }
 
+        public virtual DbSet<CharacterTitle> CharacterTitle { get; set; }
+
         public virtual DbSet<CharacterSkill> CharacterSkill { get; set; }
 
         public virtual DbSet<CharacterQuest> CharacterQuest { get; set; }

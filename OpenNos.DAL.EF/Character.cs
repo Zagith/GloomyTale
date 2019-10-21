@@ -26,6 +26,7 @@ namespace OpenNos.DAL.EF
         public Character()
         {
             CharacterSkill = new HashSet<CharacterSkill>();
+            CharacterTitle = new HashSet<CharacterTitle>();
             CharacterRelation1 = new HashSet<CharacterRelation>();
             CharacterRelation2 = new HashSet<CharacterRelation>();
             StaticBonus = new HashSet<StaticBonus>();
@@ -66,6 +67,8 @@ namespace OpenNos.DAL.EF
         public bool BuffBlocked { get; set; }
 
         public long CharacterId { get; set; }
+
+        public virtual ICollection<CharacterTitle> CharacterTitle { get; set; }
 
         public virtual ICollection<CharacterRelation> CharacterRelation1 { get; set; }
 

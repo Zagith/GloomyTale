@@ -74,6 +74,7 @@
     <Compile Include="BCardDTO.cs" />
     <Compile Include="BoxItemDTO.cs" />
     <Compile Include="CharacterQuestDTO.cs" />
+    <Compile Include="CharacterTitleDTO.cs" />
     <Compile Include="LogChatDTO.cs" />
     <Compile Include="LogCommandsDTO.cs" />
     <Compile Include="LogDropDTO.cs" />

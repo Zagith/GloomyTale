@@ -22,13 +22,14 @@ namespace OpenNos.Data
     {
         #region Properties
 
+
         public long CharacterId { get; set; }
 
-        public long CharacterRelationId { get; set; }
+        public long TitleId { get; set; }
 
-        public long RelatedCharacterId { get; set; }
+        public bool IsUsed { get; set; }
 
-        public CharacterRelationType RelationType { get; set; }
+        public bool IsDisplay { get; set; }
 
         #endregion
     }

@@ -4830,6 +4830,19 @@ namespace OpenNos.GameObject
             return mlobjstring;
         }
 
+        public string GetTitles()
+        {
+            string mlobjstring = "title";
+            foreach (ItemInstance item in Inventory.Where(s => s.Type == InventoryType.Miniland).OrderBy(s => s.Slot))
+            {
+                MinilandObject mp = MinilandObjects.Find(s => s.ItemInstanceId == item.Id);
+                bool used = mp != null;
+                mlobjstring += $" {item.Slot}.{(used ? 1 : 0)}.{(used ? mp.MapX : 0)}.{(used ? mp.MapY : 0)}.{(item.Item.Width != 0 ? item.Item.Width : 1) }.{(item.Item.Height != 0 ? item.Item.Height : 1) }.{(used ? mp.ItemInstance.DurabilityPoint : 0)}.100.0.1";
+            }
+
+            return mlobjstring;
+        }
+
         public void GetReferrerReward()
         {
             long referrerId = Session.Account.ReferrerId;
