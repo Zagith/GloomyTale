@@ -10,13 +10,14 @@ namespace OpenNos.Mapper.Mappers
 {
     public class CharacterTitleMapper
     {
-        public static bool ToCharacterRelation(CharacterRelationDTO input, CharacterTitleDTO output)
+        public static bool ToCharacterRelation(CharacterTitleDTO input, CharacterTitle output)
         {
             if (input == null)
             {
                 return false;
             }
 
+            output.CharacterTitleId = input.CharacterTitleId;
             output.CharacterId = input.CharacterId;
             output.TitleId = input.TitleId;
             output.IsUsed = input.IsUsed;
@@ -32,6 +33,7 @@ namespace OpenNos.Mapper.Mappers
                 return false;
             }
 
+            output.CharacterTitleId = input.CharacterTitleId;
             output.CharacterId = input.CharacterId;
             output.TitleId = input.TitleId;
             output.IsUsed = input.IsUsed;

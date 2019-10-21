@@ -10,6 +10,7 @@ namespace OpenNos.Data
     {
         #region Properties
 
+        public long CharacterTitleId { get; set; }
         public long CharacterId { get; set; }
 
         public long TitleId { get; set; }

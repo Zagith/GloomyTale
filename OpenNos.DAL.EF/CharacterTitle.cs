@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace OpenNos.DAL.EF
     {
         #region Properties
 
+        [Key]
+        public long CharacterTitleId { get; set; }
         public virtual Character Character { get; set; }
 
         public long CharacterId { get; set; }
