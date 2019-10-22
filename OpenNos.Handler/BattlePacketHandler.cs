@@ -49,6 +49,61 @@ namespace OpenNos.Handler
         #region Methods
 
         /// <summary>
+        /// ranksk packet
+        /// </summary>
+        /// <param name="rankSkPacket"></param>
+        public void RankSk(RankSkPacket rankSkPacket)
+        {
+            if (!Session.HasCurrentMapInstance)
+            {
+                return;
+            }
+
+            if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId != (short)MapTypeEnum.Act4)
+                        == true)
+            {
+                return;
+            }
+
+
+            bool isMuted = Session.Character.IsMuted();
+            if (isMuted || Session.Character.IsVehicled)
+            {
+                Session.SendPacket(StaticPacketHelper.Cancel());
+                return;
+            }
+
+            if (Session.Character.LastAncelloan.AddSeconds(1800) > DateTime.Now)
+            {
+                return;
+            }
+
+            if (Session.Character.IsReputationHero() >= 3 || Session.Account.Authority >= AuthorityType.TGM)
+            {
+                if (rankSkPacket.Index == 0)
+                {
+                    if (Session.Character.Inventory.CountItem(5996) > 0)
+                    {
+                        Session.Character.AddBuff(new Buff(460, Session.Character.Level), Session.Character.BattleEntity, true);
+                        Session.Character.Size = 15;
+                        Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateScal());
+                        Session.Character.Inventory.RemoveItemAmount(5996);
+                        Session.Character.LastAncelloan = DateTime.Now;
+                    }
+                    else
+                    {
+                        Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey(string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), ServerManager.GetItem(5996).Name, 1)), 10));
+                        return;
+                    }
+                }
+            else
+            {
+                return;
+            }
+
+        }
+
+        /// <summary>
         /// mtlist packet
         /// </summary>
         /// <param name="multiTargetListPacket"></param>

@@ -141,6 +141,7 @@
     <Compile Include="Event\MINILANDREFRESH\MinilandRefresh.cs" />
     <Compile Include="Helpers\UserInterfaceHelper.cs" />
     <Compile Include="Packets\ClientPackets\PartnerSkillOpenPacket.cs" />
+    <Compile Include="Packets\ClientPackets\RankSkPacket.cs" />
     <Compile Include="Packets\ClientPackets\UsePartnerSkillPacket.cs" />
     <Compile Include="Packets\CommandPackets\AddUserLogPacket.cs" />
     <Compile Include="Packets\CommandPackets\ChangeLockPacket.cs" />

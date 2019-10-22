@@ -285,6 +285,8 @@ namespace OpenNos.GameObject
 
         public bool IsWaitingForEvent { get; set; }
 
+        public DateTime LastAncelloan { get; set; }
+
         public DateTime LastDefence { get; set; }
 
         public DateTime LastDelay { get; set; }
