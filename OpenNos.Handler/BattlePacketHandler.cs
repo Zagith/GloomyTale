@@ -29,6 +29,7 @@ using static OpenNos.Domain.BCardType;
 using OpenNos.GameObject.Event;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using OpenNos.GameObject.Packets.ClientPackets;
 
 namespace OpenNos.Handler
 {
@@ -96,11 +97,12 @@ namespace OpenNos.Handler
                         return;
                     }
                 }
-            else
-            {
-                return;
-            }
+                else
+                {
+                    return;
+                }
 
+            }
         }
 
         /// <summary>
