@@ -10,7 +10,7 @@ namespace OpenNos.Mapper.Mappers
 {
     public class CharacterTitleMapper
     {
-        public static bool ToCharacterRelation(CharacterTitleDTO input, CharacterTitle output)
+        public static bool ToCharacterTitle(CharacterTitleDTO input, CharacterTitle output)
         {
             if (input == null)
             {
@@ -26,7 +26,7 @@ namespace OpenNos.Mapper.Mappers
             return true;
         }
 
-        public static bool ToCharacterRelationDTO(CharacterTitle input, CharacterTitleDTO output)
+        public static bool ToCharacterTitleDTO(CharacterTitle input, CharacterTitleDTO output)
         {
             if (input == null)
             {

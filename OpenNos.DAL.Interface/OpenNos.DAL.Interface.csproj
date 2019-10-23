@@ -85,6 +85,7 @@
     <Compile Include="IBoxItemDAO.cs" />
     <Compile Include="ICardDAO.cs" />
     <Compile Include="ICharacterQuestDAO.cs" />
+    <Compile Include="ICharacterTitlesDAO.cs" />
     <Compile Include="IFamilyCharacterDAO.cs" />
     <Compile Include="IFamilyDAO.cs" />
     <Compile Include="IFamilyLogDAO.cs" />

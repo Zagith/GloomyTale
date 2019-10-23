@@ -2416,6 +2416,7 @@ namespace OpenNos.GameObject
             return result;
         }
 
+        //public string GenerateTitle() => $""
         public string GenerateCInfo() => $"c_info {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + Name : Name : Authority == AuthorityType.BitchNiggerFaggot ? Name + "[BitchNiggerFaggot]" : Name)} - -1 {(Family != null && FamilyCharacter != null && !Undercover ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {CharacterId} {(Invisible && Authority >= AuthorityType.TMOD ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {(byte)HairColor} {(byte)Class} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(/*Authority > AuthorityType.User && !Undercover ? CharacterHelper.AuthorityColor(Authority) : */Compliment)} {(UseSp || IsVehicled ? Morph : 0)} {(Invisible ? 1 : 0)} {Family?.FamilyLevel ?? 0} {(UseSp ? MorphUpgrade : 0)} {ArenaWinner}";
 
         public string GenerateCMap() => $"c_map 0 {MapInstance.Map.MapId} {(MapInstance.MapInstanceType != MapInstanceType.BaseMapInstance ? 1 : 0)}";

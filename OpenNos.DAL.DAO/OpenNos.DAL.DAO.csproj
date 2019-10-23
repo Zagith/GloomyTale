@@ -61,6 +61,7 @@
     <Compile Include="CharacterQuestDAO.cs" />
     <Compile Include="CharacterRelationDAO.cs" />
     <Compile Include="CharacterSkillDAO.cs" />
+    <Compile Include="CharacterTitleDAO.cs" />
     <Compile Include="ComboDAO.cs" />
     <Compile Include="DropDAO.cs" />
     <Compile Include="FamilyCharacterDAO.cs" />

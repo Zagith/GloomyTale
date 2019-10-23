@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace OpenNos.Data
 {
+    [Serializable]
     public class CharacterTitleDTO
     {
         #region Properties
 
         public long CharacterTitleId { get; set; }
+
         public long CharacterId { get; set; }
 
         public long TitleId { get; set; }
