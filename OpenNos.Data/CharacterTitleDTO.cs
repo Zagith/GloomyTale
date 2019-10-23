@@ -15,7 +15,7 @@ namespace OpenNos.Data
 
         public long CharacterId { get; set; }
 
-        public long TitleId { get; set; }
+        public short TitleId { get; set; }
 
         public bool IsUsed { get; set; }
 

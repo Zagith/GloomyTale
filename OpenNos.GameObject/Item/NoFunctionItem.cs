@@ -15,6 +15,7 @@
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject
@@ -50,7 +51,7 @@ namespace OpenNos.GameObject
                     {
                         if (Option == 0)
                         {
-                            session.SendPacket($"qna #guri^300^{inv.ItemVNum}^{inv.Slot} {Language.Instance.GetMessageFromKey("ASK_OPEN_BOX")}");
+                            session.SendPacket($"qna #guri^306^{inv.ItemVNum}^{inv.Slot} {Language.Instance.GetMessageFromKey("ASK_OPEN_BOX")}");
                         }
                         else
                         {
@@ -62,6 +63,7 @@ namespace OpenNos.GameObject
                                 IsDisplay = false,
                             };
                             DAOFactory.CharacterTitleDAO.InsertOrUpdate(ref title);
+                            session.SendPacket(UserInterfaceHelper.Instance.GenerateTitle(session));
                         }
                     }
                     break;

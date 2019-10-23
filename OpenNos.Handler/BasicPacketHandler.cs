@@ -1205,6 +1205,17 @@ namespace OpenNos.Handler
                         }
                     }
                 }
+                else if (guriPacket.Type == 306)
+                {
+                    if (short.TryParse(guriPacket.User.ToString(), out short slot))
+                    {
+                        ItemInstance title = Session.Character.Inventory.LoadBySlotAndType(slot, InventoryType.Main);
+                        if (title != null)
+                        {
+                            title.Item.Use(Session, ref title, 1, new[] { guriPacket.Data.ToString() });
+                        }
+                    }
+                }
                 else if (guriPacket.Type == 199 && guriPacket.Argument == 2)
                 {
                     if (Session.Character.IsSeal)

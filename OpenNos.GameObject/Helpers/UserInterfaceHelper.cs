@@ -189,6 +189,18 @@ namespace OpenNos.GameObject.Helpers
 
         public string GeneratePStashRemove(short slot) => $"pstash {GenerateRemovePacket(slot)}";
 
+        public string GenerateTitle(ClientSession sess)
+        {
+            List<CharacterTitleDTO> titlelst = DAOFactory.CharacterTitleDAO.LoadAll().ToList();
+            string titleList = "";
+            foreach (CharacterTitleDTO title in titlelst.Where(s => s.CharacterId == sess.Character.CharacterId))
+            {
+                ItemDTO item = DAOFactory.ItemDAO.LoadById(title.TitleId);
+                titleList += $"{item.EffectValue}.1 ";
+            }
+            return $"title {titleList} ";
+        }
+
         public static string GenerateRCBList(CBListPacket packet)
         {
             if (packet == null || packet.ItemVNumFilter == null)
