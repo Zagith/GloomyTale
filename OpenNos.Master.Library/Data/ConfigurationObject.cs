@@ -62,5 +62,7 @@ namespace OpenNos.Master.Library.Data
         public bool HalloweenEvent { get; set; }
 
         public bool ChristmasEvent { get; set; }
+
+        public byte BackpackSize { get; set; }
     }
 }

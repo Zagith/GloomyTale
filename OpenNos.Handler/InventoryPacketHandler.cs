@@ -1022,7 +1022,7 @@ namespace OpenNos.Handler
                         return;
                     }
 
-                    if (mvePacket.DestinationSlot > 48 + ((Session.Character.HaveBackpack() ? 1 : 0) * 12))
+                    if (mvePacket.DestinationSlot > ServerManager.Instance.Configuration.BackpackSize + ((Session.Character.HaveBackpack() ? 1 : 0) * 12))
                     {
                         return;
                     }
@@ -1087,7 +1087,7 @@ namespace OpenNos.Handler
                 lock (Session.Character.Inventory)
                 {
                     // check if the destination slot is out of range
-                    if (mviPacket.DestinationSlot > 48 + ((Session.Character.HaveBackpack() ? 1 : 0) * 12))
+                    if (mviPacket.DestinationSlot > ServerManager.Instance.Configuration.BackpackSize + ((Session.Character.HaveBackpack() ? 1 : 0) * 12))
                     {
                         return;
                     }

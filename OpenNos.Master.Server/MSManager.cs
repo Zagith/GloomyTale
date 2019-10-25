@@ -70,6 +70,7 @@ namespace OpenNos.Master.Server
                 QuestDropRate = int.Parse(ConfigurationManager.AppSettings["QuestDropRate"]),
                 HalloweenEvent = bool.Parse(ConfigurationManager.AppSettings["HalloweenEvent"]),
                 ChristmasEvent = bool.Parse(ConfigurationManager.AppSettings["ChristmasEvent"]),
+                BackpackSize = byte.Parse(ConfigurationManager.AppSettings["BackpackSize"]),
             };
         }
 

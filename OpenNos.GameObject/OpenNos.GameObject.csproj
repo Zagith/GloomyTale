@@ -152,7 +152,7 @@
     <Compile Include="Packets\CommandPackets\SetLockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UnlockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UserLogPacket.cs" />
-    <Compile Include="Packets\CustomPackets\TitlePacket.cs" />
+    <Compile Include="Packets\ServerPackets\ExtsPacket.cs" />
     <Compile Include="Packets\ServerPackets\TitlePacket.cs" />
     <Compile Include="Packets\ServerPackets\TitleSubPacket.cs" />
     <Compile Include="PartnerSp.cs" />

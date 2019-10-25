@@ -31,8 +31,6 @@ namespace OpenNos.GameObject
     {
         #region Members
 
-        private const short DEFAULT_BACKPACK_SIZE = 48;
-
         private const short MAX_ITEM_AMOUNT = 999;
 
         private readonly object _lockObject = new object();
@@ -53,6 +51,29 @@ namespace OpenNos.GameObject
 
         #region Methods
 
+        private byte GetMaxSlot(InventoryType pocket)
+        {
+            //TODO make this configurable
+            return (byte)(pocket switch
+            {
+                InventoryType.Miniland => 50 + Expensions[pocket],
+                InventoryType.Specialist => 45 + Expensions[pocket],
+                InventoryType.Costume => 60 + Expensions[pocket],
+                InventoryType.Wear => 17,
+                _ => ServerManager.Instance.Configuration.BackpackSize + Expensions[pocket]
+            });
+        }
+
+        public Dictionary<InventoryType, byte> Expensions { get; set; } = new Dictionary<InventoryType, byte>
+        {
+            { InventoryType.Costume, 0 },
+            { InventoryType.Equipment, 0 },
+            { InventoryType.Etc, 0 },
+            { InventoryType.Miniland, 0 },
+            { InventoryType.Main, 0 },
+            { InventoryType.Specialist, 0 },
+            { InventoryType.Wear, 0 },
+        };
         public static ItemInstance InstantiateItemInstance(short vnum, long ownerId, short amount = 1)
         {
             ItemInstance newItem = new ItemInstance { ItemVNum = vnum, Amount = amount, CharacterId = ownerId };
@@ -189,7 +210,7 @@ namespace OpenNos.GameObject
                 if (newItem.Type != InventoryType.Bazaar && (newItem.Item.Type == InventoryType.Etc || newItem.Item.Type == InventoryType.Main))
                 {
                     List<ItemInstance> slotNotFull = Where(i => i.Type != InventoryType.Bazaar && i.Type != InventoryType.PetWarehouse && i.Type != InventoryType.Warehouse && i.Type != InventoryType.FamilyWareHouse && i.ItemVNum.Equals(newItem.ItemVNum) && i.Amount < MAX_ITEM_AMOUNT);
-                    int freeslot = BackpackSize() - CountLinq(s => s.Type == newItem.Type);
+                    int freeslot = GetMaxSlot(newItem.Type) - CountLinq(s => s.Type == newItem.Type);
                     if (freeslot < 0) freeslot = 0;
                     if (newItem.Amount <= (freeslot * MAX_ITEM_AMOUNT) + slotNotFull.Sum(s => MAX_ITEM_AMOUNT - s.Amount))
                     {
@@ -263,7 +284,7 @@ namespace OpenNos.GameObject
             return null;
         }
 
-        public int BackpackSize() => DEFAULT_BACKPACK_SIZE + ((Owner.HaveBackpack() ? 1 : 0) * 12);
+        //public int BackpackSize() => DEFAULT_BACKPACK_SIZE + ((Owner.HaveBackpack() ? 1 : 0) * 12);
 
         public bool CanAddItem(short itemVnum) => canAddItem(ServerManager.GetItem(itemVnum).Type);
 
@@ -346,7 +367,7 @@ namespace OpenNos.GameObject
                     List<ItemInstance> listitem = Where(i => i.Type == type);
                     if (!place.ContainsKey(type))
                     {
-                        place.Add(type, (type != InventoryType.Miniland ? BackpackSize() : 50) - listitem.Count);
+                        place.Add(type, (type != InventoryType.Miniland ? GetMaxSlot(type) : 50) - listitem.Count);
                     }
 
                     int amount = itemgroup.Sum(s => s.Amount);
@@ -720,7 +741,7 @@ namespace OpenNos.GameObject
         {
             if (Owner != null)
             {
-                for (short i = 0; i < DEFAULT_BACKPACK_SIZE; i++)
+                for (short i = 0; i < ServerManager.Instance.Configuration.BackpackSize; i++)
                 {
                     if (LoadBySlotAndType(i, type) != null)
                     {
@@ -739,7 +760,7 @@ namespace OpenNos.GameObject
         {
             IEnumerable<int> itemInstanceSlotsByType = Where(i => i.Type == type).OrderBy(i => i.Slot).Select(i => (int)i.Slot);
             IEnumerable<int> instanceSlotsByType = itemInstanceSlotsByType as int[] ?? itemInstanceSlotsByType.ToArray();
-            int backpackSize = BackpackSize();
+            int backpackSize = GetMaxSlot(type);
             int maxRange = (type != InventoryType.Miniland ? backpackSize : 50) + 1;
             int? nextFreeSlot = instanceSlotsByType.Any() ? Enumerable.Range(0, maxRange).Except(instanceSlotsByType).Cast<int?>().FirstOrDefault() : 0;
             return (short?)nextFreeSlot < (type != InventoryType.Miniland ? backpackSize : 50) ? (short?)nextFreeSlot : null;

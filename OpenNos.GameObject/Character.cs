@@ -2645,7 +2645,15 @@ namespace OpenNos.GameObject
             return $"equip {GenerateEqRareUpgradeForPacket()}{eqlist}";
         }
 
-        public string GenerateExts() => $"exts 0 {48 + ((HaveBackpack() ? 1 : 0) * 12)} {48 + ((HaveBackpack() ? 1 : 0) * 12)} {48 + ((HaveBackpack() ? 1 : 0) * 12)}";
+        public ExtsPacket GenerateExts()
+        {
+            return new ExtsPacket
+            {
+                EquipmentExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
+                MainExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
+                EtcExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12))
+            };
+        }
 
         public string GenerateFaction() => $"fs {(byte)Faction}";
 
