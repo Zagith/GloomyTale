@@ -558,6 +558,8 @@ namespace OpenNos.GameObject
 
         public List<StaticBonusDTO> StaticBonusList { get; set; }
 
+        public List<CharacterTitleDTO> Titles { get; set; }
+
         public ScriptedInstance Timespace { get; set; }
 
         public bool TimespaceRewardGotten { get; set; }
@@ -2416,7 +2418,6 @@ namespace OpenNos.GameObject
             return result;
         }
 
-        //public string GenerateTitle() => $""
         public string GenerateCInfo() => $"c_info {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + Name : Name : Authority == AuthorityType.BitchNiggerFaggot ? Name + "[BitchNiggerFaggot]" : Name)} - -1 {(Family != null && FamilyCharacter != null && !Undercover ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {CharacterId} {(Invisible && Authority >= AuthorityType.TMOD ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {(byte)HairColor} {(byte)Class} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(/*Authority > AuthorityType.User && !Undercover ? CharacterHelper.AuthorityColor(Authority) : */Compliment)} {(UseSp || IsVehicled ? Morph : 0)} {(Invisible ? 1 : 0)} {Family?.FamilyLevel ?? 0} {(UseSp ? MorphUpgrade : 0)} {ArenaWinner}";
 
         public string GenerateCMap() => $"c_map 0 {MapInstance.Map.MapId} {(MapInstance.MapInstanceType != MapInstanceType.BaseMapInstance ? 1 : 0)}";
@@ -3436,6 +3437,42 @@ namespace OpenNos.GameObject
 
         public string GenerateMinilandPoint() => $"mlpt {MinilandPoint} 100";
 
+        public string GenerateTitleInfo()
+        {
+            var visibleTitle = Titles.FirstOrDefault(s => s.Visible)?.TitleType ?? 0;
+            var effectiveTitle = Titles.FirstOrDefault(s => s.Active)?.TitleType ?? 0;
+
+            return $"titinfo 1 {CharacterId} {visibleTitle} {effectiveTitle}";
+        }
+
+        public TitlePacket GenerateTitle()
+        {
+            var data = Titles.Select(s => new TitleSubPacket
+            {
+                TitleId = (short)(s.TitleType - 9300),
+                TitleStatus = (byte)((s.Visible ? 2 : 0) + (s.Active ? 4 : 0) + 1)
+            }).ToList();
+            return new TitlePacket
+            {
+                Data = data.Any() ? data : null
+            };
+        }
+
+        public string GenerateEffs(TiteqPacketType type)
+        {
+            string packet = "";
+            switch (type)
+            {
+                case TiteqPacketType.Wiev:
+                    packet += $"eff_s 1 {CharacterId} 18";
+                    break;
+
+                case TiteqPacketType.Effect:
+                    packet += $"eff_s 1 {CharacterId} 11";
+                    break;
+            }
+            return packet;
+        }
         public string GenerateMinimapPosition() => MapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance
             || MapInstance.MapInstanceType == MapInstanceType.RaidInstance
             ? $"rsfp {MapInstance.MapIndexX} {MapInstance.MapIndexY}" : "rsfp 0 -1";
@@ -3629,8 +3666,6 @@ namespace OpenNos.GameObject
                 LevelRewards(Level);
             }
         }
-
-
 
         public void LevelRewards(int Level)
         {
@@ -5906,6 +5941,12 @@ namespace OpenNos.GameObject
                 {
                     StaticBonusDTO bonus2 = bonus;
                     DAOFactory.StaticBonusDAO.InsertOrUpdate(ref bonus2);
+                }
+
+                foreach (CharacterTitleDTO title in Titles.ToArray())
+                {
+                    CharacterTitleDTO title2 = title;
+                    DAOFactory.CharacterTitleDAO.InsertOrUpdate(ref title2);
                 }
 
                 foreach (GeneralLogDTO general in GeneralLogs.GetAllItems())

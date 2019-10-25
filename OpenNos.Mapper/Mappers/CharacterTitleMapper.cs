@@ -19,9 +19,9 @@ namespace OpenNos.Mapper.Mappers
 
             output.CharacterTitleId = input.CharacterTitleId;
             output.CharacterId = input.CharacterId;
-            output.TitleId = input.TitleId;
-            output.IsUsed = input.IsUsed;
-            output.IsDisplay = input.IsDisplay;
+            output.Active = input.Active;
+            output.Visible = input.Visible;
+            output.TitleType = input.TitleType;
 
             return true;
         }
@@ -35,9 +35,9 @@ namespace OpenNos.Mapper.Mappers
 
             output.CharacterTitleId = input.CharacterTitleId;
             output.CharacterId = input.CharacterId;
-            output.TitleId = (short)input.TitleId;
-            output.IsUsed = input.IsUsed;
-            output.IsDisplay = input.IsDisplay;
+            output.Active = input.Active;
+            output.Visible = input.Visible;
+            output.TitleType = input.TitleType;
 
             return true;
         }

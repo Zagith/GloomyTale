@@ -17,11 +17,11 @@ namespace OpenNos.DAL.EF
 
         public long CharacterId { get; set; }
 
-        public long TitleId { get; set; }
+        public bool Active { get; set; }
 
-        public bool IsUsed { get; set; }
+        public bool Visible { get; set; }
 
-        public bool IsDisplay { get; set; }
+        public short TitleType { get; set; }
 
         #endregion
     }

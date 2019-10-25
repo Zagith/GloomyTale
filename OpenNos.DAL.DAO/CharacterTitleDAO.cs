@@ -23,8 +23,8 @@ namespace OpenNos.DAL.DAO
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
                     long characterId = CharacterTitle.CharacterId;
-                    long titleId = CharacterTitle.TitleId;
-                    CharacterTitle entity = context.CharacterTitle.FirstOrDefault(c => c.CharacterId.Equals(characterId) && c.TitleId.Equals(titleId));
+                    short titleId = CharacterTitle.TitleType;
+                    CharacterTitle entity = context.CharacterTitle.FirstOrDefault(c => c.CharacterId.Equals(characterId) && c.TitleType.Equals(titleId));
 
                     if (entity == null)
                     {
@@ -49,6 +49,21 @@ namespace OpenNos.DAL.DAO
             {
                 List<CharacterTitleDTO> result = new List<CharacterTitleDTO>();
                 foreach (CharacterTitle entity in context.CharacterTitle)
+                {
+                    CharacterTitleDTO dto = new CharacterTitleDTO();
+                    Mapper.Mappers.CharacterTitleMapper.ToCharacterTitleDTO(entity, dto);
+                    result.Add(dto);
+                }
+                return result;
+            }
+        }
+
+        public IEnumerable<CharacterTitleDTO> LoadByCharacterId(long characterId)
+        {
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                List<CharacterTitleDTO> result = new List<CharacterTitleDTO>();
+                foreach (CharacterTitle entity in context.CharacterTitle.Where(i => i.CharacterId == characterId))
                 {
                     CharacterTitleDTO dto = new CharacterTitleDTO();
                     Mapper.Mappers.CharacterTitleMapper.ToCharacterTitleDTO(entity, dto);

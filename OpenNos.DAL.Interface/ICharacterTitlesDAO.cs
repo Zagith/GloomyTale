@@ -11,5 +11,8 @@ namespace OpenNos.DAL.Interface
         IEnumerable<CharacterTitleDTO> LoadAll();
 
         CharacterTitleDTO LoadById(long characterId);
+
+        IEnumerable<CharacterTitleDTO> LoadByCharacterId(long characterId);
+
     }
 }

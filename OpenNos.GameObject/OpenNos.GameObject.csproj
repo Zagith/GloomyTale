@@ -142,6 +142,7 @@
     <Compile Include="Helpers\UserInterfaceHelper.cs" />
     <Compile Include="Packets\ClientPackets\PartnerSkillOpenPacket.cs" />
     <Compile Include="Packets\ClientPackets\RankSkPacket.cs" />
+    <Compile Include="Packets\ClientPackets\TiteqPacket.cs" />
     <Compile Include="Packets\ClientPackets\UsePartnerSkillPacket.cs" />
     <Compile Include="Packets\CommandPackets\AddUserLogPacket.cs" />
     <Compile Include="Packets\CommandPackets\ChangeLockPacket.cs" />
@@ -152,6 +153,8 @@
     <Compile Include="Packets\CommandPackets\UnlockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UserLogPacket.cs" />
     <Compile Include="Packets\CustomPackets\TitlePacket.cs" />
+    <Compile Include="Packets\ServerPackets\TitlePacket.cs" />
+    <Compile Include="Packets\ServerPackets\TitleSubPacket.cs" />
     <Compile Include="PartnerSp.cs" />
     <Compile Include="Packets\BscPacket.cs" />
     <Compile Include="Packets\ClientPackets\BlPacket.cs" />

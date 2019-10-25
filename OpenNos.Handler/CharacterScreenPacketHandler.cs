@@ -505,6 +505,7 @@ namespace OpenNos.Handler
 
                 Session.Character.Respawns = DAOFactory.RespawnDAO.LoadByCharacter(Session.Character.CharacterId).ToList();
                 Session.Character.StaticBonusList = DAOFactory.StaticBonusDAO.LoadByCharacterId(Session.Character.CharacterId).ToList();
+                Session.Character.Titles = DAOFactory.CharacterTitleDAO.LoadByCharacterId(Session.Character.CharacterId).ToList();
                 Session.Character.LoadInventory();
                 Session.Character.LoadQuicklists();
                 Session.Character.GenerateMiniland();

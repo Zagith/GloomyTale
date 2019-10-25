@@ -15,11 +15,11 @@ namespace OpenNos.Data
 
         public long CharacterId { get; set; }
 
-        public short TitleId { get; set; }
+        public bool Active { get; set; }
 
-        public bool IsUsed { get; set; }
+        public bool Visible { get; set; }
 
-        public bool IsDisplay { get; set; }
+        public short TitleType { get; set; }
 
         #endregion
     }

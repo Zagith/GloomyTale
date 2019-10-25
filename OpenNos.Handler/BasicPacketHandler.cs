@@ -1074,6 +1074,45 @@ namespace OpenNos.Handler
         }
 
         /// <summary>
+        /// tit_eq packet
+        /// </summary>
+        /// <param name="titeqPacket"></param>
+        public void TitEq(TiteqPacket titEqPacket)
+        {
+            var tit = Session.Character.Titles.FirstOrDefault(s => s.TitleType == titEqPacket.TitleVNum);
+            if (tit != null)
+            {
+                switch (titEqPacket.Type)
+                {
+                    case TiteqPacketType.Wiev:
+                        foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
+                        {
+                            title.Visible = false;
+                        }
+                        tit.Visible = !tit.Visible;
+                        /*Session.SendPacket(new InfoPacket
+                        {
+                            Message = Session.GetMessageFromKey(LanguageKey.TITLE_VISIBILITY_CHANGED)
+                        });*/
+                        break;
+                    default:
+                        foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
+                        {
+                            title.Active = false;
+                        }
+                        tit.Active = !tit.Active;
+                        /*Session.SendPacket(new InfoPacket
+                        {
+                            Message = Session.GetMessageFromKey(LanguageKey.TITLE_EFFECT_CHANGED)
+                        });*/
+                        break;
+                }
+                Session.SendPacket(Session.Character.GenerateTitleInfo());
+                Session.SendPacket(Session.Character.GenerateTitle());
+            }                
+        }
+
+        /// <summary>
         /// guri packet
         /// </summary>
         /// <param name="guriPacket"></param>
@@ -3382,7 +3421,8 @@ namespace OpenNos.Handler
 
             Session.SendPacket(Session.Character.GeneratePinit());
             Session.SendPackets(Session.Character.GeneratePst());
-
+            Session.SendPacket(Session.Character.GenerateTitle());
+            Session.SendPacket(Session.Character.GenerateTitleInfo());
             Session.SendPacket("zzim");
             Session.SendPacket(
                 $"twk 1 {Session.Character.CharacterId} {Session.Account.Name} {Session.Character.Name} shtmxpdlfeoqkr");

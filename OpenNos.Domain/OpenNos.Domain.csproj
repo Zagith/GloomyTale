@@ -117,6 +117,7 @@
     <Compile Include="TalentArenaOptionType.cs" />
     <Compile Include="TargetHitType.cs" />
     <Compile Include="TeleporterType.cs" />
+    <Compile Include="TiteqPacketType.cs" />
     <Compile Include="UpgradeProtection.cs" />
     <Compile Include="RarifyProtection.cs" />
     <Compile Include="RarifyMode.cs" />

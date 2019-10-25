@@ -55,15 +55,15 @@ namespace OpenNos.GameObject
                         }
                         else
                         {
-                            var title = new CharacterTitleDTO
+                            session.Character.Titles.Add(new CharacterTitleDTO
                             {
-                                CharacterId = session.Character.CharacterId,
-                                TitleId = inv.ItemVNum,
-                                IsUsed = false,
-                                IsDisplay = false,
-                            };
-                            DAOFactory.CharacterTitleDAO.InsertOrUpdate(ref title);
-                            session.SendPacket(UserInterfaceHelper.Instance.GenerateTitle(session));
+                                TitleType = inv.ItemVNum,
+                                Visible = false,
+                                Active = false,
+                                CharacterId = session.Character.CharacterId
+                            });
+                            //DAOFactory.CharacterTitleDAO.InsertOrUpdate(ref title);
+                            session.SendPacket(session.Character.GenerateTitle());
                         }
                     }
                     break;

@@ -671,7 +671,7 @@ namespace OpenNos.GameObject.Networking
                     session.SendPacket(session.Character.GeneratePairy());
                     session.SendPacket(Character.GenerateAct());
                     session.SendPacket(session.Character.GenerateScpStc());
-
+                    session.SendPacket(session.Character.GenerateTitleInfo());
                     if (session.CurrentMapInstance.OnSpawnEvents.Any())
                     {
                         session.CurrentMapInstance.OnSpawnEvents.ForEach(e => EventHelper.Instance.RunEvent(e, session: session));
