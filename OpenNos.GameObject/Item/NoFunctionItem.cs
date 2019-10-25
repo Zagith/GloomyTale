@@ -62,8 +62,8 @@ namespace OpenNos.GameObject
                                 Active = false,
                                 CharacterId = session.Character.CharacterId
                             });
-                            //DAOFactory.CharacterTitleDAO.InsertOrUpdate(ref title);
-                            session.SendPacket(session.Character.GenerateTitle());
+                            session.CurrentMapInstance?.Broadcast(session.Character.GenerateTitle());
+                            session.Character.Inventory.RemoveItemAmount(inv.ItemVNum);
                         }
                     }
                     break;

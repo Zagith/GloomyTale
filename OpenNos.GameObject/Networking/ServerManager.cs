@@ -670,8 +670,7 @@ namespace OpenNos.GameObject.Networking
                     session.SendPackets(session.Character.GenerateStatChar());
                     session.SendPacket(session.Character.GeneratePairy());
                     session.SendPacket(Character.GenerateAct());
-                    session.SendPacket(session.Character.GenerateScpStc());
-                    session.SendPacket(session.Character.GenerateTitleInfo());
+                    session.SendPacket(session.Character.GenerateScpStc());                    
                     if (session.CurrentMapInstance.OnSpawnEvents.Any())
                     {
                         session.CurrentMapInstance.OnSpawnEvents.ForEach(e => EventHelper.Instance.RunEvent(e, session: session));
@@ -720,6 +719,7 @@ namespace OpenNos.GameObject.Networking
                             {
                                 session.SendPacket(visibleSession.Character.GenerateIn());
                                 session.SendPacket(visibleSession.Character.GenerateGidx());
+                                session.SendPacket(visibleSession.Character.GenerateTitleInfo());
                                 visibleSession.Character.Mates
                                     .Where(m => (m.IsTeamMember || m.IsTemporalMate) && m.CharacterId != session.Character.CharacterId)
                                     .ToList().ForEach(m => session.SendPacket(m.GenerateIn()));
@@ -778,6 +778,7 @@ namespace OpenNos.GameObject.Networking
                             {
                                 s.SendPacket(session.Character.GenerateIn());
                                 s.SendPacket(session.Character.GenerateGidx());
+                                s.SendPacket(session.Character.GenerateTitleInfo());
                                 session.Character.Mates.Where(m => m.IsTeamMember || m.IsTemporalMate).ToList()
                                     .ForEach(m => s.SendPacket(m.GenerateIn(false, ChannelId == 51)));
                             }

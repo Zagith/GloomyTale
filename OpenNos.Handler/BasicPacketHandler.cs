@@ -1107,7 +1107,8 @@ namespace OpenNos.Handler
                         });*/
                         break;
                 }
-                Session.SendPacket(Session.Character.GenerateTitleInfo());
+
+                Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateTitleInfo());
                 Session.SendPacket(Session.Character.GenerateTitle());
             }                
         }
@@ -3422,7 +3423,6 @@ namespace OpenNos.Handler
             Session.SendPacket(Session.Character.GeneratePinit());
             Session.SendPackets(Session.Character.GeneratePst());
             Session.SendPacket(Session.Character.GenerateTitle());
-            Session.SendPacket(Session.Character.GenerateTitleInfo());
             Session.SendPacket("zzim");
             Session.SendPacket(
                 $"twk 1 {Session.Character.CharacterId} {Session.Account.Name} {Session.Character.Name} shtmxpdlfeoqkr");
@@ -3489,7 +3489,7 @@ namespace OpenNos.Handler
             }
 
             Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGidx());
-
+            Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateTitleInfo());
             Session.SendPacket(Session.Character.GenerateFinit());
             Session.SendPacket(Session.Character.GenerateBlinit());
             Session.SendPacket(clinit);
