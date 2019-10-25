@@ -62,7 +62,7 @@ namespace OpenNos.GameObject
                                 Active = false,
                                 CharacterId = session.Character.CharacterId
                             });
-                            session.CurrentMapInstance?.Broadcast(session.Character.GenerateTitle());
+                            session.SendPacket(session.Character.GenerateTitle());
                             session.Character.Inventory.RemoveItemAmount(inv.ItemVNum);
                         }
                     }
