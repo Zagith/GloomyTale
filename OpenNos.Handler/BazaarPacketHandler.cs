@@ -341,6 +341,11 @@ namespace OpenNos.Handler
                 return;
             }
 
+            if (cRegPacket.Inventory == (byte)InventoryType.Bazaar)
+            {
+                return;
+            }
+
             SpinWait.SpinUntil(() => !ServerManager.Instance.InBazaarRefreshMode);
             StaticBonusDTO medal = Session.Character.StaticBonusList.Find(s =>
                 s.StaticBonusType == StaticBonusType.BazaarMedalGold

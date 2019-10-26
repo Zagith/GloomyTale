@@ -2058,6 +2058,10 @@ namespace OpenNos.Handler
                             {
                                 return;
                             }
+                            if (mount.Item.Effect != 1000 && pearl.Item.VNum != 4106)
+                            {
+                                return;
+                            }
 
                             Session.Character.Inventory.RemoveItemFromInventory(mount.Id);
 
@@ -2093,7 +2097,7 @@ namespace OpenNos.Handler
 
                         if (pearl.Item.ItemType == ItemType.Box && pearl.Item.ItemSubType == 5)
                         {
-                            if (fairy.Item.ItemType != ItemType.Jewelery || fairy.Item.ItemSubType != 3 || fairy.Item.IsDroppable)
+                            if (fairy.Item.ItemType != ItemType.Jewelery || fairy.Item.ItemSubType != 3 || fairy.Item.IsDroppable || pearl.Item.VNum != 4194)
                             {
                                 return;
                             }
