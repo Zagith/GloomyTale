@@ -448,6 +448,10 @@ namespace OpenNos.Handler
             Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("OBJECT_IN_BAZAAR"),
                 0));
 
+            ConnectionSQL conn = new ConnectionSQL();
+            if (conn.CheckDupe(Session.Character.CharacterId))
+                Session.BanForCheatUsing(1);
+
             Logger.LogUserEvent("BAZAAR_INSERT", Session.GenerateIdentity(),
                 $"BazaarId: {bazaarItem.BazaarItemId}, IIId: {bazaarItem.ItemInstanceId} VNum: {bazaar.ItemVNum} Amount: {cRegPacket.Amount} Price: {cRegPacket.Price} Time: {duration}");
 

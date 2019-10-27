@@ -210,17 +210,20 @@ namespace OpenNos.GameObject
 
         public void BanForCheatUsing(int detectionCode)
         {
-            bool isFirstTime = !DAOFactory.PenaltyLogDAO.LoadByAccount(Account.AccountId).Any(s => s.AdminName == "Anti-Cheat")
-                && !DAOFactory.PenaltyLogDAO.LoadByIp(IpAddress).Any(s => s.AdminName == "Anti-Cheat");
+            /*bool isFirstTime = !DAOFactory.PenaltyLogDAO.LoadByAccount(Account.AccountId).Any(s => s.AdminName == "Anti-Cheat")
+                && !DAOFactory.PenaltyLogDAO.LoadByIp(IpAddress).Any(s => s.AdminName == "Anti-Cheat");*/
+            String reason ="";
+            if (detectionCode == 1)
+                reason = "Tried to dupe with bazar";
 
             PenaltyLogDTO penaltyLog = new PenaltyLogDTO
             {
                 AccountId = Account.AccountId,
-                Reason = $"Cheat Using ({detectionCode})",
+                Reason = reason,
                 Penalty = PenaltyType.Banned,
                 DateStart = DateTime.Now,
-                DateEnd = isFirstTime ? DateTime.Now.AddHours(24) : DateTime.Now.AddYears(15),
-                AdminName = "Anti-Cheat"
+                DateEnd = DateTime.Now.AddYears(15),
+                AdminName = "GloomyTale Sbirri"
             };
 
             Character.InsertOrUpdatePenalty(penaltyLog);
