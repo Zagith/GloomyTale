@@ -73,6 +73,20 @@ namespace OpenNos.GameObject
             { InventoryType.Main, 0 },
             { InventoryType.Specialist, 0 },
             { InventoryType.Wear, 0 },
+            { InventoryType.Bazaar, 0 },
+            { InventoryType.Warehouse, 0 },
+            { InventoryType.FamilyWareHouse, 0 },
+            { InventoryType.PetWarehouse, 0 },
+            { InventoryType.FirstPartnerInventory, 0 },
+            { InventoryType.SecondPartnerInventory, 0 },
+            { InventoryType.ThirdPartnerInventory, 0 },
+            { InventoryType.FourthPartnerInventory, 0 },
+            { InventoryType.FifthPartnerInventory, 0 },
+            { InventoryType.SixthPartnerInventory, 0 },
+            { InventoryType.SeventhPartnerInventory, 0 },
+            { InventoryType.EighthPartnerInventory, 0 },
+            { InventoryType.NinthPartnerInventory, 0 },
+            { InventoryType.TenthPartnerInventory, 0 },
         };
         public static ItemInstance InstantiateItemInstance(short vnum, long ownerId, short amount = 1)
         {
