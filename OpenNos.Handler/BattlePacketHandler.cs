@@ -181,6 +181,13 @@ namespace OpenNos.Handler
                                 Session.Character.MapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.CharacterId), ReceiverType.AllExceptMe);
                                 return;
                             }
+                            if (target.NpcVNum == 866 /* Ramo Sacro */)
+                            {
+                                Session.SendPacket(StaticPacketHelper.Cancel(2));
+                                Session.SendPacket($"delay 6000 4 #guri^400^{target.MapNpcId}");
+                                Session.Character.MapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.CharacterId), ReceiverType.AllExceptMe);
+                                return;
+                            }
                         }
                     }
                     break;
