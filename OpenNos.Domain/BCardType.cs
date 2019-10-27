@@ -1082,7 +1082,7 @@ namespace OpenNos.Domain
         {
             // TODO
             LastSkillReset = 11,
-
+            AddBuff = 21,
             DamageBoostOnHigherLvl = 31
         }
 

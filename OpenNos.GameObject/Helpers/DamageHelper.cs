@@ -1612,6 +1612,93 @@ namespace OpenNos.GameObject.Helpers
 
             #endregion
 
+            #region Spiaggia
+            if (defender.Character != null)
+            {
+                int Stiloso = GetDefenderBenefitingBuffs(CardType.EffectSummon, (byte)AdditionalTypes.EffectSummon.AddBuff)[0];
+                if (ServerManager.RandomNumber(0, 100) < Stiloso)
+                {
+                    if (defender.Character.Session.CurrentMapInstance.IsPVP)
+                    {
+                        if (defender.Character.Session.CurrentMapInstance.Map.MapTypes.Any(s =>
+                                        s.MapTypeId == (short)MapTypeEnum.Act4))
+                        {
+                            IEnumerable<ClientSession> clientSessions = defender.Character.Session.CurrentMapInstance.Sessions?.Where(s =>
+                                                s.Character.IsInRange(defender.Character.PositionX,
+                                                    defender.Character.PositionY, 5) && s.Character.Faction == defender.Character.Faction);
+                            if (clientSessions != null)
+                            {
+                                foreach (ClientSession session in clientSessions)
+                                {
+                                    session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                                }
+                            }
+                        }
+                        else if (defender.Character.Session.CurrentMapInstance.Map.MapId == 2106)
+                        {
+
+                            if (defender.Character.Family == null)
+                            {
+                                IEnumerable<ClientSession> clientSessions = defender.Character.Session.CurrentMapInstance.Sessions?.Where(s =>
+                                                    s.Character.IsInRange(defender.Character.PositionX,
+                                                        defender.Character.PositionY, 5) && s.Character.Family == null);
+                                if (clientSessions != null)
+                                {
+                                    foreach (ClientSession session in clientSessions)
+                                    {
+                                        session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                IEnumerable<ClientSession> clientSessions = defender.Character.Session.CurrentMapInstance.Sessions?.Where(s =>
+                                                    s.Character.IsInRange(defender.Character.PositionX,
+                                                        defender.Character.PositionY, 5) && s.Character.Family == defender.Character.Family);
+                                if (clientSessions != null)
+                                {
+                                    foreach (ClientSession session in clientSessions)
+                                    {
+                                        session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                                    }
+                                }
+                            }
+                        }
+                        else if (defender.Character.Group != null)
+                        {
+                            IEnumerable<ClientSession> clientSessions = defender.Character.Session.CurrentMapInstance.Sessions?.Where(s =>
+                                                s.Character.IsInRange(defender.Character.PositionX,
+                                                    defender.Character.PositionY, 5) && s.Character.Group == defender.Character.Group);
+                            if (clientSessions != null)
+                            {
+                                foreach (ClientSession session in clientSessions)
+                                {
+                                    session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            defender.Character.AddBuff(new Buff(443, defender.Character.Level), defender);
+                        }
+                    }
+                    else
+                    {
+                        IEnumerable<ClientSession> clientSessions = defender.Character.Session.CurrentMapInstance.Sessions?.Where(s =>
+                                            s.Character.IsInRange(defender.Character.PositionX,
+                                                defender.Character.PositionY, 5));
+                        if (clientSessions != null)
+                        {
+                            foreach (ClientSession session in clientSessions)
+                            {
+                                session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
             if (defender.Character != null && defender.HasBuff(CardType.NoDefeatAndNoDamage, (byte)AdditionalTypes.NoDefeatAndNoDamage.TransferAttackPower))
             {
                 if (!percentDamage)
