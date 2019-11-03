@@ -1020,10 +1020,6 @@ namespace OpenNos.GameObject
 
         public void GenerateHeroicShell(RarifyProtection protection, bool forced = false)
         {
-            if (protection != RarifyProtection.RandomHeroicAmulet && !forced)
-            {
-                return;
-            }
             if (!Item.IsHeroic || Rare <= 0)
             {
                 return;
