@@ -14,6 +14,7 @@
 
 using OpenNos.Core;
 using OpenNos.GameObject;
+using OpenNos.GameObject.Packets.ClientPackets;
 
 namespace OpenNos.Handler
 {
@@ -63,6 +64,15 @@ namespace OpenNos.Handler
             // Not needed for now. (pictures)
         }
 
+        public void PdtClose(PdtClosePacket pdtclose)
+        {
+            // idk
+        }
+
+        public void ScPCtsPacket(ScPCtsPacket scptcs)
+        {
+            // idk
+        }
         #endregion
     }
 }

@@ -144,7 +144,9 @@
     <Compile Include="Helpers\UserInterfaceHelper.cs" />
     <Compile Include="Networking\ConnectionSQL.cs" />
     <Compile Include="Packets\ClientPackets\PartnerSkillOpenPacket.cs" />
+    <Compile Include="Packets\ClientPackets\PdtClosePacket.cs" />
     <Compile Include="Packets\ClientPackets\RankSkPacket.cs" />
+    <Compile Include="Packets\ClientPackets\ScPCtsPacket.cs" />
     <Compile Include="Packets\ClientPackets\TiteqPacket.cs" />
     <Compile Include="Packets\ClientPackets\UsePartnerSkillPacket.cs" />
     <Compile Include="Packets\CommandPackets\AddUserLogPacket.cs" />
