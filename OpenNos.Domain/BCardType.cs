@@ -1094,6 +1094,7 @@ namespace OpenNos.Domain
         public enum MartialArts : byte
         {
             Transformation = 11,
+            TransformationInverted = 12,
             unknow2 = 21,
             IncreaseBattleAndJobExperience = 41,
         }

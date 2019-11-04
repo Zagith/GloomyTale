@@ -244,6 +244,8 @@ namespace OpenNos.GameObject
 
         public ThreadSafeGenericList<long> GroupSentRequestCharacterIds { get; set; }
 
+        public IDisposable DragonModeObservable { get; set; }
+
         public bool HasGodMode { get; set; }
 
         public bool HasShopOpened { get; set; }

@@ -69,6 +69,7 @@
     <Compile Include="ArenaTeamType.cs" />
     <Compile Include="AttackType.cs" />
     <Compile Include="BazaarListType.cs" />
+    <Compile Include="BrawlerMorphType.cs" />
     <Compile Include="BuffType.cs" />
     <Compile Include="CellonOptionType.cs" />
     <Compile Include="ChatType.cs" />
