@@ -14,7 +14,7 @@
       "Projects": {
         "Opennos.World": {},
         "Opennos.Login": {},
-        "Opennos.MasterServer": {}
+        "Opennos.Master.Server": {}
       }
     },
     "With Crown": {
@@ -22,7 +22,7 @@
         "Opennos.Crown": {},
         "Opennos.World": {},
         "Opennos.Login": {},
-        "Opennos.MasterServer": {}
+        "Opennos.Master.Server": {}
       }
     },
     "Parser": {
