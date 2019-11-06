@@ -650,8 +650,8 @@ namespace OpenNos.GameObject
                 {
                     if (((HasSelectedCharacter && ((Character.SecondPassword != null && Character.hasVerifiedSecondPassword) ||
                         (packetHeader == "walk"
-                        || packetHeader.ToLower() == "$setpin"
-                        || packetHeader.ToLower() == "$pin"
+                        || packetHeader.ToLower() == "$setpw"
+                        || packetHeader.ToLower() == "$w"
                         || packetHeader == "select"
                         || packetHeader == "lbs"
                         || packetHeader == "c_close"
