@@ -614,6 +614,9 @@ namespace OpenNos.Handler
 
                 CommunicationServiceClient.Instance.ConnectCharacter(ServerManager.Instance.WorldId, character.CharacterId);
 
+                Session.Character.HasGodMode = true;
+                Session.Character.Invisible = true;
+                Session.Character.InvisibleGm = true;
                 character.Channel = ServerManager.Instance;
 
                 #endregion

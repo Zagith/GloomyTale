@@ -177,6 +177,11 @@ namespace OpenNos.Handler
                         Session.Character.hasVerifiedSecondPassword = true;
                         Session.SendPacket(Session.Character.GenerateSay($"You have successfully verified your identity!", 10));
                         Session.Character.HasGodMode = false;
+                        Session.Character.InvisibleGm = false;
+                        Session.Character.Invisible = false;
+                        Session.SendPacket(Session.Character.GenerateInvisible());
+                        Session.SendPacket(Session.Character.GenerateEq());
+                        Session.SendPacket(Session.Character.GenerateCMode());
                     }
                     else
                     {
