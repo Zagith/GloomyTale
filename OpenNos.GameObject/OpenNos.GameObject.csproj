@@ -150,7 +150,6 @@
     <Compile Include="Packets\ClientPackets\TiteqPacket.cs" />
     <Compile Include="Packets\ClientPackets\UsePartnerSkillPacket.cs" />
     <Compile Include="Packets\CommandPackets\AddUserLogPacket.cs" />
-    <Compile Include="Packets\CommandPackets\ChangeLockPacket.cs" />
     <Compile Include="Packets\CommandPackets\CHPacket.cs" />
     <Compile Include="Packets\CommandPackets\PartnerSpXpPacket.cs" />
     <Compile Include="Packets\CommandPackets\RemoveUserLogPacket.cs" />

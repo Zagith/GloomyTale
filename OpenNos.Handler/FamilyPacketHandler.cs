@@ -321,12 +321,6 @@ namespace OpenNos.Handler
         /// <param name="fDepositPacket"></param>
         public void FamilyDeposit(FDepositPacket fDepositPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
@@ -776,12 +770,6 @@ namespace OpenNos.Handler
         /// <param name="fReposPacket"></param>
         public void FamilyRepos(FReposPacket fReposPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
@@ -902,18 +890,6 @@ namespace OpenNos.Handler
         /// <param name="fWithdrawPacket"></param>
         public void FamilyWithdraw(FWithdrawPacket fWithdrawPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
-
             if (fWithdrawPacket == null)
             {
                 return;

@@ -142,10 +142,7 @@ namespace OpenNos.Data
 
         public bool WhisperBlocked { get; set; }
 
-        public string LockCode { get; set; }
-
-        public bool VerifiedLock { get; set; }
-
+        public string SecondPassword { get; set; }
         #endregion
     }
 }

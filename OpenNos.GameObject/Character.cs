@@ -52,6 +52,8 @@ namespace OpenNos.GameObject
 
         private byte _speed;
 
+        public bool hasVerifiedSecondPassword;
+
         #endregion
 
         #region Instantiation
@@ -141,8 +143,7 @@ namespace OpenNos.GameObject
             TalentSurrender = input.TalentSurrender;
             TalentWin = input.TalentWin;
             WhisperBlocked = input.WhisperBlocked;
-            LockCode = input.LockCode;
-            VerifiedLock = input.VerifiedLock;
+            SecondPassword = input.SecondPassword;
         }
 
         #endregion
@@ -592,6 +593,8 @@ namespace OpenNos.GameObject
         }
 
         public int WaterResistance { get; set; }
+
+        public IDisposable PinAsk { get; set; }
 
         public IDisposable Life { get; set; }
 
@@ -2285,6 +2288,7 @@ namespace OpenNos.GameObject
                 FamilyInviteCharacters.Clear();
                 FriendRequestCharacters.Clear();
                 Life.Dispose();
+                PinAsk.Dispose();
                 WalkDisposable?.Dispose();
                 SealDisposable?.Dispose();
                 MarryRequestCharacters.Clear();

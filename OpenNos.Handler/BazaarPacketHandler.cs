@@ -51,12 +51,6 @@ namespace OpenNos.Handler
         /// <param name="cBuyPacket"></param>
         public void BuyBazaar(CBuyPacket cBuyPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
@@ -323,12 +317,6 @@ namespace OpenNos.Handler
         /// <param name="cRegPacket"></param>
         public void SellBazaar(CRegPacket cRegPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
@@ -464,12 +452,6 @@ namespace OpenNos.Handler
         /// <param name="cModPacket"></param>
         public void ModPriceBazaar(CModPacket cModPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));

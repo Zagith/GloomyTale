@@ -857,12 +857,6 @@ namespace OpenNos.GameObject
                                         return;
                                     }
 
-                                    if (!session.Character.VerifiedLock)
-                                    {
-                                        session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                                        return;
-                                    }
-
                                     if (session.Account.IsLimited)
                                     {
                                         session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));

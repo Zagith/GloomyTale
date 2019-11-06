@@ -1750,7 +1750,7 @@ namespace OpenNos.GameObject.Networking
 
         public async Task ShutdownTaskAsync(int Time = 5)
         {
-            Shout(string.Format(Language.Instance.GetMessageFromKey("SHUTDOWN_MIN"), Time));
+            /*Shout(string.Format(Language.Instance.GetMessageFromKey("SHUTDOWN_MIN"), Time));
             if (Time > 1)
             {
                 for (int i = 0; i < 60 * (Time - 1); i++)
@@ -1782,7 +1782,7 @@ namespace OpenNos.GameObject.Networking
                     Instance.ShutdownStop = false;
                     return;
                 }
-            }
+            }*/
             Shout(string.Format(Language.Instance.GetMessageFromKey("SHUTDOWN_SEC"), 10));
             for (int i = 0; i < 10; i++)
             {

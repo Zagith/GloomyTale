@@ -3296,7 +3296,7 @@ namespace OpenNos.Handler
         public void StartGame(GameStartPacket gameStartPacket)
         {
             #region System Code Lock
-            if (Session.Character.LockCode != null)
+            /*if (Session.Character.LockCode != null)
             {
                 #region Lock Code
                 Session.Character.HeroChatBlocked = true;
@@ -3321,7 +3321,7 @@ namespace OpenNos.Handler
                 Session.Character.VerifiedLock = true;
                 #endregion
                 Session.SendPacket(Session.Character.GenerateSay($"Your account dont have a lock. If you need more security, use $SetLock and a code.", 12));
-            }
+            }*/
             #endregion
             if (Session?.Character == null || Session.IsOnMap || !Session.HasSelectedCharacter)
             {
@@ -3355,6 +3355,15 @@ namespace OpenNos.Handler
             }
 
             Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WELCOME_SERVER"), ServerManager.Instance.ServerGroup), 10));
+
+            Session.SendPacket(UserInterfaceHelper.GenerateInfo("Please enter your pin with $Pw. If you don't have a pin, use $SetPw"));
+            Session.Character.PinAsk = Observable.Interval(TimeSpan.FromSeconds(15)).Subscribe(x =>
+            {
+                if (!Session.Character.hasVerifiedSecondPassword)
+                {
+                    Session.SendPacket(GameObject.Helpers.UserInterfaceHelper.GenerateInfo("Please enter your pin with $Pw. If you have no pin, use $SetPw"));
+                }
+            });
 
             Session.Character.LoadSpeed();
             Session.Character.LoadSkills();

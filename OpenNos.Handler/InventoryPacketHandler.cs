@@ -232,12 +232,6 @@ namespace OpenNos.Handler
         [Packet("exc_list")]
         public void ExchangeList(string packet)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
@@ -364,12 +358,6 @@ namespace OpenNos.Handler
         /// <param name="exchangeRequestPacket"></param>
         public void ExchangeRequest(ExchangeRequestPacket exchangeRequestPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
@@ -399,12 +387,6 @@ namespace OpenNos.Handler
                                 Session.CurrentMapInstance.GetSessionByCharacterId(exchangeRequestPacket.CharacterId);
                             if (targetSession?.Account == null)
                             {
-                                return;
-                            }
-
-                            if (!targetSession.Character.VerifiedLock)
-                            {
-                                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because his account is blocked. Use $Unlock", 0));
                                 return;
                             }
 
@@ -771,12 +753,6 @@ namespace OpenNos.Handler
         /// <param name="getPacket"></param>
         public void GetItem(GetPacket getPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
@@ -1058,12 +1034,6 @@ namespace OpenNos.Handler
         /// <param name="mviPacket"></param>
         public void MoveItem(MviPacket mviPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (mviPacket != null)
             {
                 if (mviPacket.InventoryType != InventoryType.Equipment
@@ -1195,12 +1165,6 @@ namespace OpenNos.Handler
         /// <param name="removePacket"></param>
         public void Remove(RemovePacket removePacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (removePacket != null)
             {
                 InventoryType equipment;
@@ -2474,12 +2438,6 @@ namespace OpenNos.Handler
         /// <param name="useItemPacket"></param>
         public void UseItem(UseItemPacket useItemPacket)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (useItemPacket == null || (byte)useItemPacket.Type >= 9)
             {
                 return;

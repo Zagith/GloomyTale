@@ -1464,12 +1464,6 @@ namespace OpenNos.GameObject
 
                 case 1600:
                     {
-                        if (!Session.Character.VerifiedLock)
-                        {
-                            Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                            return;
-                        }
-
                         if (Session.Account.IsLimited)
                         {
                             Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));

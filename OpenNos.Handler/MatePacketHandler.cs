@@ -270,14 +270,7 @@ namespace OpenNos.Handler
             {
                 return;
             }
-
-            if (suctlPacket.TargetType != UserType.Npc
-                && !Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
+            
             if (suctlPacket.TargetType != UserType.Npc
                 && Session.Account.IsLimited)
             {

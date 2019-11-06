@@ -136,140 +136,28 @@ namespace OpenNos.Handler
             }
         }
 
-        /// <summary>
-        /// $ChangeLock Command
-        /// </summary>
-        /// <param name="packet"></param>
-
-        public void ChangeLock(ChangeLockPacket packet)
+        public void SetPin(SetLockPacket p)
         {
-            if (packet != null)
+            if (p != null && p.Message != null)
             {
-                if (Session.Character.LockCode == CryptographyBase.Sha512(packet.oldlock))
+                if (Session.Character.SecondPassword == null)
                 {
-                    if (packet.newlock.Length >= 8)
+                    if (p.Message.Length >= 8)
                     {
-                        if (packet.newlock == "00000000")
-                        {
-                            #region Unlock Code
-                            Session.Character.HeroChatBlocked = false;
-                            Session.Character.ExchangeBlocked = false;
-                            Session.Character.WhisperBlocked = false;
-                            Session.Character.Invisible = false;
-                            Session.Character.NoAttack = false;
-                            Session.Character.NoMove = false;
-                            Session.Character.VerifiedLock = true;
-                            Session.Character.LockCode = null;
-                            ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, Session.Character.MapInstanceId, Session.Character.PositionX, Session.Character.PositionY, true);
-                            #endregion
-                            Session.SendPacket(Session.Character.GenerateSay("Done! Your lock is inactive", 10));
-                            return;
-                        }
-                        #region Unlock Code
-                        Session.Character.HeroChatBlocked = false;
-                        Session.Character.ExchangeBlocked = false;
-                        Session.Character.WhisperBlocked = false;
-                        Session.Character.Invisible = false;
-                        Session.Character.NoAttack = false;
-                        Session.Character.NoMove = false;
-                        Session.Character.VerifiedLock = true;
-                        ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, Session.Character.MapInstanceId, Session.Character.PositionX, Session.Character.PositionY, true);
-                        #endregion
-                        Session.Character.LockCode = CryptographyBase.Sha512(packet.newlock);
-                        Session.SendPacket(Session.Character.GenerateSay("Done! Your new lock is: " + packet.newlock, 10));
+                        Session.Character.SecondPassword = CryptographyBase.Sha512(p.Message);
+                        Session.Character.Save();
+                        Session.Character.hasVerifiedSecondPassword = true;
+                        Session.SendPacket(Session.Character.GenerateSay($"Done! Your second password (or pin) is now: {p.Message}. Do not forget it.", 10));
+                        Session.Character.HasGodMode = false;
                     }
                     else
                     {
-                        Session.SendPacket(Session.Character.GenerateSay("The new lock need minimum 8 characters.", 10));
+                        Session.SendPacket(Session.Character.GenerateSay($"Your pin lenght cannot be less than 8 characters.", 10));
                     }
                 }
                 else
                 {
-                    Session.SendPacket(Session.Character.GenerateSay("You dont put the correct lock. Are you rebember this?", 10));
-                }
-            }
-            else
-            {
-                Session.SendPacket(Session.Character.GenerateSay(ChangeLockPacket.ReturnHelp(), 10));
-            }
-        }
-
-        /// <summary>
-        /// $Unlock Command
-        /// </summary>
-        /// <param name="packet"></param>
-
-        public void Unlock(UnlockPacket packet)
-        {
-            if (packet != null || packet.lockcode != null)
-            {
-                if (!Session.Character.VerifiedLock)
-                {
-                    #region Unlock Code
-                    Session.Character.HeroChatBlocked = false;
-                    Session.Character.ExchangeBlocked = false;
-                    Session.Character.WhisperBlocked = false;
-                    Session.Character.Invisible = false;
-                    Session.Character.NoAttack = false;
-                    Session.Character.NoMove = false;
-                    Session.Character.VerifiedLock = true;
-                    ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, Session.Character.MapInstanceId, Session.Character.PositionX, Session.Character.PositionY, true);
-                    #endregion
-                    Session.SendPacket(Session.Character.GenerateSay($"Your account now is unlocked.", 10));
-                }
-                else
-                {
-                    Session.SendPacket(Session.Character.GenerateSay("Your account is unlocked.", 10));
-                }
-            }
-            else
-            {
-                Session.SendPacket(Session.Character.GenerateSay(UnlockPacket.ReturnHelp(), 10));
-            }
-            return;
-        }
-
-        /// <summary>
-        /// $SetLock Command
-        /// </summary>
-        /// <param name="packet"></param>
-
-        public void SetLock(SetLockPacket packet)
-        {
-            if (packet != null)
-            {
-                if (packet.Psw2.Length >= 8)
-                {
-                    if (Session.Character.VerifiedLock)
-                    {
-                        if (Session.Character.LockCode == null)
-                        {
-                            #region Unlock Code
-                            Session.Character.HeroChatBlocked = false;
-                            Session.Character.ExchangeBlocked = false;
-                            Session.Character.WhisperBlocked = false;
-                            Session.Character.Invisible = false;
-                            Session.Character.NoAttack = false;
-                            Session.Character.NoMove = false;
-                            Session.Character.VerifiedLock = true;
-                            ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, Session.Character.MapInstanceId, Session.Character.PositionX, Session.Character.PositionY, true);
-                            #endregion
-                            Session.Character.LockCode = CryptographyBase.Sha512(packet.Psw2);
-                            Session.SendPacket(Session.Character.GenerateSay("Done! Your lock lock is: " + packet.Psw2 + ". Please, do a screenshot for recovery.", 10));
-                        }
-                        else
-                        {
-                            Session.SendPacket(Session.Character.GenerateSay("You have a lock code. If you like change the lock, use " + ChangeLockPacket.ReturnHelp(), 10));
-                        }
-                    }
-                    else
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay("Your character is locked and you have a lock code. If you like change the lock, use $Unlock and next " + ChangeLockPacket.ReturnHelp(), 10));
-                    }
-                }
-                else
-                {
-                    Session.SendPacket(Session.Character.GenerateSay("The code need minimum 8 characters", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You already have a pin. Please, if you have forgotten it, contact a staff member.", 10));
                 }
             }
             else
@@ -278,40 +166,33 @@ namespace OpenNos.Handler
             }
         }
 
-        /// <summary>
-        /// $CH Command
-        /// </summary>
-        /// <param name="chpacket"></param>
-
-        //public void DirectConnect(CHPacket chpacket)
-        //{
-        //    if (Session.Character.Gold <= 50000)
-        //    {
-        //        Session.SendPacket(Session.Character.GenerateSay("The ch change cost 50k, and you dont have this money", 10));
-        //        return;
-        //    }
-        //    Session.Character.Gold = Session.Character.Gold - 50000;
-        //    int puerto = 3438;
-        //    switch (chpacket.ch)
-        //    {
-        //        case 1:
-        //            Session.Character.ChangeChannel("25.61.169.67", puerto, 3);
-        //            break;
-        //        case 2:
-        //            Session.Character.ChangeChannel("25.61.169.67", puerto + '1', 3);
-        //            break;
-        //        case 3:
-        //            Session.Character.ChangeChannel("25.61.169.67", puerto + '2', 3);
-        //            break;
-        //        case 4:
-        //            Session.Character.ChangeChannel("25.61.169.67", puerto + '3', 3);
-        //            break;
-        //        case 5:
-        //            Session.Character.ChangeChannel("25.61.169.67", puerto + '4', 3);
-        //            break;
-        //    }
-        //    
-        //}
+        public void ConfirmPass(UnlockPacket p)
+        {
+            if (p != null && p.Message != null)
+            {
+                if (Session.Character.SecondPassword != null)
+                {
+                    if (CryptographyBase.Sha512(p.Message) == Session.Character.SecondPassword)
+                    {
+                        Session.Character.hasVerifiedSecondPassword = true;
+                        Session.SendPacket(Session.Character.GenerateSay($"You have successfully verified your identity!", 10));
+                        Session.Character.HasGodMode = false;
+                    }
+                    else
+                    {
+                        Session.SendPacket(Session.Character.GenerateSay($"Wrong pin.", 10));
+                    }
+                }
+                else
+                {
+                    Session.SendPacket(Session.Character.GenerateSay($"You didn't set a pin yet. Use $SetPin to set a pin.", 10));
+                }
+            }
+            else
+            {
+                Session.SendPacket(Session.Character.GenerateSay(UnlockPacket.ReturnHelp(), 10));
+            }
+        }
 
         /// <summary>
         /// $AddMonster Command
@@ -571,12 +452,6 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void BankManagement(BankPacket packet)
         {
-            if (!Session.Character.VerifiedLock)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg("You cant do this because your account is blocked. Use $Unlock", 0));
-                return;
-            }
-
             if (Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
