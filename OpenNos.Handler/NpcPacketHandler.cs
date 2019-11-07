@@ -1334,6 +1334,10 @@ namespace OpenNos.Handler
                     Session.SendPacket(UserInterfaceHelper.GenerateDelay(5000, 1,
                         $"#guri^710^{npc.MapX}^{npc.MapY}^{npc.MapNpcId}")); // #guri^710^DestinationX^DestinationY^MapNpcId
                 }
+                else if (npc.Shop?.ShopId == 1403)
+                {
+                    Session.SendPacket($"qna #guri^7600 {string.Format(Language.Instance.GetMessageFromKey("PERFECT_ALL"))}");
+                }
                 else if (!string.IsNullOrEmpty(npc.GetNpcDialog()))
                 {
                     Session.SendPacket(npc.GetNpcDialog());
