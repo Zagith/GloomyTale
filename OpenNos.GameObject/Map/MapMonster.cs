@@ -1383,6 +1383,10 @@ namespace OpenNos.GameObject
                 if (CurrentHp <= 0 && !isCaptureSkill)
                 {
                     // generate the kill bonus
+                    if (Owner.Character.MapInstance.Map.MapId == 2004)
+                    {
+                        Owner.Character.InstantBattleScore += 10;
+                    }
                     hitRequest.Session.Character.GenerateKillBonus(this, attackerBattleEntity);
 
                     if (attackerBattleEntity.Character != null && hitRequest.SkillBCards.FirstOrDefault(s => s.Type == (byte)CardType.TauntSkill && s.SubType == (byte)AdditionalTypes.TauntSkill.EffectOnKill / 10) is BCard EffectOnKill)
@@ -2398,6 +2402,10 @@ namespace OpenNos.GameObject
                             {
                                 if (Owner?.Character != null)
                                 {
+                                    if (Owner.Character.MapInstance.Map.MapId == 2004)
+                                    {
+                                        Owner.Character.InstantBattleScore += 10;
+                                    }
                                     Owner.Character.GenerateKillBonus(target.MapMonster, BattleEntity);
                                 }
                                 else
@@ -2838,6 +2846,10 @@ namespace OpenNos.GameObject
                                 {
                                     if (Owner?.Character != null)
                                     {
+                                        if (Owner.Character.MapInstance.Map.MapId == 2004)
+                                        {
+                                            Owner.Character.InstantBattleScore += 10;
+                                        }
                                         Owner.Character.GenerateKillBonus(monsterInRange, BattleEntity);
                                     }
                                     else

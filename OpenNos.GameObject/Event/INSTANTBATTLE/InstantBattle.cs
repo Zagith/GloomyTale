@@ -183,10 +183,10 @@ namespace OpenNos.GameObject.Event
                     EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(130 + (wave * 160)), new EventContainer(mapinstance.Item1, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("INSTANTBATTLE_MONSTERS_WAVE"), 0)));
                     EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(160 + (wave * 160)), new EventContainer(mapinstance.Item1, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("INSTANTBATTLE_MONSTERS_INCOMING"), 0)));
                     EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(170 + (wave * 160)), new EventContainer(mapinstance.Item1, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("INSTANTBATTLE_MONSTERS_HERE"), 0)));
-                    EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(10 + (wave * 160)), new EventContainer(mapinstance.Item1, EventActionType.SPAWNMONSTERS, getInstantBattleMonster(mapinstance.Item1.Map, mapinstance.Item2, wave)));
-                    EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(140 + (wave * 160)), new EventContainer(mapinstance.Item1, EventActionType.DROPITEMS, getInstantBattleDrop(mapinstance.Item1.Map, mapinstance.Item2, wave)));
+                    EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(10 + (wave * 160)), new EventContainer(mapinstance.Item1, EventActionType.SPAWNMONSTERS, getInstantBattleMonster(mapinstance.Item1.Map, mapinstance, mapinstance.Item2, wave)));
+                    EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(140 + (wave * 160)), new EventContainer(mapinstance.Item1, EventActionType.SENDPACKET, getInstantBattleDrop(mapinstance, mapinstance.Item2, wave)));
                 }
-                EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(650), new EventContainer(mapinstance.Item1, EventActionType.SPAWNMONSTERS, getInstantBattleMonster(mapinstance.Item1.Map, mapinstance.Item2, 4)));
+                EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(650), new EventContainer(mapinstance.Item1, EventActionType.SPAWNMONSTERS, getInstantBattleMonster(mapinstance.Item1.Map, mapinstance, mapinstance.Item2, 4)));
             }
 
             private static IEnumerable<Tuple<short, int, short, short>> generateDrop(Map map, short vnum, int amountofdrop, int amount)
@@ -200,204 +200,216 @@ namespace OpenNos.GameObject.Event
                 return dropParameters;
             }
 
-            private static List<Tuple<short, int, short, short>> getInstantBattleDrop(Map map, short instantbattletype, int wave)
+            private static string getInstantBattleDrop(Tuple<MapInstance, byte> map, short instantbattletype, int wave)
             {
-                List<Tuple<short, int, short, short>> dropParameters = new List<Tuple<short, int, short, short>>();
-                switch (instantbattletype)
+                string dropParameters = "";
+                foreach (ClientSession cli in map.Item1.Sessions.Where(s => s.Character != null).ToList())
                 {
-                    case 1:
-                        switch (wave)
+                    if (cli.Character.InstantBattleScore >= 100)
+                    {
+                        switch (instantbattletype)
                         {
-                            case 0:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 500));
-                                dropParameters.AddRange(generateDrop(map, 2027, 8, 5));
-                                dropParameters.AddRange(generateDrop(map, 2018, 5, 5));
-                                dropParameters.AddRange(generateDrop(map, 180, 5, 1));
-                                break;
-
+                            default:
                             case 1:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 1000));
-                                dropParameters.AddRange(generateDrop(map, 1002, 8, 3));
-                                dropParameters.AddRange(generateDrop(map, 1005, 16, 3));
-                                dropParameters.AddRange(generateDrop(map, 181, 5, 1));
+                                switch (wave)
+                                {
+                                    default:
+                                    case 0:
+                                        cli.Character.Gold += 500;
+                                        dropParameters = cli.Character.GenerateGold();
+                                        cli.Character.GiftAdd(2027, 5);
+                                        cli.Character.GiftAdd(2018, 5);
+                                        cli.Character.GiftAdd(180, 1);
+                                        break;
+
+                                    case 1:
+                                        /*dropParameters.AddRange(generateDrop(map, 1046, 15, 1000));
+                                        dropParameters.AddRange(generateDrop(map, 1002, 8, 3));
+                                        dropParameters.AddRange(generateDrop(map, 1005, 16, 3));
+                                        dropParameters.AddRange(generateDrop(map, 181, 5, 1));*/
+                                        break;
+
+                                    case 2:
+                                        /*dropParameters.AddRange(generateDrop(map, 1046, 15, 1500));
+                                        dropParameters.AddRange(generateDrop(map, 1002, 10, 5));
+                                        dropParameters.AddRange(generateDrop(map, 1005, 10, 5));*/
+                                        break;
+
+                                    case 3:
+                                        /*dropParameters.AddRange(generateDrop(map, 1046, 15, 2000));
+                                        dropParameters.AddRange(generateDrop(map, 1003, 10, 5));
+                                        dropParameters.AddRange(generateDrop(map, 1006, 10, 5));*/
+                                        break;
+                                }
                                 break;
 
-                            case 2:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 1500));
-                                dropParameters.AddRange(generateDrop(map, 1002, 10, 5));
-                                dropParameters.AddRange(generateDrop(map, 1005, 10, 5));
+                           /* case 40:
+                                switch (wave)
+                                {
+                                    case 0:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 1500));
+                                        dropParameters.AddRange(generateDrop(map, 1008, 5, 3));
+                                        dropParameters.AddRange(generateDrop(map, 180, 5, 1));
+                                        break;
+
+                                    case 1:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 2000));
+                                        dropParameters.AddRange(generateDrop(map, 1008, 8, 3));
+                                        dropParameters.AddRange(generateDrop(map, 181, 5, 1));
+                                        break;
+
+                                    case 2:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 2500));
+                                        dropParameters.AddRange(generateDrop(map, 1009, 10, 3));
+                                        dropParameters.AddRange(generateDrop(map, 1246, 5, 1));
+                                        dropParameters.AddRange(generateDrop(map, 1247, 5, 1));
+                                        break;
+
+                                    case 3:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 3000));
+                                        dropParameters.AddRange(generateDrop(map, 1009, 10, 3));
+                                        dropParameters.AddRange(generateDrop(map, 1248, 5, 1));
+                                        break;
+                                }
+
                                 break;
 
-                            case 3:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 2000));
-                                dropParameters.AddRange(generateDrop(map, 1003, 10, 5));
-                                dropParameters.AddRange(generateDrop(map, 1006, 10, 5));
+                            case 50:
+                                switch (wave)
+                                {
+                                    case 0:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 1500));
+                                        dropParameters.AddRange(generateDrop(map, 1008, 5, 3));
+                                        dropParameters.AddRange(generateDrop(map, 180, 5, 1));
+                                        break;
+
+                                    case 1:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 2000));
+                                        dropParameters.AddRange(generateDrop(map, 1008, 8, 3));
+                                        dropParameters.AddRange(generateDrop(map, 181, 5, 1));
+                                        break;
+
+                                    case 2:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 2500));
+                                        dropParameters.AddRange(generateDrop(map, 1009, 10, 3));
+                                        dropParameters.AddRange(generateDrop(map, 1246, 5, 1));
+                                        dropParameters.AddRange(generateDrop(map, 1247, 5, 1));
+                                        break;
+
+                                    case 3:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 3000));
+                                        dropParameters.AddRange(generateDrop(map, 1009, 10, 3));
+                                        dropParameters.AddRange(generateDrop(map, 1248, 5, 1));
+                                        break;
+                                }
                                 break;
+
+                            case 60:
+                                switch (wave)
+                                {
+                                    case 0:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 3000));
+                                        dropParameters.AddRange(generateDrop(map, 1010, 8, 4));
+                                        dropParameters.AddRange(generateDrop(map, 1246, 5, 1));
+                                        break;
+
+                                    case 1:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 4000));
+                                        dropParameters.AddRange(generateDrop(map, 1010, 10, 3));
+                                        dropParameters.AddRange(generateDrop(map, 1247, 5, 1));
+                                        break;
+
+                                    case 2:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 5000));
+                                        dropParameters.AddRange(generateDrop(map, 1010, 10, 13));
+                                        dropParameters.AddRange(generateDrop(map, 1246, 8, 1));
+                                        dropParameters.AddRange(generateDrop(map, 1247, 8, 1));
+                                        break;
+
+                                    case 3:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 7000));
+                                        dropParameters.AddRange(generateDrop(map, 1011, 13, 5));
+                                        dropParameters.AddRange(generateDrop(map, 1029, 5, 1));
+                                        dropParameters.AddRange(generateDrop(map, 1248, 13, 1));
+                                        break;
+                                }
+                                break;
+
+                            case 70:
+                                switch (wave)
+                                {
+                                    case 0:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 3000));
+                                        dropParameters.AddRange(generateDrop(map, 1010, 8, 3));
+                                        dropParameters.AddRange(generateDrop(map, 1246, 5, 1));
+                                        break;
+
+                                    case 1:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 4000));
+                                        dropParameters.AddRange(generateDrop(map, 1010, 15, 4));
+                                        dropParameters.AddRange(generateDrop(map, 1247, 10, 1));
+                                        break;
+
+                                    case 2:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 5000));
+                                        dropParameters.AddRange(generateDrop(map, 1010, 13, 5));
+                                        dropParameters.AddRange(generateDrop(map, 1246, 13, 1));
+                                        dropParameters.AddRange(generateDrop(map, 1247, 13, 1));
+                                        break;
+
+                                    case 3:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 7000));
+                                        dropParameters.AddRange(generateDrop(map, 1011, 13, 5));
+                                        dropParameters.AddRange(generateDrop(map, 1248, 13, 1));
+                                        dropParameters.AddRange(generateDrop(map, 1029, 5, 1));
+                                        break;
+                                }
+                                break;
+
+                            case 80:
+                                switch (wave)
+                                {
+                                    case 0:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 10000));
+                                        dropParameters.AddRange(generateDrop(map, 1011, 15, 5));
+                                        dropParameters.AddRange(generateDrop(map, 1246, 15, 1));
+                                        break;
+
+                                    case 1:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 12000));
+                                        dropParameters.AddRange(generateDrop(map, 1011, 15, 5));
+                                        dropParameters.AddRange(generateDrop(map, 1247, 15, 1));
+                                        break;
+
+                                    case 2:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 15, 15000));
+                                        dropParameters.AddRange(generateDrop(map, 1011, 20, 5));
+                                        dropParameters.AddRange(generateDrop(map, 1246, 15, 1));
+                                        dropParameters.AddRange(generateDrop(map, 1247, 15, 1));
+                                        break;
+
+                                    case 3:
+                                        dropParameters.AddRange(generateDrop(map, 1046, 30, 20000));
+                                        dropParameters.AddRange(generateDrop(map, 1011, 30, 5));
+                                        dropParameters.AddRange(generateDrop(map, 1030, 30, 1));
+                                        dropParameters.AddRange(generateDrop(map, 2282, 12, 3));
+                                        break;
+                                }
+                                break;*/
                         }
-                        break;
-
-                    case 40:
-                        switch (wave)
-                        {
-                            case 0:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 1500));
-                                dropParameters.AddRange(generateDrop(map, 1008, 5, 3));
-                                dropParameters.AddRange(generateDrop(map, 180, 5, 1));
-                                break;
-
-                            case 1:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 2000));
-                                dropParameters.AddRange(generateDrop(map, 1008, 8, 3));
-                                dropParameters.AddRange(generateDrop(map, 181, 5, 1));
-                                break;
-
-                            case 2:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 2500));
-                                dropParameters.AddRange(generateDrop(map, 1009, 10, 3));
-                                dropParameters.AddRange(generateDrop(map, 1246, 5, 1));
-                                dropParameters.AddRange(generateDrop(map, 1247, 5, 1));
-                                break;
-
-                            case 3:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 3000));
-                                dropParameters.AddRange(generateDrop(map, 1009, 10, 3));
-                                dropParameters.AddRange(generateDrop(map, 1248, 5, 1));
-                                break;
-                        }
-
-                        break;
-
-                    case 50:
-                        switch (wave)
-                        {
-                            case 0:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 1500));
-                                dropParameters.AddRange(generateDrop(map, 1008, 5, 3));
-                                dropParameters.AddRange(generateDrop(map, 180, 5, 1));
-                                break;
-
-                            case 1:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 2000));
-                                dropParameters.AddRange(generateDrop(map, 1008, 8, 3));
-                                dropParameters.AddRange(generateDrop(map, 181, 5, 1));
-                                break;
-
-                            case 2:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 2500));
-                                dropParameters.AddRange(generateDrop(map, 1009, 10, 3));
-                                dropParameters.AddRange(generateDrop(map, 1246, 5, 1));
-                                dropParameters.AddRange(generateDrop(map, 1247, 5, 1));
-                                break;
-
-                            case 3:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 3000));
-                                dropParameters.AddRange(generateDrop(map, 1009, 10, 3));
-                                dropParameters.AddRange(generateDrop(map, 1248, 5, 1));
-                                break;
-                        }
-                        break;
-
-                    case 60:
-                        switch (wave)
-                        {
-                            case 0:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 3000));
-                                dropParameters.AddRange(generateDrop(map, 1010, 8, 4));
-                                dropParameters.AddRange(generateDrop(map, 1246, 5, 1));
-                                break;
-
-                            case 1:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 4000));
-                                dropParameters.AddRange(generateDrop(map, 1010, 10, 3));
-                                dropParameters.AddRange(generateDrop(map, 1247, 5, 1));
-                                break;
-
-                            case 2:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 5000));
-                                dropParameters.AddRange(generateDrop(map, 1010, 10, 13));
-                                dropParameters.AddRange(generateDrop(map, 1246, 8, 1));
-                                dropParameters.AddRange(generateDrop(map, 1247, 8, 1));
-                                break;
-
-                            case 3:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 7000));
-                                dropParameters.AddRange(generateDrop(map, 1011, 13, 5));
-                                dropParameters.AddRange(generateDrop(map, 1029, 5, 1));
-                                dropParameters.AddRange(generateDrop(map, 1248, 13, 1));
-                                break;
-                        }
-                        break;
-
-                    case 70:
-                        switch (wave)
-                        {
-                            case 0:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 3000));
-                                dropParameters.AddRange(generateDrop(map, 1010, 8, 3));
-                                dropParameters.AddRange(generateDrop(map, 1246, 5, 1));
-                                break;
-
-                            case 1:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 4000));
-                                dropParameters.AddRange(generateDrop(map, 1010, 15, 4));
-                                dropParameters.AddRange(generateDrop(map, 1247, 10, 1));
-                                break;
-
-                            case 2:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 5000));
-                                dropParameters.AddRange(generateDrop(map, 1010, 13, 5));
-                                dropParameters.AddRange(generateDrop(map, 1246, 13, 1));
-                                dropParameters.AddRange(generateDrop(map, 1247, 13, 1));
-                                break;
-
-                            case 3:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 7000));
-                                dropParameters.AddRange(generateDrop(map, 1011, 13, 5));
-                                dropParameters.AddRange(generateDrop(map, 1248, 13, 1));
-                                dropParameters.AddRange(generateDrop(map, 1029, 5, 1));
-                                break;
-                        }
-                        break;
-
-                    case 80:
-                        switch (wave)
-                        {
-                            case 0:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 10000));
-                                dropParameters.AddRange(generateDrop(map, 1011, 15, 5));
-                                dropParameters.AddRange(generateDrop(map, 1246, 15, 1));
-                                break;
-
-                            case 1:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 12000));
-                                dropParameters.AddRange(generateDrop(map, 1011, 15, 5));
-                                dropParameters.AddRange(generateDrop(map, 1247, 15, 1));
-                                break;
-
-                            case 2:
-                                dropParameters.AddRange(generateDrop(map, 1046, 15, 15000));
-                                dropParameters.AddRange(generateDrop(map, 1011, 20, 5));
-                                dropParameters.AddRange(generateDrop(map, 1246, 15, 1));
-                                dropParameters.AddRange(generateDrop(map, 1247, 15, 1));
-                                break;
-
-                            case 3:
-                                dropParameters.AddRange(generateDrop(map, 1046, 30, 20000));
-                                dropParameters.AddRange(generateDrop(map, 1011, 30, 5));
-                                dropParameters.AddRange(generateDrop(map, 1030, 30, 1));
-                                dropParameters.AddRange(generateDrop(map, 2282, 12, 3));
-                                break;
-                        }
-                        break;
+                    }
                 }
                 return dropParameters;
             }
 
-            private static List<MonsterToSummon> getInstantBattleMonster(Map map, short instantbattletype, int wave)
+            private static List<MonsterToSummon> getInstantBattleMonster(Map map, Tuple<MapInstance, byte> mapinstance, short instantbattletype, int wave)
             {
                 List<MonsterToSummon> SummonParameters = new List<MonsterToSummon>();
-
-                switch (instantbattletype)
+                foreach (ClientSession cli in mapinstance.Item1.Sessions.Where(s => s.Character != null).ToList())
+                {
+                    cli.Character.InstantBattleScore = 0;
+                }
+                    switch (instantbattletype)
                 {
                     case 1:
                         switch (wave)

@@ -150,6 +150,8 @@ namespace OpenNos.GameObject
 
         #region Properties
 
+        public int InstantBattleScore { get; set; }
+
         public bool IsDisposed { get; private set; }
 
         public AuthorityType Authority { get; set; }
@@ -1656,6 +1658,7 @@ namespace OpenNos.GameObject
                 {
                     return;
                 }
+#warning change port alveus
                 MapId = 145;
                 MapX = 51;
                 MapY = 41;
@@ -2387,6 +2390,7 @@ namespace OpenNos.GameObject
                 }
                 else
                 {
+#warning change port alveus
                     MapId = 145;
                     MapX = 51;
                     MapY = 41;
@@ -6885,6 +6889,13 @@ namespace OpenNos.GameObject
             return true;
         }
 
+        public void TeleportOnMap(short x, short y)
+        {
+            Session.Character.PositionX = x;
+            Session.Character.PositionY = y;
+            Session.CurrentMapInstance.Broadcast($"tp {1} {CharacterId} {x} {y} 0");
+            Session.SendPacket(GenerateCond());
+        }
         #endregion
     }
 }

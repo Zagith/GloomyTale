@@ -1196,7 +1196,7 @@ namespace OpenNos.Handler
                             }*/
 
                             shell.ShellEffects.AddRange(shellOptions);
-                            
+
                             DAOFactory.ShellEffectDAO.InsertOrUpdateFromList(shell.ShellEffects, shell.EquipmentSerialId);
 
                             Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("OPTION_IDENTIFIED"), 0));
@@ -1353,9 +1353,9 @@ namespace OpenNos.Handler
                                 < mapobject.AmountRequired)
                             {
                                 if (ServerManager.GetItem(mapobject.VNumRequired) is Item requiredItem)
-                                Session.SendPacket(
-                                    UserInterfaceHelper.GenerateMsg(
-                                        string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), mapobject.AmountRequired, requiredItem.Name), 0));
+                                    Session.SendPacket(
+                                        UserInterfaceHelper.GenerateMsg(
+                                            string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), mapobject.AmountRequired, requiredItem.Name), 0));
                                 return;
                             }
 
@@ -1671,11 +1671,25 @@ namespace OpenNos.Handler
                         Session.Character.ClearLaurena();
                     }
                 }
+                else if (guriPacket.Type == 506) // Meteore event
+                {
+                    if (ServerManager.Instance.EventInWaiting == true && Session.Character.IsWaitingForEvent == false)
+                    {
+                        Session.SendPacket("bsinfo 0 4 30 0");
+                        Session.SendPacket("esf 2");
+                        Session.Character.IsWaitingForEvent = true;
+                    }
+                }
                 else if (guriPacket.Type == 710)
                 {
                     if (guriPacket.Value != null)
                     {
-                        // TODO: MAP TELEPORTER
+                        if (!Session.CurrentMapInstance.Npcs.Any(n => n.MapNpcId.Equals(guriPacket.Data)))
+                        {
+                            return;
+                        }
+
+                        Session.Character.TeleportOnMap((short)guriPacket.Argument, (short)guriPacket.User);
                     }
                 }
                 else if (guriPacket.Type == 711)
@@ -1697,7 +1711,7 @@ namespace OpenNos.Handler
                                 0));
                         return;
                     }
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.Act4ShipAngel 
+                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.Act4ShipAngel
                         || Session.CurrentMapInstance.MapInstanceType == MapInstanceType.Act4ShipDemon)
                     {
                         Session.SendPacket(
@@ -1738,7 +1752,7 @@ namespace OpenNos.Handler
                                         0));
                                 return;
                             }
-                            if (Session.Character.FamilyCharacter.Authority  != FamilyAuthority.Head)
+                            if (Session.Character.FamilyCharacter.Authority != FamilyAuthority.Head)
                             {
                                 Session.SendPacket(
                                     UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("NO_FAMILY_HEAD"),

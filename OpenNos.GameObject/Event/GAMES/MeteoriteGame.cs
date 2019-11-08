@@ -31,31 +31,27 @@ namespace OpenNos.GameObject.Event.GAMES
 
         public static void GenerateMeteoriteGame()
         {
-            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("METEORITE_MINUTES"), 5), 0));
-            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("METEORITE_MINUTES"), 5), 1));
-            Thread.Sleep(4 * 60 * 1000);
-            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("METEORITE_MINUTES"), 1), 0));
-            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("METEORITE_MINUTES"), 1), 1));
-            Thread.Sleep(30 * 1000);
-            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("METEORITE_SECONDS"), 30), 0));
-            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("METEORITE_SECONDS"), 30), 1));
-            Thread.Sleep(20 * 1000);
-            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("METEORITE_SECONDS"), 10), 0));
-            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("METEORITE_SECONDS"), 10), 1));
-            Thread.Sleep(10 * 1000);
+            Thread.Sleep(5 * 1000);
             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("METEORITE_STARTED"), 1));
-            ServerManager.Instance.Broadcast("qnaml 100 #guri^506 The Meteorite Game is starting! Join now!");
+            ServerManager.Instance.Broadcast("qnaml 6 #guri^506 The Meteorite Game is starting! Join now!");
             ServerManager.Instance.EventInWaiting = true;
             Thread.Sleep(30 * 1000);
-            ServerManager.Instance.Sessions.Where(s => s.Character?.IsWaitingForEvent == false).ToList().ForEach(s => s.SendPacket("esf"));
+            ServerManager.Instance.Sessions.Where(s => s.Character?.IsWaitingForEvent == false).ToList().ForEach(s => s.SendPacket("esf 1"));
             ServerManager.Instance.EventInWaiting = false;
             IEnumerable<ClientSession> sessions = ServerManager.Instance.Sessions.Where(s => s.Character?.IsWaitingForEvent == true && s.Character.MapInstance.MapInstanceType == MapInstanceType.BaseMapInstance);
 
             MapInstance map = ServerManager.GenerateMapInstance(2004, MapInstanceType.EventGameInstance, new InstanceBag());
             if (map != null)
             {
+                
                 foreach (ClientSession sess in sessions)
                 {
+                    if (map.Sessions.Count() < 3)
+                    {
+                        map.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("INSTANTBATTLE_NOT_ENOUGH_PLAYERS"), 0));
+                        EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(5), new EventContainer(map, EventActionType.DISPOSEMAP, null));
+                        continue;
+                    }
                     ServerManager.Instance.TeleportOnRandomPlaceInMap(sess, map.MapInstanceId);
                 }
 

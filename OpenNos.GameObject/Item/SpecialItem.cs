@@ -198,6 +198,26 @@ namespace OpenNos.GameObject
 
             switch (Effect)
             {
+                // Seal Mini-Game
+                case 1717:
+                    switch (EffectValue)
+                    {
+                        case 1:// King Ratufu Mini Game
+                               // Not Created for moment .
+                            break;
+                        case 2: // Sheep Mini Game
+                            /*session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
+                            EventHelper.Instance.GenerateEvent(EventType., false);
+                            session.Character.Inventory.RemoveItemAmountFromInventory(1, inv.Id);*/
+                            break;
+                        case 3: // Meteor Mini Game
+                            session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
+                            EventHelper.GenerateEvent(EventType.METEORITEGAME);
+                            session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                            break;
+                    }
+                    break;
+
                 // Honour Medals
                 case 69:
                     session.Character.Reputation += ReputPrice;

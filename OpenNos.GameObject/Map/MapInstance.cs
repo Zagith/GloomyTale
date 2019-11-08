@@ -301,6 +301,7 @@ namespace OpenNos.GameObject
         {
             foreach (Tuple<short, int, short, short> drop in list)
             {
+
                 MonsterMapItem droppedItem = new MonsterMapItem(drop.Item3, drop.Item4, drop.Item1, drop.Item2);
                 DroppedList[droppedItem.TransportId] = droppedItem;
                 Broadcast($"drop {droppedItem.ItemVNum} {droppedItem.TransportId} {droppedItem.PositionX} {droppedItem.PositionY} {(droppedItem.GoldAmount > 1 ? droppedItem.GoldAmount : droppedItem.Amount)} 0 {droppedItem.OwnerId ?? -1}");

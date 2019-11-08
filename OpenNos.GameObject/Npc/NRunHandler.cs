@@ -1744,6 +1744,7 @@ namespace OpenNos.GameObject
                 case 5004:
                     if (npc != null)
                     {
+#warning change port alveus
                         ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 145, 50, 41);
                     }
                     break;
