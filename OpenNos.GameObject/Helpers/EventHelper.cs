@@ -884,7 +884,7 @@ namespace OpenNos.GameObject.Helpers
                             break;
 
                         case EventActionType.DROPITEMS:
-                            evt.MapInstance.DropItems((List<Tuple<short, int, short, short>>)evt.Parameter);
+                            evt.MapInstance.DropItemsIC((List<Tuple<short, int>>)evt.Parameter);
                             break;
 
                         case EventActionType.THROWITEMS:
