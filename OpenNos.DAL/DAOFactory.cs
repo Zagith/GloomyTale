@@ -79,6 +79,7 @@ namespace OpenNos.DAL
         private static IStaticBonusDAO _staticBonusDAO;
         private static IStaticBuffDAO _staticBuffDAO;
         private static ITeleporterDAO _teleporterDAO;
+        private static II18NItemDAO _i18NItemDAO;
 
         #endregion
 
@@ -200,6 +201,7 @@ namespace OpenNos.DAL
 
         public static ITeleporterDAO TeleporterDAO => _teleporterDAO ?? (_teleporterDAO = new TeleporterDAO());
 
+        public static II18NItemDAO I18NItemDAO => _i18NItemDAO ?? (_i18NItemDAO = new I18NItemDAO());
         #endregion
     }
 }

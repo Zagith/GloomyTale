@@ -15,7 +15,9 @@
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.Data.I18N;
 using OpenNos.Domain;
+using OpenNos.Domain.I18N;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -3165,6 +3167,52 @@ namespace OpenNos.Import.Console
 
         public void LoadMaps() => _maps = DAOFactory.MapDAO.LoadAll();
 
+        private string I18NTextFileName(string textfilename, RegionType region)
+        {
+            var regioncode = region.ToString().ToLower();
+            regioncode = regioncode == "en" ? "uk" : regioncode;
+            return string.Format(textfilename, regioncode);
+        }
+
+        public void InsertI18N()
+        {
+            string file = _folder + "\\_code_{0}_Item.txt";
+            string _line;
+            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
+            var type = DAOFactory.I18NItemDAO.GetType().GetGenericArguments()[1] as Type;
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+                List<I18NItemDto> dtos = new List<I18NItemDto>();
+                try
+                {
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new I18NItemDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NItemDAO.Insert(dtos);
+
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
         internal void ImportItems()
         {
             string fileId = $"{_folder}\\Item.dat";

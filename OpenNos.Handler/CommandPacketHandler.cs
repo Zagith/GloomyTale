@@ -1509,7 +1509,7 @@ namespace OpenNos.Handler
                         }
 
                         Session.SendPacket(Session.Character.GenerateSay(
-                            $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {iteminfo.Name} x {amount}", 12));
+                            $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {iteminfo.Name[Session.Account.Language]} x {amount}", 12));
                     }
                     else
                     {

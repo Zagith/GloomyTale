@@ -911,13 +911,13 @@ namespace OpenNos.Handler
                                             }
 
                                             Session.SendPacket(Session.Character.GenerateSay(
-                                                $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {inv.Item.Name} x {amount}",
+                                                $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {inv.Item.Name[Session.Account.Language]} x {amount}",
                                                 12));
                                             if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.LodInstance)
                                             {
                                                 Session.CurrentMapInstance?.Broadcast(
                                                     Session.Character.GenerateSay(
-                                                        $"{string.Format(Language.Instance.GetMessageFromKey("ITEM_ACQUIRED_LOD"), Session.Character.Name)}: {inv.Item.Name} x {mapItem.Amount}",
+                                                        $"{string.Format(Language.Instance.GetMessageFromKey("ITEM_ACQUIRED_LOD"), Session.Character.Name)}: {inv.Item.Name[Session.Account.Language]} x {mapItem.Amount}",
                                                         10));
                                             }
 

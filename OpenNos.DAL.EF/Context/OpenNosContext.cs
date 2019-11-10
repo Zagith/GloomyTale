@@ -151,6 +151,7 @@ namespace OpenNos.DAL.EF
 
         public virtual DbSet<Teleporter> Teleporter { get; set; }
 
+        public virtual DbSet<I18NItem> I18NItem { get; set; }
         #endregion
 
         #region Methods

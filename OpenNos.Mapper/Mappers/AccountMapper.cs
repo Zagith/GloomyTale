@@ -22,6 +22,7 @@ namespace OpenNos.Mapper.Mappers
             output.ReferrerId = input.ReferrerId;
             output.RegistrationIP = input.RegistrationIP;
             output.VerificationToken = input.VerificationToken;
+            output.Language = input.Language;
 
             return true;
         }
@@ -41,6 +42,7 @@ namespace OpenNos.Mapper.Mappers
             output.ReferrerId = input.ReferrerId;
             output.RegistrationIP = input.RegistrationIP;
             output.VerificationToken = input.VerificationToken;
+            output.Language = input.Language;
 
             return true;
         }
