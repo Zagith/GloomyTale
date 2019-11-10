@@ -399,7 +399,7 @@ namespace OpenNos.GameObject
                 return "";
             }
 
-            string name = IsUsingSp ? Sp.GetName() : Name.Replace(' ', '^');
+            string name = IsUsingSp ? Sp.GetName(Owner.Session) : Name.Replace(' ', '^');
 
             if (receiverAuthority >= AuthorityType.TMOD)
             {
@@ -521,7 +521,7 @@ namespace OpenNos.GameObject
                         $"{MaxMp} " +
                         $"0 " +
                         $"{xp} " +
-                        $"{(IsUsingSp ? Sp.GetName() : Name.Replace(' ', '^'))} " +
+                        $"{(IsUsingSp ? Sp.GetName(Owner.Session) : Name.Replace(' ', '^'))} " +
                         $"{(IsUsingSp && Sp != null ? Sp.Instance.Item.Morph : Skin != 0 ? Skin : -1)} " +
                         $"{(IsSummonable ? 1 : 0)} " +
                         $"{(Sp != null ? $"{Sp.Instance.ItemVNum}.{Sp.GetXpPercent()}" : "-1")}" +

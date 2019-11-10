@@ -2985,7 +2985,7 @@ namespace OpenNos.Handler
                     foreach (ItemDTO item in itemlist)
                     {
                         Session.SendPacket(Session.Character.GenerateSay(
-                            $"[SearchItem:{page}]Item: {(string.IsNullOrEmpty(item.Name) ? "none" : item.Name)} VNum: {item.VNum}",
+                            $"[SearchItem:{page}]Item: {(string.IsNullOrEmpty(item.Name[Session.Account.Language]) ? "none" : item.Name[Session.Account.Language])} VNum: {item.VNum}",
                             12));
                     }
                 }

@@ -3854,7 +3854,7 @@ namespace OpenNos.GameObject
                         count++;
                     }
 
-                    str += $" 2|{mate.MateTransportId}|{(short)mate.MateType}|{mate.Level}|{(mate.IsUsingSp ? mate.Sp.GetName() : mate.Name.Replace(' ', '^'))}|-1|{(mate.IsUsingSp && mate.Sp != null ? mate.Sp.Instance.Item.Morph : mate.Monster.NpcMonsterVNum)}|0";
+                    str += $" 2|{mate.MateTransportId}|{(short)mate.MateType}|{mate.Level}|{(mate.IsUsingSp ? mate.Sp.GetName(Session) : mate.Name.Replace(' ', '^'))}|-1|{(mate.IsUsingSp && mate.Sp != null ? mate.Sp.Instance.Item.Morph : mate.Monster.NpcMonsterVNum)}|0";
                 }
             }
 
@@ -4081,13 +4081,13 @@ namespace OpenNos.GameObject
             bool isPvpSecondary = false;
             bool isPvpArmor = false;
 
-            if (weapon?.Item.Name.Contains(": ") == true)
+            if (weapon?.Item.Name[Session.Account.Language].Contains(": ") == true)
             {
                 isPvpPrimary = true;
             }
 
-            isPvpSecondary |= weapon2?.Item.Name.Contains(": ") == true;
-            isPvpArmor |= armor?.Item.Name.Contains(": ") == true;
+            isPvpSecondary |= weapon2?.Item.Name[Session.Account.Language].Contains(": ") == true;
+            isPvpArmor |= armor?.Item.Name[Session.Account.Language].Contains(": ") == true;
 
             return $"tc_info {Level} {Name} {fairy?.Item.Element ?? 0} {ElementRate} {(byte)Class} {(byte)Gender} {(Family != null ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {GetReputationIco()} {GetDignityIco()} {(weapon != null ? 1 : 0)} {weapon?.Rare ?? 0} {weapon?.Upgrade ?? 0} {(weapon2 != null ? 1 : 0)} {weapon2?.Rare ?? 0} {weapon2?.Upgrade ?? 0} {(armor != null ? 1 : 0)} {armor?.Rare ?? 0} {armor?.Upgrade ?? 0} {Act4Kill} {Act4Dead} {Reputation} 0 0 0 {(UseSp ? Morph : 0)} {TalentWin} {TalentLose} {TalentSurrender} 0 {MasterPoints} {Compliment} {Act4Points} {(isPvpPrimary ? 1 : 0)} {(isPvpSecondary ? 1 : 0)} {(isPvpArmor ? 1 : 0)} {HeroLevel} {(string.IsNullOrEmpty(Biography) ? Language.Instance.GetMessageFromKey("NO_PREZ_MESSAGE") : Biography)}";
         }

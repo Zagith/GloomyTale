@@ -3216,7 +3216,8 @@ namespace OpenNos.Import.Console
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "NAME")
                     {
-                        item.Name = dictionaryName.TryGetValue(currentLine[2], out string name) ? name : "";
+                        item.NameI18NKey = currentLine[2];
+                        //dictionaryName.TryGetValue(currentLine[2], out string name) ? name : "";
                     }
                     else if (currentLine.Length > 7 && currentLine[1] == "INDEX")
                     {

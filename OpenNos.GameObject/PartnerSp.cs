@@ -1706,10 +1706,11 @@ namespace OpenNos.GameObject
             return (int)(maxCooldown / 1000D);
         }
 
-        public string GetName()
+        public string GetName(ClientSession sess)
         {
             switch (Instance.ItemVNum)
             {
+#warning TODO: multi language support
                 case 4324: return "Guardian^Lucifer";
                 case 4325: return "Sheriff^Chloe";
                 case 4326: return "Bone^Warrior^Ragnar";
@@ -1744,7 +1745,7 @@ namespace OpenNos.GameObject
                 case 4825: return "Little^Pri﻿ncess^Venus";
             }
 
-            return Instance.Item.Name.Replace(' ', '^');
+            return Instance.Item.Name[sess.Account.Language].Replace(' ', '^');
         }
 
         private Skill GetNewSkill(byte castId) => ServerManager.GetAllSkill().FirstOrDefault(s => s.CastId == castId && (s.Class == 28 || s.Class == 29)

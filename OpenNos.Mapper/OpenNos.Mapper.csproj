@@ -33,6 +33,9 @@
     <CodeAnalysisRuleSet>..\ProjectRuleset.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mapster, Version=4.1.1.0, Culture=neutral, PublicKeyToken=2f39883af23c29a8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapster.4.1.1\lib\net45\Mapster.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -103,7 +106,9 @@
     <Compile Include="Mappers\SkillMapper.cs" />
     <Compile Include="Mappers\MinigameLogMapper.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenNos.DAL.EF\OpenNos.DAL.EF.csproj">
       <Project>{4AECC47D-098A-4493-8E1E-D10EDBB7A189}</Project>

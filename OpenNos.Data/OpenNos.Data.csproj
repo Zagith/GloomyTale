@@ -66,15 +66,22 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mapster, Version=4.1.1.0, Culture=neutral, PublicKeyToken=2f39883af23c29a8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapster.4.1.1\lib\net45\Mapster.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\I18NFromAttribute.cs" />
+    <Compile Include="Base\I18NString.cs" />
     <Compile Include="Base\SynchronizableBaseDTO.cs" />
     <Compile Include="BazaarItemDTO.cs" />
     <Compile Include="BCardDTO.cs" />
     <Compile Include="BoxItemDTO.cs" />
     <Compile Include="CharacterQuestDTO.cs" />
     <Compile Include="CharacterTitleDTO.cs" />
+    <Compile Include="I18N\I18NItemDto.cs" />
     <Compile Include="LogChatDTO.cs" />
     <Compile Include="LogCommandsDTO.cs" />
     <Compile Include="LogDropDTO.cs" />
@@ -152,6 +159,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

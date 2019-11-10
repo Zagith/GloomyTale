@@ -200,7 +200,7 @@ namespace OpenNos.Handler
                 long taxes = bazaarItemDTO.MedalUsed ? 0 : (long)(bazaarItemDTO.Price * 0.10 * soldAmount);
                 long price = (bazaarItemDTO.Price * soldAmount) - taxes;
 
-                string name = itemInstance.Item?.Name ?? "None";
+                string name = itemInstance.Item?.Name[Session.Account.Language] ?? "None";
 
                 if (itemInstance.Amount == 0 || Session.Character.Inventory.CanAddItem(itemInstance.ItemVNum))
                 {

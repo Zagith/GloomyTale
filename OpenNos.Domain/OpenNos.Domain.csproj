@@ -80,6 +80,7 @@
     <Compile Include="FactionType.cs" />
     <Compile Include="GroupType.cs" />
     <Compile Include="GeneralLogType.cs" />
+    <Compile Include="I18N\RegionType.cs" />
     <Compile Include="LoginFailType.cs" />
     <Compile Include="MapInstanceType.cs" />
     <Compile Include="FamilyLogType.cs" />

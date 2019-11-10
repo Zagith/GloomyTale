@@ -1,5 +1,7 @@
+using Mapster;
 using OpenNos.DAL.EF;
 using OpenNos.Data;
+using OpenNos.Data.Base;
 using OpenNos.Domain;
 
 namespace OpenNos.Mapper.Mappers
@@ -14,7 +16,7 @@ namespace OpenNos.Mapper.Mappers
             {
                 return false;
             }
-
+            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
             output.BasicUpgrade = input.BasicUpgrade;
             output.CellonLvl = input.CellonLvl;
             output.Class = input.Class;
@@ -68,7 +70,7 @@ namespace OpenNos.Mapper.Mappers
             output.Morph = input.Morph;
             output.Mp = input.Mp;
             output.MpRegeneration = input.MpRegeneration;
-            output.Name = input.Name;
+            output.Name = input.NameI18NKey;
             output.Price = input.Price;
             output.SellToNpcPrice = input.SellToNpcPrice;
             output.PvpDefence = input.PvpDefence;
@@ -96,7 +98,7 @@ namespace OpenNos.Mapper.Mappers
             {
                 return false;
             }
-
+            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
             output.BasicUpgrade = input.BasicUpgrade;
             output.CellonLvl = input.CellonLvl;
             output.Class = input.Class;
@@ -150,7 +152,7 @@ namespace OpenNos.Mapper.Mappers
             output.Morph = input.Morph;
             output.Mp = input.Mp;
             output.MpRegeneration = input.MpRegeneration;
-            output.Name = input.Name;
+            output.NameI18NKey = input.Name;
             output.Price = input.Price;
             output.SellToNpcPrice = input.SellToNpcPrice;
             output.PvpDefence = input.PvpDefence;
