@@ -3,6 +3,7 @@ using OpenNos.Data;
 using OpenNos.GameObject.Networking;
 using System.Linq;
 using OpenNos.Domain;
+using OpenNos.Domain.I18N;
 
 namespace OpenNos.GameObject
 {
@@ -52,7 +53,7 @@ namespace OpenNos.GameObject
         #endregion
 
         #region Methods
-        public string GetProgressMessage(byte index, int amount)
+        public string GetProgressMessage(byte index, int amount, RegionType language)
         {
             string type = null;
             string objectiveName = null;
@@ -67,7 +68,7 @@ namespace OpenNos.GameObject
                 case QuestType.Collect2:
                 case QuestType.Collect3:
                 case QuestType.Collect4:
-                    objectiveName = ServerManager.GetItem((short)GetObjectiveByIndex(index).Data).Name;
+                    objectiveName = ServerManager.GetItem((short)GetObjectiveByIndex(index).Data).Name[language];
                     type = "collecting";
                     break;
                 case QuestType.Hunt:

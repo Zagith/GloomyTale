@@ -3174,7 +3174,7 @@ namespace OpenNos.Import.Console
             return string.Format(textfilename, regioncode);
         }
 
-        public void InsertI18N()
+        public void InsertI18NItem()
         {
             string file = _folder + "\\_code_{0}_Item.txt";
             string _line;

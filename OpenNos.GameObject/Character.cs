@@ -1250,7 +1250,7 @@ namespace OpenNos.GameObject
         private void IncrementObjective(CharacterQuest quest, byte index = 0, int amount = 1, bool isOver = false)
         {
             bool isFinish = isOver;
-            Session.SendPacket(quest.GetProgressMessage(index, amount));
+            Session.SendPacket(quest.GetProgressMessage(index, amount, Session.Account.Language));
             quest.Incerment(index, amount);
             byte a = 1;
             if (quest.GetObjectives().All(q => quest.GetObjectiveByIndex(a) == null || q >= quest.GetObjectiveByIndex(a++).Objective))

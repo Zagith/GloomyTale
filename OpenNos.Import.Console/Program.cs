@@ -123,6 +123,7 @@ namespace OpenNos.Import.Console
                     factory.ImportRecipe();
                     factory.ImportHardcodedItemRecipes();
                     factory.ImportQuests();
+                    factory.InsertI18NItem();
                 }
                 else
                 {
@@ -161,6 +162,13 @@ namespace OpenNos.Import.Console
                     if (key.KeyChar != 'n')
                     {
                         factory.ImportScriptedInstances();
+                    }
+
+                    System.Console.WriteLine($@"{Language.Instance.GetMessageFromKey("PARSE_I18NITEMS")} [Y/n]");
+                    key = System.Console.ReadKey(true);
+                    if (key.KeyChar != 'n')
+                    {
+                        factory.InsertI18NItem();
                     }
 
                     System.Console.WriteLine($"{Language.Instance.GetMessageFromKey("PARSE_ITEMS")} [Y/n]");
