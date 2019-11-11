@@ -109,6 +109,7 @@ namespace OpenNos.Import.Console
                     ImportFactory.ImportAccounts();
                     factory.ImportPortals();
                     factory.ImportScriptedInstances();
+                    factory.InsertI18NItem();
                     factory.ImportItems();
                     factory.ImportSkills();
                     factory.ImportCards();
@@ -123,7 +124,6 @@ namespace OpenNos.Import.Console
                     factory.ImportRecipe();
                     factory.ImportHardcodedItemRecipes();
                     factory.ImportQuests();
-                    factory.InsertI18NItem();
                 }
                 else
                 {

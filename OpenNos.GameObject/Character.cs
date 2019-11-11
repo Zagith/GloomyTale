@@ -2414,7 +2414,7 @@ namespace OpenNos.GameObject
 
         public static string GenerateAct() => "act 6";
 
-        public string GenerateAt() => $"at {CharacterId} {MapInstance.Map.GridMapId} {PositionX} {PositionY} {Direction} 0 {MapInstance?.InstanceMusic ?? 0} 2 -1";
+        public string GenerateAt() => $"at {CharacterId} {MapInstance.Map.MapId} {PositionX} {PositionY} {Direction} 0 {MapInstance?.InstanceMusic ?? 0} 2 -1";
 
         public string GenerateBlinit()
         {

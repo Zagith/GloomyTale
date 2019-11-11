@@ -1019,16 +1019,15 @@ namespace OpenNos.Import.Console
         public void ImportMaps()
         {
             string fileMapIdDat = $"{_folder}\\MapIDData.dat";
-            string fileMapIdLang = $"{_folder}\\_code_{ConfigurationManager.AppSettings[nameof(Language)]}_MapIDData.txt";
+            string fileMapIdLang = $"{_folder}\\_code_{ConfigurationManager.AppSettings["Language"]}_MapIDData.txt";
             string folderMap = $"{_folder}\\map";
-            ThreadSafeSortedList<short, MapDTO> maps = new ThreadSafeSortedList<short, MapDTO>();
-            Dictionary<int, string> dictionaryZts = new Dictionary<int, string>();
+            List<MapDTO> maps = new List<MapDTO>();
+            Dictionary<int, string> dictionaryId = new Dictionary<int, string>();
             Dictionary<string, string> dictionaryIdLang = new Dictionary<string, string>();
-            ThreadSafeSortedList<int, int> dictionaryMusic = new ThreadSafeSortedList<int, int>();
-            Dictionary<short, byte[]> dictionaryData = new Dictionary<short, byte[]>();
-            Dictionary<short, short> dictionaryMap = new Dictionary<short, short>();
+            Dictionary<int, int> dictionaryMusic = new Dictionary<int, int>();
 
             string line;
+            int i = 0;
             using (StreamReader mapIdStream = new StreamReader(fileMapIdDat, Encoding.GetEncoding(1252)))
             {
                 while ((line = mapIdStream.ReadLine()) != null)
@@ -1042,9 +1041,9 @@ namespace OpenNos.Import.Console
                     {
                         continue;
                     }
-                    if (!dictionaryZts.ContainsKey(mapid))
+                    if (!dictionaryId.ContainsKey(mapid))
                     {
-                        dictionaryZts.Add(mapid, linesave[4]);
+                        dictionaryId.Add(mapid, linesave[4]);
                     }
                 }
             }
@@ -1062,71 +1061,51 @@ namespace OpenNos.Import.Console
                 }
             }
 
-            Parallel.ForEach(_packetList.Where(o => o[0].Equals("at")), linesave =>
+            foreach (string[] linesave in _packetList.Where(o => o[0].Equals("at")))
             {
-                if (linesave.Length <= 7 || dictionaryMusic.ContainsKey(int.Parse(linesave[2])))
+                if (linesave.Length <= 7 || linesave[0] != "at")
                 {
-                    return;
+                    continue;
                 }
-                dictionaryMusic[int.Parse(linesave[2])] = int.Parse(linesave[7]);
-                if (_packetList.FirstOrDefault(s => s[0].Equals("c_map") && _packetList.FindIndex(b => b == s) > _packetList.FindIndex(b => b == linesave)) is string[] cmap)
+                if (dictionaryMusic.ContainsKey(int.Parse(linesave[2])))
                 {
-                    dictionaryMap[short.Parse(cmap[2])] = short.Parse(linesave[2]);
+                    continue;
                 }
-            });
+                dictionaryMusic.Add(int.Parse(linesave[2]), int.Parse(linesave[7]));
+            }
 
-            OrderablePartitioner<FileInfo> mapPartitioner = Partitioner.Create(new DirectoryInfo(folderMap).GetFiles(), EnumerablePartitionerOptions.NoBuffering);
-            Parallel.ForEach(mapPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 1 }, file => dictionaryData[short.Parse(file.Name)] = File.ReadAllBytes(file.FullName));
-
-            // Found in packet.txt maps 
-            Parallel.ForEach(dictionaryMap, map =>
+            foreach (FileInfo file in new DirectoryInfo(folderMap).GetFiles())
             {
-                if (dictionaryData[map.Value] == null)
-                {
-                    return; // Map grid data doesnt exists 
-                }
-                addMap(map.Key, map.Value, dictionaryData[map.Value]);
-            });
-
-            // Nostale data maps didnt found in packet.txt 
-            Parallel.ForEach(dictionaryData, map =>
-            {
-                addMap(map.Key, map.Key, map.Value);
-            });
-
-            void addMap(short mapId, short originalMapId, byte[] mapData)
-            {
-                string name = "";
+                string name = string.Empty;
                 int music = 0;
 
-                if (dictionaryZts.ContainsKey(mapId) && dictionaryIdLang.ContainsKey(dictionaryZts[mapId]))
+                if (dictionaryId.ContainsKey(int.Parse(file.Name)) && dictionaryIdLang.ContainsKey(dictionaryId[int.Parse(file.Name)]))
                 {
-                    name = dictionaryIdLang[dictionaryZts[mapId]];
+                    name = dictionaryId[int.Parse(file.Name)];
                 }
-                if (dictionaryMusic.ContainsKey(mapId))
+                if (dictionaryMusic.ContainsKey(int.Parse(file.Name)))
                 {
-                    music = dictionaryMusic[mapId];
+                    music = dictionaryMusic[int.Parse(file.Name)];
                 }
                 MapDTO map = new MapDTO
                 {
                     Name = name,
                     Music = music,
-                    MapId = mapId,
-                    GridMapId = originalMapId,
-                    Data = mapData,
-                    ShopAllowed = mapId == 147
+                    GridMapId = short.Parse(file.Name),
+                    MapId = short.Parse(file.Name),
+                    Data = File.ReadAllBytes(file.FullName),
+                    ShopAllowed = int.Parse(file.Name) == 147,
                 };
-                if (DAOFactory.MapDAO.LoadById(map.MapId) == null && !maps.ContainsKey(map.MapId))
+                if (DAOFactory.MapDAO.LoadById(map.MapId) != null)
                 {
-                    maps[map.MapId] = map;
+                    continue; // Map already exists in list
                 }
+                maps.Add(map);
+                i++;
             }
+            DAOFactory.MapDAO.Insert(maps);
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPS_PARSED"), i));
 
-            List<MapDTO> mapsToInsert = maps.GetAllItems().Where(s => DAOFactory.MapDAO.LoadById(s.MapId) == null).ToList();
-            DAOFactory.MapDAO.Insert(mapsToInsert);
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("MAPS_PARSED"), mapsToInsert.Count));
-            dictionaryMusic.Dispose();
-            maps.Dispose();
         }
 
         public static void ImportMapType()
