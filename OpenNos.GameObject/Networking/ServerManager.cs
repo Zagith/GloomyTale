@@ -34,6 +34,13 @@ using OpenNos.Master.Library.Data;
 using OpenNos.XMLModel.Models.Quest;
 using OpenNos.GameObject.Event;
 using System.Net.Sockets;
+using OpenNos.Domain.I18N;
+using OpenNos.Data.I18N;
+using ServiceStack.Text.FastMember;
+using OpenNos.Data.Base;
+using System.Reflection;
+using OpenNos.Data.Interfaces;
+using Mapster;
 
 namespace OpenNos.GameObject.Networking
 {
@@ -1185,8 +1192,28 @@ namespace OpenNos.GameObject.Networking
             // Load Configuration
 
             Schedules = ConfigurationManager.GetSection("eventScheduler") as List<Schedule>;
+            TypeAdapterConfig.GlobalSettings
+                .ForDestinationType<I18NString>()
+                .BeforeMapping(s => s.Clear());
+            TypeAdapterConfig.GlobalSettings
+                .When(s => !s.SourceType.IsAssignableFrom(s.DestinationType) && typeof(IStaticDto).IsAssignableFrom(s.DestinationType))
+                .IgnoreMember((member, side) => typeof(I18NString).IsAssignableFrom(member.Type));
+            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
+            var dic = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NItemDto>>>
+                    {
+                        {
+                            typeof(I18NItemDto),
+                            DAOFactory.I18NItemDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NItemDto) o))
+                        }
+                    };
+            var items = DAOFactory.ItemDAO.LoadAll();
+            var props = StaticDtoExtension.GetI18NProperties(typeof(ItemDTO));
 
-            OrderablePartitioner<ItemDTO> itemPartitioner = Partitioner.Create(DAOFactory.ItemDAO.LoadAll(), EnumerablePartitionerOptions.NoBuffering);
+            var regions = Enum.GetValues(typeof(RegionType));
+            var accessors = TypeAccessor.Create(typeof(ItemDTO));
+            Parallel.ForEach(items, s => s.InjectI18N(props, dic, regions, accessors));
+            OrderablePartitioner<ItemDTO> itemPartitioner = Partitioner.Create(items, EnumerablePartitionerOptions.NoBuffering);
             Parallel.ForEach(itemPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 4 }, itemDto =>
             {
                 switch (itemDto.ItemType)
@@ -1243,6 +1270,10 @@ namespace OpenNos.GameObject.Networking
                 }
             });
             Logger.Info(string.Format(Language.Instance.GetMessageFromKey("ITEMS_LOADED"), _items.Count));
+
+            
+
+            
 
             #region BoxItem
 

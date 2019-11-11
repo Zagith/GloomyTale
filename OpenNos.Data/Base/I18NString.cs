@@ -7,6 +7,7 @@ namespace OpenNos.Data.Base
     {
         public I18NString()
         {
+
             Add(RegionType.EN, "NONAME");
             /*Add(RegionType.DE, "NONAME");
             Add(RegionType.FR, "NONAME");*/

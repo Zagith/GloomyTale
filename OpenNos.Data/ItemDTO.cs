@@ -15,13 +15,14 @@
 using Mapster;
 using OpenNos.Data.Base;
 using OpenNos.Data.I18N;
+using OpenNos.Data.Interfaces;
 using OpenNos.Domain;
 using System;
 
 namespace OpenNos.Data
 {
     [Serializable]
-    public class ItemDTO
+    public class ItemDTO : IStaticDto
     {
         #region Properties
 

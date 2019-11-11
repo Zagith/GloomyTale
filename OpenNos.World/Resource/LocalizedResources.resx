@@ -2037,4 +2037,7 @@
   <data name="SACRIFICE_OUT_OF_RANGE" xml:space="preserve">
     <value>The sacrifice effect has been lifted, because the selected player is outside of the area</value>
   </data>
+  <data name="I18NITEMS_LOADED" xml:space="preserve">
+    <value>I18N Items loaded</value>
+  </data>
 </root>

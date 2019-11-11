@@ -1,8 +1,9 @@
-﻿using OpenNos.Domain.I18N;
+﻿using OpenNos.Data.Interfaces;
+using OpenNos.Domain.I18N;
 
 namespace OpenNos.Data.I18N
 {
-    public class I18NItemDto
+    public class I18NItemDto : II18NItemDto
     {
         public int I18NItemId { get; set; }
 

@@ -3179,7 +3179,7 @@ namespace OpenNos.Import.Console
             string file = _folder + "\\_code_{0}_Item.txt";
             string _line;
             List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
-            var type = DAOFactory.I18NItemDAO.GetType().GetGenericArguments()[1] as Type;
+            //var type = DAOFactory.I18NItemDAO.GetType().GetGenericArguments()[1] as Type;
 
             Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
             {
