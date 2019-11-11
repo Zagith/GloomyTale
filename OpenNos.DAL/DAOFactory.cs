@@ -80,7 +80,10 @@ namespace OpenNos.DAL
         private static IStaticBuffDAO _staticBuffDAO;
         private static ITeleporterDAO _teleporterDAO;
         private static II18NItemDAO _i18NItemDAO;
-
+        private static II18NCardDAO _i18NCardDAO;
+        private static II18NNpcMonsterDAO _i18NNpcMonsterDAO;
+        private static II18NSkillDAO _i18NSkillDAO;
+        private static II18NMapDAO _i18NMapDAO;
         #endregion
 
         #region Properties
@@ -202,6 +205,14 @@ namespace OpenNos.DAL
         public static ITeleporterDAO TeleporterDAO => _teleporterDAO ?? (_teleporterDAO = new TeleporterDAO());
 
         public static II18NItemDAO I18NItemDAO => _i18NItemDAO ?? (_i18NItemDAO = new I18NItemDAO());
+
+        public static II18NCardDAO I18NCardDAO => _i18NCardDAO ?? (_i18NCardDAO = new I18NCardDAO());
+
+        public static II18NNpcMonsterDAO I18NNpcMonsterDAO => _i18NNpcMonsterDAO ?? (_i18NNpcMonsterDAO = new I18NNpcMonsterDAO());
+
+        public static II18NSkillDAO I18NSkillDAO => _i18NSkillDAO ?? (_i18NSkillDAO = new I18NSkillDAO());
+
+        public static II18NMapDAO I18NMapDAO => _i18NMapDAO ?? (_i18NMapDAO = new I18NMapDAO());
         #endregion
     }
 }

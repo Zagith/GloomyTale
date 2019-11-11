@@ -3152,21 +3152,64 @@ namespace OpenNos.Import.Console
             regioncode = regioncode == "en" ? "uk" : regioncode;
             return string.Format(textfilename, regioncode);
         }
-
-        public void InsertI18NItem()
+        
+        public void InsertI18NCard()
         {
-            string file = _folder + "\\_code_{0}_Item.txt";
+            string file = _folder + "\\_code_{0}_Card.txt";
             string _line;
             List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
             //var type = DAOFactory.I18NItemDAO.GetType().GetGenericArguments()[1] as Type;
 
             Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
             {
-                List<I18NItemDto> dtos = new List<I18NItemDto>();
+                
                 try
                 {
+                    List<II18NCardDto> dtos = new List<II18NCardDto>();
                     using var stream = new StreamReader(I18NTextFileName(file, region),
                         Encoding.Default);
+                    
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new II18NCardDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NCardDAO.Insert(dtos);
+
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
+
+        public void InsertI18NItem()
+        {
+            string file = _folder + "\\_code_{0}_Item.txt";
+            string _line;
+            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+
+                try
+                {
+                    List<I18NItemDto> dtos = new List<I18NItemDto>();
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                   
                     while ((_line = stream.ReadLine()) != null)
                     {
                         var currentLine = _line.Split('\t');
@@ -3192,6 +3235,129 @@ namespace OpenNos.Import.Console
                 }
             });
         }
+
+        public void InsertI18NNpcMonster()
+        {
+            string file = _folder + "\\_code_{0}_monster.txt";
+            string _line;
+            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+
+                try
+                {
+                    List<II18NNpcMonsterDto> dtos = new List<II18NNpcMonsterDto>();
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                    
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new II18NNpcMonsterDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NNpcMonsterDAO.Insert(dtos);
+
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
+
+        public void InsertI18NSkill()
+        {
+            string file = _folder + "\\_code_{0}_Skill.txt";
+            string _line;
+            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+
+                try
+                {
+                    List<II18NSkillDto> dtos = new List<II18NSkillDto>();
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                   
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new II18NSkillDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NSkillDAO.Insert(dtos);
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
+
+        public void InsertI18NMap()
+        {
+            string file = _folder + "\\_code_{0}_MapIDData.txt";
+            string _line;
+            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+
+                try
+                {
+                    List<II18NMapDto> dtos = new List<II18NMapDto>();
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                    
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new II18NMapDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NMapDAO.Insert(dtos);
+
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
+
         internal void ImportItems()
         {
             string fileId = $"{_folder}\\Item.dat";
