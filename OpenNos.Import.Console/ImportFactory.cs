@@ -3157,8 +3157,7 @@ namespace OpenNos.Import.Console
         {
             string file = _folder + "\\_code_{0}_Card.txt";
             string _line;
-            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
-            //var type = DAOFactory.I18NItemDAO.GetType().GetGenericArguments()[1] as Type;
+            List<II18NCardDto> listoftext = DAOFactory.I18NCardDAO.LoadAll().ToList();
 
             Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
             {
@@ -3240,7 +3239,7 @@ namespace OpenNos.Import.Console
         {
             string file = _folder + "\\_code_{0}_monster.txt";
             string _line;
-            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
+            List<II18NNpcMonsterDto> listoftext = DAOFactory.I18NNpcMonsterDAO.LoadAll().ToList();
 
             Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
             {
@@ -3281,7 +3280,7 @@ namespace OpenNos.Import.Console
         {
             string file = _folder + "\\_code_{0}_Skill.txt";
             string _line;
-            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
+            List<II18NSkillDto> listoftext = DAOFactory.I18NSkillDAO.LoadAll().ToList();
 
             Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
             {
@@ -3321,7 +3320,7 @@ namespace OpenNos.Import.Console
         {
             string file = _folder + "\\_code_{0}_MapIDData.txt";
             string _line;
-            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
+            List<II18NMapDto> listoftext = DAOFactory.I18NMapDAO.LoadAll().ToList();
 
             Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
             {

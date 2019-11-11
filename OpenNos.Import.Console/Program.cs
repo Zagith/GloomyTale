@@ -168,7 +168,7 @@ namespace OpenNos.Import.Console
                         factory.ImportScriptedInstances();
                     }
 
-                    System.Console.WriteLine($@"{Language.Instance.GetMessageFromKey("PARSE_I18NITEMS")} [Y/n]");
+                    System.Console.WriteLine($@"{Language.Instance.GetMessageFromKey("PARSE_I18NCARDS")} [Y/n]");
                     key = System.Console.ReadKey(true);
                     if (key.KeyChar != 'n')
                     {
@@ -182,21 +182,21 @@ namespace OpenNos.Import.Console
                         factory.InsertI18NItem();
                     }
 
-                    System.Console.WriteLine($@"{Language.Instance.GetMessageFromKey("PARSE_I18NITEMS")} [Y/n]");
+                    System.Console.WriteLine($@"{Language.Instance.GetMessageFromKey("PARSE_I18NNPCMONSTER")} [Y/n]");
                     key = System.Console.ReadKey(true);
                     if (key.KeyChar != 'n')
                     {
                         factory.InsertI18NNpcMonster();
                     }
 
-                    System.Console.WriteLine($@"{Language.Instance.GetMessageFromKey("PARSE_I18NITEMS")} [Y/n]");
+                    System.Console.WriteLine($@"{Language.Instance.GetMessageFromKey("PARSE_I18NSKILLS")} [Y/n]");
                     key = System.Console.ReadKey(true);
                     if (key.KeyChar != 'n')
                     {
                         factory.InsertI18NSkill();
                     }
 
-                    System.Console.WriteLine($@"{Language.Instance.GetMessageFromKey("PARSE_I18NITEMS")} [Y/n]");
+                    System.Console.WriteLine($@"{Language.Instance.GetMessageFromKey("PARSE_I18NMAPS")} [Y/n]");
                     key = System.Console.ReadKey(true);
                     if (key.KeyChar != 'n')
                     {
