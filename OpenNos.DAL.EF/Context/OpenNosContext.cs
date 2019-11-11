@@ -152,6 +152,24 @@ namespace OpenNos.DAL.EF
         public virtual DbSet<Teleporter> Teleporter { get; set; }
 
         public virtual DbSet<I18NItem> I18NItem { get; set; }
+
+        public virtual DbSet<I18NActDesc> I18NActDesc { get; set; }
+
+        public virtual DbSet<I18NBCard> I18NBCard { get; set; }
+
+        public virtual DbSet<I18NCard> I18NCard { get; set; }
+
+        public virtual DbSet<I18NMapIdData> I18NMapIdData { get; set; }
+
+        public virtual DbSet<I18NMapPointData> I18NMapPointData { get; set; }
+
+        public virtual DbSet<I18NNpcMonster> I18NNpcMonster { get; set; }
+
+        public virtual DbSet<I18NNpcMonsterTalk> I18NNpcMonsterTalk { get; set; }
+
+        public virtual DbSet<I18NQuest> I18NQuest { get; set; }
+
+        public virtual DbSet<I18NSkill> I18NSkill { get; set; }
         #endregion
 
         #region Methods

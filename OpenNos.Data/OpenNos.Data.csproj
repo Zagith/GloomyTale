@@ -100,7 +100,7 @@
     <Compile Include="CharacterQuestDTO.cs" />
     <Compile Include="CharacterTitleDTO.cs" />
     <Compile Include="I18N\I18NItemDto.cs" />
-    <Compile Include="Interfaces\II18NItemDto.cs" />
+    <Compile Include="Interfaces\II18NDto.cs" />
     <Compile Include="Interfaces\IStaticDto.cs" />
     <Compile Include="LogChatDTO.cs" />
     <Compile Include="LogCommandsDTO.cs" />
