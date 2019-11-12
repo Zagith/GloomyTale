@@ -28,6 +28,28 @@ namespace OpenNos.DAL.DAO
     {
         #region Methods
 
+        public NpcMonsterDTO LoadByKey(string vNum)
+        {
+            try
+            {
+                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                {
+                    NpcMonsterDTO dto = new NpcMonsterDTO();
+                    if (Mapper.Mappers.NpcMonsterMapper.ToNpcMonsterDTO(context.NpcMonster.FirstOrDefault(i => i.Name.Equals(vNum)), dto))
+                    {
+                        return dto;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                return null;
+            }
+        }
+
         public IEnumerable<NpcMonsterDTO> FindByName(string name)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())

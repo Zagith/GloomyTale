@@ -12,6 +12,8 @@ namespace OpenNos.DAL.Interface
     {
         #region Methods
 
+        IEnumerable<I18NItemDto> FindByName(string name);
+
         I18NItemDto Insert(I18NItemDto teleporter);
 
         void Insert(List<I18NItemDto> skills);

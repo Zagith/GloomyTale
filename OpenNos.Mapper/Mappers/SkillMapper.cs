@@ -34,7 +34,7 @@ namespace OpenNos.Mapper.Mappers
             output.MinimumMagicianLevel = output.MinimumMagicianLevel;
             output.MinimumSwordmanLevel = input.MinimumSwordmanLevel;
             output.MpCost = input.MpCost;
-            output.Name = input.Name;
+            output.Name = input.NameI18NKey;
             output.Price = input.Price;
             output.Range = input.Range;
             output.SkillType = input.SkillType;
@@ -75,7 +75,7 @@ namespace OpenNos.Mapper.Mappers
             output.MinimumMagicianLevel = input.MinimumMagicianLevel;
             output.MinimumSwordmanLevel = input.MinimumSwordmanLevel;
             output.MpCost = input.MpCost;
-            output.Name = input.Name;
+            output.NameI18NKey = input.Name;
             output.Price = input.Price;
             output.Range = input.Range;
             output.SkillType = input.SkillType;

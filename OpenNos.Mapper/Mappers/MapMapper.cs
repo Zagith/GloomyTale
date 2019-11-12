@@ -18,7 +18,7 @@ namespace OpenNos.Mapper.Mappers
             output.MapId = input.MapId;
             output.GridMapId = input.GridMapId;
             output.Music = input.Music;
-            output.Name = input.Name;
+            output.Name = input.NameI18NKey;
             output.ShopAllowed = input.ShopAllowed;
             output.XpRate = input.XpRate;
 
@@ -36,7 +36,7 @@ namespace OpenNos.Mapper.Mappers
             output.MapId = input.MapId;
             output.GridMapId = input.GridMapId;
             output.Music = input.Music;
-            output.Name = input.Name;
+            output.NameI18NKey = input.Name;
             output.ShopAllowed = input.ShopAllowed;
             output.XpRate = input.XpRate;
 

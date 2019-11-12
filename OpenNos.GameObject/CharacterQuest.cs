@@ -62,7 +62,7 @@ namespace OpenNos.GameObject
                 case QuestType.Capture1:
                 case QuestType.Capture2:
                     type = "capturing";
-                    objectiveName = ServerManager.GetNpcMonster((short)GetObjectiveByIndex(index).Data).Name;
+                    objectiveName = ServerManager.GetNpcMonster((short)GetObjectiveByIndex(index).Data).Name[language];
                     break;
                 case QuestType.Collect1:
                 case QuestType.Collect2:
@@ -73,7 +73,7 @@ namespace OpenNos.GameObject
                     break;
                 case QuestType.Hunt:
                     type = "hunting";
-                    objectiveName = ServerManager.GetNpcMonster((short)GetObjectiveByIndex(index).Data).Name;
+                    objectiveName = ServerManager.GetNpcMonster((short)GetObjectiveByIndex(index).Data).Name[language];
                     break;
             }
             if (!string.IsNullOrEmpty(type) && !string.IsNullOrEmpty(objectiveName) && GetObjectives()[index - 1] < GetObjectiveByIndex(index).Objective)

@@ -16,7 +16,6 @@ namespace OpenNos.Mapper.Mappers
             {
                 return false;
             }
-            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
             output.BasicUpgrade = input.BasicUpgrade;
             output.CellonLvl = input.CellonLvl;
             output.Class = input.Class;
@@ -98,7 +97,6 @@ namespace OpenNos.Mapper.Mappers
             {
                 return false;
             }
-            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
             output.BasicUpgrade = input.BasicUpgrade;
             output.CellonLvl = input.CellonLvl;
             output.Class = input.Class;

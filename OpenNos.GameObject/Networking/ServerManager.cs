@@ -945,7 +945,7 @@ namespace OpenNos.GameObject.Networking
                 Map mapinfo = new Map(baseMapInstance.Map.MapId, baseMapInstance.Map.GridMapId, baseMapInstance.Map.Data)
                 {
                     Music = baseMapInstance.Map.Music,
-                    Name = baseMapInstance.Map.Name,
+                    NameI18NKey = baseMapInstance.Map.NameI18NKey,
                     ShopAllowed = baseMapInstance.Map.ShopAllowed,
                     XpRate = baseMapInstance.Map.XpRate
                 };
@@ -1199,12 +1199,12 @@ namespace OpenNos.GameObject.Networking
                 .When(s => !s.SourceType.IsAssignableFrom(s.DestinationType) && typeof(IStaticDto).IsAssignableFrom(s.DestinationType))
                 .IgnoreMember((member, side) => typeof(I18NString).IsAssignableFrom(member.Type));
             TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
-            var dic = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NItemDto>>>
+            var dic = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
                     {
                         {
                             typeof(I18NItemDto),
                             DAOFactory.I18NItemDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
-                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NItemDto) o))
+                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
                     };
             var items = DAOFactory.ItemDAO.LoadAll();
@@ -1212,10 +1212,10 @@ namespace OpenNos.GameObject.Networking
 
             var regions = Enum.GetValues(typeof(RegionType));
             var accessors = TypeAccessor.Create(typeof(ItemDTO));
-            Parallel.ForEach(items, s => s.InjectI18N(props, dic, regions, accessors));
             OrderablePartitioner<ItemDTO> itemPartitioner = Partitioner.Create(items, EnumerablePartitionerOptions.NoBuffering);
             Parallel.ForEach(itemPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 4 }, itemDto =>
             {
+                itemDto.InjectI18N(props, dic, regions, accessors);
                 switch (itemDto.ItemType)
                 {
                     case ItemType.Armor:
@@ -1323,8 +1323,22 @@ namespace OpenNos.GameObject.Networking
             Logger.Info(string.Format(Language.Instance.GetMessageFromKey("BAZAAR_LOADED"), BazaarList.Count));
 
             // initialize npcmonsters
-            Parallel.ForEach(DAOFactory.NpcMonsterDAO.LoadAll(), npcMonster =>
+            var dicNpcMonster = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
+                    {
+                        {
+                            typeof(II18NNpcMonsterDto),
+                            DAOFactory.I18NNpcMonsterDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
+                        }
+                    };
+            var npcMonsters = DAOFactory.NpcMonsterDAO.LoadAll();
+            var propsNpcMonsters = StaticDtoExtension.GetI18NProperties(typeof(NpcMonsterDTO));
+
+            var regionsNpcMonster = Enum.GetValues(typeof(RegionType));
+            var accessorsNpcMonster = TypeAccessor.Create(typeof(NpcMonsterDTO));
+            Parallel.ForEach(npcMonsters, npcMonster =>
             {
+                npcMonster.InjectI18N(propsNpcMonsters, dicNpcMonster, regionsNpcMonster, accessorsNpcMonster);
                 NpcMonster npcMonsterObj = new NpcMonster(npcMonster);
                 npcMonsterObj.Initialize();
                 npcMonsterObj.BCards = new List<BCard>();
@@ -1374,8 +1388,22 @@ namespace OpenNos.GameObject.Networking
             Logger.Info(string.Format(Language.Instance.GetMessageFromKey("TELEPORTERS_LOADED"), _teleporters.Sum(i => i.Count)));
 
             // initialize skills
-            Parallel.ForEach(DAOFactory.SkillDAO.LoadAll(), skill =>
+            var dicSkill = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
+                    {
+                        {
+                            typeof(II18NSkillDto),
+                            DAOFactory.I18NSkillDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
+                        }
+                    };
+            var skills = DAOFactory.SkillDAO.LoadAll();
+            var propsSkill = StaticDtoExtension.GetI18NProperties(typeof(SkillDTO));
+
+            var regionsSkill = Enum.GetValues(typeof(RegionType));
+            var accessorsSkill = TypeAccessor.Create(typeof(SkillDTO));
+            Parallel.ForEach(skills, skill =>
             {
+                skill.InjectI18N(propsSkill, dicSkill, regionsSkill, accessorsSkill);
                 Skill skillObj = new Skill(skill);
                 skillObj.Combos.AddRange(DAOFactory.ComboDAO.LoadBySkillVnum(skillObj.SkillVNum).ToList());
                 skillObj.BCards = new List<BCard>();
@@ -1385,12 +1413,28 @@ namespace OpenNos.GameObject.Networking
             Logger.Info(string.Format(Language.Instance.GetMessageFromKey("SKILLS_LOADED"), _skills.Count));
 
             // initialize cards
-            Parallel.ForEach(DAOFactory.CardDAO.LoadAll(), card =>
+            var dicCard = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
+                    {
+                        {
+                            typeof(II18NCardDto),
+                            DAOFactory.I18NCardDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
+                        }
+                    };
+            var cards = DAOFactory.CardDAO.LoadAll();
+            var propsCard = StaticDtoExtension.GetI18NProperties(typeof(CardDTO));
+            
+            var regionsCard = Enum.GetValues(typeof(RegionType));
+            var accessorsCard = TypeAccessor.Create(typeof(CardDTO));
+
+            Parallel.ForEach(cards, card =>
             {
+                card.InjectI18N(propsCard, dicCard, regionsCard, accessorsCard);
                 Card cardObj = new Card(card)
                 {
                     BCards = new List<BCard>()
                 };
+               
                 DAOFactory.BCardDAO.LoadByCardId(cardObj.CardId).ToList().ForEach(o => cardObj.BCards.Add(new BCard(o)));
                 _cards.Add(cardObj);
             });
@@ -1418,14 +1462,28 @@ namespace OpenNos.GameObject.Networking
             {
                 int i = 0;
                 int monstercount = 0;
-                OrderablePartitioner<MapDTO> mapPartitioner = Partitioner.Create(DAOFactory.MapDAO.LoadAll(), EnumerablePartitionerOptions.NoBuffering);
+                var dicMap = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
+                    {
+                        {
+                            typeof(II18NMapDto),
+                            DAOFactory.I18NMapDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
+                        }
+                    };
+                var maps = DAOFactory.MapDAO.LoadAll();
+                var propsMap = StaticDtoExtension.GetI18NProperties(typeof(MapDTO));
+
+                var regionsMap = Enum.GetValues(typeof(RegionType));
+                var accessorsMap = TypeAccessor.Create(typeof(MapDTO));
+                OrderablePartitioner<MapDTO> mapPartitioner = Partitioner.Create(maps, EnumerablePartitionerOptions.NoBuffering);
                 Parallel.ForEach(mapPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 8 }, map =>
                 {
+                    map.InjectI18N(propsMap, dicMap, regionsMap, accessorsMap);
                     Guid guid = Guid.NewGuid();
                     Map mapinfo = new Map(map.MapId, map.GridMapId, map.Data)
                     {
                         Music = map.Music,
-                        Name = map.Name,
+                        NameI18NKey = map.NameI18NKey,
                         ShopAllowed = map.ShopAllowed,
                         XpRate = map.XpRate
                     };

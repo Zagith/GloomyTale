@@ -46,7 +46,7 @@ namespace OpenNos.Mapper.Mappers
             output.MaxHP = input.MaxHP;
             output.MaxMP = input.MaxMP;
             output.MonsterType = input.MonsterType;
-            output.Name = input.Name;
+            output.Name = input.NameI18NKey;
             output.NoAggresiveIcon = input.NoAggresiveIcon;
             output.NoticeRange = input.NoticeRange;
             output.NpcMonsterVNum = input.NpcMonsterVNum;
@@ -101,7 +101,7 @@ namespace OpenNos.Mapper.Mappers
             output.MaxHP = input.MaxHP;
             output.MaxMP = input.MaxMP;
             output.MonsterType = input.MonsterType;
-            output.Name = input.Name;
+            output.NameI18NKey = input.Name;
             output.NoAggresiveIcon = input.NoAggresiveIcon;
             output.NoticeRange = input.NoticeRange;
             output.NpcMonsterVNum = input.NpcMonsterVNum;

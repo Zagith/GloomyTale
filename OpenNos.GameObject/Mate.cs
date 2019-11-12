@@ -107,7 +107,7 @@ namespace OpenNos.GameObject
             Level = level;
             Hp = MaxHp;
             Mp = MaxMp;
-            Name = npcMonster.Name;
+            Name = npcMonster.Name[owner.Session.Account.Language];
             MateType = matetype;
             Loyalty = 1000;
             PositionY = (short) (owner.PositionY + 1);

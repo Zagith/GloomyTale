@@ -3,7 +3,7 @@ using OpenNos.Domain.I18N;
 
 namespace OpenNos.Data.I18N
 {
-    public class I18NItemDto : II18NItemDto
+    public class I18NItemDto : II18NDto
     {
         public int I18NItemId { get; set; }
 

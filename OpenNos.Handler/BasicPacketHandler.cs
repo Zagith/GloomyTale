@@ -2999,7 +2999,7 @@ namespace OpenNos.Handler
 
                     if (npc != null)
                     {
-                        Session.SendPacket(npc.GenerateEInfo());
+                        Session.SendPacket(npc.GenerateEInfo(Session.Account.Language));
                     }
                 }
                 else if (reqInfoPacket.Type == 12)

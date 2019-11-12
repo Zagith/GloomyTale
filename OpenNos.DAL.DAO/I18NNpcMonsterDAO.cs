@@ -15,6 +15,20 @@ namespace OpenNos.DAL.DAO
     {
         #region Methods
 
+        public IEnumerable<II18NNpcMonsterDto> FindByName(string name)
+        {
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                List<II18NNpcMonsterDto> result = new List<II18NNpcMonsterDto>();
+                foreach (I18NNpcMonster item in context.I18NNpcMonster.Where(s => string.IsNullOrEmpty(name) ? s.Text.Equals("") : s.Text.Contains(name)))
+                {
+                    II18NNpcMonsterDto dto = new II18NNpcMonsterDto();
+                    Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonsterDTO(item, dto);
+                    result.Add(dto);
+                }
+                return result;
+            }
+        }
         public void Insert(List<II18NNpcMonsterDto> skills)
         {
             try

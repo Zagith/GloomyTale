@@ -12,6 +12,8 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Data.Base;
+
 namespace OpenNos.Data
 {
     public interface IMapDTO
@@ -26,7 +28,7 @@ namespace OpenNos.Data
 
         int Music { get; set; }
 
-        string Name { get; set; }
+        string NameI18NKey { get; set; }
 
         bool ShopAllowed { get; set; }
 

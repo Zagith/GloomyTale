@@ -1532,7 +1532,7 @@ namespace OpenNos.GameObject
             }
 
             Session.SendPacket($"vb {bf.Card.CardId} 1 {(bf.RemainingTime <= 0 ? -1 : bf.RemainingTime * 10)}");
-            Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("UNDER_EFFECT"), bf.Card.Name), 12));
+            Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("UNDER_EFFECT"), bf.Card.Name[Session.Account.Language]), 12));
 
             // Visual Effects (eff packet)
             if (bf.Card.CardId == 319)

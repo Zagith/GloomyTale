@@ -489,7 +489,7 @@ namespace OpenNos.Import.Console
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "NAME")
                     {
-                        card.Name = dictionaryIdLang.ContainsKey(currentLine[2]) ? currentLine[2] : "";
+                        card.NameI18NKey = dictionaryIdLang.ContainsKey(currentLine[2]) ? currentLine[2] : "";
                     }
                     else if (currentLine.Length > 3 && currentLine[1] == "GROUP")
                     {
@@ -1089,7 +1089,7 @@ namespace OpenNos.Import.Console
                 }
                 MapDTO map = new MapDTO
                 {
-                    Name = name,
+                    NameI18NKey = name,
                     Music = music,
                     GridMapId = short.Parse(file.Name),
                     MapId = short.Parse(file.Name),
@@ -1714,7 +1714,7 @@ namespace OpenNos.Import.Console
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "NAME")
                     {
-                        npc.Name = dictionaryIdLang.ContainsKey(currentLine[2]) ? currentLine[2] : "";
+                        npc.NameI18NKey = dictionaryIdLang.ContainsKey(currentLine[2]) ? currentLine[2] : "";
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "LEVEL")
                     {
@@ -2860,7 +2860,7 @@ namespace OpenNos.Import.Console
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "NAME")
                     {
-                        skill.Name = dictionaryIdLang.TryGetValue(currentLine[2], out string name) ? currentLine[2] : "";
+                        skill.NameI18NKey = dictionaryIdLang.TryGetValue(currentLine[2], out string name) ? currentLine[2] : "";
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "TYPE")
                     {

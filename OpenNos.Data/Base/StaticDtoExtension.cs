@@ -29,7 +29,7 @@ namespace OpenNos.Data.Base
 
         public static void InjectI18N(this IStaticDto staticDto,
             IDictionary<PropertyInfo, Tuple<PropertyInfo, Type>> propertyInfos,
-            IDictionary<Type, Dictionary<string, Dictionary<RegionType, II18NItemDto>>> langDictionary, Array regions,
+            IDictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>> langDictionary, Array regions,
             TypeAccessor accessor)
         {
             foreach (var prop in propertyInfos)

@@ -22,6 +22,8 @@ namespace OpenNos.DAL.Interface
     {
         #region Methods
 
+        NpcMonsterDTO LoadByKey(string vNum);
+
         /// <summary>
         /// Used for searching monster by what it contains in name
         /// </summary>

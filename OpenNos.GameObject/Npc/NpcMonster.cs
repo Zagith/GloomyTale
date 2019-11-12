@@ -16,6 +16,7 @@ using OpenNos.Data;
 using System;
 using System.Collections.Generic;
 using OpenNos.GameObject.Networking;
+using OpenNos.Domain.I18N;
 
 namespace OpenNos.GameObject
 {
@@ -99,7 +100,7 @@ namespace OpenNos.GameObject
 
         #region Methods
 
-        public string GenerateEInfo() => $"e_info 10 {(OriginalNpcMonsterVNum > 0 ? OriginalNpcMonsterVNum : NpcMonsterVNum)} {Level} {Element} {AttackClass} {ElementRate} {AttackUpgrade} {DamageMinimum} {DamageMaximum} {Concentrate} {CriticalChance} {CriticalRate} {DefenceUpgrade} {CloseDefence} {DefenceDodge} {DistanceDefence} {DistanceDefenceDodge} {MagicDefence} {FireResistance} {WaterResistance} {LightResistance} {DarkResistance} {MaxHP} {MaxMP} -1 {Name.Replace(' ', '^')}";
+        public string GenerateEInfo(RegionType language) => $"e_info 10 {(OriginalNpcMonsterVNum > 0 ? OriginalNpcMonsterVNum : NpcMonsterVNum)} {Level} {Element} {AttackClass} {ElementRate} {AttackUpgrade} {DamageMinimum} {DamageMaximum} {Concentrate} {CriticalChance} {CriticalRate} {DefenceUpgrade} {CloseDefence} {DefenceDodge} {DistanceDefence} {DistanceDefenceDodge} {MagicDefence} {FireResistance} {WaterResistance} {LightResistance} {DarkResistance} {MaxHP} {MaxMP} -1 {Name[language].Replace(' ', '^')}";
 
         public float GetRes(int skillelement)
         {

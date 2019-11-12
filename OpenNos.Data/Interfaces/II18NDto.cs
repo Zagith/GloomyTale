@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OpenNos.Data.Interfaces
 {
-    public interface III18NMapDto
+    public interface II18NDto
     {
         string Key { get; set; }
         RegionType RegionType { get; set; }

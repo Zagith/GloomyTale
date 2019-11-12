@@ -1353,7 +1353,7 @@ namespace OpenNos.GameObject
                                 case 5370:
                                     if (session.Character.Buff.Any(s => s.Card.CardId == 393))
                                     {
-                                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ALREADY_GOT_BUFF"), session.Character.Buff.FirstOrDefault(s => s.Card.CardId == 393)?.Card.Name), 10));
+                                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ALREADY_GOT_BUFF"), session.Character.Buff.FirstOrDefault(s => s.Card.CardId == 393)?.Card.Name[session.Account.Language]), 10));
                                         return;
                                     }
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);

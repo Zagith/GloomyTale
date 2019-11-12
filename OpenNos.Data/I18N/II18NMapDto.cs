@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OpenNos.Data.I18N
 {
-    public class II18NMapDto : III18NMapDto
+    public class II18NMapDto : II18NDto
     {
         public int I18NMapId { get; set; }
 
