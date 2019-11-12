@@ -12,6 +12,8 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.DAL.EF.Base;
+using OpenNos.DAL.EF.Entities;
 using OpenNos.Domain;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -46,6 +48,7 @@ namespace OpenNos.DAL.EF
         public byte Level { get; set; }
 
         [MaxLength(255)]
+        [I18NString(typeof(I18NCard))]
         public string Name { get; set; }
 
         public byte Propability { get; set; }

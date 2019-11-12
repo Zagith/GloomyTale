@@ -66,15 +66,46 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mapster, Version=4.1.1.0, Culture=neutral, PublicKeyToken=2f39883af23c29a8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapster.4.1.1\lib\net45\Mapster.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Text.5.7.0\lib\net45\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\I18NFromAttribute.cs" />
+    <Compile Include="Base\I18NString.cs" />
+    <Compile Include="Base\StaticDtoExtension.cs" />
     <Compile Include="Base\SynchronizableBaseDTO.cs" />
     <Compile Include="BazaarItemDTO.cs" />
     <Compile Include="BCardDTO.cs" />
     <Compile Include="BoxItemDTO.cs" />
     <Compile Include="CharacterQuestDTO.cs" />
     <Compile Include="CharacterTitleDTO.cs" />
+    <Compile Include="I18N\I18NItemDto.cs" />
+    <Compile Include="I18N\II18NCardDto.cs" />
+    <Compile Include="I18N\II18NNpcMonsterDto.cs" />
+    <Compile Include="I18N\II18NSkillDto.cs" />
+    <Compile Include="I18N\II18NMapDto.cs" />
+    <Compile Include="Interfaces\II18NDto.cs" />
+    <Compile Include="Interfaces\IStaticDto.cs" />
     <Compile Include="LogChatDTO.cs" />
     <Compile Include="LogCommandsDTO.cs" />
     <Compile Include="LogDropDTO.cs" />
@@ -152,6 +183,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

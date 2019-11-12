@@ -12,13 +12,17 @@
  * GNU General Public License for more details.
  */
 
+using Mapster;
+using OpenNos.Data.Base;
+using OpenNos.Data.I18N;
+using OpenNos.Data.Interfaces;
 using OpenNos.Domain;
 using System;
 
 namespace OpenNos.Data
 {
     [Serializable]
-    public class ItemDTO
+    public class ItemDTO : IStaticDto
     {
         #region Properties
 
@@ -128,7 +132,10 @@ namespace OpenNos.Data
 
         public short MpRegeneration { get; set; }
 
-        public string Name { get; set; }
+        [I18NFrom(typeof(I18NItemDto))]
+        public I18NString Name { get; set; } = new I18NString();
+        [AdaptMember("Name")]
+        public string NameI18NKey { get; set; }
 
         public long Price { get; set; }
 

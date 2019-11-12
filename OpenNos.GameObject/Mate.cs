@@ -107,7 +107,7 @@ namespace OpenNos.GameObject
             Level = level;
             Hp = MaxHp;
             Mp = MaxMp;
-            Name = npcMonster.Name;
+            Name = npcMonster.Name[owner.Session.Account.Language];
             MateType = matetype;
             Loyalty = 1000;
             PositionY = (short) (owner.PositionY + 1);
@@ -399,7 +399,7 @@ namespace OpenNos.GameObject
                 return "";
             }
 
-            string name = IsUsingSp ? Sp.GetName() : Name.Replace(' ', '^');
+            string name = IsUsingSp ? Sp.GetName(Owner.Session) : Name.Replace(' ', '^');
 
             if (receiverAuthority >= AuthorityType.TMOD)
             {
@@ -521,7 +521,7 @@ namespace OpenNos.GameObject
                         $"{MaxMp} " +
                         $"0 " +
                         $"{xp} " +
-                        $"{(IsUsingSp ? Sp.GetName() : Name.Replace(' ', '^'))} " +
+                        $"{(IsUsingSp ? Sp.GetName(Owner.Session) : Name.Replace(' ', '^'))} " +
                         $"{(IsUsingSp && Sp != null ? Sp.Instance.Item.Morph : Skin != 0 ? Skin : -1)} " +
                         $"{(IsSummonable ? 1 : 0)} " +
                         $"{(Sp != null ? $"{Sp.Instance.ItemVNum}.{Sp.GetXpPercent()}" : "-1")}" +
@@ -882,7 +882,7 @@ namespace OpenNos.GameObject
                 {
                     Owner.Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                         string.Format(Language.Instance.GetMessageFromKey("NO_ITEM_REQUIRED"),
-                            ServerManager.GetItem(1012).Name), 0));
+                            ServerManager.GetItem(1012).Name[Owner.Session.Account.Language]), 0));
                     if (MateType == MateType.Pet)
                     {
                         Owner.IsPetAutoRelive = false;

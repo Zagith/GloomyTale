@@ -2189,7 +2189,7 @@ namespace OpenNos.GameObject
                     if (recoverHp > 0)
                     {
                         MapInstance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(
-                            Language.Instance.GetMessageFromKey("EARNED_VITALLITY"), Monster.Name, ServerManager.GetNpcMonster(2017).Name), 0));
+                            Language.Instance.GetMessageFromKey("EARNED_VITALLITY"), Monster.Name[target.Character.Session.Account.Language], ServerManager.GetNpcMonster(2017).Name[target.Character.Session.Account.Language]), 0));
                         CurrentHp += recoverHp;
                         MapInstance.Broadcast(BattleEntity.GenerateRc(recoverHp));
                     }

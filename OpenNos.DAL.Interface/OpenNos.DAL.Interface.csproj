@@ -93,6 +93,11 @@
     <Compile Include="ICharacterRelationDAO.cs" />
     <Compile Include="IComboDAO.cs" />
     <Compile Include="IDropDAO.cs" />
+    <Compile Include="II18NCardDAO.cs" />
+    <Compile Include="II18NItemDAO.cs" />
+    <Compile Include="II18NMapDAO.cs" />
+    <Compile Include="II18NNpcMonsterDAO.cs" />
+    <Compile Include="II18NSkillDAO.cs" />
     <Compile Include="ILogChatDAO.cs" />
     <Compile Include="ILogCommandsDAO.cs" />
     <Compile Include="ILogDropDAO.cs" />

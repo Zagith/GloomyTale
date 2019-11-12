@@ -12,6 +12,8 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.DAL.EF.Base;
+using OpenNos.DAL.EF.Entities;
 using OpenNos.Domain;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -158,6 +160,7 @@ namespace OpenNos.DAL.EF
         public short MpRegeneration { get; set; }
 
         [MaxLength(255)]
+        [I18NString(typeof(I18NItem))]
         public string Name { get; set; }
 
         public long Price { get; set; }

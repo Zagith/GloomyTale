@@ -15,7 +15,9 @@
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.Data.I18N;
 using OpenNos.Domain;
+using OpenNos.Domain.I18N;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -487,7 +489,7 @@ namespace OpenNos.Import.Console
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "NAME")
                     {
-                        card.Name = dictionaryIdLang.ContainsKey(currentLine[2]) ? dictionaryIdLang[currentLine[2]] : "";
+                        card.NameI18NKey = dictionaryIdLang.ContainsKey(currentLine[2]) ? currentLine[2] : "";
                     }
                     else if (currentLine.Length > 3 && currentLine[1] == "GROUP")
                     {
@@ -1017,16 +1019,15 @@ namespace OpenNos.Import.Console
         public void ImportMaps()
         {
             string fileMapIdDat = $"{_folder}\\MapIDData.dat";
-            string fileMapIdLang = $"{_folder}\\_code_{ConfigurationManager.AppSettings[nameof(Language)]}_MapIDData.txt";
+            string fileMapIdLang = $"{_folder}\\_code_{ConfigurationManager.AppSettings["Language"]}_MapIDData.txt";
             string folderMap = $"{_folder}\\map";
-            ThreadSafeSortedList<short, MapDTO> maps = new ThreadSafeSortedList<short, MapDTO>();
-            Dictionary<int, string> dictionaryZts = new Dictionary<int, string>();
+            List<MapDTO> maps = new List<MapDTO>();
+            Dictionary<int, string> dictionaryId = new Dictionary<int, string>();
             Dictionary<string, string> dictionaryIdLang = new Dictionary<string, string>();
-            ThreadSafeSortedList<int, int> dictionaryMusic = new ThreadSafeSortedList<int, int>();
-            Dictionary<short, byte[]> dictionaryData = new Dictionary<short, byte[]>();
-            Dictionary<short, short> dictionaryMap = new Dictionary<short, short>();
+            Dictionary<int, int> dictionaryMusic = new Dictionary<int, int>();
 
             string line;
+            int i = 0;
             using (StreamReader mapIdStream = new StreamReader(fileMapIdDat, Encoding.GetEncoding(1252)))
             {
                 while ((line = mapIdStream.ReadLine()) != null)
@@ -1040,9 +1041,9 @@ namespace OpenNos.Import.Console
                     {
                         continue;
                     }
-                    if (!dictionaryZts.ContainsKey(mapid))
+                    if (!dictionaryId.ContainsKey(mapid))
                     {
-                        dictionaryZts.Add(mapid, linesave[4]);
+                        dictionaryId.Add(mapid, linesave[4]);
                     }
                 }
             }
@@ -1060,71 +1061,51 @@ namespace OpenNos.Import.Console
                 }
             }
 
-            Parallel.ForEach(_packetList.Where(o => o[0].Equals("at")), linesave =>
+            foreach (string[] linesave in _packetList.Where(o => o[0].Equals("at")))
             {
-                if (linesave.Length <= 7 || dictionaryMusic.ContainsKey(int.Parse(linesave[2])))
+                if (linesave.Length <= 7 || linesave[0] != "at")
                 {
-                    return;
+                    continue;
                 }
-                dictionaryMusic[int.Parse(linesave[2])] = int.Parse(linesave[7]);
-                if (_packetList.FirstOrDefault(s => s[0].Equals("c_map") && _packetList.FindIndex(b => b == s) > _packetList.FindIndex(b => b == linesave)) is string[] cmap)
+                if (dictionaryMusic.ContainsKey(int.Parse(linesave[2])))
                 {
-                    dictionaryMap[short.Parse(cmap[2])] = short.Parse(linesave[2]);
+                    continue;
                 }
-            });
+                dictionaryMusic.Add(int.Parse(linesave[2]), int.Parse(linesave[7]));
+            }
 
-            OrderablePartitioner<FileInfo> mapPartitioner = Partitioner.Create(new DirectoryInfo(folderMap).GetFiles(), EnumerablePartitionerOptions.NoBuffering);
-            Parallel.ForEach(mapPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 1 }, file => dictionaryData[short.Parse(file.Name)] = File.ReadAllBytes(file.FullName));
-
-            // Found in packet.txt maps 
-            Parallel.ForEach(dictionaryMap, map =>
+            foreach (FileInfo file in new DirectoryInfo(folderMap).GetFiles())
             {
-                if (dictionaryData[map.Value] == null)
-                {
-                    return; // Map grid data doesnt exists 
-                }
-                addMap(map.Key, map.Value, dictionaryData[map.Value]);
-            });
-
-            // Nostale data maps didnt found in packet.txt 
-            Parallel.ForEach(dictionaryData, map =>
-            {
-                addMap(map.Key, map.Key, map.Value);
-            });
-
-            void addMap(short mapId, short originalMapId, byte[] mapData)
-            {
-                string name = "";
+                string name = string.Empty;
                 int music = 0;
 
-                if (dictionaryZts.ContainsKey(mapId) && dictionaryIdLang.ContainsKey(dictionaryZts[mapId]))
+                if (dictionaryId.ContainsKey(int.Parse(file.Name)) && dictionaryIdLang.ContainsKey(dictionaryId[int.Parse(file.Name)]))
                 {
-                    name = dictionaryIdLang[dictionaryZts[mapId]];
+                    name = dictionaryId[int.Parse(file.Name)];
                 }
-                if (dictionaryMusic.ContainsKey(mapId))
+                if (dictionaryMusic.ContainsKey(int.Parse(file.Name)))
                 {
-                    music = dictionaryMusic[mapId];
+                    music = dictionaryMusic[int.Parse(file.Name)];
                 }
                 MapDTO map = new MapDTO
                 {
-                    Name = name,
+                    NameI18NKey = name,
                     Music = music,
-                    MapId = mapId,
-                    GridMapId = originalMapId,
-                    Data = mapData,
-                    ShopAllowed = mapId == 147
+                    GridMapId = short.Parse(file.Name),
+                    MapId = short.Parse(file.Name),
+                    Data = File.ReadAllBytes(file.FullName),
+                    ShopAllowed = int.Parse(file.Name) == 147,
                 };
-                if (DAOFactory.MapDAO.LoadById(map.MapId) == null && !maps.ContainsKey(map.MapId))
+                if (DAOFactory.MapDAO.LoadById(map.MapId) != null)
                 {
-                    maps[map.MapId] = map;
+                    continue; // Map already exists in list
                 }
+                maps.Add(map);
+                i++;
             }
+            DAOFactory.MapDAO.Insert(maps);
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPS_PARSED"), i));
 
-            List<MapDTO> mapsToInsert = maps.GetAllItems().Where(s => DAOFactory.MapDAO.LoadById(s.MapId) == null).ToList();
-            DAOFactory.MapDAO.Insert(mapsToInsert);
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("MAPS_PARSED"), mapsToInsert.Count));
-            dictionaryMusic.Dispose();
-            maps.Dispose();
         }
 
         public static void ImportMapType()
@@ -1733,7 +1714,7 @@ namespace OpenNos.Import.Console
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "NAME")
                     {
-                        npc.Name = dictionaryIdLang.ContainsKey(currentLine[2]) ? dictionaryIdLang[currentLine[2]] : "";
+                        npc.NameI18NKey = dictionaryIdLang.ContainsKey(currentLine[2]) ? currentLine[2] : "";
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "LEVEL")
                     {
@@ -2879,7 +2860,7 @@ namespace OpenNos.Import.Console
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "NAME")
                     {
-                        skill.Name = dictionaryIdLang.TryGetValue(currentLine[2], out string name) ? name : "";
+                        skill.NameI18NKey = dictionaryIdLang.TryGetValue(currentLine[2], out string name) ? currentLine[2] : "";
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "TYPE")
                     {
@@ -3165,6 +3146,217 @@ namespace OpenNos.Import.Console
 
         public void LoadMaps() => _maps = DAOFactory.MapDAO.LoadAll();
 
+        private string I18NTextFileName(string textfilename, RegionType region)
+        {
+            var regioncode = region.ToString().ToLower();
+            regioncode = regioncode == "en" ? "uk" : regioncode;
+            return string.Format(textfilename, regioncode);
+        }
+        
+        public void InsertI18NCard()
+        {
+            string file = _folder + "\\_code_{0}_Card.txt";
+            string _line;
+            List<II18NCardDto> listoftext = DAOFactory.I18NCardDAO.LoadAll().ToList();
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+                
+                try
+                {
+                    List<II18NCardDto> dtos = new List<II18NCardDto>();
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                    
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new II18NCardDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NCardDAO.Insert(dtos);
+
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
+
+        public void InsertI18NItem()
+        {
+            string file = _folder + "\\_code_{0}_Item.txt";
+            string _line;
+            List<I18NItemDto> listoftext = DAOFactory.I18NItemDAO.LoadAll().ToList();
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+
+                try
+                {
+                    List<I18NItemDto> dtos = new List<I18NItemDto>();
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                   
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new I18NItemDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NItemDAO.Insert(dtos);
+
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
+
+        public void InsertI18NNpcMonster()
+        {
+            string file = _folder + "\\_code_{0}_monster.txt";
+            string _line;
+            List<II18NNpcMonsterDto> listoftext = DAOFactory.I18NNpcMonsterDAO.LoadAll().ToList();
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+
+                try
+                {
+                    List<II18NNpcMonsterDto> dtos = new List<II18NNpcMonsterDto>();
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                    
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new II18NNpcMonsterDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NNpcMonsterDAO.Insert(dtos);
+
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
+
+        public void InsertI18NSkill()
+        {
+            string file = _folder + "\\_code_{0}_Skill.txt";
+            string _line;
+            List<II18NSkillDto> listoftext = DAOFactory.I18NSkillDAO.LoadAll().ToList();
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+
+                try
+                {
+                    List<II18NSkillDto> dtos = new List<II18NSkillDto>();
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                   
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new II18NSkillDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NSkillDAO.Insert(dtos);
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
+
+        public void InsertI18NMap()
+        {
+            string file = _folder + "\\_code_{0}_MapIDData.txt";
+            string _line;
+            List<II18NMapDto> listoftext = DAOFactory.I18NMapDAO.LoadAll().ToList();
+
+            Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
+            {
+
+                try
+                {
+                    List<II18NMapDto> dtos = new List<II18NMapDto>();
+                    using var stream = new StreamReader(I18NTextFileName(file, region),
+                        Encoding.Default);
+                    
+                    while ((_line = stream.ReadLine()) != null)
+                    {
+                        var currentLine = _line.Split('\t');
+                        if ((listoftext.Find(s => (s.Key == currentLine[0]) && (s.RegionType == region))
+                                == null) && (currentLine.Length > 1) &&
+                            !dtos.Exists(s => s.Key == currentLine[0]))
+                        {
+                            dtos.Add(new II18NMapDto()
+                            {
+                                Key = currentLine[0],
+                                RegionType = region,
+                                Text = currentLine[1],
+                            });
+                        }
+                    }
+                    DAOFactory.I18NMapDAO.Insert(dtos);
+
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_PARSED"), dtos.Count, region));
+                }
+                catch (FileNotFoundException)
+                {
+                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("LANGUAGE_MISSING")));
+                }
+            });
+        }
+
         internal void ImportItems()
         {
             string fileId = $"{_folder}\\Item.dat";
@@ -3216,7 +3408,8 @@ namespace OpenNos.Import.Console
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "NAME")
                     {
-                        item.Name = dictionaryName.TryGetValue(currentLine[2], out string name) ? name : "";
+                        item.NameI18NKey = currentLine[2];
+                        //dictionaryName.TryGetValue(currentLine[2], out string name) ? name : "";
                     }
                     else if (currentLine.Length > 7 && currentLine[1] == "INDEX")
                     {

@@ -104,6 +104,28 @@ namespace OpenNos.DAL.DAO
             }
         }
 
+        public ItemDTO LoadByKey(string vNum)
+        {
+            try
+            {
+                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                {
+                    ItemDTO dto = new ItemDTO();
+                    if (Mapper.Mappers.ItemMapper.ToItemDTO(context.Item.FirstOrDefault(i => i.Name.Equals(vNum)), dto))
+                    {
+                        return dto;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                return null;
+            }
+        }
+
         public ItemDTO LoadById(short vNum)
         {
             try

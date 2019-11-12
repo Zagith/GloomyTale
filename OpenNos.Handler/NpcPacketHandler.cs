@@ -412,7 +412,7 @@ namespace OpenNos.Handler
                                 {
                                     Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1,
                                         string.Format(Language.Instance.GetMessageFromKey("BUY_ITEM_VALID"),
-                                            iteminfo.Name, amount)));
+                                            iteminfo.Name[Session.Account.Language], amount)));
                                     Session.Character.Gold -= (long) (price * percent);
                                     Session.SendPacket(Session.Character.GenerateGold());
                                 }
@@ -420,7 +420,7 @@ namespace OpenNos.Handler
                                 {
                                     Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1,
                                         string.Format(Language.Instance.GetMessageFromKey("BUY_ITEM_VALID"),
-                                            iteminfo.Name, amount)));
+                                            iteminfo.Name[Session.Account.Language], amount)));
                                     Session.Character.Reputation -= reputprice;
                                     Session.SendPacket(Session.Character.GenerateFd());
                                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
@@ -819,7 +819,7 @@ namespace OpenNos.Handler
                     Session.SendPacket($"pdti 11 {inv.ItemVNum} {recipe.Amount} 29 {inv.Upgrade} {inv.Rare}");
                     Session.SendPacket(UserInterfaceHelper.GenerateGuri(19, 1, Session.Character.CharacterId, 1324));
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                        string.Format(Language.Instance.GetMessageFromKey("CRAFTED_OBJECT"), inv.Item.Name,
+                        string.Format(Language.Instance.GetMessageFromKey("CRAFTED_OBJECT"), inv.Item.Name[Session.Account.Language],
                             recipe.Amount), 0));
                     Session.Character.IncrementQuests(QuestType.Product, inv.ItemVNum, recipe.Amount);
                 }
@@ -1000,7 +1000,7 @@ namespace OpenNos.Handler
                 }
 
                 Session.Character.Gold += price * amount;
-                Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1, string.Format(Language.Instance.GetMessageFromKey("SELL_ITEM_VALID"), inv.Item.Name, amount)));
+                Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1, string.Format(Language.Instance.GetMessageFromKey("SELL_ITEM_VALID"), inv.Item.Name[Session.Account.Language], amount)));
 
                 Session.Character.Inventory.RemoveItemFromInventory(inv.Id, amount);
                 Session.SendPacket(Session.Character.GenerateGold());
@@ -1271,7 +1271,7 @@ namespace OpenNos.Handler
                         List<ItemInstance> newInv = Session.Character.Inventory.AddToInventory(newItem);
                         if (newInv.Count > 0)
                         {
-                            Session.Character.Session.SendPacket(Session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {newItem.Item.Name}", 10));
+                            Session.Character.Session.SendPacket(Session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {newItem.Item.Name[Session.Account.Language]}", 10));
                         }
                         else
                         {
@@ -1310,7 +1310,7 @@ namespace OpenNos.Handler
                         if (ServerManager.GetItem(npc.Npc.VNumRequired) is Item requiredItem)
                             Session.SendPacket(
                                 UserInterfaceHelper.GenerateMsg(
-                                    string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), npc.Npc.AmountRequired, requiredItem.Name), 0));
+                                    string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), npc.Npc.AmountRequired, requiredItem.Name[Session.Account.Language]), 0));
                         return;
                     }
                     Session.SendPacket(UserInterfaceHelper.GenerateDelay(5000, 4, $"#guri^400^{npc.MapNpcId}"));
@@ -1323,7 +1323,7 @@ namespace OpenNos.Handler
                         if (ServerManager.GetItem(npc.Npc.VNumRequired) is Item requiredItem)
                             Session.SendPacket(
                                 UserInterfaceHelper.GenerateMsg(
-                                    string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), npc.Npc.AmountRequired, requiredItem.Name), 0));
+                                    string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), npc.Npc.AmountRequired, requiredItem.Name[Session.Account.Language]), 0));
                         return;
                     }
                     Session.SendPacket(UserInterfaceHelper.GenerateDelay(6000, 4, $"#guri^400^{npc.MapNpcId}"));
@@ -1392,7 +1392,7 @@ namespace OpenNos.Handler
             shopOwnerSession.SendPacket(shopOwnerSession.Character.GenerateGold());
             shopOwnerSession.SendPacket(UserInterfaceHelper.GenerateShopMemo(1,
                 string.Format(Language.Instance.GetMessageFromKey("BUY_ITEM"), Session.Character.Name,
-                    shopitem.ItemInstance.Item.Name, amount)));
+                    shopitem.ItemInstance.Item.Name[Session.Account.Language], amount)));
             clientSession.CurrentMapInstance.UserShops[shop.Key].Sell += shopitem.Price * amount;
 
             if (shopitem.ItemInstance.Type != InventoryType.Equipment)

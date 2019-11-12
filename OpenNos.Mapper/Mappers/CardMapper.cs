@@ -1,5 +1,7 @@
+using Mapster;
 using OpenNos.DAL.EF;
 using OpenNos.Data;
+using OpenNos.Data.Base;
 
 namespace OpenNos.Mapper.Mappers
 {
@@ -13,14 +15,14 @@ namespace OpenNos.Mapper.Mappers
             {
                 return false;
             }
-
+            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
             output.BuffType = input.BuffType;
             output.CardId = input.CardId;
             output.Delay = input.Delay;
             output.Duration = input.Duration;
             output.EffectId = input.EffectId;
             output.Level = input.Level;
-            output.Name = input.Name;
+            output.Name = input.NameI18NKey;
             output.Propability = input.Propability;
             output.TimeoutBuff = input.TimeoutBuff;
             output.TimeoutBuffChance = input.TimeoutBuffChance;
@@ -34,14 +36,14 @@ namespace OpenNos.Mapper.Mappers
             {
                 return false;
             }
-
+            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
             output.BuffType = input.BuffType;
             output.CardId = input.CardId;
             output.Delay = input.Delay;
             output.Duration = input.Duration;
             output.EffectId = input.EffectId;
             output.Level = input.Level;
-            output.Name = input.Name;
+            output.NameI18NKey = input.Name;
             output.Propability = input.Propability;
             output.TimeoutBuff = input.TimeoutBuff;
             output.TimeoutBuffChance = input.TimeoutBuffChance;

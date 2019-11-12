@@ -32,6 +32,7 @@ namespace OpenNos.GameObject
             ReferrerId = input.ReferrerId;
             RegistrationIP = input.RegistrationIP;
             VerificationToken = input.VerificationToken;
+            Language = input.Language;
         }
 
         #region Properties

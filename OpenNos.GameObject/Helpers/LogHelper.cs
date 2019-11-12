@@ -61,7 +61,7 @@ namespace OpenNos.GameObject.Helpers
             {
                 CharacterId = character.Character.CharacterId,
                 ItemVNum = inv.ItemVNum,
-                ItemName = inv.Item.Name,
+                ItemName = inv.Item.Name[character.Account.Language],
                 Amount = amount,
                 Map = character.Character.MapId,
                 X = character.Character.MapX,

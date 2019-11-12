@@ -13,6 +13,7 @@
  */
 
 using OpenNos.Domain;
+using OpenNos.Domain.I18N;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -62,6 +63,7 @@ namespace OpenNos.DAL.EF
 
         public bool DailyRewardSent { get; set; }
 
+        public RegionType Language { get; set; }
         #endregion
     }
 }

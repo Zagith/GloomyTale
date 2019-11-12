@@ -15,6 +15,7 @@
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.Data.I18N;
 using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.CommandPackets;
@@ -885,7 +886,7 @@ namespace OpenNos.Handler
                     fairy.ElementRate = fairylevel;
                     fairy.XP = 0;
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                        string.Format(Language.Instance.GetMessageFromKey("FAIRY_LEVEL_CHANGED"), fairy.Item.Name),
+                        string.Format(Language.Instance.GetMessageFromKey("FAIRY_LEVEL_CHANGED"), fairy.Item.Name[Session.Account.Language]),
                         10));
                     Session.SendPacket(Session.Character.GeneratePairy());
                 }
@@ -1509,7 +1510,7 @@ namespace OpenNos.Handler
                         }
 
                         Session.SendPacket(Session.Character.GenerateSay(
-                            $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {iteminfo.Name} x {amount}", 12));
+                            $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {iteminfo.Name[Session.Account.Language]} x {amount}", 12));
                     }
                     else
                     {
@@ -2783,7 +2784,7 @@ namespace OpenNos.Handler
                             monster.MapMonsterId));
                         Session.SendPacket(Session.Character.GenerateSay(
                             string.Format(Language.Instance.GetMessageFromKey("MONSTER_REMOVED"), monster.MapMonsterId,
-                                monster.Monster.Name, monster.MapId, monster.MapX, monster.MapY), 12));
+                                monster.Monster.Name[Session.Account.Language], monster.MapId, monster.MapX, monster.MapY), 12));
                         Session.CurrentMapInstance.RemoveMonster(monster);
                         Session.CurrentMapInstance.RemovedMobNpcList.Add(monster);
                         if (DAOFactory.MapMonsterDAO.LoadById(monster.MapMonsterId) != null)
@@ -2821,7 +2822,7 @@ namespace OpenNos.Handler
                         Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(UserType.Npc, npc.MapNpcId));
                         Session.SendPacket(Session.Character.GenerateSay(
                             string.Format(Language.Instance.GetMessageFromKey("NPCMONSTER_REMOVED"), npc.MapNpcId,
-                                npc.Npc.Name, npc.MapId, npc.MapX, npc.MapY), 12));
+                                npc.Npc.Name[Session.Account.Language], npc.MapId, npc.MapX, npc.MapY), 12));
                         Session.CurrentMapInstance.RemoveNpc(npc);
                         Session.CurrentMapInstance.RemovedMobNpcList.Add(npc);
                         if (DAOFactory.ShopDAO.LoadByNpc(npc.MapNpcId) != null)
@@ -2977,22 +2978,24 @@ namespace OpenNos.Handler
                         ? ""
                         : packetsplit.Skip(withPage ? 1 : 0).Aggregate((a, b) => a + ' ' + b);
                 }
-
-                IEnumerable<ItemDTO> itemlist = DAOFactory.ItemDAO.FindByName(name).OrderBy(s => s.VNum)
-                    .Skip(page * 200).Take(200).ToList();
-                if (itemlist.Any())
+                foreach (I18NItemDto i18nItemName in DAOFactory.I18NItemDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
                 {
-                    foreach (ItemDTO item in itemlist)
+                    ItemDTO item = DAOFactory.ItemDAO.LoadByKey(i18nItemName.Key);
+                    if (item != null)
                     {
-                        Session.SendPacket(Session.Character.GenerateSay(
-                            $"[SearchItem:{page}]Item: {(string.IsNullOrEmpty(item.Name) ? "none" : item.Name)} VNum: {item.VNum}",
-                            12));
+                        Item vnum = ServerManager.GetItem(item.VNum);
+                        if (vnum != null)
+                        {
+                            Session.SendPacket(Session.Character.GenerateSay(
+                                    $"[SearchItem:{page}]Item: {(string.IsNullOrEmpty(vnum.Name[Session.Account.Language]) ? "none" : vnum.Name[Session.Account.Language])} VNum: {vnum.VNum}",
+                                    12));
+                        }
+                        else
+                        {
+                            Session.SendPacket(
+                                Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("ITEM_NOT_FOUND"), 11));
+                        }
                     }
-                }
-                else
-                {
-                    Session.SendPacket(
-                        Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("ITEM_NOT_FOUND"), 11));
                 }
             }
             else
@@ -3023,23 +3026,25 @@ namespace OpenNos.Handler
                         ? ""
                         : packetsplit.Skip(withPage ? 1 : 0).Aggregate((a, b) => a + ' ' + b);
                 }
-
-                IEnumerable<NpcMonsterDTO> monsterlist = DAOFactory.NpcMonsterDAO.FindByName(name)
-                    .OrderBy(s => s.NpcMonsterVNum).Skip(page * 200).Take(200).ToList();
-                if (monsterlist.Any())
+                foreach (II18NNpcMonsterDto i18nItemName in DAOFactory.I18NNpcMonsterDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
                 {
-                    foreach (NpcMonsterDTO npcMonster in monsterlist)
+                    NpcMonsterDTO npcMonsters = DAOFactory.NpcMonsterDAO.LoadByKey(i18nItemName.Key);
+                    if (npcMonsters != null)
                     {
-                        Session.SendPacket(Session.Character.GenerateSay(
-                            $"[SearchMonster:{page}]Monster: {(string.IsNullOrEmpty(npcMonster.Name) ? "none" : npcMonster.Name)} VNum: {npcMonster.NpcMonsterVNum}",
+                        NpcMonster npcMonster = ServerManager.GetNpcMonster(npcMonsters.NpcMonsterVNum);
+                        if (npcMonster != null)
+                        {
+                            Session.SendPacket(Session.Character.GenerateSay(
+                            $"[SearchMonster:{page}]Monster: {(string.IsNullOrEmpty(npcMonster.Name[Session.Account.Language]) ? "none" : npcMonster.Name[Session.Account.Language])} VNum: {npcMonster.NpcMonsterVNum}",
                             12));
+                        }
+                        else
+                        {
+                            Session.SendPacket(
+                                Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("MONSTER_NOT_FOUND"), 11));
+                        }
                     }
-                }
-                else
-                {
-                    Session.SendPacket(
-                        Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("MONSTER_NOT_FOUND"), 11));
-                }
+                }               
             }
             else
             {
@@ -3954,7 +3959,7 @@ namespace OpenNos.Handler
                     Session.SendPacket(Session.Character.GenerateSay(
                         $"MapId: {map.MapId}\n" +
                         $"MapMusic: {map.Music}\n" +
-                        $"MapName: {map.Name}\n" +
+                        $"MapName: {map.Name[Session.Account.Language]}\n" +
                         $"MapShopAllowed: {map.ShopAllowed}", 10));
                     Session.SendPacket(Session.Character.GenerateSay("---------------------------------", 10));
                     Session.SendPacket(Session.Character.GenerateSay("---------MapInstanceData---------", 10));

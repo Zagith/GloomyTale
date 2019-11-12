@@ -79,7 +79,7 @@ namespace OpenNos.Core
                 if (string.IsNullOrEmpty(value))
                 {
                     _streamWriter?.WriteLine(name);
-                   return "none";
+                    return $"#<{key}>";
                 }
 
                 return value;

@@ -13,6 +13,7 @@
  */
 
 using OpenNos.Domain;
+using OpenNos.Domain.I18N;
 using System;
 
 namespace OpenNos.Data
@@ -37,7 +38,8 @@ namespace OpenNos.Data
         public string RegistrationIP { get; set; }
 
         public string VerificationToken { get; set; }
-        
+
+        public RegionType Language { get; set; }
         #endregion
     }
 }

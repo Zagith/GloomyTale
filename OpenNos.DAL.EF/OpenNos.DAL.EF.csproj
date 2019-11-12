@@ -87,10 +87,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\I18NStringAttribute.cs" />
     <Compile Include="BoxItem.cs" />
     <Compile Include="CellonOption.cs" />
     <Compile Include="CharacterQuest.cs" />
     <Compile Include="CharacterTitle.cs" />
+    <Compile Include="Entities\I18NActDesc.cs" />
+    <Compile Include="Entities\I18NBCard.cs" />
+    <Compile Include="Entities\I18NCard.cs" />
+    <Compile Include="Entities\I18NItem.cs" />
+    <Compile Include="Entities\I18NMapIdData.cs" />
+    <Compile Include="Entities\I18NMapPointData.cs" />
+    <Compile Include="Entities\I18NNpcMonster.cs" />
+    <Compile Include="Entities\I18NNpcMonsterTalk.cs" />
+    <Compile Include="Entities\I18NQuest.cs" />
+    <Compile Include="Entities\I18NSkill.cs" />
     <Compile Include="LogChat.cs" />
     <Compile Include="LogCommands.cs" />
     <Compile Include="LogDrop.cs" />
@@ -139,6 +150,14 @@
     <Compile Include="Migrations\201911061222468_Antares06.cs" />
     <Compile Include="Migrations\201911061222468_Antares06.designer.cs">
       <DependentUpon>201911061222468_Antares06.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911101001046_Antares07.cs" />
+    <Compile Include="Migrations\201911101001046_Antares07.designer.cs">
+      <DependentUpon>201911101001046_Antares07.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911111244076_Antares08.cs" />
+    <Compile Include="Migrations\201911111244076_Antares08.designer.cs">
+      <DependentUpon>201911111244076_Antares08.cs</DependentUpon>
     </Compile>
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="Quest.cs" />
@@ -259,6 +278,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911061222468_Antares06.resx">
       <DependentUpon>201911061222468_Antares06.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911101001046_Antares07.resx">
+      <DependentUpon>201911101001046_Antares07.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111244076_Antares08.resx">
+      <DependentUpon>201911111244076_Antares08.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
