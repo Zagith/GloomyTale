@@ -415,7 +415,7 @@ namespace OpenNos.Handler
                                             {
                                                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                                                     string.Format(Language.Instance.GetMessageFromKey("NO_ITEM_REQUIRED"),
-                                                        ServerManager.GetItem(gift.VNum).Name), 0));
+                                                        ServerManager.GetItem(gift.VNum).Name[Session.Account.Language]), 0));
                                                 return;
                                             }
 
@@ -505,7 +505,7 @@ namespace OpenNos.Handler
                         {
                             Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                                 string.Format(Language.Instance.GetMessageFromKey("NO_ITEM_REQUIRED"),
-                                    ServerManager.GetItem(1012).Name), 0));
+                                    ServerManager.GetItem(1012).Name[Session.Account.Language]), 0));
                             return;
                         }
 

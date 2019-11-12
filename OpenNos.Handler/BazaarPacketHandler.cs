@@ -117,14 +117,14 @@ namespace OpenNos.Handler
                                     $"rc_buy 1 {bzcree.Item.Item.VNum} {bzcree.Owner} {cBuyPacket.Amount} {cBuyPacket.Price} 0 0 0");
 
                                 Session.SendPacket(Session.Character.GenerateSay(
-                                    $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {bzcree.Item.Item.Name} x {cBuyPacket.Amount}",
+                                    $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {bzcree.Item.Item.Name[Session.Account.Language]} x {cBuyPacket.Amount}",
                                     10));
 
                                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                                 {
                                     DestinationCharacterId = bz.SellerId,
                                     SourceWorldId = ServerManager.Instance.WorldId,
-                                    Message = StaticPacketHelper.Say(1, bz.SellerId, 12, string.Format(Language.Instance.GetMessageFromKey("BAZAAR_ITEM_SOLD"), cBuyPacket.Amount, bzcree.Item.Item.Name)),
+                                    Message = StaticPacketHelper.Say(1, bz.SellerId, 12, string.Format(Language.Instance.GetMessageFromKey("BAZAAR_ITEM_SOLD"), cBuyPacket.Amount, bzcree.Item.Item.Name[Session.Account.Language])),
                                     Type = MessageType.Other
                                 });
                                 
@@ -292,7 +292,7 @@ namespace OpenNos.Handler
             }
 
             SpinWait.SpinUntil(() => !ServerManager.Instance.InBazaarRefreshMode);
-            Session.SendPacket(UserInterfaceHelper.GenerateRCBList(cbListPacket));
+            Session.SendPacket(UserInterfaceHelper.GenerateRCBList(cbListPacket, Session.Account.Language));
         }
 
         /// <summary>

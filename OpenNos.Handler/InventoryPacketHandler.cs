@@ -954,7 +954,7 @@ namespace OpenNos.Handler
                                     Logger.LogUserEvent("CHARACTER_ITEM_GET", Session.GenerateIdentity(), $"[GetItem]Gold: {(int)(droppedGold.GoldAmount * multiplier)})");
 
                                     Session.SendPacket(Session.Character.GenerateSay(
-                                        $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {mapItem.GetItemInstance().Item.Name} x {droppedGold.GoldAmount}{(multiplier > 1 ? $" + {(int)(droppedGold.GoldAmount * multiplier) - droppedGold.GoldAmount}" : "")}",
+                                        $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {mapItem.GetItemInstance().Item.Name[Session.Account.Language]} x {droppedGold.GoldAmount}{(multiplier > 1 ? $" + {(int)(droppedGold.GoldAmount * multiplier) - droppedGold.GoldAmount}" : "")}",
                                         12));
                                 }
                                 else
@@ -2320,7 +2320,7 @@ namespace OpenNos.Handler
                             if (specialist.Upgrade > 9)
                             {
                                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                                    string.Format(Language.Instance.GetMessageFromKey("MUST_USE_ITEM"), ServerManager.GetItem(1364).Name), 0));
+                                    string.Format(Language.Instance.GetMessageFromKey("MUST_USE_ITEM"), ServerManager.GetItem(1364).Name[Session.Account.Language]), 0));
                                 return;
                             }
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
@@ -2349,7 +2349,7 @@ namespace OpenNos.Handler
                             if (specialist.Upgrade <= 9)
                             {
                                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                                    string.Format(Language.Instance.GetMessageFromKey("MUST_USE_ITEM"), ServerManager.GetItem(1363).Name), 0));
+                                    string.Format(Language.Instance.GetMessageFromKey("MUST_USE_ITEM"), ServerManager.GetItem(1363).Name[Session.Account.Language]), 0));
                                 return;
                             }
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)

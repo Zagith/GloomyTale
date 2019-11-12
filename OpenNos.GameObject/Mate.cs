@@ -882,7 +882,7 @@ namespace OpenNos.GameObject
                 {
                     Owner.Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                         string.Format(Language.Instance.GetMessageFromKey("NO_ITEM_REQUIRED"),
-                            ServerManager.GetItem(1012).Name), 0));
+                            ServerManager.GetItem(1012).Name[Owner.Session.Account.Language]), 0));
                     if (MateType == MateType.Pet)
                     {
                         Owner.IsPetAutoRelive = false;

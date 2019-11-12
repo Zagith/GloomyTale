@@ -886,7 +886,7 @@ namespace OpenNos.Handler
                     fairy.ElementRate = fairylevel;
                     fairy.XP = 0;
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                        string.Format(Language.Instance.GetMessageFromKey("FAIRY_LEVEL_CHANGED"), fairy.Item.Name),
+                        string.Format(Language.Instance.GetMessageFromKey("FAIRY_LEVEL_CHANGED"), fairy.Item.Name[Session.Account.Language]),
                         10));
                     Session.SendPacket(Session.Character.GeneratePairy());
                 }

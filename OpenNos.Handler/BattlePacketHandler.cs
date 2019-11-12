@@ -93,7 +93,7 @@ namespace OpenNos.Handler
                     }
                     else
                     {
-                        Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey(string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), ServerManager.GetItem(5996).Name, 1)), 10));
+                        Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey(string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), ServerManager.GetItem(5996).Name[Session.Account.Language], 1)), 10));
                         return;
                     }
                 }

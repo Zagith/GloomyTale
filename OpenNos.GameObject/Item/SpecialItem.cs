@@ -399,7 +399,7 @@ namespace OpenNos.GameObject
                     {
                         session.Character.AddStaticBuff(new StaticBuffDTO { CardId = 131 });
                         session.CurrentMapInstance?.Broadcast(session.Character.GeneratePairy());
-                        session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), inv.Item.Name), 0));
+                        session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), inv.Item.Name[session.Account.Language]), 0));
                         session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 3014), session.Character.PositionX, session.Character.PositionY);
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }
@@ -936,7 +936,7 @@ namespace OpenNos.GameObject
                             StaticBonusType = StaticBonusType.BazaarMedalGold
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                     }
                     break;
 
@@ -951,7 +951,7 @@ namespace OpenNos.GameObject
                             StaticBonusType = StaticBonusType.BazaarMedalSilver
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                     }
                     break;
 
@@ -982,7 +982,7 @@ namespace OpenNos.GameObject
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                     }
                     break;
 
@@ -998,7 +998,7 @@ namespace OpenNos.GameObject
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                     }
                     break;
 
@@ -1015,7 +1015,7 @@ namespace OpenNos.GameObject
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
                         session.SendPacket("ib 1278 1");
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                     }
                     break;
 
@@ -1032,7 +1032,7 @@ namespace OpenNos.GameObject
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
                         session.SendPacket("ib 1278 1");
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                     }
                     break;
 
@@ -1048,7 +1048,7 @@ namespace OpenNos.GameObject
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                     }
                     break;
 
@@ -1064,7 +1064,7 @@ namespace OpenNos.GameObject
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                     }
                     break;
 

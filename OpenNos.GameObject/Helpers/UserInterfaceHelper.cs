@@ -19,6 +19,7 @@ using System.Linq;
 using OpenNos.GameObject.Networking;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.Domain.I18N;
 
 namespace OpenNos.GameObject.Helpers
 {
@@ -189,7 +190,7 @@ namespace OpenNos.GameObject.Helpers
 
         public string GeneratePStashRemove(short slot) => $"pstash {GenerateRemovePacket(slot)}";
 
-        public static string GenerateRCBList(CBListPacket packet)
+        public static string GenerateRCBList(CBListPacket packet, RegionType language)
         {
             if (packet == null || packet.ItemVNumFilter == null)
             {
@@ -322,23 +323,23 @@ namespace OpenNos.GameObject.Helpers
                 switch (packet.OrderFilter)
                 {
                     case 0:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ThenBy(s => s.BazaarItem.Price).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ThenBy(s => s.BazaarItem.Price).ToList();
                         break;
 
                     case 1:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ThenByDescending(s => s.BazaarItem.Price).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ThenByDescending(s => s.BazaarItem.Price).ToList();
                         break;
 
                     case 2:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ThenBy(s => s.BazaarItem.Amount).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ThenBy(s => s.BazaarItem.Amount).ToList();
                         break;
 
                     case 3:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ThenByDescending(s => s.BazaarItem.Amount).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ThenByDescending(s => s.BazaarItem.Amount).ToList();
                         break;
 
                     default:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ToList();
                         break;
                 }
                 foreach (BazaarItemLink bzlink in definitivelist.Where(s => (s.BazaarItem.DateStart.AddHours(s.BazaarItem.Duration) - DateTime.Now).TotalMinutes > 0 && s.Item.Amount > 0).Skip(packet.Index * 50).Take(50))

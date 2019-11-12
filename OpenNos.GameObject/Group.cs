@@ -192,7 +192,7 @@ namespace OpenNos.GameObject
                         {
                             session.SendPacket(UserInterfaceHelper.GenerateMsg(
                                 string.Format(Language.Instance.GetMessageFromKey("ITEM_NOT_EQUIPPED"),
-                                    ServerManager.GetItem(requiredItem.VNum).Name), 0));
+                                    ServerManager.GetItem(requiredItem.VNum).Name[session.Account.Language]), 0));
                             return false;
                         }
                     }
