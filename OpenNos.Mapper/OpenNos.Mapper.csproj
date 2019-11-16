@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappers\FortuneWheelMapper.cs" />
     <Compile Include="Mappers\I18NMapMapper.cs" />
     <Compile Include="Mappers\BazaarItemMapper.cs" />
     <Compile Include="Mappers\BCardMapper.cs" />

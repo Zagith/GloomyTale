@@ -231,6 +231,12 @@ namespace OpenNos.DAL.EF
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Character>()
+                .HasMany(e => e.CharacterTitle)
+                .WithRequired(e => e.Character)
+                .HasForeignKey(e => e.CharacterId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Character>()
                 .HasMany(e => e.CharacterRelation2)
                 .WithRequired(e => e.Character2)
                 .HasForeignKey(e => e.RelatedCharacterId)
@@ -323,6 +329,12 @@ namespace OpenNos.DAL.EF
                 .HasMany(e => e.Drop)
                 .WithRequired(e => e.Item)
                 .HasForeignKey(e => e.ItemVNum)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Item>()
+                .HasMany(e => e.FortuneWheel)
+                .WithRequired(e => e.Item)
+                .HasForeignKey(e => e.ItemGeneratedVNum)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Item>()
@@ -537,6 +549,11 @@ namespace OpenNos.DAL.EF
 
             modelBuilder.Entity<Shop>()
                 .HasMany(e => e.ShopItem)
+                .WithRequired(e => e.Shop)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Shop>()
+                .HasMany(e => e.FortuneWheel)
                 .WithRequired(e => e.Shop)
                 .WillCascadeOnDelete(false);
 

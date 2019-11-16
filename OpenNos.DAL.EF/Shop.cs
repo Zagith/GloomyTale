@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.DAL.EF.Entities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -25,6 +26,7 @@ namespace OpenNos.DAL.EF
         {
             ShopItem = new HashSet<ShopItem>();
             ShopSkill = new HashSet<ShopSkill>();
+            FortuneWheel = new HashSet<FortuneWheel>();
         }
 
         #endregion
@@ -45,6 +47,8 @@ namespace OpenNos.DAL.EF
         public virtual ICollection<ShopItem> ShopItem { get; set; }
 
         public virtual ICollection<ShopSkill> ShopSkill { get; set; }
+
+        public virtual ICollection<FortuneWheel> FortuneWheel { get; set; }
 
         public byte ShopType { get; set; }
 

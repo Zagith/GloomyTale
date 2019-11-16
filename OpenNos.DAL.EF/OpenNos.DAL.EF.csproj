@@ -160,6 +160,10 @@
     <Compile Include="Migrations\201911111244076_Antares08.designer.cs">
       <DependentUpon>201911111244076_Antares08.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911162118458_Antares09.cs" />
+    <Compile Include="Migrations\201911162118458_Antares09.designer.cs">
+      <DependentUpon>201911162118458_Antares09.cs</DependentUpon>
+    </Compile>
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="Quest.cs" />
     <Compile Include="QuestLog.cs" />
@@ -285,6 +289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911111244076_Antares08.resx">
       <DependentUpon>201911111244076_Antares08.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911162118458_Antares09.resx">
+      <DependentUpon>201911162118458_Antares09.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
