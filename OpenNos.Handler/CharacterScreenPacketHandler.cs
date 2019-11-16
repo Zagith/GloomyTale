@@ -155,40 +155,7 @@ namespace OpenNos.Handler
                         CharacterId = characterDTO.CharacterId,
                         QuestId = 1997,
                         IsMainQuest = true
-                    });
-
-                    //DAOFactory.QuicklistEntryDAO.InsertOrUpdate(new QuicklistEntryDTO
-                    //{
-                    //  CharacterId = characterDTO.CharacterId,
-                    //Type = 1,
-                    //Slot = 1,
-                    //Pos = 1
-                    //});
-
-                    //DAOFactory.QuicklistEntryDAO.InsertOrUpdate(new QuicklistEntryDTO
-                    //{
-                    //    CharacterId = characterDTO.CharacterId,
-                    //    Q2 = 1,
-                    //    Slot = 2
-                    //});
-
-                    //DAOFactory.QuicklistEntryDAO.InsertOrUpdate(new QuicklistEntryDTO
-                    //{
-                    //    CharacterId = characterDTO.CharacterId,
-                    //    Q2 = 8,
-                    //    Type = 1,
-                    //    Slot = 1,
-                    //    Pos = 16
-                    //});
-
-                    //DAOFactory.QuicklistEntryDAO.InsertOrUpdate(new QuicklistEntryDTO
-                    //{
-                    //    CharacterId = characterDTO.CharacterId,
-                    //    Q2 = 9,
-                    //    Type = 1,
-                    //    Slot = 3,
-                    //    Pos = 1
-                    //});
+                    });                    
 
                     DAOFactory.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 200 });
                     DAOFactory.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 201 });

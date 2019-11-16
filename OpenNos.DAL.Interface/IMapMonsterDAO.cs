@@ -22,6 +22,8 @@ namespace OpenNos.DAL.Interface
     {
         #region Methods
 
+        IEnumerable<MapMonsterDTO> LoadAll();
+
         DeleteResult DeleteById(int mapMonsterId);
 
         bool DoesMonsterExist(int mapMonsterId);

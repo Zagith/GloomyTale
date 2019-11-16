@@ -30,6 +30,21 @@ namespace OpenNos.DAL.DAO
     {
         #region Methods
 
+        public IEnumerable<MapMonsterDTO> LoadAll()
+        {
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                List<MapMonsterDTO> result = new List<MapMonsterDTO>();
+                foreach (MapMonster MapMonster in context.MapMonster)
+                {
+                    MapMonsterDTO dto = new MapMonsterDTO();
+                    Mapper.Mappers.MapMonsterMapper.ToMapMonsterDTO(MapMonster, dto);
+                    result.Add(dto);
+                }
+                return result;
+            }
+        }
+
         public DeleteResult DeleteById(int mapMonsterId)
         {
             try

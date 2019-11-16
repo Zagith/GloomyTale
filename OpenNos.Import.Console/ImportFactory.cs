@@ -1524,44 +1524,43 @@ namespace OpenNos.Import.Console
         public void ImportMonsters()
         {
             short map = 0;
-            ConcurrentBag<int> mobMvPacketsList = new ConcurrentBag<int>();
-            List<MapMonsterDTO> monsters = new List<MapMonsterDTO>();
+            var mobMvPacketsList = _packetList.Where(o => o[0].Equals("mv") && o[1].Equals("3"))
+                .Select(currentPacket => Convert.ToInt32(currentPacket[2])).Distinct().ToList();
+            var monsters = new List<MapMonsterDTO>();
+            var mapMonsterdb = DAOFactory.MapMonsterDAO.LoadAll().ToList();
+            var npcMonsterdb = DAOFactory.NpcMonsterDAO.LoadAll().ToList();
 
-            Parallel.ForEach(_packetList.Where(o => o[0].Equals("mv") && o[1].Equals("3")), currentPacket =>
+            foreach (var currentPacket in _packetList.Where(o => (o.Length > 7 && o[0].Equals("in") && (o[1] == "3") && long.Parse(o[3]) <= 20000) || o[0].Equals("at")))
             {
-                if (!mobMvPacketsList.Contains(int.Parse(currentPacket[2])))
-                {
-                    mobMvPacketsList.Add(int.Parse(currentPacket[2]));
-                }
-            });
-            foreach (string[] currentPacket in _packetList.Where(o => o[0].Equals("in") || o[0].Equals("c_map")))
-            {
-                if (currentPacket.Length > 3 && currentPacket[0] == "c_map")
+                if ((currentPacket.Length > 5) && (currentPacket[0] == "at"))
                 {
                     map = short.Parse(currentPacket[2]);
                     continue;
                 }
-                if (currentPacket.Length > 7 && currentPacket[0] == "in" && currentPacket[1] == "3")
+
+                var monster = new MapMonsterDTO
                 {
-                    MapMonsterDTO monster = new MapMonsterDTO
-                    {
-                        MapId = map,
-                        MonsterVNum = short.Parse(currentPacket[2]),
-                        MapMonsterId = int.Parse(currentPacket[3]),
-                        MapX = short.Parse(currentPacket[4]),
-                        MapY = short.Parse(currentPacket[5]),
-                        Position = (byte)(currentPacket[6]?.Length == 0 ? 0 : byte.Parse(currentPacket[6])),
-                        IsDisabled = false
-                    };
-                    monster.IsMoving = mobMvPacketsList.Contains(monster.MapMonsterId);
-                    if (DAOFactory.NpcMonsterDAO.LoadByVNum(monster.MonsterVNum) == null || DAOFactory.MapMonsterDAO.LoadById(monster.MapMonsterId) != null || monsters.Any(i => i.MapMonsterId == monster.MapMonsterId))
-                    {
-                        continue;
-                    }
-                    monsters.Add(monster);
+                    MapId = map,
+                    MonsterVNum = short.Parse(currentPacket[2]),
+                    MapMonsterId = int.Parse(currentPacket[3]),
+                    MapX = short.Parse(currentPacket[4]),
+                    MapY = short.Parse(currentPacket[5]),
+                    Position = (byte)(currentPacket[6] == string.Empty ? 0 : byte.Parse(currentPacket[6])),
+                    IsDisabled = false,
+                    IsMoving = mobMvPacketsList.Contains(int.Parse(currentPacket[3]))
+                };
+
+                if ((npcMonsterdb.FirstOrDefault(s => s.NpcMonsterVNum.Equals(monster.MonsterVNum)) == null)
+                    || (mapMonsterdb.FirstOrDefault(s => s.MapMonsterId.Equals(monster.MapMonsterId)) != null)
+                    || (monsters.Count(i => i.MapMonsterId == monster.MapMonsterId) != 0))
+                {
+                    continue;
                 }
+
+                monsters.Add(monster);
             }
             DAOFactory.MapMonsterDAO.Insert(monsters);
+            
             Logger.Info(string.Format(Language.Instance.GetMessageFromKey("MONSTERS_PARSED"), monsters.Count));
         }
 
