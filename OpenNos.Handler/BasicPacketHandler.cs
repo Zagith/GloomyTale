@@ -2200,6 +2200,79 @@ namespace OpenNos.Handler
                                 10));
                     }
                 }
+                else if (guriPacket.Type == 8888)
+                {
+                    if (Session.Character.Inventory.CountItem(2009) >= 10)
+                    {
+
+                        DateTime now = DateTime.Now;
+                        IEnumerable<MapNpcDTO> npcs = DAOFactory.MapNpcDAO.LoadFromMap(Session.Character.MapId);
+                        foreach (MapNpcDTO npc in npcs.Where(n => n.MapNpcId.Equals(5)))
+                        {
+                            ShopDTO shop = DAOFactory.ShopDAO.LoadByNpc(npc.MapNpcId);
+                            IEnumerable<FortuneWheelDTO> roll = DAOFactory.FortuneWheelDAO.LoadByShopId(shop.ShopId).ToList();
+                            int probabilities = roll.Sum(s => s.Probability);
+                            int rnd = ServerManager.RandomNumber(0, probabilities);
+                            int currentrnd = 0;
+                            foreach (FortuneWheelDTO rollitem in roll)
+                            {
+                                currentrnd += rollitem.Probability;
+                                if (currentrnd >= rnd)
+                                {
+                                    Item i = ServerManager.GetItem(rollitem.ItemGeneratedVNum);
+                                    sbyte rare = (sbyte)rollitem.Rare;
+                                    byte upgrade = rollitem.Upgrade;
+                                    Session.Character.GiftAdd(rollitem.ItemGeneratedVNum, (short)rollitem.ItemGeneratedAmount, (byte)rare, upgrade);
+                                    Session.SendPacket($"rdi {rollitem.ItemGeneratedVNum} {rollitem.ItemGeneratedAmount}");
+                                    Session.Character.Inventory.RemoveItemAmount(2009, 10);
+                                    return;
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Session.SendPacket(
+                            UserInterfaceHelper.GenerateMsg(
+                                Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEM"), 0));
+                    }
+                }
+                else if (guriPacket.Type == 8889)
+                {
+                    if (Session.Character.Gold >= 5000000)
+                    {
+
+                        DateTime now = DateTime.Now;
+                        MapNpc npc = Session.CurrentMapInstance.Npcs.FirstOrDefault(n => n.MapNpcId.Equals(2));
+                        IEnumerable<FortuneWheelDTO> roll = DAOFactory.FortuneWheelDAO.LoadByShopId(npc.Shop.ShopId).ToList();
+                        int probabilities = roll.Sum(s => s.Probability);
+                        int rnd = ServerManager.RandomNumber(0, probabilities);
+                        int currentrnd = 0;
+                        foreach (FortuneWheelDTO rollitem in roll)
+                        {
+                            currentrnd += rollitem.Probability;
+                            if (currentrnd >= rnd)
+                            {
+                                Item i = ServerManager.GetItem(rollitem.ItemGeneratedVNum);
+                                sbyte rare = (sbyte)rollitem.Rare;
+                                byte upgrade = rollitem.Upgrade;
+                                Session.Character.GiftAdd(rollitem.ItemGeneratedVNum, (short)rollitem.ItemGeneratedAmount, (byte)rare, upgrade);
+                                Session.SendPacket($"rdi {rollitem.ItemGeneratedVNum} {rollitem.ItemGeneratedAmount}");
+                                Session.Character.Gold -= 5000000;
+                                Session.SendPacket(Session.Character.GenerateGold());
+                                return;
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Session.SendPacket(
+                            UserInterfaceHelper.GenerateMsg(
+                                Language.Instance.GetMessageFromKey("NOT_ENOUGH_GOLD"), 0));
+                    }
+                }
                 else if (guriPacket.Type == 7600)
                 {
                     if (Session.Character.Inventory.CountItem(1216) >= 1)

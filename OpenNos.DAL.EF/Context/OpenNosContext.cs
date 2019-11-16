@@ -170,6 +170,8 @@ namespace OpenNos.DAL.EF
         public virtual DbSet<I18NQuest> I18NQuest { get; set; }
 
         public virtual DbSet<I18NSkill> I18NSkill { get; set; }
+
+        public virtual DbSet<FortuneWheel> FortuneWheel { get; set; }
         #endregion
 
         #region Methods

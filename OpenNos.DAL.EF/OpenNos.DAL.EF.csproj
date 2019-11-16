@@ -92,6 +92,7 @@
     <Compile Include="CellonOption.cs" />
     <Compile Include="CharacterQuest.cs" />
     <Compile Include="CharacterTitle.cs" />
+    <Compile Include="Entities\FortuneWheel.cs" />
     <Compile Include="Entities\I18NActDesc.cs" />
     <Compile Include="Entities\I18NBCard.cs" />
     <Compile Include="Entities\I18NCard.cs" />
