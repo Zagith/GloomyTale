@@ -9,13 +9,13 @@ namespace OpenNos.Data.Base
         {
 
             Add(RegionType.EN, "NONAME");
-            //Add(RegionType.DE, "NONAME");
-            //Add(RegionType.FR, "NONAME");
+            Add(RegionType.DE, "NONAME");
+            Add(RegionType.FR, "NONAME");
             Add(RegionType.IT, "NONAME");
-            //dd(RegionType.PL, "NONAME");
+            Add(RegionType.PL, "NONAME");
             Add(RegionType.ES, "NONAME");
             //Add(RegionType.CS, "NONAME");
-            //Add(RegionType.TR, "NONAME");
+            Add(RegionType.TR, "NONAME");
             //Add(RegionType.RU, "NONAME");
         }
     }

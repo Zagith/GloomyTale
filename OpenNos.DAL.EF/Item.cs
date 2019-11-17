@@ -39,6 +39,7 @@ namespace OpenNos.DAL.EF
             RecipeList = new HashSet<RecipeList>();
             ShopItem = new HashSet<ShopItem>();
             BCards = new HashSet<BCard>();
+            FortuneWheel = new HashSet<FortuneWheel>();
         }
 
         #endregion
@@ -211,6 +212,7 @@ namespace OpenNos.DAL.EF
 
         public byte Width { get; set; }
 
+        public virtual ICollection<FortuneWheel> FortuneWheel { get; set; }
         #endregion
     }
 }

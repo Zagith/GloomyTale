@@ -84,6 +84,7 @@ namespace OpenNos.DAL
         private static II18NNpcMonsterDAO _i18NNpcMonsterDAO;
         private static II18NSkillDAO _i18NSkillDAO;
         private static II18NMapDAO _i18NMapDAO;
+        private static IFortuneWheelDAO _fortuneWheelDAO;
         #endregion
 
         #region Properties
@@ -213,6 +214,9 @@ namespace OpenNos.DAL
         public static II18NSkillDAO I18NSkillDAO => _i18NSkillDAO ?? (_i18NSkillDAO = new I18NSkillDAO());
 
         public static II18NMapDAO I18NMapDAO => _i18NMapDAO ?? (_i18NMapDAO = new I18NMapDAO());
+
+        public static IFortuneWheelDAO FortuneWheelDAO => _fortuneWheelDAO ?? (_fortuneWheelDAO = new FortuneWheelDAO());
+        
         #endregion
     }
 }

@@ -238,9 +238,32 @@ namespace OpenNos.GameObject
                     string recipelist = "m_list 2";
                     if (npc != null)
                     {
-                        List<Recipe> tps = npc.Recipes;
-                        recipelist = tps.Where(s => s.Amount > 0).Aggregate(recipelist, (current, s) => current + $" {s.ItemVNum}");
-                        recipelist += " -100";
+                        if (npc.Shop?.ShopId == 409)
+                        {
+                            DateTime now = DateTime.Now;
+                            IEnumerable<FortuneWheelDTO> roll = DAOFactory.FortuneWheelDAO.LoadByShopId(408);
+                            List<Recipe> recipeweek = new List<Recipe>();
+                            foreach (FortuneWheelDTO rollitem in roll)
+                            {
+                                Recipe recipedto = new Recipe
+                                {
+                                    Amount = (short)rollitem.ItemGeneratedAmount,
+                                    ItemVNum = rollitem.ItemGeneratedVNum
+                                };
+                                recipeweek.Add(recipedto);
+                            }
+                            foreach (Recipe ite in recipeweek)
+                            {
+                                if (ite.Amount > 0) recipelist = recipelist + $" {ite.ItemVNum}";
+                            }
+                            recipelist += " -100";
+                        }
+                        else
+                        {
+                            List<Recipe> tps = npc.Recipes;
+                            recipelist = tps.Where(s => s.Amount > 0).Aggregate(recipelist, (current, s) => current + $" {s.ItemVNum}");
+                            recipelist += " -100";
+                        }
                         Session.SendPacket(recipelist);
                     }
                     break;

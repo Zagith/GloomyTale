@@ -13,6 +13,7 @@ namespace OpenNos.DAL.EF
 
         [Key]
         public long CharacterTitleId { get; set; }
+
         public virtual Character Character { get; set; }
 
         public long CharacterId { get; set; }

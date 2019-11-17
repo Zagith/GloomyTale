@@ -170,6 +170,8 @@ namespace OpenNos.DAL.EF
         public virtual DbSet<I18NQuest> I18NQuest { get; set; }
 
         public virtual DbSet<I18NSkill> I18NSkill { get; set; }
+
+        public virtual DbSet<FortuneWheel> FortuneWheel { get; set; }
         #endregion
 
         #region Methods
@@ -225,6 +227,12 @@ namespace OpenNos.DAL.EF
             modelBuilder.Entity<Character>()
                 .HasMany(e => e.CharacterRelation1)
                 .WithRequired(e => e.Character1)
+                .HasForeignKey(e => e.CharacterId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Character>()
+                .HasMany(e => e.CharacterTitle)
+                .WithRequired(e => e.Character)
                 .HasForeignKey(e => e.CharacterId)
                 .WillCascadeOnDelete(false);
 
@@ -321,6 +329,12 @@ namespace OpenNos.DAL.EF
                 .HasMany(e => e.Drop)
                 .WithRequired(e => e.Item)
                 .HasForeignKey(e => e.ItemVNum)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Item>()
+                .HasMany(e => e.FortuneWheel)
+                .WithRequired(e => e.Item)
+                .HasForeignKey(e => e.ItemGeneratedVNum)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Item>()
@@ -535,6 +549,11 @@ namespace OpenNos.DAL.EF
 
             modelBuilder.Entity<Shop>()
                 .HasMany(e => e.ShopItem)
+                .WithRequired(e => e.Shop)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Shop>()
+                .HasMany(e => e.FortuneWheel)
                 .WithRequired(e => e.Shop)
                 .WillCascadeOnDelete(false);
 

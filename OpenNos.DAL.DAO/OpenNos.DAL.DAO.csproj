@@ -67,6 +67,7 @@
     <Compile Include="FamilyCharacterDAO.cs" />
     <Compile Include="FamilyDAO.cs" />
     <Compile Include="FamilyLogDAO.cs" />
+    <Compile Include="FortuneWheelDAO.cs" />
     <Compile Include="GeneralLogDAO.cs" />
     <Compile Include="I18NCardDAO.cs" />
     <Compile Include="I18NItemDAO.cs" />
