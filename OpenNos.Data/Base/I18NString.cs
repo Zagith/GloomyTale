@@ -15,7 +15,7 @@ namespace OpenNos.Data.Base
             //dd(RegionType.PL, "NONAME");
             Add(RegionType.ES, "NONAME");
             //Add(RegionType.CS, "NONAME");
-            //Add(RegionType.TR, "NONAME");
+            Add(RegionType.TR, "NONAME");
             //Add(RegionType.RU, "NONAME");
         }
     }

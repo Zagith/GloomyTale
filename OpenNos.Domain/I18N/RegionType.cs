@@ -13,7 +13,7 @@ namespace OpenNos.Domain.I18N
         //PL,
         ES,
         //CS,
-        //TR,
+        TR,
         //RU
     }
 }
