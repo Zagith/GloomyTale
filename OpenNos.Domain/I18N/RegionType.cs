@@ -7,10 +7,10 @@ namespace OpenNos.Domain.I18N
     public enum RegionType
     {
         EN,
-        //DE,
-        //FR,
+        DE,
+        FR,
         IT,
-        //PL,
+        PL,
         ES,
         //CS,
         TR,
