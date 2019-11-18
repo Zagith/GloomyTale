@@ -27,6 +27,7 @@ using OpenNos.GameObject.Networking;
 using static OpenNos.Domain.BCardType;
 using System.Collections.Concurrent;
 using OpenNos.DAL;
+using OpenNos.GameObject.Event.TIMESPACES;
 
 namespace OpenNos.Handler
 {
@@ -770,6 +771,50 @@ namespace OpenNos.Handler
                             return;
                         }
                         break;
+                    case 1805:
+                        {
+                            if (Session.Character.MapId == 1)
+                            {
+                                int dist = Map.GetDistance(
+                                    new MapCell { X = Session.Character.PositionX, Y = Session.Character.PositionY },
+                                    new MapCell { X = 125, Y = 61 });
+                                if (dist < 5)
+                                {
+                                   Pts.GeneratePTS(recipe.ItemVNum, Session);
+                                    foreach (RecipeItemDTO ite in recipe.Items)
+                                    {
+                                        Session.Character.Inventory.RemoveItemAmount(ite.ItemVNum, ite.Amount);
+                                    }
+                                }
+                                else
+                                {
+                                    Session.SendPacket(UserInterfaceHelper.GenerateInfo("Devi essere a Nosville"));
+                                }
+                            }
+                        }
+                        return;
+                    case 1024:
+                        {
+                            if (Session.Character.MapId == 1)
+                            {
+                                int dist = Map.GetDistance(
+                                    new MapCell { X = Session.Character.PositionX, Y = Session.Character.PositionY },
+                                    new MapCell { X = 120, Y = 56 });
+                                if (dist < 5)
+                                {
+                                    Bts.GenerateBTS(recipe.ItemVNum, Session);
+                                    foreach (RecipeItemDTO ite in recipe.Items)
+                                    {
+                                        Session.Character.Inventory.RemoveItemAmount(ite.ItemVNum, ite.Amount);
+                                    }
+                                }
+                                else
+                                {
+                                    Session.SendPacket(UserInterfaceHelper.GenerateInfo("Devi essere a Nosville"));
+                                }
+                            }
+                        }
+                        return;
                 }
 
                 Item item = ServerManager.GetItem(recipe.ItemVNum);

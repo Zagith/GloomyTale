@@ -135,6 +135,8 @@
     <Compile Include="Event\ICEBREAKER\IceBreaker.cs" />
     <Compile Include="Event\TALENTARENA %28Unused%29\TalentArena.cs" />
     <Compile Include="Event\TALENTARENA %28Unused%29\TalentArenaBattle.cs" />
+    <Compile Include="Event\TIMESPACES\Bts.cs" />
+    <Compile Include="Event\TIMESPACES\Pts.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\MallAPIHelper.cs" />
     <Compile Include="Helpers\MateHelper.cs" />
