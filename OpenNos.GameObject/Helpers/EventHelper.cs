@@ -939,6 +939,86 @@ namespace OpenNos.GameObject.Helpers
                             }
                             break;
 
+                        case EventActionType.DROPMETEORITE:
+                            {
+                                if (evt.MapInstance != null)
+                                {
+                                    Tuple<int> meteo = (Tuple<int>)evt.Parameter;
+                                    short VNUM = 0;
+                                    switch (meteo.Item1)
+                                    {
+                                        case 55:
+                                            VNUM = 1464;
+                                            break;
+                                        case 80:
+                                            VNUM = 1463;
+                                            break;
+                                        case 99:
+                                            VNUM = 1462;
+                                            break;
+                                    }
+                                    foreach (ClientSession c in evt.MapInstance.Sessions)
+                                    {
+                                        if ((c.Character.Level + 10) >= meteo.Item1)
+                                        {
+                                            c.Character.GiftAdd(VNUM, 1, 0, 0);
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
+                        case EventActionType.BOMBARDAMENTOMETEORITE:
+                            {
+                                if (evt.MapInstance != null)
+                                {
+                                    Tuple<int> meteo = (Tuple<int>)evt.Parameter;
+                                    short perc = 0;
+                                    switch (meteo.Item1)
+                                    {
+                                        case 55:
+                                            perc = 25;
+                                            break;
+                                        case 80:
+                                            perc = 60;
+                                            break;
+                                        case 99:
+                                            perc = 80;
+                                            break;
+                                    }
+                                    foreach (ClientSession c in evt.MapInstance.Sessions)
+                                    {
+                                        int circleId = evt.MapInstance.GetNextMonsterId();
+                                        MapMonster circle = new MapMonster { MonsterVNum = 2018, MapX = c.Character.PositionX, MapY = c.Character.PositionY, MapMonsterId = circleId, IsHostile = false, IsMoving = false, ShouldRespawn = false };
+                                        circle.Initialize(evt.MapInstance);
+                                        circle.NoAggresiveIcon = true;
+                                        evt.MapInstance.AddMonster(circle);
+                                        evt.MapInstance.Broadcast(circle.GenerateIn());
+                                        evt.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, circleId, 4495));
+                                        Observable.Timer(TimeSpan.FromSeconds(3)).Subscribe(observer =>
+                                        {
+                                            if (evt.MapInstance != null)
+                                            {
+                                                evt.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Monster, circleId, 3, circleId, 1220, 220, 0, 4496, c.Character.PositionX, c.Character.PositionY, true, 0, 5000, 0, 0));
+                                                MapMonster mapmonster = evt.MapInstance.Monsters.Where(s => s.MonsterVNum == 1046).FirstOrDefault();
+
+                                                foreach (Character character in evt.MapInstance.GetCharactersInRange(c.Character.PositionX, c.Character.PositionY, 2))
+                                                {
+                                                    character.GetDamageInPercentage(perc);
+                                                    character.GetMPPercentage(perc);
+                                                    character.Session.SendPacket(character.GenerateStat());
+
+                                                }
+                                                evt.MapInstance.RemoveMonster(circle);
+                                                evt.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, circle.MapMonsterId));
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                            break;
+
+
                             #endregion
                     }
                 }

@@ -1387,7 +1387,7 @@ namespace OpenNos.Handler
                 {
                     Session.SendPacket($"qna #guri^8889 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA"), 5000000)}");
                 }
-                else if (npc.Shop?.ShopId == 99)
+                else if (npc.Shop?.ShopId == 91)
                 {
                     ItemDTO item = DAOFactory.ItemDAO.LoadById(2009);
                     Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10, item.Name[Session.Account.Language])}");

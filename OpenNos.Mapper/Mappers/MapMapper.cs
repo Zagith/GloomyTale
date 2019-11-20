@@ -21,6 +21,7 @@ namespace OpenNos.Mapper.Mappers
             output.Name = input.NameI18NKey;
             output.ShopAllowed = input.ShopAllowed;
             output.XpRate = input.XpRate;
+            output.MeteoriteLevel = input.MeteoriteLevel;
 
             return true;
         }
@@ -39,6 +40,7 @@ namespace OpenNos.Mapper.Mappers
             output.NameI18NKey = input.Name;
             output.ShopAllowed = input.ShopAllowed;
             output.XpRate = input.XpRate;
+            output.MeteoriteLevel = input.MeteoriteLevel;
 
             return true;
         }

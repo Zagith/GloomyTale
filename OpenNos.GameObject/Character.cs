@@ -648,6 +648,56 @@ namespace OpenNos.GameObject
 
         #region Methods
 
+        public void GenerateTacchetta(MapMonster monsterToAttack)
+        {
+            lock (_syncObj)
+            {
+                if (monsterToAttack == null || !monsterToAttack.IsAlive)
+                {
+                    return;
+                }
+
+                monsterToAttack.RunTacchettaEvent();
+            }
+        }
+
+        public void GenerateTacchettaDivisoDue(MapMonster monsterToAttack)
+        {
+            lock (_syncObj)
+            {
+                if (monsterToAttack == null || !monsterToAttack.IsAlive)
+                {
+                    return;
+                }
+
+                monsterToAttack.RunTacchettaDivisoDueEvent();
+            }
+        }
+
+        public void GetDamageInPercentage(double percentage)
+        {
+            LastDefence = DateTime.Now;
+            Dispose();
+            short dannitot = (short)(HPLoad() * (percentage / 100));
+            Hp -= dannitot;
+            if (Hp < 0)
+            {
+                Hp = 1;
+            }
+        }
+
+        public void GetMPPercentage(double percentage)
+        {
+            LastDefence = DateTime.Now;
+            Dispose();
+            short dannitot = (short)(MPLoad() * (percentage / 100));
+            Mp -= dannitot;
+            if (Mp < 0)
+            {
+                Mp = 1;
+            }
+        }
+
         public List<long> GetMTListTargetQueue_QuickFix(CharacterSkill ski, UserType entityType)
         {
             List<long> result = new List<long>();

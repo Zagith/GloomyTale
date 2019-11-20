@@ -317,7 +317,7 @@ namespace OpenNos.GameObject
             ArmorMeleeDefense = 0;
             ArmorRangeDefense = 0;
             ArmorMagicalDefense = 0;
-            Element = monster.Monster.Element;
+            Element = monster.Element > 0 ? monster.Element : monster.Monster.Element;
             ElementRate = monster.Monster.ElementRate;
             Death = monster.Death;
         }

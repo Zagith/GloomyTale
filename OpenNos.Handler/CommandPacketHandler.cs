@@ -21,6 +21,7 @@ using OpenNos.GameObject;
 using OpenNos.GameObject.CommandPackets;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
+using OpenNos.GameObject.Packets.CommandPackets;
 using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Data;
 using System;
@@ -48,6 +49,24 @@ namespace OpenNos.Handler
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// $Meteorite Command
+        /// </summary>
+        /// <param name="meteoriteSpawnPacket"></param>
+        public void MeteoriteSpawn(MeteoriteSpawnPacket meteoriteSpawnPacket)
+        {
+            if (meteoriteSpawnPacket != null)
+            {
+                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MeteoriteSpawn]");
+
+                ServerManager.Instance.MeteoriteSpawn();
+            }
+            else
+            {
+                Session.SendPacket(Session.Character.GenerateSay(EventPacket.ReturnHelp(), 10));
+            }
+        }
 
         public void AddUserLog(AddUserLogPacket packet)
         {
