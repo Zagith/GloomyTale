@@ -105,7 +105,17 @@ namespace OpenNos.GameObject.Helpers
                                 return;
                             }
                             break;
-
+                        case EventType.SHEEPGAME:
+                            if (ServerManager.Instance.ChannelId != 51)
+                            {
+                                SheepGame.GenerateSheepGames();
+                            }
+                            else
+                            {
+                                ServerManager.Instance.StartedEvents.Remove(type);
+                                return;
+                            }
+                            break;
                         case EventType.METEORITEGAME:
                             if (ServerManager.Instance.ChannelId != 51)
                             {

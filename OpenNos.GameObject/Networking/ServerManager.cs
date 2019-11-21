@@ -2015,7 +2015,7 @@ namespace OpenNos.GameObject.Networking
             MapInstance map = null;
             while (mappa == 0)
             {
-                map = GetMapInstanceByMapId((short)RandomNumber(1, 3));
+                map = GetMapInstanceByMapId((short)RandomNumber(2, 4817));
                 if (map != null)
                 {
                     if (map.MeteoriteLevel > 0)
@@ -2039,7 +2039,7 @@ namespace OpenNos.GameObject.Networking
             {
                 case 55:
                     MaxHp = 250000;
-                    NumeroMob = 25;
+                    NumeroMob = 15;
                     switch (element)
                     {
                         case 1:
@@ -2058,7 +2058,7 @@ namespace OpenNos.GameObject.Networking
                     break;
                 case 80:
                     MaxHp = 2500000;
-                    NumeroMob = 60;
+                    NumeroMob = 20;
                     switch (element)
                     {
                         case 1:
@@ -2077,7 +2077,7 @@ namespace OpenNos.GameObject.Networking
                     break;
                 case 99:
                     MaxHp = 10000000;
-                    NumeroMob = 100;
+                    NumeroMob = 25;
                     switch (element)
                     {
                         case 1:
@@ -2098,9 +2098,9 @@ namespace OpenNos.GameObject.Networking
             List<MonsterToSummon> summonParameters = new List<MonsterToSummon>();
             for (int i = 0; i <= NumeroMob; i++)
             {
-                short x = (short)(ServerManager.RandomNumber(-3, 3) + pos.X);
-                short y = (short)(ServerManager.RandomNumber(-3, 3) + pos.Y);
-                summonParameters.Add(new MonsterToSummon((short)MonsterVNUM, new MapCell { X = x, Y = y }, null, true));
+                short x = (short)(RandomNumber(-3, 3) + pos.X);
+                short y = (short)(RandomNumber(-3, 3) + pos.Y);
+                summonParameters.Add(new MonsterToSummon(MonsterVNUM, new MapCell { X = x, Y = y }, null, true));
             }
 
             List<EventContainer> OnTacchettaDivisoDueEvents = new List<EventContainer>
@@ -2111,10 +2111,6 @@ namespace OpenNos.GameObject.Networking
             List<EventContainer> OnTacchettaEvents = new List<EventContainer>
             {
                 new EventContainer(map, EventActionType.BOMBARDAMENTOMETEORITE, new Tuple<int>(map.MeteoriteLevel))
-            };
-
-            List<EventContainer> onDeathEvents = new List<EventContainer> {
-                new EventContainer(map, EventActionType.DROPMETEORITE, new Tuple<int>(map.MeteoriteLevel))
             };
             MapMonster monster = new MapMonster
             {
