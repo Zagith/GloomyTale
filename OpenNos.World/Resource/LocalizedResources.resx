@@ -151,25 +151,25 @@
     <value>Wrong password.</value>
   </data>
   <data name="BN0" xml:space="preserve">
-    <value>Welcome^to^NosByte!</value>
+    <value>Welcome^to^GloomyTale!</value>
   </data>
   <data name="BN1" xml:space="preserve">
-    <value>Welcome^to^NosByte!</value>
+    <value>Welcome^to^GloomyTale!</value>
   </data>
   <data name="BN2" xml:space="preserve">
-    <value>Welcome^to^NosByte!</value>
+    <value>Welcome^to^GloomyTale!</value>
   </data>
   <data name="BN3" xml:space="preserve">
-    <value>Welcome^to^NosByte!</value>
+    <value>Welcome^to^GloomyTale!</value>
   </data>
   <data name="BN4" xml:space="preserve">
-    <value>Welcome^to^NosByte!</value>
+    <value>Welcome^to^GloomyTale!</value>
   </data>
   <data name="BN5" xml:space="preserve">
-    <value>Welcome^to^NosByte!</value>
+    <value>Welcome^to^GloomyTale!</value>
   </data>
   <data name="BN6" xml:space="preserve">
-    <value>Welcome^to^NosByte!</value>
+    <value>Welcome^to^GloomyTale!</value>
   </data>
   <data name="BUFF_BLOCKED" xml:space="preserve">
     <value>Buff icons disabled.</value>
@@ -811,13 +811,13 @@
     <value>You joined {0}'s party!</value>
   </data>
   <data name="BN7" xml:space="preserve">
-    <value>Welcome ^to^NosByte!</value>
+    <value>Welcome ^to^GloomyTale!</value>
   </data>
   <data name="BN8" xml:space="preserve">
-    <value>Welcome^to^NosByte!</value>
+    <value>Welcome^to^GloomyTale!</value>
   </data>
   <data name="BN9" xml:space="preserve">
-    <value>Welcome^to^NosByte!</value>
+    <value>Welcome^to^GloomyTale!</value>
   </data>
   <data name="NO_WIG" xml:space="preserve">
     <value>You are not wearing wigs.</value>
@@ -982,7 +982,7 @@
     <value>We hope you like your experience in here!</value>
   </data>
   <data name="BOT_MESSAGE_1" xml:space="preserve">
-    <value>Visit our page https://nosbyte.com</value>
+    <value>Visit our page https://GloomyTale.com</value>
   </data>
   <data name="BOT_MESSAGE_2" xml:space="preserve">
     <value>Get your daily gift in our webpage!</value>

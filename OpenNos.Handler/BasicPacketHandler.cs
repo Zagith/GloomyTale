@@ -3654,7 +3654,7 @@ namespace OpenNos.Handler
             {
                 if (!Session.Character.hasVerifiedSecondPassword)
                 {
-                    Session.SendPacket(GameObject.Helpers.UserInterfaceHelper.GenerateInfo("Please enter your pin with $Pw. If you have no pin, use $SetPw"));
+                    Session.SendPacket(UserInterfaceHelper.GenerateInfo("Please enter your pin with $Pw. If you have no pin, use $SetPw"));
                 }
             });
 

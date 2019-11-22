@@ -2341,7 +2341,10 @@ namespace OpenNos.GameObject
                 FamilyInviteCharacters.Clear();
                 FriendRequestCharacters.Clear();
                 Life.Dispose();
-                PinAsk.Dispose();
+                if (PinAsk != null)
+                {
+                    PinAsk.Dispose();
+                }
                 WalkDisposable?.Dispose();
                 SealDisposable?.Dispose();
                 MarryRequestCharacters.Clear();
