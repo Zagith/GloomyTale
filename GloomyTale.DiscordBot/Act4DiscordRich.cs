@@ -55,6 +55,7 @@ namespace GloomyTale.DiscordBot
                     message = "A new raid can appear to Frozen Crown... Get ready for the battle!";
                     embed = new EmbedBuilder
                     {
+                        Color = Color.DarkBlue,
                         ImageUrl = "http://wiki.nostale.it/images/4/45/LordMukraju.png",
                         Title = "Lord Mukraju Appear",
                         Description = $"Faction {nameFaction}"
@@ -68,6 +69,7 @@ namespace GloomyTale.DiscordBot
                         case MapInstanceType.Act4Morcos:
                             embed = new EmbedBuilder
                             {
+                                Color = Color.Red,
                                 ImageUrl = "http://wiki.nostale.it/images/b/bc/MaestroMorcos.png",
                                 Title = "Morcos Raid",
                                 Description = $"Raid Morcos started for {nameFaction} faction"
@@ -84,6 +86,7 @@ namespace GloomyTale.DiscordBot
                         case MapInstanceType.Act4Calvina:
                             embed = new EmbedBuilder
                             {
+                                Color = Color.Blue,
                                 ImageUrl = "http://wiki.nostale.it/images/2/26/LadyCalvinas.png",
                                 Title = "Calvina Raid",
                                 Description = $"Raid Calvina started for {nameFaction} faction"
@@ -92,6 +95,7 @@ namespace GloomyTale.DiscordBot
                         case MapInstanceType.Act4Berios:
                             embed = new EmbedBuilder
                             {
+                                Color = Color.Gold,
                                 ImageUrl = "http://wiki.nostale.it/images/f/f6/BaroneBerios.png",
                                 Title = "Berios Raid",
                                 Description = $"Raid Berios started for {nameFaction} faction"
