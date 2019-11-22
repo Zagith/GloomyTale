@@ -41,6 +41,7 @@ using OpenNos.Data.Base;
 using System.Reflection;
 using OpenNos.Data.Interfaces;
 using Mapster;
+using GloomyTale.DiscordBot;
 
 namespace OpenNos.GameObject.Networking
 {
@@ -2167,7 +2168,7 @@ namespace OpenNos.GameObject.Networking
                 monster.Faction = (FactionType)faction == FactionType.Angel ? FactionType.Demon : FactionType.Angel;
                 instance.AddMonster(monster);
                 instance.Broadcast(monster.GenerateIn());
-
+                Act4DiscordRich discord = new Act4DiscordRich(faction, 0, true);
                 Observable.Timer(TimeSpan.FromSeconds(faction == 1 ? Act4AngelStat.TotalTime : Act4DemonStat.TotalTime)).Subscribe(s =>
                 {
                     if (instance.Monsters.ToList().Any(m => m.MonsterVNum == monster.MonsterVNum))
