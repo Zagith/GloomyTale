@@ -2366,6 +2366,36 @@ namespace OpenNos.GameObject
 
                         break;
 
+                    case BCardType.CardType.LotusSkills:
+                        break;
+
+                    case BCardType.CardType.WolfMaster:
+                        {
+                            Character user = sender.Character != null ? sender.Character : session.Character;
+
+                            if (user == null)
+                            {
+                                break;
+                            }
+                            switch (SubType)
+                            {
+                                case ((byte)AdditionalTypes.WolfMaster.AddUltimatePoints / 10):
+                                    {
+                                        user.AddUltimatePoints((short)FirstData);
+                                        user.Session.SendPacket(user.GenerateFtPtPacket());
+                                        user.AddWolfBuffs();
+                                    }
+                                    break;
+                                case (byte)AdditionalTypes.WolfMaster.CanExecuteUltimateSkills / 10:
+                                    {
+                                        user.Session.SendPacket(user.GenerateFtPtPacket());
+                                        user.Session.SendPackets(user.GenerateQuicklist());
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+
                     default:
                         Logger.Warn($"Card Type {Type} not defined!");
                         break;
