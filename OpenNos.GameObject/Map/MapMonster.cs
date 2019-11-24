@@ -59,10 +59,12 @@ namespace OpenNos.GameObject
             OnNoticeEvents = new List<EventContainer>();
             OnSpawnEvents = new List<EventContainer>();
             PVELockObject = new object();
+            OnTacchettaEvents = new List<EventContainer>();
         }
 
         public MapMonster(MapMonsterDTO input) : this()
         {
+            OnTacchettaEvents = new List<EventContainer>();
             IsDisabled = input.IsDisabled;
             IsMoving = input.IsMoving;
             MapId = input.MapId;
@@ -77,6 +79,17 @@ namespace OpenNos.GameObject
         #endregion
 
         #region Properties
+
+        public bool Tacchetta1 { get; set; }
+        public bool Tacchetta2 { get; set; }
+        public bool Tacchetta3 { get; set; }
+        public bool Tacchetta4 { get; set; }
+
+        public bool TacchettaDivisoDue1 { get; set; }
+        public bool TacchettaDivisoDue2 { get; set; }
+        public bool TacchettaDivisoDue3 { get; set; }
+        public bool TacchettaDivisoDue4 { get; set; }
+        public bool TacchettaDivisoDue5 { get; set; }
 
         public bool IsSelfAttack => MonsterHelper.IsSelfAttack(MonsterVNum);
 
@@ -148,6 +161,10 @@ namespace OpenNos.GameObject
 
         public List<EventContainer> OnDeathEvents => BattleEntity.OnDeathEvents;
 
+        public List<EventContainer> OnTacchettaEvents { get; set; }
+
+        public List<EventContainer> OnTacchettaDivisoDueEvents { get; set; }
+
         public List<EventContainer> OnNoticeEvents { get; set; }
 
         public List<EventContainer> OnSpawnEvents { get; set; }
@@ -159,6 +176,8 @@ namespace OpenNos.GameObject
         public List<NpcMonsterSkill> Skills { get; set; }
 
         public bool Started { get; internal set; }
+
+        public byte Element { get; set; }
 
         public byte Speed
         {
@@ -562,6 +581,16 @@ namespace OpenNos.GameObject
                 X = MapX,
                 Y = MapY
             }) <= distance;
+        }
+
+        public void RunTacchettaEvent()
+        {
+            OnTacchettaEvents.ForEach(e => EventHelper.Instance.RunEvent(e, monster: this));
+        }
+
+        public void RunTacchettaDivisoDueEvent()
+        {
+            OnTacchettaDivisoDueEvents.ForEach(e => EventHelper.Instance.RunEvent(e, monster: this));
         }
 
         public void RunDeathEvent()
@@ -1380,6 +1409,68 @@ namespace OpenNos.GameObject
                         attackerBattleEntity.AddBuff(new Buff(560, attackerBattleEntity.Level), attackerBattleEntity);
                     }
                 }
+
+                if (CurrentHp > 0)
+                {
+                    #region TacchettaDivisoDue
+                    if ((MaxHp - CurrentHp >= MaxHp * 0.1) && TacchettaDivisoDue1 == false)
+                    {
+                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                        TacchettaDivisoDue1 = true;
+                    }
+
+                    if ((MaxHp - CurrentHp >= MaxHp * 0.3) && TacchettaDivisoDue2 == false)
+                    {
+                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                        TacchettaDivisoDue2 = true;
+                    }
+
+                    if ((MaxHp - CurrentHp >= MaxHp * 0.5) && TacchettaDivisoDue3 == false)
+                    {
+                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                        TacchettaDivisoDue3 = true;
+                    }
+
+                    if ((MaxHp - CurrentHp >= MaxHp * 0.7) && TacchettaDivisoDue4 == false)
+                    {
+                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                        TacchettaDivisoDue4 = true;
+                    }
+
+                    if ((MaxHp - CurrentHp >= MaxHp * 0.9) && TacchettaDivisoDue5 == false)
+                    {
+                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                        TacchettaDivisoDue5 = true;
+                    }
+                    #endregion
+
+                    #region Tacchetta
+                    if ((MaxHp - CurrentHp >= MaxHp / 5) && Tacchetta1 == false)
+                    {
+                        hitRequest.Session.Character.GenerateTacchetta(this);
+                        Tacchetta1 = true;
+                    }
+
+                    if (((MaxHp - CurrentHp >= (MaxHp / 5) * 2)) && Tacchetta2 == false)
+                    {
+                        hitRequest.Session.Character.GenerateTacchetta(this);
+                        Tacchetta2 = true;
+                    }
+
+                    if (((MaxHp - CurrentHp >= (MaxHp / 5) * 3)) && Tacchetta3 == false)
+                    {
+                        hitRequest.Session.Character.GenerateTacchetta(this);
+                        Tacchetta3 = true;
+                    }
+
+                    if (((MaxHp - CurrentHp >= (MaxHp / 5) * 4)) && Tacchetta4 == false)
+                    {
+                        hitRequest.Session.Character.GenerateTacchetta(this);
+                        Tacchetta4 = true;
+                    }
+                    #endregion
+                }
+
                 if (CurrentHp <= 0 && !isCaptureSkill)
                 {
                     // generate the kill bonus

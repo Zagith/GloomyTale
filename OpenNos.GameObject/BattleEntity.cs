@@ -317,7 +317,7 @@ namespace OpenNos.GameObject
             ArmorMeleeDefense = 0;
             ArmorRangeDefense = 0;
             ArmorMagicalDefense = 0;
-            Element = monster.Monster.Element;
+            Element = monster.Element > 0 ? monster.Element : monster.Monster.Element;
             ElementRate = monster.Monster.ElementRate;
             Death = monster.Death;
         }
@@ -811,6 +811,16 @@ namespace OpenNos.GameObject
                     return;
                 }
 
+                if (indicator.Card.BCards.Any(s => s.Type == (byte)CardType.LotusSkills && s.SubType.Equals((byte)AdditionalTypes.LotusSkills.ChangeMoonSkills / 10)))
+                {
+                    RemoveBuff(697);
+                }
+
+                if (indicator.Card.BCards.Any(s => s.Type == (byte)CardType.LotusSkills && s.SubType.Equals((byte)AdditionalTypes.LotusSkills.ChangeLotusSkills / 10)))
+                {
+                    RemoveBuff(690);
+                }
+
                 switch (indicator.Card.CardId)
                 {
                     case 272:
@@ -940,6 +950,56 @@ namespace OpenNos.GameObject
                         break;
                     case 617:
                         RemoveBuff(608); // Magical Fetters
+                        break;
+                    case 727:
+                        if (Character == null)
+                        {
+                            break;
+                        }
+                        if (Buffs.Any(s => s.Card.CardId == 728))
+                        {
+                            MapInstance.Broadcast(Character.GenerateBfePacket(728, 0));
+                        }
+
+                        if (Buffs.Any(s => s.Card.CardId == 729))
+                        {
+                            MapInstance.Broadcast(Character.GenerateBfePacket(729, 0));
+                        }
+                        MapInstance.Broadcast(Character.GenerateBfePacket(727, 1000));
+                        break;
+
+                    case 728:
+                        if (Character == null)
+                        {
+                            break;
+                        }
+                        if (Buffs.Any(s => s.Card.CardId == 727))
+                        {
+                            MapInstance.Broadcast(Character.GenerateBfePacket(727, 0));
+                        }
+
+                        if (Buffs.Any(s => s.Card.CardId == 729))
+                        {
+                            MapInstance.Broadcast(Character.GenerateBfePacket(729, 0));
+                        }
+                        MapInstance.Broadcast(Character.GenerateBfePacket(728, 1000));
+                        break;
+
+                    case 729:
+                        if (Character == null)
+                        {
+                            break;
+                        }
+                        if (Buffs.Any(s => s.Card.CardId == 727))
+                        {
+                            MapInstance.Broadcast(Character.GenerateBfePacket(727, 0));
+                        }
+
+                        if (Buffs.Any(s => s.Card.CardId == 728))
+                        {
+                            MapInstance.Broadcast(Character.GenerateBfePacket(728, 0));
+                        }
+                        MapInstance.Broadcast(Character.GenerateBfePacket(729, 1000));
                         break;
                 }
 
@@ -1290,6 +1350,35 @@ namespace OpenNos.GameObject
                                         }
                                     }
                                 }
+                                break;
+                            case 697:
+                            case 690:
+                                Character.Session.SendPackets(Character.GenerateQuicklist());
+                                break;
+                            case 676:
+                                Character.Session.Character.DragonModeObservable?.Dispose();
+                                break;
+                            case 727:
+                            case 728:
+                            case 729:
+                                if (Buffs.Any(s => s.Card.CardId == 727 || s.Card.CardId == 728 || s.Card.CardId == 729))
+                                {
+                                    break;
+                                }
+
+                                MapInstance.Broadcast(Character.GenerateBfePacket(indicator.Card.CardId, 0));
+
+                                Character.UltimatePoints = 0;
+                                Character.Session.SendPacket(Character.GenerateFtPtPacket());
+                                Character.Session.SendPackets(Character.GenerateQuicklist());
+                                break;
+
+                            case 730:
+                                Character.Session.SendPackets(Character.GenerateQuicklist());
+                                break;
+
+                            case 724:
+                                Character.RemoveUltimatePoints(1000);
                                 break;
                         }
                     }

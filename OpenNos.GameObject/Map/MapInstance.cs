@@ -54,7 +54,7 @@ namespace OpenNos.GameObject
 
         #region Instantiation
 
-        public MapInstance(Map map, Guid guid, bool shopAllowed, MapInstanceType type, InstanceBag instanceBag, bool dropAllowed = false)
+        public MapInstance(Map map, Guid guid, bool shopAllowed, MapInstanceType type, InstanceBag instanceBag, int meteoritelevel, bool dropAllowed = false)
         {
             OnSpawnEvents = new List<EventContainer>();
             Buttons = new List<MapButton>();
@@ -85,6 +85,7 @@ namespace OpenNos.GameObject
             DropAllowed = dropAllowed;
             InstanceMusic = map.Music;
             ShopAllowed = shopAllowed;
+            MeteoriteLevel = meteoritelevel;
             MapInstanceType = type;
             _isSleeping = true;
             LastUserShopId = 0;
@@ -219,6 +220,8 @@ namespace OpenNos.GameObject
         public List<ScriptedInstance> ScriptedInstances { get; set; }
 
         public bool ShopAllowed { get; set; }
+
+        public int MeteoriteLevel { get; set; }
 
         public List<EventContainer> UnlockEvents { get; set; }
 

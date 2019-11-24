@@ -22,6 +22,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenNos.GameObject.Networking;
+using GloomyTale.DiscordBot;
 
 namespace OpenNos.GameObject.Event
 {
@@ -34,6 +35,7 @@ namespace OpenNos.GameObject.Event
         {
             Guardians = new List<MapMonster>();
             MapInstance bitoren = ServerManager.GetMapInstance(ServerManager.GetBaseMapInstanceIdByMapId(134));
+            Act4DiscordRich discord = new Act4DiscordRich(faction, raidType, false);
             bitoren.CreatePortal(new Portal
             {
                 SourceMapId = 134,

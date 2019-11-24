@@ -249,6 +249,10 @@ namespace OpenNos.GameObject
 
         public IDisposable DragonModeObservable { get; set; }
 
+        public ItemInstance SpInstance => Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+
+        public int UltimatePoints { get; set; }
+
         public bool HasGodMode { get; set; }
 
         public bool HasShopOpened { get; set; }
@@ -647,6 +651,131 @@ namespace OpenNos.GameObject
         #endregion
 
         #region Methods
+
+        public string GenerateFtPtPacket() => $"ftpt {UltimatePoints} 3000";
+
+        public string GenerateBfePacket(short effect, short time) => $"bf_e 1 {CharacterId} {effect} {time}";
+
+        public void AddWolfBuffs()
+        {
+            if (UltimatePoints >= 1000 && !Buff.Any(s => s.Card.CardId == 727 || s.Card.CardId == 728 || s.Card.CardId == 729))
+            {
+                AddBuff(new Buff(727, 10, false), BattleEntity);
+                RemoveBuff(728);
+                RemoveBuff(729);
+            }
+
+            if (UltimatePoints >= 2000 && !Buff.Any(s => s.Card.CardId == 728 || s.Card.CardId == 729))
+            {
+                AddBuff(new Buff(728, 10, false), BattleEntity);
+                RemoveBuff(727);
+                RemoveBuff(729);
+            }
+
+            if (UltimatePoints >= 3000 && !Buff.Any(s => s.Card.CardId == 729))
+            {
+                AddBuff(new Buff(729, 10, false), BattleEntity);
+                RemoveBuff(727);
+                RemoveBuff(728);
+            }
+        }
+
+        public void AddUltimatePoints(short points)
+        {
+            UltimatePoints += points;
+
+            if (UltimatePoints > 3000)
+            {
+                UltimatePoints = 3000;
+            }
+
+            Session.SendPacket(this.GenerateFtPtPacket());
+            Session.SendPackets(this.GenerateQuicklist());
+        }
+
+        public void RemoveUltimatePoints(short points)
+        {
+            UltimatePoints -= points;
+
+            if (UltimatePoints < 0)
+            {
+                UltimatePoints = 0;
+            }
+
+            if (UltimatePoints < 3000)
+            {
+                RemoveBuff(729);
+                RemoveBuff(727);
+                AddBuff(new Buff(728, 10, false), BattleEntity);
+            }
+
+            if (UltimatePoints < 2000)
+            {
+                RemoveBuff(728);
+                RemoveBuff(729);
+                AddBuff(new Buff(727, 10, false), BattleEntity);
+            }
+
+            if (UltimatePoints < 1000)
+            {
+                RemoveBuff(727);
+                RemoveBuff(728);
+                RemoveBuff(729);
+            }
+
+            Session.SendPacket(this.GenerateFtPtPacket());
+            Session.SendPackets(this.GenerateQuicklist());
+        }
+
+        public void GenerateTacchetta(MapMonster monsterToAttack)
+        {
+            lock (_syncObj)
+            {
+                if (monsterToAttack == null || !monsterToAttack.IsAlive)
+                {
+                    return;
+                }
+
+                monsterToAttack.RunTacchettaEvent();
+            }
+        }
+
+        public void GenerateTacchettaDivisoDue(MapMonster monsterToAttack)
+        {
+            lock (_syncObj)
+            {
+                if (monsterToAttack == null || !monsterToAttack.IsAlive)
+                {
+                    return;
+                }
+
+                monsterToAttack.RunTacchettaDivisoDueEvent();
+            }
+        }
+
+        public void GetDamageInPercentage(double percentage)
+        {
+            LastDefence = DateTime.Now;
+            Dispose();
+            short dannitot = (short)(HPLoad() * (percentage / 100));
+            Hp -= dannitot;
+            if (Hp < 0)
+            {
+                Hp = 1;
+            }
+        }
+
+        public void GetMPPercentage(double percentage)
+        {
+            LastDefence = DateTime.Now;
+            Dispose();
+            short dannitot = (short)(MPLoad() * (percentage / 100));
+            Mp -= dannitot;
+            if (Mp < 0)
+            {
+                Mp = 1;
+            }
+        }
 
         public List<long> GetMTListTargetQueue_QuickFix(CharacterSkill ski, UserType entityType)
         {
@@ -2291,7 +2420,10 @@ namespace OpenNos.GameObject
                 FamilyInviteCharacters.Clear();
                 FriendRequestCharacters.Clear();
                 Life.Dispose();
-                PinAsk.Dispose();
+                if (PinAsk != null)
+                {
+                    PinAsk.Dispose();
+                }
                 WalkDisposable?.Dispose();
                 SealDisposable?.Dispose();
                 MarryRequestCharacters.Clear();
@@ -3901,18 +4033,88 @@ namespace OpenNos.GameObject
             return Inventory.Where(s => s.Type == InventoryType.PetWarehouse).Aggregate(stash, (current, item) => current + $" {item.GenerateStashPacket()}");
         }
 
+        private void GenerateQuickListSp2Am(ref string[] pktQs)
+        {
+            var morph = Morph;
+            if (Class == ClassType.MartialArtist && Morph == (byte)BrawlerMorphType.Dragon || Morph == (byte)BrawlerMorphType.Normal)
+            {
+                morph = 30;
+            }
+
+            for (var i = 0; i < 30; i++)
+            {
+                for (var j = 0; j < 2; j++)
+                {
+                    QuicklistEntryDTO qi = QuicklistEntries.Find(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? morph : 0));
+                    var pos = qi?.Pos;
+                    if (pos >= 6 && pos <= 9)
+                    {
+                        pos += 5;
+                    }
+                    pktQs[j] += $" {qi?.Type ?? 7}.{qi?.Slot ?? 7}.{pos.ToString() ?? "-1"}";
+                }
+            }
+        }
+
+        private void GenerateQuickListSp3Am(ref string[] pktQs)
+        {
+            var morph = Morph;
+            if (Class == ClassType.MartialArtist && Morph == (byte)BrawlerMorphType.Dragon || Morph == (byte)BrawlerMorphType.Normal)
+            {
+                morph = 30;
+            }
+
+            for (var i = 0; i < 30; i++)
+            {
+                for (var j = 0; j < 2; j++)
+                {
+                    QuicklistEntryDTO qi = QuicklistEntries.Find(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? morph : 0));
+                    short? pos = qi?.Pos;
+                    if (pos.HasValue && pos == 3 && UltimatePoints >= 2000 || pos == 4 && UltimatePoints >= 1000 || pos == 5 && UltimatePoints >= 3000)
+                    {
+                        pos += 8;
+                    }
+
+                    if (pos.HasValue && pos == 10 && UltimatePoints >= 3000)
+                    {
+                        pos += 4;
+                    }
+
+                    pktQs[j] += $" {qi?.Type ?? 7}.{qi?.Slot ?? 7}.{pos.ToString() ?? "-1"}";
+                }
+            }
+        }
+
         public IEnumerable<string> GenerateQuicklist()
         {
             string[] pktQs = { "qslot 0", "qslot 1" };
 
-            for (int i = 0; i < 30; i++)
+            var morph = Morph;
+            if (Class == ClassType.MartialArtist && Morph == (byte)BrawlerMorphType.Dragon || Morph == (byte)BrawlerMorphType.Normal)
             {
-                for (int j = 0; j < 2; j++)
-                {
-                    QuicklistEntryDTO qi = QuicklistEntries.FirstOrDefault(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? Morph : 0));
-                    pktQs[j] += $" {qi?.Type ?? 7}.{qi?.Slot ?? 7}.{qi?.Pos.ToString() ?? "-1"}";
-                }
+                morph = 30;
             }
+
+            switch (Class)
+            {
+                case ClassType.MartialArtist when Morph == 31 && UseSp && SpInstance.SpLevel >= 20 && HasBuff(CardType.LotusSkills, (byte)AdditionalTypes.LotusSkills.ChangeLotusSkills):
+                    GenerateQuickListSp2Am(ref pktQs);
+                    break;
+                case ClassType.MartialArtist when Morph == 33 && UseSp && SpInstance.SpLevel >= 20 && HasBuff(CardType.WolfMaster, (byte)AdditionalTypes.WolfMaster.CanExecuteUltimateSkills):
+                    GenerateQuickListSp3Am(ref pktQs);
+                    break;
+                default:
+                    for (int i = 0; i < 30; i++)
+                    {
+                        for (int j = 0; j < 2; j++)
+                        {
+                            QuicklistEntryDTO qi = QuicklistEntries.FirstOrDefault(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? Morph : 0));
+                            pktQs[j] += $" {qi?.Type ?? 7}.{qi?.Slot ?? 7}.{qi?.Pos.ToString() ?? "-1"}";
+                        }
+                    }
+                    break;
+            }
+            
 
             return pktQs;
         }

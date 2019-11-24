@@ -700,7 +700,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN0 {
             get {
@@ -709,7 +709,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN1 {
             get {
@@ -718,7 +718,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN2 {
             get {
@@ -727,7 +727,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN3 {
             get {
@@ -736,7 +736,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN4 {
             get {
@@ -745,7 +745,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN5 {
             get {
@@ -754,7 +754,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN6 {
             get {
@@ -763,7 +763,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome ^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome ^to^GloomyTale!.
         /// </summary>
         internal static string BN7 {
             get {
@@ -772,7 +772,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN8 {
             get {
@@ -781,7 +781,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Welcome^to^NosByte!.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN9 {
             get {
@@ -799,7 +799,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Visit our page https://nosbyte.com.
+        ///   Cerca una stringa localizzata simile a Visit our page https://GloomyTale.com.
         /// </summary>
         internal static string BOT_MESSAGE_1 {
             get {
@@ -3198,6 +3198,15 @@ namespace OpenNos.World.Resource {
         internal static string METEORITE_SECONDS {
             get {
                 return ResourceManager.GetString("METEORITE_SECONDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Gloomy Stone of level {0} appeared to{2}.
+        /// </summary>
+        internal static string METEORITE_SPAWN {
+            get {
+                return ResourceManager.GetString("METEORITE_SPAWN", resourceCulture);
             }
         }
         

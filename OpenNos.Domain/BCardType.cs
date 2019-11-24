@@ -109,7 +109,9 @@ namespace OpenNos.Domain
             // ??? = 87~88
             MartialArts = 89,
             // ??? = 90~95,
+            LotusSkills = 91,
             PixieCostumeWings = 96,
+            WolfMaster = 97,
         }
     }
 
@@ -1099,6 +1101,19 @@ namespace OpenNos.Domain
             IncreaseBattleAndJobExperience = 41,
         }
 
+        public enum LotusSkills : byte
+        {
+            ChangeMoonSkills = 31,
+            ChangeLotusSkills = 41
+        }
+
+        public enum WolfMaster : byte
+        {
+            AddBuffFromLostHp = 12,
+            AddUltimatePoints = 21,
+            AddBuffsAndUltimatePoints = 22,
+            CanExecuteUltimateSkills = 31
+        }
         #endregion
     }
 }

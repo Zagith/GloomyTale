@@ -41,6 +41,7 @@ using OpenNos.Data.Base;
 using System.Reflection;
 using OpenNos.Data.Interfaces;
 using Mapster;
+using GloomyTale.DiscordBot;
 
 namespace OpenNos.GameObject.Networking
 {
@@ -915,7 +916,7 @@ namespace OpenNos.GameObject.Networking
             if (map != null)
             {
                 Guid guid = Guid.NewGuid();
-                MapInstance mapInstance = new MapInstance(map, guid, false, type, mapclock, dropAllowed);
+                MapInstance mapInstance = new MapInstance(map, guid, false, type, mapclock, 0, dropAllowed);
                 if (!isScriptedInstance)
                 {
                     mapInstance.LoadMonsters();
@@ -947,9 +948,10 @@ namespace OpenNos.GameObject.Networking
                     Music = baseMapInstance.Map.Music,
                     NameI18NKey = baseMapInstance.Map.NameI18NKey,
                     ShopAllowed = baseMapInstance.Map.ShopAllowed,
-                    XpRate = baseMapInstance.Map.XpRate
+                    XpRate = baseMapInstance.Map.XpRate,
+                    MeteoriteLevel = baseMapInstance.MeteoriteLevel
                 };
-                MapInstance mapInstance = new MapInstance(mapinfo, baseMapInstance.MapInstanceId, baseMapInstance.ShopAllowed, baseMapInstance.MapInstanceType, new InstanceBag(), baseMapInstance.DropAllowed);
+                MapInstance mapInstance = new MapInstance(mapinfo, baseMapInstance.MapInstanceId, baseMapInstance.ShopAllowed, baseMapInstance.MapInstanceType, new InstanceBag(), baseMapInstance.MeteoriteLevel, baseMapInstance.DropAllowed);
                 mapInstance.LoadMonsters();
                 mapInstance.LoadNpcs();
                 mapInstance.LoadPortals();
@@ -1485,10 +1487,11 @@ namespace OpenNos.GameObject.Networking
                         Music = map.Music,
                         NameI18NKey = map.NameI18NKey,
                         ShopAllowed = map.ShopAllowed,
-                        XpRate = map.XpRate
+                        XpRate = map.XpRate,
+                        MeteoriteLevel = map.MeteoriteLevel
                     };
                     _maps.Add(mapinfo);
-                    MapInstance newMap = new MapInstance(mapinfo, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), true);
+                    MapInstance newMap = new MapInstance(mapinfo, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, true);
                     _mapinstances.TryAdd(guid, newMap);
 
                     Task.Run((Action)newMap.LoadPortals);
@@ -2002,6 +2005,143 @@ namespace OpenNos.GameObject.Networking
             }
         }
 
+        public void MeteoriteSpawn()
+        {
+            int channelid = 1; // RandomNumber(1, 6);
+            if (channelid != ChannelId)
+            {
+                return;
+            }
+            int mappa = 0;
+            MapInstance map = null;
+            while (mappa == 0)
+            {
+                map = GetMapInstanceByMapId((short)RandomNumber(2, 4817));
+                if (map != null)
+                {
+                    if (map.MeteoriteLevel > 0)
+                    {
+                        mappa = map.MeteoriteLevel;
+                    }
+                }
+            }
+
+            MapCell pos = map.Map.GetRandomPosition();
+            if (pos == null)
+            {
+                return;
+            }
+            short MonsterVNUM = 0;
+            byte element = (byte)RandomNumber(1, 5);
+            short NumeroMob = 0;
+            long MaxHp = 0;
+
+            switch (map.MeteoriteLevel)
+            {
+                case 55:
+                    MaxHp = 250000;
+                    NumeroMob = 15;
+                    switch (element)
+                    {
+                        case 1:
+                            MonsterVNUM = 371;
+                            break;
+                        case 2:
+                            MonsterVNUM = 370;
+                            break;
+                        case 3:
+                            MonsterVNUM = 368;
+                            break;
+                        case 4:
+                            MonsterVNUM = 369;
+                            break;
+                    }
+                    break;
+                case 80:
+                    MaxHp = 2500000;
+                    NumeroMob = 20;
+                    switch (element)
+                    {
+                        case 1:
+                            MonsterVNUM = 1243;
+                            break;
+                        case 2:
+                            MonsterVNUM = 2046;
+                            break;
+                        case 3:
+                            MonsterVNUM = 2644;
+                            break;
+                        case 4:
+                            MonsterVNUM = 2664;
+                            break;
+                    }
+                    break;
+                case 99:
+                    MaxHp = 10000000;
+                    NumeroMob = 25;
+                    switch (element)
+                    {
+                        case 1:
+                            MonsterVNUM = 2520;
+                            break;
+                        case 2:
+                            MonsterVNUM = 2572;
+                            break;
+                        case 3:
+                            MonsterVNUM = 2543;
+                            break;
+                        case 4:
+                            MonsterVNUM = 2512;
+                            break;
+                    }
+                    break;
+            }
+            List<MonsterToSummon> summonParameters = new List<MonsterToSummon>();
+            for (int i = 0; i <= NumeroMob; i++)
+            {
+                short x = (short)(RandomNumber(-3, 3) + pos.X);
+                short y = (short)(RandomNumber(-3, 3) + pos.Y);
+                summonParameters.Add(new MonsterToSummon(MonsterVNUM, new MapCell { X = x, Y = y }, null, true));
+            }
+
+            List<EventContainer> OnTacchettaDivisoDueEvents = new List<EventContainer>
+            {
+                new EventContainer(map, EventActionType.SPAWNMONSTERS, summonParameters)
+            };
+
+            List<EventContainer> OnTacchettaEvents = new List<EventContainer>
+            {
+                new EventContainer(map, EventActionType.BOMBARDAMENTOMETEORITE, new Tuple<int>(map.MeteoriteLevel))
+            };
+            MapMonster monster = new MapMonster
+            {
+                MaxHp = 100000000,
+                CurrentHp = 100000000,
+                MonsterVNum = 424,
+                MapY = pos.Y,
+                MapX = pos.X,
+                MapId = map.Map.MapId,
+                IsMoving = false,
+                MapMonsterId = map.GetNextMonsterId(),
+                ShouldRespawn = false,
+                IsBoss = false,
+                Element = element,
+                OnTacchettaEvents = OnTacchettaEvents,
+                OnTacchettaDivisoDueEvents = OnTacchettaDivisoDueEvents,
+            };
+            monster.Initialize(map);
+            monster.BattleEntity.OnDeathEvents.Add(new EventContainer(map, EventActionType.DROPMETEORITE, new Tuple<int>(map.MeteoriteLevel)));
+            map.AddMonster(monster);
+            map.Broadcast(monster.GenerateIn());
+            CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
+            {
+                DestinationCharacterId = null,
+                SourceWorldId = Instance.WorldId,
+                Message = string.Format(Language.Instance.GetMessageFromKey("METEORITE_SPAWN"), map.MeteoriteLevel, channelid, map.Map.NameI18NKey[0]),
+                Type = MessageType.Shout
+            });
+        }
+
         private void Act4Process()
         {
             if (ChannelId != 51)
@@ -2028,7 +2168,7 @@ namespace OpenNos.GameObject.Networking
                 monster.Faction = (FactionType)faction == FactionType.Angel ? FactionType.Demon : FactionType.Angel;
                 instance.AddMonster(monster);
                 instance.Broadcast(monster.GenerateIn());
-
+                Act4DiscordRich discord = new Act4DiscordRich(faction, 0, true);
                 Observable.Timer(TimeSpan.FromSeconds(faction == 1 ? Act4AngelStat.TotalTime : Act4DemonStat.TotalTime)).Subscribe(s =>
                 {
                     if (instance.Monsters.ToList().Any(m => m.MonsterVNum == monster.MonsterVNum))
@@ -2199,6 +2339,7 @@ namespace OpenNos.GameObject.Networking
             Observable.Interval(TimeSpan.FromMinutes(1)).Subscribe(x => Act4FlowerProcess());
             //Observable.Interval(TimeSpan.FromHours(3)).Subscribe(x => BotProcess());
             Observable.Interval(TimeSpan.FromSeconds(5)).Subscribe(x => MaintenanceProcess());
+            Observable.Interval(TimeSpan.FromMinutes(RandomNumber(30, 60))).Subscribe(x => MeteoriteSpawn());
 
             EventHelper.Instance.RunEvent(new EventContainer(GetMapInstance(GetBaseMapInstanceIdByMapId(98)), EventActionType.NPCSEFFECTCHANGESTATE, true));
             Parallel.ForEach(Schedules, schedule => Observable.Timer(TimeSpan.FromSeconds(EventHelper.GetMilisecondsBeforeTime(schedule.Time).TotalSeconds), TimeSpan.FromDays(1)).Subscribe(e =>

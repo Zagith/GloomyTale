@@ -42,6 +42,8 @@ namespace OpenNos.Data
 
         public byte XpRate { get; set; }
 
+        public int MeteoriteLevel { get; set; }
+
         #endregion
     }
 }
