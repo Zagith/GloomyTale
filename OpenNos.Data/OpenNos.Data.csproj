@@ -101,6 +101,7 @@
     <Compile Include="CharacterTitleDTO.cs" />
     <Compile Include="FortuneWheelDTO.cs" />
     <Compile Include="I18N\I18NItemDto.cs" />
+    <Compile Include="I18N\I18NShopNameDto.cs" />
     <Compile Include="I18N\II18NCardDto.cs" />
     <Compile Include="I18N\II18NNpcMonsterDto.cs" />
     <Compile Include="I18N\II18NSkillDto.cs" />

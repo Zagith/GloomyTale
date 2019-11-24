@@ -73,6 +73,7 @@
     <Compile Include="I18NItemDAO.cs" />
     <Compile Include="I18NMapDAO.cs" />
     <Compile Include="I18NNpcMonsterDAO.cs" />
+    <Compile Include="I18NShopNameDAO.cs" />
     <Compile Include="I18NSkillDAO.cs" />
     <Compile Include="ItemDAO.cs" />
     <Compile Include="ItemInstanceDAO.cs" />

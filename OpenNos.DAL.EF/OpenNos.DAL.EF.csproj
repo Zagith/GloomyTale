@@ -102,6 +102,7 @@
     <Compile Include="Entities\I18NNpcMonster.cs" />
     <Compile Include="Entities\I18NNpcMonsterTalk.cs" />
     <Compile Include="Entities\I18NQuest.cs" />
+    <Compile Include="Entities\I18NShopName.cs" />
     <Compile Include="Entities\I18NSkill.cs" />
     <Compile Include="LogChat.cs" />
     <Compile Include="LogCommands.cs" />
@@ -167,6 +168,10 @@
     <Compile Include="Migrations\201911181757043_Antares10.cs" />
     <Compile Include="Migrations\201911181757043_Antares10.designer.cs">
       <DependentUpon>201911181757043_Antares10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911241258394_Antares11.cs" />
+    <Compile Include="Migrations\201911241258394_Antares11.designer.cs">
+      <DependentUpon>201911241258394_Antares11.cs</DependentUpon>
     </Compile>
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="Quest.cs" />
@@ -299,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911181757043_Antares10.resx">
       <DependentUpon>201911181757043_Antares10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911241258394_Antares11.resx">
+      <DependentUpon>201911241258394_Antares11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

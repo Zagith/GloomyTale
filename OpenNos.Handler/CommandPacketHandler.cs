@@ -199,6 +199,9 @@ namespace OpenNos.Handler
                         Session.Character.HasGodMode = false;
                         Session.Character.InvisibleGm = false;
                         Session.Character.Invisible = false;
+                        Session.SendPacket(Session.Character.GenerateInvisible());
+                        Session.SendPacket(Session.Character.GenerateEq());
+                        Session.SendPacket(Session.Character.GenerateCMode());
                         foreach (Mate teamMate in Session.Character.Mates.Where(m => m.IsTeamMember))
                         {
                             teamMate.PositionX = Session.Character.PositionX;
@@ -4429,8 +4432,8 @@ namespace OpenNos.Handler
                             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                             if (DAOFactory.ShopDAO.LoadById(shop.ShopId) is ShopDTO shopDTO)
                             {
-                                shop.Name = packet.Name;
-                                shopDTO.Name = packet.Name;
+                                shop.NameI18NKey = packet.Name;
+                                shopDTO.NameI18NKey = packet.Name;
                                 DAOFactory.ShopDAO.Update(ref shopDTO);
 
                                 Session.CurrentMapInstance.Broadcast($"shop 2 {npc.MapNpcId} {npc.Shop.ShopId} {npc.Shop.MenuType} {npc.Shop.ShopType} {npc.Shop.Name}");

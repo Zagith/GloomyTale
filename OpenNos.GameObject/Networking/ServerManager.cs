@@ -1375,9 +1375,23 @@ namespace OpenNos.GameObject.Networking
             Logger.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPSKILLS_LOADED"), _shopSkills.Sum(i => i.Count)));
 
             // initialize shops
+            var dicShop = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
+                    {
+                        {
+                            typeof(I18NShopNameDto),
+                            DAOFactory.I18NShopNameDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
+                        }
+                    };
+            var shops = DAOFactory.ShopDAO.LoadAll();
+            var propsShop= StaticDtoExtension.GetI18NProperties(typeof(ShopDTO));
+
+            var regionsShop = Enum.GetValues(typeof(RegionType));
+            var accessorsShop = TypeAccessor.Create(typeof(ShopDTO));
             _shops = new ThreadSafeSortedList<int, Shop>();
-            Parallel.ForEach(DAOFactory.ShopDAO.LoadAll(), shopGrouping =>
+            Parallel.ForEach(shops, shopGrouping =>
             {
+                shopGrouping.InjectI18N(propsShop, dicShop, regionsShop, accessorsShop);
                 Shop shop = new Shop(shopGrouping);
                 _shops[shopGrouping.MapNpcId] = shop;
                 shop.Initialize();

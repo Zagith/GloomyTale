@@ -56,6 +56,7 @@
     <Compile Include="Mappers\I18NCardMapper.cs" />
     <Compile Include="Mappers\I18NItemMapper.cs" />
     <Compile Include="Mappers\I18NNpcMonsterMapper.cs" />
+    <Compile Include="Mappers\I18NShopNameMapper.cs" />
     <Compile Include="Mappers\I18NSkillMapper.cs" />
     <Compile Include="Mappers\ItemInstanceMapper.cs" />
     <Compile Include="Mappers\CardMapper.cs" />
