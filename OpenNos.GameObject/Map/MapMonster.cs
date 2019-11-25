@@ -1413,60 +1413,66 @@ namespace OpenNos.GameObject
                 if (CurrentHp > 0)
                 {
                     #region TacchettaDivisoDue
-                    if ((MaxHp - CurrentHp >= MaxHp * 0.1) && TacchettaDivisoDue1 == false)
+                    if (OnTacchettaDivisoDueEvents != null)
                     {
-                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                        TacchettaDivisoDue1 = true;
-                    }
+                        if ((MaxHp - CurrentHp >= MaxHp * 0.1) && TacchettaDivisoDue1 == false)
+                        {
+                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                            TacchettaDivisoDue1 = true;
+                        }
 
-                    if ((MaxHp - CurrentHp >= MaxHp * 0.3) && TacchettaDivisoDue2 == false)
-                    {
-                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                        TacchettaDivisoDue2 = true;
-                    }
+                        if ((MaxHp - CurrentHp >= MaxHp * 0.3) && TacchettaDivisoDue2 == false)
+                        {
+                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                            TacchettaDivisoDue2 = true;
+                        }
 
-                    if ((MaxHp - CurrentHp >= MaxHp * 0.5) && TacchettaDivisoDue3 == false)
-                    {
-                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                        TacchettaDivisoDue3 = true;
-                    }
+                        if ((MaxHp - CurrentHp >= MaxHp * 0.5) && TacchettaDivisoDue3 == false)
+                        {
+                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                            TacchettaDivisoDue3 = true;
+                        }
 
-                    if ((MaxHp - CurrentHp >= MaxHp * 0.7) && TacchettaDivisoDue4 == false)
-                    {
-                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                        TacchettaDivisoDue4 = true;
-                    }
+                        if ((MaxHp - CurrentHp >= MaxHp * 0.7) && TacchettaDivisoDue4 == false)
+                        {
+                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                            TacchettaDivisoDue4 = true;
+                        }
 
-                    if ((MaxHp - CurrentHp >= MaxHp * 0.9) && TacchettaDivisoDue5 == false)
-                    {
-                        hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                        TacchettaDivisoDue5 = true;
+                        if ((MaxHp - CurrentHp >= MaxHp * 0.9) && TacchettaDivisoDue5 == false)
+                        {
+                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
+                            TacchettaDivisoDue5 = true;
+                        }
                     }
                     #endregion
 
                     #region Tacchetta
-                    if ((MaxHp - CurrentHp >= MaxHp / 5) && Tacchetta1 == false)
+                    if (OnTacchettaEvents != null)
                     {
-                        hitRequest.Session.Character.GenerateTacchetta(this);
-                        Tacchetta1 = true;
-                    }
+                        if ((MaxHp - CurrentHp >= MaxHp / 5) && Tacchetta1 == false)
+                        {
+                            hitRequest.Session.Character.GenerateTacchetta(this);
+                            Tacchetta1 = true;
+                        }
 
-                    if (((MaxHp - CurrentHp >= (MaxHp / 5) * 2)) && Tacchetta2 == false)
-                    {
-                        hitRequest.Session.Character.GenerateTacchetta(this);
-                        Tacchetta2 = true;
-                    }
+                        if (((MaxHp - CurrentHp >= (MaxHp / 5) * 2)) && Tacchetta2 == false)
+                        {
+                            hitRequest.Session.Character.GenerateTacchetta(this);
+                            Tacchetta2 = true;
+                        }
 
-                    if (((MaxHp - CurrentHp >= (MaxHp / 5) * 3)) && Tacchetta3 == false)
-                    {
-                        hitRequest.Session.Character.GenerateTacchetta(this);
-                        Tacchetta3 = true;
-                    }
+                        if (((MaxHp - CurrentHp >= (MaxHp / 5) * 3)) && Tacchetta3 == false)
+                        {
+                            hitRequest.Session.Character.GenerateTacchetta(this);
+                            Tacchetta3 = true;
+                        }
 
-                    if (((MaxHp - CurrentHp >= (MaxHp / 5) * 4)) && Tacchetta4 == false)
-                    {
-                        hitRequest.Session.Character.GenerateTacchetta(this);
-                        Tacchetta4 = true;
+                        if (((MaxHp - CurrentHp >= (MaxHp / 5) * 4)) && Tacchetta4 == false)
+                        {
+                            hitRequest.Session.Character.GenerateTacchetta(this);
+                            Tacchetta4 = true;
+                        }
                     }
                     #endregion
                 }
