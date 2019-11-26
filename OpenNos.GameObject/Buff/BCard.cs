@@ -2016,19 +2016,22 @@ namespace OpenNos.GameObject
 
                                     // SafeZone
 
-                                    for (short monsterVNum = 4280; monsterVNum <= 4282; monsterVNum++)
+                                    for (short effectSafeZone = 4280; effectSafeZone <= 4282; effectSafeZone++)
                                     {
-                                        EventHelper.Instance.RunEvent(new EventContainer(mapInstance, EventActionType.SPAWNMONSTER, new MonsterToSummon(monsterVNum, new MapCell { X = 0, Y = 0 }, null, false)
+                                        
+                                        
+                                        EventHelper.Instance.RunEvent(new EventContainer(mapInstance, EventActionType.SPAWNMONSTER, new MonsterToSummon(2628, new MapCell { X = 0, Y = 0 }, null, false, isHostile: false, isTarget: false)
                                         {
+
                                             AfterSpawnEvents = new List<EventContainer>()
                                             {
-                                                new EventContainer(mapInstance, EventActionType.EFFECT, new Tuple<short, int>(monsterVNum, 0)),
+                                                new EventContainer(mapInstance, EventActionType.EFFECT, new Tuple<short, int>(effectSafeZone, 0)),
                                                 new EventContainer(mapInstance, EventActionType.REMOVEAFTER, 15)
                                             }
                                         }));
                                     }
 
-                                    Observable.Timer(TimeSpan.FromSeconds(5)).Subscribe(t =>
+                                    Observable.Timer(TimeSpan.FromSeconds(8)).Subscribe(t =>
                                     {
                                         foreach (Character character in mapInstance.Sessions.Where(s => s?.Character != null).Select(s => s.Character))
                                         {
@@ -2045,7 +2048,7 @@ namespace OpenNos.GameObject
                                             }
 
                                             IEnumerable<MapMonster> safeZoneList = mapInstance.GetMonsterInRangeList(character.PositionX, character.PositionY, 5)
-                                                .Where(m => m.MonsterVNum >= 4280 && m.MonsterVNum <= 4282);
+                                                .Where(m => m.MonsterVNum == 2628);
 
                                             if (!safeZoneList.Any())
                                             {
