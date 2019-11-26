@@ -68,7 +68,43 @@ namespace OpenNos.GameObject
 
         #region Methods
 
-        public bool CanBeUsed() => Skill != null && LastUse.AddMilliseconds(Skill.Cooldown * 100) < DateTime.Now;
+        public bool CanBeUsed(bool force = false)
+        {
+            bool canContinue = true;
+            var online = ServerManager.Instance.GetSessionByCharacterId(CharacterId);
+
+            if (!(online is ClientSession session))
+            {
+                return false;
+            }
+
+            if (session.Character.Morph == (short)BrawlerMorphType.Normal)
+            {
+                if (Skill.SkillVNum < 1577 || Skill.SkillVNum > 1585)
+                {
+                    canContinue = false;
+                }
+            }
+            else if (session.Character.Morph == (short)BrawlerMorphType.Dragon)
+            {
+                if (Skill.SkillVNum < 1586 || Skill.SkillVNum > 1594)
+                {
+                    canContinue = false;
+                }
+            }
+
+            if (force)
+            {
+                canContinue = true;
+            }
+
+            if (!canContinue)
+            {
+                return false;
+            }
+
+            return Skill != null && LastUse.AddMilliseconds(Skill.Cooldown * 100) < DateTime.Now;
+        }
 
         public List<BCard> GetSkillBCards()
         {

@@ -123,7 +123,13 @@ namespace OpenNos.GameObject.Networking
 
         public List<ArenaMember> ArenaMembers { get; set; } = new List<ArenaMember>();
 
+        public List<RainbowBattleMember> RainbowBattleMembers { get; set; } = new List<RainbowBattleMember>();
+
+        public bool CanRegisterRainbowBattle { get; set; }
+
         public List<ConcurrentBag<ArenaTeamMember>> ArenaTeams { get; set; } = new List<ConcurrentBag<ArenaTeamMember>>();
+
+        public List<RainbowBattleMember> RainbowBattleMembersRegistered { get; set; } = new List<RainbowBattleMember>();
 
         public List<long> BannedCharacters { get; set; } = new List<long>();
 

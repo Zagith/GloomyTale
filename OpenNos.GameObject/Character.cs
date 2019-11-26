@@ -2221,7 +2221,7 @@ namespace OpenNos.GameObject
                                     SpCooldown = 30;
                                     if (SkillsSp != null)
                                     {
-                                        foreach (CharacterSkill ski in SkillsSp.Where(s => !s.CanBeUsed()))
+                                        foreach (CharacterSkill ski in SkillsSp.Where(s => !s.CanBeUsed(true)))
                                         {
                                             short time = ski.Skill.Cooldown;
                                             double temp = (ski.LastUse - DateTime.Now).TotalMilliseconds + (time * 100);
@@ -7046,7 +7046,7 @@ namespace OpenNos.GameObject
                 SpCooldown = 30;
                 if (SkillsSp != null)
                 {
-                    foreach (CharacterSkill ski in SkillsSp.Where(s => !s.CanBeUsed()))
+                    foreach (CharacterSkill ski in SkillsSp.Where(s => !s.CanBeUsed(true)))
                     {
                         short time = ski.Skill.Cooldown;
                         double temp = (ski.LastUse - DateTime.Now).TotalMilliseconds + (time * 100);

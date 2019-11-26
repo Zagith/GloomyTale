@@ -32,6 +32,7 @@ namespace OpenNos.Domain
         CaligorInstance,
         IceBreakerInstance,
         TalentArenaMapInstance,
-        SheepGameInstance
+        SheepGameInstance,
+        BAInstance
     }
 }

@@ -2057,7 +2057,7 @@ namespace OpenNos.Handler
                         return;
                     }
 
-                    if (Session.Character.Skills.Any(s => !s.CanBeUsed()))
+                    if (Session.Character.Skills.Any(s => !s.CanBeUsed(true)))
                     {
                         Session.SendPacket(
                             UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SKILLS_IN_LOADING"),

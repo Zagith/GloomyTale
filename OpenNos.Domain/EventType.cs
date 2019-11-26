@@ -26,6 +26,7 @@ namespace OpenNos.Domain
         TALENTARENA,
         CALIGOR,
         ICEBREAKER,
-        SHEEPGAME
+        SHEEPGAME,
+        RAINBOWBATTLE
     }
 }

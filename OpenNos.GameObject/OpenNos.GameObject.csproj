@@ -134,6 +134,7 @@
     <Compile Include="Event\GAMES\MeteoriteGame.cs" />
     <Compile Include="Event\GAMES\SheepGame.cs" />
     <Compile Include="Event\ICEBREAKER\IceBreaker.cs" />
+    <Compile Include="Event\RainbowBattle\RainbowBattle.cs" />
     <Compile Include="Event\TALENTARENA %28Unused%29\TalentArena.cs" />
     <Compile Include="Event\TALENTARENA %28Unused%29\TalentArenaBattle.cs" />
     <Compile Include="Event\TIMESPACES\Bts.cs" />
@@ -218,6 +219,9 @@
     <Compile Include="Packets\TaCallPacket.cs" />
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="Quest.cs" />
+    <Compile Include="RainbowBattleMember.cs" />
+    <Compile Include="RainbowBattleTeam.cs" />
+    <Compile Include="RainbowBattleTeamMember.cs" />
     <Compile Include="ScriptedObjects\Clock.cs" />
     <Compile Include="ScriptedObjects\Locker.cs" />
     <Compile Include="Map\MapButton.cs" />
