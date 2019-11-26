@@ -27,6 +27,7 @@ using OpenNos.GameObject.Networking;
 using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Data;
 using OpenNos.Data;
+using OpenNos.GameObject.Event.RainbowBattle;
 
 namespace OpenNos.GameObject.Helpers
 {
@@ -167,6 +168,9 @@ namespace OpenNos.GameObject.Helpers
                                 ServerManager.Instance.StartedEvents.Remove(type);
                                 return;
                             }
+                            break;
+                        case EventType.RAINBOWBATTLE:
+                            RainbowBattle.GenerateRainbowBattle();
                             break;
                     }
                 });
