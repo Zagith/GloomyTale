@@ -1683,10 +1683,6 @@ namespace OpenNos.Handler
                         target.Character.RemoveBuff(569);
                     }
                 }
-                else if (guriPacket.Type == 506)
-                {
-                    Session.Character.IsWaitingForEvent |= ServerManager.Instance.EventInWaiting;
-                }
                 else if (guriPacket.Type == 513)
                 {
                     if (Session?.Character?.MapInstance == null)

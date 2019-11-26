@@ -29,6 +29,8 @@ namespace OpenNos.GameObject.Event.GAMES
     {
         #region Methods
 
+        public const int MiniPlayerForStart = 3;
+
         public static void GenerateMeteoriteGame()
         {
             Thread.Sleep(5 * 1000);
@@ -39,28 +41,30 @@ namespace OpenNos.GameObject.Event.GAMES
             ServerManager.Instance.Sessions.Where(s => s.Character?.IsWaitingForEvent == false).ToList().ForEach(s => s.SendPacket("esf 1"));
             ServerManager.Instance.EventInWaiting = false;
             IEnumerable<ClientSession> sessions = ServerManager.Instance.Sessions.Where(s => s.Character?.IsWaitingForEvent == true && s.Character.MapInstance.MapInstanceType == MapInstanceType.BaseMapInstance);
-
+            List<Tuple<MapInstance, byte>> maps = new List<Tuple<MapInstance, byte>>();
             MapInstance map = ServerManager.GenerateMapInstance(2004, MapInstanceType.EventGameInstance, new InstanceBag());
+            maps.Add(new Tuple<MapInstance, byte>(map, 1));
             if (map != null)
             {
-                
                 foreach (ClientSession sess in sessions)
                 {
-                    if (map.Sessions.Count() < 3)
-                    {
-                        map.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("INSTANTBATTLE_NOT_ENOUGH_PLAYERS"), 0));
-                        EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(5), new EventContainer(map, EventActionType.DISPOSEMAP, null));
-                        continue;
-                    }
+                    sess.SendPacket("bsinfo 2 4 0 0");
                     ServerManager.Instance.TeleportOnRandomPlaceInMap(sess, map.MapInstanceId);
                 }
 
                 ServerManager.Instance.Sessions.Where(s => s.Character != null).ToList().ForEach(s => s.Character.IsWaitingForEvent = false);
                 ServerManager.Instance.StartedEvents.Remove(EventType.METEORITEGAME);
 
-                MeteoriteGameThread task = new MeteoriteGameThread();
-                Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(X => task.Run(map));
             }
+
+            if (map.Sessions.Count() < MiniPlayerForStart)
+            {
+                map.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("INSTANTBATTLE_NOT_ENOUGH_PLAYERS"), 0));
+                EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(5), new EventContainer(map, EventActionType.DISPOSEMAP, null));
+                return;
+            }
+            MeteoriteGameThread task = new MeteoriteGameThread();
+            Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(X => task.Run(map));
         }
 
         #endregion
