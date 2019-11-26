@@ -213,11 +213,50 @@ namespace OpenNos.GameObject
                         case 3: // Meteor Mini Game
                             session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
                             EventHelper.GenerateEvent(EventType.METEORITEGAME);
-                            session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                            //session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                             break;
                     }
                     break;
 
+                ////btk register
+                case 1227:
+                    if (ServerManager.Instance.CanRegisterRainbowBattle == true)
+                    {
+                        if (session.Character.Family != null)
+                        {
+                            if (session.Character.Family.FamilyCharacters.Where(s => s.CharacterId == session.Character.CharacterId).First().Authority == FamilyAuthority.Head || session.Character.Family.FamilyCharacters.Where(s => s.CharacterId == session.Character.CharacterId).First().Authority == FamilyAuthority.Familykeeper)
+                            {
+                                if (ServerManager.Instance.IsCharacterMemberOfGroup(session.Character.CharacterId))
+                                {
+                                    session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("RAINBOWBATTLE_OPEN_GROUP"), 12));
+                                    return;
+                                }
+                                Group group = new Group
+                                {
+                                    GroupType = GroupType.BigTeam
+                                };
+                                group.JoinGroup(session.Character.CharacterId);
+                                ServerManager.Instance.AddGroup(group);
+                                session.SendPacket(session.Character.GenerateFbt(2));
+                                session.SendPacket(session.Character.GenerateFbt(0));
+                                session.SendPacket(session.Character.GenerateFbt(1));
+                                session.SendPacket(group.GenerateFblst());
+                                session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("RAINBOWBATTLE_LEADER"), session.Character.Name), 0));
+                                session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("RAINBOWBATTLE_LEADER"), session.Character.Name), 10));
+
+                                ServerManager.Instance.RainbowBattleMembers.Add(new RainbowBattleMember
+                                {
+                                    RainbowBattleType = EventType.RAINBOWBATTLE,
+                                    Session = session,
+                                    GroupId = group.GroupId,
+                                });
+
+                                ItemInstance RainbowBattleSeal = session.Character.Inventory.LoadBySlotAndType(inv.Slot, InventoryType.Main);
+                                session.Character.Inventory.RemoveItemFromInventory(RainbowBattleSeal.Id);
+                            }
+                        }
+                    }
+                    break;
                 // Honour Medals
                 case 69:
                     session.Character.Reputation += ReputPrice;

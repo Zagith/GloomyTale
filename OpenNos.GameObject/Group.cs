@@ -213,6 +213,21 @@ namespace OpenNos.GameObject
             return true;
         }
 
+        public string GenerateFblst()
+        {
+            string result = string.Empty;
+            result = $"fblst ";
+            try
+            {
+                Sessions.ForEach(session => result += $" {session.Character.Level}.{(session.Character.UseSp || session.Character.IsVehicled ? session.Character.Morph : -1)}.{(short)session.Character.Class}.{Raid?.InstanceBag.DeadList.Count(s => s == session.Character.CharacterId) ?? 0}.{session.Character.Name}.{(short)session.Character.Gender}.{session.Character.CharacterId}");
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, nameof(GenerateRdlst));
+            }
+            return result;
+        }
+
         public void LeaveGroup(ClientSession session)
         {
             session.Character.Group = null;

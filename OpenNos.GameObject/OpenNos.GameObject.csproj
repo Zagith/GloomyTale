@@ -164,6 +164,7 @@
     <Compile Include="Event\MINILANDREFRESH\MinilandRefresh.cs" />
     <Compile Include="Helpers\UserInterfaceHelper.cs" />
     <Compile Include="Networking\ConnectionSQL.cs" />
+    <Compile Include="Packets\ClientPackets\FbPacket.cs" />
     <Compile Include="Packets\ClientPackets\PartnerSkillOpenPacket.cs" />
     <Compile Include="Packets\ClientPackets\PdtClosePacket.cs" />
     <Compile Include="Packets\ClientPackets\RankSkPacket.cs" />

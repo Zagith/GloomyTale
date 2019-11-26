@@ -1990,6 +1990,46 @@ namespace OpenNos.GameObject
                     }
                     break;
 
+                case 4000:
+                    if (npc != null)
+                    {
+                        if (ServerManager.Instance.CanRegisterRainbowBattle)
+                        {
+                            if (Session.Character.Group != null)
+                            {
+                                if (Session.Character.Group.Raid == null)
+                                {
+                                    if (Session.Character.Group.GroupType == GroupType.BigTeam)
+                                    {
+                                        if (Session.Character.Group.IsLeader(Session))
+                                        {
+                                            if (ServerManager.Instance.RainbowBattleMembersRegistered.Count() > 0)
+                                            {
+                                                if (ServerManager.Instance.RainbowBattleMembersRegistered?.Where(s => s.Session == Session).Count() > 0)
+                                                {
+                                                    return;
+                                                }
+                                            }
+                                            Parallel.ForEach(
+                                                ServerManager.Instance.RainbowBattleMembers.Where(s => s.GroupId == Session.Character.Group.GroupId), s =>
+                                                {
+                                                    ServerManager.Instance.RainbowBattleMembersRegistered.Add(s);
+                                                }
+                                                                                );
+                                            Session.SendPacket(npc?.GenerateSay(Language.Instance.GetMessageFromKey("BA_REGISTERED"), 10));
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Session.SendPacket(npc?.GenerateSay(Language.Instance.GetMessageFromKey("BA_NOT_OPEN"), 10));
+                        }
+                    }
+                    break;
+
                 case 324: // MA Quest SP2
                     {
                         if (npc != null)

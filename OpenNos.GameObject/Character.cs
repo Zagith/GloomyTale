@@ -4191,6 +4191,40 @@ namespace OpenNos.GameObject
                 .Select(s => s.GeneratePst()));
         }
 
+        public string GenerateFbt(int Type, bool exit = false)
+        {
+            string result = string.Empty;
+            switch (Type)
+            {
+                case 0:
+                    result = "fbt 0";
+                    Group?.Sessions?.ForEach(s => result += $" {s.Character?.CharacterId}");
+                    break;
+
+                case 2:
+                    result = $"fbt 2 {(exit ? "-1" : $"{CharacterId}")}";
+                    break;
+
+                case 1:
+                    result = $"fbt 1 {(exit ? 0 : 1)}";
+                    break;
+
+                case 3:
+                    result = "fbt 3";
+                    Group?.Sessions?.ForEach(s => result += $" {s.Character?.CharacterId}.{Math.Ceiling(s.Character.Hp / s.Character.HPLoad() * 100)}.{Math.Ceiling(s.Character.Mp / s.Character.MPLoad() * 100)}");
+                    break;
+
+                case 4:
+                    result = "fbt 4";
+                    break;
+
+                case 5:
+                    result = "fbt 5 1";
+                    break;
+
+            }
+            return result;
+        }
         public string GenerateRaid(int Type, bool exit = false)
         {
             string result = "";
