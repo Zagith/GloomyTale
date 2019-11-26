@@ -1034,6 +1034,124 @@ namespace OpenNos.GameObject
             ShellEffects.AddRange(ShellGeneratorHelper.Instance.GenerateShell(shellType, Rare == 8 ? 7 : Rare, shellLevel));
         }
 
+        public void RarifyBoxItem(ClientSession session, RarifyMode mode, RarifyProtection protection, bool isCommand = false, byte forceRare = 0)
+        {
+            const short goldprice = 5000;
+            double rnd;
+            byte[] rarifyRate = new byte[ItemHelper.RarifyRate.Length];
+            ItemHelper.RarifyRate.CopyTo(rarifyRate, 0);
+
+            if (session?.HasCurrentMapInstance == false)
+            {
+                return;
+            }
+            rnd = ServerManager.RandomNumber(0, 1000) / 10D;
+            
+            if (session != null)
+            {
+                switch (mode)
+                {
+                    case RarifyMode.Normal:
+                        if (session.Character.Gold < goldprice)
+                        {
+                            return;
+                        }
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+                }
+            }
+
+            void rarify(sbyte rarity, bool isHeroEquipmentDowngrade = false)
+            {
+                Rare = rarity;
+                if (mode != RarifyMode.Drop)
+                {
+                    Logger.LogUserEvent("GAMBLE", session.GenerateIdentity(), $"[RarifyItem]Protection: {protection.ToString()} IIId: {Id} ItemVnum: {ItemVNum} Result: Success");
+
+                    session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey(isHeroEquipmentDowngrade ? "RARIFY_DOWNGRADE_SUCCESS" : "RARIFY_SUCCESS"), Rare), 12));
+                    session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey(isHeroEquipmentDowngrade ? "RARIFY_DOWNGRADE_SUCCESS" : "RARIFY_SUCCESS"), Rare), 0));
+                    session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 3005), session.Character.PositionX, session.Character.PositionY);
+                    session.SendPacket("shop_end 1");
+                }
+            }
+
+            if (forceRare != 0)
+            {
+                rarify((sbyte)forceRare);
+                return;
+            }
+            if (rnd < rarifyRate[10] && !(protection == RarifyProtection.Scroll && Rare >= 8))
+            {
+                rarify(8);
+            }
+            if (rnd < rarifyRate[9] && !(protection == RarifyProtection.Scroll && Rare >= 7))
+            {
+                rarify(7);
+            }
+            else if (rnd < rarifyRate[8] && !(protection == RarifyProtection.Scroll && Rare >= 6))
+            {
+                rarify(6);
+            }
+            else if (rnd < rarifyRate[7] && !(protection == RarifyProtection.Scroll && Rare >= 5))
+            {
+                rarify(5);
+            }
+            else if (rnd < rarifyRate[6] && !(protection == RarifyProtection.Scroll && Rare >= 4))
+            {
+                rarify(4);
+            }
+            else if (rnd < rarifyRate[5] && !(protection == RarifyProtection.Scroll && Rare >= 3))
+            {
+                rarify(3);
+            }
+            else if (rnd < rarifyRate[4] && !(protection == RarifyProtection.Scroll && Rare >= 2))
+            {
+                rarify(2);
+            }
+            else if (rnd < rarifyRate[3] && !(protection == RarifyProtection.Scroll && Rare >= 1))
+            {
+                rarify(1);
+            }
+            else if (rnd < rarifyRate[2] && !(protection == RarifyProtection.Scroll && Rare >= 0))
+            {
+                rarify(0);
+            }
+            else if (rnd < rarifyRate[1] && !(protection == RarifyProtection.Scroll && Rare >= -1))
+            {
+                rarify(-1);
+            }
+            else if (rnd < rarifyRate[0] && !(protection == RarifyProtection.Scroll && Rare >= -2))
+            {
+                rarify(-2);
+            }
+            else if (mode != RarifyMode.Drop && session != null)
+            {
+                switch (protection)
+                {
+                    
+                    case RarifyProtection.None:
+                        session.Character.DeleteItemByItemInstanceId(Id);
+                        session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("RARIFY_FAILED"), 11));
+                        session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("RARIFY_FAILED"), 0));
+                        return;
+                }
+                session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("RARIFY_FAILED_ITEM_SAVED"), 11));
+                session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("RARIFY_FAILED_ITEM_SAVED"), 0));
+                session.CurrentMapInstance.Broadcast(session.Character.GenerateEff(3004), session.Character.PositionX, session.Character.PositionY);
+                return;
+            }
+            if (mode != RarifyMode.Drop && session != null)
+            {
+                ItemInstance inventory = session.Character.Inventory.GetItemInstanceById(Id);
+                if (inventory != null)
+                {
+                    session.SendPacket(inventory.GenerateInventoryAdd());
+                }
+            }
+        }
+
         public void RarifyItem(ClientSession session, RarifyMode mode, RarifyProtection protection, bool isCommand = false, byte forceRare = 0)
         {
             const short goldprice = 500;

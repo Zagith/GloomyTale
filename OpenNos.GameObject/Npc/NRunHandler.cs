@@ -2048,6 +2048,20 @@ namespace OpenNos.GameObject
                     }
                     break;
 
+                case 8888:
+                    ItemInstance inventory = Session.Character.Inventory.LoadBySlotAndType(0, InventoryType.Equipment);
+                    if (inventory != null)
+                    {
+                        if (inventory.Item.ItemType == ItemType.Box)
+                        {
+                            RarifyMode mode = RarifyMode.Normal;
+                            RarifyProtection protection = RarifyProtection.None;
+                            inventory.RarifyBoxItem(Session, mode, protection);
+                        }
+
+                        Session.SendPacket("shop_end 1");
+                    }
+                    break;
                 default:
                     {
                         Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("NO_NRUN_HANDLER"), packet.Runner));
