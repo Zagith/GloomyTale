@@ -2058,8 +2058,10 @@ namespace OpenNos.GameObject
                             RarifyProtection protection = RarifyProtection.None;
                             inventory.RarifyBoxItem(Session, mode, protection);
                         }
-
-                        Session.SendPacket("shop_end 1");
+                    }
+                    else
+                    {
+                        Session.SendPacket(Session.Character.GenerateSay($"Insert the box in the first slot before!", 11));
                     }
                     break;
                 default:
