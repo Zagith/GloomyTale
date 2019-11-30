@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="CommunicationService.cs" />
     <Compile Include="AuthentificationService.cs" />
+    <Compile Include="DiscordService.cs" />
     <Compile Include="MallService.cs" />
     <Compile Include="MailService.cs" />
     <Compile Include="ConfigurationService.cs" />

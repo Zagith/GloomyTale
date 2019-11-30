@@ -180,6 +180,10 @@ namespace OpenNos.World
             if (newChannelId.HasValue)
             {
                 ServerManager.Instance.ChannelId = newChannelId.Value;
+                if (newChannelId == 51)
+                {
+                    DiscordServiceClient.Instance.Authenticate(authKey);
+                }
                 MailServiceClient.Instance.Authenticate(authKey, ServerManager.Instance.WorldId);
                 ConfigurationServiceClient.Instance.Authenticate(authKey, ServerManager.Instance.WorldId);
                 ServerManager.Instance.Configuration = ConfigurationServiceClient.Instance.GetConfigurationObject();

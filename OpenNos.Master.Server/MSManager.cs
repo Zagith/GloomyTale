@@ -35,6 +35,7 @@ namespace OpenNos.Master.Server
 
         public MSManager()
         {
+            //DiscordServers = new List<DiscordServer>();
             WorldServers = new List<WorldServer>();
             LoginServers = new List<IScsServiceClient>();
             ConnectedAccounts = new ThreadSafeGenericList<AccountConnection>();
@@ -90,6 +91,7 @@ namespace OpenNos.Master.Server
 
         public List<WorldServer> WorldServers { get; set; }
 
+        //public List<DiscordServer> DiscordServers { get; set; }
         #endregion
     }
 }

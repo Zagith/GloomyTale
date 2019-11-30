@@ -10,6 +10,15 @@
   "ListAllProjects": false,
 
   "MultiProjectConfigurations": {
+    "All With Crown + Discord Bot": {
+      "Projects": {
+        "GloomyTale.DiscordBot": {},
+        "Opennos.Crown": {},
+        "Opennos.World": {},
+        "Opennos.Login": {},
+        "Opennos.Master.Server": {}
+      }
+    },
     "Without Crown": {
       "Projects": {
         "Opennos.World": {},

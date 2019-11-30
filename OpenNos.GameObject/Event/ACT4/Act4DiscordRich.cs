@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GloomyTale.DiscordBot
+namespace OpenNos.GameObject.Event.ACT4
 {
     public class Act4DiscordRich
     {
@@ -25,9 +25,7 @@ namespace GloomyTale.DiscordBot
 
         public bool IsMukraju { get; set; }
 
-        
-        public static void Main()
-        { }
+
         public async Task MainAsync()
         {
             // The webhook url follows the format https://discordapp.com/api/webhooks/{id}/{token}

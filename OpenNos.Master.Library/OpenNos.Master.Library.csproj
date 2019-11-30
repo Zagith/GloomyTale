@@ -75,6 +75,7 @@
     <Compile Include="Client\CommunicationClient.cs" />
     <Compile Include="Client\CommunicationServiceClient.cs" />
     <Compile Include="Client\ConfigurationServiceClient.cs" />
+    <Compile Include="Client\DiscordServiceClient.cs" />
     <Compile Include="Client\MailClient.cs" />
     <Compile Include="Client\ConfigurationClient.cs" />
     <Compile Include="Client\MailServiceClient.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Interface\ICommunicationService.cs" />
     <Compile Include="Data\SCSCharacterMessage.cs" />
     <Compile Include="Interface\IConfigurationClient.cs" />
+    <Compile Include="Interface\IDiscordService.cs" />
     <Compile Include="Interface\IMailClient.cs" />
     <Compile Include="Interface\IMailService.cs" />
     <Compile Include="Interface\IConfigurationService.cs" />
