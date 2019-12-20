@@ -22,7 +22,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenNos.GameObject.Networking;
-using GloomyTale.DiscordBot;
+using OpenNos.GameObject.Event.ACT4;
 
 namespace OpenNos.GameObject.Event
 {

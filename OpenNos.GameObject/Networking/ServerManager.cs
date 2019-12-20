@@ -41,7 +41,7 @@ using OpenNos.Data.Base;
 using System.Reflection;
 using OpenNos.Data.Interfaces;
 using Mapster;
-using GloomyTale.DiscordBot;
+using OpenNos.GameObject.Event.ACT4;
 
 namespace OpenNos.GameObject.Networking
 {
@@ -916,6 +916,7 @@ namespace OpenNos.GameObject.Networking
 
         public void FamilyRefresh(long familyId, bool changeFaction = false) => CommunicationServiceClient.Instance.UpdateFamily(ServerGroup, familyId, changeFaction);
 
+        //public void Act4StatRefresh(int Angel, int Demon) => DiscordServiceClient.Instance.GetAct4Stat(Angel, Demon);
         public static MapInstance GenerateMapInstance(short mapId, MapInstanceType type, InstanceBag mapclock, bool dropAllowed = false, bool isScriptedInstance = false)
         {
             Map map = _maps.FirstOrDefault(m => m.MapId.Equals(mapId));
