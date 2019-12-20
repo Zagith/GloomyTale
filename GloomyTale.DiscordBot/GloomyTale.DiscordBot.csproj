@@ -129,6 +129,7 @@
   <ItemGroup>
     <Compile Include="Enumerations\RegionType.cs" />
     <Compile Include="Extensions\ChannelExtension.cs" />
+    <Compile Include="Extensions\FrozenCrownExtension.cs" />
     <Compile Include="Modules\FrozenCrownModule.cs" />
     <Compile Include="Modules\HelpModule.cs" />
     <Compile Include="Modules\LanguageModule.cs" />
@@ -155,10 +156,6 @@
     <ProjectReference Include="..\OpenNos.Domain\OpenNos.Domain.csproj">
       <Project>{20ADDDDD-DAD9-44F3-9BEB-026C73090660}</Project>
       <Name>OpenNos.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OpenNos.GameObject\OpenNos.GameObject.csproj">
-      <Project>{EADD17BE-20A4-4589-830E-E41BE9314928}</Project>
-      <Name>OpenNos.GameObject</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenNos.Master.Library\OpenNos.Master.Library.csproj">
       <Project>{8FABDA5B-C873-4E32-A78F-08A9A4768595}</Project>

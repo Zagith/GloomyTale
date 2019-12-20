@@ -30,41 +30,5 @@ namespace OpenNos.Master.Server
 
             return false;
         }
-
-        /*public int? RegisterDiscordServer(SerializableWorldServer worldServer)
-        {
-            if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
-            {
-                return null;
-            }
-            DiscordServer ws = new DiscordServer(worldServer.Id, new ScsTcpEndPoint(worldServer.EndPointIP, worldServer.EndPointPort), worldServer.AccountLimit, worldServer.WorldGroup)
-            {
-                CommunicationServiceClient = CurrentClient,
-                ChannelId = Enumerable.Range(1, 30).Except(MSManager.Instance.WorldServers.Where(w => w.WorldGroup.Equals(worldServer.WorldGroup)).OrderBy(w => w.ChannelId).Select(w => w.ChannelId)).First()
-            };
-            if (worldServer.EndPointPort == MSManager.Instance.ConfigurationObject.Act4Port)
-            {
-                ws.ChannelId = 51;
-            }
-            MSManager.Instance.WorldServers.Add(ws);
-            return ws.ChannelId;
-        }*/
-
-        /*public void GetAct4Stat()
-        {
-            if(!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
-            {
-                return;
-            }
-
-            foreach (WorldServer world in MSManager.Instance.WorldServers.Where(w => w.ChannelId == 51)
-            {
-                world..GetClientProxy<ICommunicationClient>().UpdatePenaltyLog(penaltyId);
-            }
-            foreach (IScsServiceClient login in MSManager.Instance.LoginServers)
-            {
-                login.GetClientProxy<ICommunicationClient>().UpdatePenaltyLog(penaltyId);
-            }
-        }*/
     }
 }

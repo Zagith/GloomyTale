@@ -12,7 +12,6 @@ using System.Configuration;
 using System.Reflection;
 using System.Diagnostics;
 using System.Globalization;
-using OpenNos.GameObject.Networking;
 
 namespace GloomyTale.DiscordBot
 {
@@ -29,11 +28,6 @@ namespace GloomyTale.DiscordBot
             string separator = new string('=', Console.WindowWidth);
             Console.WriteLine(separator + string.Format("{0," + offset + "}\n", text) + separator);
 
-            // initialize api
-            if (DiscordServiceClient.Instance.Authenticate(ConfigurationManager.AppSettings["MasterAuthKey"]))
-            {
-                Console.WriteLine("Connected with master server");
-            }
             Initialize();
         }
         static void Initialize()

@@ -252,6 +252,7 @@
     <Compile Include="Event\TALENTARENA %28Unused%29\TalentArenaBattle.cs" />
     <Compile Include="Event\TIMESPACES\Bts.cs" />
     <Compile Include="Event\TIMESPACES\Pts.cs" />
+    <Compile Include="FrozenCrownBot.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\MallAPIHelper.cs" />
     <Compile Include="Helpers\MateHelper.cs" />
@@ -627,6 +628,10 @@
     <Compile Include="UseSkillOnDamage.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GloomyTale.DiscordBot\GloomyTale.DiscordBot.csproj">
+      <Project>{c7c0782a-52ee-4e98-a90f-5b7c326c4f72}</Project>
+      <Name>GloomyTale.DiscordBot</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenNos.Core\OpenNos.Core.csproj">
       <Project>{c93a0a40-0551-4732-b594-171b87679ac1}</Project>
       <Name>OpenNos.Core</Name>
