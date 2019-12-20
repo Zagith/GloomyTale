@@ -69,7 +69,7 @@ namespace OpenNos.DAL.EF
 
         public short DamageMinimum { get; set; }
 
-        public short DarkResistance { get; set; }
+        public int DarkResistance { get; set; }
 
         public short DefenceDodge { get; set; }
 
@@ -85,7 +85,7 @@ namespace OpenNos.DAL.EF
 
         public short ElementRate { get; set; }
 
-        public short FireResistance { get; set; }
+        public int FireResistance { get; set; }
 
         public byte HeroLevel { get; set; }
 
@@ -97,7 +97,7 @@ namespace OpenNos.DAL.EF
 
         public byte Level { get; set; }
 
-        public short LightResistance { get; set; }
+        public int LightResistance { get; set; }
 
         public short MagicDefence { get; set; }
 
@@ -138,7 +138,7 @@ namespace OpenNos.DAL.EF
 
         public short VNumRequired { get; set; }
 
-        public short WaterResistance { get; set; }
+        public int WaterResistance { get; set; }
 
         public int XP { get; set; }
 

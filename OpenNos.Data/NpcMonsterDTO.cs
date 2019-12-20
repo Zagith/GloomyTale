@@ -54,7 +54,7 @@ namespace OpenNos.Data
 
         public short DamageMinimum { get; set; }
 
-        public sbyte DarkResistance { get; set; }
+        public short DarkResistance { get; set; }
 
         public short DefenceDodge { get; set; }
 
@@ -68,7 +68,7 @@ namespace OpenNos.Data
 
         public short ElementRate { get; set; }
 
-        public sbyte FireResistance { get; set; }
+        public short FireResistance { get; set; }
 
         public byte HeroLevel { get; set; }
 
@@ -80,7 +80,7 @@ namespace OpenNos.Data
 
         public byte Level { get; set; }
 
-        public sbyte LightResistance { get; set; }
+        public short LightResistance { get; set; }
 
         public short MagicDefence { get; set; }
 
@@ -113,7 +113,7 @@ namespace OpenNos.Data
 
         public short VNumRequired { get; set; }
 
-        public sbyte WaterResistance { get; set; }
+        public short WaterResistance { get; set; }
 
         public int XP { get; set; }
 

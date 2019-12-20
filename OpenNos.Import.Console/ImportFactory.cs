@@ -1589,10 +1589,10 @@ namespace OpenNos.Import.Console
                     npcMonster.DistanceDefence = short.Parse(currentPacket[16]);
                     npcMonster.DistanceDefenceDodge = short.Parse(currentPacket[17]);
                     npcMonster.MagicDefence = short.Parse(currentPacket[18]);
-                    npcMonster.FireResistance = sbyte.Parse(currentPacket[19]);
-                    npcMonster.WaterResistance = sbyte.Parse(currentPacket[20]);
-                    npcMonster.LightResistance = sbyte.Parse(currentPacket[21]);
-                    npcMonster.DarkResistance = sbyte.Parse(currentPacket[22]);
+                    npcMonster.FireResistance = short.Parse(currentPacket[19]);
+                    npcMonster.WaterResistance = short.Parse(currentPacket[20]);
+                    npcMonster.LightResistance = short.Parse(currentPacket[21]);
+                    npcMonster.DarkResistance = short.Parse(currentPacket[22]);
 
                     // TODO: BCard Buff parsing
                     DAOFactory.NpcMonsterDAO.InsertOrUpdate(ref npcMonster);
@@ -1602,15 +1602,15 @@ namespace OpenNos.Import.Console
 
         public void ImportNpcMonsters()
         {
-            int[] basicHp = new int[100];
-            int[] basicMp = new int[100];
-            int[] basicXp = new int[100];
-            int[] basicJXp = new int[100];
+            int[] basicHp = new int[101];
+            int[] basicMp = new int[101];
+            int[] basicXp = new int[101];
+            int[] basicJXp = new int[101];
 
             // basicHpLoad
             int baseHp = 138;
             int basup = 17;
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 101; i++)
             {
                 basicHp[i] = baseHp;
                 basup++;
@@ -1631,7 +1631,7 @@ namespace OpenNos.Import.Console
             int baseMpup = 5;
             // basicMpLoad
             int x = 0;
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 101; i++)
             {
                 basicMp[i] = i == 0 ? baseMp : basicMp[i - 1];
 
@@ -1660,13 +1660,13 @@ namespace OpenNos.Import.Console
             }
 
             // basicXPLoad
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 101; i++)
             {
                 basicXp[i] = i * 180;
             }
 
             // basicJXpLoad
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 101; i++)
             {
                 basicJXp[i] = 360;
             }
@@ -1732,10 +1732,10 @@ namespace OpenNos.Import.Console
                     {
                         npc.Element = byte.Parse(currentLine[2]);
                         npc.ElementRate = short.Parse(currentLine[3]);
-                        npc.FireResistance = Convert.ToSByte(currentLine[4]);
-                        npc.WaterResistance = Convert.ToSByte(currentLine[5]);
-                        npc.LightResistance = Convert.ToSByte(currentLine[6]);
-                        npc.DarkResistance = Convert.ToSByte(currentLine[7]);
+                        npc.FireResistance = Convert.ToInt16(currentLine[4]);
+                        npc.WaterResistance = Convert.ToInt16(currentLine[5]);
+                        npc.LightResistance = Convert.ToInt16(currentLine[6]);
+                        npc.DarkResistance = Convert.ToInt16(currentLine[7]);
                     }
                     else if (currentLine.Length > 3 && currentLine[1] == "HP/MP")
                     {
@@ -2792,7 +2792,7 @@ namespace OpenNos.Import.Console
                         for (int i = 5; i < currentPacket.Length; i++)
                         {
                             ShopSkillDTO shopSkill;
-                            if (!currentPacket[i].Contains("."))
+                            if (!currentPacket[i].Contains(".") && !currentPacket[i].Contains("|"))
                             {
                                 shopSkill = new ShopSkillDTO
                                 {
