@@ -36,6 +36,8 @@ namespace OpenNos.DAL.EF
 
         public virtual NpcMonster NpcMonster { get; set; }
 
+        public bool IsLevelPenalty { get; set; }
+
         #endregion
     }
 }

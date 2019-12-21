@@ -78,6 +78,9 @@ namespace OpenNos.DAL.EF
         public byte XpRate { get; set; }
 
         public int MeteoriteLevel { get; set; }
+
+        public int Side { get; set; }
+
         #endregion
     }
 }

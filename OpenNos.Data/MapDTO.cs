@@ -44,6 +44,8 @@ namespace OpenNos.Data
 
         public int MeteoriteLevel { get; set; }
 
+        public int Side { get; set; }
+
         #endregion
     }
 }

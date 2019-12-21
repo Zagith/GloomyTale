@@ -27,6 +27,13 @@ namespace OpenNos.Data
 
         public short RecipeId { get; set; }
 
+        public int MapNpcId { get; set; }
+
+        public short ProduceItemVNum { get; set; }
+
+        public short Rare { get; set; }
+
+        public byte Upgrade { get; set; }
         #endregion
     }
 }

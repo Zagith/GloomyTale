@@ -90,6 +90,22 @@ namespace OpenNos.DAL.DAO
             }
         }
 
+        public IEnumerable<RecipeDTO> LoadByNpc(int npcId)
+        {
+
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                List<RecipeDTO> result = new List<RecipeDTO>();
+                foreach (Recipe recipe in context.Recipe.Where(s => s.MapNpcId == npcId))
+                {
+                    RecipeDTO dto = new RecipeDTO();
+                    Mapper.Mappers.RecipeMapper.ToRecipeDTO(recipe, dto);
+                    result.Add(dto);
+                }
+                return result;
+            }
+        }
+
         public RecipeDTO LoadByItemVNum(short itemVNum)
         {
             try

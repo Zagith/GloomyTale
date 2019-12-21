@@ -66,7 +66,6 @@ namespace OpenNos.DAL
         private static IQuicklistEntryDAO _quicklistEntryDAO;
         private static IRecipeDAO _recipeDAO;
         private static IRecipeItemDAO _recipeItemDAO;
-        private static IRecipeListDAO _recipeListDAO;
         private static IRespawnDAO _respawnDAO;
         private static IRespawnMapTypeDAO _respawnMapTypeDAO;
         private static IRollGeneratedItemDAO _rollGeneratedItemDAO;
@@ -179,8 +178,6 @@ namespace OpenNos.DAL
         public static IRecipeDAO RecipeDAO => _recipeDAO ?? (_recipeDAO = new RecipeDAO());
 
         public static IRecipeItemDAO RecipeItemDAO => _recipeItemDAO ?? (_recipeItemDAO = new RecipeItemDAO());
-
-        public static IRecipeListDAO RecipeListDAO => _recipeListDAO ?? (_recipeListDAO = new RecipeListDAO());
 
         public static IRespawnDAO RespawnDAO => _respawnDAO ?? (_respawnDAO = new RespawnDAO());
 

@@ -85,8 +85,6 @@ namespace OpenNos.GameObject.Networking
 
         private ThreadSafeSortedList<short, List<NpcMonsterSkill>> _monsterSkills;
 
-        private ThreadSafeSortedList<int, RecipeListDTO> _recipeLists;
-
         private ThreadSafeSortedList<short, Recipe> _recipes;
 
         private ThreadSafeSortedList<int, List<ShopItemDTO>> _shopItems;
@@ -923,7 +921,7 @@ namespace OpenNos.GameObject.Networking
             if (map != null)
             {
                 Guid guid = Guid.NewGuid();
-                MapInstance mapInstance = new MapInstance(map, guid, false, type, mapclock, 0, dropAllowed);
+                MapInstance mapInstance = new MapInstance(map, guid, false, type, mapclock, 0, 0, dropAllowed);
                 if (!isScriptedInstance)
                 {
                     mapInstance.LoadMonsters();
@@ -958,7 +956,7 @@ namespace OpenNos.GameObject.Networking
                     XpRate = baseMapInstance.Map.XpRate,
                     MeteoriteLevel = baseMapInstance.MeteoriteLevel
                 };
-                MapInstance mapInstance = new MapInstance(mapinfo, baseMapInstance.MapInstanceId, baseMapInstance.ShopAllowed, baseMapInstance.MapInstanceType, new InstanceBag(), baseMapInstance.MeteoriteLevel, baseMapInstance.DropAllowed);
+                MapInstance mapInstance = new MapInstance(mapinfo, baseMapInstance.MapInstanceId, baseMapInstance.ShopAllowed, baseMapInstance.MapInstanceType, new InstanceBag(), baseMapInstance.MeteoriteLevel, baseMapInstance.Side, baseMapInstance.DropAllowed);
                 mapInstance.LoadMonsters();
                 mapInstance.LoadNpcs();
                 mapInstance.LoadPortals();
@@ -1063,7 +1061,7 @@ namespace OpenNos.GameObject.Networking
         public List<Recipe> GetRecipesByItemVNum(short itemVNum)
         {
             List<Recipe> recipes = new List<Recipe>();
-            foreach (RecipeListDTO recipeList in _recipeLists.Where(r => r.ItemVNum == itemVNum))
+            foreach (RecipeDTO recipeList in _recipes.Where(r => r.ProduceItemVNum == itemVNum))
             {
                 recipes.Add(_recipes[recipeList.RecipeId]);
             }
@@ -1073,7 +1071,7 @@ namespace OpenNos.GameObject.Networking
         public List<Recipe> GetRecipesByMapNpcId(int mapNpcId)
         {
             List<Recipe> recipes = new List<Recipe>();
-            foreach (RecipeListDTO recipeList in _recipeLists.Where(r => r.MapNpcId == mapNpcId))
+            foreach (RecipeDTO recipeList in _recipes.Where(r => r.MapNpcId == mapNpcId))
             {
                 recipes.Add(_recipes[recipeList.RecipeId]);
             }
@@ -1365,12 +1363,7 @@ namespace OpenNos.GameObject.Networking
                 recipe.Initialize();
             });
             Logger.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPES_LOADED"), _recipes.Count));
-
-            // initialize recipelist
-            _recipeLists = new ThreadSafeSortedList<int, RecipeListDTO>();
-            Parallel.ForEach(DAOFactory.RecipeListDAO.LoadAll(), recipeListGrouping => _recipeLists[recipeListGrouping.RecipeListId] = recipeListGrouping);
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPELISTS_LOADED"), _recipeLists.Count));
-
+            
             // initialize shopitems
             _shopItems = new ThreadSafeSortedList<int, List<ShopItemDTO>>();
             Parallel.ForEach(DAOFactory.ShopItemDAO.LoadAll().GroupBy(s => s.ShopId), shopItemGrouping => _shopItems[shopItemGrouping.Key] = shopItemGrouping.ToList());
@@ -1512,7 +1505,7 @@ namespace OpenNos.GameObject.Networking
                         MeteoriteLevel = map.MeteoriteLevel
                     };
                     _maps.Add(mapinfo);
-                    MapInstance newMap = new MapInstance(mapinfo, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, true);
+                    MapInstance newMap = new MapInstance(mapinfo, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, map.Side, true);
                     _mapinstances.TryAdd(guid, newMap);
 
                     Task.Run((Action)newMap.LoadPortals);
@@ -1645,7 +1638,7 @@ namespace OpenNos.GameObject.Networking
 
         public bool IsCharactersGroupFull(long characterId) => Groups?.Any(g => g.IsMemberOfGroup(characterId) && (g.SessionCount == (byte)g.GroupType || g.GroupType == GroupType.TalentArena)) == true;
 
-        public bool ItemHasRecipe(short itemVNum) => _recipeLists.Any(r => r.ItemVNum == itemVNum);
+        public bool ItemHasRecipe(short itemVNum) => _recipes.Any(r => r.ItemVNum == itemVNum);
 
         public void JoinMiniland(ClientSession session, ClientSession minilandOwner)
         {
@@ -1713,7 +1706,7 @@ namespace OpenNos.GameObject.Networking
             }
         }
 
-        public bool MapNpcHasRecipe(int mapNpcId) => _recipeLists.Any(r => r.MapNpcId == mapNpcId);
+        public bool MapNpcHasRecipe(int mapNpcId) => _recipes.Any(r => r.MapNpcId == mapNpcId);
         
         //Function to get a random number 
         private static readonly Random random = new Random();

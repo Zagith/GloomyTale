@@ -116,6 +116,8 @@
     <Compile Include="ShellArmorEffectType.cs" />
     <Compile Include="ShellEffectLevelType.cs" />
     <Compile Include="ShellWeaponEffectType.cs" />
+    <Compile Include="SideReputMapType.cs" />
+    <Compile Include="SideReputPortalType.cs" />
     <Compile Include="StaticBonusType.cs" />
     <Compile Include="TalentArenaOptionType.cs" />
     <Compile Include="TargetHitType.cs" />

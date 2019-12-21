@@ -39,6 +39,12 @@ namespace OpenNos.Data
 
         public short Type { get; set; }
 
+        public int Side { get; set; }
+
+        public short RequiredItem { get; set; }
+
+        public string NomeOggetto { get; set; }
+
         #endregion
     }
 }

@@ -3339,7 +3339,8 @@ namespace OpenNos.GameObject
                                 bool divideRate = true;
                                 if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act4)
                                  || MapInstance.Map.MapId == 20001 // Miniland
-                                 || explodeMonsters.Contains(monsterToAttack.MonsterVNum))
+                                 || explodeMonsters.Contains(monsterToAttack.MonsterVNum)
+                                 || drop.IsLevelPenalty == false)
                                 {
                                     divideRate = false;
                                 }

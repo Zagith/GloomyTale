@@ -20,6 +20,7 @@ namespace OpenNos.Mapper.Mappers
             output.ItemVNum = input.ItemVNum;
             output.MapTypeId = input.MapTypeId;
             output.MonsterVNum = input.MonsterVNum;
+            output.IsLevelPenalty = input.IsLevelPenalty;
 
             return true;
         }
@@ -37,6 +38,7 @@ namespace OpenNos.Mapper.Mappers
             output.ItemVNum = input.ItemVNum;
             output.MapTypeId = input.MapTypeId;
             output.MonsterVNum = input.MonsterVNum;
+            output.IsLevelPenalty = input.IsLevelPenalty;
 
             return true;
         }

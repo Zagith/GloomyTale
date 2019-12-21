@@ -33,6 +33,8 @@ namespace OpenNos.Data
 
         public short? MonsterVNum { get; set; }
 
+        public bool IsLevelPenalty { get; set; }
+
         #endregion
     }
 }

@@ -260,6 +260,7 @@
     <Compile Include="Helpers\MonsterHelper.cs" />
     <Compile Include="Helpers\PartnerHelper.cs" />
     <Compile Include="Helpers\PartnerSkillHelper.cs" />
+    <Compile Include="Helpers\SideHelper.cs" />
     <Compile Include="Helpers\SkillHelper.cs" />
     <Compile Include="Helpers\PassiveSkillHelper.cs" />
     <Compile Include="Helpers\QuestHelper.cs" />

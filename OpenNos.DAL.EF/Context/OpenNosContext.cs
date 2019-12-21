@@ -125,8 +125,6 @@ namespace OpenNos.DAL.EF
 
         public virtual DbSet<RecipeItem> RecipeItem { get; set; }
 
-        public virtual DbSet<RecipeList> RecipeList { get; set; }
-
         public virtual DbSet<Respawn> Respawn { get; set; }
 
         public virtual DbSet<RespawnMapType> RespawnMapType { get; set; }
@@ -495,24 +493,6 @@ namespace OpenNos.DAL.EF
             modelBuilder.Entity<MapNpc>()
                 .HasMany(e => e.Teleporter)
                 .WithRequired(e => e.MapNpc)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<RecipeList>()
-                .HasOptional(e => e.Item)
-                .WithMany(e => e.RecipeList)
-                .HasForeignKey(e => e.ItemVNum)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<RecipeList>()
-                .HasOptional(e => e.MapNpc)
-                .WithMany(e => e.RecipeList)
-                .HasForeignKey(e => e.MapNpcId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<RecipeList>()
-                .HasRequired(e => e.Recipe)
-                .WithMany(e => e.RecipeList)
-                .HasForeignKey(e => e.RecipeId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<NpcMonster>()

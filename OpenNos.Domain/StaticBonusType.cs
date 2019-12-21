@@ -23,6 +23,7 @@ namespace OpenNos.Domain
         PetBackPack = 4,
         AutoLoot = 250,
         FastVessels = 251,
-        MultipleReturns = 252
+        MultipleReturns = 252,
+        VIP = 255
     }
 }

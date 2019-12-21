@@ -23,6 +23,9 @@ namespace OpenNos.Mapper.Mappers
             output.SourceX = input.SourceX;
             output.SourceY = input.SourceY;
             output.Type = input.Type;
+            output.Side = input.Side;
+            output.RequiredItem = input.RequiredItem;
+            output.NomeOggetto = input.NomeOggetto;
 
             return true;
         }
@@ -43,6 +46,9 @@ namespace OpenNos.Mapper.Mappers
             output.SourceX = input.SourceX;
             output.SourceY = input.SourceY;
             output.Type = input.Type;
+            output.Side = input.Side;
+            output.RequiredItem = input.RequiredItem;
+            output.NomeOggetto = input.NomeOggetto;
 
             return true;
         }
