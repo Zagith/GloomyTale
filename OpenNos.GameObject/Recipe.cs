@@ -36,6 +36,8 @@ namespace OpenNos.GameObject
             Amount = input.Amount;
             ItemVNum = input.ItemVNum;
             RecipeId = input.RecipeId;
+            Rare = input.Rare;
+            Upgrade = input.Upgrade;
         }
 
         #region Methods

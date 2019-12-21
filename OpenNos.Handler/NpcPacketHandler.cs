@@ -1279,7 +1279,8 @@ namespace OpenNos.Handler
                         Session.SendPacket("wopen 27 0");
                         string recipelist = "m_list 2";
                         List<Recipe> recipeList = ServerManager.Instance.GetRecipesByItemVNum(itemVNum);
-                        recipelist = recipeList.Where(s => s.Amount > 0).Aggregate(recipelist, (current, s) => current + $" {s.ItemVNum}");
+                        recipelist = recipeList.Where(s => s.Amount > 0)
+                            .Aggregate(recipelist, (current, s) => current + $" {s.ItemVNum}");
                         recipelist += " -100";
                         Session.SendPacket(recipelist);
                     }

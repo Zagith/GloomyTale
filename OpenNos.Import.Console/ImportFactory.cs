@@ -2521,6 +2521,8 @@ namespace OpenNos.Import.Console
             short itemVNum = 0;
             RecipeDTO recipe;
 
+            RecipeListDTO recipeListDTO;
+
             foreach (string[] currentPacket in _packetList.Where(o => o[0].Equals("n_run") || o[0].Equals("pdtse") || o[0].Equals("m_list")))
             {
                 if (currentPacket.Length > 4 && currentPacket[0] == "n_run")
@@ -2532,23 +2534,27 @@ namespace OpenNos.Import.Console
                 {
                     for (int i = 2; i < currentPacket.Length - 1; i++)
                     {
-                        if (DAOFactory.MapNpcDAO.LoadById(mapNpcId) == null)
+                        short vNum = short.Parse(currentPacket[i]);
+                        if (DAOFactory.RecipeDAO.LoadByItemVNum(vNum) == null)
                         {
-                            continue;
+                            recipe = new RecipeDTO
+                            {
+                                ItemVNum = vNum
+                            };
+                            DAOFactory.RecipeDAO.Insert(recipe);
                         }
+                        RecipeDTO recipeForId = DAOFactory.RecipeDAO.LoadByItemVNum(vNum);
+                        if (DAOFactory.MapNpcDAO.LoadById(mapNpcId) != null && !DAOFactory.RecipeListDAO.LoadByMapNpcId(mapNpcId).Any(r => r.RecipeId.Equals(recipeForId.RecipeId)))
+                        {
+                            recipeListDTO = new RecipeListDTO
+                            {
+                                MapNpcId = mapNpcId,
+                                RecipeId = recipeForId.RecipeId
+                            };
 
-                        recipe = new RecipeDTO
-                        {
-                            ItemVNum = short.Parse(currentPacket[i]),
-                            MapNpcId = mapNpcId
-                        };
-                        if (DAOFactory.RecipeDAO.LoadByNpc(mapNpcId).Any(s => s.ItemVNum == recipe.ItemVNum))
-                        {
-                            continue;
+                            DAOFactory.RecipeListDAO.Insert(recipeListDTO);
+                            count++;
                         }
-
-                        DAOFactory.RecipeDAO.Insert(recipe);
-                        count++;
                     }
                     continue;
                 }
@@ -4572,34 +4578,55 @@ namespace OpenNos.Import.Console
 
         private void InsertRecipe(short itemVNum, short triggerVNum, short amount = 1, short[] recipeItems = null)
         {
-            var recipe = new RecipeDTO
+            void recipeAdd(RecipeDTO recipeDTO)
             {
-                ItemVNum = itemVNum,
-                Amount = amount,
-                ProduceItemVNum = triggerVNum
-            };
-            if (DAOFactory.RecipeDAO.LoadByItemVNum(recipe.ItemVNum) == null)
-            {
-                DAOFactory.RecipeDAO.Insert(recipe);
-            }
-
-            recipe = DAOFactory.RecipeDAO.LoadByItemVNum(itemVNum);
-            if (recipeItems == null || recipe == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < recipeItems.Length; i += 2)
-            {
-                var recipeItem = new RecipeItemDTO
+                RecipeListDTO recipeList = DAOFactory.RecipeListDAO.LoadByRecipeId(recipeDTO.RecipeId).FirstOrDefault(r => r.ItemVNum == null);
+                if (recipeList != null)
                 {
-                    ItemVNum = recipeItems[i],
-                    Amount = recipeItems[i + 1],
-                    RecipeId = recipe.RecipeId
+                    recipeList.ItemVNum = triggerVNum;
+                    DAOFactory.RecipeListDAO.Update(recipeList);
+                }
+                else
+                {
+                    recipeList = new RecipeListDTO
+                    {
+                        ItemVNum = triggerVNum,
+                        RecipeId = recipeDTO.RecipeId
+                    };
+                    DAOFactory.RecipeListDAO.Insert(recipeList);
+                }
+            }
+
+            RecipeDTO recipe = DAOFactory.RecipeDAO.LoadByItemVNum(itemVNum);
+            if (recipe != null)
+            {
+                recipeAdd(recipe);
+            }
+            else
+            {
+                recipe = new RecipeDTO
+                {
+                    ItemVNum = itemVNum,
+                    Amount = amount
                 };
-                if (!DAOFactory.RecipeItemDAO.LoadByRecipeAndItem(recipe.RecipeId, recipeItem.ItemVNum).Any())
+                DAOFactory.RecipeDAO.Insert(recipe);
+                recipe = DAOFactory.RecipeDAO.LoadByItemVNum(itemVNum);
+                if (recipe != null && recipeItems != null)
                 {
-                    DAOFactory.RecipeItemDAO.Insert(recipeItem);
+                    for (int i = 0; i < recipeItems.Length; i += 2)
+                    {
+                        RecipeItemDTO recipeItem = new RecipeItemDTO
+                        {
+                            ItemVNum = recipeItems[i],
+                            Amount = recipeItems[i + 1],
+                            RecipeId = recipe.RecipeId
+                        };
+                        if (DAOFactory.RecipeItemDAO.LoadByRecipeAndItem(recipe.RecipeId, recipeItem.ItemVNum) == null)
+                        {
+                            DAOFactory.RecipeItemDAO.Insert(recipeItem);
+                        }
+                    }
+                    recipeAdd(recipe);
                 }
             }
         }

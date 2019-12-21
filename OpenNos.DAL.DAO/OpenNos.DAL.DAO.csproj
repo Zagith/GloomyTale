@@ -102,6 +102,7 @@
     <Compile Include="QuicklistEntryDAO.cs" />
     <Compile Include="RecipeDAO.cs" />
     <Compile Include="RecipeItemDAO.cs" />
+    <Compile Include="RecipeListDAO.cs" />
     <Compile Include="RespawnDAO.cs" />
     <Compile Include="RespawnMapTypeDAO.cs" />
     <Compile Include="RollGeneratedItemDAO.cs" />

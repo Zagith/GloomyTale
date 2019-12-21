@@ -23,6 +23,7 @@ namespace OpenNos.DAL.EF
         public Recipe()
         {
             RecipeItem = new HashSet<RecipeItem>();
+            RecipeList = new HashSet<RecipeList>();
         }
 
         #endregion
@@ -37,15 +38,13 @@ namespace OpenNos.DAL.EF
 
         public short RecipeId { get; set; }
 
-        public int MapNpcId { get; set; }
-
-        public short ProduceItemVNum { get; set; }
-
         public short Rare { get; set; }
 
         public byte Upgrade { get; set; }
 
         public virtual ICollection<RecipeItem> RecipeItem { get; set; }
+
+        public virtual ICollection<RecipeList> RecipeList { get; set; }
 
         #endregion
     }

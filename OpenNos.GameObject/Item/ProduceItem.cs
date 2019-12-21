@@ -52,7 +52,8 @@ namespace OpenNos.GameObject
                     session.Character.LastItemVNum = inv.ItemVNum;
                     session.SendPacket("wopen 28 0");
                     List<Recipe> recipeList = ServerManager.Instance.GetRecipesByItemVNum(VNum);
-                    string list = recipeList.Where(s => s.Amount > 0).Aggregate("m_list 2", (current, s) => current + $" {s.ItemVNum}");
+                    string list = recipeList.Where(s => s.Amount > 0)
+                        .Aggregate("m_list 2", (current, s) => current + $" {s.ItemVNum}");
                     session.SendPacket(list + (EffectValue <= 110 && EffectValue >= 108 ? " 999" : ""));
                     break;
 

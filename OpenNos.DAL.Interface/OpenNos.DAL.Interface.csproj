@@ -122,6 +122,7 @@
     <Compile Include="IQuestObjectiveDAO.cs" />
     <Compile Include="IQuestRewardDAO.cs" />
     <Compile Include="IQuicklistEntryDAO.cs" />
+    <Compile Include="IRecipeListDAO.cs" />
     <Compile Include="IRollGeneratedItemDAO.cs" />
     <Compile Include="IRecipeDAO.cs" />
     <Compile Include="IRecipeItemDAO.cs" />
