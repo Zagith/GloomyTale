@@ -4800,7 +4800,7 @@ namespace OpenNos.Handler
                 {
                     LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                     Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Home]");
-                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 1, 79, 117);
+                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 129, 127, 73);
                 }
                 else
                 {

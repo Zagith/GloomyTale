@@ -103,9 +103,9 @@ namespace OpenNos.Handler
                     HairStyle = characterCreatePacket.HairStyle,
                     HairColor = characterCreatePacket.HairColor,
                     Name = characterCreatePacket.Name,
-                    MapId = 1,
-                    MapX = ServerManager.RandomNumber<short>(78, 81),
-                    MapY = ServerManager.RandomNumber<short>(114, 118),
+                    MapId = 129,
+                    MapX = 127,
+                    MapY = 73,
                     MaxMateCount = 10,
                     MaxPartnerCount = 3,
                     SpPoint = 10000,
@@ -128,8 +128,8 @@ namespace OpenNos.Handler
 
                     default:
                         {
-                            characterDTO.Level = 1;
-                            characterDTO.JobLevel = 1;
+                            characterDTO.Level = 15;
+                            characterDTO.JobLevel = 20;
                             characterDTO.Hp = 221;
                             characterDTO.Mp = 221;
                         }
@@ -163,17 +163,8 @@ namespace OpenNos.Handler
 
                     using (Inventory inventory = new Inventory(new Character(characterDTO)))
                     {
-                        inventory.AddNewToInventory(1, 1, InventoryType.Wear);
-                        inventory.AddNewToInventory(8, 1, InventoryType.Wear);
-                        inventory.AddNewToInventory(12, 1, InventoryType.Wear);
-                        inventory.AddNewToInventory(2024, 10, InventoryType.Etc);
-                        inventory.AddNewToInventory(2081, 1, InventoryType.Etc);
-					    inventory.AddNewToInventory(884, 1, InventoryType.Equipment);
-                        inventory.AddNewToInventory(885, 1, InventoryType.Equipment);
-                        inventory.AddNewToInventory(886, 1, InventoryType.Equipment);
-                        inventory.AddNewToInventory(887, 1, InventoryType.Equipment);
-                        inventory.AddNewToInventory(9087, 1, InventoryType.Main);                        
-						inventory.ForEach(i => DAOFactory.ItemInstanceDAO.InsertOrUpdate(i));
+                        inventory.AddNewToInventory(1098, 1, InventoryType.Main);
+                        inventory.ForEach(i => DAOFactory.ItemInstanceDAO.InsertOrUpdate(i));
                         LoadCharacters(characterCreatePacket.OriginalContent);
                     }
                 }
