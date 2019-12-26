@@ -212,6 +212,8 @@ namespace OpenNos.DAL.EF
 
         public byte Width { get; set; }
 
+        public int SideReputation { get; set; }
+
         public virtual ICollection<FortuneWheel> FortuneWheel { get; set; }
         #endregion
     }

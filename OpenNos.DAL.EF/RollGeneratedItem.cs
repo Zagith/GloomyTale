@@ -45,6 +45,10 @@ namespace OpenNos.DAL.EF
         [Key]
         public short RollGeneratedItemId { get; set; }
 
+        public byte ItemGeneratedUpgrade { get; set; }
+
+        public bool IsSuperReward { get; set; }
+
         #endregion
     }
 }
