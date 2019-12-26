@@ -87,6 +87,7 @@ namespace OpenNos.Mapper.Mappers
             output.WaterElement = input.WaterElement;
             output.WaterResistance = input.WaterResistance;
             output.Width = input.Width;
+            output.SideReputation = input.SideReputation;
 
             return true;
         }
@@ -168,6 +169,7 @@ namespace OpenNos.Mapper.Mappers
             output.WaterElement = input.WaterElement;
             output.WaterResistance = input.WaterResistance;
             output.Width = input.Width;
+            output.SideReputation = input.SideReputation;
 
             return true;
         }

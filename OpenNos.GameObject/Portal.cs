@@ -45,6 +45,9 @@ namespace OpenNos.GameObject
             SourceX = input.SourceX;
             SourceY = input.SourceY;
             Type = input.Type;
+            Side = input.Side;
+            RequiredItem = input.RequiredItem;
+            NomeOggetto = input.NomeOggetto;
         }
 
         #endregion

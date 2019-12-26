@@ -1270,10 +1270,19 @@ namespace OpenNos.Handler
 
                         if (removePacket.Type == 0)
                         {
+                            if (Session.Character.Reputation >= inv.Item.SideReputation)
+                            {
+                                Session.Character.Reputation -= inv.Item.SideReputation;
+                                Session.Character.SideReputationRemoveBuff();
+                            }
+                            CharacterHelper.AddEquipBuff(Session, inv, true);
                             Session.SendPackets(Session.Character.GenerateStatChar());
                             Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateEq());
                             Session.SendPacket(Session.Character.GenerateEquipment());
                             Session.CurrentMapInstance?.Broadcast(Session.Character.GeneratePairy());
+                            Session.SendPacket(Session.Character.GenerateFd());
+                            Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(), ReceiverType.AllExceptMe);
+                            Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
                         }
                         else if (mate != null)
                         {

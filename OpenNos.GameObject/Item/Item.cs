@@ -125,6 +125,7 @@ namespace OpenNos.GameObject
             WaterElement = input.WaterElement;
             WaterResistance = input.WaterResistance;
             Width = input.Width;
+            SideReputation = input.SideReputation;
             BCards = new List<BCard>();
             DAOFactory.BCardDAO.LoadByItemVNum(input.VNum).ToList().ForEach(o => BCards.Add(new BCard(o)));
             RollGeneratedItems = DAOFactory.RollGeneratedItemDAO.LoadByItemVNum(input.VNum).ToList();

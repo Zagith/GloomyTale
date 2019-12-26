@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Core;
 using OpenNos.Domain;
 using System;
 
@@ -249,6 +250,39 @@ namespace OpenNos.GameObject.Helpers
         #endregion
 
         #region Methods
+
+        public static void AddEquipBuff(ClientSession session, ItemInstance item, bool remove = false)
+        {
+            RemoveEuipBuff(session);
+            if (remove == false)
+            {
+                if (session.Character.Level > 89)
+                {
+                    switch (item.ItemVNum)
+                    {
+                        case 180:
+                            session.Character.AddBuff(new Buff(96, session.Character.Level, isPermaBuff: true), session.Character.BattleEntity);
+                            break;
+                        case 181:
+                            session.Character.AddBuff(new Buff(162, session.Character.Level, isPermaBuff: true), session.Character.BattleEntity);
+                            break;
+                        case 182:
+                            session.Character.AddBuff(new Buff(479, session.Character.Level, isPermaBuff: true), session.Character.BattleEntity);
+                            break;
+                    }
+                }
+                else
+                {
+                    session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("LOW_LEVEL"), 0));
+                }
+            }
+        }
+        public static void RemoveEuipBuff(ClientSession session)
+        {
+            session.Character.RemoveBuff(96, true);
+            session.Character.RemoveBuff(162, true);
+            session.Character.RemoveBuff(479, true);
+        }
 
         public static float ExperiencePenalty(byte playerLevel, byte monsterLevel)
         {

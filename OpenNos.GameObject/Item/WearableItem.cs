@@ -287,9 +287,23 @@ namespace OpenNos.GameObject
 
                         // move from wear to equipment and back
                         session.Character.Inventory.MoveInInventory(currentlyEquippedItem.Slot, equipment, itemToWearType, inv.Slot);
+                        if (session.Character.Reputation >= currentlyEquippedItem.Item.SideReputation)
+                            session.Character.Reputation -= currentlyEquippedItem.Item.SideReputation;
                         session.SendPacket(currentlyEquippedItem.GenerateInventoryAdd());
                         session.Character.EquipmentBCards.RemoveAll(o => o.ItemVNum == currentlyEquippedItem.ItemVNum);
                     }
+
+                    session.Character.Reputation += inv.Item.SideReputation;
+                    session.Character.SideReputationRemoveBuff();
+                    session.Character.SideReputationAddBuff();
+
+                    session.SendPackets(session.Character.GenerateStatChar());
+                    session.CurrentMapInstance?.Broadcast(session.Character.GenerateEq());
+                    session.SendPacket(session.Character.GenerateEquipment());
+                    session.CurrentMapInstance?.Broadcast(session.Character.GeneratePairy());
+                    session.SendPacket(session.Character.GenerateFd());
+                    session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(), ReceiverType.AllExceptMe);
+                    session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
 
                     Logger.LogUserEvent("EQUIPMENT_WEAR", session.GenerateIdentity(), $"IIId: {inv.Id} ItemVnum: {inv.ItemVNum} Upgrade: {inv.Upgrade} Rare: {inv.Rare}");
 

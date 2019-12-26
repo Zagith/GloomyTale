@@ -23,7 +23,6 @@ using OpenNos.GameObject.Packets.ServerPackets;
 using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Data;
 using OpenNos.PathFinder;
-using OpenNos.XMLModel.Models.Quest;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -651,6 +650,177 @@ namespace OpenNos.GameObject
         #endregion
 
         #region Methods
+
+        public void SideReputationAddBuff()
+        {
+            switch (Reputation)
+            {
+                case (long)SideReputType.Side1:
+                    AddBuff(new Buff(12, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(248);
+                    RemoveBuff(453);
+                    RemoveBuff(114);
+                    RemoveBuff(385);
+                    RemoveBuff(94);
+                    RemoveBuff(5);
+                    RemoveBuff(452);
+                    RemoveBuff(166);
+                    RemoveBuff(108);
+                    break;
+                case (long)SideReputType.Side2:
+                    RemoveBuff(12);
+                    AddBuff(new Buff(248, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(453);
+                    RemoveBuff(114);
+                    RemoveBuff(385);
+                    RemoveBuff(94);
+                    RemoveBuff(5);
+                    RemoveBuff(452);
+                    RemoveBuff(166);
+                    RemoveBuff(108);
+                    break;
+                case (long)SideReputType.Side3:
+                    RemoveBuff(12);
+                    AddBuff(new Buff(453, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(248);
+                    RemoveBuff(114);
+                    RemoveBuff(385);
+                    RemoveBuff(94);
+                    RemoveBuff(5);
+                    RemoveBuff(452);
+                    RemoveBuff(166);
+                    RemoveBuff(108);
+                    break;
+                case (long)SideReputType.Side4:
+                    RemoveBuff(12);
+                    AddBuff(new Buff(114, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(453);
+                    RemoveBuff(248);
+                    RemoveBuff(385);
+                    RemoveBuff(94);
+                    RemoveBuff(5);
+                    RemoveBuff(452);
+                    RemoveBuff(166);
+                    RemoveBuff(108);
+                    break;
+                case (long)SideReputType.Side5:
+                    RemoveBuff(12);
+                    AddBuff(new Buff(385, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(453);
+                    RemoveBuff(114);
+                    RemoveBuff(248);
+                    RemoveBuff(94);
+                    RemoveBuff(5);
+                    RemoveBuff(452);
+                    RemoveBuff(166);
+                    RemoveBuff(108);
+                    break;
+                case (long)SideReputType.Side6:
+                    RemoveBuff(12);
+                    AddBuff(new Buff(94, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(453);
+                    RemoveBuff(114);
+                    RemoveBuff(385);
+                    RemoveBuff(248);
+                    RemoveBuff(5);
+                    RemoveBuff(452);
+                    RemoveBuff(166);
+                    RemoveBuff(108);
+                    break;
+                case (long)SideReputType.Side7:
+                    RemoveBuff(12);
+                    AddBuff(new Buff(5, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(453);
+                    RemoveBuff(114);
+                    RemoveBuff(385);
+                    RemoveBuff(94);
+                    RemoveBuff(248);
+                    RemoveBuff(452);
+                    RemoveBuff(166);
+                    RemoveBuff(108);
+                    break;
+                case (long)SideReputType.Side8:
+                    RemoveBuff(12);
+                    AddBuff(new Buff(452, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(453);
+                    RemoveBuff(114);
+                    RemoveBuff(385);
+                    RemoveBuff(94);
+                    RemoveBuff(5);
+                    RemoveBuff(248);
+                    RemoveBuff(166);
+                    RemoveBuff(108);
+                    break;
+                case (long)SideReputType.Side9:
+                    RemoveBuff(12);
+                    AddBuff(new Buff(166, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(453);
+                    RemoveBuff(114);
+                    RemoveBuff(385);
+                    RemoveBuff(94);
+                    RemoveBuff(5);
+                    RemoveBuff(452);
+                    RemoveBuff(248);
+                    RemoveBuff(108);
+                    break;
+                case (long)SideReputType.Side10:
+                    RemoveBuff(12);
+                    AddBuff(new Buff(108, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(453);
+                    RemoveBuff(114);
+                    RemoveBuff(385);
+                    RemoveBuff(94);
+                    RemoveBuff(5);
+                    RemoveBuff(452);
+                    RemoveBuff(166);
+                    RemoveBuff(248);
+                    break;
+            }
+        }
+
+        public void SideReputationRemoveBuff()
+        {
+            if (Reputation != (long)SideReputType.Side1)
+            {
+                RemoveBuff(12, true);
+            }
+            if (Reputation != (long)SideReputType.Side2)
+            {
+                RemoveBuff(248, true);
+            }
+            if (Reputation != (long)SideReputType.Side3)
+            {
+                RemoveBuff(453, true);
+            }
+            if (Reputation != (long)SideReputType.Side4)
+            {
+                RemoveBuff(114, true);
+            }
+            if (Reputation != (long)SideReputType.Side5)
+            {
+                RemoveBuff(385, true);
+            }
+            if (Reputation != (long)SideReputType.Side6)
+            {
+                RemoveBuff(94, true);
+            }
+            if (Reputation != (long)SideReputType.Side7)
+            {
+                RemoveBuff(228, true);
+            }
+            if (Reputation != (long)SideReputType.Side8)
+            {
+                RemoveBuff(452, true);
+            }
+            if (Reputation != (long)SideReputType.Side9)
+            {
+                RemoveBuff(166, true);
+            }
+            if (Reputation != (long)SideReputType.Side10)
+            {
+                RemoveBuff(108, true);
+            }
+        }
 
         public string GenerateFtPtPacket() => $"ftpt {UltimatePoints} 3000";
 

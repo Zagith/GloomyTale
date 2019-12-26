@@ -171,6 +171,7 @@ namespace OpenNos.Data
 
         public byte Width { get; set; }
 
+        public int SideReputation { get; set; }
         #endregion
     }
 }
