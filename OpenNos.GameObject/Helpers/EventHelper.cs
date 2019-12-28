@@ -372,40 +372,47 @@ namespace OpenNos.GameObject.Helpers
                                     switch (evt.MapInstance.MapInstanceType)
                                     {
                                         case MapInstanceType.Act4Morcos:
-                                            mobWave.Add(new MonsterToSummon(561, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(561, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(561, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(562, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(562, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(562, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(851, evt.MapInstance.Map.GetRandomPosition(), null, false));
+                                            mobWave.Add(new MonsterToSummon(1925, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(1051, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(1042, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(1045, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(1911, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(1925, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(1051, evt.MapInstance.Map.GetRandomPosition(), null, false));
+                                            mobWave.Add(new MonsterToSummon(1042, evt.MapInstance.Map.GetRandomPosition(), null, false));
                                             break;
 
                                         case MapInstanceType.Act4Hatus:
-                                            mobWave.Add(new MonsterToSummon(574, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(574, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(575, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(575, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(576, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(576, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(439, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(95, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(316, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(482, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(276, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(439, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(95, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(316, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             break;
 
                                         case MapInstanceType.Act4Calvina:
-                                            mobWave.Add(new MonsterToSummon(770, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(770, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(770, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(771, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(771, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(771, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(549, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(2503, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(436, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(376, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(478, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(549, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(2503, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(436, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             break;
 
                                         case MapInstanceType.Act4Berios:
-                                            mobWave.Add(new MonsterToSummon(780, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(781, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(782, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(782, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(783, evt.MapInstance.Map.GetRandomPosition(), null, true));
-                                            mobWave.Add(new MonsterToSummon(783, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(314, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(314, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(402, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(402, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(447, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(447, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(343, evt.MapInstance.Map.GetRandomPosition(), null, true));
+                                            mobWave.Add(new MonsterToSummon(315, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             break;
                                     }
                                 }

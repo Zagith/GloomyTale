@@ -157,29 +157,29 @@ namespace OpenNos.GameObject.Event
 
         private readonly List<long> _wonFamilies = new List<long>();
 
-        private short _bossMapId = 136;
+        private short _bossMapId = 2539;
 
         private bool _bossMove;
 
-        private short _bossVNum = 563;
+        private short _bossVNum = 2034;
 
-        private short _bossX = 55;
+        private short _bossX = 43;
 
-        private short _bossY = 11;
+        private short _bossY = 61;
 
-        private short _destPortalX = 55;
+        private short _destPortalX = 43;
 
-        private short _destPortalY = 80;
+        private short _destPortalY = 143;
 
         private byte _faction;
 
-        private short _mapId = 135;
+        private short _mapId = 2617;
 
         private MapInstanceType _raidType;
 
-        private short _sourcePortalX = 146;
+        private short _sourcePortalX = 102;
 
-        private short _sourcePortalY = 43;
+        private short _sourcePortalY = 15;
 
         private int _raidTime = 3600;
 
@@ -197,41 +197,41 @@ namespace OpenNos.GameObject.Event
             {
                 // Morcos is default
                 case MapInstanceType.Act4Hatus:
-                    _mapId = 137;
-                    _bossMapId = 138;
-                    _bossVNum = 577;
-                    _bossX = 36;
-                    _bossY = 18;
-                    _sourcePortalX = 37;
-                    _sourcePortalY = 156;
-                    _destPortalX = 36;
-                    _destPortalY = 58;
+                    _mapId = 2616;
+                    _bossMapId = 2509;
+                    _bossVNum = 2327;
+                    _bossX = 50;
+                    _bossY = 44;
+                    _sourcePortalX = 102;
+                    _sourcePortalY = 15;
+                    _destPortalX = 47;
+                    _destPortalY = 76;
                     _bossMove = false;
                     break;
 
                 case MapInstanceType.Act4Calvina:
-                    _mapId = 139;
-                    _bossMapId = 140;
-                    _bossVNum = 629;
-                    _bossX = 26;
-                    _bossY = 26;
-                    _sourcePortalX = 194;
-                    _sourcePortalY = 17;
-                    _destPortalX = 9;
-                    _destPortalY = 41;
+                    _mapId = 2618;
+                    _bossMapId = 136;
+                    _bossVNum = 2049;
+                    _bossX = 55;
+                    _bossY = 12;
+                    _sourcePortalX = 102;
+                    _sourcePortalY = 15;
+                    _destPortalX = 144;
+                    _destPortalY = 129;
                     _bossMove = true;
                     break;
 
                 case MapInstanceType.Act4Berios:
-                    _mapId = 141;
-                    _bossMapId = 142;
-                    _bossVNum = 624;
-                    _bossX = 29;
-                    _bossY = 29;
-                    _sourcePortalX = 188;
-                    _sourcePortalY = 96;
-                    _destPortalX = 29;
-                    _destPortalY = 54;
+                    _mapId = 2619;
+                    _bossMapId = 199;
+                    _bossVNum = 2504;
+                    _bossX = 21;
+                    _bossY = 1;
+                    _sourcePortalX = 102;
+                    _sourcePortalY = 15;
+                    _destPortalX = 42;
+                    _destPortalY = 11;
                     _bossMove = true;
                     break;
             }
