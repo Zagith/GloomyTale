@@ -3438,7 +3438,7 @@ namespace OpenNos.Handler
                             }
                             else
                             {
-                                Session.Character.GetReputation(Session.Character.Level * -10);
+                                //Session.Character.GetReputation(Session.Character.Level * -10);
                                 Session.Character.Hp = (int)Session.Character.HPLoad();
                                 Session.Character.Mp = (int)Session.Character.MPLoad();
                                 Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateRevive());

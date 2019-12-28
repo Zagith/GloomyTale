@@ -85,7 +85,7 @@ namespace OpenNos.GameObject.Event.TIMESPACES
                             foreach (ClientSession cli in mapinstance.Item1.Sessions.Where(s => s.Character != null).ToList())
                             {
                                 cli.Character.GenerateFamilyXp(cli.Character.Level * 4);
-                                cli.Character.GetReputation(MediaLivello * 75);
+                                //cli.Character.GetReputation(MediaLivello * 75);
                                 cli.Character.SpAdditionPoint += cli.Character.Level * 100;
                                 cli.Character.SpAdditionPoint = cli.Character.SpAdditionPoint > 20000 ? 20000 : cli.Character.SpAdditionPoint;
                                 cli.SendPacket(cli.Character.GenerateSpPoint());

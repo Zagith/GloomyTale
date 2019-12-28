@@ -541,7 +541,7 @@ namespace OpenNos.GameObject.Helpers
                                                     }
                                                 }
 
-                                                s.Character.GetReputation(group.Raid.Reputation);
+                                                //s.Character.GetReputation(group.Raid.Reputation);
 
                                                 if (s.Character.GenerateFamilyXp(group.Raid.FamExp, group.Raid.Id))
                                                 {

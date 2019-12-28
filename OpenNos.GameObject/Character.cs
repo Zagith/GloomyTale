@@ -4018,7 +4018,7 @@ namespace OpenNos.GameObject
 
                 if (Level >= 20)
                 {
-                    GetReputation(50);
+                    //GetReputation(50);
                 }
 
                 LevelRewards(Level);
@@ -5372,7 +5372,7 @@ namespace OpenNos.GameObject
 
         public int GetReputationIco()
         {
-            if (Reputation >= 5000001)
+            /*if (Reputation >= 5000001)
             {
                 switch (IsReputationHero())
                 {
@@ -5391,133 +5391,53 @@ namespace OpenNos.GameObject
                     case 5:
                         return 32;
                 }
-            }
-            if (Reputation <= 50)
+            }*/
+            if (Reputation <= 5)
             {
                 return 1;
             }
 
-            if (Reputation <= 150)
-            {
-                return 2;
-            }
-
-            if (Reputation <= 250)
-            {
-                return 3;
-            }
-
-            if (Reputation <= 500)
+            if (Reputation <= 49)
             {
                 return 4;
             }
 
-            if (Reputation <= 750)
+            if (Reputation <= 329)
             {
                 return 5;
             }
 
-            if (Reputation <= 1000)
+            if (Reputation <= 1999)
             {
                 return 6;
             }
 
-            if (Reputation <= 2250)
+            if (Reputation <= 12049)
             {
                 return 7;
             }
 
-            if (Reputation <= 3500)
+            if (Reputation <= 72329)
             {
                 return 8;
             }
 
-            if (Reputation <= 5000)
+            if (Reputation <= 434099)
             {
                 return 9;
             }
 
-            if (Reputation <= 9500)
+            if (Reputation <= 2604899)
             {
                 return 10;
             }
 
-            if (Reputation <= 19000)
+            if (Reputation <= 15629999)
             {
                 return 11;
             }
 
-            if (Reputation <= 25000)
-            {
-                return 12;
-            }
-
-            if (Reputation <= 40000)
-            {
-                return 13;
-            }
-
-            if (Reputation <= 60000)
-            {
-                return 14;
-            }
-
-            if (Reputation <= 85000)
-            {
-                return 15;
-            }
-
-            if (Reputation <= 115000)
-            {
-                return 16;
-            }
-
-            if (Reputation <= 150000)
-            {
-                return 17;
-            }
-
-            if (Reputation <= 190000)
-            {
-                return 18;
-            }
-
-            if (Reputation <= 235000)
-            {
-                return 19;
-            }
-
-            if (Reputation <= 285000)
-            {
-                return 20;
-            }
-
-            if (Reputation <= 350000)
-            {
-                return 21;
-            }
-
-            if (Reputation <= 500000)
-            {
-                return 22;
-            }
-
-            if (Reputation <= 1500000)
-            {
-                return 23;
-            }
-
-            if (Reputation <= 2500000)
-            {
-                return 24;
-            }
-
-            if (Reputation <= 3750000)
-            {
-                return 25;
-            }
-
-            return Reputation <= 5000000 ? 26 : 27;
+            return Reputation <= 93809999 ? 12 : 13;
         }
 
         /// <summary>

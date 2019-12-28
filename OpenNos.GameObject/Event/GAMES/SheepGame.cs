@@ -228,7 +228,7 @@ namespace OpenNos.GameObject.Event.GAMES
             {
                 character.IsCustomSpeed = false;
                 character.GenerateFamilyXp(character.Level * 400);
-                character.GetReputation(character.Level * 500);
+                //character.GetReputation(character.Level * 500);
                 character.GetGold(character.Level * 250000);
                 character.GiftAdd(1134, 2);
                 character.SpAdditionPoint += character.Level * 1090;

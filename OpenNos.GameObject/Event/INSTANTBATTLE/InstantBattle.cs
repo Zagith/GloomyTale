@@ -124,7 +124,7 @@ namespace OpenNos.GameObject.Event
                             foreach (ClientSession cli in mapinstance.Item1.Sessions.Where(s => s.Character != null).ToList())
                             {
                                 cli.Character.GenerateFamilyXp(cli.Character.Level * 4);
-                                cli.Character.GetReputation(cli.Character.Level * 50);
+                                //cli.Character.GetReputation(cli.Character.Level * 50);
                                 cli.Character.Gold += cli.Character.Level * 1000;
                                 cli.Character.Gold = cli.Character.Gold > maxGold ? maxGold : cli.Character.Gold;
                                 cli.Character.SpAdditionPoint += cli.Character.Level * 100;

@@ -249,7 +249,7 @@ namespace OpenNos.Handler
                     if (!Session.Character.TimespaceRewardGotten)
                     {
                         Session.Character.TimespaceRewardGotten = true;
-                        Session.Character.GetReputation(Session.Character.Timespace.Reputation);
+                        //Session.Character.GetReputation(Session.Character.Timespace.Reputation);
 
                         Session.Character.Gold =
                             Session.Character.Gold + Session.Character.Timespace.Gold

@@ -257,7 +257,7 @@ namespace OpenNos.GameObject
                     break;
                 // Honour Medals
                 case 69:
-                    session.Character.Reputation += ReputPrice;
+                    //session.Character.Reputation += ReputPrice;
                     session.SendPacket(session.Character.GenerateFd());
                     session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("REPUT_INCREASE"), ReputPrice), 11));
                     session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
