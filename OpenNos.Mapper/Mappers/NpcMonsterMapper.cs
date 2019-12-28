@@ -58,6 +58,9 @@ namespace OpenNos.Mapper.Mappers
             output.VNumRequired = input.VNumRequired;
             output.WaterResistance = input.WaterResistance;
             output.XP = input.XP;
+            output.Contributi = input.Contributi;
+            output.MinLevelXP = input.MinLevelXP;
+            output.MaxLevelXP = input.MaxLevelXP;
 
             return true;
         }
@@ -113,6 +116,9 @@ namespace OpenNos.Mapper.Mappers
             output.VNumRequired = input.VNumRequired;
             output.WaterResistance = (sbyte)input.WaterResistance;
             output.XP = input.XP;
+            output.Contributi = input.Contributi;
+            output.MinLevelXP = input.MinLevelXP;
+            output.MaxLevelXP = input.MaxLevelXP;
 
             return true;
         }

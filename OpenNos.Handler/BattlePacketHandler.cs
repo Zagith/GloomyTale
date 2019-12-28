@@ -722,7 +722,19 @@ namespace OpenNos.Handler
 
                         if (target.Character.Session.CleanIpAddress != hitRequest.Session.CleanIpAddress)
                         {
-                            int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
+                            if (hitRequest.Session.Character.Group == null)
+                            {
+                                hitRequest.Session.Character.GetContributi(1500);
+                            }
+                            else
+                            {
+                                hitRequest.Session.Character.GetContributi(750);
+                                foreach (ClientSession s in hitRequest.Session.Character.Group.Sessions.GetAllItems())
+                                {
+                                    s.Character.GetContributi(250);
+                                }
+                            }
+                            /*int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
 
                             if (levelDifference < 30)
                             {
@@ -755,10 +767,10 @@ namespace OpenNos.Handler
                                         || (target.Character.Faction == FactionType.Demon && ServerManager.Instance.Act4AngelStat.Mode == 3))
                                         ? 2 : 1;
 
-                                    target.Character.Reputation -= ReputationValue/* * act4RaidPenalty*/;
+                                    target.Character.Reputation -= ReputationValue/* * act4RaidPenalty;
                                     target.SendPacket(target.Character.GenerateSay(
                                         string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
-                                            (short)ReputationValue/* * act4RaidPenalty*/), 11));
+                                            (short)ReputationValue/* * act4RaidPenalty), 11));
                                 }
                                 else
                                 {
@@ -772,7 +784,7 @@ namespace OpenNos.Handler
                             else
                             {
                                 hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TOO_LEVEL_DIFFERENCE"), 11));
-                            }
+                            }*/
                         }
                         else
                         {

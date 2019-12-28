@@ -412,47 +412,72 @@ namespace OpenNos.GameObject.Networking
                         break;
 
                     case MapInstanceType.RaidInstance:
-                        List<long> save = session.CurrentMapInstance.InstanceBag.DeadList.ToList();
-                        if (session.CurrentMapInstance.InstanceBag.Lives - save.Count < 0)
+                        if (session.Character.Family?.Act4Raid?.Map == session.CurrentMapInstance.Map)
                         {
-                            session.Character.Hp = 1;
-                            session.Character.Mp = 1;
-                            session.Character.Group?.Raid.End();
-                        }
-                        else if (3 - save.Count(s => s == session.Character.CharacterId) > 0)
-                        {
-                            session.SendPacket(UserInterfaceHelper.GenerateInfo(string.Format(Language.Instance.GetMessageFromKey("YOU_HAVE_LIFE"), 2 - session.CurrentMapInstance.InstanceBag.DeadList.Count(s => s == session.Character.CharacterId))));
-
-                            session.Character.Group?.Sessions.ForEach(grpSession =>
+                            if (session.Character.Contributi < 5000)
                             {
-                                grpSession?.SendPacket(grpSession.Character.Group?.GeneraterRaidmbf(grpSession));
-                                grpSession?.SendPacket(grpSession.Character.Group?.GenerateRdlst());
-                            });
+                                session.SendPacket(
+                                    UserInterfaceHelper.GenerateMsg(
+                                        Language.Instance.GetMessageFromKey("NOT_ENOUGH_CONTRIBUTI"), 0));
+                                ChangeMap(session.Character.CharacterId, 134, 142, 100);
+                                if (session.Character.Hp <= 0)
+                                {
+                                    session.Character.Hp = 1;
+                                    session.Character.Mp = 1;
+                                }
+                                return;
+                            }
+                            session.Character.SetContributi(-5000);
                             Task.Factory.StartNew(async () =>
                             {
-                                await Task.Delay(20000).ConfigureAwait(false);
+                                await Task.Delay(5000);
                                 Instance.ReviveFirstPosition(session.Character.CharacterId);
                             });
                         }
                         else
                         {
-                            Group grp = session.Character?.Group;
-                            session.Character.Hp = 1;
-                            session.Character.Mp = 1;
-                            ChangeMap(session.Character.CharacterId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
-                            session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("KICK_RAID"), 0));
-                            if (grp != null)
+                            List<long> save = session.CurrentMapInstance.InstanceBag.DeadList.ToList();
+                            if (session.CurrentMapInstance.InstanceBag.Lives - save.Count < 0)
                             {
-                                grp.LeaveGroup(session);
-                                grp.Sessions.ForEach(s =>
+                                session.Character.Hp = 1;
+                                session.Character.Mp = 1;
+                                session.Character.Group?.Raid.End();
+                            }
+                            else if (3 - save.Count(s => s == session.Character.CharacterId) > 0)
+                            {
+                                session.SendPacket(UserInterfaceHelper.GenerateInfo(string.Format(Language.Instance.GetMessageFromKey("YOU_HAVE_LIFE"), 2 - session.CurrentMapInstance.InstanceBag.DeadList.Count(s => s == session.Character.CharacterId))));
+
+                                session.Character.Group?.Sessions.ForEach(grpSession =>
                                 {
-                                    s.SendPacket(grp.GenerateRdlst());
-                                    s.SendPacket(s.Character.Group?.GeneraterRaidmbf(s));
-                                    s.SendPacket(s.Character.GenerateRaid(0));
+                                    grpSession?.SendPacket(grpSession.Character.Group?.GeneraterRaidmbf(grpSession));
+                                    grpSession?.SendPacket(grpSession.Character.Group?.GenerateRdlst());
+                                });
+                                Task.Factory.StartNew(async () =>
+                                {
+                                    await Task.Delay(20000).ConfigureAwait(false);
+                                    Instance.ReviveFirstPosition(session.Character.CharacterId);
                                 });
                             }
-                            session.SendPacket(session.Character.GenerateRaid(1, true));
-                            session.SendPacket(session.Character.GenerateRaid(2, true));
+                            else
+                            {
+                                Group grp = session.Character?.Group;
+                                session.Character.Hp = 1;
+                                session.Character.Mp = 1;
+                                ChangeMap(session.Character.CharacterId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
+                                session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("KICK_RAID"), 0));
+                                if (grp != null)
+                                {
+                                    grp.LeaveGroup(session);
+                                    grp.Sessions.ForEach(s =>
+                                    {
+                                        s.SendPacket(grp.GenerateRdlst());
+                                        s.SendPacket(s.Character.Group?.GeneraterRaidmbf(s));
+                                        s.SendPacket(s.Character.GenerateRaid(0));
+                                    });
+                                }
+                                session.SendPacket(session.Character.GenerateRaid(1, true));
+                                session.SendPacket(session.Character.GenerateRaid(2, true));
+                            }
                         }
                         break;
 

@@ -117,6 +117,11 @@ namespace OpenNos.Data
 
         public int XP { get; set; }
 
+        public byte MinLevelXP { get; set; }
+
+        public byte MaxLevelXP { get; set; }
+
+        public int Contributi { get; set; }
         #endregion
     }
 }

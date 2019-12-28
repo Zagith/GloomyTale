@@ -74,6 +74,9 @@ namespace OpenNos.GameObject
             VNumRequired = input.VNumRequired;
             WaterResistance = input.WaterResistance;
             XP = input.XP;
+            Contributi = input.Contributi;
+            MinLevelXP = input.MinLevelXP;
+            MaxLevelXP = input.MaxLevelXP;
         }
 
         #endregion

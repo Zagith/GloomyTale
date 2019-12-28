@@ -22,8 +22,6 @@ using System;
 using System.Linq;
 using OpenNos.GameObject.Networking;
 using System.Collections.Generic;
-using OpenNos.Master.Library.Client;
-using OpenNos.Master.Library.Data;
 using System.Threading.Tasks;
 
 namespace OpenNos.GameObject

@@ -651,6 +651,42 @@ namespace OpenNos.GameObject
 
         #region Methods
 
+        public void GetContributi(int val)
+        {
+            Contributi += val;
+            Session.SendPacket(GenerateSay("You received " + val + " contributions.", 11));
+        }
+
+        public void LoseContributi(int val)
+        {
+            if (Contributi < val)
+            {
+                Session.SendPacket(GenerateSay("You have lost " + Contributi + " contributions.", 11));
+                Contributi = 0;
+            }
+            else
+            {
+                Contributi -= val;
+                Session.SendPacket(GenerateSay("You have lost " + val + " contributions.", 11));
+            }
+        }
+
+        public void SetContributi(long val)
+        {
+            if (val != 0)
+            {
+                Contributi += (int)val;
+                if (val > 0)
+                {
+                    Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("CONTRIBUTI_INCREASED"), val), 11));
+                }
+                else
+                {
+                    Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("CONTRIBUTI_DECREASED"), val), 12));
+                }
+            }
+        }
+
         public void SideReputationAddBuff()
         {
             switch (Reputation)
@@ -3687,19 +3723,19 @@ namespace OpenNos.GameObject
                     }
 
                     GenerateDignity(monsterToAttack.Monster);
-
-                    if (MapInstance.IsReputationMap)
+                    if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4) &&
+                        monsterToAttack.Monster.Contributi > 0)
                     {
                         if (Group?.GroupType == GroupType.Group)
                         {
                             foreach (ClientSession targetSession in Group.Sessions.Where(s => s.Character.MapInstanceId == MapInstanceId))
                             {
-                                targetSession.Character.GetReputation(monsterToAttack.Monster.Level / 2);
+                                targetSession.Character.GetContributi(monsterToAttack.Monster.Contributi);
                             }
                         }
                         else
                         {
-                            GetReputation(monsterToAttack.Monster.Level / 2);
+                            GetContributi(monsterToAttack.Monster.Contributi);
                         }
                     }
                 }
@@ -6805,9 +6841,19 @@ namespace OpenNos.GameObject
 
                 int xp = (int)(GetXP(monster, grp) * expDamageRate * (isMonsterOwner ? 1 : 0.8f) * (1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)) * (1 + (GetBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.IncreaseBattleAndJobExperience)[0] / 100)));
 
-                if (Level < ServerManager.Instance.Configuration.MaxLevel)
+                if (monster.Monster.MaxLevelXP > 0 && monster.Monster.MinLevelXP > 0)
                 {
-                    LevelXp += xp;
+                    if (Level < ServerManager.Instance.Configuration.MaxLevel && Level < monster.Monster.MaxLevelXP && Level > monster.Monster.MinLevelXP)
+                    {
+                        LevelXp += xp;
+                    }
+                }
+                else
+                {
+                    if (Level < ServerManager.Instance.Configuration.MaxLevel)
+                    {
+                        LevelXp += xp;
+                    }
                 }
 
                 foreach (Mate mate in Mates.Where(x => x.IsTeamMember && x.IsAlive))

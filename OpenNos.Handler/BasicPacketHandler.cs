@@ -2610,9 +2610,9 @@ namespace OpenNos.Handler
                                 {
                                     if (Session.Character.Level > 49)
                                     {
-                                        if (Session.Character.Reputation > 10000)
+                                        if (Session.Character.Contributi > 10000)
                                         {
-                                            Session.Character.GetReputation(Session.Character.Level * -5);
+                                            Session.Character.SetContributi(-10000);
 
                                             Session.Character.LastPortal = currentRunningSeconds;
 
@@ -2642,7 +2642,7 @@ namespace OpenNos.Handler
                                         else
                                         {
                                             Session.SendPacket(
-                                                Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("LOW_REP"),
+                                                Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("NOT_ENOUGH_CONTRIBUTI"),
                                                     10));
                                         }
                                     }
@@ -2699,6 +2699,12 @@ namespace OpenNos.Handler
 
                 if (ServerManager.Instance.ChannelId == 51)
                 {
+                    /*ScriptedInstance raid = Session.Character.Family.Act4Raid;
+                    if (raid.ContributesMinimum > Session.Character.Contributi)
+                    {
+                        Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("LOW_RAID_CONTRIBUTES"), raid.LevelMinimum), 10));
+                        return;
+                    }*/
                     if ((Session.Character.Faction == FactionType.Angel && portal.DestinationMapId == 131)
                         || (Session.Character.Faction == FactionType.Demon && portal.DestinationMapId == 130))
                     {

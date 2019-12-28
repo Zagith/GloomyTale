@@ -66,7 +66,7 @@ namespace OpenNos.GameObject
             }
 
             MinLevel = 1;
-            MaxLevel = 99;
+            MaxLevel = 150;
 
             if (type != MapInstanceType.TimeSpaceInstance && type != MapInstanceType.RaidInstance)
             {
