@@ -75,7 +75,10 @@ namespace OpenNos.GameObject
             Skill skill = null;
             int delayTime = 0;
             int duration = 0;
-
+            if (ItemVNum == 5965 || ItemVNum == 5966 || ItemVNum == 5967)
+            {
+                return;
+            }
             if (CardId is short cardId2 && ServerManager.Instance.GetCardByCardId(cardId2) is Card BuffCard)
             {
                 card = BuffCard;
