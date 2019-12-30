@@ -1449,6 +1449,12 @@ namespace OpenNos.GameObject
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                     break;
 
+                                case 10016:
+                                    session.Character.Size = inv.Item.EffectValue;
+                                    session.CurrentMapInstance?.Broadcast(session.Character.GenerateScal());
+                                    session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                                    break;
+
                                 default:
                                     IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.RollGeneratedItemDAO.LoadByItemVNum(VNum);
                                     IEnumerable<RollGeneratedItemDTO> rollGeneratedItemDtos = roll as IList<RollGeneratedItemDTO> ?? roll.ToList();
