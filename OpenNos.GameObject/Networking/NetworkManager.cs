@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenNos.GameObject.Networking;
 using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
 
 namespace OpenNos.GameObject
 {
@@ -57,7 +58,7 @@ namespace OpenNos.GameObject
 
             // Start the server
             _server.Start();
-
+            DiscordHelper discord = new DiscordHelper();
             Logger.Info(Language.Instance.GetMessageFromKey("STARTED"), memberName: "NetworkManager");
         }
 
