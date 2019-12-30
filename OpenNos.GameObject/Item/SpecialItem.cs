@@ -1449,6 +1449,42 @@ namespace OpenNos.GameObject
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                     break;
 
+                                case 10011: // Change Class Seaquenzial
+                                    {
+                                        if (Option == 0)
+                                        {
+                                            session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)inv.Type}^{inv.Slot}^3 Do you really want change your class?");
+                                        }
+                                        else
+                                        {
+                                            switch (EffectValue)
+                                            {
+                                                case 0:
+                                                    ChangeClassHelper.Instance.SequenzialChangeClass(session);
+                                                    break;
+                                                case 1:
+                                                    ChangeClassHelper.Instance.SequenzialChangeClass(session, true);
+                                                    break;
+                                                default:
+                                                    return;
+                                            }
+                                        }
+                                    }
+                                    break;
+
+                                case 10012: // Change Class Single
+                                    {
+                                        if (Option == 0)
+                                        {
+                                            session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)inv.Type}^{inv.Slot}^3 Do you really want change your class?");
+                                        }
+                                        else
+                                        {
+                                            ChangeClassHelper.Instance.ChangeClass(session, inv);
+                                        }
+                                    }
+                                    break;
+
                                 case 10016:
                                     session.Character.Size = inv.Item.EffectValue;
                                     session.CurrentMapInstance?.Broadcast(session.Character.GenerateScal());

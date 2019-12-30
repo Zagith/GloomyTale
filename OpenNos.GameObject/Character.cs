@@ -1897,12 +1897,17 @@ namespace OpenNos.GameObject
             Session.Disconnect();
         }
 
-        public void ChangeClass(ClassType characterClass, bool fromCommand)
+        public void ChangeClass(ClassType characterClass, bool fromCommand, bool noItem = true)
         {
             if (!fromCommand)
             {
                 JobLevel = 1;
                 JobLevelXp = 0;
+            }
+            if (noItem == false)
+            {
+                JobLevel = JobLevel;
+                JobLevelXp = JobLevelXp;
             }
             Session.SendPacket("npinfo 0");
             Session.SendPacket(UserInterfaceHelper.GeneratePClear());
@@ -1910,9 +1915,12 @@ namespace OpenNos.GameObject
             if (characterClass == (byte)ClassType.Adventurer)
             {
                 HairStyle = (byte)HairStyle > 1 ? 0 : HairStyle;
-                if (JobLevel > 20)
+                if (noItem == true)
                 {
-                    JobLevel = 20;
+                    if (JobLevel > 20)
+                    {
+                        JobLevel = 20;
+                    }
                 }
             }
             LoadSpeed();
@@ -1925,9 +1933,14 @@ namespace OpenNos.GameObject
             Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 8), PositionX, PositionY);
             Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("CLASS_CHANGED"), 0));
             Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 196), PositionX, PositionY);
-
-            ChangeFaction(Session.Character.Family == null ? (FactionType)ServerManager.RandomNumber(1, 2) : (FactionType)Session.Character.Family.FamilyFaction);
-
+            if (noItem == true)
+            {
+                ChangeFaction(Session.Character.Family == null ? (FactionType)ServerManager.RandomNumber(1, 2) : (FactionType)Session.Character.Family.FamilyFaction);
+            }
+            else
+            {
+                Faction = Faction;
+            }
             Session.SendPacket(GenerateCond());
             Session.SendPacket(GenerateLev());
             Session.CurrentMapInstance?.Broadcast(Session, GenerateCMode());
