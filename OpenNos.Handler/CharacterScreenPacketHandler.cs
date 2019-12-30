@@ -163,7 +163,7 @@ namespace OpenNos.Handler
 
                     using (Inventory inventory = new Inventory(new Character(characterDTO)))
                     {
-                        inventory.AddNewToInventory(1098, 1, InventoryType.Main);
+                        inventory.AddNewToInventory(15299, 1, InventoryType.Main);
                         inventory.ForEach(i => DAOFactory.ItemInstanceDAO.InsertOrUpdate(i));
                         LoadCharacters(characterCreatePacket.OriginalContent);
                     }
