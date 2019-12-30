@@ -3920,15 +3920,15 @@ namespace OpenNos.Handler
             }
 
             Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WELCOME_SERVER"), ServerManager.Instance.ServerGroup), 10));
-
-            Session.SendPacket(UserInterfaceHelper.GenerateInfo("Please enter your pin with $Pw. If you don't have a pin, use $SetPw"));
-            Session.Character.PinAsk = Observable.Interval(TimeSpan.FromSeconds(15)).Subscribe(x =>
+            Session.Character.hasVerifiedSecondPassword = true;
+            //Session.SendPacket(UserInterfaceHelper.GenerateInfo("Please enter your pin with $Pw. If you don't have a pin, use $SetPw"));
+            /*Session.Character.PinAsk = Observable.Interval(TimeSpan.FromSeconds(15)).Subscribe(x =>
             {
                 if (!Session.Character.hasVerifiedSecondPassword)
                 {
                     Session.SendPacket(UserInterfaceHelper.GenerateInfo("Please enter your pin with $Pw. If you have no pin, use $SetPw"));
                 }
-            });
+            });*/
 
             Session.Character.LoadSpeed();
             Session.Character.LoadSkills();
