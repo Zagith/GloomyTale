@@ -75,7 +75,7 @@ namespace OpenNos.GameObject
             Skill skill = null;
             int delayTime = 0;
             int duration = 0;
-            if (ItemVNum == 5965 || ItemVNum == 5966 || ItemVNum == 5967)
+            if (ItemVNum == 15282 || ItemVNum == 15283 || ItemVNum == 15284)
             {
                 return;
             }
