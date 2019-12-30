@@ -804,7 +804,31 @@ namespace OpenNos.GameObject
                                     session.Character.LoadSpeed();
                                     session.Character.MorphUpgrade = 0;
                                     session.Character.MorphUpgrade2 = 0;
-                                    session.Character.Morph = morph + (byte)session.Character.Gender;
+                                    switch (VNum)
+                                    {
+                                        case 15000:
+                                        case 15001:
+                                        case 15002:
+                                        case 15003:
+                                        case 15004:
+                                        case 15005:
+                                        case 15006:
+                                        case 15007:
+                                        case 15008:
+                                        case 15009:
+                                        case 15010:
+                                        case 15011:
+                                        case 15012:
+                                        case 15013:
+                                        case 15294:
+                                        case 15293:
+                                        case 15292:
+                                            session.Character.Morph = Morph;
+                                            break;
+                                        default:
+                                            session.Character.Morph = Morph + (byte)session.Character.Gender;
+                                            break;
+                                    }
                                     session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 196), session.Character.PositionX, session.Character.PositionY);
                                     session.CurrentMapInstance?.Broadcast(session.Character.GenerateCMode());
                                     session.SendPacket(session.Character.GenerateCond());
