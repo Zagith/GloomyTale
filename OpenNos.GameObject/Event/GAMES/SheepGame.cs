@@ -21,7 +21,7 @@ namespace OpenNos.GameObject.Event.GAMES
             /*
             Thread.Sleep(5 * 1000);
             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SHEEP_STARTED"), 1));
-            ServerManager.Instance.Broadcast("qnaml 4 #guri^514 ¿Quieres participar en el raid de las ovejas?");
+            ServerManager.Instance.Broadcast("qnaml 4 #guri^514 Quieres participar en el raid de las ovejas?");
             ServerManager.Instance.EventInWaiting = true;
             Thread.Sleep(30 * 1000);
             ServerManager.Instance.Sessions.Where(s => s.Character?.IsWaitingForEvent == false).ToList().ForEach(s => s.SendPacket("esf 1"));

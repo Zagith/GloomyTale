@@ -30,6 +30,7 @@ namespace OpenNos.Domain
         Special = 14,
         Potion = 15,
         Event = 16,
+        Title = 17,
         Quest1 = 18,
         Sell = 20,
         Food = 21,

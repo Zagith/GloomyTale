@@ -1705,28 +1705,6 @@ namespace OpenNos.GameObject
                 case 5001:
                     if (npc != null)
                     {
-                        MapInstance map = null;
-                        switch (Session.Character.Faction)
-                        {
-                            case FactionType.None:
-                                Session.SendPacket(UserInterfaceHelper.GenerateInfo("You need to be part of a faction to join Act 4!"));
-                                return;
-
-                            case FactionType.Angel:
-                                map = ServerManager.GetAllMapInstances().Find(s => s.MapInstanceType.Equals(MapInstanceType.Act4ShipAngel));
-
-                                break;
-
-                            case FactionType.Demon:
-                                map = ServerManager.GetAllMapInstances().Find(s => s.MapInstanceType.Equals(MapInstanceType.Act4ShipDemon));
-
-                                break;
-                        }
-                        if (map == null || npc.EffectActivated)
-                        {
-                            Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SHIP_NOTARRIVED"), 0));
-                            return;
-                        }
                         if (3000 > Session.Character.Gold)
                         {
                             Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("NOT_ENOUGH_MONEY"), 10));
@@ -1734,8 +1712,24 @@ namespace OpenNos.GameObject
                         }
                         Session.Character.Gold -= 3000;
                         Session.SendPacket(Session.Character.GenerateGold());
-                        MapCell pos = map.Map.GetRandomPosition();
-                        ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, map.MapInstanceId, pos.X, pos.Y);
+                        switch (Session.Character.Faction)
+                        {
+                            case FactionType.None:
+                                Session.SendPacket(UserInterfaceHelper.GenerateInfo("You need to be part of a faction to join Act 4!"));
+                                return;
+
+                            case FactionType.Angel:
+                                Session.Character.MapId = 130;
+                                Session.Character.MapX = (short)(12 + ServerManager.RandomNumber(-2, 3));
+                                Session.Character.MapY = (short)(40 + ServerManager.RandomNumber(-2, 3));
+                                break;
+
+                            case FactionType.Demon:
+                                Session.Character.MapId = 131;
+                                Session.Character.MapX = (short)(12 + ServerManager.RandomNumber(-2, 3));
+                                Session.Character.MapY = (short)(40 + ServerManager.RandomNumber(-2, 3));
+                                break;
+                        }
                     }
                     break;
 
@@ -1743,7 +1737,7 @@ namespace OpenNos.GameObject
                     tp = npc?.Teleporters?.FirstOrDefault(s => s.Index == packet.Type);
                     if (tp != null)
                     {
-                        //Session.SendPacket("it 3");
+                        Session.SendPacket("it 3");
                         if (ServerManager.Instance.ChannelId == 51)
                         {
                             string connection = CommunicationServiceClient.Instance.RetrieveOriginWorld(Session.Account.AccountId);

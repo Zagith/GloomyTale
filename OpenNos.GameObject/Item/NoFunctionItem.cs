@@ -49,21 +49,24 @@ namespace OpenNos.GameObject
             {
                 case 0:
                     {
-                        if (Option == 0)
+                        if (ItemType == Domain.ItemType.Title)
                         {
-                            session.SendPacket($"qna #guri^306^{inv.ItemVNum}^{inv.Slot} {Language.Instance.GetMessageFromKey("ASK_OPEN_BOX")}");
-                        }
-                        else
-                        {
-                            session.Character.Titles.Add(new CharacterTitleDTO
+                            if (Option == 0)
                             {
-                                TitleType = inv.ItemVNum,
-                                Visible = false,
-                                Active = false,
-                                CharacterId = session.Character.CharacterId
-                            });
-                            session.SendPacket(session.Character.GenerateTitle());
-                            session.Character.Inventory.RemoveItemAmount(inv.ItemVNum);
+                                session.SendPacket($"qna #guri^306^{inv.ItemVNum}^{inv.Slot} {Language.Instance.GetMessageFromKey("ASK_OPEN_BOX")}");
+                            }
+                            else
+                            {
+                                session.Character.Titles.Add(new CharacterTitleDTO
+                                {
+                                    TitleType = inv.ItemVNum,
+                                    Visible = false,
+                                    Active = false,
+                                    CharacterId = session.Character.CharacterId
+                                });
+                                session.SendPacket(session.Character.GenerateTitle());
+                                session.Character.Inventory.RemoveItemAmount(inv.ItemVNum);
+                            }
                         }
                     }
                     break;

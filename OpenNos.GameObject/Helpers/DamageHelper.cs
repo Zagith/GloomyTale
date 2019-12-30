@@ -1834,7 +1834,7 @@ namespace OpenNos.GameObject.Helpers
             totalDamage = Math.Max(0, totalDamage);
 
             // TODO: Find a better way because hardcoded
-            // There is no clue about this in DB¿
+            // There is no clue about this in DB
 
             // Convert && Corruption
 

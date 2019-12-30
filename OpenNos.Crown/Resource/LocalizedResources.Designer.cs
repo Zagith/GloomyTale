@@ -142,7 +142,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} se requieren puntos de reputación. ¿Quieres entrar?.
+        ///   Cerca una stringa localizzata simile a {0} se requieren puntos de reputación. Quieres entrar?.
         /// </summary>
         internal static string ACT4_RAID_ENTER {
             get {
@@ -151,7 +151,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres salir a Bitoren Tundra?.
+        ///   Cerca una stringa localizzata simile a Quieres salir a Bitoren Tundra?.
         /// </summary>
         internal static string ACT4_RAID_EXIT {
             get {
@@ -160,7 +160,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres añadir una opción sobre este tema? Si la respuesta es sí, este item será ligado a tu personaje..
+        ///   Cerca una stringa localizzata simile a Quieres añadir una opción sobre este tema? Si la respuesta es sí, este item será ligado a tu personaje..
         /// </summary>
         internal static string ADD_OPTION_ON_STUFF {
             get {
@@ -169,7 +169,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La opción será reemplazada por la nueva. Tienes el 50% de posibilidades de ganar, de lo contrario el objeto será destruido. ¿Quieres continuar?.
+        ///   Cerca una stringa localizzata simile a La opción será reemplazada por la nueva. Tienes el 50% de posibilidades de ganar, de lo contrario el objeto será destruido. Quieres continuar?.
         /// </summary>
         internal static string ADD_OPTION_ON_STUFF_NOT_EMPTY {
             get {
@@ -358,7 +358,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tienes un equipo. ¿Estás seguro de que quieres irte?.
+        ///   Cerca una stringa localizzata simile a Tienes un equipo. Estás seguro de que quieres irte?.
         /// </summary>
         internal static string ARENA_PENALTY_NOTICE {
             get {
@@ -376,7 +376,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres usar ese artículo? se vinculará a tu personaje..
+        ///   Cerca una stringa localizzata simile a Quieres usar ese artículo? se vinculará a tu personaje..
         /// </summary>
         internal static string ASK_BIND {
             get {
@@ -385,7 +385,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Realmente quieres cambiar tu ubicación de aparición?.
+        ///   Cerca una stringa localizzata simile a Realmente quieres cambiar tu ubicación de aparición?.
         /// </summary>
         internal static string ASK_CHANGE_SPAWNLOCATION {
             get {
@@ -394,7 +394,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Deseas acceder?, Te costara {0} de oro..
+        ///   Cerca una stringa localizzata simile a Deseas acceder?, Te costara {0} de oro..
         /// </summary>
         internal static string ASK_ENETER_GOLD {
             get {
@@ -403,7 +403,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres comenzar la misión?.
+        ///   Cerca una stringa localizzata simile a Quieres comenzar la misión?.
         /// </summary>
         internal static string ASK_ENTRY_IN_FIRST_ROOM {
             get {
@@ -412,7 +412,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has sido invitado a la familia {0}, ¿Quieres unirte?.
+        ///   Cerca una stringa localizzata simile a Has sido invitado a la familia {0}, Quieres unirte?.
         /// </summary>
         internal static string ASK_FAMILY_INVITED {
             get {
@@ -421,7 +421,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Deseas unirte a tu grupo en el Time-Space?.
+        ///   Cerca una stringa localizzata simile a Deseas unirte a tu grupo en el Time-Space?.
         /// </summary>
         internal static string ASK_JOIN_TEAM_TS {
             get {
@@ -430,7 +430,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Desea devolver su Mascota al Mini-Mundo?.
+        ///   Cerca una stringa localizzata simile a Desea devolver su Mascota al Mini-Mundo?.
         /// </summary>
         internal static string ASK_KICK_PET {
             get {
@@ -439,7 +439,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿De verdad quieres abrir la caja?.
+        ///   Cerca una stringa localizzata simile a De verdad quieres abrir la caja?.
         /// </summary>
         internal static string ASK_OPEN_BOX {
             get {
@@ -457,7 +457,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres expandir las ranuras para mascotas?.
+        ///   Cerca una stringa localizzata simile a Quieres expandir las ranuras para mascotas?.
         /// </summary>
         internal static string ASK_PET_MAX {
             get {
@@ -466,7 +466,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres liberar a tu Mascota?.
+        ///   Cerca una stringa localizzata simile a Quieres liberar a tu Mascota?.
         /// </summary>
         internal static string ASK_RELEASE_PET {
             get {
@@ -475,7 +475,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres revivir? Te costará 10 semillas de poder..
+        ///   Cerca una stringa localizzata simile a Quieres revivir? Te costará 10 semillas de poder..
         /// </summary>
         internal static string ASK_REVIVE {
             get {
@@ -484,7 +484,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres revivir en el Renio de Caligor?.
+        ///   Cerca una stringa localizzata simile a Quieres revivir en el Renio de Caligor?.
         /// </summary>
         internal static string ASK_REVIVE_CALIGOR {
             get {
@@ -493,7 +493,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres revivir? Será gratis.
+        ///   Cerca una stringa localizzata simile a Quieres revivir? Será gratis.
         /// </summary>
         internal static string ASK_REVIVE_FREE {
             get {
@@ -502,7 +502,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres usar una Poción de Savior?.
+        ///   Cerca una stringa localizzata simile a Quieres usar una Poción de Savior?.
         /// </summary>
         internal static string ASK_REVIVE_LOD {
             get {
@@ -511,7 +511,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres revivir? Te costará 100 de Oro.
+        ///   Cerca una stringa localizzata simile a Quieres revivir? Te costará 100 de Oro.
         /// </summary>
         internal static string ASK_REVIVE_PVP {
             get {
@@ -520,7 +520,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Deseas revivir?.
+        ///   Cerca una stringa localizzata simile a Deseas revivir?.
         /// </summary>
         internal static string ASK_REVIVE_TS {
             get {
@@ -529,7 +529,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Deseas guardar al Compañero/Mascota en la perla?.
+        ///   Cerca una stringa localizzata simile a Deseas guardar al Compañero/Mascota en la perla?.
         /// </summary>
         internal static string ASK_STORE_PET {
             get {
@@ -538,7 +538,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres borrar?.
+        ///   Cerca una stringa localizzata simile a Quieres borrar?.
         /// </summary>
         internal static string ASK_TO_DELETE {
             get {
@@ -547,7 +547,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres usar ese artículo?.
+        ///   Cerca una stringa localizzata simile a Quieres usar ese artículo?.
         /// </summary>
         internal static string ASK_USE {
             get {
@@ -556,7 +556,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres cambiar tus alas?.
+        ///   Cerca una stringa localizzata simile a Quieres cambiar tus alas?.
         /// </summary>
         internal static string ASK_WINGS_CHANGE {
             get {
@@ -925,7 +925,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres entrar al Reino de Caligor?.
+        ///   Cerca una stringa localizzata simile a Quieres entrar al Reino de Caligor?.
         /// </summary>
         internal static string CALIGOR_RAID_ENTER {
             get {
@@ -934,7 +934,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres salir a Tierra Desconocida?.
+        ///   Cerca una stringa localizzata simile a Quieres salir a Tierra Desconocida?.
         /// </summary>
         internal static string CALIGOR_RAID_EXIT {
             get {
@@ -1312,7 +1312,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres crear la familia?.
+        ///   Cerca una stringa localizzata simile a Quieres crear la familia?.
         /// </summary>
         internal static string CREATE_FAMILY {
             get {
@@ -1420,7 +1420,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres disolver tu familia?.
+        ///   Cerca una stringa localizzata simile a Quieres disolver tu familia?.
         /// </summary>
         internal static string DISMISS_FAMILY {
             get {
@@ -1753,7 +1753,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres entrar en la primera habitación?.
+        ///   Cerca una stringa localizzata simile a Quieres entrar en la primera habitación?.
         /// </summary>
         internal static string FIRST_ROOM_START {
             get {
@@ -1771,7 +1771,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Ser amigo de {0}?.
+        ///   Cerca una stringa localizzata simile a Ser amigo de {0}?.
         /// </summary>
         internal static string FRIEND_ADD {
             get {
@@ -2230,7 +2230,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Deseas unirte al ICEBREAKER?.
+        ///   Cerca una stringa localizzata simile a Deseas unirte al ICEBREAKER?.
         /// </summary>
         internal static string ICEBREAKER_ASK {
             get {
@@ -2410,7 +2410,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres unirte a la batalla instantánea?.
+        ///   Cerca una stringa localizzata simile a Quieres unirte a la batalla instantánea?.
         /// </summary>
         internal static string INSTANTBATTLE_QUESTION {
             get {
@@ -2500,7 +2500,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Deseas establecer el punto de retorno de: {0}?.
+        ///   Cerca una stringa localizzata simile a Deseas establecer el punto de retorno de: {0}?.
         /// </summary>
         internal static string INVITED_YOU_SHARE {
             get {
@@ -3040,7 +3040,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} te pidió que te casaras con él. ¿Quieres aceptar?.
+        ///   Cerca una stringa localizzata simile a {0} te pidió que te casaras con él. Quieres aceptar?.
         /// </summary>
         internal static string MARRY_REQUEST {
             get {
@@ -4381,7 +4381,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres usar este artículo?.
+        ///   Cerca una stringa localizzata simile a Quieres usar este artículo?.
         /// </summary>
         internal static string QNA_ITEM {
             get {
@@ -4525,7 +4525,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres comenzar el raid?.
+        ///   Cerca una stringa localizzata simile a Quieres comenzar el raid?.
         /// </summary>
         internal static string RAID_START_QUESTION {
             get {
@@ -5245,7 +5245,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Seguro que quieres eliminar este Item?.
+        ///   Cerca una stringa localizzata simile a Seguro que quieres eliminar este Item?.
         /// </summary>
         internal static string SURE_TO_DELETE {
             get {
@@ -5597,7 +5597,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres ir a la base?.
+        ///   Cerca una stringa localizzata simile a Quieres ir a la base?.
         /// </summary>
         internal static string WANT_TO_GO_BASE {
             get {
@@ -5606,7 +5606,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¿Quieres guardar tu posición?.
+        ///   Cerca una stringa localizzata simile a Quieres guardar tu posición?.
         /// </summary>
         internal static string WANT_TO_SAVE_POSITION {
             get {

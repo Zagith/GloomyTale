@@ -136,7 +136,7 @@
     <value>Archer</value>
   </data>
   <data name="ASK_TO_DELETE" xml:space="preserve">
-    <value>¿Do you want to delete it?</value>
+    <value>Do you want to delete it?</value>
   </data>
   <data name="BAD_DROP_AMOUNT" xml:space="preserve">
     <value>Wrong fallen amount.</value>
@@ -574,7 +574,7 @@
     <value>Wait, {0} seconds.</value>
   </data>
   <data name="SURE_TO_DELETE" xml:space="preserve">
-    <value>¿Do you really want to delete this Item?</value>
+    <value>Do you really want to delete this Item?</value>
   </data>
   <data name="SWORDMAN" xml:space="preserve">
     <value>Swordman</value>
@@ -649,10 +649,10 @@
     <value>Seeds of power used!</value>
   </data>
   <data name="ASK_REVIVE" xml:space="preserve">
-    <value>¿Do you want to revive? It will cost you 10 seeds of power.</value>
+    <value>Do you want to revive? It will cost you 10 seeds of power.</value>
   </data>
   <data name="ASK_REVIVE_FREE" xml:space="preserve">
-    <value>¿Do you want to revive? It will be free.</value>
+    <value>Do you want to revive? It will be free.</value>
   </data>
   <data name="LOSE_DIGNITY" xml:space="preserve">
     <value>You've lost {0} dignity.</value>
@@ -835,13 +835,13 @@
     <value>Already transforming!</value>
   </data>
   <data name="ASK_WINGS_CHANGE" xml:space="preserve">
-    <value>¿Do you want to change your wings?</value>
+    <value>Do you want to change your wings?</value>
   </data>
   <data name="ASK_USE" xml:space="preserve">
-    <value>¿Do you want to use this?</value>
+    <value>Do you want to use this?</value>
   </data>
   <data name="ASK_BIND" xml:space="preserve">
-    <value>¿Do you want to use that item? it will be linked to your character.</value>
+    <value>Do you want to use that item? it will be linked to your character.</value>
   </data>
   <data name="IN_BATTLE" xml:space="preserve">
     <value>You can't invite people during a battle.</value>
@@ -967,7 +967,7 @@
     <value>Monster removed (MapMonsterId: {0}, Name: {1}, MapId: {2}, MapX: {3}, MapY: {4})</value>
   </data>
   <data name="QNA_ITEM" xml:space="preserve">
-    <value>¿Do you want to use this article?</value>
+    <value>Do you want to use this article?</value>
   </data>
   <data name="SP_RESURRECTED" xml:space="preserve">
     <value>The soul of your SP has resurrected!</value>
@@ -1081,7 +1081,7 @@
     <value>Your friend is not connected!</value>
   </data>
   <data name="FRIEND_ADD" xml:space="preserve">
-    <value>¿Be friend of {0}?</value>
+    <value>Be friend of {0}?</value>
   </data>
   <data name="FRIEND_ADDED" xml:space="preserve">
     <value>Friend request accepted!</value>
@@ -1111,7 +1111,7 @@
     <value>No wings of friendship!</value>
   </data>
   <data name="WANT_TO_SAVE_POSITION" xml:space="preserve">
-    <value>¿Do you want to save your position?</value>
+    <value>Do you want to save your position?</value>
   </data>
   <data name="GOLD_DROPRATE_NOW" xml:space="preserve">
     <value>Gold Drop Rate</value>
@@ -1129,10 +1129,10 @@
     <value>Angel</value>
   </data>
   <data name="CREATE_FAMILY" xml:space="preserve">
-    <value>¿You want to create the family?</value>
+    <value>You want to create the family?</value>
   </data>
   <data name="DISMISS_FAMILY" xml:space="preserve">
-    <value>¿Do you want to dissolve your family?</value>
+    <value>Do you want to dissolve your family?</value>
   </data>
   <data name="FAMILY_INVITATION_NOT_ALLOWED" xml:space="preserve">
     <value>You are not allowed to invite people!</value>
@@ -1156,7 +1156,7 @@
     <value>The player {0} has been invited!</value>
   </data>
   <data name="ASK_FAMILY_INVITED" xml:space="preserve">
-    <value>You have been invited to the family {0}, ¿Do you want to join?</value>
+    <value>You have been invited to the family {0}, Do you want to join?</value>
   </data>
   <data name="FAMILY_JOINED" xml:space="preserve">
     <value>The player {0} joined the family {1}!</value>
@@ -1168,7 +1168,7 @@
     <value>Only {0} allowed!</value>
   </data>
   <data name="ASK_REVIVE_PVP" xml:space="preserve">
-    <value>¿Do you want to revive? It will cost you 100 gold.</value>
+    <value>Do you want to revive? It will cost you 100 gold.</value>
   </data>
   <data name="LOSE_REP" xml:space="preserve">
     <value>You've lost reputation {0}</value>
@@ -1198,7 +1198,7 @@
     <value>You sent a request to share your returning point with the members of your party.</value>
   </data>
   <data name="INVITED_YOU_SHARE" xml:space="preserve">
-    <value>¿Do you want to establish your returning point of: {0}?</value>
+    <value>Do you want to establish your returning point of: {0}?</value>
   </data>
   <data name="CHANGED_SHARE" xml:space="preserve">
     <value>You have change the common returning point of the members of the party</value>
@@ -1288,7 +1288,7 @@
     <value>You have won the Instant Combat!</value>
   </data>
   <data name="INSTANTBATTLE_QUESTION" xml:space="preserve">
-    <value>¿Do you want to join Rainbow Battle?</value>
+    <value>Do you want to join Rainbow Battle?</value>
   </data>
   <data name="INSTANTBATTLE_SECONDS" xml:space="preserve">
     <value>The Instant Combat will start in {0} seconds.</value>
@@ -1348,10 +1348,10 @@
     <value>Your Pet is in your team.</value>
   </data>
   <data name="ASK_KICK_PET" xml:space="preserve">
-    <value>¿Do you want to take you NosMate back to the Mini-Land?</value>
+    <value>Do you want to take you NosMate back to the Mini-Land?</value>
   </data>
   <data name="ASK_RELEASE_PET" xml:space="preserve">
-    <value>¿Do you want to free your NosMate?</value>
+    <value>Do you want to free your NosMate?</value>
   </data>
   <data name="GET_PET_PLACES" xml:space="preserve">
     <value>You have more room for your pets.</value>
@@ -1429,7 +1429,7 @@
     <value>You've been muted for 1 minute.</value>
   </data>
   <data name="ASK_ENTRY_IN_FIRST_ROOM" xml:space="preserve">
-    <value>¿Do you want to start the quest?</value>
+    <value>Do you want to start the quest?</value>
   </data>
   <data name="GOLD_TS_END" xml:space="preserve">
     <value>You have {0} gold after finishing the TimeSpace.</value>
@@ -1474,7 +1474,7 @@
     <value>Your level doesn't match the required, therefore you won't recieve a reward.</value>
   </data>
   <data name="RAID_START_QUESTION" xml:space="preserve">
-    <value>¿Do you want to start the raid?</value>
+    <value>Do you want to start the raid?</value>
   </data>
   <data name="NOT_TEAM_LEADER" xml:space="preserve">
     <value>Only the leader can start the raid.</value>
@@ -1483,7 +1483,7 @@
     <value>You need a team to start the raid.</value>
   </data>
   <data name="FIRST_ROOM_START" xml:space="preserve">
-    <value>¿Do you want to go to the first room?</value>
+    <value>Do you want to go to the first room?</value>
   </data>
   <data name="RAID_REGISTERED" xml:space="preserve">
     <value>The Raid has been registered.</value>
@@ -1516,7 +1516,7 @@
     <value>You are in a family, you can't join another one.</value>
   </data>
   <data name="ASK_PET_MAX" xml:space="preserve">
-    <value>¿Do you want to expand pet slots?</value>
+    <value>Do you want to expand pet slots?</value>
   </data>
   <data name="ACT4_PVP_DEATH1" xml:space="preserve">
     <value>The Power of Protection of {0} has been stolen by a guardian of the Demons.</value>
@@ -1609,10 +1609,10 @@
     <value>The Arena of Talents has begun!</value>
   </data>
   <data name="ASK_CHANGE_SPAWNLOCATION" xml:space="preserve">
-    <value>¿Do you really want to change your reappearance point?</value>
+    <value>Do you really want to change your reappearance point?</value>
   </data>
   <data name="ASK_OPEN_BOX" xml:space="preserve">
-    <value>¿Do you really want to open the box?</value>
+    <value>Do you really want to open the box?</value>
   </data>
   <data name="ITEM_IS_NOT_FIXED" xml:space="preserve">
     <value>You can't unfix something that is not fixed.</value>
@@ -1672,7 +1672,7 @@
     <value>You have to wait {0}  days.</value>
   </data>
   <data name="ASK_JOIN_TEAM_TS" xml:space="preserve">
-    <value>¿Do you want to join your party in the Time-Space?</value>
+    <value>Do you want to join your party in the Time-Space?</value>
   </data>
   <data name="REMOVE_FAIRY_WHILE_USING_BOOSTER" xml:space="preserve">
     <value>You can't remove your fairy while using booster!</value>
@@ -1681,7 +1681,7 @@
     <value>You haven't reached the level yet!</value>
   </data>
   <data name="ASK_REVIVE_TS" xml:space="preserve">
-    <value>¿Do you want to revive?</value>
+    <value>Do you want to revive?</value>
   </data>
   <data name="BACK_TO_MINILAND" xml:space="preserve">
     <value>Your NosMate is dead and will be sent to Mini-Land!</value>
@@ -1690,7 +1690,7 @@
     <value>You can only use HP / MP potions while mounting.</value>
   </data>
   <data name="ICEBREAKER_ASK" xml:space="preserve">
-    <value>¿Do you want to join ICEBREAKER?</value>
+    <value>Do you want to join ICEBREAKER?</value>
   </data>
   <data name="MARRIAGE_REJECT_SHOUT" xml:space="preserve">
     <value>{0} denied {1} proposal!</value>
@@ -1702,7 +1702,7 @@
     <value>You still have a life.</value>
   </data>
   <data name="ASK_ENETER_GOLD" xml:space="preserve">
-    <value>¿Do you want to acces?, It will cost you {0} of gold.</value>
+    <value>Do you want to acces?, It will cost you {0} of gold.</value>
   </data>
   <data name="WINNER_ARENA_ROUND" xml:space="preserve">
     <value>{0} has defeated {1}.</value>
@@ -1723,7 +1723,7 @@
     <value>You can't use that.</value>
   </data>
   <data name="WANT_TO_GO_BASE" xml:space="preserve">
-    <value>¿Do you want to go to the base?</value>
+    <value>Do you want to go to the base?</value>
   </data>
   <data name="INVALID_NAME" xml:space="preserve">
     <value>Invalid name.</value>
@@ -1735,7 +1735,7 @@
     <value>The portal is closed.</value>
   </data>
   <data name="ASK_REVIVE_LOD" xml:space="preserve">
-    <value>¿Do you want to use a Savior Potion?</value>
+    <value>Do you want to use a Savior Potion?</value>
   </data>
   <data name="UPDATE_SHOP_ERROR" xml:space="preserve">
     <value>Error to instert or update the shop {0} , {1}</value>
@@ -1744,10 +1744,10 @@
     <value>Adquired a daily reward.</value>
   </data>
   <data name="ADD_OPTION_ON_STUFF" xml:space="preserve">
-    <value>¿Do you want to add an option over this? If the answer is yes, this item will be attached to you character.</value>
+    <value>Do you want to add an option over this? If the answer is yes, this item will be attached to you character.</value>
   </data>
   <data name="ADD_OPTION_ON_STUFF_NOT_EMPTY" xml:space="preserve">
-    <value>The option will be replaced by the new one. You have 50% of winning, otherwise the item will be destroyed. ¿Do you want to continue?</value>
+    <value>The option will be replaced by the new one. You have 50% of winning, otherwise the item will be destroyed. Do you want to continue?</value>
   </data>
   <data name="SHELL_MUST_BE_IDENTIFIED" xml:space="preserve">
     <value>The shell must be identified before its use.</value>
@@ -1819,10 +1819,10 @@
     <value>Entry limit reached.</value>
   </data>
   <data name="ACT4_RAID_ENTER" xml:space="preserve">
-    <value>{0} reputation points are needed. ¿Do you want to go in?</value>
+    <value>{0} reputation points are needed. Do you want to go in?</value>
   </data>
   <data name="ACT4_RAID_EXIT" xml:space="preserve">
-    <value>¿Do you want to go to Bitoren Tundra?</value>
+    <value>Do you want to go to Bitoren Tundra?</value>
   </data>
   <data name="FAIRY_SAVED" xml:space="preserve">
     <value>The fairy is in the bead</value>
@@ -1861,7 +1861,7 @@
     <value>The user doesn't want to recieve family requests.</value>
   </data>
   <data name="ARENA_PENALTY_NOTICE" xml:space="preserve">
-    <value>You have a team. ¿Are you sure you want to leave?</value>
+    <value>You have a team. Are you sure you want to leave?</value>
   </data>
   <data name="ARENA_TEAM_LEAVE" xml:space="preserve">
     <value>A member has left the team.</value>
@@ -1936,7 +1936,7 @@
     <value>Your marriage request has been denied</value>
   </data>
   <data name="MARRY_REQUEST" xml:space="preserve">
-    <value>{0} has asked you to marry him/her. ¿Accept?</value>
+    <value>{0} has asked you to marry him/her. Accept?</value>
   </data>
   <data name="ALREADY_MARRIED" xml:space="preserve">
     <value>!You can't marry again because you are into a relationship already!</value>
@@ -1960,7 +1960,7 @@
     <value>Your partner has dead!, you failed to complete the quest.</value>
   </data>
   <data name="ASK_STORE_PET" xml:space="preserve">
-    <value>¿Do you want to keep the Pet/Partner in the bead?</value>
+    <value>Do you want to keep the Pet/Partner in the bead?</value>
   </data>
   <data name="FIGHTER_ALREADY_EXISTING" xml:space="preserve">
     <value>Already a Martial Artist in this account!</value>
@@ -1972,13 +1972,13 @@
     <value>Welcome to {0} !</value>
   </data>
   <data name="CALIGOR_RAID_ENTER" xml:space="preserve">
-    <value>¿Do you want to enter to Caligor Realm?</value>
+    <value>Do you want to enter to Caligor Realm?</value>
   </data>
   <data name="CALIGOR_RAID_EXIT" xml:space="preserve">
-    <value>¿Do you want to go to Unknown Land?</value>
+    <value>Do you want to go to Unknown Land?</value>
   </data>
   <data name="ASK_REVIVE_CALIGOR" xml:space="preserve">
-    <value>¿Do you want to revive in Caligor's Realm?</value>
+    <value>Do you want to revive in Caligor's Realm?</value>
   </data>
   <data name="VICTORIOUS_ZENAS" xml:space="preserve">
     <value>Zenas' team has won the combat!</value>
