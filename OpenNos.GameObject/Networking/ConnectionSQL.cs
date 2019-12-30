@@ -9,7 +9,7 @@ namespace OpenNos.GameObject.Networking
 {
     public class ConnectionSQL
     {
-        private static string connectionString = "Server=localhost;Database=gloomytale;User Id=sa;Password=strong_pass2018;";
+        private static string connectionString = "Server=localhost;Database=gloomytale;User ID=GloomytaleSa;Password=strong_pass2018;";
         private SqlConnection connection;
 
         public ConnectionSQL()

@@ -700,6 +700,12 @@ namespace OpenNos.GameObject
                     }
                 }
 
+                // End
+                if (onMapClean.End != null)
+                {
+                    onMapCleanEvents.Add(new EventContainer(mapInstance, EventActionType.SCRIPTEND, onMapClean.End.Type));
+                }
+
                 // SummonMonster
                 onMapCleanEvents.AddRange(SummonMonster(mapInstance, onMapClean.SummonMonster));
 

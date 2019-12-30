@@ -41,6 +41,8 @@ namespace OpenNos.XMLModel.Events
         [XmlElement]
         public object StopMapWaves { get; set; }
 
+        [XmlElement]
+        public End End { get; set; }
         #endregion
     }
 }
