@@ -2558,13 +2558,6 @@ namespace OpenNos.Handler
                 Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
             if (sp != null)
             {
-                if (Session.Character.GetReputationIco() < sp.Item.ReputationMinimum)
-                {
-                    Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("LOW_REP"),
-                        0));
-                    return;
-                }
-
                 if (fairy != null && sp.Item.Element != 0 && fairy.Item.Element != sp.Item.Element
                     && fairy.Item.Element != sp.Item.SecondaryElement)
                 {
