@@ -287,12 +287,15 @@ namespace OpenNos.GameObject.Helpers
             int[] attackerpercentdamage2 = GetAttackerBenefitingBuffs(CardType.RecoveryAndDamagePercent, (byte)AdditionalTypes.RecoveryAndDamagePercent.DecreaseEnemyHP);
             int[] defenderpercentdefense = GetDefenderBenefitingBuffs(CardType.RecoveryAndDamagePercent, (byte)AdditionalTypes.RecoveryAndDamagePercent.DecreaseSelfHP);
 
-            if (attackerpercentdamage[3] != 0)
+            if (attacker.MapMonster.MonsterVNum != 2334)
             {
-                totalDamage = defender.HpMax / 100 * attackerpercentdamage[2];
-                percentDamage = true;
-            }
+                if (attackerpercentdamage[3] != 0)
+                {
+                    totalDamage = defender.HpMax / 100 * attackerpercentdamage[2];
+                    percentDamage = true;
+                }
 
+            }
             if (attackerpercentdamage2[3] != 0)
             {
                 totalDamage = defender.HpMax / 100 * Math.Abs(attackerpercentdamage2[0]);
