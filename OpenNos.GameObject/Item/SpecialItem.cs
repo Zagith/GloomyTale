@@ -1344,12 +1344,61 @@ namespace OpenNos.GameObject
                         });
                         session.Character.Compliment += 500;
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                         ServerManager.Instance.ChangeMap(session.Character.CharacterId);
                     }
                     else
                         session.SendPacket(session.Character.GenerateSay("Already in use.", 12));
                     break;
+
+                //Max Perfections
+                case 30001:
+                    {
+                        ItemInstance SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                        if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade <= 99)
+                        {
+                            if (Option == 0)
+                            {
+                                session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)inv.Type}^{inv.Slot}^3 Do you want use all perfection for your wearable sp?");
+                            }
+                            else
+                            {
+                                CustomHelper.Instance.SpeedPerfection(session, SP, inv);
+                            }
+                        }
+                    }
+                    break;
+
+                // Reset perfection
+                case 30002:
+                    {
+                        ItemInstance SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                        if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade > 0)
+                        {
+                            if (Option == 0)
+                            {
+                                session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)inv.Type}^{inv.Slot}^3 Do you want reset all perfections of your wearable sp?");
+                            }
+                            else
+                            {
+                                switch (EffectValue)
+                                {
+                                    case 0:
+                                        CustomHelper.Instance.RemovePerfection(session, SP, inv);
+                                        break;
+
+                                    case 1:
+                                        CustomHelper.Instance.RemovePerfection(session, SP);
+                                        break;
+
+                                    default:
+                                        return;
+                                }
+                            }
+                        }
+                    }
+                    break;
+
                 default:
                     switch (EffectValue)
                     {
@@ -1585,55 +1634,7 @@ namespace OpenNos.GameObject
                                     vnums = new short[] { 8316, 8317, 8318, 8319 };
                                     session.Character.GiftAdd(vnums[ServerManager.RandomNumber(0, 4)], 1);
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                                    break;
-
-                                //Max Perfections
-                                case 30001:
-                                    {
-                                        ItemInstance SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-                                        if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade <= 99)
-                                        {
-                                            if (Option == 0)
-                                            {
-                                                session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)inv.Type}^{inv.Slot}^3 Do you want use all perfection for your wearable sp?");
-                                            }
-                                            else
-                                            {
-                                                CustomHelper.Instance.SpeedPerfection(session, SP, inv);
-                                            }
-                                        }
-                                    }
-                                    break;
-
-                                // Reset perfection
-                                case 30002:
-                                    {
-                                        ItemInstance SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-                                        if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade > 0)
-                                        {
-                                            if (Option == 0)
-                                            {
-                                                session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)inv.Type}^{inv.Slot}^3 Do you want reset all perfections of your wearable sp?");
-                                            }
-                                            else
-                                            {
-                                                switch (EffectValue)
-                                                {
-                                                    case 0:
-                                                        CustomHelper.Instance.RemovePerfection(session, SP, inv);
-                                                        break;
-
-                                                    case 1:
-                                                        CustomHelper.Instance.RemovePerfection(session, SP);
-                                                        break;
-
-                                                    default:
-                                                        return;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    break;
+                                    break;                                
 
                                 default:
                                     if (inv.Item.VNum == 15282 || inv.Item.VNum == 15284)
