@@ -1222,6 +1222,72 @@ namespace OpenNos.GameObject
                     }
                     break;
 
+                // Return Command
+                case 10010: // Return NosVille
+                    {
+                        if (session.Character.HasShopOpened || session.Character.InExchangeOrTrade)
+                        {
+                            session.Character.Dispose();
+                        }
+
+                        if (session.Character.IsChangingMapInstance)
+                        {
+                            return;
+                        }
+
+                        StaticBonusDTO VipBonus =
+                                session.Character.StaticBonusList.FirstOrDefault(s => s.StaticBonusType == StaticBonusType.VIP);
+                        if (VipBonus == null)
+                        {
+                            session.SendPacket(session.Character.GenerateSay("You need a Vip packet to use this item.", 11));
+                            return;
+                        }
+
+                        if (ServerManager.Instance.ChannelId != 51)
+                        {
+                            ServerManager.Instance.ChangeMap(session.Character.CharacterId, 129, 127, 73);
+                            session.CurrentMapInstance?.Broadcast(session.Character.GenerateEff(23));
+                        }
+                        else
+                        {
+                            if (session.Character.LastSkillUse.AddSeconds(20) < DateTime.Now || session.Character.LastDefence.AddSeconds(20) < DateTime.Now)
+                            {
+                                if (session.Character.Faction == FactionType.Angel)
+                                {
+                                    ServerManager.Instance.ChangeMap(session.Character.CharacterId, 130, 41, 41);
+                                    session.CurrentMapInstance?.Broadcast(session.Character.GenerateEff(23));
+                                }
+                                else if (session.Character.Faction == FactionType.Demon)
+                                {
+                                    ServerManager.Instance.ChangeMap(session.Character.CharacterId, 131, 41, 41);
+                                    session.CurrentMapInstance?.Broadcast(session.Character.GenerateEff(3));
+                                }
+                            }
+                            else
+                            {
+                                session.SendPacket(
+                                        session.Character.GenerateSay(
+                                                Language.Instance.GetMessageFromKey("CANT_USE_THAT_IN_BATTLE"), 10));
+                            }
+                        }
+                    }
+                    break;
+
+                case 29999:
+                    StaticBonusDTO vipBonus =
+                                session.Character.StaticBonusList.FirstOrDefault(s => s.StaticBonusType == StaticBonusType.VIP);
+                    if (vipBonus == null)
+                    {
+                        session.SendPacket(session.Character.GenerateSay("You need a Vip packet to use this item.", 11));
+                        return;
+                    }
+                    if (session.Character.Compliment < 500)
+                    {
+                        session.Character.Compliment += 500;
+                        ServerManager.Instance.ChangeMap(session.Character.CharacterId);
+                    }
+                    break;
+
                 case 10011: // Change Class Seaquenzial
                     {
                         if (Option == 0)
@@ -1262,6 +1328,27 @@ namespace OpenNos.GameObject
                     session.Character.Size = inv.Item.EffectValue;
                     session.CurrentMapInstance?.Broadcast(session.Character.GenerateScal());
                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                    break;
+
+                // Vip Medal
+                case 30000:
+                    StaticBonusDTO vipBonuss =
+                                session.Character.StaticBonusList.FirstOrDefault(s => s.StaticBonusType == StaticBonusType.VIP);
+                    if (vipBonuss == null)
+                    {
+                        session.Character.StaticBonusList.Add(new StaticBonusDTO
+                        {
+                            CharacterId = session.Character.CharacterId,
+                            DateEnd = DateTime.Now.AddDays(EffectValue),
+                            StaticBonusType = StaticBonusType.VIP
+                        });
+                        session.Character.Compliment += 500;
+                        session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
+                        ServerManager.Instance.ChangeMap(session.Character.CharacterId);
+                    }
+                    else
+                        session.SendPacket(session.Character.GenerateSay("Already in use.", 12));
                     break;
                 default:
                     switch (EffectValue)

@@ -6626,6 +6626,20 @@ namespace OpenNos.GameObject
                 Session.SendPacket(GenerateExts());
             }
 
+            if (StaticBonusList.RemoveAll(
+                s => s.StaticBonusType == StaticBonusType.VIP && s.DateEnd < DateTime.Now) > 0)
+            {
+                Session.SendPacket(GenerateSay(Language.Instance.GetMessageFromKey("ITEM_TIMEOUT"), 10));
+                if (Session.Character.Inventory.CountItem(1310) > 0)
+                {
+                    if (Session.Character.Compliment >= 500)
+                    {
+                        Session.Character.Compliment -= 500;
+                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId);
+                    }
+                }
+            }
+
             if (StaticBonusList.RemoveAll(s => s.DateEnd < DateTime.Now) > 0)
             {
                 Session.SendPacket(GenerateSay(Language.Instance.GetMessageFromKey("ITEM_TIMEOUT"), 10));
