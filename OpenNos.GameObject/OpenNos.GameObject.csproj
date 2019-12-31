@@ -254,6 +254,7 @@
     <Compile Include="Event\TIMESPACES\Pts.cs" />
     <Compile Include="FrozenCrownBot.cs" />
     <Compile Include="Helpers\ChangeClassHelper.cs" />
+    <Compile Include="Helpers\CustomHelper.cs" />
     <Compile Include="Helpers\DiscordHelper.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\MallAPIHelper.cs" />

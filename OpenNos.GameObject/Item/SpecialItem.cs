@@ -1465,17 +1465,8 @@ namespace OpenNos.GameObject
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                     session.Character.AddStaticBuff(new StaticBuffDTO { CardId = 393 });
                                     break;
-                                case 5841:
-                                    int rnd = ServerManager.RandomNumber(0, 1000);
-                                    short[] vnums = null;
-                                    if (rnd < 900)
-                                    {
-                                        vnums = new short[] { 4356, 4357, 4358, 4359 };
-                                    }
-                                    else
-                                    {
-                                        vnums = new short[] { 4360, 4361, 4362, 4363 };
-                                    }
+                                case 15274:
+                                    short[] vnums = new short[] { 4356, 4357, 4358, 4359 };
                                     session.Character.GiftAdd(vnums[ServerManager.RandomNumber(0, 4)], 1);
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                     break;
@@ -1503,22 +1494,65 @@ namespace OpenNos.GameObject
                                     break;
 
                                     // Mother Nature's Rune Pack (limited)
-                                case 9117:
-                                    rnd = ServerManager.RandomNumber(0, 1000);
-                                    vnums = null;
-                                    if (rnd < 900)
-                                    {
-                                        vnums = new short[] { 8312, 8313, 8314, 8315 };
-                                    }
-                                    else
-                                    {
-                                        vnums = new short[] { 8316, 8317, 8318, 8319 };
-                                    }
+                                case 15295:
+                                    vnums = new short[] { 8316, 8317, 8318, 8319 };
                                     session.Character.GiftAdd(vnums[ServerManager.RandomNumber(0, 4)], 1);
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                                    break;                                
+                                    break;
+
+                                //Max Perfections
+                                case 30001:
+                                    {
+                                        ItemInstance SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                                        if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade <= 99)
+                                        {
+                                            if (Option == 0)
+                                            {
+                                                session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)inv.Type}^{inv.Slot}^3 Do you want use all perfection for your wearable sp?");
+                                            }
+                                            else
+                                            {
+                                                CustomHelper.Instance.SpeedPerfection(session, SP, inv);
+                                            }
+                                        }
+                                    }
+                                    break;
+
+                                // Reset perfection
+                                case 30002:
+                                    {
+                                        ItemInstance SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                                        if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade > 0)
+                                        {
+                                            if (Option == 0)
+                                            {
+                                                session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)inv.Type}^{inv.Slot}^3 Do you want reset all perfections of your wearable sp?");
+                                            }
+                                            else
+                                            {
+                                                switch (EffectValue)
+                                                {
+                                                    case 0:
+                                                        CustomHelper.Instance.RemovePerfection(session, SP, inv);
+                                                        break;
+
+                                                    case 1:
+                                                        CustomHelper.Instance.RemovePerfection(session, SP);
+                                                        break;
+
+                                                    default:
+                                                        return;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    break;
 
                                 default:
+                                    if (inv.Item.VNum == 15282 || inv.Item.VNum == 15284)
+                                    {
+                                        return;
+                                    }
                                     IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.RollGeneratedItemDAO.LoadByItemVNum(VNum);
                                     IEnumerable<RollGeneratedItemDTO> rollGeneratedItemDtos = roll as IList<RollGeneratedItemDTO> ?? roll.ToList();
                                     if (!rollGeneratedItemDtos.Any())
@@ -1529,12 +1563,13 @@ namespace OpenNos.GameObject
                                     int probabilities = rollGeneratedItemDtos.Where(s => s.Probability != 10000).Sum(s => s.Probability);
                                     int rnd2 = ServerManager.RandomNumber(0, probabilities);
                                     int currentrnd = 0;
+                                    int rnd = ServerManager.RandomNumber(0, 100);
                                     foreach (RollGeneratedItemDTO rollitem in rollGeneratedItemDtos.Where(s => s.Probability == 10000))
                                     {
                                         sbyte rare = 0;
                                         if (rollitem.IsRareRandom)
                                         {
-                                            rnd = ServerManager.RandomNumber(0, 100);
+                                            
 
                                             for (int j = ItemHelper.RareRate.Length - 1; j >= 0; j--)
                                             {
