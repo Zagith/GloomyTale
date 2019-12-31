@@ -50,7 +50,7 @@ namespace OpenNos.Handler
             {
                 Logger.Debug(
                     "Could not retrieve Worldserver groups. Please make sure they've already been registered.");
-                _session.SendPacket($"fail {Language.Instance.GetMessageFromKey("NO_WORLDSERVERS")}");
+                _session.SendPacket($"failc {Language.Instance.GetMessageFromKey("NO_WORLDSERVERS")}");
             }
 
             return channelpacket;

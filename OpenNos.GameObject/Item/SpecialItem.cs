@@ -823,6 +823,10 @@ namespace OpenNos.GameObject
                                         case 15294:
                                         case 15293:
                                         case 15292:
+                                        case 15291:
+                                        case 15289:
+                                        case 15288:
+                                        case 15287:
                                             session.Character.Morph = Morph;
                                             break;
                                         default:
