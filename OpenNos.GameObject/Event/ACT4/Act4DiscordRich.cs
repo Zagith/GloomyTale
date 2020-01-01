@@ -34,7 +34,7 @@ namespace OpenNos.GameObject.Event.ACT4
             EmbedBuilder embed;
             string nameFaction;
             string message = "";
-            using (var client = new DiscordWebhookClient("https://discordapp.com/api/webhooks/647350541772521482/y30_Wu0znQUCBkpv-fVTcGVhC8obAiKSMbWDqzcQD_ERTKJTiwyd22u8hRLEij2MQhUN"))
+            using (var client = new DiscordWebhookClient("https://discordapp.com/api/webhooks/662019836267986954/HhI3-iyFEWbyvfndxZYWkWC8mWlBoSRyNdA3wkeKUj3QyHORvtrTA3fiFPtlpwQG7fCZ"))
             {
                 switch (Faction)
                 {
