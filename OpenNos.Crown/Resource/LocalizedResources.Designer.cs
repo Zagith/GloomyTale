@@ -61,7 +61,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has aceptado compartir puntos con {0}!.
+        ///   Cerca una stringa localizzata simile a You accepted to share points with {0}!.
         /// </summary>
         internal static string ACCEPTED_SHARE {
             get {
@@ -70,7 +70,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La cuenta con id {0} ha iniciado sesión..
+        ///   Cerca una stringa localizzata simile a The account with id {0} has logged in..
         /// </summary>
         internal static string ACCOUNT_ARRIVED {
             get {
@@ -79,7 +79,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La puerta de la cueva del ataque en la Torre Central de la Frontera en la Tundra Bitoren está abierta!.
+        ///   Cerca una stringa localizzata simile a The portal to the Glacernon Raid has opened!.
         /// </summary>
         internal static string ACT4_BITOREN_RAID_OPEN {
             get {
@@ -88,7 +88,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Glacernon no está disponible en estos momentos..
+        ///   Cerca una stringa localizzata simile a Glacernon is not available in this moment..
         /// </summary>
         internal static string ACT4_OFFLINE {
             get {
@@ -97,7 +97,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El Poder de Protección de {0} ha sido robado por un guardián de los Demonios..
+        ///   Cerca una stringa localizzata simile a The Power of Protection of {0} has been stolen by a guardian of the Demons..
         /// </summary>
         internal static string ACT4_PVP_DEATH1 {
             get {
@@ -106,7 +106,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El Poder de Protección de {0} ha sido robado por un guardián de los Ángeles..
+        ///   Cerca una stringa localizzata simile a The Power of Protection of {0} has been stolen by a guardian of the Angels..
         /// </summary>
         internal static string ACT4_PVP_DEATH2 {
             get {
@@ -115,7 +115,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Fuiste asesinado por un enemigo! ¡Debido a la maldición de la Corona de Hielo, no puedes revivir durante 30 segundos!.
+        ///   Cerca una stringa localizzata simile a You were killed by an enemy! Due to the curse of the Frozen Crown, you can&apos;t revive for 30 seconds!.
         /// </summary>
         internal static string ACT4_PVP_DIE {
             get {
@@ -124,7 +124,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} robó el Poder de Protección de un guardián de los Ángeles..
+        ///   Cerca una stringa localizzata simile a {0} stole the Power of Protection of a guardian of the Angels..
         /// </summary>
         internal static string ACT4_PVP_KILL1 {
             get {
@@ -133,7 +133,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} robó el Poder de Protección de un guardián de los Demonios..
+        ///   Cerca una stringa localizzata simile a {0} stole the Power of Protection of a guardian of the Demons..
         /// </summary>
         internal static string ACT4_PVP_KILL2 {
             get {
@@ -142,7 +142,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} se requieren puntos de reputación. Quieres entrar?.
+        ///   Cerca una stringa localizzata simile a {0} reputation points are needed. Do you want to go in?.
         /// </summary>
         internal static string ACT4_RAID_ENTER {
             get {
@@ -151,7 +151,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres salir a Bitoren Tundra?.
+        ///   Cerca una stringa localizzata simile a Do you want to go to Bitoren Tundra?.
         /// </summary>
         internal static string ACT4_RAID_EXIT {
             get {
@@ -160,7 +160,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres añadir una opción sobre este tema? Si la respuesta es sí, este item será ligado a tu personaje..
+        ///   Cerca una stringa localizzata simile a Do you want to add an option over this? If the answer is yes, this item will be attached to you character..
         /// </summary>
         internal static string ADD_OPTION_ON_STUFF {
             get {
@@ -169,7 +169,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La opción será reemplazada por la nueva. Tienes el 50% de posibilidades de ganar, de lo contrario el objeto será destruido. Quieres continuar?.
+        ///   Cerca una stringa localizzata simile a The option will be replaced by the new one. You have 50% of winning, otherwise the item will be destroyed. Do you want to continue?.
         /// </summary>
         internal static string ADD_OPTION_ON_STUFF_NOT_EMPTY {
             get {
@@ -178,7 +178,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Administrador.
+        ///   Cerca una stringa localizzata simile a Administrator.
         /// </summary>
         internal static string ADMINISTRATOR {
             get {
@@ -187,7 +187,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Aventurero.
+        ///   Cerca una stringa localizzata simile a Adventurer.
         /// </summary>
         internal static string ADVENTURER {
             get {
@@ -196,7 +196,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Los aventureros no pueden usar esto!.
+        ///   Cerca una stringa localizzata simile a Adventurers can&apos;t use that!.
         /// </summary>
         internal static string ADVENTURERS_CANT_USE {
             get {
@@ -205,7 +205,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El usuario está en un intercambio!.
+        ///   Cerca una stringa localizzata simile a The user is in an exchange!.
         /// </summary>
         internal static string ALREADY_EXCHANGE {
             get {
@@ -214,7 +214,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Ya esta registrado en tu lista de amigos!.
+        ///   Cerca una stringa localizzata simile a Already registered in your friends&apos; list!.
         /// </summary>
         internal static string ALREADY_FRIEND {
             get {
@@ -223,7 +223,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ya tienes {0}..
+        ///   Cerca una stringa localizzata simile a You already have {0}..
         /// </summary>
         internal static string ALREADY_GOT_BUFF {
             get {
@@ -232,7 +232,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Ya ha alcanzado su limite!.
+        ///   Cerca una stringa localizzata simile a You reached the limit!.
         /// </summary>
         internal static string ALREADY_HAVE_MAX_AMOUNT {
             get {
@@ -241,7 +241,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Ya estás en el grupo!.
+        ///   Cerca una stringa localizzata simile a Already in a party!.
         /// </summary>
         internal static string ALREADY_IN_GROUP {
             get {
@@ -250,7 +250,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a !No puedes volver a casarte porque ya estás en una relación!.
+        ///   Cerca una stringa localizzata simile a !You can&apos;t marry again because you are into a relationship already!.
         /// </summary>
         internal static string ALREADY_MARRIED {
             get {
@@ -259,7 +259,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Ya estás transformado!.
+        ///   Cerca una stringa localizzata simile a Already transforming!.
         /// </summary>
         internal static string ALREADY_MORPHED {
             get {
@@ -268,7 +268,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Su Mascota ya está en el equipo..
+        ///   Cerca una stringa localizzata simile a Your Pet is in your team..
         /// </summary>
         internal static string ALREADY_PET_IN_TEAM {
             get {
@@ -277,7 +277,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Este Nick ya está siendo utilizado..
+        ///   Cerca una stringa localizzata simile a This Nick is already in use..
         /// </summary>
         internal static string ALREADY_TAKEN {
             get {
@@ -286,7 +286,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ya tienes dos Representantes..
+        ///   Cerca una stringa localizzata simile a You already have two Familydeputy..
         /// </summary>
         internal static string ALREADY_TWO_ASSISTANT {
             get {
@@ -295,7 +295,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Munición cargada!.
+        ///   Cerca una stringa localizzata simile a Ammunition charged!.
         /// </summary>
         internal static string AMMO_LOADED_ADVENTURER {
             get {
@@ -304,7 +304,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Flechas cargadas!.
+        ///   Cerca una stringa localizzata simile a Arrows charged!.
         /// </summary>
         internal static string AMMO_LOADED_ARCHER {
             get {
@@ -313,7 +313,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Pernos de ballesta cargados..
+        ///   Cerca una stringa localizzata simile a Crossbows Bolt charged..
         /// </summary>
         internal static string AMMO_LOADED_SWORDSMAN {
             get {
@@ -322,7 +322,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ángel.
+        ///   Cerca una stringa localizzata simile a Angel.
         /// </summary>
         internal static string ANGEL {
             get {
@@ -331,7 +331,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La comunicación del servidor maestro se ha iniciado..
+        ///   Cerca una stringa localizzata simile a The comunication with master server has been initialized..
         /// </summary>
         internal static string API_INITIALIZED {
             get {
@@ -340,7 +340,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Arquero.
+        ///   Cerca una stringa localizzata simile a Archer.
         /// </summary>
         internal static string ARCHER {
             get {
@@ -349,7 +349,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El horario de Arena de Talentos de {0} ..
+        ///   Cerca una stringa localizzata simile a The schedule of Talent Arena is {0} ..
         /// </summary>
         internal static string ARENA_NOT_OPEN {
             get {
@@ -358,7 +358,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tienes un equipo. Estás seguro de que quieres irte?.
+        ///   Cerca una stringa localizzata simile a You have a team. Are you sure you want to leave?.
         /// </summary>
         internal static string ARENA_PENALTY_NOTICE {
             get {
@@ -367,7 +367,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Un miembro ha dejado el equipo..
+        ///   Cerca una stringa localizzata simile a A member has left the team..
         /// </summary>
         internal static string ARENA_TEAM_LEAVE {
             get {
@@ -376,7 +376,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres usar ese artículo? se vinculará a tu personaje..
+        ///   Cerca una stringa localizzata simile a Do you want to use that item? it will be linked to your character..
         /// </summary>
         internal static string ASK_BIND {
             get {
@@ -385,7 +385,16 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Realmente quieres cambiar tu ubicación de aparición?.
+        ///   Cerca una stringa localizzata simile a Do you want to change your faction?.
+        /// </summary>
+        internal static string ASK_CHANGE_FACTION2 {
+            get {
+                return ResourceManager.GetString("ASK_CHANGE_FACTION2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Do you really want to change your reappearance point?.
         /// </summary>
         internal static string ASK_CHANGE_SPAWNLOCATION {
             get {
@@ -394,7 +403,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Deseas acceder?, Te costara {0} de oro..
+        ///   Cerca una stringa localizzata simile a Do you want to acces?, It will cost you {0} of gold..
         /// </summary>
         internal static string ASK_ENETER_GOLD {
             get {
@@ -403,7 +412,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres comenzar la misión?.
+        ///   Cerca una stringa localizzata simile a Do you want to start the quest?.
         /// </summary>
         internal static string ASK_ENTRY_IN_FIRST_ROOM {
             get {
@@ -412,7 +421,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has sido invitado a la familia {0}, Quieres unirte?.
+        ///   Cerca una stringa localizzata simile a You have been invited to the family {0}, Do you want to join?.
         /// </summary>
         internal static string ASK_FAMILY_INVITED {
             get {
@@ -421,7 +430,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Deseas unirte a tu grupo en el Time-Space?.
+        ///   Cerca una stringa localizzata simile a Do you want to join your party in the Time-Space?.
         /// </summary>
         internal static string ASK_JOIN_TEAM_TS {
             get {
@@ -430,7 +439,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Desea devolver su Mascota al Mini-Mundo?.
+        ///   Cerca una stringa localizzata simile a Do you want to take you NosMate back to the Mini-Land?.
         /// </summary>
         internal static string ASK_KICK_PET {
             get {
@@ -439,7 +448,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a De verdad quieres abrir la caja?.
+        ///   Cerca una stringa localizzata simile a Do you really want to open the box?.
         /// </summary>
         internal static string ASK_OPEN_BOX {
             get {
@@ -448,16 +457,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Do you want to expand partner&apos;s slots?.
-        /// </summary>
-        internal static string ASK_PARTNER_MAX {
-            get {
-                return ResourceManager.GetString("ASK_PARTNER_MAX", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres expandir las ranuras para mascotas?.
+        ///   Cerca una stringa localizzata simile a Do you want to expand pet slots?.
         /// </summary>
         internal static string ASK_PET_MAX {
             get {
@@ -466,7 +466,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres liberar a tu Mascota?.
+        ///   Cerca una stringa localizzata simile a Do you want to free your NosMate?.
         /// </summary>
         internal static string ASK_RELEASE_PET {
             get {
@@ -475,7 +475,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres revivir? Te costará 10 semillas de poder..
+        ///   Cerca una stringa localizzata simile a Do you want to revive? It will cost you 10 seeds of power..
         /// </summary>
         internal static string ASK_REVIVE {
             get {
@@ -484,7 +484,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres revivir en el Renio de Caligor?.
+        ///   Cerca una stringa localizzata simile a Do you want to revive in Caligor&apos;s Realm?.
         /// </summary>
         internal static string ASK_REVIVE_CALIGOR {
             get {
@@ -493,7 +493,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres revivir? Será gratis.
+        ///   Cerca una stringa localizzata simile a Do you want to revive? It will be free..
         /// </summary>
         internal static string ASK_REVIVE_FREE {
             get {
@@ -502,7 +502,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres usar una Poción de Savior?.
+        ///   Cerca una stringa localizzata simile a Do you want to use a Savior Potion?.
         /// </summary>
         internal static string ASK_REVIVE_LOD {
             get {
@@ -511,7 +511,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres revivir? Te costará 100 de Oro.
+        ///   Cerca una stringa localizzata simile a Do you want to revive? It will cost you 100 gold..
         /// </summary>
         internal static string ASK_REVIVE_PVP {
             get {
@@ -520,7 +520,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Deseas revivir?.
+        ///   Cerca una stringa localizzata simile a Do you want to revive?.
         /// </summary>
         internal static string ASK_REVIVE_TS {
             get {
@@ -529,7 +529,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Deseas guardar al Compañero/Mascota en la perla?.
+        ///   Cerca una stringa localizzata simile a Do you want to keep the Pet/Partner in the bead?.
         /// </summary>
         internal static string ASK_STORE_PET {
             get {
@@ -538,7 +538,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres borrar?.
+        ///   Cerca una stringa localizzata simile a Do you want to delete it?.
         /// </summary>
         internal static string ASK_TO_DELETE {
             get {
@@ -547,7 +547,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres usar ese artículo?.
+        ///   Cerca una stringa localizzata simile a Do you want to use this?.
         /// </summary>
         internal static string ASK_USE {
             get {
@@ -556,7 +556,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres cambiar tus alas?.
+        ///   Cerca una stringa localizzata simile a Do you want to change your wings?.
         /// </summary>
         internal static string ASK_WINGS_CHANGE {
             get {
@@ -565,7 +565,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Representante.
+        ///   Cerca una stringa localizzata simile a Familydeputy.
         /// </summary>
         internal static string ASSISTANT {
             get {
@@ -574,7 +574,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes degradar a otro Representante..
+        ///   Cerca una stringa localizzata simile a You can&apos;t downgrade another Familydeputy..
         /// </summary>
         internal static string ASSISTANT_UNDEMOTABLE {
             get {
@@ -583,7 +583,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu mascota ha muerto y será enviada al Minimundo!.
+        ///   Cerca una stringa localizzata simile a Your NosMate is dead and will be sent to Mini-Land!.
         /// </summary>
         internal static string BACK_TO_MINILAND {
             get {
@@ -592,7 +592,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Valor de dignidad erróneo..
+        ///   Cerca una stringa localizzata simile a Wrong dignity value..
         /// </summary>
         internal static string BAD_DIGNITY {
             get {
@@ -601,7 +601,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Cantidad de caída incorrecta..
+        ///   Cerca una stringa localizzata simile a Wrong fallen amount..
         /// </summary>
         internal static string BAD_DROP_AMOUNT {
             get {
@@ -610,7 +610,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes usar este artículo!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t use this item!.
         /// </summary>
         internal static string BAD_EQUIPMENT {
             get {
@@ -619,7 +619,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El elemento de la Hada es diferente al de la Tarjeta del Especialista!.
+        ///   Cerca una stringa localizzata simile a The fairy element is different from the element of the Specialist Card!.
         /// </summary>
         internal static string BAD_FAIRY {
             get {
@@ -628,7 +628,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Contraseña incorrecta..
+        ///   Cerca una stringa localizzata simile a Wrong password..
         /// </summary>
         internal static string BAD_PASSWORD {
             get {
@@ -637,7 +637,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Esta cuenta ha sido bloqueada de {0} hasta {1}..
+        ///   Cerca una stringa localizzata simile a This account has been blocked from {0} to {1}..
         /// </summary>
         internal static string BANNED {
             get {
@@ -646,7 +646,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Te han comprado {0} {1} en el NosBazar..
+        ///   Cerca una stringa localizzata simile a They bought {0} {1} from you in NosBasaar..
         /// </summary>
         internal static string BAZAAR_ITEM_SOLD {
             get {
@@ -655,7 +655,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Items de bazar cargados!.
+        ///   Cerca una stringa localizzata simile a {0} Items of NosBasaar charged..
         /// </summary>
         internal static string BAZAAR_LOADED {
             get {
@@ -664,7 +664,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Usuario añadido a la lista negra!.
+        ///   Cerca una stringa localizzata simile a User added to black list!.
         /// </summary>
         internal static string BLACKLIST_ADDED {
             get {
@@ -673,7 +673,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Este jugador te ha bloqueado!.
+        ///   Cerca una stringa localizzata simile a This user has blocked you!.
         /// </summary>
         internal static string BLACKLIST_BLOCKED {
             get {
@@ -682,7 +682,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Estás bloqueando este jugador!.
+        ///   Cerca una stringa localizzata simile a You are blocking this character!.
         /// </summary>
         internal static string BLACKLIST_BLOCKING {
             get {
@@ -691,7 +691,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Usuario borrado de la lista negra!.
+        ///   Cerca una stringa localizzata simile a User erased from the black list!.
         /// </summary>
         internal static string BLACKLIST_DELETED {
             get {
@@ -700,7 +700,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN0.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN0 {
             get {
@@ -709,7 +709,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN1.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN1 {
             get {
@@ -718,7 +718,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN2.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN2 {
             get {
@@ -727,7 +727,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN3.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN3 {
             get {
@@ -736,7 +736,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN4.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN4 {
             get {
@@ -745,7 +745,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN5.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN5 {
             get {
@@ -754,7 +754,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN6.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN6 {
             get {
@@ -763,7 +763,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN7.
+        ///   Cerca una stringa localizzata simile a Welcome ^to^GloomyTale!.
         /// </summary>
         internal static string BN7 {
             get {
@@ -772,7 +772,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN8.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN8 {
             get {
@@ -781,7 +781,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BN9.
+        ///   Cerca una stringa localizzata simile a Welcome^to^GloomyTale!.
         /// </summary>
         internal static string BN9 {
             get {
@@ -790,7 +790,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BOT_MESSAGE_0.
+        ///   Cerca una stringa localizzata simile a We hope you like your experience in here!.
         /// </summary>
         internal static string BOT_MESSAGE_0 {
             get {
@@ -799,7 +799,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BOT_MESSAGE_1.
+        ///   Cerca una stringa localizzata simile a Visit our page https://GloomyTale.com.
         /// </summary>
         internal static string BOT_MESSAGE_1 {
             get {
@@ -808,7 +808,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BOT_MESSAGE_2.
+        ///   Cerca una stringa localizzata simile a Get your daily gift in our webpage!.
         /// </summary>
         internal static string BOT_MESSAGE_2 {
             get {
@@ -817,7 +817,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BOT_MESSAGE_3.
+        ///   Cerca una stringa localizzata simile a Bot^Message^4.
         /// </summary>
         internal static string BOT_MESSAGE_3 {
             get {
@@ -826,7 +826,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BOT_MESSAGE_4.
+        ///   Cerca una stringa localizzata simile a Bot^Message^5.
         /// </summary>
         internal static string BOT_MESSAGE_4 {
             get {
@@ -835,7 +835,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a BOT_MESSAGE_5.
+        ///   Cerca una stringa localizzata simile a Bot^Message^6.
         /// </summary>
         internal static string BOT_MESSAGE_5 {
             get {
@@ -844,7 +844,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ahora el artículo está ligado a tu personaje.
+        ///   Cerca una stringa localizzata simile a Now the item is linked to your character..
         /// </summary>
         internal static string BOUND_TO_YOU {
             get {
@@ -853,7 +853,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Box Items Loaded!.
+        ///   Cerca una stringa localizzata simile a {0} BoxItems loaded.
         /// </summary>
         internal static string BOX_ITEMS_LOADED {
             get {
@@ -862,7 +862,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Iconos de buff deshabilitados..
+        ///   Cerca una stringa localizzata simile a Buff icons disabled..
         /// </summary>
         internal static string BUFF_BLOCKED {
             get {
@@ -871,7 +871,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Iconos de buff habilitados..
+        ///   Cerca una stringa localizzata simile a Buff icons enabled..
         /// </summary>
         internal static string BUFF_UNLOCKED {
             get {
@@ -880,7 +880,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Jugador: {0} Compra &lt;{1} {2}: Piezas &gt;.
+        ///   Cerca una stringa localizzata simile a Player: {0} Buys &lt;{1} {2}: Pieces &gt;.
         /// </summary>
         internal static string BUY_ITEM {
             get {
@@ -889,7 +889,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Compraste {1} de {0}.
+        ///   Cerca una stringa localizzata simile a You bought {1} from {0}.
         /// </summary>
         internal static string BUY_ITEM_VALID {
             get {
@@ -898,7 +898,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Los portales del Reino de Caligor están cerrados!.
+        ///   Cerca una stringa localizzata simile a The portals to the Caligor Realm are closed!.
         /// </summary>
         internal static string CALIGOR_CLOSED {
             get {
@@ -907,7 +907,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El ataque en el reino de Caligor terminó!.
+        ///   Cerca una stringa localizzata simile a The attacks to the Caligor Realm are over!.
         /// </summary>
         internal static string CALIGOR_END {
             get {
@@ -916,7 +916,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Los portales al Reino de Caligor se abrieron!.
+        ///   Cerca una stringa localizzata simile a The portals to the Caligor Realm are open!.
         /// </summary>
         internal static string CALIGOR_OPEN {
             get {
@@ -925,7 +925,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres entrar al Reino de Caligor?.
+        ///   Cerca una stringa localizzata simile a Do you want to enter to Caligor Realm?.
         /// </summary>
         internal static string CALIGOR_RAID_ENTER {
             get {
@@ -934,7 +934,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres salir a Tierra Desconocida?.
+        ///   Cerca una stringa localizzata simile a Do you want to go to Unknown Land?.
         /// </summary>
         internal static string CALIGOR_RAID_EXIT {
             get {
@@ -952,7 +952,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes usar este Item..
+        ///   Cerca una stringa localizzata simile a You can&apos;t use that item..
         /// </summary>
         internal static string CANNOT_USE {
             get {
@@ -961,7 +961,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes atacar ahora mismo..
+        ///   Cerca una stringa localizzata simile a You can&apos;t attack right now..
         /// </summary>
         internal static string CANT_ATTACK {
             get {
@@ -970,7 +970,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes poner a un miembro del equipo en la lista negra.
+        ///   Cerca una stringa localizzata simile a You can&apos;t add a team member to the black list..
         /// </summary>
         internal static string CANT_BLACKLIST_TEAM {
             get {
@@ -979,7 +979,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ya has modificado tu mensaje hoy. ¡Intentalo mañana!.
+        ///   Cerca una stringa localizzata simile a You have already modified the message today. Try tomorrow!.
         /// </summary>
         internal static string CANT_CHANGE_MESSAGE {
             get {
@@ -988,7 +988,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes cambiar el nombre de tu pareja.
+        ///   Cerca una stringa localizzata simile a You can&apos;t change the name of your couple..
         /// </summary>
         internal static string CANT_CHANGE_PARTNER_NAME {
             get {
@@ -997,7 +997,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes borrar a tu pareja de la lista de amigos.
+        ///   Cerca una stringa localizzata simile a You can&apos;t erase your couple of your friends list..
         /// </summary>
         internal static string CANT_DELETE_COUPLE {
             get {
@@ -1006,7 +1006,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes hacer eso..
+        ///   Cerca una stringa localizzata simile a You can&apos;t do that..
         /// </summary>
         internal static string CANT_DO_THAT {
             get {
@@ -1015,7 +1015,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solo puedes usar pociones de HP / MP mientras montas.
+        ///   Cerca una stringa localizzata simile a You can only use HP / MP potions while mounting..
         /// </summary>
         internal static string CANT_DO_VEHICLED {
             get {
@@ -1024,7 +1024,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes usar una SP destruida!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t use a broken SP!.
         /// </summary>
         internal static string CANT_EQUIP_DESTROYED_SP {
             get {
@@ -1033,7 +1033,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Teletransportación en espera..
+        ///   Cerca una stringa localizzata simile a Teleport cooldown..
         /// </summary>
         internal static string CANT_MOVE {
             get {
@@ -1042,7 +1042,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes comenzar una relación contigo mismo..
+        ///   Cerca una stringa localizzata simile a You can&apos;t start a relationship with yourself..
         /// </summary>
         internal static string CANT_RELATION_YOURSELF {
             get {
@@ -1051,7 +1051,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se puede transformar debido a los efectos secundarios..
+        ///   Cerca una stringa localizzata simile a You can&apos;t transform due to the bad effects..
         /// </summary>
         internal static string CANT_TRASFORM_WITH_DEBUFFS {
             get {
@@ -1060,7 +1060,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se puede deshacer la transformación debido a los efectos secundarios..
+        ///   Cerca una stringa localizzata simile a You can&apos;t undo the transformation due to the bad effects..
         /// </summary>
         internal static string CANT_UNTRASFORM_WITH_DEBUFFS {
             get {
@@ -1069,7 +1069,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes optimizar una SP destruida!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t upgrade a broken SP!.
         /// </summary>
         internal static string CANT_UPGRADE_DESTROYED_SP {
             get {
@@ -1078,7 +1078,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes usar eso..
+        ///   Cerca una stringa localizzata simile a You can&apos;t use that..
         /// </summary>
         internal static string CANT_USE_THAT {
             get {
@@ -1087,7 +1087,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Tarjetas cargadas.
+        ///   Cerca una stringa localizzata simile a {0} Cards loaded..
         /// </summary>
         internal static string CARDS_LOADED {
             get {
@@ -1096,7 +1096,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Captura fallida..
+        ///   Cerca una stringa localizzata simile a Failed capture..
         /// </summary>
         internal static string CATCH_FAIL {
             get {
@@ -1105,7 +1105,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Captura exitosa..
+        ///   Cerca una stringa localizzata simile a Successful capture..
         /// </summary>
         internal static string CATCH_SUCCESS {
             get {
@@ -1114,7 +1114,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tienes que esperar un día para cambiar de facción de nuevo..
+        ///   Cerca una stringa localizzata simile a You have to wait one day to change your faction again..
         /// </summary>
         internal static string CHANGE_NOT_PERMITTED {
             get {
@@ -1123,7 +1123,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes cambiar de facción en este canal..
+        ///   Cerca una stringa localizzata simile a You can&apos;t change your faction in this channel..
         /// </summary>
         internal static string CHANGE_NOT_PERMITTED_ACT4 {
             get {
@@ -1132,7 +1132,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has cambiado el punto de retorno común de los miembros del grupo..
+        ///   Cerca una stringa localizzata simile a You have change the common returning point of the members of the party.
         /// </summary>
         internal static string CHANGED_SHARE {
             get {
@@ -1141,7 +1141,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Canal.
+        ///   Cerca una stringa localizzata simile a Channel.
         /// </summary>
         internal static string CHANNEL {
             get {
@@ -1150,7 +1150,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0}({1}) inició sesión!.
+        ///   Cerca una stringa localizzata simile a {0}({1}) logged in!.
         /// </summary>
         internal static string CHARACTER_FAMILY_LOGGED_IN {
             get {
@@ -1159,7 +1159,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} se ha conectado..
+        ///   Cerca una stringa localizzata simile a {0} has connected..
         /// </summary>
         internal static string CHARACTER_LOGGED_IN {
             get {
@@ -1168,7 +1168,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} ha cerrado sesión....
+        ///   Cerca una stringa localizzata simile a {0} has logged out....
         /// </summary>
         internal static string CHARACTER_LOGGED_OUT {
             get {
@@ -1177,7 +1177,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Este jugador no está en tu lista de amigos..
+        ///   Cerca una stringa localizzata simile a This player is not in your friends list..
         /// </summary>
         internal static string CHARACTER_NOT_IN_FRIENDLIST {
             get {
@@ -1186,7 +1186,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tu clase ha sido cambiada..
+        ///   Cerca una stringa localizzata simile a Your job has been changed..
         /// </summary>
         internal static string CLASS_CHANGED {
             get {
@@ -1195,7 +1195,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Se ha conectado, SessionId: {0}.
+        ///   Cerca una stringa localizzata simile a SessionId: {0} has connected.
         /// </summary>
         internal static string CLIENT_ARRIVED {
             get {
@@ -1204,7 +1204,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Conexión cerrada por el cliente..
+        ///   Cerca una stringa localizzata simile a Connection closed by the client.
         /// </summary>
         internal static string CLIENT_CLOSED {
             get {
@@ -1213,7 +1213,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Conexión cerrada..
+        ///   Cerca una stringa localizzata simile a Connection closed.
         /// </summary>
         internal static string CLIENT_DISCONNECTED {
             get {
@@ -1222,7 +1222,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Separación del cliente, el paquete no será manejado..
+        ///   Cerca una stringa localizzata simile a Separation of the client, the packet won&apos;t be handled..
         /// </summary>
         internal static string CLIENTSESSION_DISPOSING {
             get {
@@ -1231,7 +1231,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solo puedes elogiar a un jugador por día..
+        ///   Cerca una stringa localizzata simile a You can only commend once per day.
         /// </summary>
         internal static string COMPLIMENT_COOLDOWN {
             get {
@@ -1240,7 +1240,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Elogiaste a {0}..
+        ///   Cerca una stringa localizzata simile a You commended {0}..
         /// </summary>
         internal static string COMPLIMENT_GIVEN {
             get {
@@ -1249,7 +1249,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tienes que esperar {0} minutos antes de poder elogiar a alguien..
+        ///   Cerca una stringa localizzata simile a You have to wait {0} minutes before commending someone..
         /// </summary>
         internal static string COMPLIMENT_LOGIN_COOLDOWN {
             get {
@@ -1258,7 +1258,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solo se puede elogiar a un jugador si ha alcanzado la Lv 30..
+        ///   Cerca una stringa localizzata simile a You can only commend someone who has reached Lv 30..
         /// </summary>
         internal static string COMPLIMENT_NOT_MINLVL {
             get {
@@ -1267,7 +1267,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has sido elogiado por {0}..
+        ///   Cerca una stringa localizzata simile a You have been commended by {0}..
         /// </summary>
         internal static string COMPLIMENT_RECEIVED {
             get {
@@ -1276,7 +1276,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La conexión al servidor se ha perdido..
+        ///   Cerca una stringa localizzata simile a The server connection has been lost..
         /// </summary>
         internal static string CONNECTION_LOST {
             get {
@@ -1294,7 +1294,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Conexión corrupta detectada {0}..
+        ///   Cerca una stringa localizzata simile a Corrupted connection detected {0}..
         /// </summary>
         internal static string CORRUPTED_KEEPALIVE {
             get {
@@ -1303,7 +1303,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has creado: {0} x {1}.
+        ///   Cerca una stringa localizzata simile a You have created: {0} x {1}.
         /// </summary>
         internal static string CRAFTED_OBJECT {
             get {
@@ -1312,7 +1312,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres crear la familia?.
+        ///   Cerca una stringa localizzata simile a You want to create the family?.
         /// </summary>
         internal static string CREATE_FAMILY {
             get {
@@ -1321,7 +1321,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solo puede capturar animales cuyo HP es 50% o inferior..
+        ///   Cerca una stringa localizzata simile a You can only capture animals whose HP is under 50%.
         /// </summary>
         internal static string CURRENT_HP_TOO_HIGH {
             get {
@@ -1330,7 +1330,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Adquirió una recompensa diaria.
+        ///   Cerca una stringa localizzata simile a Adquired a daily reward..
         /// </summary>
         internal static string DAILY_REWARD {
             get {
@@ -1339,7 +1339,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Base de datos iniciada..
+        ///   Cerca una stringa localizzata simile a Database initialized.
         /// </summary>
         internal static string DATABASE_INITIALIZED {
             get {
@@ -1348,7 +1348,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La base de datos puede no estar actualizada. Por favor considere actualizar su base de datos..
+        ///   Cerca una stringa localizzata simile a The database is not updated. Please update it..
         /// </summary>
         internal static string DATABASE_NOT_UPTODATE {
             get {
@@ -1357,7 +1357,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Error al eliminar la cuenta con Id {0}, {1}..
+        ///   Cerca una stringa localizzata simile a Error to eliminate the account Id {0}, {1}..
         /// </summary>
         internal static string DELETE_ACCOUNT_ERROR {
             get {
@@ -1366,7 +1366,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Error al eliminar al personaje con la ranura {0}, {1}..
+        ///   Cerca una stringa localizzata simile a Error to eliminate the character in the slot {0}, {1}..
         /// </summary>
         internal static string DELETE_CHARACTER_ERROR {
             get {
@@ -1375,7 +1375,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Error al eliminar el registro de penalizaciones con Id {0} , {1}.
+        ///   Cerca una stringa localizzata simile a Error to eliminate the record of penalties with Id {0} , {1}.
         /// </summary>
         internal static string DELETE_PENALTYLOG_ERROR {
             get {
@@ -1384,7 +1384,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Demonio.
+        ///   Cerca una stringa localizzata simile a Demon.
         /// </summary>
         internal static string DEMON {
             get {
@@ -1393,7 +1393,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Dignidad cambiada!.
+        ///   Cerca una stringa localizzata simile a Dignity changed!.
         /// </summary>
         internal static string DIGNITY_CHANGED {
             get {
@@ -1402,7 +1402,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has perdido algo de tu dignidad.
+        ///   Cerca una stringa localizzata simile a You have lost some of your dignity..
         /// </summary>
         internal static string DIGNITY_LOST {
             get {
@@ -1411,7 +1411,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Cliente desconectado. ClientId = .
+        ///   Cerca una stringa localizzata simile a Client disconnected. ClientId = .
         /// </summary>
         internal static string DISCONNECT {
             get {
@@ -1420,7 +1420,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres disolver tu familia?.
+        ///   Cerca una stringa localizzata simile a Do you want to dissolve your family?.
         /// </summary>
         internal static string DISMISS_FAMILY {
             get {
@@ -1429,7 +1429,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Estás divorciado..
+        ///   Cerca una stringa localizzata simile a You are divorced.
         /// </summary>
         internal static string DIVORCED {
             get {
@@ -1438,7 +1438,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Realizado.
+        ///   Cerca una stringa localizzata simile a Done.
         /// </summary>
         internal static string DONE {
             get {
@@ -1447,7 +1447,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Hay demasiados Items en este mapa! ¡Inténtalo más tarde!.
+        ///   Cerca una stringa localizzata simile a Too many items in this place! Try later..
         /// </summary>
         internal static string DROP_MAP_FULL {
             get {
@@ -1456,7 +1456,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tasa de Drop cambiada!.
+        ///   Cerca una stringa localizzata simile a Drop Rate changed!.
         /// </summary>
         internal static string DROP_RATE_CHANGED {
             get {
@@ -1465,7 +1465,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de Drop.
+        ///   Cerca una stringa localizzata simile a Drop Rate.
         /// </summary>
         internal static string DROP_RATE_NOW {
             get {
@@ -1474,7 +1474,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Obtenido {0} x {1}.
+        ///   Cerca una stringa localizzata simile a Obtained {0} x {1}.
         /// </summary>
         internal static string DROPPED_ITEM {
             get {
@@ -1483,7 +1483,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Drops cargados!.
+        ///   Cerca una stringa localizzata simile a {0} Drops loaded!.
         /// </summary>
         internal static string DROPS_LOADED {
             get {
@@ -1492,7 +1492,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El efecto {0} ha sido activado!.
+        ///   Cerca una stringa localizzata simile a The effect {0} has been activated!.
         /// </summary>
         internal static string EFFECT_ACTIVATED {
             get {
@@ -1501,7 +1501,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Efecto de: {0} ha terminado.
+        ///   Cerca una stringa localizzata simile a Effect of: {0} is over.
         /// </summary>
         internal static string EFFECT_TERMINATED {
             get {
@@ -1510,7 +1510,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Emoticones deshabilitados..
+        ///   Cerca una stringa localizzata simile a Emojis disabled..
         /// </summary>
         internal static string EMO_BLOCKED {
             get {
@@ -1519,7 +1519,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Emoticones habilitados..
+        ///   Cerca una stringa localizzata simile a Emojis enabled..
         /// </summary>
         internal static string EMO_UNLOCKED {
             get {
@@ -1528,7 +1528,16 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu equipo no está vacío!.
+        ///   Cerca una stringa localizzata simile a You have been encased in the heat of the Burning Sword..
+        /// </summary>
+        internal static string ENCASED_BURNING_SWORD {
+            get {
+                return ResourceManager.GetString("ENCASED_BURNING_SWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a You equip is not empty!.
         /// </summary>
         internal static string EQ_NOT_EMPTY {
             get {
@@ -1537,7 +1546,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Comercios bloqueados..
+        ///   Cerca una stringa localizzata simile a Blocked shops.
         /// </summary>
         internal static string EXCHANGE_BLOCKED {
             get {
@@ -1546,7 +1555,16 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} rechazó su solicitud de cambio..
+        ///   Cerca una stringa localizzata simile a Exchange in Raids is not allowed.
+        /// </summary>
+        internal static string EXCHANGE_NOT_ALLOWED_IN_RAID {
+            get {
+                return ResourceManager.GetString("EXCHANGE_NOT_ALLOWED_IN_RAID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a {0} denied your exchange petition..
         /// </summary>
         internal static string EXCHANGE_REFUSED {
             get {
@@ -1555,7 +1573,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Comercios permitidos..
+        ///   Cerca una stringa localizzata simile a Shops allowed..
         /// </summary>
         internal static string EXCHANGE_UNLOCKED {
             get {
@@ -1564,7 +1582,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El nivel de tu {0} ha sido cambiado..
+        ///   Cerca una stringa localizzata simile a The level of you {0} has increased..
         /// </summary>
         internal static string FAIRY_LEVEL_CHANGED {
             get {
@@ -1573,7 +1591,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tu {0} aumentó.
+        ///   Cerca una stringa localizzata simile a Your {0} increased.
         /// </summary>
         internal static string FAIRY_LEVELUP {
             get {
@@ -1582,7 +1600,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El hada ha sido almacenada en la perla.
+        ///   Cerca una stringa localizzata simile a The fairy is in the bead.
         /// </summary>
         internal static string FAIRY_SAVED {
             get {
@@ -1591,7 +1609,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tu hada a alcanzado el nivel máximo..
+        ///   Cerca una stringa localizzata simile a Your fairy has reached the maximum level..
         /// </summary>
         internal static string FAIRYMAX {
             get {
@@ -1600,7 +1618,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Experiencia del hada: {0}/{1}.
+        ///   Cerca una stringa localizzata simile a Fairy experience: {0}/{1}.
         /// </summary>
         internal static string FAIRYSTATS {
             get {
@@ -1609,7 +1627,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de experiencia del hada cambiada..
+        ///   Cerca una stringa localizzata simile a Fairy exp Rate changed.
         /// </summary>
         internal static string FAIRYXP_RATE_CHANGED {
             get {
@@ -1618,7 +1636,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de la experiencia del hada..
+        ///   Cerca una stringa localizzata simile a Fairy exp Rate.
         /// </summary>
         internal static string FAIRYXP_RATE_NOW {
             get {
@@ -1627,7 +1645,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El usuario no desea recibir solicitudes de familia.
+        ///   Cerca una stringa localizzata simile a The user doesn&apos;t want to recieve family requests..
         /// </summary>
         internal static string FAMILY_BLOCKED {
             get {
@@ -1636,7 +1654,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La familia {0} fue fundada!.
+        ///   Cerca una stringa localizzata simile a The family {0} was founded!.
         /// </summary>
         internal static string FAMILY_FOUNDED {
             get {
@@ -1645,7 +1663,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes crear una familia sin un grupo completo!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t create a family without the full team!.
         /// </summary>
         internal static string FAMILY_GROUP_NOT_FULL {
             get {
@@ -1654,7 +1672,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No tienes permiso para invitar jugadores!.
+        ///   Cerca una stringa localizzata simile a You are not allowed to invite people!.
         /// </summary>
         internal static string FAMILY_INVITATION_NOT_ALLOWED {
             get {
@@ -1663,7 +1681,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El jugador {0} ha sido invitado!.
+        ///   Cerca una stringa localizzata simile a The player {0} has been invited!.
         /// </summary>
         internal static string FAMILY_INVITED {
             get {
@@ -1672,7 +1690,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El jugador {0} se unió a la familia {1}!.
+        ///   Cerca una stringa localizzata simile a The player {0} joined the family {1}!.
         /// </summary>
         internal static string FAMILY_JOINED {
             get {
@@ -1681,7 +1699,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El jugador {0} ha sido expulsado de la familia!.
+        ///   Cerca una stringa localizzata simile a The player {0} has been expelled of the family!.
         /// </summary>
         internal static string FAMILY_KICKED {
             get {
@@ -1690,7 +1708,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Este nombre ya está en uso!.
+        ///   Cerca una stringa localizzata simile a This name is already in use!.
         /// </summary>
         internal static string FAMILY_NAME_ALREADY_USED {
             get {
@@ -1699,7 +1717,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solicitud familiar bloqueada..
+        ///   Cerca una stringa localizzata simile a Family request denied..
         /// </summary>
         internal static string FAMILY_REQ_LOCKED {
             get {
@@ -1708,7 +1726,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solicitud familiar permitida..
+        ///   Cerca una stringa localizzata simile a Family request accepted..
         /// </summary>
         internal static string FAMILY_REQ_UNLOCKED {
             get {
@@ -1717,7 +1735,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Llamada familiar.
+        ///   Cerca una stringa localizzata simile a Family call..
         /// </summary>
         internal static string FAMILYCALL {
             get {
@@ -1726,7 +1744,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Representante.
+        ///   Cerca una stringa localizzata simile a Familydeputy.
         /// </summary>
         internal static string FAMILYDEPUTY {
             get {
@@ -1735,7 +1753,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Administrador.
+        ///   Cerca una stringa localizzata simile a Familykeeper.
         /// </summary>
         internal static string FAMILYKEEPER {
             get {
@@ -1744,7 +1762,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Ya existe un Artista marcial en esta cuenta!.
+        ///   Cerca una stringa localizzata simile a Already a Martial Artist in this account!.
         /// </summary>
         internal static string FIGHTER_ALREADY_EXISTING {
             get {
@@ -1753,7 +1771,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres entrar en la primera habitación?.
+        ///   Cerca una stringa localizzata simile a Do you want to go to the first room?.
         /// </summary>
         internal static string FIRST_ROOM_START {
             get {
@@ -1762,7 +1780,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Desconexión forzada del cliente {0}, demasiadas conexiones..
+        ///   Cerca una stringa localizzata simile a Forced disconnection {0}, too many connections..
         /// </summary>
         internal static string FORCED_DISCONNECT {
             get {
@@ -1771,7 +1789,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ser amigo de {0}?.
+        ///   Cerca una stringa localizzata simile a Be friend of {0}?.
         /// </summary>
         internal static string FRIEND_ADD {
             get {
@@ -1780,7 +1798,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Solicitud de amigo aceptada!.
+        ///   Cerca una stringa localizzata simile a Friend request accepted!.
         /// </summary>
         internal static string FRIEND_ADDED {
             get {
@@ -1789,7 +1807,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Amigo eliminado!.
+        ///   Cerca una stringa localizzata simile a Friend erased!.
         /// </summary>
         internal static string FRIEND_DELETED {
             get {
@@ -1798,7 +1816,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu lista de amigos está llena!.
+        ///   Cerca una stringa localizzata simile a Your friend list is full!.
         /// </summary>
         internal static string FRIEND_FULL {
             get {
@@ -1807,7 +1825,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu amigo no esta conectado!.
+        ///   Cerca una stringa localizzata simile a Your friend is not connected!.
         /// </summary>
         internal static string FRIEND_OFFLINE {
             get {
@@ -1816,7 +1834,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Solicitud de amigo rechazada!.
+        ///   Cerca una stringa localizzata simile a Friend request not accepted!.
         /// </summary>
         internal static string FRIEND_REJECTED {
             get {
@@ -1825,7 +1843,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solicitudes de amistad bloqueadas..
+        ///   Cerca una stringa localizzata simile a Friend request blocked.
         /// </summary>
         internal static string FRIEND_REQ_BLOCKED {
             get {
@@ -1834,7 +1852,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ahora puedes recibir solicitudes de amistad..
+        ///   Cerca una stringa localizzata simile a You can recieve friends request.
         /// </summary>
         internal static string FRIEND_REQ_UNLOCKED {
             get {
@@ -1843,16 +1861,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a You got an extra space for your partner..
-        /// </summary>
-        internal static string GET_PARTNER_PLACES {
-            get {
-                return ResourceManager.GetString("GET_PARTNER_PLACES", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a Tienes más espacio para tus mascotas..
+        ///   Cerca una stringa localizzata simile a You have more room for your pets..
         /// </summary>
         internal static string GET_PET_PLACES {
             get {
@@ -1861,7 +1870,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has sido bendecido por el poder de los Ángeles..
+        ///   Cerca una stringa localizzata simile a You have been blessed by the power of the Angels..
         /// </summary>
         internal static string GET_PROTECTION_POWER_1 {
             get {
@@ -1870,7 +1879,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has sido maldecido por el poder de los Demonios..
+        ///   Cerca una stringa localizzata simile a You have been cursed by the power of the Demons..
         /// </summary>
         internal static string GET_PROTECTION_POWER_2 {
             get {
@@ -1879,7 +1888,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El regalo ha sido enviado!.
+        ///   Cerca una stringa localizzata simile a The gift has been sent!.
         /// </summary>
         internal static string GIFT_SENDED {
             get {
@@ -1888,7 +1897,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Regalo enviado!	.
+        ///   Cerca una stringa localizzata simile a Gift sent!.
         /// </summary>
         internal static string GIFT_SENT {
             get {
@@ -1897,7 +1906,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has recibido {0} regalo/s!.
+        ///   Cerca una stringa localizzata simile a You recieved {0} gift/s!.
         /// </summary>
         internal static string GIFTED {
             get {
@@ -1906,7 +1915,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ahora todos pueden contactarlo..
+        ///   Cerca una stringa localizzata simile a Everyone can contact..
         /// </summary>
         internal static string GM_BLOCK_DISABLE {
             get {
@@ -1915,7 +1924,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ahora ninguno puede contactarlo..
+        ///   Cerca una stringa localizzata simile a None can contact..
         /// </summary>
         internal static string GM_BLOCK_ENABLE {
             get {
@@ -1924,7 +1933,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Este pequeño mono está ocupado atm. ¡Intenta más tarde!.
+        ///   Cerca una stringa localizzata simile a This little monkey is busy atm. Try later..
         /// </summary>
         internal static string GM_CHAT_BLOCKED {
             get {
@@ -1933,7 +1942,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tasa de caida de oro cambiada!.
+        ///   Cerca una stringa localizzata simile a Gold Drop Rate changed!.
         /// </summary>
         internal static string GOLD_DROP_RATE_CHANGED {
             get {
@@ -1942,7 +1951,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de caída de oro.
+        ///   Cerca una stringa localizzata simile a Gold Drop Rate.
         /// </summary>
         internal static string GOLD_DROPRATE_NOW {
             get {
@@ -1951,7 +1960,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tasa de oro cambió!.
+        ///   Cerca una stringa localizzata simile a Gold Rate changed!.
         /// </summary>
         internal static string GOLD_RATE_CHANGED {
             get {
@@ -1960,7 +1969,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de caída del oro..
+        ///   Cerca una stringa localizzata simile a Gold Drop Rate.
         /// </summary>
         internal static string GOLD_RATE_NOW {
             get {
@@ -1969,7 +1978,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La cantidad de Oro ha cambiado..
+        ///   Cerca una stringa localizzata simile a Money amount changed..
         /// </summary>
         internal static string GOLD_SET {
             get {
@@ -1978,7 +1987,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tienes {0} oro después de terminar el espacio de tiempo..
+        ///   Cerca una stringa localizzata simile a You have {0} gold after finishing the TimeSpace..
         /// </summary>
         internal static string GOLD_TS_END {
             get {
@@ -1987,7 +1996,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Eres el administrador del grupo!.
+        ///   Cerca una stringa localizzata simile a You are the leader of the party!.
         /// </summary>
         internal static string GROUP_ADMIN {
             get {
@@ -1996,7 +2005,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El usuario ha bloqueado las invitaciones de Grupo..
+        ///   Cerca una stringa localizzata simile a The user has blocked party requests..
         /// </summary>
         internal static string GROUP_BLOCKED {
             get {
@@ -2005,7 +2014,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Todos habéis abandonado el Grupo..
+        ///   Cerca una stringa localizzata simile a All abandoned the party..
         /// </summary>
         internal static string GROUP_CLOSED {
             get {
@@ -2014,7 +2023,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El usuario ha rechazado la petición de Grupo..
+        ///   Cerca una stringa localizzata simile a The user rejected the party request..
         /// </summary>
         internal static string GROUP_DENIED {
             get {
@@ -2023,7 +2032,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El grupo está lleno..
+        ///   Cerca una stringa localizzata simile a The party is full..
         /// </summary>
         internal static string GROUP_FULL {
             get {
@@ -2032,7 +2041,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Te uniste al grupo de {0}&apos;!.
+        ///   Cerca una stringa localizzata simile a You joined {0}&apos;s party!.
         /// </summary>
         internal static string GROUP_JOIN {
             get {
@@ -2041,7 +2050,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has salido del grupo..
+        ///   Cerca una stringa localizzata simile a You left the party..
         /// </summary>
         internal static string GROUP_LEFT {
             get {
@@ -2050,7 +2059,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Alguien en el grupo ya tiene familia!.
+        ///   Cerca una stringa localizzata simile a Someone in the party is already in a family!.
         /// </summary>
         internal static string GROUP_MEMBER_ALREADY_IN_FAMILY {
             get {
@@ -2059,7 +2068,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solicitudes de grupo bloqueadas..
+        ///   Cerca una stringa localizzata simile a Party request blocked..
         /// </summary>
         internal static string GROUP_REQ_BLOCKED {
             get {
@@ -2068,7 +2077,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solicitudes de grupo permitidas..
+        ///   Cerca una stringa localizzata simile a Party request allowed..
         /// </summary>
         internal static string GROUP_REQ_UNLOCKED {
             get {
@@ -2077,7 +2086,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solicitud de grupo enviada a: {0}.
+        ///   Cerca una stringa localizzata simile a Party request sent to : {0}.
         /// </summary>
         internal static string GROUP_REQUEST {
             get {
@@ -2086,7 +2095,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Enviaste una solicitud para compartir el punto de retorno con los miembros de tu grupo..
+        ///   Cerca una stringa localizzata simile a You sent a request to share your returning point with the members of your party..
         /// </summary>
         internal static string GROUP_SHARE_INFO {
             get {
@@ -2104,7 +2113,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se puede comerciar con tienda abierta..
+        ///   Cerca una stringa localizzata simile a You can&apos;t trade with a shop open..
         /// </summary>
         internal static string HAS_SHOP_OPENED {
             get {
@@ -2113,7 +2122,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Cabecilla.
+        ///   Cerca una stringa localizzata simile a Familyhead.
         /// </summary>
         internal static string HEAD {
             get {
@@ -2122,7 +2131,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes degradar al Cabecilla de la familia..
+        ///   Cerca una stringa localizzata simile a You can&apos;t downgrade the Familyhead..
         /// </summary>
         internal static string HEAD_UNDEMOTABLE {
             get {
@@ -2131,7 +2140,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Chat de Héroe oculto..
+        ///   Cerca una stringa localizzata simile a Hero Chat hidden..
         /// </summary>
         internal static string HERO_CHAT_BLOCKED {
             get {
@@ -2140,7 +2149,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Chat de Héroe visible..
+        ///   Cerca una stringa localizzata simile a Hero Chat visible..
         /// </summary>
         internal static string HERO_CHAT_UNLOCKED {
             get {
@@ -2149,7 +2158,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu nivel de héroe ha aumentado!.
+        ///   Cerca una stringa localizzata simile a Your Hero Lv changed!.
         /// </summary>
         internal static string HERO_LEVELUP {
             get {
@@ -2158,7 +2167,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de experiencia de héroe .
+        ///   Cerca una stringa localizzata simile a Hero Exp Rate.
         /// </summary>
         internal static string HERO_XPRATE_NOW {
             get {
@@ -2167,7 +2176,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Nivel de héroe cambiado!.
+        ///   Cerca una stringa localizzata simile a Hero Lv changed!.
         /// </summary>
         internal static string HEROLEVEL_CHANGED {
             get {
@@ -2176,7 +2185,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La tasa de la experiencia héroe ha sido cambiada!.
+        ///   Cerca una stringa localizzata simile a The Hero Exp Rate has changed!.
         /// </summary>
         internal static string HEROXP_RATE_CHANGED {
             get {
@@ -2185,7 +2194,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La caza del cuerno oscuro comenzó..
+        ///   Cerca una stringa localizzata simile a The Flying Fire Devil hunt has begun..
         /// </summary>
         internal static string HORN_APPEAR {
             get {
@@ -2194,7 +2203,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El cuerno oscuro se ha ido..
+        ///   Cerca una stringa localizzata simile a The Flying Fire Devil is gone..
         /// </summary>
         internal static string HORN_DISAPEAR {
             get {
@@ -2203,7 +2212,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Información de HP deshabilitada..
+        ///   Cerca una stringa localizzata simile a HP information disabled..
         /// </summary>
         internal static string HP_BLOCKED {
             get {
@@ -2212,7 +2221,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El HP enemigo es demasiado alto..
+        ///   Cerca una stringa localizzata simile a Enemy&apos;s HP is too high..
         /// </summary>
         internal static string HP_TOO_HIGH {
             get {
@@ -2221,7 +2230,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Información de HP habilitada..
+        ///   Cerca una stringa localizzata simile a HP information enabled..
         /// </summary>
         internal static string HP_UNLOCKED {
             get {
@@ -2230,7 +2239,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Deseas unirte al ICEBREAKER?.
+        ///   Cerca una stringa localizzata simile a Do you want to join ICEBREAKER?.
         /// </summary>
         internal static string ICEBREAKER_ASK {
             get {
@@ -2239,7 +2248,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La arena de hielo comenzará en  {0} minuto/s!.
+        ///   Cerca una stringa localizzata simile a Icebreaker will begin in {0} minute/s!.
         /// </summary>
         internal static string ICEBREAKER_MINUTES {
             get {
@@ -2248,7 +2257,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La arena de hielo comenzará en {0} segundos!.
+        ///   Cerca una stringa localizzata simile a Icebreaker will begin in {0} second/s.
         /// </summary>
         internal static string ICEBREAKER_SECONDS {
             get {
@@ -2257,7 +2266,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Ha comenzado la arena de hielo!.
+        ///   Cerca una stringa localizzata simile a The Icebreaker has begun!.
         /// </summary>
         internal static string ICEBREAKER_STARTED {
             get {
@@ -2266,7 +2275,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has ganado el combate de hielo!.
+        ///   Cerca una stringa localizzata simile a You have won the Icebreaker!.
         /// </summary>
         internal static string ICEBREAKER_WIN {
             get {
@@ -2275,7 +2284,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes usar eso ahora!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t use that now!.
         /// </summary>
         internal static string IMPOSSIBLE_TO_USE {
             get {
@@ -2284,7 +2293,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes invitar jugadores cuando estas en batalla..
+        ///   Cerca una stringa localizzata simile a You can&apos;t invite people during a battle..
         /// </summary>
         internal static string IN_BATTLE {
             get {
@@ -2293,7 +2302,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Estás en una familia, no puedes pertenecer a una facción diferente..
+        ///   Cerca una stringa localizzata simile a You are in a family, you can&apos;t join another one..
         /// </summary>
         internal static string IN_FAMILY {
             get {
@@ -2302,7 +2311,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a En espera de {0}.
+        ///   Cerca una stringa localizzata simile a Waiting {0}.
         /// </summary>
         internal static string IN_WAITING_FOR {
             get {
@@ -2311,7 +2320,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} quiere comerciar contigo..
+        ///   Cerca una stringa localizzata simile a {0} wants to trade..
         /// </summary>
         internal static string INCOMING_EXCHANGE {
             get {
@@ -2320,7 +2329,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes abrir el bazar porque no posees el objeto requerido..
+        ///   Cerca una stringa localizzata simile a You can&apos;t open the Basaar because you don&apos;t have the proper item..
         /// </summary>
         internal static string INFO_BAZAAR {
             get {
@@ -2338,7 +2347,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} entradas restantes..
+        ///   Cerca una stringa localizzata simile a {0} remaining entries..
         /// </summary>
         internal static string INSTANCE_ENTRIES {
             get {
@@ -2347,7 +2356,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Se ha alcanzado el límite de entrada..
+        ///   Cerca una stringa localizzata simile a Entry limit reached..
         /// </summary>
         internal static string INSTANCE_NO_MORE_ENTRIES {
             get {
@@ -2356,7 +2365,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La batalla instantánea comenzará en {0} minutos..
+        ///   Cerca una stringa localizzata simile a The Instant Combat will start in {0} minutes..
         /// </summary>
         internal static string INSTANTBATTLE_MINUTES {
             get {
@@ -2365,7 +2374,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La batalla instantánea cerrará en {0} minutos..
+        ///   Cerca una stringa localizzata simile a The Instant Combat will close in {0} minutes..
         /// </summary>
         internal static string INSTANTBATTLE_MINUTES_REMAINING {
             get {
@@ -2374,7 +2383,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Los monstruos están aquí!.
+        ///   Cerca una stringa localizzata simile a The monsters are here!.
         /// </summary>
         internal static string INSTANTBATTLE_MONSTERS_APPEAR {
             get {
@@ -2383,7 +2392,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Los refuerzos están aquí..
+        ///   Cerca una stringa localizzata simile a The reinforcements are here.
         /// </summary>
         internal static string INSTANTBATTLE_MONSTERS_HERE {
             get {
@@ -2392,7 +2401,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Los monstruos se acercan!.
+        ///   Cerca una stringa localizzata simile a Monsters approach!.
         /// </summary>
         internal static string INSTANTBATTLE_MONSTERS_INCOMING {
             get {
@@ -2401,7 +2410,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Se acerca una oleada de monstruos..
+        ///   Cerca una stringa localizzata simile a A wave of monsters is coming..
         /// </summary>
         internal static string INSTANTBATTLE_MONSTERS_WAVE {
             get {
@@ -2410,7 +2419,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres unirte a la batalla instantánea?.
+        ///   Cerca una stringa localizzata simile a Do you want to join Rainbow Battle?.
         /// </summary>
         internal static string INSTANTBATTLE_QUESTION {
             get {
@@ -2419,7 +2428,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La batalla instantánea comenzará en {0} segundos..
+        ///   Cerca una stringa localizzata simile a The Instant Combat will start in {0} seconds..
         /// </summary>
         internal static string INSTANTBATTLE_SECONDS {
             get {
@@ -2428,7 +2437,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La batalla instantánea se cerrará en {0} segundos..
+        ///   Cerca una stringa localizzata simile a The Instant Combat will close in {0} seconds..
         /// </summary>
         internal static string INSTANTBATTLE_SECONDS_REMAINING {
             get {
@@ -2437,7 +2446,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La batalla instantánea ha comenzado!.
+        ///   Cerca una stringa localizzata simile a The Instant Combat has started!.
         /// </summary>
         internal static string INSTANTBATTLE_STARTED {
             get {
@@ -2446,7 +2455,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has ganado la batalla instantánea!.
+        ///   Cerca una stringa localizzata simile a You have won the Instant Combat!.
         /// </summary>
         internal static string INSTANTBATTLE_SUCCEEDED {
             get {
@@ -2455,7 +2464,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu descripción ha sido actualizada!.
+        ///   Cerca una stringa localizzata simile a The description has been updated!.
         /// </summary>
         internal static string INTRODUCTION_SET {
             get {
@@ -2464,7 +2473,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Nombre incorrecto..
+        ///   Cerca una stringa localizzata simile a Wrong name..
         /// </summary>
         internal static string INVALID_CHARNAME {
             get {
@@ -2473,7 +2482,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Nombre inválido..
+        ///   Cerca una stringa localizzata simile a Invalid name..
         /// </summary>
         internal static string INVALID_NAME {
             get {
@@ -2482,7 +2491,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} te ha invitado a el raid..
+        ///   Cerca una stringa localizzata simile a {0} has invited you to a Raid..
         /// </summary>
         internal static string INVITE_RAID {
             get {
@@ -2491,7 +2500,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} te envió una solicitud de grupo..
+        ///   Cerca una stringa localizzata simile a {0} has invited you to a party..
         /// </summary>
         internal static string INVITED_YOU {
             get {
@@ -2500,7 +2509,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Deseas establecer el punto de retorno de: {0}?.
+        ///   Cerca una stringa localizzata simile a Do you want to establish your returning point of: {0}?.
         /// </summary>
         internal static string INVITED_YOU_SHARE {
             get {
@@ -2509,7 +2518,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Adquirido.
+        ///   Cerca una stringa localizzata simile a Adquired.
         /// </summary>
         internal static string ITEM_ACQUIRED {
             get {
@@ -2518,7 +2527,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Obtienes el Item del monstruo!.
+        ///   Cerca una stringa localizzata simile a You obtained the item of the monster!.
         /// </summary>
         internal static string ITEM_ACQUIRED_BY_THE_GIANT_MONSTER {
             get {
@@ -2527,7 +2536,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} adquirido.
+        ///   Cerca una stringa localizzata simile a {0} adquired.
         /// </summary>
         internal static string ITEM_ACQUIRED_LOD {
             get {
@@ -2536,7 +2545,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {1} ha obtenido {0} x {2}.
+        ///   Cerca una stringa localizzata simile a {1} obtained {0} x {2}.
         /// </summary>
         internal static string ITEM_BOUND_TO {
             get {
@@ -2545,7 +2554,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has recibido: {0} x{1}.
+        ///   Cerca una stringa localizzata simile a You recieved: {0} x{1}.
         /// </summary>
         internal static string ITEM_GIFTED {
             get {
@@ -2554,7 +2563,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Este Item está en uso..
+        ///   Cerca una stringa localizzata simile a Item already in use.
         /// </summary>
         internal static string ITEM_IN_USE {
             get {
@@ -2563,7 +2572,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El nivel de mejora del equipo está bloqueado..
+        ///   Cerca una stringa localizzata simile a The level of improvement of the equipment is blocked.
         /// </summary>
         internal static string ITEM_IS_FIXED {
             get {
@@ -2572,7 +2581,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Por favor utiliza el Amuleto para el Equipamiento heroico..
+        ///   Cerca una stringa localizzata simile a Please use Champion Blessing Amulet..
         /// </summary>
         internal static string ITEM_IS_HEROIC {
             get {
@@ -2581,7 +2590,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puede deshacer la fijación del Item, ¡no está fijado!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t unfix something that is not fixed..
         /// </summary>
         internal static string ITEM_IS_NOT_FIXED {
             get {
@@ -2590,7 +2599,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes dejar caer este Item!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t drop this item!.
         /// </summary>
         internal static string ITEM_NOT_DROPPABLE {
             get {
@@ -2599,7 +2608,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes soltar ese objeto!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t drop that item!.
         /// </summary>
         internal static string ITEM_NOT_DROPPABLE_HERE {
             get {
@@ -2608,7 +2617,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El item {0} no está equipado..
+        ///   Cerca una stringa localizzata simile a The item {0} is not equipped..
         /// </summary>
         internal static string ITEM_NOT_EQUIPPED {
             get {
@@ -2617,7 +2626,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Item no encontrado!.
+        ///   Cerca una stringa localizzata simile a Item not found!.
         /// </summary>
         internal static string ITEM_NOT_FOUND {
             get {
@@ -2626,7 +2635,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Este Item no puede ser vendido!.
+        ///   Cerca una stringa localizzata simile a Item can&apos;t be sold!.
         /// </summary>
         internal static string ITEM_NOT_SOLDABLE {
             get {
@@ -2635,7 +2644,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Este Item no puede ser comerciable!.
+        ///   Cerca una stringa localizzata simile a Item can&apos;t be merchantable!.
         /// </summary>
         internal static string ITEM_NOT_TRADABLE {
             get {
@@ -2644,7 +2653,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El Item ya no es válido..
+        ///   Cerca una stringa localizzata simile a Item is no longer valid..
         /// </summary>
         internal static string ITEM_TIMEOUT {
             get {
@@ -2653,7 +2662,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has eliminado el bloqueo del Item!.
+        ///   Cerca una stringa localizzata simile a You erased the block of the Item!.
         /// </summary>
         internal static string ITEM_UNFIXED {
             get {
@@ -2662,7 +2671,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Items cargados!.
+        ///   Cerca una stringa localizzata simile a {0} Items loaded!.
         /// </summary>
         internal static string ITEMS_LOADED {
             get {
@@ -2671,7 +2680,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El nivel de profesión se ha incrementado!.
+        ///   Cerca una stringa localizzata simile a Your job level increased!.
         /// </summary>
         internal static string JOB_LEVELUP {
             get {
@@ -2680,7 +2689,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu nivel de profesión sido cambiado!.
+        ///   Cerca una stringa localizzata simile a You job level changed!.
         /// </summary>
         internal static string JOBLEVEL_CHANGED {
             get {
@@ -2689,7 +2698,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} se unió al grupo..
+        ///   Cerca una stringa localizzata simile a {0} joined the party..
         /// </summary>
         internal static string JOIN_TEAM {
             get {
@@ -2698,7 +2707,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Te has unido al grupo..
+        ///   Cerca una stringa localizzata simile a You joined the party..
         /// </summary>
         internal static string JOINED_GROUP {
             get {
@@ -2707,7 +2716,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Kenko ha tenido éxito.
+        ///   Cerca una stringa localizzata simile a Kenko was succesful..
         /// </summary>
         internal static string KENKO_CATCHED {
             get {
@@ -2716,7 +2725,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has sido expulsado del Raid..
+        ///   Cerca una stringa localizzata simile a You have been expelled from the Raid..
         /// </summary>
         internal static string KICK_RAID {
             get {
@@ -2725,7 +2734,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Solo se admite {0} idioma!.
+        ///   Cerca una stringa localizzata simile a Only {0} allowed!.
         /// </summary>
         internal static string LANGUAGE_REQUIRED {
             get {
@@ -2734,7 +2743,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} salió del grupo..
+        ///   Cerca una stringa localizzata simile a {0} left the party.
         /// </summary>
         internal static string LEAVE_GROUP {
             get {
@@ -2743,7 +2752,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has dejado el raid..
+        ///   Cerca una stringa localizzata simile a Left the Raid.
         /// </summary>
         internal static string LEFT_RAID {
             get {
@@ -2752,7 +2761,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu nivel ha sido cambiado!.
+        ///   Cerca una stringa localizzata simile a Your level has been changed!.
         /// </summary>
         internal static string LEVEL_CHANGED {
             get {
@@ -2761,7 +2770,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solo puedes capturar animales de un nivel inferior al tuyo..
+        ///   Cerca una stringa localizzata simile a You can only capture animals whose level is under yours..
         /// </summary>
         internal static string LEVEL_LOWER_THAN_MONSTER {
             get {
@@ -2770,7 +2779,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has subido de Nivel!.
+        ///   Cerca una stringa localizzata simile a You increased your level!.
         /// </summary>
         internal static string LEVELUP {
             get {
@@ -2779,7 +2788,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puede agregar más elementos en el bazar porque se excedió el límite..
+        ///   Cerca una stringa localizzata simile a You reached the limit, you can&apos;t add more elements to Basaar..
         /// </summary>
         internal static string LIMIT_EXCEEDED {
             get {
@@ -2797,7 +2806,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La tierra de los muertos esta cerrada..
+        ///   Cerca una stringa localizzata simile a The land of death if closed..
         /// </summary>
         internal static string LOD_CLOSED {
             get {
@@ -2806,7 +2815,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Debes tener un nivel mínimo de 55 para entrar a la tierra de los muertos..
+        ///   Cerca una stringa localizzata simile a You need at least lvl 55 to enter to LoD..
         /// </summary>
         internal static string LOD_REQUIERE_LVL {
             get {
@@ -2815,7 +2824,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El Medallón de Bazar está actualmente activo..
+        ///   Cerca una stringa localizzata simile a The Basaar medallion is already in use.
         /// </summary>
         internal static string LOGIN_MEDAL {
             get {
@@ -2824,7 +2833,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has perdido {0} dignidad..
+        ///   Cerca una stringa localizzata simile a You&apos;ve lost {0} dignity..
         /// </summary>
         internal static string LOSE_DIGNITY {
             get {
@@ -2833,7 +2842,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has perdido reputación {0}.
+        ///   Cerca una stringa localizzata simile a You&apos;ve lost reputation {0}.
         /// </summary>
         internal static string LOSE_REP {
             get {
@@ -2842,7 +2851,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu nivel de profesión es muy bajo!.
+        ///   Cerca una stringa localizzata simile a Your job level is too low!.
         /// </summary>
         internal static string LOW_JOB_LVL {
             get {
@@ -2851,7 +2860,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu nivel es muy bajo!.
+        ///   Cerca una stringa localizzata simile a &apos;Your level is too low!.
         /// </summary>
         internal static string LOW_LVL {
             get {
@@ -2860,7 +2869,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes hacer esto hasta que hayas alcanzado el nivel 30..
+        ///   Cerca una stringa localizzata simile a You can&apos;t do that until you reach level 30..
         /// </summary>
         internal static string LOW_LVL_30 {
             get {
@@ -2869,7 +2878,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes acceder a este mapa ya que tu nivel no está entre {0} y {1}..
+        ///   Cerca una stringa localizzata simile a You can&apos;t access this map until you are between {0} and {1}..
         /// </summary>
         internal static string LOW_LVL_MAP {
             get {
@@ -2878,7 +2887,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu reputación es muy baja!.
+        ///   Cerca una stringa localizzata simile a Your reputation is too low!.
         /// </summary>
         internal static string LOW_REP {
             get {
@@ -2887,7 +2896,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Se requiere un especialista con el nivel {0} para seguir optimizando!.
+        ///   Cerca una stringa localizzata simile a You need your SP to be at least {0} to keep upgrading it!.
         /// </summary>
         internal static string LVL_REQUIRED {
             get {
@@ -2896,7 +2905,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Mago .
+        ///   Cerca una stringa localizzata simile a Mage.
         /// </summary>
         internal static string MAGICIAN {
             get {
@@ -2905,7 +2914,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El correo ha sido eliminado!.
+        ///   Cerca una stringa localizzata simile a The mail has been erased!.
         /// </summary>
         internal static string MAIL_DELETED {
             get {
@@ -2914,7 +2923,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has enviado un correo!.
+        ///   Cerca una stringa localizzata simile a You sent a mail!.
         /// </summary>
         internal static string MAILED {
             get {
@@ -2923,7 +2932,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Mantenimiento planificado detectado, echando a los usuarios...
+        ///   Cerca una stringa localizzata simile a Planned maintenance, kicking players..
         /// </summary>
         internal static string MAINTENANCE_PLANNED {
             get {
@@ -2932,7 +2941,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes una cuenta en el NosMall..
+        ///   Cerca una stringa localizzata simile a You don&apos;t have an account in NosMall..
         /// </summary>
         internal static string MALL_ACCOUNT_NOT_EXISTING {
             get {
@@ -2941,7 +2950,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tienes {0} NosDollar!.
+        ///   Cerca una stringa localizzata simile a You have {0} NosDollar!.
         /// </summary>
         internal static string MALL_CURRENCY_RECEIVE {
             get {
@@ -2950,7 +2959,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Error al conectarse a NosMall. Por favor, inténtelo de nuevo más tarde..
+        ///   Cerca una stringa localizzata simile a Failed to connect to NosMall, try later..
         /// </summary>
         internal static string MALL_UNKNOWN_ERROR {
             get {
@@ -2959,7 +2968,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Administrador.
+        ///   Cerca una stringa localizzata simile a Administrator.
         /// </summary>
         internal static string MANAGER {
             get {
@@ -2968,7 +2977,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Este mapa no existe!.
+        ///   Cerca una stringa localizzata simile a That map doesn&apos;t exist!.
         /// </summary>
         internal static string MAP_NOT_FOUND {
             get {
@@ -2977,7 +2986,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Mapas de Monstruos cargados!.
+        ///   Cerca una stringa localizzata simile a {0} Map Monster loaded!.
         /// </summary>
         internal static string MAPMONSTERS_LOADED {
             get {
@@ -2986,7 +2995,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Mapas de NPCs cargados!.
+        ///   Cerca una stringa localizzata simile a {0} NPCs Map loaded!.
         /// </summary>
         internal static string MAPNPCS_LOADED {
             get {
@@ -2995,7 +3004,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Mapas cargados!.
+        ///   Cerca una stringa localizzata simile a {0} Mapd loaded!.
         /// </summary>
         internal static string MAPS_LOADED {
             get {
@@ -3004,7 +3013,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Su solicitud de matrimonio ha sido aceptada.
+        ///   Cerca una stringa localizzata simile a Your marriage request has been accepted.
         /// </summary>
         internal static string MARRIAGE_ACCEPT {
             get {
@@ -3013,7 +3022,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Enhorabuena!{0} aceptó la propuesta de matrimonio de {1}!.
+        ///   Cerca una stringa localizzata simile a Congratulations!{0} accepted {1} proposal!.
         /// </summary>
         internal static string MARRIAGE_ACCEPT_SHOUT {
             get {
@@ -3022,7 +3031,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} rechazó la propuesta de matrimonio de {1}!.
+        ///   Cerca una stringa localizzata simile a {0} denied {1} proposal!.
         /// </summary>
         internal static string MARRIAGE_REJECT_SHOUT {
             get {
@@ -3031,7 +3040,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Su solicitud de matrimonio ha sido rechazada.
+        ///   Cerca una stringa localizzata simile a Your marriage request has been denied.
         /// </summary>
         internal static string MARRIAGE_REJECTED {
             get {
@@ -3040,7 +3049,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} te pidió que te casaras con él. Quieres aceptar?.
+        ///   Cerca una stringa localizzata simile a {0} has asked you to marry him/her. Accept?.
         /// </summary>
         internal static string MARRY_REQUEST {
             get {
@@ -3049,7 +3058,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La actualización de ataque de compañero ha cambiado: Ataque +{0}.
+        ///   Cerca una stringa localizzata simile a The attack of the partner has changed: Attack +{0}.
         /// </summary>
         internal static string MATE_ATTACK_CHANGED {
             get {
@@ -3058,7 +3067,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La actualización de ataque de compañero no ha cambiado..
+        ///   Cerca una stringa localizzata simile a The attack of the partner has not changed..
         /// </summary>
         internal static string MATE_ATTACK_EQUAL {
             get {
@@ -3067,7 +3076,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La mejora de la defensa del compañero ha cambiado: Defensa +{0}.
+        ///   Cerca una stringa localizzata simile a The defense of the partner has changed: Defense +{0}.
         /// </summary>
         internal static string MATE_DEFENCE_CHANGED {
             get {
@@ -3076,7 +3085,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La actualización de la defensa del compañero no ha cambiado..
+        ///   Cerca una stringa localizzata simile a The defense of the partner has not changed..
         /// </summary>
         internal static string MATE_DEFENCE_EQUAL {
             get {
@@ -3085,7 +3094,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La lealtdad de tu mascota ha bajado a 0!.
+        ///   Cerca una stringa localizzata simile a Your pet loyalty has decreased to 0..
         /// </summary>
         internal static string MATE_LOYALTY_ZERO {
             get {
@@ -3094,7 +3103,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Alimenta a tu mascota o ve al Minimundo..
+        ///   Cerca una stringa localizzata simile a Feed your pet or go to Mini-Land..
         /// </summary>
         internal static string MATE_NEED_FEED {
             get {
@@ -3103,7 +3112,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Cantidad máxima de oro alcanzada!.
+        ///   Cerca una stringa localizzata simile a Max. Amount of gold achieved!.
         /// </summary>
         internal static string MAX_GOLD {
             get {
@@ -3112,7 +3121,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Este item ya tiene un máximo de opciones.
+        ///   Cerca una stringa localizzata simile a This item has already a number of options!.
         /// </summary>
         internal static string MAX_OPTIONS {
             get {
@@ -3121,7 +3130,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Miembro.
+        ///   Cerca una stringa localizzata simile a Member.
         /// </summary>
         internal static string MEMBER {
             get {
@@ -3130,7 +3139,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Memoria usada.
+        ///   Cerca una stringa localizzata simile a Used memory.
         /// </summary>
         internal static string MEMORY {
             get {
@@ -3139,7 +3148,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Mensaje recibido {0} en el cliente {1}.
+        ///   Cerca una stringa localizzata simile a Message recieved {0} in the client {1}.
         /// </summary>
         internal static string MESSAGE_RECEIVED {
             get {
@@ -3148,7 +3157,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Enviando mensaje a &apos;{0}&apos; en el canal {1}..
+        ///   Cerca una stringa localizzata simile a Message sent to &apos;{0}&apos; in channel {1}..
         /// </summary>
         internal static string MESSAGE_SENT_TO_CHARACTER {
             get {
@@ -3157,7 +3166,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El juego Meteorite comenzará en {0} minuto (s)!.
+        ///   Cerca una stringa localizzata simile a The meteorite game will start in {0} minute (s)!.
         /// </summary>
         internal static string METEORITE_MINUTES {
             get {
@@ -3166,7 +3175,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Felicidades! Terminaste el {0} del Juego del Meteorito. ¡Prepárate para la próxima ronda!.
+        ///   Cerca una stringa localizzata simile a Congratulations! You finished the {0} of the meteorite game. Be ready for the next round!.
         /// </summary>
         internal static string METEORITE_ROUND {
             get {
@@ -3175,7 +3184,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El Juego del Meteorito comenzará en {0} segundo (s)!.
+        ///   Cerca una stringa localizzata simile a The meteorite game will start in {0} second (s)!.
         /// </summary>
         internal static string METEORITE_SECONDS {
             get {
@@ -3184,7 +3193,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El Juego del Meteorito comenzó!.
+        ///   Cerca una stringa localizzata simile a The meteorite game has started!.
         /// </summary>
         internal static string METEORITE_STARTED {
             get {
@@ -3193,7 +3202,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La invitación del Mini-Mundo esta bloqueada..
+        ///   Cerca una stringa localizzata simile a The Mini-Land request is blocked.
         /// </summary>
         internal static string MINI_INV_BLOCKED {
             get {
@@ -3202,7 +3211,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Invitación de Mini-Mundo permitida..
+        ///   Cerca una stringa localizzata simile a Mini-Land request allowed..
         /// </summary>
         internal static string MINI_INV_UNLOCKED {
             get {
@@ -3211,7 +3220,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El Mini-Mundo ha sido cerrado..
+        ///   Cerca una stringa localizzata simile a Mini-Land closed..
         /// </summary>
         internal static string MINILAND_CLOSED_BY_FRIEND {
             get {
@@ -3220,7 +3229,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La información del Mini-Mundo ha cambiado..
+        ///   Cerca una stringa localizzata simile a Mini-Land&apos;s information changed..
         /// </summary>
         internal static string MINILAND_INFO_CHANGED {
             get {
@@ -3229,7 +3238,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El Mini-Mundo ahora está bloqueado..
+        ///   Cerca una stringa localizzata simile a Mini-Land is blocked..
         /// </summary>
         internal static string MINILAND_LOCK {
             get {
@@ -3238,7 +3247,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Debes bloquear tu Mini-Mundo para hacer modificaciones..
+        ///   Cerca una stringa localizzata simile a Block your Mini-Land to modify something.
         /// </summary>
         internal static string MINILAND_NEED_LOCK {
             get {
@@ -3247,7 +3256,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El mini mundo ahora esta bloqueado..
+        ///   Cerca una stringa localizzata simile a Mini-Land now blocked..
         /// </summary>
         internal static string MINILAND_PRIVATE {
             get {
@@ -3256,7 +3265,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El mini mundo ahora esta público..
+        ///   Cerca una stringa localizzata simile a Mini-Land now public..
         /// </summary>
         internal static string MINILAND_PUBLIC {
             get {
@@ -3265,7 +3274,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Total de visitas: {0}, visitas diarias: {1}.
+        ///   Cerca una stringa localizzata simile a Number of visits: {0}, daily visits: {1}.
         /// </summary>
         internal static string MINILAND_VISITOR {
             get {
@@ -3274,7 +3283,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Bienvenido!.
+        ///   Cerca una stringa localizzata simile a Welcome!.
         /// </summary>
         internal static string MINILAND_WELCOME_MESSAGE {
             get {
@@ -3283,7 +3292,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Los monstruos no pueden ser capturados..
+        ///   Cerca una stringa localizzata simile a Monsters can&apos;t be captured..
         /// </summary>
         internal static string MONSTER_CANT_BE_CAPTURED {
             get {
@@ -3292,7 +3301,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Si quieres eliminar un monstruo, necesita estar vivo!.
+        ///   Cerca una stringa localizzata simile a If you want to erase a monster, it has to be alive!.
         /// </summary>
         internal static string MONSTER_NOT_ALIVE {
             get {
@@ -3301,7 +3310,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Monstruo no encontrado!.
+        ///   Cerca una stringa localizzata simile a Monster not found!.
         /// </summary>
         internal static string MONSTER_NOT_FOUND {
             get {
@@ -3310,7 +3319,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Monstruo removido (MapMonsterId: {0}, Name: {1}, MapId: {2}, MapX: {3}, MapY: {4}).
+        ///   Cerca una stringa localizzata simile a Monster removed (MapMonsterId: {0}, Name: {1}, MapId: {2}, MapX: {3}, MapY: {4}).
         /// </summary>
         internal static string MONSTER_REMOVED {
             get {
@@ -3319,7 +3328,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Habilidades de monstruos cargadas!.
+        ///   Cerca una stringa localizzata simile a {0} Monster skills loaded!.
         /// </summary>
         internal static string MONSTERSKILLS_LOADED {
             get {
@@ -3328,7 +3337,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La montura ha sido almacenada en la perla.
+        ///   Cerca una stringa localizzata simile a Mount in a bead..
         /// </summary>
         internal static string MOUNT_SAVED {
             get {
@@ -3337,7 +3346,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Mordedura de ratón activada..
+        ///   Cerca una stringa localizzata simile a Mouse bite activated..
         /// </summary>
         internal static string MOUSE_LOCKED {
             get {
@@ -3346,7 +3355,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ratón moviéndose libremente..
+        ///   Cerca una stringa localizzata simile a Mouse freely moving..
         /// </summary>
         internal static string MOUSE_UNLOCKED {
             get {
@@ -3355,7 +3364,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Mensaje enviado {0} al cliente {1}.
+        ///   Cerca una stringa localizzata simile a Message sent {0} to client {1}.
         /// </summary>
         internal static string MSG_SENT {
             get {
@@ -3364,7 +3373,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Deben ser amigos para casarse..
+        ///   Cerca una stringa localizzata simile a You must be friends to marry..
         /// </summary>
         internal static string MUST_BE_FRIENDS {
             get {
@@ -3373,7 +3382,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has utilizado {0}..
+        ///   Cerca una stringa localizzata simile a You have used {0}..
         /// </summary>
         internal static string MUST_USE_ITEM {
             get {
@@ -3382,7 +3391,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu castigo ha terminado!.
+        ///   Cerca una stringa localizzata simile a Your punishment is over!.
         /// </summary>
         internal static string MUTE_END {
             get {
@@ -3391,7 +3400,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Duración del castigo: {0}.
+        ///   Cerca una stringa localizzata simile a Punishment duration: {0}.
         /// </summary>
         internal static string MUTE_TIME {
             get {
@@ -3400,7 +3409,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡He sido una chica muy mala y me castigaron!.
+        ///   Cerca una stringa localizzata simile a I&apos;ve been a bad girl and I&apos;ve been punished!.
         /// </summary>
         internal static string MUTED_FEMALE {
             get {
@@ -3409,7 +3418,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡He sido un chico muy malo y me castigaron!.
+        ///   Cerca una stringa localizzata simile a I&apos;ve been a bad boy and I&apos;ve been punished!.
         /// </summary>
         internal static string MUTED_MALE {
             get {
@@ -3418,7 +3427,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has sido silenciado! Razón: {0} Por: {1} minutos.
+        ///   Cerca una stringa localizzata simile a You&apos;ve been muted! Reason: {0} Because: {1} minutes..
         /// </summary>
         internal static string MUTED_PLURAL {
             get {
@@ -3427,7 +3436,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has sido silenciado por 1 minuto..
+        ///   Cerca una stringa localizzata simile a You&apos;ve been muted for 1 minute..
         /// </summary>
         internal static string MUTED_SINGULAR {
             get {
@@ -3436,7 +3445,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Portal más cercano(MapID: {0}, MapX: {1}, MapY: {2})  ha sido eliminado!.
+        ///   Cerca una stringa localizzata simile a Closest portal(MapID: {0}, MapX: {1}, MapY: {2})  has been erased!.
         /// </summary>
         internal static string NEAREST_PORTAL {
             get {
@@ -3445,7 +3454,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes entrar a la tierra de los muertos sin familia..
+        ///   Cerca una stringa localizzata simile a You can&apos;t enter to LoD without family..
         /// </summary>
         internal static string NEED_FAMILY {
             get {
@@ -3454,7 +3463,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes cambiar la concha, no te pertenece el item.
+        ///   Cerca una stringa localizzata simile a You can&apos;t change the shell because the item doesn&apos;t belong to you..
         /// </summary>
         internal static string NEED_FRAGANCE {
             get {
@@ -3463,7 +3472,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Necesitas formar un equipo para comenzar el raid..
+        ///   Cerca una stringa localizzata simile a You need a team to start the raid..
         /// </summary>
         internal static string NEED_TEAM {
             get {
@@ -3472,7 +3481,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Se ha conectado. Identificación del jugador = .
+        ///   Cerca una stringa localizzata simile a Connected. Player identification = .
         /// </summary>
         internal static string NEW_CONNECT {
             get {
@@ -3481,7 +3490,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Eres el nuevo líder del grupo!.
+        ///   Cerca una stringa localizzata simile a You are the new leader of the party!.
         /// </summary>
         internal static string NEW_LEADER {
             get {
@@ -3490,7 +3499,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Un nuevo correo llegó!.
+        ///   Cerca una stringa localizzata simile a A new mail arrived!.
         /// </summary>
         internal static string NEW_MAIL {
             get {
@@ -3499,7 +3508,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La misión ha sido actualizada!.
+        ///   Cerca una stringa localizzata simile a The quest has been updated!.
         /// </summary>
         internal static string NEW_MISSION {
             get {
@@ -3508,7 +3517,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El nombre de tu mascota ha sido cambiado.
+        ///   Cerca una stringa localizzata simile a Your pet&apos;s name has been changed..
         /// </summary>
         internal static string NEW_NAME_PET {
             get {
@@ -3517,7 +3526,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes suficiente munición. Compralo en la tienda de equipos..
+        ///   Cerca una stringa localizzata simile a You don&apos;t have enough ammo. Buy them in the shop..
         /// </summary>
         internal static string NO_AMMO_ADVENTURER {
             get {
@@ -3526,7 +3535,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes suficientes flechas. Compralas en la tienda de equipos..
+        ///   Cerca una stringa localizzata simile a You don&apos;t have enough arrows. Buy them in the shop..
         /// </summary>
         internal static string NO_AMMO_ARCHER {
             get {
@@ -3535,7 +3544,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes suficientes pernos de ballesta. Compralos en la tienda de equipos..
+        ///   Cerca una stringa localizzata simile a You don&apos;t have enought crossbow bolts. Buy them in the shop..
         /// </summary>
         internal static string NO_AMMO_SWORDSMAN {
             get {
@@ -3544,7 +3553,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se encontró entrada..
+        ///   Cerca una stringa localizzata simile a Entry not found..
         /// </summary>
         internal static string NO_ENTRY {
             get {
@@ -3553,7 +3562,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tienes que usar hada para hacer esto.
+        ///   Cerca una stringa localizzata simile a You need fairy to do that..
         /// </summary>
         internal static string NO_FAIRY {
             get {
@@ -3562,7 +3571,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes permisos para hacerlo..
+        ///   Cerca una stringa localizzata simile a Not allowed to do that..
         /// </summary>
         internal static string NO_FAMILY_HEAD {
             get {
@@ -3571,7 +3580,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Usted no tiene permisos familiares..
+        ///   Cerca una stringa localizzata simile a Not allowed to do that..
         /// </summary>
         internal static string NO_FAMILY_RIGHT {
             get {
@@ -3580,7 +3589,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se encontró ningún almacén familiar..
+        ///   Cerca una stringa localizzata simile a No familiar warehouse found..
         /// </summary>
         internal static string NO_FAMILY_WAREHOUSE {
             get {
@@ -3589,7 +3598,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Sin controlador guri para: {0}.
+        ///   Cerca una stringa localizzata simile a No guri controler to: {0}.
         /// </summary>
         internal static string NO_HANDLER_GURI {
             get {
@@ -3598,7 +3607,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se encontró controlador para este Item en la clase {0}, ItemVNum: {1}, Effect: {2}, EffectValue: {3}.
+        ///   Cerca una stringa localizzata simile a No controler found for this item in this class {0}, ItemVNum: {1}, Effect: {2}, EffectValue: {3}.
         /// </summary>
         internal static string NO_HANDLER_ITEM {
             get {
@@ -3607,7 +3616,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El Item no existe!.
+        ///   Cerca una stringa localizzata simile a The Item doesn&apos;t exist!.
         /// </summary>
         internal static string NO_ITEM {
             get {
@@ -3616,7 +3625,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tiene suficientes : {0} para hacer esto..
+        ///   Cerca una stringa localizzata simile a You don&apos;t have enough : {0} to do this..
         /// </summary>
         internal static string NO_ITEM_REQUIRED {
             get {
@@ -3625,7 +3634,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El servidor necesita al menos el mapa de nosville para funcionar!.
+        ///   Cerca una stringa localizzata simile a Server needs at least NosVille map to works!.
         /// </summary>
         internal static string NO_MAP {
             get {
@@ -3634,7 +3643,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se implementó n_run Handler para {0}.
+        ///   Cerca una stringa localizzata simile a Not implemented n_run Handler to {0}.
         /// </summary>
         internal static string NO_NRUN_HANDLER {
             get {
@@ -3643,7 +3652,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se ha encontrado ningún portal.
+        ///   Cerca una stringa localizzata simile a No portal found..
         /// </summary>
         internal static string NO_PORTAL_FOUND {
             get {
@@ -3652,7 +3661,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Sin descripción..
+        ///   Cerca una stringa localizzata simile a No description..
         /// </summary>
         internal static string NO_PREZ_MESSAGE {
             get {
@@ -3661,7 +3670,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a You do not have a partner card equipped!.
+        ///   Cerca una stringa localizzata simile a You partner does not have a Specialist Card!.
         /// </summary>
         internal static string NO_PSP {
             get {
@@ -3670,7 +3679,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No llevas una tarjeta de especialista equipada!.
+        ///   Cerca una stringa localizzata simile a You are not wearing a specialist card!.
         /// </summary>
         internal static string NO_SP {
             get {
@@ -3679,7 +3688,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No hay equipos que observar.
+        ///   Cerca una stringa localizzata simile a No equips no watch..
         /// </summary>
         internal static string NO_TEAM_ARENA {
             get {
@@ -3688,7 +3697,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No estás usando el arma apropiada!.
+        ///   Cerca una stringa localizzata simile a You are not using the proper weapon!.
         /// </summary>
         internal static string NO_WEAPON {
             get {
@@ -3697,7 +3706,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No llevas ese afro genial ;).
+        ///   Cerca una stringa localizzata simile a You are not wearing wigs..
         /// </summary>
         internal static string NO_WIG {
             get {
@@ -3706,7 +3715,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No tienes alas de amistad!.
+        ///   Cerca una stringa localizzata simile a No wings of friendship!.
         /// </summary>
         internal static string NO_WINGS {
             get {
@@ -3715,7 +3724,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Puedes cambiar de clase solo una vez..
+        ///   Cerca una stringa localizzata simile a You can only change your class once..
         /// </summary>
         internal static string NOT_ADVENTURER {
             get {
@@ -3724,7 +3733,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a !Tienes que abandonar el grupo para hacer esto!.
+        ///   Cerca una stringa localizzata simile a You need to abandon the party to do that!.
         /// </summary>
         internal static string NOT_ALLOWED_IN_GROUP {
             get {
@@ -3733,7 +3742,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No tienes permiso para echar jugadores!.
+        ///   Cerca una stringa localizzata simile a Not allowed to kick players!.
         /// </summary>
         internal static string NOT_ALLOWED_KICK {
             get {
@@ -3742,7 +3751,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes suficientes CP..
+        ///   Cerca una stringa localizzata simile a Not enough CP.
         /// </summary>
         internal static string NOT_ENOUGH_CP {
             get {
@@ -3751,7 +3760,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes el Item requerido..
+        ///   Cerca una stringa localizzata simile a You don&apos;t have the required Item..
         /// </summary>
         internal static string NOT_ENOUGH_ITEM {
             get {
@@ -3760,7 +3769,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Necesitas al menos {0} x {1}.
+        ///   Cerca una stringa localizzata simile a Need at least {0} x {1}.
         /// </summary>
         internal static string NOT_ENOUGH_ITEMS {
             get {
@@ -3769,7 +3778,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Dinero insuficiente..
+        ///   Cerca una stringa localizzata simile a Insufficient gold..
         /// </summary>
         internal static string NOT_ENOUGH_MONEY {
             get {
@@ -3778,7 +3787,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No hay suficiente maná para usar esa habilidad..
+        ///   Cerca una stringa localizzata simile a Not enough MP to use that skill..
         /// </summary>
         internal static string NOT_ENOUGH_MP {
             get {
@@ -3787,7 +3796,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No hay suficiente espacio..
+        ///   Cerca una stringa localizzata simile a Not enough space..
         /// </summary>
         internal static string NOT_ENOUGH_PLACE {
             get {
@@ -3796,7 +3805,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes suficientes puntos SP para hacer esto..
+        ///   Cerca una stringa localizzata simile a Not enough SP points to do that..
         /// </summary>
         internal static string NOT_ENOUGH_POINTS {
             get {
@@ -3805,7 +3814,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes suficientes semillas de poder..
+        ///   Cerca una stringa localizzata simile a Not enough seeds of power..
         /// </summary>
         internal static string NOT_ENOUGH_POWER_SEED {
             get {
@@ -3814,7 +3823,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Reputación insuficiente..
+        ///   Cerca una stringa localizzata simile a Insufficient reputation..
         /// </summary>
         internal static string NOT_ENOUGH_REPUT {
             get {
@@ -3823,7 +3832,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tienes suficiente Poción de Redención para resucitar..
+        ///   Cerca una stringa localizzata simile a Not enough Redemption Potions..
         /// </summary>
         internal static string NOT_ENOUGH_SAVER {
             get {
@@ -3832,7 +3841,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No tengo suficientes semillas de poder..
+        ///   Cerca una stringa localizzata simile a Not enough seeds of power..
         /// </summary>
         internal static string NOT_ENOUGH_SEED_SAY {
             get {
@@ -3841,7 +3850,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No eres el Cabecilla de la familia..
+        ///   Cerca una stringa localizzata simile a You are not Familyhead.
         /// </summary>
         internal static string NOT_FAMILY_HEAD {
             get {
@@ -3850,7 +3859,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No tengo hambre!.
+        ///   Cerca una stringa localizzata simile a I am not hungry!.
         /// </summary>
         internal static string NOT_HUNGRY_FEMALE {
             get {
@@ -3859,7 +3868,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No tengo hambre!.
+        ///   Cerca una stringa localizzata simile a I am not hungry!.
         /// </summary>
         internal static string NOT_HUNGRY_MALE {
             get {
@@ -3868,7 +3877,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No estás en tu Mini-Mundo!.
+        ///   Cerca una stringa localizzata simile a You are not in the Mini-Land!.
         /// </summary>
         internal static string NOT_IN_MINILAND {
             get {
@@ -3877,7 +3886,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No eres el líder del grupo!.
+        ///   Cerca una stringa localizzata simile a You are not the party leader!.
         /// </summary>
         internal static string NOT_MASTER {
             get {
@@ -3886,7 +3895,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solo el líder del equipo puede comenzar el raid..
+        ///   Cerca una stringa localizzata simile a Only the leader can start the raid..
         /// </summary>
         internal static string NOT_TEAM_LEADER {
             get {
@@ -3895,7 +3904,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Este Item no es tuyo!.
+        ///   Cerca una stringa localizzata simile a This item isn&apos;t yours!.
         /// </summary>
         internal static string NOT_YOUR_ITEM {
             get {
@@ -3904,7 +3913,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Advertencia, puedes ser atacado por monstruos cuando usas el bazar!.
+        ///   Cerca una stringa localizzata simile a Warning, you can be attacked while using NosBasaar!.
         /// </summary>
         internal static string NOTICE_BAZAAR {
             get {
@@ -3913,7 +3922,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Monstruo no encontrado!.
+        ///   Cerca una stringa localizzata simile a Monster not found!.
         /// </summary>
         internal static string NPCMONSTER_NOT_FOUND {
             get {
@@ -3922,7 +3931,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a NPC eliminado (MapNpcId: {0}, Nombre: {1}, MapId: {2}, MapX: {3}, MapY: {4}).
+        ///   Cerca una stringa localizzata simile a NPC erased (MapNpcId: {0}, Nombre: {1}, MapId: {2}, MapX: {3}, MapY: {4}).
         /// </summary>
         internal static string NPCMONSTER_REMOVED {
             get {
@@ -3931,7 +3940,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} NpcMonsters cargados!.
+        ///   Cerca una stringa localizzata simile a {0} NpcMonsters loaded!.
         /// </summary>
         internal static string NPCMONSTERS_LOADED {
             get {
@@ -3940,7 +3949,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Su artículo ha sido agregado en el bazar!.
+        ///   Cerca una stringa localizzata simile a You article has been added to the Basaar!.
         /// </summary>
         internal static string OBJECT_IN_BAZAAR {
             get {
@@ -3949,7 +3958,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Se ha corregido el precio de venta: oro {0}..
+        ///   Cerca una stringa localizzata simile a The price has been corrected: gold {0}..
         /// </summary>
         internal static string OBJECT_MOD_IN_BAZAAR {
             get {
@@ -3958,7 +3967,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Solo puedes promocionar a un Representante del jefe de familia!.
+        ///   Cerca una stringa localizzata simile a You can only promote a Familydeputy of the family!.
         /// </summary>
         internal static string ONLY_PROMOTE_ASSISTANT {
             get {
@@ -3967,7 +3976,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El efecto de la concha ha sido eliminado..
+        ///   Cerca una stringa localizzata simile a The shell effect has been eliminated.
         /// </summary>
         internal static string OPTION_DELETE {
             get {
@@ -3976,7 +3985,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Mejora fallida..
+        ///   Cerca una stringa localizzata simile a Failed to improve..
         /// </summary>
         internal static string OPTION_FAIL {
             get {
@@ -3985,7 +3994,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Se ha identificado la Concha correctamente.
+        ///   Cerca una stringa localizzata simile a The Shell has correctly been identified..
         /// </summary>
         internal static string OPTION_IDENTIFIED {
             get {
@@ -3994,7 +4003,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Mejora exitosa..
+        ///   Cerca una stringa localizzata simile a Succeed to improve..
         /// </summary>
         internal static string OPTION_SUCCESS {
             get {
@@ -4003,7 +4012,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El jugador es un miembro del grupo.
+        ///   Cerca una stringa localizzata simile a The player is a member of the party..
         /// </summary>
         internal static string OTHER_PLAYER_IN_GROUP {
             get {
@@ -4012,7 +4021,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Paquete recibido, paquete: {0}.
+        ///   Cerca una stringa localizzata simile a Recieved packet: {0}.
         /// </summary>
         internal static string PACKET_ARRIVED {
             get {
@@ -4021,7 +4030,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Error al enviar el paquete {0} al jugador {1}, {2}..
+        ///   Cerca una stringa localizzata simile a Error to send packet {0} to player {1}, {2}..
         /// </summary>
         internal static string PACKET_FAILURE {
             get {
@@ -4030,7 +4039,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El compañero regresará a Mini-land después de su muerte.
+        ///   Cerca una stringa localizzata simile a The partner will return to the Mini-Land when killed..
         /// </summary>
         internal static string PARTNER_AUTO_RELIVE_DISABLED {
             get {
@@ -4039,7 +4048,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El compañero será revidido si este muere usando semillas del poder.
+        ///   Cerca una stringa localizzata simile a The partner will be revived using seeds of power..
         /// </summary>
         internal static string PARTNER_AUTO_RELIVE_ENABLED {
             get {
@@ -4048,7 +4057,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Uno de los miembros de su grupo sigue bajo pena de familia..
+        ///   Cerca una stringa localizzata simile a One of the members of the party has still a family penalty..
         /// </summary>
         internal static string PARTY_MEMBER_HAS_PENALTY {
             get {
@@ -4057,7 +4066,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Uno de los miembros de tu grupo ya está en otra familia..
+        ///   Cerca una stringa localizzata simile a One of the members of the party is in a family..
         /// </summary>
         internal static string PARTY_MEMBER_IN_FAMILY {
             get {
@@ -4066,7 +4075,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ataque.
+        ///   Cerca una stringa localizzata simile a Attack.
         /// </summary>
         internal static string PERFECTSP_ATTACK {
             get {
@@ -4075,7 +4084,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Defensa.
+        ///   Cerca una stringa localizzata simile a Defense.
         /// </summary>
         internal static string PERFECTSP_DEFENSE {
             get {
@@ -4084,7 +4093,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Elemento.
+        ///   Cerca una stringa localizzata simile a Element.
         /// </summary>
         internal static string PERFECTSP_ELEMENT {
             get {
@@ -4093,7 +4102,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡SP Perfection falló!.
+        ///   Cerca una stringa localizzata simile a Failure SP perfection!.
         /// </summary>
         internal static string PERFECTSP_FAILURE {
             get {
@@ -4102,7 +4111,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Fuego.
+        ///   Cerca una stringa localizzata simile a Fire.
         /// </summary>
         internal static string PERFECTSP_FIRE {
             get {
@@ -4120,7 +4129,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Luz.
+        ///   Cerca una stringa localizzata simile a Light.
         /// </summary>
         internal static string PERFECTSP_LIGHT {
             get {
@@ -4129,7 +4138,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tinieblas.
+        ///   Cerca una stringa localizzata simile a Shadow.
         /// </summary>
         internal static string PERFECTSP_SHADOW {
             get {
@@ -4138,7 +4147,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Perfección exitosa: {0} + {1}.
+        ///   Cerca una stringa localizzata simile a Success perfection {0} + {1}.
         /// </summary>
         internal static string PERFECTSP_SUCCESS {
             get {
@@ -4147,7 +4156,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Agua.
+        ///   Cerca una stringa localizzata simile a Water.
         /// </summary>
         internal static string PERFECTSP_WATER {
             get {
@@ -4156,7 +4165,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La mascota regresará a Mini-land después de morir..
+        ///   Cerca una stringa localizzata simile a The pet will return to the Mini-Land if killed..
         /// </summary>
         internal static string PET_AUTO_RELIVE_DISABLED {
             get {
@@ -4165,7 +4174,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tu mascota será revivida si muere.
+        ///   Cerca una stringa localizzata simile a The pet will be relived if killed..
         /// </summary>
         internal static string PET_AUTO_RELIVE_ENABLED {
             get {
@@ -4174,7 +4183,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ahora tu mascota puede recoger Items..
+        ///   Cerca una stringa localizzata simile a Now your pet can pick up things..
         /// </summary>
         internal static string PET_CAN_PICK_UP {
             get {
@@ -4183,7 +4192,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu compañero ha muerto!, la misión ha fracasado serás enviado fuera..
+        ///   Cerca una stringa localizzata simile a Your partner has dead!, you failed to complete the quest..
         /// </summary>
         internal static string PET_DIED {
             get {
@@ -4192,7 +4201,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El nivel de la mascota es demasiado alto..
+        ///   Cerca una stringa localizzata simile a The pet level is too high..
         /// </summary>
         internal static string PET_HIGHER_LEVEL {
             get {
@@ -4201,7 +4210,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes liberar tu Mascota si te está acompañando..
+        ///   Cerca una stringa localizzata simile a You can&apos;t release your pet if it&apos;s with you..
         /// </summary>
         internal static string PET_IN_TEAM_UNRELEASABLE {
             get {
@@ -4210,7 +4219,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Mascota regresada al Mini-Mundo..
+        ///   Cerca una stringa localizzata simile a Pet returned to the Mini-Land..
         /// </summary>
         internal static string PET_KICKED {
             get {
@@ -4219,7 +4228,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tu mascota está fuera de la perla!.
+        ///   Cerca una stringa localizzata simile a Your pet is out of the bead!.
         /// </summary>
         internal static string PET_LEAVE_BEAD {
             get {
@@ -4228,7 +4237,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tu mascota ahora es libre..
+        ///   Cerca una stringa localizzata simile a Your pet is free now..
         /// </summary>
         internal static string PET_RELEASED {
             get {
@@ -4237,7 +4246,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Espacio de Mascota lleno. .
+        ///   Cerca una stringa localizzata simile a Pets slot full..
         /// </summary>
         internal static string PET_SLOT_FULL {
             get {
@@ -4246,7 +4255,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tu mascota ahora está en la perla..
+        ///   Cerca una stringa localizzata simile a Your pet is now stored..
         /// </summary>
         internal static string PET_STORED {
             get {
@@ -4255,7 +4264,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Puedes invocar a tu Mascota en cualquier momento..
+        ///   Cerca una stringa localizzata simile a You can summon your pet when you want..
         /// </summary>
         internal static string PET_SUMMONABLE {
             get {
@@ -4264,7 +4273,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El jugador {0} está en batalla..
+        ///   Cerca una stringa localizzata simile a The player {0} is in a battle..
         /// </summary>
         internal static string PLAYER_IN_BATTLE {
             get {
@@ -4273,7 +4282,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El jugador no puede hacer esto hasta que haya alcanzado el nivel 30..
+        ///   Cerca una stringa localizzata simile a The player can&apos;t do that until reaching level 30..
         /// </summary>
         internal static string PLAYER_LOW_LVL_30 {
             get {
@@ -4282,7 +4291,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El jugador no esta en línea..
+        ///   Cerca una stringa localizzata simile a The player is offline..
         /// </summary>
         internal static string PLAYER_OFFLINE {
             get {
@@ -4291,7 +4300,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Puntos de especialista reseteados!.
+        ///   Cerca una stringa localizzata simile a Specialist points reset!.
         /// </summary>
         internal static string POINTS_RESET {
             get {
@@ -4300,7 +4309,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Puntos establecidos..
+        ///   Cerca una stringa localizzata simile a Points set..
         /// </summary>
         internal static string POINTS_SET {
             get {
@@ -4309,7 +4318,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Este portal está bloqueado, no puedo usarlo..
+        ///   Cerca una stringa localizzata simile a The portal is blocked, you can&apos;t use it..
         /// </summary>
         internal static string PORTAL_BLOCKED {
             get {
@@ -4318,7 +4327,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El portal ya está cerrado.
+        ///   Cerca una stringa localizzata simile a The portal is closed..
         /// </summary>
         internal static string PORTAL_CLOSED {
             get {
@@ -4327,7 +4336,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El límite de precio se excede..
+        ///   Cerca una stringa localizzata simile a The price has exceeded the limit..
         /// </summary>
         internal static string PRICE_EXCEEDED {
             get {
@@ -4336,16 +4345,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a All partner&apos;s skills have been resetted..
-        /// </summary>
-        internal static string PSP_ALL_SKILLS_RESETTED {
-            get {
-                return ResourceManager.GetString("PSP_ALL_SKILLS_RESETTED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a You have learned a new skill!.
+        ///   Cerca una stringa localizzata simile a You partner learnt a skill!.
         /// </summary>
         internal static string PSP_SKILL_LEARNED {
             get {
@@ -4354,16 +4354,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a The partner&apos;s skill has been resetted..
-        /// </summary>
-        internal static string PSP_SKILL_RESETTED {
-            get {
-                return ResourceManager.GetString("PSP_SKILL_RESETTED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡PVP habilitado!.
+        ///   Cerca una stringa localizzata simile a PVP enabled!.
         /// </summary>
         internal static string PVP_ACTIVE {
             get {
@@ -4372,7 +4363,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a [{1}] fue asesinado por [{0}].
+        ///   Cerca una stringa localizzata simile a [{1}] was murdered by [{0}].
         /// </summary>
         internal static string PVP_KILL {
             get {
@@ -4381,7 +4372,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres usar este artículo?.
+        ///   Cerca una stringa localizzata simile a Do you want to use this article?.
         /// </summary>
         internal static string QNA_ITEM {
             get {
@@ -4390,7 +4381,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a !Ya has hecho esta misión!.
+        ///   Cerca una stringa localizzata simile a You have alredy done this quest!.
         /// </summary>
         internal static string QUEST_ALREADY_DONE {
             get {
@@ -4399,7 +4390,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Ya has hecho esta misión hoy.
+        ///   Cerca una stringa localizzata simile a You have done this quest today!.
         /// </summary>
         internal static string QUEST_ALREADY_DONE_TODAY {
             get {
@@ -4408,7 +4399,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La captura falló. Espere 30 segundos para intentarlo de nuevo..
+        ///   Cerca una stringa localizzata simile a The catch failed. Wait 30 seconds to try again..
         /// </summary>
         internal static string QUEST_CATCH_FAIL {
             get {
@@ -4417,7 +4408,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} objetivos de la búsqueda analizados..
+        ///   Cerca una stringa localizzata simile a {0} objectives of the search analized..
         /// </summary>
         internal static string QUEST_OBJECTIVE_PARSED {
             get {
@@ -4426,7 +4417,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} búsqueda analizada..
+        ///   Cerca una stringa localizzata simile a {0} search analized..
         /// </summary>
         internal static string QUEST_PARSED {
             get {
@@ -4435,7 +4426,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} las recompensas de la búsqueda analizadas..
+        ///   Cerca una stringa localizzata simile a {0} the rewards of the searchs analized..
         /// </summary>
         internal static string QUEST_REWARD_PARSED {
             get {
@@ -4444,7 +4435,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Misiones cargadas..
+        ///   Cerca una stringa localizzata simile a {0} Quests loaded..
         /// </summary>
         internal static string QUESTS_LOADED {
             get {
@@ -4453,7 +4444,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Levantarse rápido deshabilitado..
+        ///   Cerca una stringa localizzata simile a Get up quick disabled..
         /// </summary>
         internal static string QUICK_GET_UP_DISABLED {
             get {
@@ -4462,7 +4453,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Levantarse rápido habilitado..
+        ///   Cerca una stringa localizzata simile a Get up quick enabled..
         /// </summary>
         internal static string QUICK_GET_UP_ENABLED {
             get {
@@ -4471,7 +4462,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes unirte a un grupo de un Raid comenzado.
+        ///   Cerca una stringa localizzata simile a You can&apos;t join an already started Raid..
         /// </summary>
         internal static string RAID_ALREADY_STARTED {
             get {
@@ -4480,7 +4471,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El Raid ha sido cancelado..
+        ///   Cerca una stringa localizzata simile a The Raid team has been disolved..
         /// </summary>
         internal static string RAID_DISOLVED {
             get {
@@ -4489,7 +4480,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Te has unido a el raid..
+        ///   Cerca una stringa localizzata simile a You&apos;ve joined the Raid..
         /// </summary>
         internal static string RAID_JOIN {
             get {
@@ -4498,7 +4489,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Eres el líder del raid..
+        ///   Cerca una stringa localizzata simile a You are the Raid leader..
         /// </summary>
         internal static string RAID_LEADER {
             get {
@@ -4507,7 +4498,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Dado que su nivel no coincide con el nivel recomendado, no recibirá ninguna recompensa..
+        ///   Cerca una stringa localizzata simile a Your level doesn&apos;t match the required, therefore you won&apos;t recieve a reward..
         /// </summary>
         internal static string RAID_LEVEL_INCORRECT {
             get {
@@ -4516,7 +4507,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El Raid ha sido registrado..
+        ///   Cerca una stringa localizzata simile a The Raid has been registered..
         /// </summary>
         internal static string RAID_REGISTERED {
             get {
@@ -4525,7 +4516,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres comenzar el raid?.
+        ///   Cerca una stringa localizzata simile a Do you want to start the raid?.
         /// </summary>
         internal static string RAID_START_QUESTION {
             get {
@@ -4534,7 +4525,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El equipo de [{1}] completó con éxito el Raid [{0}]..
+        ///   Cerca una stringa localizzata simile a [{1}]&apos;s team completed succesfully the raid [{0}]..
         /// </summary>
         internal static string RAID_SUCCEED {
             get {
@@ -4543,7 +4534,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El equipo del Raid no está listo todavía!.
+        ///   Cerca una stringa localizzata simile a The Raid team is not ready yet!.
         /// </summary>
         internal static string RAID_TEAM_NOT_READY {
             get {
@@ -4552,7 +4543,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se ha registrado el Raid..
+        ///   Cerca una stringa localizzata simile a The Raid is not registered..
         /// </summary>
         internal static string RAID_UNREGISTERED {
             get {
@@ -4561,7 +4552,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Se ha devuelto la calidad a un nivel de rareza inferior: {0}.
+        ///   Cerca una stringa localizzata simile a The rarify of the item has been downgraded: {0}.
         /// </summary>
         internal static string RARIFY_DOWNGRADE_SUCCESS {
             get {
@@ -4570,7 +4561,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El juego falló! El Item desapareció. .
+        ///   Cerca una stringa localizzata simile a The gamble failed! The item has been destroyed..
         /// </summary>
         internal static string RARIFY_FAILED {
             get {
@@ -4579,7 +4570,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El juego falló, pero el Item no fue destruido..
+        ///   Cerca una stringa localizzata simile a The gamble failed but the Item is safe..
         /// </summary>
         internal static string RARIFY_FAILED_ITEM_SAVED {
             get {
@@ -4588,7 +4579,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El juego tuvo éxito! Nuevo nivel de rareza: {0}.
+        ///   Cerca una stringa localizzata simile a The gamble was succesful! New rarify: {0}.
         /// </summary>
         internal static string RARIFY_SUCCESS {
             get {
@@ -4597,7 +4588,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de caída de oro..
+        ///   Cerca una stringa localizzata simile a Gold Drop rate.
         /// </summary>
         internal static string RATEGOLD_NOW {
             get {
@@ -4606,7 +4597,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Recibido: {0}.
+        ///   Cerca una stringa localizzata simile a Recived: {0}.
         /// </summary>
         internal static string RECEIVED_ITEM {
             get {
@@ -4615,7 +4606,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Listas de recetas cargadas!.
+        ///   Cerca una stringa localizzata simile a {0} Recipe lists loaded!.
         /// </summary>
         internal static string RECIPELISTS_LOADED {
             get {
@@ -4624,7 +4615,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} ¡Recetas cargadas!.
+        ///   Cerca una stringa localizzata simile a {0} Recipe loaded!.
         /// </summary>
         internal static string RECIPES_LOADED {
             get {
@@ -4633,7 +4624,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Rechazó su petición de grupo..
+        ///   Cerca una stringa localizzata simile a {0} Refused your party request..
         /// </summary>
         internal static string REFUSED_GROUP_REQUEST {
             get {
@@ -4642,7 +4633,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Te negaste a cambiar el punto de retorno con los miembros del grupo..
+        ///   Cerca una stringa localizzata simile a You refused to share your point with your party members..
         /// </summary>
         internal static string REFUSED_SHARE {
             get {
@@ -4651,7 +4642,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes desequiparte el Hada mientras el efecto Fortalecedor de Hada este activado!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t remove your fairy while using booster!.
         /// </summary>
         internal static string REMOVE_FAIRY_WHILE_USING_BOOSTER {
             get {
@@ -4660,7 +4651,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La venta se ha completado, recibido: {0}..
+        ///   Cerca una stringa localizzata simile a The sale has been completed, recieved: {0}..
         /// </summary>
         internal static string REMOVE_FROM_BAZAAR {
             get {
@@ -4669,7 +4660,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Si quieres aprender habilidades, debes retirar tu SP..
+        ///   Cerca una stringa localizzata simile a If you want to learn skills you must remove your SP..
         /// </summary>
         internal static string REMOVE_SP {
             get {
@@ -4678,7 +4669,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Antes de la transformación, debes de quitar el vehículo..
+        ///   Cerca una stringa localizzata simile a Before transformation you need to remove your vehicle..
         /// </summary>
         internal static string REMOVE_VEHICLE {
             get {
@@ -4687,7 +4678,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Reputación cambiada.
+        ///   Cerca una stringa localizzata simile a Reputation changed..
         /// </summary>
         internal static string REP_CHANGED {
             get {
@@ -4696,7 +4687,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La reputación disminuyó en {0}.
+        ///   Cerca una stringa localizzata simile a Reputation decrease {0}.
         /// </summary>
         internal static string REPUT_DECREASE {
             get {
@@ -4705,7 +4696,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La reputación disminuyó: -{0}.
+        ///   Cerca una stringa localizzata simile a Reputation decreased: -{0}.
         /// </summary>
         internal static string REPUT_DECREASED {
             get {
@@ -4714,7 +4705,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Reputación aumentada en {0}.
+        ///   Cerca una stringa localizzata simile a Reputation increase: {0}.
         /// </summary>
         internal static string REPUT_INCREASE {
             get {
@@ -4723,7 +4714,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de eputación cambiada.
+        ///   Cerca una stringa localizzata simile a Reputation Rate changed.
         /// </summary>
         internal static string REPUTATION_RATE_CHANGED {
             get {
@@ -4732,7 +4723,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de Reputación.
+        ///   Cerca una stringa localizzata simile a Reputation Rate.
         /// </summary>
         internal static string REPUTATION_RATE_NOW {
             get {
@@ -4741,7 +4732,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tu ubicación de generación ha cambiado..
+        ///   Cerca una stringa localizzata simile a Your respawn location has changed..
         /// </summary>
         internal static string RESPAWNLOCATION_CHANGED {
             get {
@@ -4750,7 +4741,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has restaurado algo de tu dignidad!.
+        ///   Cerca una stringa localizzata simile a You have restored some of your dignity!.
         /// </summary>
         internal static string RESTORE_DIGNITY {
             get {
@@ -4759,7 +4750,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No se puede conectar al servidor! Intentando de nuevo en 5 segundos ....
+        ///   Cerca una stringa localizzata simile a You can&apos;t connect to the server. Try again in 5 seconds..
         /// </summary>
         internal static string RETRY_CONNECTION {
             get {
@@ -4768,7 +4759,25 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Guardando todos los datos!.
+        ///   Cerca una stringa localizzata simile a The sacrifice effect has been lifted, because the selected player is outside of the area.
+        /// </summary>
+        internal static string SACRIFICE_OUT_OF_RANGE {
+            get {
+                return ResourceManager.GetString("SACRIFICE_OUT_OF_RANGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a {0} sacrifices themselves for {1}..
+        /// </summary>
+        internal static string SACRIFICES_THEMSELVES {
+            get {
+                return ResourceManager.GetString("SACRIFICES_THEMSELVES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Saving all data!.
         /// </summary>
         internal static string SAVING_ALL {
             get {
@@ -4777,7 +4786,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Se ha utilizado el pergamino..
+        ///   Cerca una stringa localizzata simile a The scroll has been used..
         /// </summary>
         internal static string SCROLL_PROTECT_USED {
             get {
@@ -4786,7 +4795,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} está buscando miembros de equipo para el Raid {1}.
+        ///   Cerca una stringa localizzata simile a {0} is looking members for the Raid {1}.
         /// </summary>
         internal static string SEARCH_TEAM_MEMBERS {
             get {
@@ -4795,7 +4804,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Semillas de poder usadas!.
+        ///   Cerca una stringa localizzata simile a Seeds of power used!.
         /// </summary>
         internal static string SEED_USED {
             get {
@@ -4804,7 +4813,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Vendido: {0} &lt;{1} : Pieza &gt;.
+        ///   Cerca una stringa localizzata simile a Sold: {0} &lt;{1} : Pieces &gt;.
         /// </summary>
         internal static string SELL_ITEM_VALID {
             get {
@@ -4813,7 +4822,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tiempo de trabajo del servidor.
+        ///   Cerca una stringa localizzata simile a Server working time.
         /// </summary>
         internal static string SERVER_WORKING_TIME {
             get {
@@ -4822,7 +4831,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El sexo ha cambiado!.
+        ///   Cerca una stringa localizzata simile a The sex has changed!.
         /// </summary>
         internal static string SEX_CHANGED {
             get {
@@ -4831,7 +4840,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Compartir con todos.
+        ///   Cerca una stringa localizzata simile a Share with all.
         /// </summary>
         internal static string SHARING {
             get {
@@ -4840,7 +4849,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Compartir por orden.
+        ///   Cerca una stringa localizzata simile a Share by order.
         /// </summary>
         internal static string SHARING_BY_ORDER {
             get {
@@ -4849,7 +4858,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El nivel de la concha es demasiado alto..
+        ///   Cerca una stringa localizzata simile a The shell level is too high..
         /// </summary>
         internal static string SHELL_LEVEL_TOO_HIGH {
             get {
@@ -4858,7 +4867,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La concha debe ser identificada antes de su uso..
+        ///   Cerca una stringa localizzata simile a The shell must be identified before its use..
         /// </summary>
         internal static string SHELL_MUST_BE_IDENTIFIED {
             get {
@@ -4867,7 +4876,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El barco partirá en un minuto!.
+        ///   Cerca una stringa localizzata simile a The ship will sail in a minute!.
         /// </summary>
         internal static string SHIP_MINUTE {
             get {
@@ -4876,7 +4885,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El barco partirá en {0} minutos!.
+        ///   Cerca una stringa localizzata simile a The ship will sail in {0} minutes!.
         /// </summary>
         internal static string SHIP_MINUTES {
             get {
@@ -4885,7 +4894,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El barco aún no ha regresado!.
+        ///   Cerca una stringa localizzata simile a The ship has not arrived yet.
         /// </summary>
         internal static string SHIP_NOTARRIVED {
             get {
@@ -4894,7 +4903,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El barco partirá en {0} segundos!.
+        ///   Cerca una stringa localizzata simile a The ship will sail in {0} seconds!.
         /// </summary>
         internal static string SHIP_SECONDS {
             get {
@@ -4903,7 +4912,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a De acuerdo, ¡Estamos saliendo! ¡Levad anclas!.
+        ///   Cerca una stringa localizzata simile a Alright, we are setting off, Weigh anchor!.
         /// </summary>
         internal static string SHIP_SETOFF {
             get {
@@ -4912,7 +4921,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La tienda no puede estar vacía!.
+        ///   Cerca una stringa localizzata simile a The shop can&apos;t be empty!.
         /// </summary>
         internal static string SHOP_EMPTY {
             get {
@@ -4921,7 +4930,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes crear una tienda tan cerca del portal!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t create a shop that close to a portal!.
         /// </summary>
         internal static string SHOP_NEAR_PORTAL {
             get {
@@ -4930,7 +4939,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes abrir tiendas en mapas globales..
+        ///   Cerca una stringa localizzata simile a You can&apos;t open a shop in general maps..
         /// </summary>
         internal static string SHOP_NOT_ALLOWED {
             get {
@@ -4939,7 +4948,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solo puede vender artículos comerciables en una tienda privada..
+        ///   Cerca una stringa localizzata simile a You can only sell tradable items..
         /// </summary>
         internal static string SHOP_ONLY_TRADABLE_ITEMS {
             get {
@@ -4948,7 +4957,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La tienda ha sido abierta..
+        ///   Cerca una stringa localizzata simile a The shop is open..
         /// </summary>
         internal static string SHOP_OPEN {
             get {
@@ -4957,7 +4966,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tienda privada..
+        ///   Cerca una stringa localizzata simile a Private shop..
         /// </summary>
         internal static string SHOP_PRIVATE_SHOP {
             get {
@@ -4966,7 +4975,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Tiendas cargadas!.
+        ///   Cerca una stringa localizzata simile a {0} Shops loaded!.
         /// </summary>
         internal static string SHOPITEMS_LOADED {
             get {
@@ -4975,7 +4984,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} ¡Tiendas cargadas!.
+        ///   Cerca una stringa localizzata simile a {0} Shops loaded!.
         /// </summary>
         internal static string SHOPS_LOADED {
             get {
@@ -4984,7 +4993,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Tiendas de habilidades cargadas!.
+        ///   Cerca una stringa localizzata simile a {0} Shopskills loaded!.
         /// </summary>
         internal static string SHOPSKILLS_LOADED {
             get {
@@ -4993,7 +5002,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El servidor se cerrará en {0} minutos..
+        ///   Cerca una stringa localizzata simile a The server will shut down in {0} minutes..
         /// </summary>
         internal static string SHUTDOWN_MIN {
             get {
@@ -5002,7 +5011,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El servidor se cerrará en {0} segundos..
+        ///   Cerca una stringa localizzata simile a The server will shut down in {0} seconds..
         /// </summary>
         internal static string SHUTDOWN_SEC {
             get {
@@ -5011,7 +5020,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La habilidad ya existe!.
+        ///   Cerca una stringa localizzata simile a The skill already exists!.
         /// </summary>
         internal static string SKILL_ALREADY_EXIST {
             get {
@@ -5020,7 +5029,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes aprender esta habilidad..
+        ///   Cerca una stringa localizzata simile a You can&apos;t learn that skill..
         /// </summary>
         internal static string SKILL_CANT_LEARN {
             get {
@@ -5029,7 +5038,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La habilidad no existe..
+        ///   Cerca una stringa localizzata simile a The skill doesn&apos;t exist..
         /// </summary>
         internal static string SKILL_DOES_NOT_EXIST {
             get {
@@ -5038,7 +5047,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Aprendiste una nueva habilidad!.
+        ///   Cerca una stringa localizzata simile a You learnt a new skill!.
         /// </summary>
         internal static string SKILL_LEARNED {
             get {
@@ -5047,7 +5056,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Habilidad en enfriamiento.
+        ///   Cerca una stringa localizzata simile a Skill cooldown.
         /// </summary>
         internal static string SKILL_NEED_COOLDOWN {
             get {
@@ -5056,7 +5065,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tienes que esperar hasta que finalice el enfriamiento de habilidades!.
+        ///   Cerca una stringa localizzata simile a You have to wait until the skill cooldown is over!.
         /// </summary>
         internal static string SKILLS_IN_LOADING {
             get {
@@ -5065,7 +5074,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Habilidades cargadas!.
+        ///   Cerca una stringa localizzata simile a {0} Skills loaded!.
         /// </summary>
         internal static string SKILLS_LOADED {
             get {
@@ -5074,7 +5083,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No puedes cambiar de SP ahora!.
+        ///   Cerca una stringa localizzata simile a You can&apos;t change your SP now!.
         /// </summary>
         internal static string SP_BLOCKED {
             get {
@@ -5083,7 +5092,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Espera {0} segundos!.
+        ///   Cerca una stringa localizzata simile a Wait {0} seconds!.
         /// </summary>
         internal static string SP_INLOADING {
             get {
@@ -5092,7 +5101,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Nivel del especialista aumentado..
+        ///   Cerca una stringa localizzata simile a The SP level has increased.
         /// </summary>
         internal static string SP_LEVELUP {
             get {
@@ -5101,7 +5110,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡No te quedan puntos de SP! ¡No puedes transformar ahora!.
+        ///   Cerca una stringa localizzata simile a You don&apos;t have SP points! You can&apos;t transform now..
         /// </summary>
         internal static string SP_NOPOINTS {
             get {
@@ -5110,7 +5119,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La transformación fue cancelada! ¡No te quedan de SP Points!.
+        ///   Cerca una stringa localizzata simile a The transformation was canceled due to the lack of SP points!.
         /// </summary>
         internal static string SP_NOPOINTSCANCELED {
             get {
@@ -5119,7 +5128,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Estas por encima de tus posibilidades!.
+        ///   Cerca una stringa localizzata simile a You over your possibilities!.
         /// </summary>
         internal static string SP_POINTS_FULL {
             get {
@@ -5128,7 +5137,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Recibiste {0} puntos de SP!.
+        ///   Cerca una stringa localizzata simile a You recieved {0} SP points!.
         /// </summary>
         internal static string SP_POINTSADDED {
             get {
@@ -5137,7 +5146,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Recibió {0} puntos de SP básicos y {1} adicionales!.
+        ///   Cerca una stringa localizzata simile a Recieved {0} basic SP points and {1} additionals!.
         /// </summary>
         internal static string SP_POINTSADDEDBOTH {
             get {
@@ -5146,7 +5155,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Punto de especialista establecido!.
+        ///   Cerca una stringa localizzata simile a SP points refilled!.
         /// </summary>
         internal static string SP_REFILL {
             get {
@@ -5155,7 +5164,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El alma de tu especialista ha resucitado!.
+        ///   Cerca una stringa localizzata simile a The soul of your SP has resurrected!.
         /// </summary>
         internal static string SP_RESURRECTED {
             get {
@@ -5164,7 +5173,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Altavoz.
+        ///   Cerca una stringa localizzata simile a Speaker.
         /// </summary>
         internal static string SPEAKER {
             get {
@@ -5173,7 +5182,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No puedes usar el altavoz bajo penalización..
+        ///   Cerca una stringa localizzata simile a You can&apos;t use a speaker under penalty..
         /// </summary>
         internal static string SPEAKER_CANT_BE_USED {
             get {
@@ -5182,7 +5191,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El nivel de especialista ha sido cambiado!.
+        ///   Cerca una stringa localizzata simile a The SP level has changed!.
         /// </summary>
         internal static string SPLEVEL_CHANGED {
             get {
@@ -5191,7 +5200,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tienes que convertirte en especialista para cambiar los puntos!.
+        ///   Cerca una stringa localizzata simile a You need to be using the SP to change the points!.
         /// </summary>
         internal static string SPUSE_NEEDED {
             get {
@@ -5200,7 +5209,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a WorldServer comenzó con éxito..
+        ///   Cerca una stringa localizzata simile a WorldServer started succesfully..
         /// </summary>
         internal static string STARTED {
             get {
@@ -5209,7 +5218,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La venta fue interrumpida porque el artículo ya no está disponible!.
+        ///   Cerca una stringa localizzata simile a The sale was cancelled because the Item is no longer available!.
         /// </summary>
         internal static string STATE_CHANGED {
             get {
@@ -5218,7 +5227,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Espera, {0} segundos..
+        ///   Cerca una stringa localizzata simile a Wait, {0} seconds..
         /// </summary>
         internal static string STAY_TIME {
             get {
@@ -5227,7 +5236,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Suma fallida..
+        ///   Cerca una stringa localizzata simile a Sum failed..
         /// </summary>
         internal static string SUM_FAILED {
             get {
@@ -5236,7 +5245,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Suma exitosa!.
+        ///   Cerca una stringa localizzata simile a Sum succeed!.
         /// </summary>
         internal static string SUM_SUCCESS {
             get {
@@ -5245,7 +5254,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Seguro que quieres eliminar este Item?.
+        ///   Cerca una stringa localizzata simile a Do you really want to delete this Item?.
         /// </summary>
         internal static string SURE_TO_DELETE {
             get {
@@ -5254,7 +5263,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Espadachín.
+        ///   Cerca una stringa localizzata simile a Swordman.
         /// </summary>
         internal static string SWORDMAN {
             get {
@@ -5272,7 +5281,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Las arenas de talentos han abierto!.
+        ///   Cerca una stringa localizzata simile a The Arena of Talents has begun!.
         /// </summary>
         internal static string TALENTARENA_OPEN {
             get {
@@ -5281,7 +5290,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El líder del equipo cambió. {0} es el nuevo líder..
+        ///   Cerca una stringa localizzata simile a The team leader changed. {0} is the new leader..
         /// </summary>
         internal static string TEAM_LEADER_CHANGE {
             get {
@@ -5290,7 +5299,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Es el Ganador!  {0}  {1}.
+        ///   Cerca una stringa localizzata simile a {0} is the winner, team: {1}.
         /// </summary>
         internal static string TEAM_WINNER_ARENA_ROUND {
             get {
@@ -5299,7 +5308,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} Teletransportadores cargados!.
+        ///   Cerca una stringa localizzata simile a {0} Teleporters loaded!.
         /// </summary>
         internal static string TELEPORTERS_LOADED {
             get {
@@ -5308,7 +5317,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El mensaje es demasiado grande ({0} bytes). La longitud máxima permitida es {1} bytes..
+        ///   Cerca una stringa localizzata simile a The message is too long ({0} bytes). The maximum lenght allowed is {1} bytes..
         /// </summary>
         internal static string TOO_BIG {
             get {
@@ -5317,7 +5326,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Su nivel es demasiado alto!.
+        ///   Cerca una stringa localizzata simile a You level is too high!.
         /// </summary>
         internal static string TOO_HIGH_LVL {
             get {
@@ -5326,7 +5335,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Aún no has alcanzado el nivel necesario!.
+        ///   Cerca una stringa localizzata simile a You haven&apos;t reached the level yet!.
         /// </summary>
         internal static string TOO_LOW_LVL {
             get {
@@ -5335,7 +5344,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Número total de sesiones.
+        ///   Cerca una stringa localizzata simile a Total session number.
         /// </summary>
         internal static string TOTAL_SESSION {
             get {
@@ -5344,7 +5353,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El usuario ha bloqueado intercambios!.
+        ///   Cerca una stringa localizzata simile a The user has blocked exchanges!.
         /// </summary>
         internal static string TRADE_BLOCKED {
             get {
@@ -5353,7 +5362,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tiempo de espera terminado..
+        ///   Cerca una stringa localizzata simile a Cooldown finished..
         /// </summary>
         internal static string TRANSFORM_DISAPPEAR {
             get {
@@ -5362,7 +5371,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Debes transformarte para restablecer tus puntos SP..
+        ///   Cerca una stringa localizzata simile a You need to transform to change your SP points..
         /// </summary>
         internal static string TRANSFORMATION_NEEDED {
             get {
@@ -5371,7 +5380,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No has encontrado nada..
+        ///   Cerca una stringa localizzata simile a You found nothing..
         /// </summary>
         internal static string TRY_FAILED {
             get {
@@ -5380,7 +5389,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Intenta después de: {0}s.
+        ///   Cerca una stringa localizzata simile a Try after: {0}s.
         /// </summary>
         internal static string TRY_FAILED_WAIT {
             get {
@@ -5389,7 +5398,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Aún deberás esperar {0}  días..
+        ///   Cerca una stringa localizzata simile a You have to wait {0}  days..
         /// </summary>
         internal static string TS_PENALTY {
             get {
@@ -5398,7 +5407,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tutorial de TimeSpace.
+        ///   Cerca una stringa localizzata simile a TimeSpace tutorial.
         /// </summary>
         internal static string TS_TUTORIAL {
             get {
@@ -5407,7 +5416,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Estás bajo el efecto de: {0}.
+        ///   Cerca una stringa localizzata simile a Under the effect of: {0}.
         /// </summary>
         internal static string UNDER_EFFECT {
             get {
@@ -5416,7 +5425,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Error al insertar o actualizar la cuenta {0}, {1}.
+        ///   Cerca una stringa localizzata simile a Error to instert or update the account  {0}, {1}.
         /// </summary>
         internal static string UPDATE_ACCOUNT_ERROR {
             get {
@@ -5425,7 +5434,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Error al insertar o actualizar la tienda {0} , {1}.
+        ///   Cerca una stringa localizzata simile a Error to instert or update the shop {0} , {1}.
         /// </summary>
         internal static string UPDATE_SHOP_ERROR {
             get {
@@ -5434,7 +5443,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Mejora fallida!.
+        ///   Cerca una stringa localizzata simile a Upgrade failed!.
         /// </summary>
         internal static string UPGRADE_FAILED {
             get {
@@ -5443,7 +5452,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La mejora falló pero el item no fue destruido..
+        ///   Cerca una stringa localizzata simile a The upgrade failed but the Item was saved..
         /// </summary>
         internal static string UPGRADE_FAILED_ITEM_SAVED {
             get {
@@ -5452,7 +5461,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La mejora del Item ha sido bloqueada!.
+        ///   Cerca una stringa localizzata simile a The Item has become fixed!.
         /// </summary>
         internal static string UPGRADE_FIXED {
             get {
@@ -5461,7 +5470,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Mejora exitosa!.
+        ///   Cerca una stringa localizzata simile a Succesful upgrade!.
         /// </summary>
         internal static string UPGRADE_SUCCESS {
             get {
@@ -5470,7 +5479,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a SP destruida..
+        ///   Cerca una stringa localizzata simile a SP destroyed..
         /// </summary>
         internal static string UPGRADESP_DESTROYED {
             get {
@@ -5479,8 +5488,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La optimización de la especialista falló!
-        ///.
+        ///   Cerca una stringa localizzata simile a The SP upgrade failed!.
         /// </summary>
         internal static string UPGRADESP_FAILED {
             get {
@@ -5489,7 +5497,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a La optimizado de SP falló pero fue protegida..
+        ///   Cerca una stringa localizzata simile a The SP upgrade failed but it was saved..
         /// </summary>
         internal static string UPGRADESP_FAILED_SAVED {
             get {
@@ -5498,7 +5506,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡La optimización del especialista tuvo éxito!.
+        ///   Cerca una stringa localizzata simile a The SP upgrade succeed!.
         /// </summary>
         internal static string UPGRADESP_SUCCESS {
             get {
@@ -5507,7 +5515,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El usuario no está bloqueado..
+        ///   Cerca una stringa localizzata simile a The user is not blocked..
         /// </summary>
         internal static string USER_NOT_BANNED {
             get {
@@ -5516,7 +5524,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El usuario no esta conectado..
+        ///   Cerca una stringa localizzata simile a The user is not connected..
         /// </summary>
         internal static string USER_NOT_CONNECTED {
             get {
@@ -5525,7 +5533,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Usuario no econtrado..
+        ///   Cerca una stringa localizzata simile a User not found..
         /// </summary>
         internal static string USER_NOT_FOUND {
             get {
@@ -5534,7 +5542,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a No se ha encontrado al jugador en ninguna arena..
+        ///   Cerca una stringa localizzata simile a You didn&apos;t find the player in any arena..
         /// </summary>
         internal static string USER_NOT_FOUND_IN_ARENA {
             get {
@@ -5543,7 +5551,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a 	Solo los héroes pueden usar mensajes de héroe..
+        ///   Cerca una stringa localizzata simile a Only heroes can use heroes messages..
         /// </summary>
         internal static string USER_NOT_HERO {
             get {
@@ -5552,7 +5560,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El usuario no está silenciado..
+        ///   Cerca una stringa localizzata simile a The user is not muted..
         /// </summary>
         internal static string USER_NOT_MUTED {
             get {
@@ -5561,7 +5569,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a El jugador no está actualmente en un mapa público.
+        ///   Cerca una stringa localizzata simile a The player is not in a public map..
         /// </summary>
         internal static string USER_ON_INSTANCEMAP {
             get {
@@ -5570,7 +5578,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El usuario ha bloqueado susurros!.
+        ///   Cerca una stringa localizzata simile a The user has blocked whispers!.
         /// </summary>
         internal static string USER_WHISPER_BLOCKED {
             get {
@@ -5579,7 +5587,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El equipo de Zenas ha ganado el combate!.
+        ///   Cerca una stringa localizzata simile a Zenas&apos; team has won the combat!.
         /// </summary>
         internal static string VICTORIOUS_ZENAS {
             get {
@@ -5588,7 +5596,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡El equipo de Erenia ha ganado el combate!.
+        ///   Cerca una stringa localizzata simile a Erenia&apos;s team has won the combat!.
         /// </summary>
         internal static string VICTORUOS_ERENIA {
             get {
@@ -5597,7 +5605,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres ir a la base?.
+        ///   Cerca una stringa localizzata simile a Do you want to go to the base?.
         /// </summary>
         internal static string WANT_TO_GO_BASE {
             get {
@@ -5606,7 +5614,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Quieres guardar tu posición?.
+        ///   Cerca una stringa localizzata simile a Do you want to save your position?.
         /// </summary>
         internal static string WANT_TO_SAVE_POSITION {
             get {
@@ -5615,7 +5623,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has sido advertido por: {0}.
+        ///   Cerca una stringa localizzata simile a You&apos;ve been warned by: {0}.
         /// </summary>
         internal static string WARNING {
             get {
@@ -5624,7 +5632,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Has sido advertido: {0} veces..
+        ///   Cerca una stringa localizzata simile a You&apos;ve been warned: {0} times..
         /// </summary>
         internal static string WARNING_INFO {
             get {
@@ -5651,7 +5659,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Susurro bloqueado..
+        ///   Cerca una stringa localizzata simile a Whisper blocked..
         /// </summary>
         internal static string WHISPER_BLOCKED {
             get {
@@ -5660,7 +5668,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Susurro permitido..
+        ///   Cerca una stringa localizzata simile a Whisper unblocked..
         /// </summary>
         internal static string WHISPER_UNLOCKED {
             get {
@@ -5669,7 +5677,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a !{0} muerto! Será revivido en 3 min..
+        ///   Cerca una stringa localizzata simile a {0} dead! Will be back in 3 minutes..
         /// </summary>
         internal static string WILL_BE_BACK {
             get {
@@ -5678,7 +5686,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Has ganado {0} experiencia familiar!.
+        ///   Cerca una stringa localizzata simile a You&apos;ve won {0} family experience!.
         /// </summary>
         internal static string WIN_FXP {
             get {
@@ -5687,7 +5695,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Dinero: +{0}.
+        ///   Cerca una stringa localizzata simile a Money: +{0}.
         /// </summary>
         internal static string WIN_MONEY {
             get {
@@ -5696,7 +5704,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Reputación: +{0}.
+        ///   Cerca una stringa localizzata simile a Reputation: +{0}.
         /// </summary>
         internal static string WIN_REPUT {
             get {
@@ -5705,7 +5713,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Puntos SP: +{0}.
+        ///   Cerca una stringa localizzata simile a SP points: +{0}.
         /// </summary>
         internal static string WIN_SP_POINT {
             get {
@@ -5714,7 +5722,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} ha derrotado {1}..
+        ///   Cerca una stringa localizzata simile a {0} has defeated {1}..
         /// </summary>
         internal static string WINNER_ARENA_ROUND {
             get {
@@ -5723,7 +5731,16 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Portal equivocado..
+        ///   Cerca una stringa localizzata simile a GloomyTale - ACT4 WORLD SERVER - ID : {0} | Players : {1} | IP : {2}:{3}.
+        /// </summary>
+        internal static string WORLD_SERVER_CONSOLE_TITLE {
+            get {
+                return ResourceManager.GetString("WORLD_SERVER_CONSOLE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Wrong portal.
         /// </summary>
         internal static string WRONG_PORTAL {
             get {
@@ -5732,7 +5749,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Valor incorrecto!.
+        ///   Cerca una stringa localizzata simile a Wrong value!.
         /// </summary>
         internal static string WRONG_VALUE {
             get {
@@ -5741,7 +5758,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Como no hiciste el primer golpe, solo obtienes una parte de la experiencia..
+        ///   Cerca una stringa localizzata simile a Since you didn&apos;t make the first hit, you won&apos;t recieve all the experience..
         /// </summary>
         internal static string XP_NOTFIRSTHIT {
             get {
@@ -5750,7 +5767,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ¡Tasa de experiencia cambiada!.
+        ///   Cerca una stringa localizzata simile a XP rate changed!.
         /// </summary>
         internal static string XP_RATE_CHANGED {
             get {
@@ -5759,7 +5776,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tasa de experiencia..
+        ///   Cerca una stringa localizzata simile a XP rate.
         /// </summary>
         internal static string XP_RATE_NOW {
             get {
@@ -5768,7 +5785,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Solicitud de comercio enviada a: {0}..
+        ///   Cerca una stringa localizzata simile a Ask for exchange: {0}..
         /// </summary>
         internal static string YOU_ASK_FOR_EXCHANGE {
             get {
@@ -5777,7 +5794,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Recibes una mascota llamada: {0}..
+        ///   Cerca una stringa localizzata simile a You recieved a pet called: {0}..
         /// </summary>
         internal static string YOU_GET_PET {
             get {
@@ -5786,7 +5803,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Todavía dispones de una vida.
+        ///   Cerca una stringa localizzata simile a You still have a life..
         /// </summary>
         internal static string YOU_HAVE_LIFE {
             get {
@@ -5795,7 +5812,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Comercio rechazado..
+        ///   Cerca una stringa localizzata simile a Refused trade..
         /// </summary>
         internal static string YOU_REFUSED {
             get {
@@ -5804,7 +5821,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Estás en el equipo Zenas..
+        ///   Cerca una stringa localizzata simile a You&apos;re in Zenas&apos; team..
         /// </summary>
         internal static string ZENAS {
             get {

@@ -35,6 +35,7 @@ using System.Threading;
 using OpenNos.GameObject.Networking;
 using System.IO;
 using OpenNos.SCS.Communication.Scs.Communication;
+using OpenNos.World.Resource;
 
 namespace OpenNos.World
 {
@@ -75,14 +76,15 @@ namespace OpenNos.World
 
         #region Methods
 
+        private static void Welcome()
+        {
+            Console.Title = string.Format(LocalizedResources.WORLD_SERVER_CONSOLE_TITLE, 0, 0, 0, 0);
+        }
+        
         public static void Main(string[] args)
         {
-#if DEBUG
-            _isDebug = true;
-            Thread.Sleep(1000);
-#endif
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("en-US");
-            Console.Title = $"OpenNos World Server{(_isDebug ? " Development Environment" : "")}";
+            Welcome();
 
             bool ignoreStartupMessages = false;
             _port = Convert.ToInt32(ConfigurationManager.AppSettings["WorldPort"]);
@@ -180,6 +182,10 @@ namespace OpenNos.World
             if (newChannelId.HasValue)
             {
                 ServerManager.Instance.ChannelId = newChannelId.Value;
+                ServerManager.Instance.IpAddress = publicIp;
+                ServerManager.Instance.Port = (short)_port;
+                Console.Title = string.Format(Language.Instance.GetMessageFromKey("WORLD_SERVER_CONSOLE_TITLE"), ServerManager.Instance.ChannelId, ServerManager.Instance.Sessions.Count(),
+                    ServerManager.Instance.IpAddress, ServerManager.Instance.Port);
                 MailServiceClient.Instance.Authenticate(authKey, ServerManager.Instance.WorldId);
                 ConfigurationServiceClient.Instance.Authenticate(authKey, ServerManager.Instance.WorldId);
                 ServerManager.Instance.Configuration = ConfigurationServiceClient.Instance.GetConfigurationObject();

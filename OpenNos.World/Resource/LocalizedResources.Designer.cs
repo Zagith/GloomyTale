@@ -5749,6 +5749,15 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a GloomyTale - WORLD SERVER - ID : {0} | Players : {1} | IP : {2}:{3}.
+        /// </summary>
+        internal static string WORLD_SERVER_CONSOLE_TITLE {
+            get {
+                return ResourceManager.GetString("WORLD_SERVER_CONSOLE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Wrong portal.
         /// </summary>
         internal static string WRONG_PORTAL {

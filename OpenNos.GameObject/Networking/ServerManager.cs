@@ -141,6 +141,10 @@ namespace OpenNos.GameObject.Networking
 
         public int ChannelId { get; set; }
 
+        public string IpAddress { get; set; }
+
+        public short Port { get; set; }
+
         public List<CharacterRelationDTO> CharacterRelations { get; set; }
 
         public ConfigurationObject Configuration { get; set; }

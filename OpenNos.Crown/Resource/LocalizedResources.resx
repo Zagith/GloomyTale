@@ -2037,4 +2037,7 @@
   <data name="SACRIFICE_OUT_OF_RANGE" xml:space="preserve">
     <value>The sacrifice effect has been lifted, because the selected player is outside of the area</value>
   </data>
+  <data name="WORLD_SERVER_CONSOLE_TITLE" xml:space="preserve">
+    <value>GloomyTale - ACT4 WORLD SERVER - ID : {0} | Players : {1} | IP : {2}:{3}</value>
+  </data>
 </root>
