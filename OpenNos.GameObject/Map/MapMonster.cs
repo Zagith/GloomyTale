@@ -406,19 +406,21 @@ namespace OpenNos.GameObject
                 DisminMpPerSecThread.Start();
             }
 
-            if (MonsterVNum == 621)
+            if (ServerManager.Instance.ChannelId == 51)
             {
-                OnDeathEvents.Add(new EventContainer(MapInstance, EventActionType.SPAWNNPC, new NpcToSummon(1408, new MapCell { X = MapX, Y = MapY }, -1, move: true)));
+                if (MonsterVNum == 621)
+                {
+                    OnDeathEvents.Add(new EventContainer(MapInstance, EventActionType.SPAWNNPC, new NpcToSummon(1408, new MapCell { X = MapX, Y = MapY }, -1, move: true)));
+                }
+                if (MonsterVNum == 622)
+                {
+                    OnDeathEvents.Add(new EventContainer(MapInstance, EventActionType.SPAWNNPC, new NpcToSummon(1409, new MapCell { X = MapX, Y = MapY }, -1, move: true)));
+                }
+                if (MonsterVNum == 623)
+                {
+                    OnDeathEvents.Add(new EventContainer(MapInstance, EventActionType.SPAWNNPC, new NpcToSummon(1410, new MapCell { X = MapX, Y = MapY }, -1, move: true)));
+                }
             }
-            if (MonsterVNum == 622)
-            {
-                OnDeathEvents.Add(new EventContainer(MapInstance, EventActionType.SPAWNNPC, new NpcToSummon(1409, new MapCell { X = MapX, Y = MapY }, -1, move: true)));
-            }
-            if (MonsterVNum == 623)
-            {
-                OnDeathEvents.Add(new EventContainer(MapInstance, EventActionType.SPAWNNPC, new NpcToSummon(1410, new MapCell { X = MapX, Y = MapY }, -1, move: true)));
-            }
-            
             if (OnSpawnEvents.Any())
             {
                 OnSpawnEvents.ToList().ForEach(e => { EventHelper.Instance.RunEvent(e, monster: this); });
