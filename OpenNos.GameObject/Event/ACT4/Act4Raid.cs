@@ -226,8 +226,8 @@ namespace OpenNos.GameObject.Event
                     _mapId = 2619;
                     _bossMapId = 199;
                     _bossVNum = 2504;
-                    _bossX = 21;
-                    _bossY = 1;
+                    _bossX = 19;
+                    _bossY = 19;
                     _sourcePortalX = 102;
                     _sourcePortalY = 15;
                     _destPortalX = 42;

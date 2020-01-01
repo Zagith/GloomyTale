@@ -655,8 +655,8 @@ namespace OpenNos.GameObject.Helpers
                                                     break;
 
                                                 case MapInstanceType.Act4Berios:
-                                                    destX = 16;
-                                                    destY = 25;
+                                                    destX = 125;
+                                                    destY = 2;
                                                     rewardVNum = 999;
                                                     break;
                                             }
