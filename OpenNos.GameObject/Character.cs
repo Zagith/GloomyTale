@@ -2811,19 +2811,19 @@ namespace OpenNos.GameObject
 
             switch (Family?.Act4Raid?.MapInstanceType)
             {
-                case MapInstanceType.Act4Morcos:
+                case MapInstanceType.Act4Viserion:
                     raidType = 1;
                     break;
 
-                case MapInstanceType.Act4Hatus:
+                case MapInstanceType.Act4Orias:
                     raidType = 2;
                     break;
 
-                case MapInstanceType.Act4Calvina:
+                case MapInstanceType.Act4Zanarkand:
                     raidType = 3;
                     break;
 
-                case MapInstanceType.Act4Berios:
+                case MapInstanceType.Act4Demetra:
                     raidType = 4;
                     break;
             }

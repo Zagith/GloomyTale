@@ -196,7 +196,7 @@ namespace OpenNos.GameObject.Event
             switch (raidType)
             {
                 // Morcos is default
-                case MapInstanceType.Act4Hatus:
+                case MapInstanceType.Act4Orias:
                     _mapId = 2616;
                     _bossMapId = 2509;
                     _bossVNum = 2327;
@@ -209,7 +209,7 @@ namespace OpenNos.GameObject.Event
                     _bossMove = false;
                     break;
 
-                case MapInstanceType.Act4Calvina:
+                case MapInstanceType.Act4Zanarkand:
                     _mapId = 2618;
                     _bossMapId = 136;
                     _bossVNum = 2049;
@@ -222,7 +222,7 @@ namespace OpenNos.GameObject.Event
                     _bossMove = true;
                     break;
 
-                case MapInstanceType.Act4Berios:
+                case MapInstanceType.Act4Demetra:
                     _mapId = 2619;
                     _bossMapId = 199;
                     _bossVNum = 2504;
@@ -319,7 +319,7 @@ namespace OpenNos.GameObject.Event
                 new EventContainer(fam.Act4RaidBossMap, EventActionType.THROWITEMS, new Tuple<int, short, byte, int, int, short>(_bossVNum, 1046, 10, 20000, 20001, 0)),
                 new EventContainer(fam.Act4RaidBossMap, EventActionType.THROWITEMS, new Tuple<int, short, byte, int, int, short>(_bossVNum, 1244, 10, 5, 6, 0))
             };
-            if (_raidType.Equals(MapInstanceType.Act4Berios))
+            if (_raidType.Equals(MapInstanceType.Act4Demetra))
             {
                 onDeathEvents.Add(new EventContainer(fam.Act4RaidBossMap, EventActionType.THROWITEMS, new Tuple<int, short, byte, int, int, short>(_bossVNum, 2395, 3, 1, 2, 0)));
                 onDeathEvents.Add(new EventContainer(fam.Act4RaidBossMap, EventActionType.THROWITEMS, new Tuple<int, short, byte, int, int, short>(_bossVNum, 2396, 5, 1, 2, 0)));

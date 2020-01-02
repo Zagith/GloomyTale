@@ -498,10 +498,10 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
 
-                    case MapInstanceType.Act4Berios:
-                    case MapInstanceType.Act4Calvina:
-                    case MapInstanceType.Act4Hatus:
-                    case MapInstanceType.Act4Morcos:
+                    case MapInstanceType.Act4Demetra:
+                    case MapInstanceType.Act4Zanarkand:
+                    case MapInstanceType.Act4Orias:
+                    case MapInstanceType.Act4Viserion:
                         session.SendPacket(UserInterfaceHelper.GenerateDialog($"#revival^0 #revival^1 {string.Format(Language.Instance.GetMessageFromKey("ASK_REVIVE_ACT4RAID"), session.Character.Level * 10)}"));
                         ReviveTask(session);
                         break;
@@ -1814,24 +1814,24 @@ namespace OpenNos.GameObject.Networking
 
                             switch (session.Character.Family.Act4Raid.MapInstanceType)
                             {
-                                case MapInstanceType.Act4Morcos:
+                                case MapInstanceType.Act4Viserion:
                                     ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
-                                        session.Character.Family.Act4Raid.MapInstanceId, 43, 179);
+                                        session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                     break;
 
-                                case MapInstanceType.Act4Hatus:
+                                case MapInstanceType.Act4Orias:
                                     ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
-                                        session.Character.Family.Act4Raid.MapInstanceId, 15, 9);
+                                        session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                     break;
 
-                                case MapInstanceType.Act4Calvina:
+                                case MapInstanceType.Act4Zanarkand:
                                     ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
-                                        session.Character.Family.Act4Raid.MapInstanceId, 24, 6);
+                                        session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                     break;
 
-                                case MapInstanceType.Act4Berios:
+                                case MapInstanceType.Act4Demetra:
                                     ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
-                                        session.Character.Family.Act4Raid.MapInstanceId, 20, 20);
+                                        session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                     break;
                             }
                         }
@@ -2239,20 +2239,20 @@ namespace OpenNos.GameObject.Networking
 
             int CreateRaid(byte faction)
             {
-                MapInstanceType raidType = MapInstanceType.Act4Morcos;
+                MapInstanceType raidType = MapInstanceType.Act4Viserion;
                 int rng = RandomNumber(1, 5);
                 switch (rng)
                 {
                     case 2:
-                        raidType = MapInstanceType.Act4Hatus;
+                        raidType = MapInstanceType.Act4Orias;
                         break;
 
                     case 3:
-                        raidType = MapInstanceType.Act4Calvina;
+                        raidType = MapInstanceType.Act4Zanarkand;
                         break;
 
                     case 4:
-                        raidType = MapInstanceType.Act4Berios;
+                        raidType = MapInstanceType.Act4Demetra;
                         break;
                 }
                 Event.Act4Raid.GenerateRaid(raidType, faction);

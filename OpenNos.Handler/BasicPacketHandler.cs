@@ -2431,22 +2431,22 @@ namespace OpenNos.Handler
 
                                             switch (Session.Character.Family.Act4Raid.MapInstanceType)
                                             {
-                                                case MapInstanceType.Act4Morcos:
+                                                case MapInstanceType.Act4Viserion:
                                                     ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
                                                         Session.Character.Family.Act4Raid.MapInstanceId, 43, 179);
                                                     break;
 
-                                                case MapInstanceType.Act4Hatus:
+                                                case MapInstanceType.Act4Orias:
                                                     ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
                                                         Session.Character.Family.Act4Raid.MapInstanceId, 15, 9);
                                                     break;
 
-                                                case MapInstanceType.Act4Calvina:
+                                                case MapInstanceType.Act4Zanarkand:
                                                     ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
                                                         Session.Character.Family.Act4Raid.MapInstanceId, 24, 6);
                                                     break;
 
-                                                case MapInstanceType.Act4Berios:
+                                                case MapInstanceType.Act4Demetra:
                                                     ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
                                                         Session.Character.Family.Act4Raid.MapInstanceId, 20, 20);
                                                     break;
@@ -3238,10 +3238,10 @@ namespace OpenNos.Handler
 
                             break;
 
-                        case MapInstanceType.Act4Berios:
-                        case MapInstanceType.Act4Calvina:
-                        case MapInstanceType.Act4Hatus:
-                        case MapInstanceType.Act4Morcos:
+                        case MapInstanceType.Act4Demetra:
+                        case MapInstanceType.Act4Zanarkand:
+                        case MapInstanceType.Act4Orias:
+                        case MapInstanceType.Act4Viserion:
                             if (Session.Character.Reputation < Session.Character.Level * 10)
                             {
                                 Session.SendPacket(
