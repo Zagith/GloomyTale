@@ -88,6 +88,17 @@ namespace OpenNos.GameObject.Helpers
             DAOFactory.LogPutItemDAO.Insert(log);
         }
 
+        public void InsertTimeSpacesLog(long characterId, long timespaceId, DateTime time)
+        {
+            var log = new TimeSpacesLogDTO
+            {
+                CharacterId = characterId,
+                TimeSpaceId = timespaceId,
+                Timestamp = time
+            };
+            DAOFactory.TimeSpaceLogDAO.Insert(log);
+        }
+
         #region Singleton
 
         private static LogHelper _instance;

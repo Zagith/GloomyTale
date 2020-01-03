@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading;
 using OpenNos.Data;
+using OpenNos.DAL;
 
 namespace OpenNos.Handler
 {
@@ -284,11 +285,17 @@ namespace OpenNos.Handler
                         // TODO: Add HasAlreadyDone
                         for (int i = 0; i < 2; i++)
                         {
-                            Gift gift = Session.Character.Timespace.SpecialItems.ElementAtOrDefault(i);
+                            Gift gift = null;
+                            if (!DAOFactory.TimeSpaceLogDAO.LoadByCharacterId(Session.Character.CharacterId).Any(s => s.TimeSpaceId == Session.Character.Timespace.ScriptedInstanceId))
+                            {
+                                gift = Session.Character.Timespace.SpecialItems.ElementAtOrDefault(i);
+                            }
                             repay += gift == null ? "-1.0.0 " : $"{gift.VNum}.0.{gift.Amount} ";
                             if (gift != null)
                             {
                                 Session.Character.GiftAdd(gift.VNum, gift.Amount, design: gift.Design, forceRandom: gift.IsRandomRare);
+                                LogHelper.Instance.InsertTimeSpacesLog(Session.Character.CharacterId, Session.Character.Timespace.ScriptedInstanceId,
+                                    DateTime.Now);
                             }
                         }
 

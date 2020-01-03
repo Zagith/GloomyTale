@@ -174,6 +174,8 @@ namespace OpenNos.DAL.EF
         public virtual DbSet<I18NShopName> I18NShopName { get; set; }
 
         public virtual DbSet<FortuneWheel> FortuneWheel { get; set; }
+
+        public virtual DbSet<TimeSpacesLog> TimeSpacesLog { get; set; }
         #endregion
 
         #region Methods

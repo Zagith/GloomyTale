@@ -91,6 +91,7 @@
     <Compile Include="Mappers\StaticBonusMapper.cs" />
     <Compile Include="Mappers\StaticBuffMapper.cs" />
     <Compile Include="Mappers\TeleporterMapper.cs" />
+    <Compile Include="Mappers\TimeSpacesLogMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Mappers\AccountMapper.cs" />
     <Compile Include="Mappers\CharacterMapper.cs" />

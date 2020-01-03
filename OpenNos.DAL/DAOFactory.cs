@@ -86,6 +86,7 @@ namespace OpenNos.DAL
         private static II18NMapDAO _i18NMapDAO;
         private static IFortuneWheelDAO _fortuneWheelDAO;
         private static II18NShopNameDAO _i18nShopDAO;
+        private static ITimeSpaceLogDAO _timespacelogDAO;
         #endregion
 
         #region Properties
@@ -219,7 +220,9 @@ namespace OpenNos.DAL
         public static II18NShopNameDAO I18NShopNameDAO => _i18nShopDAO ?? (_i18nShopDAO = new I18NShopNameDAO());
 
         public static IFortuneWheelDAO FortuneWheelDAO => _fortuneWheelDAO ?? (_fortuneWheelDAO = new FortuneWheelDAO());
-        
+
+        public static ITimeSpaceLogDAO TimeSpaceLogDAO => _timespacelogDAO ?? (_timespacelogDAO = new TimeSpaceLogDAO());
+
         #endregion
     }
 }

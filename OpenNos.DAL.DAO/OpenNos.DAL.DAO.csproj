@@ -117,6 +117,7 @@
     <Compile Include="StaticBuffDAO.cs" />
     <Compile Include="TeleporterDAO.cs" />
     <Compile Include="MinigameLogDAO.cs" />
+    <Compile Include="TimeSpaceLogDAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenNos.Core\OpenNos.Core.csproj">
