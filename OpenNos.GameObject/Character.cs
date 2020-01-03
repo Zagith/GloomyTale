@@ -693,124 +693,124 @@ namespace OpenNos.GameObject
             switch (Reputation)
             {
                 case (long)SideReputType.Side1:
-                    AddBuff(new Buff(12, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(248);
-                    RemoveBuff(453);
-                    RemoveBuff(114);
-                    RemoveBuff(385);
-                    RemoveBuff(94);
-                    RemoveBuff(5);
-                    RemoveBuff(452);
-                    RemoveBuff(166);
-                    RemoveBuff(108);
+                    AddBuff(new Buff(4003, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4005);
+                    RemoveBuff(4006);
+                    RemoveBuff(4007);
+                    RemoveBuff(4008);
+                    RemoveBuff(4009);
+                    RemoveBuff(4010);
+                    RemoveBuff(4012);
+                    RemoveBuff(4013);
+                    RemoveBuff(4004);
                     break;
                 case (long)SideReputType.Side2:
-                    RemoveBuff(12);
-                    AddBuff(new Buff(248, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(453);
-                    RemoveBuff(114);
-                    RemoveBuff(385);
-                    RemoveBuff(94);
-                    RemoveBuff(5);
-                    RemoveBuff(452);
-                    RemoveBuff(166);
-                    RemoveBuff(108);
+                    RemoveBuff(4003);
+                    AddBuff(new Buff(4005, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4006);
+                    RemoveBuff(4007);
+                    RemoveBuff(4008);
+                    RemoveBuff(4009);
+                    RemoveBuff(4010);
+                    RemoveBuff(4012);
+                    RemoveBuff(4013);
+                    RemoveBuff(4004);
                     break;
                 case (long)SideReputType.Side3:
-                    RemoveBuff(12);
-                    AddBuff(new Buff(453, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(248);
-                    RemoveBuff(114);
-                    RemoveBuff(385);
-                    RemoveBuff(94);
-                    RemoveBuff(5);
-                    RemoveBuff(452);
-                    RemoveBuff(166);
-                    RemoveBuff(108);
+                    RemoveBuff(4003);
+                    AddBuff(new Buff(4006, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4005);
+                    RemoveBuff(4007);
+                    RemoveBuff(4008);
+                    RemoveBuff(4009);
+                    RemoveBuff(4010);
+                    RemoveBuff(4012);
+                    RemoveBuff(4013);
+                    RemoveBuff(4004);
                     break;
                 case (long)SideReputType.Side4:
-                    RemoveBuff(12);
-                    AddBuff(new Buff(114, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(453);
-                    RemoveBuff(248);
-                    RemoveBuff(385);
-                    RemoveBuff(94);
-                    RemoveBuff(5);
-                    RemoveBuff(452);
-                    RemoveBuff(166);
-                    RemoveBuff(108);
+                    RemoveBuff(4003);
+                    AddBuff(new Buff(4007, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4006);
+                    RemoveBuff(4005);
+                    RemoveBuff(4008);
+                    RemoveBuff(4009);
+                    RemoveBuff(4010);
+                    RemoveBuff(4012);
+                    RemoveBuff(4013);
+                    RemoveBuff(4004);
                     break;
                 case (long)SideReputType.Side5:
-                    RemoveBuff(12);
-                    AddBuff(new Buff(385, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(453);
-                    RemoveBuff(114);
-                    RemoveBuff(248);
-                    RemoveBuff(94);
-                    RemoveBuff(5);
-                    RemoveBuff(452);
-                    RemoveBuff(166);
-                    RemoveBuff(108);
+                    RemoveBuff(4003);
+                    AddBuff(new Buff(4008, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4006);
+                    RemoveBuff(4007);
+                    RemoveBuff(4005);
+                    RemoveBuff(4009);
+                    RemoveBuff(4010);
+                    RemoveBuff(4012);
+                    RemoveBuff(4013);
+                    RemoveBuff(4004);
                     break;
                 case (long)SideReputType.Side6:
-                    RemoveBuff(12);
-                    AddBuff(new Buff(94, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(453);
-                    RemoveBuff(114);
-                    RemoveBuff(385);
-                    RemoveBuff(248);
-                    RemoveBuff(5);
-                    RemoveBuff(452);
-                    RemoveBuff(166);
-                    RemoveBuff(108);
+                    RemoveBuff(4003);
+                    AddBuff(new Buff(4009, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4006);
+                    RemoveBuff(4007);
+                    RemoveBuff(4008);
+                    RemoveBuff(4005);
+                    RemoveBuff(4010);
+                    RemoveBuff(4012);
+                    RemoveBuff(4013);
+                    RemoveBuff(4004);
                     break;
                 case (long)SideReputType.Side7:
-                    RemoveBuff(12);
-                    AddBuff(new Buff(5, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(453);
-                    RemoveBuff(114);
-                    RemoveBuff(385);
-                    RemoveBuff(94);
-                    RemoveBuff(248);
-                    RemoveBuff(452);
-                    RemoveBuff(166);
-                    RemoveBuff(108);
+                    RemoveBuff(4003);
+                    AddBuff(new Buff(4010, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4006);
+                    RemoveBuff(4007);
+                    RemoveBuff(4008);
+                    RemoveBuff(4009);
+                    RemoveBuff(4005);
+                    RemoveBuff(4012);
+                    RemoveBuff(4013);
+                    RemoveBuff(4004);
                     break;
                 case (long)SideReputType.Side8:
-                    RemoveBuff(12);
-                    AddBuff(new Buff(452, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(453);
-                    RemoveBuff(114);
-                    RemoveBuff(385);
-                    RemoveBuff(94);
-                    RemoveBuff(5);
-                    RemoveBuff(248);
-                    RemoveBuff(166);
-                    RemoveBuff(108);
+                    RemoveBuff(4003);
+                    AddBuff(new Buff(4012, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4006);
+                    RemoveBuff(4007);
+                    RemoveBuff(4008);
+                    RemoveBuff(4009);
+                    RemoveBuff(4010);
+                    RemoveBuff(4005);
+                    RemoveBuff(4013);
+                    RemoveBuff(4004);
                     break;
                 case (long)SideReputType.Side9:
-                    RemoveBuff(12);
-                    AddBuff(new Buff(166, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(453);
-                    RemoveBuff(114);
-                    RemoveBuff(385);
-                    RemoveBuff(94);
-                    RemoveBuff(5);
-                    RemoveBuff(452);
-                    RemoveBuff(248);
-                    RemoveBuff(108);
+                    RemoveBuff(4003);
+                    AddBuff(new Buff(4013, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4006);
+                    RemoveBuff(4007);
+                    RemoveBuff(4008);
+                    RemoveBuff(4009);
+                    RemoveBuff(4010);
+                    RemoveBuff(4012);
+                    RemoveBuff(4005);
+                    RemoveBuff(4004);
                     break;
                 case (long)SideReputType.Side10:
-                    RemoveBuff(12);
-                    AddBuff(new Buff(108, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(453);
-                    RemoveBuff(114);
-                    RemoveBuff(385);
-                    RemoveBuff(94);
-                    RemoveBuff(5);
-                    RemoveBuff(452);
-                    RemoveBuff(166);
-                    RemoveBuff(248);
+                    RemoveBuff(4003);
+                    AddBuff(new Buff(4004, Level, isPermaBuff: true), BattleEntity);
+                    RemoveBuff(4006);
+                    RemoveBuff(4007);
+                    RemoveBuff(4008);
+                    RemoveBuff(4009);
+                    RemoveBuff(4010);
+                    RemoveBuff(4012);
+                    RemoveBuff(4013);
+                    RemoveBuff(4005);
                     break;
             }
         }
@@ -819,43 +819,43 @@ namespace OpenNos.GameObject
         {
             if (Reputation != (long)SideReputType.Side1)
             {
-                RemoveBuff(12, true);
+                RemoveBuff(4003, true);
             }
             if (Reputation != (long)SideReputType.Side2)
             {
-                RemoveBuff(248, true);
+                RemoveBuff(4005, true);
             }
             if (Reputation != (long)SideReputType.Side3)
             {
-                RemoveBuff(453, true);
+                RemoveBuff(4006, true);
             }
             if (Reputation != (long)SideReputType.Side4)
             {
-                RemoveBuff(114, true);
+                RemoveBuff(4007, true);
             }
             if (Reputation != (long)SideReputType.Side5)
             {
-                RemoveBuff(385, true);
+                RemoveBuff(4008, true);
             }
             if (Reputation != (long)SideReputType.Side6)
             {
-                RemoveBuff(94, true);
+                RemoveBuff(4009, true);
             }
             if (Reputation != (long)SideReputType.Side7)
             {
-                RemoveBuff(228, true);
+                RemoveBuff(4010, true);
             }
             if (Reputation != (long)SideReputType.Side8)
             {
-                RemoveBuff(452, true);
+                RemoveBuff(4012, true);
             }
             if (Reputation != (long)SideReputType.Side9)
             {
-                RemoveBuff(166, true);
+                RemoveBuff(4013, true);
             }
             if (Reputation < (long)SideReputType.Side10)
             {
-                RemoveBuff(108, true);
+                RemoveBuff(4004, true);
             }
         }
 
