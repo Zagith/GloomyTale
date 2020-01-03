@@ -143,6 +143,7 @@ namespace OpenNos.GameObject
             TalentWin = input.TalentWin;
             WhisperBlocked = input.WhisperBlocked;
             SecondPassword = input.SecondPassword;
+            Contributi = input.Contributi;
         }
 
         #endregion
@@ -852,7 +853,7 @@ namespace OpenNos.GameObject
             {
                 RemoveBuff(166, true);
             }
-            if (Reputation != (long)SideReputType.Side10)
+            if (Reputation < (long)SideReputType.Side10)
             {
                 RemoveBuff(108, true);
             }
@@ -2006,10 +2007,9 @@ namespace OpenNos.GameObject
                 {
                     return;
                 }
-#warning change port alveus
-                MapId = 145;
-                MapX = 51;
-                MapY = 41;
+                MapId = 129;
+                MapX = 77;
+                MapY = 143;
                 int port = Convert.ToInt32(connection.Split(':')[1]);
                 ChangeChannel(connection.Split(':')[0], port, 3);
             }
@@ -2741,10 +2741,9 @@ namespace OpenNos.GameObject
                 }
                 else
                 {
-#warning change port alveus
-                    MapId = 145;
-                    MapX = 51;
-                    MapY = 41;
+                    MapId = 129;
+                    MapX = 77;
+                    MapY = 143;
                     string connection =
                         CommunicationServiceClient.Instance.RetrieveOriginWorld(Session.Account.AccountId);
                     if (string.IsNullOrWhiteSpace(connection))

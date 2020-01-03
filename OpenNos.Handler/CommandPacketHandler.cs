@@ -1103,7 +1103,7 @@ namespace OpenNos.Handler
                 Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ChangeRep]Reputation: {packet.Reputation}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
-                if (packet.Reputation > 0)
+                if (packet.Reputation >= 0)
                 {
                     Session.Character.Reputation = packet.Reputation;
                     Session.SendPacket(Session.Character.GenerateFd());
