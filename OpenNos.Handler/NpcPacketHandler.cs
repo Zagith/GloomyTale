@@ -1380,19 +1380,19 @@ namespace OpenNos.Handler
                     Session.SendPacket(UserInterfaceHelper.GenerateDelay(5000, 1,
                         $"#guri^710^{npc.MapX}^{npc.MapY}^{npc.MapNpcId}")); // #guri^710^DestinationX^DestinationY^MapNpcId
                 }
-                else if (npc.Shop?.ShopId == 89)
+                else if (npc.Shop?.ShopId == 19496)
                 {
                     Session.SendPacket($"qna #guri^7600 {string.Format(Language.Instance.GetMessageFromKey("PERFECT_ALL"))}");
                 }
-                else if (npc.Shop?.ShopId == 90)
+                else if (npc.Shop?.ShopId == 2)
                 {
                     Session.SendPacket($"qna #guri^8889 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA"), 5000000)}");
                 }
-                /*else if (npc.Shop?.ShopId == 91)
+                else if (npc.Shop?.ShopId == 5)
                 {
-                    ItemDTO item = DAOFactory.ItemDAO.LoadById(2009);
+                    ItemDTO item = DAOFactory.ItemDAO.LoadById(15297);
                     Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10, item.Name[Session.Account.Language])}");
-                }*/
+                }
                 else if (!string.IsNullOrEmpty(npc.GetNpcDialog()))
                 {
                     Session.SendPacket(npc.GetNpcDialog());

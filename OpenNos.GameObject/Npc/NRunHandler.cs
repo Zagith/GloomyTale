@@ -1766,7 +1766,7 @@ namespace OpenNos.GameObject
                 case 5004:
                     if (npc != null)
                     {
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 129, 76, 144);
+                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 129, 77, 141);
                     }
                     break;
 
