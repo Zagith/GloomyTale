@@ -64,7 +64,7 @@ namespace OpenNos.GameObject.Event.ACT4
                     message = "A new raid appeared to Frozen Crown... Get ready for the battle!";
                     switch (RaidType)
                     {
-                        case MapInstanceType.Act4Morcos:
+                        case MapInstanceType.Act4Viserion:
                             embed = new EmbedBuilder
                             {
                                 Color = Color.Red,
@@ -73,7 +73,7 @@ namespace OpenNos.GameObject.Event.ACT4
                                 Description = $"Raid Morcos started for {nameFaction} faction"
                             };
                             break;
-                        case MapInstanceType.Act4Hatus:
+                        case MapInstanceType.Act4Orias:
                             embed = new EmbedBuilder
                             {
                                 ImageUrl = "http://4.bp.blogspot.com/-rVwumtP1Ivo/U_QeOd78RWI/AAAAAAAABLs/GaeQKq9_b1M/s1600/hatus.jpg",
@@ -81,7 +81,7 @@ namespace OpenNos.GameObject.Event.ACT4
                                 Description = $"Raid Hatus started for {nameFaction} faction"
                             };
                             break;
-                        case MapInstanceType.Act4Calvina:
+                        case MapInstanceType.Act4Zanarkand:
                             embed = new EmbedBuilder
                             {
                                 Color = Color.Blue,
@@ -90,7 +90,7 @@ namespace OpenNos.GameObject.Event.ACT4
                                 Description = $"Raid Calvina started for {nameFaction} faction"
                             };
                             break;
-                        case MapInstanceType.Act4Berios:
+                        case MapInstanceType.Act4Demetra:
                             embed = new EmbedBuilder
                             {
                                 Color = Color.Gold,

@@ -64,10 +64,10 @@ namespace OpenNos.GameObject
                 && session.Character.MapId != 130
                 && session.Character.MapId != 131
                 && (session.Character.Group?.Raid == null || !session.Character.Group.Raid.InstanceBag.Lock)
-                && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Berios
-                && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Calvina
-                && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Hatus
-                && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Morcos
+                && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Demetra
+                && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Zanarkand
+                && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Orias
+                && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Viserion
                 && (inv.ItemVNum == 1242 || inv.ItemVNum == 1243 || inv.ItemVNum == 1244 || inv.ItemVNum == 5582 || inv.ItemVNum == 5583 || inv.ItemVNum == 5584))
             {
                 return;

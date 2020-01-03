@@ -1915,6 +1915,24 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Do you want try your luck? you need {0} gold at roll..
+        /// </summary>
+        internal static string GIRO_RUOTA {
+            get {
+                return ResourceManager.GetString("GIRO_RUOTA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Do you want try your luck with the &quot;Try your Luck Shop&quot;? you need {0} &quot;{1}&quot; at roll..
+        /// </summary>
+        internal static string GIRO_RUOTA_SHOP {
+            get {
+                return ResourceManager.GetString("GIRO_RUOTA_SHOP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Everyone can contact..
         /// </summary>
         internal static string GM_BLOCK_DISABLE {

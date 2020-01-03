@@ -336,7 +336,7 @@ namespace OpenNos.GameObject
             }
 
             // Irrelevant for now(Act4)
-            //if (MapInstance?.MapInstanceType == MapInstanceType.Act4Morcos || MapInstance?.MapInstanceType == MapInstanceType.Act4Hatus || MapInstance?.MapInstanceType == MapInstanceType.Act4Calvina || MapInstance?.MapInstanceType == MapInstanceType.Act4Berios)
+            //if (MapInstance?.MapInstanceType == MapInstanceType.Act4Viserion || MapInstance?.MapInstanceType == MapInstanceType.Act4Orias || MapInstance?.MapInstanceType == MapInstanceType.Act4Zanarkand || MapInstance?.MapInstanceType == MapInstanceType.Act4Demetra)
             //{
             //    if (MonsterVNum == 563 || MonsterVNum == 577 || MonsterVNum == 629 || MonsterVNum == 624)
             //    {

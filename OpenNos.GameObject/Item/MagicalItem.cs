@@ -607,7 +607,7 @@ namespace OpenNos.GameObject
                             {
                                 if (sess?.Character != null && session?.CurrentMapInstance != null && session?.Character != null && sess.Character != session.Character)
                                 {
-                                    ServerManager.Instance.TeleportOnRandomPlaceInMap(sess, session.CurrentMapInstance.MapInstanceId);
+                                    ServerManager.Instance.ChangeMapInstance(sess.Character.CharacterId, session.CurrentMapInstance.MapInstanceId, session.Character.MapX, session.Character.MapY);
                                 }
                             });
                             delay += 100;

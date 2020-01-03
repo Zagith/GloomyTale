@@ -143,6 +143,7 @@ namespace OpenNos.GameObject
             TalentWin = input.TalentWin;
             WhisperBlocked = input.WhisperBlocked;
             SecondPassword = input.SecondPassword;
+            Contributi = input.Contributi;
         }
 
         #endregion
@@ -852,7 +853,7 @@ namespace OpenNos.GameObject
             {
                 RemoveBuff(166, true);
             }
-            if (Reputation != (long)SideReputType.Side10)
+            if (Reputation < (long)SideReputType.Side10)
             {
                 RemoveBuff(108, true);
             }
@@ -2006,10 +2007,9 @@ namespace OpenNos.GameObject
                 {
                     return;
                 }
-#warning change port alveus
-                MapId = 145;
-                MapX = 51;
-                MapY = 41;
+                MapId = 129;
+                MapX = 77;
+                MapY = 143;
                 int port = Convert.ToInt32(connection.Split(':')[1]);
                 ChangeChannel(connection.Split(':')[0], port, 3);
             }
@@ -2741,10 +2741,9 @@ namespace OpenNos.GameObject
                 }
                 else
                 {
-#warning change port alveus
-                    MapId = 145;
-                    MapX = 51;
-                    MapY = 41;
+                    MapId = 129;
+                    MapX = 77;
+                    MapY = 143;
                     string connection =
                         CommunicationServiceClient.Instance.RetrieveOriginWorld(Session.Account.AccountId);
                     if (string.IsNullOrWhiteSpace(connection))
@@ -2811,19 +2810,19 @@ namespace OpenNos.GameObject
 
             switch (Family?.Act4Raid?.MapInstanceType)
             {
-                case MapInstanceType.Act4Morcos:
+                case MapInstanceType.Act4Viserion:
                     raidType = 1;
                     break;
 
-                case MapInstanceType.Act4Hatus:
+                case MapInstanceType.Act4Orias:
                     raidType = 2;
                     break;
 
-                case MapInstanceType.Act4Calvina:
+                case MapInstanceType.Act4Zanarkand:
                     raidType = 3;
                     break;
 
-                case MapInstanceType.Act4Berios:
+                case MapInstanceType.Act4Demetra:
                     raidType = 4;
                     break;
             }

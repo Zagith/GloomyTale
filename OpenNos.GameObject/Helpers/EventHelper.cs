@@ -371,7 +371,7 @@ namespace OpenNos.GameObject.Helpers
                                 {
                                     switch (evt.MapInstance.MapInstanceType)
                                     {
-                                        case MapInstanceType.Act4Morcos:
+                                        case MapInstanceType.Act4Viserion:
                                             mobWave.Add(new MonsterToSummon(1925, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             mobWave.Add(new MonsterToSummon(1051, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             mobWave.Add(new MonsterToSummon(1042, evt.MapInstance.Map.GetRandomPosition(), null, true));
@@ -382,7 +382,7 @@ namespace OpenNos.GameObject.Helpers
                                             mobWave.Add(new MonsterToSummon(1042, evt.MapInstance.Map.GetRandomPosition(), null, false));
                                             break;
 
-                                        case MapInstanceType.Act4Hatus:
+                                        case MapInstanceType.Act4Orias:
                                             mobWave.Add(new MonsterToSummon(439, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             mobWave.Add(new MonsterToSummon(95, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             mobWave.Add(new MonsterToSummon(316, evt.MapInstance.Map.GetRandomPosition(), null, true));
@@ -393,7 +393,7 @@ namespace OpenNos.GameObject.Helpers
                                             mobWave.Add(new MonsterToSummon(316, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             break;
 
-                                        case MapInstanceType.Act4Calvina:
+                                        case MapInstanceType.Act4Zanarkand:
                                             mobWave.Add(new MonsterToSummon(549, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             mobWave.Add(new MonsterToSummon(2503, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             mobWave.Add(new MonsterToSummon(436, evt.MapInstance.Map.GetRandomPosition(), null, true));
@@ -404,7 +404,7 @@ namespace OpenNos.GameObject.Helpers
                                             mobWave.Add(new MonsterToSummon(436, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             break;
 
-                                        case MapInstanceType.Act4Berios:
+                                        case MapInstanceType.Act4Demetra:
                                             mobWave.Add(new MonsterToSummon(314, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             mobWave.Add(new MonsterToSummon(314, evt.MapInstance.Map.GetRandomPosition(), null, true));
                                             mobWave.Add(new MonsterToSummon(402, evt.MapInstance.Map.GetRandomPosition(), null, true));
@@ -626,38 +626,36 @@ namespace OpenNos.GameObject.Helpers
                                     break;
 
 
-                                case MapInstanceType.Act4Morcos:
-                                case MapInstanceType.Act4Hatus:
-                                case MapInstanceType.Act4Calvina:
-                                case MapInstanceType.Act4Berios:
+                                case MapInstanceType.Act4Viserion:
+                                case MapInstanceType.Act4Orias:
+                                case MapInstanceType.Act4Zanarkand:
+                                case MapInstanceType.Act4Demetra:
                                     client = evt.MapInstance.Sessions.FirstOrDefault(s => s.Character?.Family?.Act4RaidBossMap == evt.MapInstance);
                                     if (client != null)
                                     {
                                         Family fam = client.Character.Family;
                                         if (fam != null)
                                         {
-                                            short destX = 38;
-                                            short destY = 179;
-                                            short rewardVNum = 882;
+                                            short destX = 97;
+                                            short destY = 130;
+                                            short rewardVNum = 15107;
+                                            short secondaryRewardVNum = 2440;
                                             switch (evt.MapInstance.MapInstanceType)
                                             {
                                                 //Morcos is default
-                                                case MapInstanceType.Act4Hatus:
-                                                    destX = 18;
-                                                    destY = 10;
-                                                    rewardVNum = 185;
+                                                case MapInstanceType.Act4Orias:
+                                                    rewardVNum = 15052;
+                                                    secondaryRewardVNum = 2443;
                                                     break;
 
-                                                case MapInstanceType.Act4Calvina:
-                                                    destX = 25;
-                                                    destY = 7;
-                                                    rewardVNum = 942;
+                                                case MapInstanceType.Act4Zanarkand:
+                                                    rewardVNum = 15108;
+                                                    secondaryRewardVNum = 2441;
                                                     break;
 
-                                                case MapInstanceType.Act4Berios:
-                                                    destX = 125;
-                                                    destY = 2;
-                                                    rewardVNum = 999;
+                                                case MapInstanceType.Act4Demetra:
+                                                    rewardVNum = 15112;
+                                                    secondaryRewardVNum = 2442;
                                                     break;
                                             }
                                             int count = evt.MapInstance.Sessions.Count(s => s?.Character != null);
@@ -666,6 +664,7 @@ namespace OpenNos.GameObject.Helpers
                                                 if (sess?.Character != null)
                                                 {
                                                     sess.Character.GiftAdd(rewardVNum, 1, forceRandom: true, minRare: 1, design: 255);
+                                                    sess.Character.GiftAdd(secondaryRewardVNum, 1);
                                                     if (sess.Character.GenerateFamilyXp(10000 / count))
                                                     {
                                                         sess.SendPacket(sess.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_FXP"), 10000 / count), 10));
@@ -839,10 +838,10 @@ namespace OpenNos.GameObject.Helpers
 
                                 portal.Type = (short)param.Item2;
                                 if ((PortalType)portal.Type == PortalType.Closed
-                                && (evt.MapInstance.MapInstanceType.Equals(MapInstanceType.Act4Berios)
-                                 || evt.MapInstance.MapInstanceType.Equals(MapInstanceType.Act4Calvina)
-                                 || evt.MapInstance.MapInstanceType.Equals(MapInstanceType.Act4Hatus)
-                                 || evt.MapInstance.MapInstanceType.Equals(MapInstanceType.Act4Morcos)))
+                                && (evt.MapInstance.MapInstanceType.Equals(MapInstanceType.Act4Demetra)
+                                 || evt.MapInstance.MapInstanceType.Equals(MapInstanceType.Act4Zanarkand)
+                                 || evt.MapInstance.MapInstanceType.Equals(MapInstanceType.Act4Orias)
+                                 || evt.MapInstance.MapInstanceType.Equals(MapInstanceType.Act4Viserion)))
                                 {
                                     portal.IsDisabled = true;
                                 }

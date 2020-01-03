@@ -2046,4 +2046,10 @@
   <data name="WORLD_SERVER_CONSOLE_TITLE" xml:space="preserve">
     <value>GloomyTale - WORLD SERVER - ID : {0} | Players : {1} | IP : {2}:{3}</value>
   </data>
+  <data name="GIRO_RUOTA" xml:space="preserve">
+    <value>Do you want try your luck? you need {0} gold at roll.</value>
+  </data>
+  <data name="GIRO_RUOTA_SHOP" xml:space="preserve">
+    <value>Do you want try your luck with the "Try your Luck Shop"? you need {0} "{1}" at roll.</value>
+  </data>
 </root>
