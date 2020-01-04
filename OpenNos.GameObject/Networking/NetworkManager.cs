@@ -58,7 +58,7 @@ namespace OpenNos.GameObject
 
             // Start the server
             _server.Start();
-            DiscordHelper discord = new DiscordHelper();
+            
             Logger.Info(Language.Instance.GetMessageFromKey("STARTED"), memberName: "NetworkManager");
         }
 

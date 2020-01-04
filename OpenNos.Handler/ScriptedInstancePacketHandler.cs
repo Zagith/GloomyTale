@@ -282,7 +282,6 @@ namespace OpenNos.Handler
                             }
                         }
 
-                        // TODO: Add HasAlreadyDone
                         for (int i = 0; i < 2; i++)
                         {
                             Gift gift = null;

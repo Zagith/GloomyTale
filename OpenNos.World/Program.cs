@@ -36,6 +36,7 @@ using OpenNos.GameObject.Networking;
 using System.IO;
 using OpenNos.SCS.Communication.Scs.Communication;
 using OpenNos.World.Resource;
+using OpenNos.GameObject.Helpers;
 
 namespace OpenNos.World
 {
@@ -197,6 +198,7 @@ namespace OpenNos.World
                 Logger.Error("Could not retrieve ChannelId from Web API.");
                 Console.ReadKey();
             }
+            DiscordHelper serverStatus = new DiscordHelper();
         }
 
         private static bool ExitHandler(CtrlType sig)

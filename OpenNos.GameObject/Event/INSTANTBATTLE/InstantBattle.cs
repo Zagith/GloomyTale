@@ -119,7 +119,7 @@ namespace OpenNos.GameObject.Event
                     {
                         if (!mapinstance.Item1.Monsters.Any(s => s.CurrentHp > 0))
                         {
-                            EventHelper.Instance.ScheduleEvent(TimeSpan.FromMinutes(0), new EventContainer(mapinstance.Item1, EventActionType.SPAWNPORTAL, new Portal { SourceX = 47, SourceY = 33, DestinationMapId = 1 }));
+                            EventHelper.Instance.ScheduleEvent(TimeSpan.FromMinutes(0), new EventContainer(mapinstance.Item1, EventActionType.SPAWNPORTAL, new Portal { SourceX = 30, SourceY = 101, DestinationMapId = 1 }));
                             mapinstance.Item1.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("INSTANTBATTLE_SUCCEEDED"), 0));
                             foreach (ClientSession cli in mapinstance.Item1.Sessions.Where(s => s.Character != null).ToList())
                             {
@@ -173,6 +173,7 @@ namespace OpenNos.GameObject.Event
                 }
                 EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(650), new EventContainer(mapinstance.Item1, EventActionType.SPAWNMONSTERS, getInstantBattleMonster(mapinstance.Item1.Map, mapinstance, mapinstance.Item2, 4)));
             }
+
 
             private static IEnumerable<Tuple<short, int>> GenerateDrop(Map map, short vnum, int amount)
             {
