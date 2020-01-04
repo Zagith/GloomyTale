@@ -202,6 +202,7 @@ namespace OpenNos.Handler
                         Session.SendPacket(Session.Character.GenerateInvisible());
                         Session.SendPacket(Session.Character.GenerateEq());
                         Session.SendPacket(Session.Character.GenerateCMode());
+                        Session.Character.SideReputationAddBuff();
                         foreach (Mate teamMate in Session.Character.Mates.Where(m => m.IsTeamMember))
                         {
                             teamMate.PositionX = Session.Character.PositionX;

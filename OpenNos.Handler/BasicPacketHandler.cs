@@ -2664,7 +2664,6 @@ namespace OpenNos.Handler
                                                          Session.Character.Family.FamilyMessage));
                 }
             }
-            Session.Character.SideReputationAddBuff();
             Session.SendPacket(Session.Character.GetSqst());
             Session.SendPacket("act6");
             Session.SendPacket(Session.Character.GenerateFaction());
