@@ -839,7 +839,7 @@ namespace OpenNos.Handler
                     }
                 }
 
-                ItemInstance inv = Session.Character.Inventory.AddNewToInventory(recipe.ItemVNum, recipe.Amount, Rare: rare)
+                ItemInstance inv = Session.Character.Inventory.AddNewToInventory(recipe.ItemVNum, recipe.Amount, Rare: (sbyte)recipe.Rare, Upgrade: recipe.Upgrade)
                     .FirstOrDefault();
                 if (inv != null)
                 {
