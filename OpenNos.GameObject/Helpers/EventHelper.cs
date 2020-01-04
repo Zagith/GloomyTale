@@ -965,23 +965,63 @@ namespace OpenNos.GameObject.Helpers
                                 {
                                     Tuple<int> meteo = (Tuple<int>)evt.Parameter;
                                     short VNUM = 0;
+                                    int random = 0;
+                                    short amount = 1;
                                     switch (meteo.Item1)
                                     {
-                                        case 55:
-                                            VNUM = 1464;
+                                        case 25:
+                                            VNUM = 15114;
+                                            random = 70;
                                             break;
-                                        case 80:
-                                            VNUM = 1463;
+                                        case 35:
+                                            VNUM = 15115;
+                                            random = 70;
+                                            break;
+                                        case 45:
+                                            VNUM = 15116;
+                                            random = 70;
+                                            break;
+                                        case 55:
+                                            VNUM = 15117;
+                                            random = 60;
+                                            break;
+                                        case 65:
+                                            VNUM = 15118;
+                                            random = 60;
+                                            break;
+                                        case 75:
+                                            VNUM = 15142;
+                                            random = 50;
+                                            break;
+                                        case 85:
+                                            VNUM = 15270;
+                                            random = 40;
+                                            amount = 2;
+                                            break;
+                                        case 90:
+                                            VNUM = 15271;
+                                            random = 40;
+                                            amount = 2;
+                                            break;
+                                        case 95:
+                                            VNUM = 15277;
+                                            random = 30;
+                                            amount = 2;
                                             break;
                                         case 99:
-                                            VNUM = 1462;
+                                            VNUM = 15278;
+                                            random = 30;
+                                            amount = 2;
                                             break;
                                     }
                                     foreach (ClientSession c in evt.MapInstance.Sessions)
                                     {
                                         if ((c.Character.Level + 10) >= meteo.Item1)
                                         {
-                                            c.Character.GiftAdd(VNUM, 1, 0, 0);
+                                            if (ServerManager.RandomNumber(0, 100) < random)
+                                            {
+                                                c.Character.GiftAdd(VNUM, amount, 0, 0);
+                                            }
                                         }
                                     }
                                 }
