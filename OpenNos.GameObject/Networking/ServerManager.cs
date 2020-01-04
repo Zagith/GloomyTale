@@ -1057,6 +1057,8 @@ namespace OpenNos.GameObject.Networking
 
         public static MapInstance GetMapInstanceByMapId(short mapId) => _mapinstances.Values.FirstOrDefault(s => s.Map.MapId == mapId);
 
+        public static List<MapInstance> GetMapInstanceByMeteoriteLevel() => _mapinstances.Values.Where(s => s.Map.MeteoriteLevel != 0).ToList();
+
         public static List<MapInstance> GetMapInstances(Func<MapInstance, bool> predicate) => _mapinstances.Values.Where(predicate).ToList();
 
         public long GetNextGroupId() => ++_lastGroupId;
@@ -2057,139 +2059,269 @@ namespace OpenNos.GameObject.Networking
 
         public void MeteoriteSpawn()
         {
-            int channelid = 1; // RandomNumber(1, 6);
-            if (channelid != ChannelId)
-            {
-                return;
-            }
             int mappa = 0;
-            MapInstance map = null;
-            while (mappa == 0)
+            List<MapInstance> maps = null;
+            maps = GetMapInstanceByMeteoriteLevel();
+            foreach (MapInstance map in maps)
             {
-                map = GetMapInstanceByMapId((short)RandomNumber(2, 4817));
-                if (map != null)
+                IEnumerable<MapMonster> spawnedMonsters = map.Monsters.Where(s => s.MonsterVNum.Equals(424));
+                if(spawnedMonsters.Count() > 4)
                 {
-                    if (map.MeteoriteLevel > 0)
-                    {
-                        mappa = map.MeteoriteLevel;
-                    }
+                    continue;
                 }
-            }
+                if (map.MeteoriteLevel > 0)
+                {
+                    mappa = map.MeteoriteLevel;
+                }
 
-            MapCell pos = map.Map.GetRandomPosition();
-            if (pos == null)
-            {
-                return;
-            }
-            short MonsterVNUM = 0;
-            byte element = (byte)RandomNumber(1, 5);
-            short NumeroMob = 0;
-            long MaxHp = 0;
+                MapCell pos = map.Map.GetRandomPosition();
+                if (pos == null)
+                {
+                    continue;
+                }
+                short MonsterVNUM = 0;
+                byte element = (byte)RandomNumber(1, 5);
+                short NumeroMob = 0;
+                long MaxHp = 0;
 
-            switch (map.MeteoriteLevel)
-            {
-                case 55:
-                    MaxHp = 250000;
-                    NumeroMob = 15;
-                    switch (element)
-                    {
-                        case 1:
-                            MonsterVNUM = 371;
-                            break;
-                        case 2:
-                            MonsterVNUM = 370;
-                            break;
-                        case 3:
-                            MonsterVNUM = 368;
-                            break;
-                        case 4:
-                            MonsterVNUM = 369;
-                            break;
-                    }
-                    break;
-                case 80:
-                    MaxHp = 2500000;
-                    NumeroMob = 20;
-                    switch (element)
-                    {
-                        case 1:
-                            MonsterVNUM = 1243;
-                            break;
-                        case 2:
-                            MonsterVNUM = 2046;
-                            break;
-                        case 3:
-                            MonsterVNUM = 2644;
-                            break;
-                        case 4:
-                            MonsterVNUM = 2664;
-                            break;
-                    }
-                    break;
-                case 99:
-                    MaxHp = 10000000;
-                    NumeroMob = 25;
-                    switch (element)
-                    {
-                        case 1:
-                            MonsterVNUM = 2520;
-                            break;
-                        case 2:
-                            MonsterVNUM = 2572;
-                            break;
-                        case 3:
-                            MonsterVNUM = 2543;
-                            break;
-                        case 4:
-                            MonsterVNUM = 2512;
-                            break;
-                    }
-                    break;
-            }
-            List<MonsterToSummon> summonParameters = new List<MonsterToSummon>();
-            for (int i = 0; i <= NumeroMob; i++)
-            {
-                short x = (short)(RandomNumber(-3, 3) + pos.X);
-                short y = (short)(RandomNumber(-3, 3) + pos.Y);
-                summonParameters.Add(new MonsterToSummon(MonsterVNUM, new MapCell { X = x, Y = y }, null, true));
-            }
+                switch (map.MeteoriteLevel)
+                {
+                    case 25:
+                        MaxHp = 250000;
+                        NumeroMob = 5;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 371;
+                                break;
+                            case 2:
+                                MonsterVNUM = 370;
+                                break;
+                            case 3:
+                                MonsterVNUM = 368;
+                                break;
+                            case 4:
+                                MonsterVNUM = 369;
+                                break;
+                        }
+                        break;
+                    case 35:
+                        MaxHp = 250000;
+                        NumeroMob = 10;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 371;
+                                break;
+                            case 2:
+                                MonsterVNUM = 370;
+                                break;
+                            case 3:
+                                MonsterVNUM = 368;
+                                break;
+                            case 4:
+                                MonsterVNUM = 369;
+                                break;
+                        }
+                        break;
+                    case 45:
+                        MaxHp = 250000;
+                        NumeroMob = 15;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 371;
+                                break;
+                            case 2:
+                                MonsterVNUM = 370;
+                                break;
+                            case 3:
+                                MonsterVNUM = 368;
+                                break;
+                            case 4:
+                                MonsterVNUM = 369;
+                                break;
+                        }
+                        break;
+                    case 55:
+                        MaxHp = 250000;
+                        NumeroMob = 20;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 371;
+                                break;
+                            case 2:
+                                MonsterVNUM = 370;
+                                break;
+                            case 3:
+                                MonsterVNUM = 368;
+                                break;
+                            case 4:
+                                MonsterVNUM = 369;
+                                break;
+                        }
+                        break;
+                    case 65:
+                        MaxHp = 2500000;
+                        NumeroMob = 25;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 1243;
+                                break;
+                            case 2:
+                                MonsterVNUM = 2046;
+                                break;
+                            case 3:
+                                MonsterVNUM = 2644;
+                                break;
+                            case 4:
+                                MonsterVNUM = 2664;
+                                break;
+                        }
+                        break;
+                    case 75:
+                        MaxHp = 2500000;
+                        NumeroMob = 30;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 1243;
+                                break;
+                            case 2:
+                                MonsterVNUM = 2046;
+                                break;
+                            case 3:
+                                MonsterVNUM = 2644;
+                                break;
+                            case 4:
+                                MonsterVNUM = 2664;
+                                break;
+                        }
+                        break;
+                    case 85:
+                        MaxHp = 2500000;
+                        NumeroMob = 30;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 1243;
+                                break;
+                            case 2:
+                                MonsterVNUM = 2046;
+                                break;
+                            case 3:
+                                MonsterVNUM = 2644;
+                                break;
+                            case 4:
+                                MonsterVNUM = 2664;
+                                break;
+                        }
+                        break;
+                    case 90:
+                        MaxHp = 10000000;
+                        NumeroMob = 25;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 2520;
+                                break;
+                            case 2:
+                                MonsterVNUM = 2572;
+                                break;
+                            case 3:
+                                MonsterVNUM = 2543;
+                                break;
+                            case 4:
+                                MonsterVNUM = 2512;
+                                break;
+                        }
+                        break;
+                    case 95:
+                        MaxHp = 10000000;
+                        NumeroMob = 25;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 2520;
+                                break;
+                            case 2:
+                                MonsterVNUM = 2572;
+                                break;
+                            case 3:
+                                MonsterVNUM = 2543;
+                                break;
+                            case 4:
+                                MonsterVNUM = 2512;
+                                break;
+                        }
+                        break;
+                    case 100:
+                        MaxHp = 10000000;
+                        NumeroMob = 25;
+                        switch (element)
+                        {
+                            case 1:
+                                MonsterVNUM = 2520;
+                                break;
+                            case 2:
+                                MonsterVNUM = 2572;
+                                break;
+                            case 3:
+                                MonsterVNUM = 2543;
+                                break;
+                            case 4:
+                                MonsterVNUM = 2512;
+                                break;
+                        }
+                        break;
+                }
+                List<MonsterToSummon> summonParameters = new List<MonsterToSummon>();
+                for (int i = 0; i <= NumeroMob; i++)
+                {
+                    short x = (short)(RandomNumber(-3, 3) + pos.X);
+                    short y = (short)(RandomNumber(-3, 3) + pos.Y);
+                    summonParameters.Add(new MonsterToSummon(MonsterVNUM, new MapCell { X = x, Y = y }, null, true));
+                }
 
-            List<EventContainer> OnTacchettaDivisoDueEvents = new List<EventContainer>
-            {
+                List<EventContainer> OnTacchettaDivisoDueEvents = new List<EventContainer>
+                {
                 new EventContainer(map, EventActionType.SPAWNMONSTERS, summonParameters)
-            };
+                };
 
-            List<EventContainer> OnTacchettaEvents = new List<EventContainer>
-            {
+                List<EventContainer> OnTacchettaEvents = new List<EventContainer>
+                {
                 new EventContainer(map, EventActionType.BOMBARDAMENTOMETEORITE, new Tuple<int>(map.MeteoriteLevel))
-            };
-            MapMonster monster = new MapMonster
-            {
-                MaxHp = 100000000,
-                CurrentHp = 100000000,
-                MonsterVNum = 424,
-                MapY = pos.Y,
-                MapX = pos.X,
-                MapId = map.Map.MapId,
-                IsMoving = false,
-                MapMonsterId = map.GetNextMonsterId(),
-                ShouldRespawn = false,
-                IsBoss = false,
-                Element = element,
-                OnTacchettaEvents = OnTacchettaEvents,
-                OnTacchettaDivisoDueEvents = OnTacchettaDivisoDueEvents,
-            };
-            monster.Initialize(map);
-            monster.BattleEntity.OnDeathEvents.Add(new EventContainer(map, EventActionType.DROPMETEORITE, new Tuple<int>(map.MeteoriteLevel)));
-            map.AddMonster(monster);
-            map.Broadcast(monster.GenerateIn());
-            CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
-            {
-                DestinationCharacterId = null,
-                SourceWorldId = Instance.WorldId,
-                Message = string.Format(Language.Instance.GetMessageFromKey("METEORITE_SPAWN"), map.MeteoriteLevel, channelid, map.Map.NameI18NKey[0]),
-                Type = MessageType.Shout
-            });
+                };
+                MapMonster monster = new MapMonster
+                {
+                    MaxHp = 100000000,
+                    CurrentHp = 100000000,
+                    MonsterVNum = 424,
+                    MapY = pos.Y,
+                    MapX = pos.X,
+                    MapId = map.Map.MapId,
+                    IsMoving = false,
+                    MapMonsterId = map.GetNextMonsterId(),
+                    ShouldRespawn = false,
+                    IsBoss = false,
+                    Element = element,
+                    OnTacchettaEvents = OnTacchettaEvents,
+                    OnTacchettaDivisoDueEvents = OnTacchettaDivisoDueEvents,
+                };
+                monster.Initialize(map);
+                monster.BattleEntity.OnDeathEvents.Add(new EventContainer(map, EventActionType.DROPMETEORITE, new Tuple<int>(map.MeteoriteLevel)));
+                map.AddMonster(monster);
+                map.Broadcast(monster.GenerateIn());
+                /*CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
+                {
+                    DestinationCharacterId = null,
+                    SourceWorldId = Instance.WorldId,
+                    Message = string.Format(Language.Instance.GetMessageFromKey("METEORITE_SPAWN"), map.MeteoriteLevel, channelid, map.Map.NameI18NKey[0]),
+                    Type = MessageType.Shout
+                });*/
+            }
         }
 
         private void Act4Process()
@@ -2389,7 +2521,7 @@ namespace OpenNos.GameObject.Networking
             Observable.Interval(TimeSpan.FromMinutes(1)).Subscribe(x => Act4FlowerProcess());
             //Observable.Interval(TimeSpan.FromHours(3)).Subscribe(x => BotProcess());
             Observable.Interval(TimeSpan.FromSeconds(5)).Subscribe(x => MaintenanceProcess());
-            Observable.Interval(TimeSpan.FromMinutes(RandomNumber(30, 60))).Subscribe(x => MeteoriteSpawn());
+            Observable.Interval(TimeSpan.FromMinutes(RandomNumber(5, 20))).Subscribe(x => MeteoriteSpawn());
 
             EventHelper.Instance.RunEvent(new EventContainer(GetMapInstance(GetBaseMapInstanceIdByMapId(98)), EventActionType.NPCSEFFECTCHANGESTATE, true));
             Parallel.ForEach(Schedules, schedule => Observable.Timer(TimeSpan.FromSeconds(EventHelper.GetMilisecondsBeforeTime(schedule.Time).TotalSeconds), TimeSpan.FromDays(1)).Subscribe(e =>
