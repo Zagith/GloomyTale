@@ -1115,25 +1115,11 @@ namespace OpenNos.GameObject
                                 {
                                     if (IsLevelDivided)
                                     {
-                                        if (NpcMonsterVNum != 679 && NpcMonsterVNum != 680)
-                                        {
-                                            bonus = (int)((senderLevel / firstData) * (session.HPLoad() / 100));
-                                        }
-                                        else
-                                        {
-                                            bonus = (int)(senderLevel / ThirdData * (session.HPLoad() / 100));
-                                        }
+                                        bonus = (int)((senderLevel / firstData) * (session.HPLoad() / 100));
                                     }
                                     else
                                     {
-                                        if (NpcMonsterVNum != 679 && NpcMonsterVNum != 680)
-                                        {
-                                            bonus = (int)(firstData * (session.HPLoad() / 100));
-                                        }
-                                        else
-                                        {
-                                            bonus = (int)(ThirdData * (session.HPLoad() / 100));
-                                        }
+                                        bonus = (int)(firstData * (session.HPLoad() / 100));
                                     }
                                     if (bonus > 0)
                                     {

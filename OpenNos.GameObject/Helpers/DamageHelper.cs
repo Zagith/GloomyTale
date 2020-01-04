@@ -295,6 +295,12 @@ namespace OpenNos.GameObject.Helpers
                 percentDamage = true;
             }
 
+            if (attackerpercentdamage[3] != 0)
+            {
+                totalDamage = defender.HpMax / 100 * Math.Abs(attackerpercentdamage[2]);
+                percentDamage = true;
+            }
+
             if (defenderpercentdefense[3] != 0)
             {
                 totalDamage = defender.HpMax / 100 * Math.Abs(defenderpercentdefense[0]);
@@ -331,7 +337,7 @@ namespace OpenNos.GameObject.Helpers
 
             if (attacker.MapMonster != null)
             {
-                if (attacker.MapMonster.MonsterVNum != 2334 || attacker.MapMonster.MonsterVNum != 2333)
+                if (attacker.MapMonster.MonsterVNum <= 2334 &&  attacker.MapMonster.MonsterVNum >= 2331 || attacker.MapMonster.MonsterVNum == 2309)
                 {
                     totalDamage = 0;
                     percentDamage = false;

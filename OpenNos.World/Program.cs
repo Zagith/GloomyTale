@@ -198,7 +198,9 @@ namespace OpenNos.World
                 Logger.Error("Could not retrieve ChannelId from Web API.");
                 Console.ReadKey();
             }
+#if !DEBUG
             DiscordHelper serverStatus = new DiscordHelper();
+#endif
         }
 
         private static bool ExitHandler(CtrlType sig)
@@ -238,20 +240,20 @@ namespace OpenNos.World
             Environment.Exit(1);
         }
 
-        #endregion
+#endregion
 
-        #region Classes
+#region Classes
 
         public static class NativeMethods
         {
-            #region Methods
+#region Methods
 
             [DllImport("Kernel32")]
             internal static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add);
 
-            #endregion
+#endregion
         }
 
-        #endregion
+#endregion
     }
 }
