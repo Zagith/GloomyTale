@@ -590,11 +590,18 @@ namespace OpenNos.Handler
                 }
                 else if (guriPacket.Type == 506) // Meteore event
                 {
-                    if (ServerManager.Instance.EventInWaiting == true && Session.Character.IsWaitingForEvent == false)
+                    if (ServerManager.Instance.IsInstantBattle == true)
                     {
-                        Session.SendPacket("bsinfo 0 4 30 0");
-                        Session.SendPacket("esf 2");
-                        Session.Character.IsWaitingForEvent = true;
+                        Session.Character.IsWaitingForEvent |= ServerManager.Instance.EventInWaiting;
+                    }
+                    else
+                    {
+                        if (ServerManager.Instance.EventInWaiting == true && Session.Character.IsWaitingForEvent == false)
+                        {
+                            Session.SendPacket("bsinfo 0 4 30 0");
+                            Session.SendPacket("esf 2");
+                            Session.Character.IsWaitingForEvent = true;
+                        }
                     }
                 }
                 else if (guriPacket.Type == 710)

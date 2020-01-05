@@ -151,6 +151,8 @@ namespace OpenNos.GameObject.Networking
 
         public bool EventInWaiting { get; set; }
 
+        public bool IsInstantBattle { get; set; }
+
         public MapInstance FamilyArenaInstance { get; private set; }
 
         public ThreadSafeSortedList<long, Family> FamilyList { get; set; }
