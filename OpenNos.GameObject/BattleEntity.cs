@@ -1320,7 +1320,13 @@ namespace OpenNos.GameObject
                                     Character.Session?.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("ENCASED_BURNING_SWORD")));
                                 }
                                 break;
-
+                            case 460:
+                                if (Character.Session != null)
+                                {
+                                    Character.Session.Character.Size = 10;
+                                    Character.Session.CurrentMapInstance?.Broadcast(Character.Session.Character.GenerateScal());
+                                }
+                                break;
                             case 617:
                                 {
                                     Character.LastComboCastId = 0;
