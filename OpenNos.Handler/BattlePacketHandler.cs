@@ -2269,7 +2269,6 @@ namespace OpenNos.Handler
                             {
                                 Session.Character.MTListTargetQueue.Clear();
                             }
-                            Session.Character.InstantBattleScore += 10;
                             ski.GetSkillBCards().Where(s =>
                                (s.Type.Equals((byte)CardType.Buff) && new Buff((short)s.SecondData, Session.Character.Level).Card?.BuffType == BuffType.Good)).ToList()
                                 .ForEach(s => s.ApplyBCards(Session.Character.BattleEntity, Session.Character.BattleEntity));

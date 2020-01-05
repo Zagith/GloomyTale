@@ -64,6 +64,10 @@ namespace OpenNos.GameObject.Battle
                 MapY = mapY.Value;
             }
 
+            if (Session.CurrentMapInstance.Map.MapId == 2517)
+            {
+                Session.Character.InstantBattleScore += 10;
+            }
             if (skillCombo != null)
             {
                 SkillCombo = skillCombo;

@@ -316,7 +316,7 @@ namespace OpenNos.GameObject
 
         public void DropItemsIC(List<Tuple<short, int>> list)
         {
-            foreach (ClientSession sess in Sessions.Where(s => s.Character.MapInstance.Map.MapId == 2004))
+            foreach (ClientSession sess in Sessions.Where(s => s.Character.MapInstance.Map.MapId == 2517))
             {
                 foreach (Tuple<short, int> drop in list)
                 {
