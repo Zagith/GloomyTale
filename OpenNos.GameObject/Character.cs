@@ -3646,7 +3646,7 @@ namespace OpenNos.GameObject
 
                         // gold calculation
                         int gold = GetGold(monsterToAttack);
-                        gold *= ServerManager.Instance.Configuration.RateGold;
+                        gold *= (ServerManager.Instance.Configuration.RateGold + Session.CurrentMapInstance.Map.GoldMapRate);
                         long maxGold = ServerManager.Instance.Configuration.MaxGold;
                         gold = gold > maxGold ? (int)maxGold : gold;
                         double randChance = ServerManager.RandomNumber() * random.NextDouble();

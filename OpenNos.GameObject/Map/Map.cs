@@ -110,6 +110,8 @@ namespace OpenNos.GameObject
 
         public int Side { get; set; }
 
+        public byte GoldMapRate { get; set; }
+
         #endregion
 
         #region Methods

@@ -81,6 +81,8 @@ namespace OpenNos.DAL.EF
 
         public int Side { get; set; }
 
+        public byte GoldMapRate { get; set; }
+
         #endregion
     }
 }

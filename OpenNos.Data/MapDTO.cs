@@ -46,6 +46,8 @@ namespace OpenNos.Data
 
         public int Side { get; set; }
 
+        public byte GoldMapRate { get; set; }
+
         #endregion
     }
 }

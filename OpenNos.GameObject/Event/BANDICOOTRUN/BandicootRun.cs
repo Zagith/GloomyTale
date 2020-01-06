@@ -33,11 +33,11 @@ namespace OpenNos.GameObject.Event.BANDICOOTRUN
             List<Tuple<MapInstance, byte>> maps = new List<Tuple<MapInstance, byte>>();
             MapInstance map = ServerManager.GenerateMapInstance(2004, MapInstanceType.EventGameInstance, new InstanceBag());
             maps.Add(new Tuple<MapInstance, byte>(map, 1));
-           /* if (map != null)
+           if (map != null)
             {
                 foreach (BandicootMember sess in sessions)
                 {
-                    ServerManager.Instance.TeleportOnRandomPlaceInMap(sess, map.MapInstanceId);
+                    ServerManager.Instance.TeleportOnRandomPlaceInMap(sess.Session, map.MapInstanceId);
                 }
 
                 ServerManager.Instance.Sessions.Where(s => s.Character != null).ToList().ForEach(s => s.Character.IsWaitingForEvent = false);
@@ -45,9 +45,9 @@ namespace OpenNos.GameObject.Event.BANDICOOTRUN
 
             }
 
-            if (map.Sessions.Count() < MiniPlayerForStart)
+            /*if (map.Sessions.Count() < MiniPlayerForStart)
             {
-                map.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("INSTANTBATTLE_NOT_ENOUGH_PLAYERS"), 0));
+                map.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("BANDICOOTRUN_NOT_ENOUGH_PLAYERS"), 0));
                 EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(5), new EventContainer(map, EventActionType.DISPOSEMAP, null));
                 return;
             }

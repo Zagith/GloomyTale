@@ -23,6 +23,7 @@ namespace OpenNos.Mapper.Mappers
             output.XpRate = input.XpRate;
             output.MeteoriteLevel = input.MeteoriteLevel;
             output.Side = input.Side;
+            output.GoldMapRate = input.GoldMapRate;
 
             return true;
         }
@@ -43,6 +44,7 @@ namespace OpenNos.Mapper.Mappers
             output.XpRate = input.XpRate;
             output.MeteoriteLevel = input.MeteoriteLevel;
             output.Side = input.Side;
+            output.GoldMapRate = input.GoldMapRate;
 
             return true;
         }

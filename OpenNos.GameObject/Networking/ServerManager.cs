@@ -993,9 +993,10 @@ namespace OpenNos.GameObject.Networking
                     NameI18NKey = baseMapInstance.Map.NameI18NKey,
                     ShopAllowed = baseMapInstance.Map.ShopAllowed,
                     XpRate = baseMapInstance.Map.XpRate,
-                    MeteoriteLevel = baseMapInstance.MeteoriteLevel
+                    MeteoriteLevel = baseMapInstance.MeteoriteLevel,
+                    GoldMapRate = baseMapInstance.GoldMapRate
                 };
-                MapInstance mapInstance = new MapInstance(mapinfo, baseMapInstance.MapInstanceId, baseMapInstance.ShopAllowed, baseMapInstance.MapInstanceType, new InstanceBag(), baseMapInstance.MeteoriteLevel, baseMapInstance.Side, baseMapInstance.DropAllowed);
+                MapInstance mapInstance = new MapInstance(mapinfo, baseMapInstance.MapInstanceId, baseMapInstance.ShopAllowed, baseMapInstance.MapInstanceType, new InstanceBag(), baseMapInstance.MeteoriteLevel, baseMapInstance.Side, baseMapInstance.GoldMapRate, baseMapInstance.DropAllowed);
                 mapInstance.LoadMonsters();
                 mapInstance.LoadNpcs();
                 mapInstance.LoadPortals();
@@ -1548,10 +1549,11 @@ namespace OpenNos.GameObject.Networking
                         NameI18NKey = map.NameI18NKey,
                         ShopAllowed = map.ShopAllowed,
                         XpRate = map.XpRate,
-                        MeteoriteLevel = map.MeteoriteLevel
+                        MeteoriteLevel = map.MeteoriteLevel,
+                        GoldMapRate = map.GoldMapRate
                     };
                     _maps.Add(mapinfo);
-                    MapInstance newMap = new MapInstance(mapinfo, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, map.Side, true);
+                    MapInstance newMap = new MapInstance(mapinfo, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, map.Side, map.GoldMapRate, true);
                     _mapinstances.TryAdd(guid, newMap);
 
                     Task.Run((Action)newMap.LoadPortals);
