@@ -234,6 +234,7 @@
     <Compile Include="Act4Stat.cs" />
     <Compile Include="ArenaMember.cs" />
     <Compile Include="ArenaTeamMember.cs" />
+    <Compile Include="BandicootMember.cs" />
     <Compile Include="Buff\Buff.cs" />
     <Compile Include="Buff\BCard.cs" />
     <Compile Include="Buff\Card.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Event\ACT4\CaligorRaid.cs" />
     <Compile Include="Event\ARENA\ArenaEvent.cs" />
     <Compile Include="Event\EventWave.cs" />
+    <Compile Include="Event\BANDICOOTRUN\BandicootRun.cs" />
     <Compile Include="Event\GAMES\MeteoriteGame.cs" />
     <Compile Include="Event\GAMES\SheepGame.cs" />
     <Compile Include="Event\ICEBREAKER\IceBreaker.cs" />

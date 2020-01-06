@@ -3724,6 +3724,29 @@ namespace OpenNos.GameObject
                     }
                 }
 
+                #region Act4
+
+                if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4) && ServerManager.Instance.ChannelId == 51)
+                {
+                    if (ServerManager.Instance.Act4AngelStat.Mode == 0 &&
+                        ServerManager.Instance.Act4DemonStat.Mode == 0)
+                    {
+                        switch (Faction)
+                        {
+                            case FactionType.Angel:
+                                ServerManager.Instance.Act4AngelStat.Percentage += 10000 / (ServerManager.Instance.Configuration.GlacernonPercentRatePvm * 100);
+                                break;
+                            case FactionType.Demon:
+                                ServerManager.Instance.Act4DemonStat.Percentage += 10000 / (ServerManager.Instance.Configuration.GlacernonPercentRatePvm * 100);
+                                break;
+                        }
+
+                        ServerManager.Instance.Act4Process();
+                    }
+                }
+
+                #endregion
+
                 #region EXP, Reputation and Dignity
 
                 if (Hp > 0 && !monsterToAttack.BattleEntity.IsMateTrainer(monsterToAttack.MonsterVNum))

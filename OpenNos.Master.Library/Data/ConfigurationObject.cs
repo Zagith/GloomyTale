@@ -64,5 +64,9 @@ namespace OpenNos.Master.Library.Data
         public bool ChristmasEvent { get; set; }
 
         public byte BackpackSize { get; set; }
+
+        public byte GlacernonPercentRatePvp { get; set; }
+
+        public byte GlacernonPercentRatePvm { get; set; }
     }
 }

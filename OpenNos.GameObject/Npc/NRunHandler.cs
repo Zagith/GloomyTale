@@ -2062,6 +2062,24 @@ namespace OpenNos.GameObject
                         Session.SendPacket(Session.Character.GenerateSay($"Insert the box in the first slot before!", 11));
                     }
                     break;
+
+                case 8889:
+                    if (ServerManager.Instance.CanRegisterBandicootRun == true)
+                    {
+                        /*if (ServerManager.Instance.IsCharacterMemberOfGroup(session.Character.CharacterId))
+                        {
+                            session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("RAINBOWBATTLE_OPEN_GROUP"), 12));
+                            return;
+                        }*/
+
+                        ServerManager.Instance.BandicootMembers.Add(new BandicootMember
+                        {
+                            BandicootRunType = EventType.BANDICOOTRUN,
+                            Session = Session,
+                        });                        
+                    }
+                    break;
+
                 default:
                     {
                         Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("NO_NRUN_HANDLER"), packet.Runner));

@@ -27,6 +27,7 @@ namespace OpenNos.Domain
         CALIGOR,
         ICEBREAKER,
         SHEEPGAME,
-        RAINBOWBATTLE
+        RAINBOWBATTLE,
+        BANDICOOTRUN
     }
 }

@@ -125,11 +125,17 @@ namespace OpenNos.GameObject.Networking
 
         public List<RainbowBattleMember> RainbowBattleMembers { get; set; } = new List<RainbowBattleMember>();
 
+        public List<BandicootMember> BandicootMembers { get; set; } = new List<BandicootMember>();
+
         public bool CanRegisterRainbowBattle { get; set; }
+
+        public bool CanRegisterBandicootRun { get; set; }
 
         public List<ConcurrentBag<ArenaTeamMember>> ArenaTeams { get; set; } = new List<ConcurrentBag<ArenaTeamMember>>();
 
         public List<RainbowBattleMember> RainbowBattleMembersRegistered { get; set; } = new List<RainbowBattleMember>();
+
+        public List<BandicootMember> BandicootMembersRegistered { get; set; } = new List<BandicootMember>();
 
         public List<long> BannedCharacters { get; set; } = new List<long>();
 
@@ -2326,7 +2332,7 @@ namespace OpenNos.GameObject.Networking
             }
         }
 
-        private void Act4Process()
+        public void Act4Process()
         {
             if (ChannelId != 51)
             {

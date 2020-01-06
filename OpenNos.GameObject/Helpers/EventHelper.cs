@@ -28,6 +28,7 @@ using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Data;
 using OpenNos.Data;
 using OpenNos.GameObject.Event.RainbowBattle;
+using OpenNos.GameObject.Event.BANDICOOTRUN;
 
 namespace OpenNos.GameObject.Helpers
 {
@@ -171,6 +172,10 @@ namespace OpenNos.GameObject.Helpers
                             break;
                         case EventType.RAINBOWBATTLE:
                             RainbowBattle.GenerateRainbowBattle();
+                            break;
+
+                        case EventType.BANDICOOTRUN:
+                            BandicootRun.GenerateBandicootRun();
                             break;
                     }
                 });
@@ -1036,6 +1041,7 @@ namespace OpenNos.GameObject.Helpers
                                     short perc = 0;
                                     switch (meteo.Item1)
                                     {
+#warning TODO: Add other levels
                                         case 55:
                                             perc = 25;
                                             break;
