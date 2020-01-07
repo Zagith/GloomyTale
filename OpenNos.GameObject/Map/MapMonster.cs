@@ -1414,31 +1414,18 @@ namespace OpenNos.GameObject
 
                 if (CurrentHp > 0)
                 {
+                    if (hitRequest.Session.CurrentMapInstance.Map.MapId == 2517)
+                    {
+                        hitRequest.Session.Character.InstantBattleScore += 10;
+                    }
                     #region TacchettaDivisoDue
                     if (OnTacchettaDivisoDueEvents != null)
                     {
-                        if ((MaxHp - CurrentHp >= MaxHp * 0.1) && TacchettaDivisoDue1 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                            TacchettaDivisoDue1 = true;
-                        }
-
-                        if ((MaxHp - CurrentHp >= MaxHp * 0.3) && TacchettaDivisoDue2 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                            TacchettaDivisoDue2 = true;
-                        }
 
                         if ((MaxHp - CurrentHp >= MaxHp * 0.5) && TacchettaDivisoDue3 == false)
                         {
                             hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
                             TacchettaDivisoDue3 = true;
-                        }
-
-                        if ((MaxHp - CurrentHp >= MaxHp * 0.7) && TacchettaDivisoDue4 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                            TacchettaDivisoDue4 = true;
                         }
 
                         if ((MaxHp - CurrentHp >= MaxHp * 0.9) && TacchettaDivisoDue5 == false)

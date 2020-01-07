@@ -5,6 +5,7 @@ using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace OpenNos.GameObject.Event.BANDICOOTRUN
     {
         public static void GenerateBandicootRun()
         {
-            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("BANDICOOTRUN_OPEN_REGISTER")), 0));
+            /*ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("BANDICOOTRUN_OPEN_REGISTER")), 0));
             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("BANDICOOTRUN_OPEN_REGISTER")), 1));
             ServerManager.Instance.CanRegisterBandicootRun = true;
             Thread.Sleep(1 * 40 * 100);
@@ -28,12 +29,12 @@ namespace OpenNos.GameObject.Event.BANDICOOTRUN
             IEnumerable<BandicootMember> sessions = ServerManager.Instance.BandicootMembersRegistered.Where(s => s.Session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance);
 
             ServerManager.Instance.BandicootMembersRegistered = new List<BandicootMember>();
-            ServerManager.Instance.RainbowBattleMembers = new List<RainbowBattleMember>();
+            ServerManager.Instance.BandicootMembers = new List<BandicootMember>();
 
             List<Tuple<MapInstance, byte>> maps = new List<Tuple<MapInstance, byte>>();
             MapInstance map = ServerManager.GenerateMapInstance(2004, MapInstanceType.EventGameInstance, new InstanceBag());
             maps.Add(new Tuple<MapInstance, byte>(map, 1));
-           if (map != null)
+            if (map != null)
             {
                 foreach (BandicootMember sess in sessions)
                 {
@@ -45,13 +46,7 @@ namespace OpenNos.GameObject.Event.BANDICOOTRUN
 
             }
 
-            /*if (map.Sessions.Count() < MiniPlayerForStart)
-            {
-                map.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("BANDICOOTRUN_NOT_ENOUGH_PLAYERS"), 0));
-                EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(5), new EventContainer(map, EventActionType.DISPOSEMAP, null));
-                return;
-            }
-            MeteoriteGameThread task = new MeteoriteGameThread();
+            SheepThread task = new SheepThread();
             Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(X => task.Run(map));*/
         }
     }

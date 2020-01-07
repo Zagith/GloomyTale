@@ -2098,7 +2098,7 @@ namespace OpenNos.GameObject.Networking
                 {
                     case 25:
                         MaxHp = 250000;
-                        NumeroMob = 5;
+                        NumeroMob = 1;
                         switch (element)
                         {
                             case 1:
@@ -2117,7 +2117,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                     case 35:
                         MaxHp = 250000;
-                        NumeroMob = 10;
+                        NumeroMob = 2;
                         switch (element)
                         {
                             case 1:
@@ -2136,7 +2136,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                     case 45:
                         MaxHp = 250000;
-                        NumeroMob = 15;
+                        NumeroMob = 3;
                         switch (element)
                         {
                             case 1:
@@ -2155,7 +2155,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                     case 55:
                         MaxHp = 250000;
-                        NumeroMob = 20;
+                        NumeroMob = 4;
                         switch (element)
                         {
                             case 1:
@@ -2174,7 +2174,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                     case 65:
                         MaxHp = 2500000;
-                        NumeroMob = 25;
+                        NumeroMob = 5;
                         switch (element)
                         {
                             case 1:
@@ -2193,7 +2193,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                     case 75:
                         MaxHp = 2500000;
-                        NumeroMob = 30;
+                        NumeroMob = 5;
                         switch (element)
                         {
                             case 1:
@@ -2212,7 +2212,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                     case 85:
                         MaxHp = 2500000;
-                        NumeroMob = 30;
+                        NumeroMob = 6;
                         switch (element)
                         {
                             case 1:
@@ -2231,7 +2231,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                     case 90:
                         MaxHp = 10000000;
-                        NumeroMob = 25;
+                        NumeroMob = 6;
                         switch (element)
                         {
                             case 1:
@@ -2250,7 +2250,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                     case 95:
                         MaxHp = 10000000;
-                        NumeroMob = 25;
+                        NumeroMob = 7;
                         switch (element)
                         {
                             case 1:
@@ -2269,7 +2269,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                     case 100:
                         MaxHp = 10000000;
-                        NumeroMob = 25;
+                        NumeroMob = 7;
                         switch (element)
                         {
                             case 1:
