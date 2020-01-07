@@ -960,7 +960,7 @@ namespace OpenNos.GameObject.Networking
             if (map != null)
             {
                 Guid guid = Guid.NewGuid();
-                MapInstance mapInstance = new MapInstance(map, guid, false, type, mapclock, 0, 0, dropAllowed);
+                MapInstance mapInstance = new MapInstance(map, guid, false, type, mapclock, 0, 0, 0, dropAllowed);
                 if (!isScriptedInstance)
                 {
                     mapInstance.LoadMonsters();
