@@ -2334,11 +2334,7 @@ namespace OpenNos.Handler
                             }
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                var start = DateTime.Now;
-                                while (DateTime.Now - start < TimeSpan.FromSeconds(2))
-                                {
-                                    specialist.UpgradeSp(Session, UpgradeProtection.Protected);
-                                }
+                                specialist.UpgradeSp(Session, UpgradeProtection.Protected);
                             }
                         }
                         else
@@ -2363,11 +2359,7 @@ namespace OpenNos.Handler
                             }
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                var start = DateTime.Now;
-                                while (DateTime.Now - start < TimeSpan.FromSeconds(2))
-                                {
-                                    specialist.UpgradeSp(Session, UpgradeProtection.Protected);
-                                }
+                                specialist.UpgradeSp(Session, UpgradeProtection.Protected);
                             }
                         }
                         else
@@ -2386,12 +2378,8 @@ namespace OpenNos.Handler
                         {
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                var start = DateTime.Now;
-                                while (DateTime.Now - start < TimeSpan.FromSeconds(2))
-                                {
-                                    specialist.UpgradeSp(Session, UpgradeProtection.Event);
-                                }
-                                
+                                specialist.UpgradeSp(Session, UpgradeProtection.Event);
+
                             }
                         }
                         else
@@ -2410,11 +2398,7 @@ namespace OpenNos.Handler
                         {
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                var start = DateTime.Now;
-                                while (DateTime.Now - start < TimeSpan.FromSeconds(2))
-                                {
-                                    specialist.PerfectSP(Session);
-                                }
+                                specialist.PerfectSP(Session);
                             }
                         }
                         else
