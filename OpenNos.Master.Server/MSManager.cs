@@ -72,9 +72,9 @@ namespace OpenNos.Master.Server
                 HalloweenEvent = bool.Parse(ConfigurationManager.AppSettings["HalloweenEvent"]),
                 ChristmasEvent = bool.Parse(ConfigurationManager.AppSettings["ChristmasEvent"]),
                 BackpackSize = byte.Parse(ConfigurationManager.AppSettings["BackpackSize"]),
-                GlacernonPercentRatePvm = byte.Parse(ConfigurationManager.AppSettings["GlacernonPercentRatePvp"]),
-                GlacernonPercentRatePvp = byte.Parse(ConfigurationManager.AppSettings["GlacernonPercentRatePvm"]),
-        };
+                GlacernonPercentRatePvm = byte.Parse(ConfigurationManager.AppSettings["GlacernonPercentRatePvm"]),
+                GlacernonPercentRatePvp = byte.Parse(ConfigurationManager.AppSettings["GlacernonPercentRatePvp"]),
+            };
         }
 
         #endregion
