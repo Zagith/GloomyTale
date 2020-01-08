@@ -2373,6 +2373,13 @@ namespace OpenNos.GameObject
                                     AddBuff(new Buff(686, Level), BattleEntity, true);
                                 }
                                 break;
+
+                            case 16:
+                                if (!Buff.ContainsKey(755))
+                                {
+                                    AddBuff(new Buff(755, Level), BattleEntity, true);
+                                }
+                                break;
                         }
                     }
                 }

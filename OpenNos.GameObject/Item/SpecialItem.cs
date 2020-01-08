@@ -707,6 +707,7 @@ namespace OpenNos.GameObject
                             disposeBuff(444);
                             disposeBuff(663);
                             disposeBuff(686);
+                            disposeBuff(755);
 
                             specialistInstance.Design = (byte)EffectValue;
 

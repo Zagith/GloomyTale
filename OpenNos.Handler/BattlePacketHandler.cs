@@ -654,6 +654,14 @@ namespace OpenNos.Handler
                 target.Character.GetDamage(damage / 2, battleEntity);
                 target.SendPacket(target.Character.GenerateStat());
 
+                int rnd = ServerManager.RandomNumber();
+                if(rnd <= 5)
+                    target.Character.AddBuff(new Buff(754, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity, true);
+
+                rnd = ServerManager.RandomNumber();
+                if(rnd < 7)
+                    target.Character.AddBuff(new Buff(553, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity, true);
+
                 // Magical Fetters
 
                 if (damage > 0)
@@ -1062,7 +1070,7 @@ namespace OpenNos.Handler
                     short fairywings = 1;
                     if (hitRequest.Session.Character.HasBuff(444))
                     {
-                        int rnd = ServerManager.RandomNumber();
+                        rnd = ServerManager.RandomNumber();
                         if (rnd < 7)
                             fairywings = 0;
                     }
