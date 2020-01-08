@@ -1086,6 +1086,12 @@ namespace OpenNos.GameObject
                                     session.Character.MPLoad();
                                     session.Character.Session?.SendPacket(session.Character.GenerateStat());
                                 }
+                                else if(SubType == (byte)AdditionalTypes.MaxHPMP.MaximumHPMPIncreased / 10)
+                                {
+                                    session.Character.HPLoad();
+                                    session.Character.MPLoad();
+                                    session.Character.Session?.SendPacket(session.Character.GenerateStat());
+                                }
                             }
                         }
                         break;
