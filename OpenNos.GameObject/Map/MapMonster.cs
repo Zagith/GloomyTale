@@ -1252,6 +1252,12 @@ namespace OpenNos.GameObject
                 {
                     if (hitRequest.Skill != null)
                     {
+                        if (hitRequest.Session.Character.HasBuff(444))
+                        {
+                            int rnd = ServerManager.RandomNumber();
+                            if (rnd < 7)
+                                hitRequest.Skill.Cooldown = 0;
+                        }
                         switch (hitRequest.TargetHitType)
                         {
                             case TargetHitType.SingleTargetHit:
