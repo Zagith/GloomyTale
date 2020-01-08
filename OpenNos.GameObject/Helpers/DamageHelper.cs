@@ -1428,11 +1428,22 @@ namespace OpenNos.GameObject.Helpers
 
             #region Fairy Damage
 
-            int fairyDamage = (int)((baseDamage + 100) * realAttacker.ElementRate / 100D);
+            int fairyDamage;
+
+            //fix Tropycal wings Effect
+            int rnd = ServerManager.RandomNumber();
+            if (rnd < 10)
+            {
+                fairyDamage = (int)((baseDamage + 100) * (realAttacker.ElementRate + 40) / 100D);
+                attacker.MapInstance?.Broadcast(
+                    StaticPacketHelper.GenerateEff(realAttacker.UserType, realAttacker.MapEntityId, 521));
+            }
+            else
+                fairyDamage = (int)((baseDamage + 100) * realAttacker.ElementRate / 100D);
 
             #endregion
 
-            #region Elemental Damage Advantage
+                #region Elemental Damage Advantage
 
             double elementalBoost = 0;
 
