@@ -13,7 +13,7 @@ using YoutubeExplode.Converter;
 
 namespace GloomyTale.DiscordBot.Modules
 {
-    public class MusicModule : ModuleBase<ShardedCommandContext>
+    public class MusicModule : ModuleBase<SocketCommandContext>
     {
         private Process CreateStream(string path)
         {

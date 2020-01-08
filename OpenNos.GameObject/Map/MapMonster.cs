@@ -1252,11 +1252,12 @@ namespace OpenNos.GameObject
                 {
                     if (hitRequest.Skill != null)
                     {
+                        short fairywings = 1;
                         if (hitRequest.Session.Character.HasBuff(444))
                         {
                             int rnd = ServerManager.RandomNumber();
                             if (rnd < 7)
-                                hitRequest.Skill.Cooldown = 0;
+                                fairywings = 0;
                         }
                         switch (hitRequest.TargetHitType)
                         {
@@ -1265,7 +1266,7 @@ namespace OpenNos.GameObject
                                 {
                                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                         attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                        hitRequest.Skill.SkillVNum, (short)(hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D),
+                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
                                         hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                         attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                         IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1277,7 +1278,7 @@ namespace OpenNos.GameObject
                             case TargetHitType.SingleTargetHitCombo:
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)(hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
                                     hitRequest.SkillCombo.Animation, hitRequest.SkillCombo.Effect,
                                     attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                     IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1298,7 +1299,7 @@ namespace OpenNos.GameObject
                                     }
                                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                         attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                        hitRequest.Skill.SkillVNum, (short)(hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D),
+                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
                                         hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                         attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                         IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1328,7 +1329,7 @@ namespace OpenNos.GameObject
 
                                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                         attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                        -1, (short)(hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D),
+                                        -1, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
                                         hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                         attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                         IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1359,7 +1360,7 @@ namespace OpenNos.GameObject
 
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)(hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                     attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                     IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1369,7 +1370,7 @@ namespace OpenNos.GameObject
                             case TargetHitType.ZoneHit:
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)(hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect, hitRequest.MapX,
                                     hitRequest.MapY, IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
                                     (byte)(hitRequest.Skill.SkillType - 1)));
@@ -1378,7 +1379,7 @@ namespace OpenNos.GameObject
                             case TargetHitType.SpecialZoneHit:
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)(hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                     attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                     IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
