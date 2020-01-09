@@ -1056,6 +1056,10 @@ namespace OpenNos.GameObject
                         }
 
                         #endregion
+
+                        int rnd = ServerManager.RandomNumber();
+                        if (rnd <= 5 && attackerBattleEntity.Character.HasBuff(755))
+                            BattleEntity.AddBuff(new Buff(754, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
                     }
                 }
 
@@ -1417,6 +1421,28 @@ namespace OpenNos.GameObject
                             });
                         attackerBattleEntity.AddBuff(new Buff(560, attackerBattleEntity.Level), attackerBattleEntity);
                     }
+
+                    //Test reset skill by fairy wings
+                    List<CharacterSkill> skills = attackerBattleEntity.Character.GetSkills();
+
+                    if (skills != null)
+                    {
+                        CharacterSkill ski = skills.FirstOrDefault(s => s.Skill?.CastId == hitRequest.Skill.CastId && (s.Skill?.UpgradeSkill == 0 || s.Skill?.SkillType == 1));
+                        int[] fairyWings = attackerBattleEntity.GetBuff(CardType.EffectSummon, 11);
+                        int random = ServerManager.RandomNumber();
+                        if (fairyWings[0] > random)
+                        {
+                            Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(o =>
+                            {
+                                if (ski != null)
+                                {
+                                    ski.LastUse = DateTime.Now.AddMilliseconds(ski.Skill.Cooldown * 100 * -1);
+                                    attackerBattleEntity.Character.Session.SendPacket(StaticPacketHelper.SkillReset(ski.Skill.CastId));
+                                }
+                            });
+                        }
+                    }
+                    
                 }
 
                 if (CurrentHp > 0)
@@ -2313,6 +2339,10 @@ namespace OpenNos.GameObject
                     bool firstHit = false;
 
                     target.GetDamage(damage, BattleEntity);
+
+                    int rnd = ServerManager.RandomNumber();
+                    if (rnd < 7 && target.Character.HasBuff(755))
+                        BattleEntity.AddBuff(new Buff(553, target.Character.Level), target, true);
 
                     if (target.MapNpc != null)
                     {

@@ -654,13 +654,19 @@ namespace OpenNos.Handler
                 target.Character.GetDamage(damage / 2, battleEntity);
                 target.SendPacket(target.Character.GenerateStat());
 
+                if((hitRequest.Skill.SkillVNum == 1122 || 
+                    hitRequest.Skill.SkillVNum == 1136 || 
+                    hitRequest.Skill.SkillVNum == 1139 || 
+                    hitRequest.Skill.SkillVNum == 1140) && damage == 0)
+                    Session.SendPacket( StaticPacketHelper.Cancel(2, target.Character.CharacterId));
+
                 int rnd = ServerManager.RandomNumber();
-                if(rnd <= 5)
+                if(rnd <= 5 && hitRequest.Session.Character.HasBuff(755))
                     target.Character.AddBuff(new Buff(754, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity, true);
 
                 rnd = ServerManager.RandomNumber();
-                if(rnd < 7)
-                    target.Character.AddBuff(new Buff(553, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity, true);
+                if(rnd < 7 && target.Character.HasBuff(755))
+                    hitRequest.Session.Character.AddBuff(new Buff(553, target.Character.Level), target.Character.BattleEntity, true);
 
                 // Magical Fetters
 
@@ -1735,6 +1741,10 @@ namespace OpenNos.Handler
                                         else
                                         {
                                             ski.Hit++;
+                                            ski.ComboCount++;
+                                            if(ski.SkillVNum == 1122 && ski.ComboCount > 5)
+                                                Session.SendPacket(
+                                                        StaticPacketHelper.Cancel(2, targetId));
                                         }
 
                                         ski.LastUse = DateTime.Now;
@@ -1990,6 +2000,10 @@ namespace OpenNos.Handler
                                         else
                                         {
                                             ski.Hit++;
+                                            ski.ComboCount++;
+                                            if (ski.SkillVNum == 1122 && ski.ComboCount > 5)
+                                                Session.SendPacket(
+                                                        StaticPacketHelper.Cancel(2, targetId));
                                         }
 
                                         #endregion
@@ -2142,6 +2156,10 @@ namespace OpenNos.Handler
                                         else
                                         {
                                             ski.Hit++;
+                                            ski.ComboCount++;
+                                            if (ski.SkillVNum == 1122 && ski.ComboCount > 5)
+                                                Session.SendPacket(
+                                                        StaticPacketHelper.Cancel(2, targetId));
                                         }
 
                                         ski.LastUse = DateTime.Now;

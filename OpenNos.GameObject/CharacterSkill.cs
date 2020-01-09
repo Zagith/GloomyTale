@@ -31,6 +31,8 @@ namespace OpenNos.GameObject
 
         private Skill _skill;
 
+        public byte ComboCount;
+
         #endregion
 
         #region Instantiation
@@ -39,6 +41,7 @@ namespace OpenNos.GameObject
         {
             LastUse = DateTime.Now.AddHours(-1);
             Hit = 0;
+            ComboCount = 0;
         }
 
         public CharacterSkill(CharacterSkillDTO input) : this()
