@@ -658,7 +658,7 @@ namespace OpenNos.Handler
                     hitRequest.Skill.SkillVNum == 1136 || 
                     hitRequest.Skill.SkillVNum == 1139 || 
                     hitRequest.Skill.SkillVNum == 1140) && damage == 0)
-                    Session.SendPacket( StaticPacketHelper.Cancel(2, target.Character.CharacterId));
+                        Session.SendPacket( StaticPacketHelper.Cancel(2, target.Character.CharacterId));
 
                 int rnd = ServerManager.RandomNumber();
                 if(rnd <= 5 && hitRequest.Session.Character.HasBuff(755))
