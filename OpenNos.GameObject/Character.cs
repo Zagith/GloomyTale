@@ -340,6 +340,8 @@ namespace OpenNos.GameObject
 
         public DateTime LastSkillUse { get; set; }
 
+        public CharacterSkill LastSkillUsed { get; set; }
+
         public double LastSp { get; set; }
 
         public DateTime LastSpeedChange { get; set; }
