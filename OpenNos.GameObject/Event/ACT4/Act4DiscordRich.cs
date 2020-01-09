@@ -47,6 +47,7 @@ namespace OpenNos.GameObject.Event.ACT4
                 if (IsMukraju == true)
                 {
                     message = "A new raid can appear to Frozen Crown... Get ready for the battle!";
+                    string description = $"Raid started for {nameFaction} faction";
                     embed = new EmbedBuilder
                     {
                         Color = Color.DarkBlue,
@@ -58,41 +59,42 @@ namespace OpenNos.GameObject.Event.ACT4
                 else
                 {
                     message = "A new raid appeared to Frozen Crown... Get ready for the battle!";
+                    string description = $"Raid started for {nameFaction} faction";
                     switch (RaidType)
                     {
                         case MapInstanceType.Act4Viserion:
                             embed = new EmbedBuilder
                             {
                                 Color = Color.Red,
-                                ImageUrl = "http://wiki.nostale.it/images/b/bc/MaestroMorcos.png",
-                                Title = "Morcos Raid",
-                                Description = $"Raid Morcos started for {nameFaction} faction"
+                                ImageUrl = "https://cdn.discordapp.com/attachments/534507467128963092/571088928816496650/8563.png",
+                                Title = "God Viserion Raid",
+                                Description = description
                             };
                             break;
                         case MapInstanceType.Act4Orias:
                             embed = new EmbedBuilder
                             {
-                                ImageUrl = "http://4.bp.blogspot.com/-rVwumtP1Ivo/U_QeOd78RWI/AAAAAAAABLs/GaeQKq9_b1M/s1600/hatus.jpg",
-                                Title = "Hatus Raid",
-                                Description = $"Raid Hatus started for {nameFaction} faction"
+                                ImageUrl = "https://cdn.discordapp.com/attachments/534507467128963092/571088937871998977/8577.png",
+                                Title = "God Orias Raid",
+                                Description = description
                             };
                             break;
                         case MapInstanceType.Act4Zanarkand:
                             embed = new EmbedBuilder
                             {
                                 Color = Color.Blue,
-                                ImageUrl = "http://wiki.nostale.it/images/2/26/LadyCalvinas.png",
-                                Title = "Calvina Raid",
-                                Description = $"Raid Calvina started for {nameFaction} faction"
+                                ImageUrl = "https://cdn.discordapp.com/attachments/534507467128963092/571088954476986394/8629.png",
+                                Title = "God Zanarkand Raid",
+                                Description = description
                             };
                             break;
                         case MapInstanceType.Act4Demetra:
                             embed = new EmbedBuilder
                             {
                                 Color = Color.Gold,
-                                ImageUrl = "http://wiki.nostale.it/images/f/f6/BaroneBerios.png",
-                                Title = "Berios Raid",
-                                Description = $"Raid Berios started for {nameFaction} faction"
+                                ImageUrl = "https://cdn.discordapp.com/attachments/534507467128963092/571088946608603137/8624.png",
+                                Title = "God Demetra Raid",
+                                Description = description
                             };
                             break;
                         default:
