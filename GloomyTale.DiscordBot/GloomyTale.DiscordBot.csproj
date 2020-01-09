@@ -166,44 +166,30 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenNos.Core\OpenNos.Core.csproj">
-      <Project>{C93A0A40-0551-4732-B594-171B87679AC1}</Project>
-      <Name>OpenNos.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OpenNos.Domain\OpenNos.Domain.csproj">
-      <Project>{20ADDDDD-DAD9-44F3-9BEB-026C73090660}</Project>
-      <Name>OpenNos.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OpenNos.Master.Library\OpenNos.Master.Library.csproj">
-      <Project>{8FABDA5B-C873-4E32-A78F-08A9A4768595}</Project>
-      <Name>OpenNos.Master.Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resource\LocalizedResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizedResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-  <None Update="Copy\ffmpeg.exe">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-  </None>
-  <None Update="Copy\libsodium.dll">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-  </None>
-  <None Update="Copy\opus.dll">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-  </None>
-  <None Update="ffmpeg.exe">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </None>
-  <None Update="libsodium.dll">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </None>
-  <None Update="opus.dll">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </None>
+    <None Update="Copy\ffmpeg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Copy\libsodium.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Copy\opus.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libsodium.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="opus.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

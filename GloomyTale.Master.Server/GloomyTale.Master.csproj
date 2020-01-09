@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GloomyTale.Communication.RPC\GloomyTale.Communication.RPC.csproj" />
+    <ProjectReference Include="..\GloomyTale.DAL.DAO\GloomyTale.DAL.DAO.csproj" />
+    <ProjectReference Include="..\GloomyTale.DAL.EF\GloomyTale.DAL.EF.csproj" />
+    <ProjectReference Include="..\GloomyTale.DAL.Interface\GloomyTale.DAL.Interface.csproj" />
+    <ProjectReference Include="..\GloomyTale.DAL\GloomyTale.DAL.csproj" />
+    <ProjectReference Include="..\GloomyTale.Data\GloomyTale.Data.csproj" />
+    <ProjectReference Include="..\GloomyTale.Domain\GloomyTale.Domain.csproj" />
+    <ProjectReference Include="..\GloomyTale.GameObject\GloomyTale.GameObject.csproj" />
+    <ProjectReference Include="..\GloomyTale.Plugins\GloomyTale.Plugins.csproj" />
+  </ItemGroup>
+
+</Project>
