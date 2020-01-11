@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GloomyTale.Plugins.Exceptions
+﻿namespace GloomyTale.Plugins.Exceptions
 {
     public class CriticalPluginException : PluginException
     {

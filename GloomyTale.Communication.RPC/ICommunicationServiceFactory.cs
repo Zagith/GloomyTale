@@ -1,5 +1,4 @@
-﻿using GloomyTale.Communication;
-using Grpc.Core;
+﻿using Grpc.Core;
 using OpenNos.Core;
 using System.Threading.Tasks;
 

@@ -1,8 +1,5 @@
 ﻿using Autofac;
 using GloomyTale.Plugins.Logging.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GloomyTale.Plugins.Logging
 {

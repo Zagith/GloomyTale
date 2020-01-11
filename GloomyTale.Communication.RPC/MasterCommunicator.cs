@@ -1,10 +1,8 @@
-﻿using GloomyTale.Communication;
-using OpenNos.Data;
+﻿using OpenNos.Data;
 using OpenNos.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace GloomyTale.Communication.RPC
 {

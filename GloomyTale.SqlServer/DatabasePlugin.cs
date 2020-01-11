@@ -7,7 +7,6 @@ using GloomyTale.Plugins.Logging.Interface;
 using OpenNos.DAL;
 using OpenNos.DAL.DAO;
 using OpenNos.Data;
-using System;
 
 namespace GloomyTale.SqlServer
 {

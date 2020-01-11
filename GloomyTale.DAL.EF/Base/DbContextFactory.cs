@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GloomyTale.DAL.EF.Base
 {

@@ -1,5 +1,4 @@
-﻿using GloomyTale.Communication;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 
 namespace GloomyTale.Communication.RPC
