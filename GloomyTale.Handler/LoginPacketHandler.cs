@@ -93,9 +93,7 @@ namespace OpenNos.Handler
             UserDTO user = new UserDTO
             {
                 Name = loginPacket.Name,
-                Password = ConfigurationManager.AppSettings["UseOldCrypto"] == "true"
-                    ? CryptographyBase.Sha512(LoginCryptography.GetPassword(loginPacket.Password)).ToUpper()
-                    : loginPacket.Password
+                Password = loginPacket.Password
             };
             if (user == null || user.Name == null || user.Password == null)
             {
@@ -164,7 +162,7 @@ namespace OpenNos.Handler
                                 }
 
                                 int newSessionId = SessionFactory.Instance.GenerateSessionId();
-                                Logger.Debug(string.Format(Language.Instance.GetMessageFromKey("CONNECTION"), user.Name,
+                                Logger.Log.Debug(string.Format(Language.Instance.GetMessageFromKey("CONNECTION"), user.Name,
                                     newSessionId));
                                 try
                                 {
@@ -174,7 +172,7 @@ namespace OpenNos.Handler
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.Error("General Error SessionId: " + newSessionId, ex);
+                                    Logger.Log.Error("General Error SessionId: " + newSessionId, ex);
                                 }
 
                                     string[] clientData = loginPacket.ClientData.Split('.');

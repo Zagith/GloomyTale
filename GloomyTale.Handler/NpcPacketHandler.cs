@@ -78,7 +78,7 @@ namespace OpenNos.Handler
                         return;
                     }
 
-                    Logger.LogUserEvent("ITEM_BUY_PLAYERSHOP", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("ITEM_BUY_PLAYERSHOP", Session.GenerateIdentity(),
                         $"From: {buyPacket.OwnerId} IIId: {item.ItemInstance.Id} ItemVNum: {item.ItemInstance.ItemVNum} Amount: {buyPacket.Amount} PricePer: {item.Price}");
 
                     if (amount > item.SellAmount)
@@ -171,7 +171,7 @@ namespace OpenNos.Handler
                                 return;
                             }
 
-                            Logger.LogUserEvent("SKILL_BUY", Session.GenerateIdentity(),
+                            Logger.Log.LogUserEvent("SKILL_BUY", Session.GenerateIdentity(),
                                 $"SkillVNum: {skillinfo.SkillVNum} Price: {skillinfo.Price}");
 
                             if (Session.Character.Gold < skillinfo.Price)
@@ -328,7 +328,7 @@ namespace OpenNos.Handler
                                     break;
                             }
 
-                            Logger.LogUserEvent("ITEM_BUY_NPCSHOP", Session.GenerateIdentity(),
+                            Logger.Log.LogUserEvent("ITEM_BUY_NPCSHOP", Session.GenerateIdentity(),
                                 $"From: {npc.MapNpcId} ItemVNum: {iteminfo.VNum} Amount: {buyPacket.Amount} PricePer: {price * percent} ");
 
                             sbyte rare = shopItem.Rare;

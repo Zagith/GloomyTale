@@ -58,7 +58,7 @@ namespace OpenNos.Handler
         {
             if (meteoriteSpawnPacket != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MeteoriteSpawn]");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MeteoriteSpawn]");
 
                 ServerManager.Instance.MeteoriteSpawn();
             }
@@ -134,7 +134,7 @@ namespace OpenNos.Handler
         {
             if (packet != null && ServerManager.Instance.ChannelId == 51)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Act4Stat]Faction: {packet.Faction} Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 switch (packet.Faction)
@@ -252,7 +252,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddMonster]NpcMonsterVNum: {packet.MonsterVNum} IsMoving: {packet.IsMoving}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (!Session.HasCurrentMapInstance)
@@ -304,7 +304,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddNpc]NpcMonsterVNum: {packet.NpcVNum} IsMoving: {packet.IsMoving}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (!Session.HasCurrentMapInstance)
@@ -356,7 +356,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddPartner]NpcMonsterVNum: {packet.MonsterVNum} Level: {packet.Level}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 AddMate(packet.MonsterVNum, packet.Level, MateType.Partner);
@@ -375,7 +375,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddPet]NpcMonsterVNum: {packet.MonsterVNum} Level: {packet.Level}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 AddMate(packet.MonsterVNum, packet.Level, MateType.Pet);
@@ -394,7 +394,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddPortal]DestinationMapId: {packet.DestinationMapId} DestinationMapX: {packet.DestinationX} DestinationY: {packet.DestinationY}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 AddPortal(packet.DestinationMapId, packet.DestinationX, packet.DestinationY,
@@ -414,7 +414,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddShellEffect]Slot: {packet.Slot} EffectLevel: {packet.EffectLevel} Effect: {packet.Effect} Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 try
@@ -452,7 +452,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddSkill]SkillVNum: {packet.SkillVNum}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Session.Character.AddSkill(packet.SkillVNum);
@@ -470,7 +470,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void ArenaWinner(ArenaWinnerPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ArenaWinner]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ArenaWinner]");
             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
             Session.Character.ArenaWinner = Session.Character.ArenaWinner == 0 ? 1 : 0;
             Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateCMode());
@@ -485,7 +485,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Ban]CharacterName: {packet.CharacterName} Reason: {packet.Reason} Until: {(packet.Duration == 0 ? DateTime.Now.AddYears(15) : DateTime.Now.AddDays(packet.Duration))}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 BanMethod(packet.CharacterName, packet.Duration, packet.Reason);
@@ -515,7 +515,7 @@ namespace OpenNos.Handler
                 {
                     case "balance":
                         {
-                            Logger.LogEvent("BANK",
+                            Logger.Log.LogEvent("BANK",
                                 $"[{Session.GenerateIdentity()}][Balance]Balance: {Session.Character.GoldBank}");
 
                             Session.SendPacket(
@@ -531,7 +531,7 @@ namespace OpenNos.Handler
                                 if (string.Equals(packet.Param1, "all", StringComparison.OrdinalIgnoreCase)
                                     && Session.Character.Gold > 0)
                                 {
-                                    Logger.LogEvent("BANK",
+                                    Logger.Log.LogEvent("BANK",
                                         $"[{Session.GenerateIdentity()}][Deposit]Amount: {Session.Character.Gold} OldBank: {Session.Character.GoldBank} NewBank: {Session.Character.GoldBank + Session.Character.Gold}");
 
                                     Session.SendPacket(
@@ -548,7 +548,7 @@ namespace OpenNos.Handler
                                 {
                                     if (amount < 1)
                                     {
-                                        Logger.LogEvent("BANK",
+                                        Logger.Log.LogEvent("BANK",
                                             $"[{Session.GenerateIdentity()}][Illegal]Mode: {packet.Mode} Param1: {packet.Param1} Param2: {packet.Param2}");
 
                                         Session.SendPacket(Session.Character.GenerateSay(
@@ -556,7 +556,7 @@ namespace OpenNos.Handler
                                     }
                                     else
                                     {
-                                        Logger.LogEvent("BANK",
+                                        Logger.Log.LogEvent("BANK",
                                             $"[{Session.GenerateIdentity()}][Deposit]Amount: {amount} OldBank: {Session.Character.GoldBank} NewBank: {Session.Character.GoldBank + amount}");
 
                                         Session.SendPacket(Session.Character.GenerateSay($"Deposited {amount} Gold.", 10));
@@ -580,7 +580,7 @@ namespace OpenNos.Handler
                             {
                                 if (amount < 1)
                                 {
-                                    Logger.LogEvent("BANK",
+                                    Logger.Log.LogEvent("BANK",
                                         $"[{Session.GenerateIdentity()}][Illegal]Mode: {packet.Mode} Param1: {packet.Param1} Param2: {packet.Param2}");
 
                                     Session.SendPacket(Session.Character.GenerateSay(
@@ -588,7 +588,7 @@ namespace OpenNos.Handler
                                 }
                                 else
                                 {
-                                    Logger.LogEvent("BANK",
+                                    Logger.Log.LogEvent("BANK",
                                         $"[{Session.GenerateIdentity()}][Withdraw]Amount: {amount} OldBank: {Session.Character.GoldBank} NewBank: {Session.Character.GoldBank - amount}");
 
                                     Session.SendPacket(Session.Character.GenerateSay($"Withdrawn {amount} Gold.", 10));
@@ -615,7 +615,7 @@ namespace OpenNos.Handler
                                 {
                                     if (amount < 1)
                                     {
-                                        Logger.LogEvent("BANK",
+                                        Logger.Log.LogEvent("BANK",
                                             $"[{Session.GenerateIdentity()}][Illegal]Mode: {packet.Mode} Param1: {packet.Param1} Param2: {packet.Param2}");
 
                                         Session.SendPacket(Session.Character.GenerateSay(
@@ -623,7 +623,7 @@ namespace OpenNos.Handler
                                     }
                                     else
                                     {
-                                        Logger.LogEvent("BANK",
+                                        Logger.Log.LogEvent("BANK",
                                             $"[{Session.GenerateIdentity()}][Send]Amount: {amount} OldBankSender: {Session.Character.GoldBank} NewBankSender: {Session.Character.GoldBank - amount} OldBankReceiver: {receiver.Character.GoldBank} NewBankReceiver: {receiver.Character.GoldBank + amount}");
 
                                         Session.SendPacket(
@@ -667,7 +667,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[BlockExp]CharacterName: {packet.CharacterName} Reason: {packet.Reason} Until: {DateTime.Now.AddMinutes(packet.Duration)}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Duration == 0)
@@ -720,7 +720,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[BlockFExp]CharacterName: {packet.CharacterName} Reason: {packet.Reason} Until: {DateTime.Now.AddMinutes(packet.Duration)}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Duration == 0)
@@ -772,7 +772,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void BlockPm(BlockPMPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[BlockPM]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[BlockPM]");
 
             if (!Session.Character.GmPvtBlock)
             {
@@ -796,7 +796,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[BlockRep]CharacterName: {packet.CharacterName} Reason: {packet.Reason} Until: {DateTime.Now.AddMinutes(packet.Duration)}");
 
                 if (packet.Duration == 0)
@@ -867,7 +867,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ChangeClass]Class: {packet.ClassType}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Session.Character.ChangeClass(packet.ClassType, true);
@@ -886,7 +886,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ChangeDignity]Dignity: {packet.Dignity}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Dignity >= -1000 && packet.Dignity <= 100)
@@ -920,7 +920,7 @@ namespace OpenNos.Handler
                 Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[FLvl]FairyLevel: {packet.FairyLevel}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (fairy != null)
@@ -952,7 +952,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void ChangeGender(ChangeSexPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ChangeSex]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ChangeSex]");
             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
             Session.Character.ChangeSex();
         }
@@ -965,7 +965,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[HeroLvl]HeroLevel: {packet.HeroLevel}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.HeroLevel <= 255)
@@ -1007,7 +1007,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[JLvl]JobLevel: {packet.JobLevel}");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[JLvl]JobLevel: {packet.JobLevel}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (((Session.Character.Class == 0 && packet.JobLevel <= 20)
                     || (Session.Character.Class != 0 && packet.JobLevel <= 255))
@@ -1042,7 +1042,7 @@ namespace OpenNos.Handler
         {
             if (packet != null && !Session.Character.IsSeal)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Lvl]Level: {packet.Level}");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Lvl]Level: {packet.Level}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Level > 0)
                 {
@@ -1101,7 +1101,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ChangeRep]Reputation: {packet.Reputation}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Reputation >= 0)
@@ -1133,7 +1133,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[SPLvl]SpecialistLevel: {packet.SpecialistLevel}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 ItemInstance sp =
@@ -1184,7 +1184,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void ChannelInfo(ChannelInfoPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ChannelInfo]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ChannelInfo]");
 
             Session.SendPacket(Session.Character.GenerateSay(
                 $"-----------Channel Info-----------\n-------------Channel:{ServerManager.Instance.ChannelId}-------------",
@@ -1205,7 +1205,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void ServerInfo(ServerInfoPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ServerInfo]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ServerInfo]");
 
             Session.SendPacket(Session.Character.GenerateSay($"------------Server Info------------", 11));
 
@@ -1239,7 +1239,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[CharEdit]Property: {packet.Property} Value: {packet.Data}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Property != null && !string.IsNullOrEmpty(packet.Data))
@@ -1271,7 +1271,7 @@ namespace OpenNos.Handler
             string returnHelp = CharacterStatsPacket.ReturnHelp();
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[CharStat]CharacterName: {packet.CharacterName}");
 
                 string name = packet.CharacterName;
@@ -1312,7 +1312,7 @@ namespace OpenNos.Handler
         {
             if (packet != null && packet.InventoryType != InventoryType.Wear)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Clear]InventoryType: {packet.InventoryType}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Parallel.ForEach(Session.Character.Inventory.Where(s => s.Type == packet.InventoryType),
@@ -1337,7 +1337,7 @@ namespace OpenNos.Handler
         {
             if (packet != null && Session.HasCurrentMapInstance)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ClearMap]MapId: {Session.CurrentMapInstance.MapInstanceId}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Parallel.ForEach(Session.CurrentMapInstance.Monsters.Where(s => s.ShouldRespawn != true), monster =>
@@ -1368,7 +1368,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Clone]Slot: {packet.Slot}");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Clone]Slot: {packet.Slot}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 ItemInstance item =
                     Session.Character.Inventory.LoadBySlotAndType(packet.Slot, InventoryType.Equipment);
@@ -1391,7 +1391,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void Command(HelpPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[Help]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[Help]");
 
             // get commands
             List<Type> classes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(t => t.GetTypes()).Where(t =>
@@ -1455,7 +1455,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[CreateItem]ItemVNum: {packet.VNum} Amount/Design: {packet.Design} Upgrade: {packet.Upgrade}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 short vnum = packet.VNum;
@@ -1582,7 +1582,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Demote]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
@@ -1684,7 +1684,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[DropRate]Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
@@ -1713,7 +1713,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Effect]EffectId: {packet.EffectId}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Session.CurrentMapInstance?.Broadcast(
@@ -1830,7 +1830,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[FairyXPRate]Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
@@ -1867,7 +1867,7 @@ namespace OpenNos.Handler
                     Amount = 1;
                 }
 
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Gift]CharacterName: {packet.CharacterName} ItemVNum: {packet.VNum} Amount: {Amount} Rare: {packet.Rare} Upgrade: {packet.Upgrade}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.CharacterName == "*")
@@ -1927,7 +1927,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void GodMode(GodModePacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[GodMode]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[GodMode]");
 
             Session.Character.HasGodMode = !Session.Character.HasGodMode;
             Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
@@ -1941,7 +1941,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Gold]Amount: {packet.Amount}");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Gold]Amount: {packet.Amount}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 long gold = packet.Amount;
                 long maxGold = 1000000000; // ServerManager.Instance.Configuration.MaxGold;
@@ -1973,7 +1973,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[GoldDropRate]Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
@@ -2003,7 +2003,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[GoldRate]Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
@@ -2033,7 +2033,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ReputationRate]Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
@@ -2063,7 +2063,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Guri]Type: {packet.Type} Value: {packet.Value} Arguments: {packet.Argument}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Session.SendPacket(UserInterfaceHelper.GenerateGuri(packet.Type, packet.Argument,
@@ -2081,7 +2081,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[HairColor]HairColor: {packet.HairColor}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Session.Character.HairColor = packet.HairColor;
@@ -2103,7 +2103,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[HairStyle]HairStyle: {packet.HairStyle}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Session.Character.HairStyle = packet.HairStyle;
@@ -2168,7 +2168,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[HeroXPRate]Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
@@ -2195,7 +2195,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void Invisible(InvisiblePacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[Invisible]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[Invisible]");
 
             Session.Character.Invisible = !Session.Character.Invisible;
             Session.Character.InvisibleGm = !Session.Character.InvisibleGm;
@@ -2247,7 +2247,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                        $"[ItemRain]ItemVNum: {packet.VNum} Amount: {packet.Amount} Count: {packet.Count} Time: {packet.Time}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 short vnum = packet.VNum;
@@ -2282,7 +2282,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Kick]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.CharacterName == "*")
@@ -2306,7 +2306,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Kick]AccountName: {packet.AccountName} SessionId: {packet.SessionId}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.SessionId.HasValue) //if you set the sessionId, remove account verification
@@ -2332,7 +2332,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Kill]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 ClientSession sess = ServerManager.Instance.GetSessionByCharacterName(packet.CharacterName);
@@ -2381,7 +2381,7 @@ namespace OpenNos.Handler
             string returnHelp = CharacterStatsPacket.ReturnHelp();
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[PenaltyLog]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
@@ -2495,7 +2495,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void MapDance(MapDancePacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MapDance]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MapDance]");
             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
             if (Session.HasCurrentMapInstance)
             {
@@ -2521,7 +2521,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void MapPvp(MapPVPPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MapPVP]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MapPVP]");
             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
             Session.CurrentMapInstance.IsPVP = !Session.CurrentMapInstance.IsPVP;
             Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
@@ -2535,7 +2535,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Morph]MorphId: {packet.MorphId} MorphDesign: {packet.MorphDesign} Upgrade: {packet.Upgrade} MorphId: {packet.ArenaWinner}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.MorphId < 30 && packet.MorphId > 0)
@@ -2578,7 +2578,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Mute]CharacterName: {packet.CharacterName} Reason: {packet.Reason} Until: {DateTime.Now.AddMinutes(packet.Duration)}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Duration == 0)
@@ -2603,7 +2603,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Packet]Packet: {packet.Packet}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Session.SendPacket(packet.Packet);
@@ -2623,7 +2623,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Maintenance]Delay: {packet.Delay} Duration: {packet.Duration} Reason: {packet.Reason}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 DateTime dateStart = DateTime.Now.AddMinutes(packet.Delay);
@@ -2650,7 +2650,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[PortalTo]DestinationMapId: {packet.DestinationMapId} DestinationMapX: {packet.DestinationX} DestinationY: {packet.DestinationY}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 AddPortal(packet.DestinationMapId, packet.DestinationX, packet.DestinationY,
@@ -2668,7 +2668,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void Position(PositionPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[Position]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[Position]");
             Session.SendPacket(Session.Character.GenerateSay(
                 $"Map:{Session.Character.MapInstance.Map.MapId} - X:{Session.Character.PositionX} - Y:{Session.Character.PositionY} - Dir:{Session.Character.Direction} - Cell:{Session.CurrentMapInstance.Map.JaggedGrid[Session.Character.PositionX][Session.Character.PositionY]?.Value}",
                 12));
@@ -2682,7 +2682,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Promote]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
@@ -2775,7 +2775,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Rarify]Slot: {packet.Slot} Mode: {packet.Mode} Protection: {packet.Protection}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Slot >= 0)
@@ -2798,7 +2798,7 @@ namespace OpenNos.Handler
         {
             if (Session.HasCurrentMapInstance)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[RemoveMob]NpcMonsterId: {Session.Character.LastNpcMonsterId}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 MapMonster monster = Session.CurrentMapInstance.GetMonsterById(Session.Character.LastNpcMonsterId);
@@ -2907,7 +2907,7 @@ namespace OpenNos.Handler
                         new MapCell { X = Session.Character.PositionX, Y = Session.Character.PositionY }) < 10);
                 if (portal != null)
                 {
-                    Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[RemovePortal]MapId: {portal.SourceMapId} MapX: {portal.SourceX} MapY: {portal.SourceY}");
                     LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                     Session.SendPacket(Session.Character.GenerateSay(
@@ -2933,7 +2933,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Resize]Size: {packet.Value}");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Resize]Size: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value >= 0)
                 {
@@ -2955,7 +2955,7 @@ namespace OpenNos.Handler
         {
             int time = packet.Time > 0 ? packet.Time : 5;
 
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Restart]Time: {time}");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Restart]Time: {time}");
             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
             if (ServerManager.Instance.TaskShutdown != null)
             {
@@ -2979,7 +2979,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[RestartAll]");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[RestartAll]");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string worldGroup = !string.IsNullOrEmpty(packet.WorldGroup) ? packet.WorldGroup : ServerManager.Instance.ServerGroup;
 
@@ -3009,7 +3009,7 @@ namespace OpenNos.Handler
             if (packet != null)
             {
                 string contents = packet.Contents;
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[SearchItem]Contents: {(string.IsNullOrEmpty(contents) ? "none" : contents)}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string name = "";
@@ -3057,7 +3057,7 @@ namespace OpenNos.Handler
             if (packet != null)
             {
                 string contents = packet.Contents;
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[SearchMonster]Contents: {(string.IsNullOrEmpty(contents) ? "none" : contents)}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string name = "";
@@ -3104,7 +3104,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[SetPerfection]Slot: {packet.Slot} Type: {packet.Type} Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Slot >= 0)
@@ -3178,7 +3178,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Shout]Message: {packet.Message}");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Shout]Message: {packet.Message}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
@@ -3203,7 +3203,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ShoutHere]Message: {packet.Message}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 ServerManager.Shout(packet.Message);
@@ -3220,7 +3220,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void Shutdown(ShutdownPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Shutdown]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Shutdown]");
             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
             if (ServerManager.Instance.TaskShutdown != null)
             {
@@ -3242,7 +3242,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[ShutdownAll]");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[ShutdownAll]");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (!string.IsNullOrEmpty(packet.WorldGroup))
                 {
@@ -3269,7 +3269,7 @@ namespace OpenNos.Handler
         {
             if (packet?.InventoryType.HasValue == true)
             {
-                Logger.LogUserEvent("USERCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("USERCOMMAND", Session.GenerateIdentity(),
                     $"[Sort]InventoryType: {packet.InventoryType}");
 
                 if (packet.InventoryType == InventoryType.Equipment
@@ -3292,7 +3292,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Speed]Value: {packet.Value}");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Speed]Value: {packet.Value}");
                 if (packet.Value < 60)
                 {
                     Session.Character.Speed = packet.Value;
@@ -3318,7 +3318,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void SpRefill(SPRefillPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[SPRefill]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[SPRefill]");
             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
             Session.Character.SpPoint = 10000;
             Session.Character.SpAdditionPoint = 1000000;
@@ -3334,7 +3334,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Event]EventType: {packet.EventType.ToString()}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.LvlBracket >= 0)
@@ -3360,7 +3360,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[GlobalEvent]EventType: {packet.EventType.ToString()}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
 #warning CommunicationServiceClient.Instance.RunGlobalEvent(packet.EventType);
@@ -3377,7 +3377,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void Stat(StatCommandPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Stat]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Stat]");
 
             /*Session.SendPacket(Session.Character.GenerateSay(
                 $"{Language.Instance.GetMessageFromKey("XP_RATE_NOW")}: {ServerManager.Instance.Configuration.RateXP} ",
@@ -3418,7 +3418,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Sudo]CharacterName: {packet.CharacterName} CommandContents:{packet.CommandContents}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.CharacterName == "*")
@@ -3463,7 +3463,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Mob]NpcMonsterVNum: {packet.NpcMonsterVNum} Amount: {packet.Amount} IsMoving: {packet.IsMoving}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (Session.IsOnMap && Session.HasCurrentMapInstance)
@@ -3530,7 +3530,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[MobRain]NpcMonsterVNum: {packet.NpcMonsterVNum} Amount: {packet.Amount} IsMoving: {packet.IsMoving}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (Session.IsOnMap && Session.HasCurrentMapInstance)
@@ -3560,7 +3560,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[NPC]NpcMonsterVNum: {packet.NpcMonsterVNum} Amount: {packet.Amount} IsMoving: {packet.IsMoving}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (Session.IsOnMap && Session.HasCurrentMapInstance)
@@ -3641,7 +3641,7 @@ namespace OpenNos.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (session != null)
                 {
-                    Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[Teleport]CharacterName: {packet.Data}");
 
                     short mapX = session.Character.PositionX;
@@ -3658,7 +3658,7 @@ namespace OpenNos.Handler
                 }
                 else if (short.TryParse(packet.Data, out short mapId))
                 {
-                    Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[Teleport]MapId: {packet.Data} MapX: {packet.X} MapY: {packet.Y}");
 
                     if (ServerManager.GetBaseMapInstanceIdByMapId(mapId) != default)
@@ -3693,7 +3693,7 @@ namespace OpenNos.Handler
             Random random = new Random();
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Summon]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.CharacterName == "*")
@@ -3767,7 +3767,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Unban]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
@@ -3807,7 +3807,7 @@ namespace OpenNos.Handler
         /// <param name="packet"></param>
         public void Undercover(UndercoverPacket packet)
         {
-            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Undercover]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Undercover]");
             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
             Session.Character.Undercover = !Session.Character.Undercover;
             ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, Session.CurrentMapInstance.MapInstanceId, Session.Character.PositionX, Session.Character.PositionY);
@@ -3821,7 +3821,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Unmute]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
@@ -3875,7 +3875,7 @@ namespace OpenNos.Handler
                     return;
                 }
 
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[BackMob]");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[BackMob]");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 object lastObject = Session.CurrentMapInstance.RemovedMobNpcList.LastOrDefault();
 
@@ -3971,7 +3971,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Upgrade]Slot: {packet.Slot} Mode: {packet.Mode} Protection: {packet.Protection}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Slot >= 0)
@@ -4061,7 +4061,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Warn]CharacterName: {packet.CharacterName} Reason: {packet.Reason}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string characterName = packet.CharacterName;
@@ -4132,7 +4132,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[WigColor]Color: {packet.Color}");
 
                 ItemInstance wig =
@@ -4165,7 +4165,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[XpRate]Value: {packet.Value}");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[XpRate]Value: {packet.Value}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
@@ -4194,7 +4194,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Zoom]Value: {packet.Value}");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Zoom]Value: {packet.Value}");
 
                 Session.SendPacket(
                     UserInterfaceHelper.GenerateGuri(15, packet.Value, Session.Character.CharacterId));
@@ -4211,7 +4211,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Act4]");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Act4]");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 //if (ServerManager.Instance.IsAct4Online())
                 {
@@ -4257,7 +4257,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[LeaveAct4]");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[LeaveAct4]");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (Session.Character.Channel.ChannelId == 51)
                 {
@@ -4290,7 +4290,7 @@ namespace OpenNos.Handler
             {
                 if (string.IsNullOrEmpty(packet.CharacterName))
                 {
-                    Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Miniland]");
+                    Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Miniland]");
 
                     ServerManager.Instance.JoinMiniland(Session, Session);
                 }
@@ -4299,7 +4299,7 @@ namespace OpenNos.Handler
                     ClientSession session = ServerManager.Instance.GetSessionByCharacterName(packet.CharacterName);
                     if (session != null)
                     {
-                        Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Miniland]CharacterName: {packet.CharacterName}");
+                        Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Miniland]CharacterName: {packet.CharacterName}");
 
                         ServerManager.Instance.JoinMiniland(Session, session);
 
@@ -4330,7 +4330,7 @@ namespace OpenNos.Handler
                 
                 if (Session.CurrentMapInstance != null)
                 {
-                    Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[Gogo]MapId: {Session.CurrentMapInstance.Map.MapId} MapX: {packet.X} MapY: {packet.Y}");
                     LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                     if (packet.X == 0 && packet.Y == 0)
@@ -4363,7 +4363,7 @@ namespace OpenNos.Handler
                 }
                 if (Session.CurrentMapInstance != null)
                 {
-                    Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[MapReset]MapId: {Session.CurrentMapInstance.Map.MapId}");
                     LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                     GameObject.MapInstance newMapInstance = ServerManager.ResetMapInstance(Session.CurrentMapInstance);
@@ -4386,7 +4386,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                        $"[Drop]ItemVNum: {packet.VNum} Amount: {packet.Amount} Count: {packet.Count} Time: {packet.Time}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 short vnum = packet.VNum;
@@ -4430,7 +4430,7 @@ namespace OpenNos.Handler
                     {
                         if (npc.Shop is Shop shop)
                         {
-                            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                                 $"[ChangeShopName]ShopId: {shop.ShopId} Name: {packet.Name}");
                             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                             if (DAOFactory.ShopDAO.LoadById(shop.ShopId) is ShopDTO shopDTO)
@@ -4467,7 +4467,7 @@ namespace OpenNos.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (Session.CurrentMapInstance.GetNpc(Session.Character.LastNpcMonsterId) is MapNpc npc)
                 {
-                    Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[CustomNpcName]MapNpcId: {npc.MapNpcId} Name: {packet.Name}");
 
                     if (DAOFactory.MapNpcDAO.LoadById(npc.MapNpcId) is MapNpcDTO npcDTO)
@@ -4481,7 +4481,7 @@ namespace OpenNos.Handler
                 }
                 else if (Session.CurrentMapInstance.GetMonsterById(Session.Character.LastNpcMonsterId) is MapMonster monster)
                 {
-                    Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[CustomNpcName]MapMonsterId: {monster.MapMonsterId} Name: {packet.Name}");
 
                     if (DAOFactory.MapMonsterDAO.LoadById(monster.MapMonsterId) is MapMonsterDTO monsterDTO)
@@ -4509,7 +4509,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                                        $"[AddQuest]QuestId: {packet.QuestId}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (ServerManager.Instance.Quests.Any(q => q.QuestId == packet.QuestId))
@@ -4538,7 +4538,7 @@ namespace OpenNos.Handler
                     return;
                 }
 
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                                        $"[ClassPack]Class: {packet.Class}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 switch (packet.Class)
@@ -4802,7 +4802,7 @@ namespace OpenNos.Handler
                 if (Session.Character.Channel.ChannelId != 51)
                 {
                     LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
-                    Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Home]");
+                    Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Home]");
                     ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 129, 127, 73);
                 }
                 else
@@ -4846,7 +4846,7 @@ namespace OpenNos.Handler
         {
             if (packet != null)
             {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[ReloadSI]");
+                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[ReloadSI]");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 ServerManager.Instance.LoadScriptedInstances();
                 Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));

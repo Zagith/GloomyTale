@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OpenNos.DAL.EF
+namespace GloomyTale.DAL.EF
 {
     public class ItemInstance : SynchronizableBaseEntity
     {
@@ -46,8 +46,6 @@ namespace OpenNos.DAL.EF
         public long? BoundCharacterId { get; set; }
 
         public virtual Character Character { get; set; }
-
-        [Index("IX_SlotAndType", 1, IsUnique = false, Order = 0)]
         public long CharacterId { get; set; }
 
         public short Design { get; set; }
@@ -64,10 +62,8 @@ namespace OpenNos.DAL.EF
 
         public short Rare { get; set; }
 
-        [Index("IX_SlotAndType", 2, IsUnique = false, Order = 1)]
         public short Slot { get; set; }
 
-        [Index("IX_SlotAndType", 3, IsUnique = false, Order = 2)]
         public InventoryType Type { get; set; }
 
         public byte Upgrade { get; set; }

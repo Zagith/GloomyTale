@@ -12,13 +12,13 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.DAL.EF.Entities;
+using GloomyTale.DAL.EF.Entities;
 using OpenNos.Domain;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OpenNos.DAL.EF
+namespace GloomyTale.DAL.EF
 {
     public class NpcMonster
     {

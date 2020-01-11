@@ -1,6 +1,6 @@
 ﻿using OpenNos.Core;
-using OpenNos.DAL.EF;
-using OpenNos.DAL.EF.Helpers;
+using GloomyTale.DAL.EF;
+using GloomyTale.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using OpenNos.Data.Enums;
@@ -36,7 +36,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
 
             return null;
@@ -64,7 +64,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
 
             }
 
@@ -92,7 +92,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
 
             return DeleteResult.Error;

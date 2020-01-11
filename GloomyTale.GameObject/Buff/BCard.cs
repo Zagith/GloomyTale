@@ -2408,7 +2408,7 @@ namespace OpenNos.GameObject
                         break;
 
                     default:
-                        Logger.Warn($"Card Type {Type} not defined!");
+                        Logger.Log.Warn($"Card Type {Type} not defined!");
                         break;
                 }
             });

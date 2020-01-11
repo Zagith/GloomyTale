@@ -302,7 +302,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 
@@ -488,7 +488,7 @@ namespace OpenNos.GameObject
 
         public MapItem PutItem(InventoryType type, short slot, short amount, ref ItemInstance inv, ClientSession session)
         {
-            Logger.LogUserEventDebug("PUTITEM", session.GenerateIdentity(), $"type: {type} slot: {slot} amount: {amount}");
+            Logger.Log.LogUserEventDebug("PUTITEM", session.GenerateIdentity(), $"type: {type} slot: {slot} amount: {amount}");
             Guid random2 = Guid.NewGuid();
             MapItem droppedItem = null;
             List<GridPos> possibilities = new List<GridPos>();
@@ -543,7 +543,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 
@@ -663,7 +663,7 @@ namespace OpenNos.GameObject
                     }
                     catch (Exception e)
                     {
-                        Logger.Error(e);
+                        Logger.Log.Error(e);
                     }
                 }
             });

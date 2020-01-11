@@ -54,7 +54,7 @@ namespace OpenNos.Handler
                 return;
             }
 
-            Logger.LogUserEvent("CREATECHARACTER", Session.GenerateIdentity(), $"[CreateCharacter]Name: {characterCreatePacket.Name} Slot: {characterCreatePacket.Slot} Gender: {characterCreatePacket.Gender} HairStyle: {characterCreatePacket.HairStyle} HairColor: {characterCreatePacket.HairColor}");
+            Logger.Log.LogUserEvent("CREATECHARACTER", Session.GenerateIdentity(), $"[CreateCharacter]Name: {characterCreatePacket.Name} Slot: {characterCreatePacket.Slot} Gender: {characterCreatePacket.Gender} HairStyle: {characterCreatePacket.HairStyle} HairColor: {characterCreatePacket.HairColor}");
 
             if (characterCreatePacket.Slot <= 3
                 && DAOFactory.CharacterDAO.LoadBySlot(Session.Account.AccountId, characterCreatePacket.Slot) == null
@@ -221,7 +221,7 @@ namespace OpenNos.Handler
                 return;
             }
 
-            Logger.LogUserEvent("DELETECHARACTER", Session.GenerateIdentity(),
+            Logger.Log.LogUserEvent("DELETECHARACTER", Session.GenerateIdentity(),
                 $"[DeleteCharacter]Name: {characterDeletePacket.Slot}");
             AccountDTO account = DAOFactory.AccountDAO.LoadById(Session.Account.AccountId);
             if (account == null)
@@ -297,7 +297,7 @@ namespace OpenNos.Handler
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error("MS Communication Failed.", ex);
+                    Logger.Log.Error("MS Communication Failed.", ex);
                     Session.Disconnect();
                     return;
                 }
@@ -314,21 +314,21 @@ namespace OpenNos.Handler
                         }
                         else
                         {
-                            Logger.Debug($"Client {Session.ClientId} forced Disconnection, invalid Password.");
+                            Logger.Log.Debug($"Client {Session.ClientId} forced Disconnection, invalid Password.");
                             Session.Disconnect();
                             return;
                         }
                     }
                     else
                     {
-                        Logger.Debug($"Client {Session.ClientId} forced Disconnection, invalid AccountName.");
+                        Logger.Log.Debug($"Client {Session.ClientId} forced Disconnection, invalid AccountName.");
                         Session.Disconnect();
                         return;
                     }
                 }
                 else
                 {
-                    Logger.Debug(
+                    Logger.Log.Debug(
                         $"Client {Session.ClientId} forced Disconnection, login has not been registered or Account is already logged in.");
                     Session.Disconnect();
                     return;
@@ -347,7 +347,7 @@ namespace OpenNos.Handler
                 // TODO: Wrap Database access up to GO
                 IEnumerable<CharacterDTO> characters = DAOFactory.CharacterDAO.LoadByAccount(Session.Account.AccountId);
 
-                Logger.Info(string.Format(Language.Instance.GetMessageFromKey("ACCOUNT_ARRIVED"), Session.SessionId));
+                Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("ACCOUNT_ARRIVED"), Session.SessionId));
 
                 // load characterlist packet for each character in CharacterDTO
                 Session.SendPacket("clist_start 0");
@@ -582,7 +582,7 @@ namespace OpenNos.Handler
             }
             catch (Exception ex)
             {
-                Logger.Error("Failed selecting the character.", ex);
+                Logger.Log.Error("Failed selecting the character.", ex);
             }
             finally
             {

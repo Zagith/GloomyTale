@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OpenNos.DAL.EF.Entities
+namespace GloomyTale.DAL.EF.Entities
 {
     public class FortuneWheel
     {

@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace OpenNos.DAL.EF
+namespace GloomyTale.DAL.EF
 {
     public class Recipe
     {

@@ -232,7 +232,7 @@ namespace OpenNos.GameObject
                             max = max > MAX_ITEM_AMOUNT ? MAX_ITEM_AMOUNT : max;
                             newItem.Amount = (short)(slot.Amount + newItem.Amount - max);
                             newItem.Amount = (short)(newItem.Amount < 0 ? 0 : newItem.Amount);
-                            Logger.LogUserEvent("ITEM_CREATE", Owner.GenerateIdentity(), $"IIId: {slot.Id} ItemVNum: {slot.ItemVNum} Amount: {max - slot.Amount} MapId: {Owner.MapInstance?.Map.MapId} MapX: {Owner.PositionX} MapY: {Owner.PositionY}");
+                            Logger.Log.LogUserEvent("ITEM_CREATE", Owner.GenerateIdentity(), $"IIId: {slot.Id} ItemVNum: {slot.ItemVNum} Amount: {max - slot.Amount} MapId: {Owner.MapInstance?.Map.MapId} MapX: {Owner.PositionX} MapY: {Owner.PositionY}");
 
                             slot.Amount = (short)max;
                             invlist.Add(slot);
@@ -268,7 +268,7 @@ namespace OpenNos.GameObject
         {
             if (Owner != null)
             {
-                Logger.LogUserEvent("ITEM_CREATE", Owner.GenerateIdentity(), $"IIId: {itemInstance.Id} ItemVNum: {itemInstance.ItemVNum} Amount: {itemInstance.Amount} MapId: {Owner.MapInstance?.Map.MapId} MapX: {Owner.PositionX} MapY: {Owner.PositionY}");
+                Logger.Log.LogUserEvent("ITEM_CREATE", Owner.GenerateIdentity(), $"IIId: {itemInstance.Id} ItemVNum: {itemInstance.ItemVNum} Amount: {itemInstance.Amount} MapId: {Owner.MapInstance?.Map.MapId} MapX: {Owner.PositionX} MapY: {Owner.PositionY}");
 
                 itemInstance.Slot = slot;
                 itemInstance.Type = type;
@@ -276,7 +276,7 @@ namespace OpenNos.GameObject
 
                 if (ContainsKey(itemInstance.Id))
                 {
-                    Logger.Error(new InvalidOperationException("Cannot add the same ItemInstance twice to inventory."));
+                    Logger.Log.Error(new InvalidOperationException("Cannot add the same ItemInstance twice to inventory."));
                     return null;
                 }
 
@@ -324,7 +324,7 @@ namespace OpenNos.GameObject
                 }
                 else
                 {
-                    Logger.Error(new InvalidOperationException("Expected item wasn't deleted, Type or Slot did not match!"));
+                    Logger.Log.Error(new InvalidOperationException("Expected item wasn't deleted, Type or Slot did not match!"));
                     return null;
                 }
 
@@ -350,7 +350,7 @@ namespace OpenNos.GameObject
                 }
                 else
                 {
-                    Logger.Error(new InvalidOperationException("Expected item wasn't deleted, Type or Slot did not match!"));
+                    Logger.Log.Error(new InvalidOperationException("Expected item wasn't deleted, Type or Slot did not match!"));
                 }
             }
         }
@@ -437,7 +437,7 @@ namespace OpenNos.GameObject
             }
             catch (InvalidOperationException ioEx)
             {
-                Logger.LogUserEventError(nameof(LoadBySlotAndType), Owner?.Session?.GenerateIdentity(), "Multiple items in slot, Splitting...", ioEx);
+                Logger.Log.LogUserEventError(nameof(LoadBySlotAndType), Owner?.Session?.GenerateIdentity(), "Multiple items in slot, Splitting...", ioEx);
 
                 bool isFirstItem = true;
 
@@ -487,7 +487,7 @@ namespace OpenNos.GameObject
 
             if (sourceInstance == null && wear)
             {
-                Logger.Error(new InvalidOperationException("SourceInstance to move does not exist."));
+                Logger.Log.Error(new InvalidOperationException("SourceInstance to move does not exist."));
                 return null;
             }
             if (Owner != null && sourceInstance != null)
@@ -563,7 +563,7 @@ namespace OpenNos.GameObject
 
         public void MoveItem(InventoryType sourcetype, InventoryType desttype, short sourceSlot, short amount, short destinationSlot, out ItemInstance sourceInventory, out ItemInstance destinationInventory)
         {
-            Logger.LogUserEvent("ITEM_MOVE", Owner.GenerateIdentity(), $"SourceType: {sourcetype.ToString()} DestType: {desttype.ToString()} SourceSlot: {sourceSlot} Amount: {amount} DestSlot: {destinationSlot}");
+            Logger.Log.LogUserEvent("ITEM_MOVE", Owner.GenerateIdentity(), $"SourceType: {sourcetype.ToString()} DestType: {desttype.ToString()} SourceSlot: {sourceSlot} Amount: {amount} DestSlot: {destinationSlot}");
 
             // Load source and destination slots
             sourceInventory = LoadBySlotAndType(sourceSlot, sourcetype);

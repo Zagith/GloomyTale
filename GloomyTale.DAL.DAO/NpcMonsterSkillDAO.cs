@@ -13,9 +13,9 @@
  */
 
 using OpenNos.Core;
-using OpenNos.DAL.EF;
+using GloomyTale.DAL.EF;
 
-using OpenNos.DAL.EF.Helpers;
+using GloomyTale.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using System;
@@ -48,7 +48,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }
@@ -59,20 +59,20 @@ namespace OpenNos.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    context.Configuration.AutoDetectChangesEnabled = false;
+                    
                     foreach (NpcMonsterSkillDTO Skill in skills)
                     {
                         NpcMonsterSkill entity = new NpcMonsterSkill();
                         Mapper.Mappers.NpcMonsterSkillMapper.ToNpcMonsterSkill(Skill, entity);
                         context.NpcMonsterSkill.Add(entity);
                     }
-                    context.Configuration.AutoDetectChangesEnabled = true;
+                    
                     context.SaveChanges();
                 }
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 

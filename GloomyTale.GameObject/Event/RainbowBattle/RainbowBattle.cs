@@ -184,7 +184,7 @@ namespace OpenNos.GameObject.Event.RainbowBattle
                     session.SendPackets(session.Character.GenerateQuicklist());
                     session.SendPacket(session.Character.GenerateStat());
 
-                    Logger.LogUserEvent("CHARACTER_SPECIALIST_RETURN", session.GenerateIdentity(), $"SpCooldown: {session.Character.SpCooldown}");
+                    Logger.Log.LogUserEvent("CHARACTER_SPECIALIST_RETURN", session.GenerateIdentity(), $"SpCooldown: {session.Character.SpCooldown}");
 
                     Observable.Timer(TimeSpan.FromMilliseconds(session.Character.SpCooldown * 1000)).Subscribe(o =>
                     {

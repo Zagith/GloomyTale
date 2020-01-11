@@ -2082,7 +2082,7 @@ namespace OpenNos.GameObject
 
                 default:
                     {
-                        Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("NO_NRUN_HANDLER"), packet.Runner));
+                        Logger.Log.Warn(string.Format(Language.Instance.GetMessageFromKey("NO_NRUN_HANDLER"), packet.Runner));
                     }
                     break;
             }

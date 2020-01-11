@@ -91,7 +91,7 @@ namespace OpenNos.GameObject
                 }
                 catch (IOException)
                 {
-                    Logger.Warn("MissingMateStats.txt was in use, but i was able to catch this exception", null, "MissingMateStats");
+                    Logger.Log.Warn("MissingMateStats.txt was in use, but i was able to catch this exception", null, "MissingMateStats");
                 }
             }
         }

@@ -364,7 +364,7 @@ namespace OpenNos.GameObject.Helpers
             }
             catch (Exception ex)
             {
-                Core.Logger.Error(ex);
+                Core.Logger.Log.Error(ex);
                 return "";
             }
         }

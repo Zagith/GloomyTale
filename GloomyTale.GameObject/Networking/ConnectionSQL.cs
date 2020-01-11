@@ -9,8 +9,8 @@ namespace OpenNos.GameObject.Networking
 {
     public class ConnectionSQL
     {
-        private static string connectionString = "Server=localhost;Database=gloomytale;User ID=GloomytaleSa;Password=strong_pass2018;";
-        private SqlConnection connection;
+        /*private static string connectionString = "Server=localhost;Database=gloomytale;User ID=GloomytaleSa;Password=strong_pass2018;";
+        //private SqlConnection connection;
 
         public ConnectionSQL()
         {
@@ -28,7 +28,7 @@ namespace OpenNos.GameObject.Networking
                 while (reader.Read())
                 {
                     /*Console.WriteLine(String.Format("{0}, {1}",
-                    reader["tPatCulIntPatIDPk"], reader["tPatSFirstname"]));// etc*/
+                    reader["tPatCulIntPatIDPk"], reader["tPatSFirstname"]));// etc
                     if ((long)reader["CharacterId"] == charid)
                         return true;
                 }
@@ -39,6 +39,6 @@ namespace OpenNos.GameObject.Networking
                 reader.Close();
             }
             return false;
-        }
+        }*/
     }
 }

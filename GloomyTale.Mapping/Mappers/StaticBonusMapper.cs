@@ -1,4 +1,4 @@
-﻿using OpenNos.DAL.EF;
+﻿using GloomyTale.DAL.EF;
 using OpenNos.Data;
 
 namespace OpenNos.Mapper.Mappers

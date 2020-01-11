@@ -20,7 +20,7 @@ using System.Xml;
 
 namespace OpenNos.GameObject
 {
-    public class EventSchedule : IConfigurationSectionHandler
+    public class EventSchedule //: IConfigurationSectionHandler
     {
         #region Methods
 

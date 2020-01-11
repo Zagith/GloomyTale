@@ -1625,7 +1625,7 @@ namespace OpenNos.GameObject
             }
             else
             {
-                Logger.Warn($"Partner skill not found (Morph: {Instance.Item.Morph}, CastId: {castId})");
+                Logger.Log.Warn($"Partner skill not found (Morph: {Instance.Item.Morph}, CastId: {castId})");
             }
 
             return false;

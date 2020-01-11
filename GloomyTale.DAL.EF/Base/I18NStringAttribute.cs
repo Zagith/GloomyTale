@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.DAL.EF.Base
+namespace GloomyTale.DAL.EF.Base
 {
     public class I18NStringAttribute : Attribute
     {

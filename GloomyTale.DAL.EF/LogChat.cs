@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.DAL.EF
+namespace GloomyTale.DAL.EF
 {
     public class LogChat
     {

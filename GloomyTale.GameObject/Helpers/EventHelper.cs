@@ -573,7 +573,7 @@ namespace OpenNos.GameObject.Helpers
                                                 }
                                             }
 
-                                            Logger.LogUserEvent("RAID_SUCCESS", owner.Name, $"RaidId: {group.GroupId}");
+                                            Logger.Log.LogUserEvent("RAID_SUCCESS", owner.Name, $"RaidId: {group.GroupId}");
 
                                             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("RAID_SUCCEED"), group.Raid.Label, owner.Name), 0));
 
@@ -678,7 +678,7 @@ namespace OpenNos.GameObject.Helpers
                                             }
                                             evt.MapInstance.Broadcast("dance 2");
 
-                                            Logger.LogEvent("FAMILYRAID_SUCCESS", $"[fam.Name]FamilyRaidId: {evt.MapInstance.MapInstanceType.ToString()}");
+                                            Logger.Log.LogEvent("FAMILYRAID_SUCCESS", $"[fam.Name]FamilyRaidId: {evt.MapInstance.MapInstanceType.ToString()}");
 
                                             CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                                             {

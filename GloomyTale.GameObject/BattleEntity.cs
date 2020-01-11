@@ -1172,7 +1172,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception ex)
             {
-                Logger.LogEventError("HASBUFF", "Error on HasBuff(CardType type, byte subtype, bool castTypeNotZero = false) method", ex);
+                Logger.Log.LogEventError("HASBUFF", "Error on HasBuff(CardType type, byte subtype, bool castTypeNotZero = false) method", ex);
                 return false;
             }
         }

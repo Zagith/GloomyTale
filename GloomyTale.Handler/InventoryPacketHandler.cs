@@ -79,7 +79,7 @@ namespace OpenNos.Handler
 
                         if (delInstance != null)
                         {
-                            Logger.LogUserEvent("ITEM_DELETE", Session.GenerateIdentity(),
+                            Logger.Log.LogUserEvent("ITEM_DELETE", Session.GenerateIdentity(),
                                 $"[DeleteItem]IIId: {delInstance.Id} ItemVNum: {delInstance.ItemVNum} Amount: {delInstance.Amount} MapId: {Session.CurrentMapInstance?.Map.MapId} MapX: {Session.Character.PositionX} MapY: {Session.Character.PositionY}");
                         }
 
@@ -127,7 +127,7 @@ namespace OpenNos.Handler
                 // actually move the item from source to destination
                 Session.Character.Inventory.DepositItem(depositPacket.Inventory, depositPacket.Slot,
                     depositPacket.Amount, depositPacket.NewSlot, ref item, ref itemdest, depositPacket.PartnerBackpack);
-                Logger.LogUserEvent("STASH_DEPOSIT", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("STASH_DEPOSIT", Session.GenerateIdentity(),
                     $"[Deposit]OldIIId: {item?.Id} NewIIId: {itemdest?.Id} Amount: {depositPacket.Amount} PartnerBackpack: {depositPacket.PartnerBackpack}");
             }
         }
@@ -238,7 +238,7 @@ namespace OpenNos.Handler
                 return;
             }
 
-            Logger.LogUserEvent("EXC_LIST", Session.GenerateIdentity(),
+            Logger.Log.LogUserEvent("EXC_LIST", Session.GenerateIdentity(),
                 $"Packet string: {packet.ToString()}");
 
             if (Session.Character.ExchangeInfo == null)
@@ -475,7 +475,7 @@ namespace OpenNos.Handler
                                         string.Format(Language.Instance.GetMessageFromKey("YOU_ASK_FOR_EXCHANGE"),
                                             targetSession.Character.Name), 0));
 
-                                    Logger.LogUserEvent("TRADE_REQUEST", Session.GenerateIdentity(),
+                                    Logger.Log.LogUserEvent("TRADE_REQUEST", Session.GenerateIdentity(),
                                         $"[ExchangeRequest][{targetSession.GenerateIdentity()}]");
 
                                     Session.Character.TradeRequests.Add(targetSession.Character.CharacterId);
@@ -547,7 +547,7 @@ namespace OpenNos.Handler
 
                                         if (Session.Character.ExchangeInfo.Validated && targetExchange.Validated)
                                         {
-                                            Logger.LogUserEvent("TRADE_ACCEPT", Session.GenerateIdentity(),
+                                            Logger.Log.LogUserEvent("TRADE_ACCEPT", Session.GenerateIdentity(),
                                                 $"[ExchangeAccept][{targetSession.GenerateIdentity()}]");
                                             try
                                             {
@@ -645,7 +645,7 @@ namespace OpenNos.Handler
                                             }
                                             catch (NullReferenceException nre)
                                             {
-                                                Logger.Error(nre);
+                                                Logger.Log.Error(nre);
                                             }
                                         }
                                     }
@@ -739,7 +739,7 @@ namespace OpenNos.Handler
                             break;
 
                         default:
-                            Logger.Warn(
+                            Logger.Log.Warn(
                                 $"Exchange-Request-Type not implemented. RequestType: {exchangeRequestPacket.RequestType})");
                             break;
                     }
@@ -921,7 +921,7 @@ namespace OpenNos.Handler
                                                         10));
                                             }
 
-                                            Logger.LogUserEvent("CHARACTER_ITEM_GET", Session.GenerateIdentity(),
+                                            Logger.Log.LogUserEvent("CHARACTER_ITEM_GET", Session.GenerateIdentity(),
                                                 $"[GetItem]IIId: {inv.Id} ItemVNum: {inv.ItemVNum} Amount: {amount}");
                                             LogHelper.Instance.InsertDropLog(inv, Session, amount, Session.IpAddress);
                                         }
@@ -951,7 +951,7 @@ namespace OpenNos.Handler
 
                                     Session.Character.Gold += (int)(droppedGold.GoldAmount * multiplier);
 
-                                    Logger.LogUserEvent("CHARACTER_ITEM_GET", Session.GenerateIdentity(), $"[GetItem]Gold: {(int)(droppedGold.GoldAmount * multiplier)})");
+                                    Logger.Log.LogUserEvent("CHARACTER_ITEM_GET", Session.GenerateIdentity(), $"[GetItem]Gold: {(int)(droppedGold.GoldAmount * multiplier)})");
 
                                     Session.SendPacket(Session.Character.GenerateSay(
                                         $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {mapItem.GetItemInstance().Item.Name[Session.Account.Language]} x {droppedGold.GoldAmount}{(multiplier > 1 ? $" + {(int)(droppedGold.GoldAmount * multiplier) - droppedGold.GoldAmount}" : "")}",
@@ -960,7 +960,7 @@ namespace OpenNos.Handler
                                 else
                                 {
                                     Session.Character.Gold = maxGold;
-                                    Logger.LogUserEvent("CHARACTER_ITEM_GET", Session.GenerateIdentity(), "[MaxGold]");
+                                    Logger.Log.LogUserEvent("CHARACTER_ITEM_GET", Session.GenerateIdentity(), "[MaxGold]");
                                     Session.SendPacket(
                                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("MAX_GOLD"),
                                             0));
@@ -1132,7 +1132,7 @@ namespace OpenNos.Handler
                                 Session.Character.DeleteItem(invitem.Type, invitem.Slot);
                             }
 
-                            Logger.LogUserEvent("CHARACTER_ITEM_DROP", Session.GenerateIdentity(),
+                            Logger.Log.LogUserEvent("CHARACTER_ITEM_DROP", Session.GenerateIdentity(),
                                 $"[PutItem]IIId: {invitem.Id} ItemVNum: {droppedItem.ItemVNum} Amount: {droppedItem.Amount} MapId: {Session.CurrentMapInstance.Map.MapId} MapX: {droppedItem.PositionX} MapY: {droppedItem.PositionY}");
                             LogHelper.Instance.InsertPutItemLog(droppedItem, Session, Session.IpAddress); 
                             Session.CurrentMapInstance?.Broadcast(
@@ -1349,7 +1349,7 @@ namespace OpenNos.Handler
         {
             if (reposPacket != null)
             {
-                Logger.LogUserEvent("STASH_REPOS", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("STASH_REPOS", Session.GenerateIdentity(),
                     $"[ItemReposition]OldSlot: {reposPacket.OldSlot} NewSlot: {reposPacket.NewSlot} Amount: {reposPacket.Amount} PartnerBackpack: {reposPacket.PartnerBackpack}");
 
                 if (reposPacket.Amount < 1)
@@ -2512,7 +2512,7 @@ namespace OpenNos.Handler
                 ItemInstance item2 = previousInventory.DeepCopy();
                 item2.Id = Guid.NewGuid();
                 item2.Amount = withdrawPacket.Amount;
-                Logger.LogUserEvent("STASH_WITHDRAW", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("STASH_WITHDRAW", Session.GenerateIdentity(),
                     $"[Withdraw]OldIIId: {previousInventory.Id} NewIIId: {item2.Id} Amount: {withdrawPacket.Amount} PartnerBackpack: {withdrawPacket.PetBackpack}");
                 Session.Character.Inventory.RemoveItemFromInventory(previousInventory.Id, withdrawPacket.Amount);
                 Session.Character.Inventory.AddToInventory(item2, item2.Item.Type);
@@ -2603,7 +2603,7 @@ namespace OpenNos.Handler
                 });
                 Session.SendPacket(Session.Character.GenerateSki());
                 Session.SendPackets(Session.Character.GenerateQuicklist());
-                Logger.LogUserEvent("CHARACTER_SPECIALIST_CHANGE", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("CHARACTER_SPECIALIST_CHANGE", Session.GenerateIdentity(),
                     $"Specialist: {sp.Item.Morph}");
             }
         }
@@ -2708,7 +2708,7 @@ namespace OpenNos.Handler
 
             // all items and gold from sourceSession have been transferred, clean exchange info
             
-            Logger.LogUserEvent("TRADE_COMPLETE", sourceSession.GenerateIdentity(),
+            Logger.Log.LogUserEvent("TRADE_COMPLETE", sourceSession.GenerateIdentity(),
                 $"[{targetSession.GenerateIdentity()}]Data: {data}");
             try
             {

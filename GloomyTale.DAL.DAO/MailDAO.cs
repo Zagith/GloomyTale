@@ -13,14 +13,13 @@
  */
 
 using OpenNos.Core;
-using OpenNos.DAL.EF;
-using OpenNos.DAL.EF.Helpers;
+using GloomyTale.DAL.EF;
+using GloomyTale.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using OpenNos.Data.Enums;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace OpenNos.DAL.DAO
@@ -48,7 +47,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return DeleteResult.Error;
             }
         }
@@ -75,7 +74,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return SaveResult.Error;
             }
         }
@@ -112,7 +111,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }
@@ -164,22 +163,9 @@ namespace OpenNos.DAL.DAO
 
                 return null;
             }
-            catch (DbEntityValidationException dbEx)
+            catch (Exception dbEx)
             {
-                Exception raise = dbEx;
-                foreach (DbEntityValidationResult validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (DbValidationError validationError in validationErrors.ValidationErrors)
-                    {
-                        // raise a new exception nesting the current instance as InnerException
-                        Logger.Error(new InvalidOperationException($"{validationErrors.Entry.Entity}:{validationError.ErrorMessage}", raise));
-                    }
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
+                Logger.Log.Error(dbEx);
                 return null;
             }
         }

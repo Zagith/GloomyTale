@@ -15,7 +15,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OpenNos.DAL.EF
+namespace GloomyTale.DAL.EF
 {
     public class MapNpc
     {

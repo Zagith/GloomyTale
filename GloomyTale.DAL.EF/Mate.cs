@@ -15,7 +15,7 @@
 using OpenNos.Domain;
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenNos.DAL.EF.Entities
+namespace GloomyTale.DAL.EF.Entities
 {
     public class Mate
     {

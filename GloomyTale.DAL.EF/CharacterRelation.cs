@@ -14,7 +14,7 @@
 
 using OpenNos.Domain;
 
-namespace OpenNos.DAL.EF
+namespace GloomyTale.DAL.EF
 {
     public class CharacterRelation
     {

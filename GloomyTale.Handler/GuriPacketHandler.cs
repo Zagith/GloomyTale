@@ -467,7 +467,7 @@ namespace OpenNos.Handler
                         IEnumerable<RollGeneratedItemDTO> rollGeneratedItemDtos = roll as IList<RollGeneratedItemDTO> ?? roll.ToList();
                         if (!rollGeneratedItemDtos.Any())
                         {
-                            Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("NO_HANDLER_RELICT"), GetType(), relictVNum));
+                            Logger.Log.Warn(string.Format(Language.Instance.GetMessageFromKey("NO_HANDLER_RELICT"), GetType(), relictVNum));
                             return;
                         }
                         int probabilities = rollGeneratedItemDtos.Sum(s => s.Probability);

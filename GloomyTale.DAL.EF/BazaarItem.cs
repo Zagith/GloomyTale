@@ -14,7 +14,7 @@
 
 using System;
 
-namespace OpenNos.DAL.EF
+namespace GloomyTale.DAL.EF
 {
     public class BazaarItem
     {

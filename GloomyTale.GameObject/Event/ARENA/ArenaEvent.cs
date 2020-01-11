@@ -355,7 +355,7 @@ namespace OpenNos.GameObject.Event.ARENA
                                         }
                                         catch (Exception ex)
                                         {
-                                            Logger.Error($"Talent Arena error: {ex}");
+                                            Logger.Log.Error($"Talent Arena error: {ex}");
                                             return;
                                         }
 

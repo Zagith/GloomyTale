@@ -1,7 +1,7 @@
 ﻿using OpenNos.Core;
-using OpenNos.DAL.EF;
-using OpenNos.DAL.EF.Entities;
-using OpenNos.DAL.EF.Helpers;
+using GloomyTale.DAL.EF;
+using GloomyTale.DAL.EF.Entities;
+using GloomyTale.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data.Enums;
 using OpenNos.Data.I18N;
@@ -21,18 +21,18 @@ namespace OpenNos.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    context.Configuration.AutoDetectChangesEnabled = false;
+                    
                     foreach (II18NCardDto skill in skills)
                     {
                         InsertOrUpdate(skill);
                     }
-                    context.Configuration.AutoDetectChangesEnabled = true;
+                    
                     context.SaveChanges();
                 }
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 
@@ -57,7 +57,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(string.Format(Language.Instance.GetMessageFromKey("UPDATE_I18NCard_ERROR"), skill.RegionType, e.Message), e);
+                Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("UPDATE_I18NCard_ERROR"), skill.RegionType, e.Message), e);
                 return SaveResult.Error;
             }
         }
@@ -81,7 +81,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }
@@ -118,7 +118,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }

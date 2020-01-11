@@ -13,8 +13,8 @@
  */
 
 using OpenNos.Core;
-using OpenNos.DAL.EF;
-using OpenNos.DAL.EF.Helpers;
+using GloomyTale.DAL.EF;
+using GloomyTale.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using OpenNos.Data.Enums;
@@ -57,7 +57,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error($"characterId: {characterId} slot: {slot} type: {type}", e);
+                Logger.Log.Error($"characterId: {characterId} slot: {slot} type: {type}", e);
                 return DeleteResult.Error;
             }
         }
@@ -80,7 +80,7 @@ namespace OpenNos.DAL.DAO
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogUserEventError("DELETEGUIDLIST_EXCEPTION", "Saving Process","Items were not deleted!", ex);
+                    Logger.Log.LogUserEventError("DELETEGUIDLIST_EXCEPTION", "Saving Process","Items were not deleted!", ex);
                     foreach (Guid id in guids)
                     {
                         try
@@ -93,7 +93,7 @@ namespace OpenNos.DAL.DAO
                             //       "FK_dbo.BazaarItem_dbo.ItemInstance_ItemInstanceId". The
                             //       conflict occurred in database "opennos", table "dbo.BazaarItem",
                             //       column 'ItemInstanceId'.
-                            Logger.LogUserEventError("ONSAVEDELETION_EXCEPTION", "Saving Process", $"FALLBACK FUNCTION FAILED! Detailed Item Information: Item ID = {id}", exc);
+                            Logger.Log.LogUserEventError("ONSAVEDELETION_EXCEPTION", "Saving Process", $"FALLBACK FUNCTION FAILED! Detailed Item Information: Item ID = {id}", exc);
                         }
                     }
                 }
@@ -117,7 +117,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error($"Message: {e.Message}", e);
+                Logger.Log.Error($"Message: {e.Message}", e);
                 return Enumerable.Empty<ItemInstanceDTO>();
             }
         }
@@ -133,7 +133,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error($"Message: {e.Message}", e);
+                Logger.Log.Error($"Message: {e.Message}", e);
                 return null;
             }
         }
@@ -181,7 +181,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return SaveResult.Error;
             }
         }
@@ -233,7 +233,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }
@@ -264,7 +264,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }
@@ -292,7 +292,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }

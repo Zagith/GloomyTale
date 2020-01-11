@@ -1,4 +1,4 @@
-﻿using OpenNos.DAL.EF;
+﻿using GloomyTale.DAL.EF;
 using OpenNos.Data;
 using System;
 using System.Collections.Generic;

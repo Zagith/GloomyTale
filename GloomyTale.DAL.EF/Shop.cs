@@ -12,11 +12,11 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.DAL.EF.Entities;
+using GloomyTale.DAL.EF.Entities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenNos.DAL.EF
+namespace GloomyTale.DAL.EF
 {
     public class Shop
     {

@@ -283,7 +283,7 @@ namespace OpenNos.GameObject
                     }
                     else
                     {
-                        Logger.LogUserEvent("EQUIPMENT_TAKEOFF", session.GenerateIdentity(), $"IIId: {currentlyEquippedItem.Id} ItemVnum: {currentlyEquippedItem.ItemVNum} Upgrade: {currentlyEquippedItem.Upgrade} Rare: {currentlyEquippedItem.Rare}");
+                        Logger.Log.LogUserEvent("EQUIPMENT_TAKEOFF", session.GenerateIdentity(), $"IIId: {currentlyEquippedItem.Id} ItemVnum: {currentlyEquippedItem.ItemVNum} Upgrade: {currentlyEquippedItem.Upgrade} Rare: {currentlyEquippedItem.Rare}");
 
                         // move from wear to equipment and back
                         session.Character.Inventory.MoveInInventory(currentlyEquippedItem.Slot, equipment, itemToWearType, inv.Slot);
@@ -305,7 +305,7 @@ namespace OpenNos.GameObject
                     session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(), ReceiverType.AllExceptMe);
                     session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
 
-                    Logger.LogUserEvent("EQUIPMENT_WEAR", session.GenerateIdentity(), $"IIId: {inv.Id} ItemVnum: {inv.ItemVNum} Upgrade: {inv.Upgrade} Rare: {inv.Rare}");
+                    Logger.Log.LogUserEvent("EQUIPMENT_WEAR", session.GenerateIdentity(), $"IIId: {inv.Id} ItemVnum: {inv.ItemVNum} Upgrade: {inv.Upgrade} Rare: {inv.Rare}");
 
                     ScriptedInstance raid = ServerManager.Instance.Raids.FirstOrDefault(s => s.RequiredItems?.Any(obj => obj?.VNum == VNum) == true)?.Copy();
                     if (raid?.DailyEntries > 0)

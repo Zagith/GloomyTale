@@ -57,7 +57,7 @@ namespace OpenNos.Core
             }
             catch (Exception ex)
             {
-                //Logger.Warn($"The serialized packet has the wrong format. Packet: {packetContent}", ex);
+                //Logger.Log.Warn($"The serialized packet has the wrong format. Packet: {packetContent}", ex);
                 return null;
             }
         }
@@ -83,7 +83,7 @@ namespace OpenNos.Core
             }
             catch (Exception e)
             {
-                //Logger.Warn($"The serialized packet has the wrong format. Packet: {packetContent}", e);
+                //Logger.Log.Warn($"The serialized packet has the wrong format. Packet: {packetContent}", e);
                 return null;
             }
         }
@@ -147,7 +147,7 @@ namespace OpenNos.Core
             }
             catch (Exception e)
             {
-                //Logger.Warn("Wrong Packet Format!", e);
+                //Logger.Log.Warn("Wrong Packet Format!", e);
                 return "";
             }
         }
@@ -314,7 +314,7 @@ namespace OpenNos.Core
                 }
                 catch (Exception)
                 {
-                    //Logger.Warn($"Could not convert value {currentValue} to type {packetPropertyType.Name}");
+                    //Logger.Log.Warn($"Could not convert value {currentValue} to type {packetPropertyType.Name}");
                 }
 
                 return convertedValue;

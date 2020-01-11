@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.DAL.EF.Base;
-using OpenNos.DAL.EF.Entities;
+using GloomyTale.DAL.EF.Base;
+using GloomyTale.DAL.EF.Entities;
 using OpenNos.Domain;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OpenNos.DAL.EF
+namespace GloomyTale.DAL.EF
 {
     /// <summary>
     /// Do Not forget to change Mapping in Item GO when changing this class

@@ -404,7 +404,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 

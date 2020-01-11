@@ -12,24 +12,28 @@
  * GNU General Public License for more details.
  */
 
+using Microsoft.EntityFrameworkCore;
 using OpenNos.Core;
 using System;
-using System.Data;
-using System.Data.Common;
 
-namespace OpenNos.DAL.EF.Helpers
+namespace GloomyTale.DAL.EF.Helpers
 {
+    public interface IOpenNosContextFactory
+    {
+        OpenNosContext CreateContext();
+    }
+
     public static class DataAccessHelper
     {
         #region Members
 
-        private static OpenNosContext _context;
+        private static IOpenNosContextFactory _contextFactory;
 
         #endregion
 
         #region Properties
 
-        private static OpenNosContext Context => _context ?? (_context = CreateContext());
+        //private static OpenNosContext Context => _context ?? (_context = CreateContext());
 
         #endregion
 
@@ -40,7 +44,7 @@ namespace OpenNos.DAL.EF.Helpers
         /// or use it in an using-clause.
         /// </summary>
         /// <returns>A new transaction.</returns>
-        public static DbTransaction BeginTransaction()
+        /*public static DbTransaction BeginTransaction()
         {
             // an open connection is needed for a transaction
             if (Context.Database.Connection.State == ConnectionState.Broken || Context.Database.Connection.State == ConnectionState.Closed)
@@ -50,39 +54,39 @@ namespace OpenNos.DAL.EF.Helpers
 
             // begin and return new transaction
             return Context.Database.Connection.BeginTransaction();
-        }
+        }*/
 
         /// <summary>
         /// Creates new instance of database context.
         /// </summary>
-        public static OpenNosContext CreateContext() => new OpenNosContext();
+        public static OpenNosContext CreateContext() => _contextFactory.CreateContext();
 
         /// <summary>
         /// Disposes the current instance of database context.
         /// </summary>
-        public static void DisposeContext()
+        /*public static void DisposeContext()
         {
             if (_context != null)
             {
                 _context.Dispose();
                 _context = null;
             }
-        }
+        }*/
 
-        public static bool Initialize()
+        public static bool Initialize(IOpenNosContextFactory contextFactory)
         {
+            _contextFactory = contextFactory;
             using (OpenNosContext context = CreateContext())
             {
                 try
                 {
-                    context.Database.Initialize(true);
-                    context.Database.Connection.Open();
-                    Logger.Info(Language.Instance.GetMessageFromKey("DATABASE_INITIALIZED"));
+                    context.Database.GetDbConnection().Open();
+                    //Logger.Log.Info(Language.Instance.GetMessageFromKey("DATABASE_INITIALIZED"));
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogEventError("DATABASE_INITIALIZATION", "Database Error", ex);
-                    Logger.LogEventError("DATABASE_INITIALIZATION", Language.Instance.GetMessageFromKey("DATABASE_NOT_UPTODATE"));
+                    Logger.Log.LogEventError("DATABASE_INITIALIZATION", "Database Error", ex);
+                    Logger.Log.LogEventError("DATABASE_INITIALIZATION", Language.Instance.GetMessageFromKey("DATABASE_NOT_UPTODATE"));
                     return false;
                 }
                 return true;

@@ -128,7 +128,7 @@ namespace OpenNos.Handler
                                     Type = MessageType.Other
                                 });
                                 
-                                Logger.LogUserEvent("BAZAAR_BUY", Session.GenerateIdentity(),
+                                Logger.Log.LogUserEvent("BAZAAR_BUY", Session.GenerateIdentity(),
                                     $"BazaarId: {cBuyPacket.BazaarId} VNum: {cBuyPacket.VNum} Amount: {cBuyPacket.Amount} Price: {cBuyPacket.Price}");
                             }
                         }
@@ -221,7 +221,7 @@ namespace OpenNos.Handler
 
                         Session.SendPacket(UserInterfaceHelper.GenerateBazarRecollect(bazaarItemDTO.Price, soldAmount, bazaarItemDTO.Amount, taxes, price, name));
 
-                        Logger.LogUserEvent("BAZAAR_REMOVE", Session.GenerateIdentity(), $"BazaarId: {cScalcPacket.BazaarId}, IId: {itemInstance.Id} VNum: {itemInstance.ItemVNum} Amount: {bazaarItemDTO.Amount} RemainingAmount: {itemInstance.Amount} Price: {bazaarItemDTO.Price}");
+                        Logger.Log.LogUserEvent("BAZAAR_REMOVE", Session.GenerateIdentity(), $"BazaarId: {cScalcPacket.BazaarId}, IId: {itemInstance.Id} VNum: {itemInstance.ItemVNum} Amount: {bazaarItemDTO.Amount} RemainingAmount: {itemInstance.Amount} Price: {bazaarItemDTO.Price}");
 
                         if (DAOFactory.BazaarItemDAO.LoadById(bazaarItemDTO.BazaarItemId) != null)
                         {
@@ -440,7 +440,7 @@ namespace OpenNos.Handler
             if (conn.CheckDupe(Session.Character.CharacterId))
                 Session.BanForCheatUsing(1);*/
 
-            Logger.LogUserEvent("BAZAAR_INSERT", Session.GenerateIdentity(),
+            Logger.Log.LogUserEvent("BAZAAR_INSERT", Session.GenerateIdentity(),
                 $"BazaarId: {bazaarItem.BazaarItemId}, IIId: {bazaarItem.ItemInstanceId} VNum: {bazaar.ItemVNum} Amount: {cRegPacket.Amount} Price: {cRegPacket.Price} Time: {duration}");
 
             Session.SendPacket("rc_reg 1");
@@ -508,7 +508,7 @@ namespace OpenNos.Handler
                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("OBJECT_MOD_IN_BAZAAR"), bz.Price),
                     0));
 
-                Logger.LogUserEvent("BAZAAR_MOD", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("BAZAAR_MOD", Session.GenerateIdentity(),
                     $"BazaarId: {bz.BazaarItemId}, IIId: {bz.ItemInstanceId} VNum: {itemInstance.ItemVNum} Amount: {bz.Amount} Price: {bz.Price} Time: {bz.Duration}");
                 
                 RefreshPersonalBazarList(new CSListPacket());

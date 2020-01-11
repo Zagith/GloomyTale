@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GloomyTale.Domain\GloomyTale.Domain.csproj" />
+    <ProjectReference Include="..\GloomyTale.Plugins.Logging\GloomyTale.Plugins.Logging.csproj" />
   </ItemGroup>
 
 </Project>

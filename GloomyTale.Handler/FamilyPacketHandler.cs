@@ -173,7 +173,7 @@ namespace OpenNos.Handler
                 };
                 DAOFactory.FamilyDAO.InsertOrUpdate(ref family);
 
-                Logger.LogUserEvent("GUILDCREATE", Session.GenerateIdentity(), $"[FamilyCreate][{family.FamilyId}]");
+                Logger.Log.LogUserEvent("GUILDCREATE", Session.GenerateIdentity(), $"[FamilyCreate][{family.FamilyId}]");
 
                 ServerManager.Instance.Broadcast(
                     UserInterfaceHelper.GenerateMsg(
@@ -233,7 +233,7 @@ namespace OpenNos.Handler
                         i++;
                     }
 
-                    Logger.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                         $"[FamilyShout][{Session.Character.Family.FamilyId}]Message: {msg}");
                     CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                     {
@@ -392,7 +392,7 @@ namespace OpenNos.Handler
             DAOFactory.FamilyDAO.Delete(fam.FamilyId);
             ServerManager.Instance.FamilyRefresh(fam.FamilyId);
 
-            Logger.LogUserEvent("GUILDDISMISS", Session.GenerateIdentity(), $"[FamilyDismiss][{fam.FamilyId}]");
+            Logger.Log.LogUserEvent("GUILDDISMISS", Session.GenerateIdentity(), $"[FamilyDismiss][{fam.FamilyId}]");
 
             List<ClientSession> sessions = ServerManager.Instance.Sessions
                 .Where(s => s.Character?.Family != null && s.Character.Family.FamilyId == fam.FamilyId).ToList();
@@ -437,7 +437,7 @@ namespace OpenNos.Handler
 
                 string characterName = packetsplit[2];
 
-                Logger.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                     $"[FamilyKick][{Session.Character.Family.FamilyId}]CharacterName: {characterName}");
 
                 FamilyCharacter familyCharacter = Session.Character.Family.FamilyCharacters.FirstOrDefault(s => s.Character.Name == characterName);
@@ -516,9 +516,9 @@ namespace OpenNos.Handler
 
                 DAOFactory.FamilyCharacterDAO.Delete(Session.Character.CharacterId);
 
-                Logger.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                     $"[FamilyLeave][{Session.Character.Family.FamilyId}]");
-                Logger.LogUserEvent("GUILDLEAVE", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GUILDLEAVE", Session.GenerateIdentity(),
                     $"[FamilyLeave][{Session.Character.Family.FamilyId}]");
 
                 Session.Character.Family.InsertFamilyLog(FamilyLogType.FamilyManaged, Session.Character.Name);
@@ -557,7 +557,7 @@ namespace OpenNos.Handler
                 return;
             }
 
-            Logger.LogUserEvent("GUILDMGMT", Session.GenerateIdentity(),
+            Logger.Log.LogUserEvent("GUILDMGMT", Session.GenerateIdentity(),
                 $"[FamilyManagement][{Session.Character.Family.FamilyId}]TargetId: {familyManagementPacket.TargetId} AuthorityType: {familyManagementPacket.FamilyAuthorityType.ToString()}");
 
             if (Session.Character.FamilyCharacter.Authority == FamilyAuthority.Member
@@ -719,7 +719,7 @@ namespace OpenNos.Handler
                         i++;
                     }
 
-                    Logger.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                         $"[FamilyMessage][{Session.Character.Family.FamilyId}]Message: {msg}");
 
                     Session.Character.Family.FamilyMessage = msg;
@@ -975,7 +975,7 @@ namespace OpenNos.Handler
                 return;
             }
 
-            Logger.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
+            Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                 $"[FamilyInvite][{Session.Character.Family.FamilyId}]Message: {packetsplit[2]}");
             ClientSession otherSession = ServerManager.Instance.GetSessionByCharacterName(packetsplit[2]);
             if (otherSession == null)
@@ -1078,7 +1078,7 @@ namespace OpenNos.Handler
                     inviteSession.Character.Family.InsertFamilyLog(FamilyLogType.UserManaged,
                         inviteSession.Character.Name, Session.Character.Name);
 
-                    Logger.LogUserEvent("GUILDJOIN", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GUILDJOIN", Session.GenerateIdentity(),
                         $"[FamilyJoin][{inviteSession.Character.Family.FamilyId}]");
 
                     CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
@@ -1128,7 +1128,7 @@ namespace OpenNos.Handler
                     DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref familyCharacterDto);
                 }
 
-                Logger.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                     $"[Sex][{Session.Character.Family.FamilyId}]");
 
                 FamilyDTO fam = Session.Character.Family;
@@ -1176,7 +1176,7 @@ namespace OpenNos.Handler
                 {
                     fchar.Rank = (FamilyMemberRank)rank;
 
-                    Logger.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
+                    Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                         $"[Title][{Session.Character.Family.FamilyId}]CharacterName: {packetsplit[2]} Title: {fchar.Rank.ToString()}");
 
                     DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref fchar);
@@ -1212,7 +1212,7 @@ namespace OpenNos.Handler
                     i++;
                 }
 
-                Logger.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                     $"[Today][{Session.Character.Family.FamilyId}]CharacterName: {Session.Character.Name} Title: {msg}");
 
                 bool islog = Session.Character.Family.FamilyLogs.Any(s =>

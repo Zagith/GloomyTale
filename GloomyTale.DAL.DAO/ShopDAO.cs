@@ -12,15 +12,15 @@
  * GNU General Public License for more details.
  */
 
+using Microsoft.EntityFrameworkCore;
 using OpenNos.Core;
-using OpenNos.DAL.EF;
-using OpenNos.DAL.EF.Helpers;
+using GloomyTale.DAL.EF;
+using GloomyTale.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using OpenNos.Data.Enums;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace OpenNos.DAL.DAO
@@ -58,7 +58,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return DeleteResult.Error;
             }
         }
@@ -69,20 +69,20 @@ namespace OpenNos.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    context.Configuration.AutoDetectChangesEnabled = false;
+                    
                     foreach (ShopDTO Item in shops)
                     {
                         Shop entity = new Shop();
                         Mapper.Mappers.ShopMapper.ToShop(Item, entity);
                         context.Shop.Add(entity);
                     }
-                    context.Configuration.AutoDetectChangesEnabled = true;
+                    
                     context.SaveChanges();
                 }
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 
@@ -110,7 +110,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }
@@ -156,7 +156,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(string.Format(Language.Instance.GetMessageFromKey("UPDATE_SHOP_ERROR"), shop.ShopId, e.Message), e);
+                Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("UPDATE_SHOP_ERROR"), shop.ShopId, e.Message), e);
                 return SaveResult.Error;
             }
         }
@@ -193,7 +193,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }
@@ -215,7 +215,7 @@ namespace OpenNos.DAL.DAO
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
                 return null;
             }
         }

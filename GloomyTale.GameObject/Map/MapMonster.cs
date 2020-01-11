@@ -670,7 +670,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 
@@ -831,7 +831,7 @@ namespace OpenNos.GameObject
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(
+                        Logger.Log.Error(
                             $"Pathfinding using Pathfinder failed. Map: {MapId} StartX: {MapX} StartY: {MapY} TargetX: {(short)(target.PositionX + xoffset)} TargetY: {(short)(target.PositionY + yoffset)}",
                             ex);
                         RemoveTarget();

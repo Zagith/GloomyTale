@@ -221,7 +221,7 @@ namespace OpenNos.Handler
 
                         ServerManager.Instance.GroupList.Remove(Session.Character.Group);
 
-                        Logger.LogUserEvent("RAID_START", Session.GenerateIdentity(),
+                        Logger.Log.LogUserEvent("RAID_START", Session.GenerateIdentity(),
                             $"RaidId: {Session.Character.Group.GroupId}");
                     }
                     else

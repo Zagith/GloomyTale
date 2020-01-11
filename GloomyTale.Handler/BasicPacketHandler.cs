@@ -580,7 +580,7 @@ namespace OpenNos.Handler
                                 newInv.FireResistance = (short)(newInv.Item.FireResistance * newInv.Upgrade);
                             }
 
-                            Logger.LogUserEvent("PARCEL_GET", Session.GenerateIdentity(),
+                            Logger.Log.LogUserEvent("PARCEL_GET", Session.GenerateIdentity(),
                                 $"IIId: {newInv.Id} ItemVNum: {newInv.ItemVNum} Amount: {mail.AttachmentAmount} Sender: {mail.SenderId}");
 
                             Session.SendPacket(Session.Character.GenerateSay(
@@ -877,7 +877,7 @@ namespace OpenNos.Handler
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.Log.Error(ex);
                     }
 
                     if (ServerManager.Instance.IsCharacterMemberOfGroup(Session.Character.CharacterId)
@@ -2960,7 +2960,7 @@ namespace OpenNos.Handler
             }
             catch (Exception e)
             {
-                Logger.Error("Whisper failed.", e);
+                Logger.Log.Error("Whisper failed.", e);
             }
         }
 

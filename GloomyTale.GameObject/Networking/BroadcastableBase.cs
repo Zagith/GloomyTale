@@ -84,7 +84,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.Log.Error(ex);
             }
         }
 
@@ -99,7 +99,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.Log.Error(ex);
             }
         }
 

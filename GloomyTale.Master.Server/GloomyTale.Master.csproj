@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,6 +7,12 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="dotenv.net" Version="1.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +24,24 @@
     <ProjectReference Include="..\GloomyTale.Data\GloomyTale.Data.csproj" />
     <ProjectReference Include="..\GloomyTale.Domain\GloomyTale.Domain.csproj" />
     <ProjectReference Include="..\GloomyTale.GameObject\GloomyTale.GameObject.csproj" />
+    <ProjectReference Include="..\GloomyTale.Plugins.Logging\GloomyTale.Plugins.Logging.csproj" />
     <ProjectReference Include="..\GloomyTale.Plugins\GloomyTale.Plugins.csproj" />
+    <ProjectReference Include="..\GloomyTale.SqlServer\GloomyTale.SqlServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resource\LocalizedResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LocalizedResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource\LocalizedResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalizedResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

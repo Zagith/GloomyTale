@@ -2,7 +2,7 @@
 using OpenNos.Domain.I18N;
 using System.ComponentModel.DataAnnotations;
 
-namespace OpenNos.DAL.EF.Entities
+namespace GloomyTale.DAL.EF.Entities
 {
     public class I18NItem
     {

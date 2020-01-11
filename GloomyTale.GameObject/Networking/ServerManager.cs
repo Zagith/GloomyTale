@@ -949,7 +949,7 @@ namespace OpenNos.GameObject.Networking
                 }
                 catch (Exception ex)
                 {
-                    Logger.Warn("Character changed while changing map. Do not abuse Commands.", ex);
+                    Logger.Log.Warn("Character changed while changing map. Do not abuse Commands.", ex);
                     session.Character.IsChangingMapInstance = false;
                 }
             }
@@ -1302,7 +1302,7 @@ namespace OpenNos.GameObject.Networking
 
             // Load Configuration
 
-            Schedules = ConfigurationManager.GetSection("eventScheduler") as List<Schedule>;
+            //Schedules = ConfigurationManager.GetSection("eventScheduler") as List<Schedule>;
             TypeAdapterConfig.GlobalSettings
                 .ForDestinationType<I18NString>()
                 .BeforeMapping(s => s.Clear());
@@ -1380,7 +1380,7 @@ namespace OpenNos.GameObject.Networking
                         break;
                 }
             });
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("ITEMS_LOADED"), _items.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("ITEMS_LOADED"), _items.Count));
 
 
 
@@ -1390,7 +1390,7 @@ namespace OpenNos.GameObject.Networking
 
             BoxItems = DAOFactory.BoxItemDAO.LoadAll();
 
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("BOX_ITEMS_LOADED"), BoxItems.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("BOX_ITEMS_LOADED"), BoxItems.Count));
 
             #endregion
 
@@ -1407,12 +1407,12 @@ namespace OpenNos.GameObject.Networking
                     _generalDrops = monsterDropGrouping.ToList();
                 }
             });
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("DROPS_LOADED"), _monsterDrops.Sum(i => i.Count)));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("DROPS_LOADED"), _monsterDrops.Sum(i => i.Count)));
 
             // initialize monsterskills
             _monsterSkills = new ThreadSafeSortedList<short, List<NpcMonsterSkill>>();
             Parallel.ForEach(DAOFactory.NpcMonsterSkillDAO.LoadAll().GroupBy(n => n.NpcMonsterVNum), monsterSkillGrouping => _monsterSkills[monsterSkillGrouping.Key] = monsterSkillGrouping.Select(n => new NpcMonsterSkill(n)).ToList());
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("MONSTERSKILLS_LOADED"), _monsterSkills.Sum(i => i.Count)));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MONSTERSKILLS_LOADED"), _monsterSkills.Sum(i => i.Count)));
 
             // initialize bazaar
             BazaarList = new ThreadSafeGenericList<BazaarItemLink>();
@@ -1431,7 +1431,7 @@ namespace OpenNos.GameObject.Networking
                 }
                 BazaarList.Add(item);
             });
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("BAZAAR_LOADED"), BazaarList.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("BAZAAR_LOADED"), BazaarList.Count));
 
             // initialize npcmonsters
             var dicNpcMonster = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
@@ -1456,7 +1456,7 @@ namespace OpenNos.GameObject.Networking
                 DAOFactory.BCardDAO.LoadByNpcMonsterVNum(npcMonster.OriginalNpcMonsterVNum > 0 ? npcMonster.OriginalNpcMonsterVNum : npcMonster.NpcMonsterVNum).ToList().ForEach(s => npcMonsterObj.BCards.Add(new BCard(s)));
                 _npcmonsters.Add(npcMonsterObj);
             });
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("NPCMONSTERS_LOADED"), _npcmonsters.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("NPCMONSTERS_LOADED"), _npcmonsters.Count));
 
             // intialize recipes
             _recipes = new ThreadSafeSortedList<short, Recipe>();
@@ -1466,22 +1466,22 @@ namespace OpenNos.GameObject.Networking
                 _recipes[recipeGrouping.RecipeId] = recipe;
                 recipe.Initialize();
             });
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPES_LOADED"), _recipes.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPES_LOADED"), _recipes.Count));
 
             // initialize recipelist
             _recipeLists = new ThreadSafeSortedList<int, RecipeListDTO>();
             Parallel.ForEach(DAOFactory.RecipeListDAO.LoadAll(), recipeListGrouping => _recipeLists[recipeListGrouping.RecipeListId] = recipeListGrouping);
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPELISTS_LOADED"), _recipeLists.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPELISTS_LOADED"), _recipeLists.Count));
 
             // initialize shopitems
             _shopItems = new ThreadSafeSortedList<int, List<ShopItemDTO>>();
             Parallel.ForEach(DAOFactory.ShopItemDAO.LoadAll().GroupBy(s => s.ShopId), shopItemGrouping => _shopItems[shopItemGrouping.Key] = shopItemGrouping.ToList());
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPITEMS_LOADED"), _shopItems.Sum(i => i.Count)));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPITEMS_LOADED"), _shopItems.Sum(i => i.Count)));
 
             // initialize shopskills
             _shopSkills = new ThreadSafeSortedList<int, List<ShopSkillDTO>>();
             Parallel.ForEach(DAOFactory.ShopSkillDAO.LoadAll().GroupBy(s => s.ShopId), shopSkillGrouping => _shopSkills[shopSkillGrouping.Key] = shopSkillGrouping.ToList());
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPSKILLS_LOADED"), _shopSkills.Sum(i => i.Count)));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPSKILLS_LOADED"), _shopSkills.Sum(i => i.Count)));
 
             // initialize shops
             var dicShop = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
@@ -1505,12 +1505,12 @@ namespace OpenNos.GameObject.Networking
                 _shops[shopGrouping.MapNpcId] = shop;
                 shop.Initialize();
             });
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPS_LOADED"), _shops.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPS_LOADED"), _shops.Count));
 
             // initialize teleporters
             _teleporters = new ThreadSafeSortedList<int, List<TeleporterDTO>>();
             Parallel.ForEach(DAOFactory.TeleporterDAO.LoadAll().GroupBy(t => t.MapNpcId), teleporterGrouping => _teleporters[teleporterGrouping.Key] = teleporterGrouping.Select(t => t).ToList());
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("TELEPORTERS_LOADED"), _teleporters.Sum(i => i.Count)));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("TELEPORTERS_LOADED"), _teleporters.Sum(i => i.Count)));
 
             // initialize skills
             var dicSkill = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
@@ -1535,7 +1535,7 @@ namespace OpenNos.GameObject.Networking
                 DAOFactory.BCardDAO.LoadBySkillVNum(skillObj.SkillVNum).ToList().ForEach(o => skillObj.BCards.Add(new BCard(o)));
                 _skills.Add(skillObj);
             });
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("SKILLS_LOADED"), _skills.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SKILLS_LOADED"), _skills.Count));
 
             // initialize cards
             var dicCard = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
@@ -1563,7 +1563,7 @@ namespace OpenNos.GameObject.Networking
                 DAOFactory.BCardDAO.LoadByCardId(cardObj.CardId).ToList().ForEach(o => cardObj.BCards.Add(new BCard(o)));
                 _cards.Add(cardObj);
             });
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("CARDS_LOADED"), _cards.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("CARDS_LOADED"), _cards.Count));
 
             // initialize quests
             Quests = new List<Quest>();
@@ -1576,12 +1576,12 @@ namespace OpenNos.GameObject.Networking
             }
             FlowerQuestId = Quests.FirstOrDefault(q => q.QuestType == (byte)QuestType.FlowerQuest)?.QuestId;
 
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("QUESTS_LOADED"), Quests.Count));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("QUESTS_LOADED"), Quests.Count));
 
             // intialize mapnpcs
             _mapNpcs = new ThreadSafeSortedList<short, List<MapNpc>>();
             Parallel.ForEach(DAOFactory.MapNpcDAO.LoadAll().GroupBy(t => t.MapId), mapNpcGrouping => _mapNpcs[mapNpcGrouping.Key] = mapNpcGrouping.Select(t => t as MapNpc).ToList());
-            Logger.Info(string.Format(Language.Instance.GetMessageFromKey("MAPNPCS_LOADED"), _mapNpcs.Sum(i => i.Count)));
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPNPCS_LOADED"), _mapNpcs.Sum(i => i.Count)));
 
             try
             {
@@ -1637,14 +1637,14 @@ namespace OpenNos.GameObject.Networking
                 });
                 if (i != 0)
                 {
-                    Logger.Info(string.Format(Language.Instance.GetMessageFromKey("MAPS_LOADED"), i));
+                    Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPS_LOADED"), i));
                 }
                 else
                 {
-                    Logger.Error(Language.Instance.GetMessageFromKey("NO_MAP"));
+                    Logger.Log.Error(Language.Instance.GetMessageFromKey("NO_MAP"));
                 }
 
-                Logger.Info(string.Format(Language.Instance.GetMessageFromKey("MAPMONSTERS_LOADED"), monstercount));
+                Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPMONSTERS_LOADED"), monstercount));
                 StartedEvents = new List<EventType>();
 
                 LoadFamilies();
@@ -1738,7 +1738,7 @@ namespace OpenNos.GameObject.Networking
             }
             catch (Exception ex)
             {
-                Logger.Error("General Error", ex);
+                Logger.Log.Error("General Error", ex);
             }
 
             WorldId = Guid.NewGuid();
@@ -2073,7 +2073,7 @@ namespace OpenNos.GameObject.Networking
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 
@@ -2553,7 +2553,7 @@ namespace OpenNos.GameObject.Networking
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 
@@ -2581,7 +2581,7 @@ namespace OpenNos.GameObject.Networking
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 
@@ -2902,7 +2902,7 @@ namespace OpenNos.GameObject.Networking
             {
                 if (maintenanceLog.DateStart <= DateTime.Now)
                 {
-                    Logger.LogUserEvent("MAINTENANCE_STATE", "Caller: ServerManager", $"[Maintenance]{Language.Instance.GetMessageFromKey("MAINTENANCE_PLANNED")}");
+                    Logger.Log.LogUserEvent("MAINTENANCE_STATE", "Caller: ServerManager", $"[Maintenance]{Language.Instance.GetMessageFromKey("MAINTENANCE_PLANNED")}");
                     sessions.Where(s => s.Account.Authority < AuthorityType.SMOD).ToList().ForEach(session => session.Disconnect());
                 }
                 else if (LastMaintenanceAdvert.AddMinutes(1) <= DateTime.Now && maintenanceLog.DateStart <= DateTime.Now.AddMinutes(5))
@@ -3247,7 +3247,7 @@ namespace OpenNos.GameObject.Networking
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 
@@ -3277,12 +3277,12 @@ namespace OpenNos.GameObject.Networking
         {
             try
             {
-                Logger.Info(Language.Instance.GetMessageFromKey("SAVING_ALL"));
+                Logger.Log.Info(Language.Instance.GetMessageFromKey("SAVING_ALL"));
                 SaveAll();
             }
             catch (Exception e)
             {
-                Logger.Error(e);
+                Logger.Log.Error(e);
             }
         }
 

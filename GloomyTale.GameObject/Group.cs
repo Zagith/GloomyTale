@@ -111,7 +111,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, nameof(GenerateRdlst));
+                Logger.Log.Error(ex, nameof(GenerateRdlst));
             }
 
             return result;
@@ -223,7 +223,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, nameof(GenerateRdlst));
+                Logger.Log.Error(ex, nameof(GenerateRdlst));
             }
             return result;
         }

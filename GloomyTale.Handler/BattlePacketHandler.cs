@@ -1200,7 +1200,7 @@ namespace OpenNos.Handler
                             break;
 
                         default:
-                            Logger.Warn("Not Implemented TargetHitType Handling!");
+                            Logger.Log.Warn("Not Implemented TargetHitType Handling!");
                             break;
                     }
                 }

@@ -1,6 +1,6 @@
-﻿using OpenNos.DAL.EF;
-using OpenNos.DAL.EF.Entities;
-using OpenNos.DAL.EF.Helpers;
+﻿using GloomyTale.DAL.EF;
+using GloomyTale.DAL.EF.Entities;
+using GloomyTale.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using System.Collections.Generic;

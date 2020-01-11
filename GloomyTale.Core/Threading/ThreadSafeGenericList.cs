@@ -254,7 +254,7 @@ namespace OpenNos.Core
                 }
                 catch (Exception ex)
                 {
-                    //Logger.Error("Tell Master that I dropped and IOR exception somewhere, also stop crying about it.", ex);
+                    //Logger.Log.Error("Tell Master that I dropped and IOR exception somewhere, also stop crying about it.", ex);
                 }
                 finally
                 {

@@ -130,7 +130,7 @@ namespace OpenNos.GameObject
                 if (_character == null || !HasSelectedCharacter)
                 {
                     // cant access an
-                    Logger.Warn("An uninitialized character should not be accessed.");
+                    Logger.Log.Warn("An uninitialized character should not be accessed.");
                 }
 
                 return _character;
@@ -259,7 +259,7 @@ namespace OpenNos.GameObject
             // do everything necessary before removing client, DB save, Whatever
             if (HasSelectedCharacter)
             {
-                Logger.LogUserEvent("CHARACTER_LOGOUT", GenerateIdentity(), "");
+                Logger.Log.LogUserEvent("CHARACTER_LOGOUT", GenerateIdentity(), "");
 
                 long characterId = Character.CharacterId;
 
@@ -385,7 +385,7 @@ namespace OpenNos.GameObject
             Character = character;
             HasSelectedCharacter = true;
 
-            Logger.LogUserEvent("CHARACTER_LOGIN", GenerateIdentity(), "");
+            Logger.Log.LogUserEvent("CHARACTER_LOGIN", GenerateIdentity(), "");
 
             // register CSC events
             _communicationServiceEvents.CharacterConnectedEvent += OnOtherCharacterConnected;
@@ -496,7 +496,7 @@ namespace OpenNos.GameObject
 
                         if (!int.TryParse(nextRawPacketId, out int nextPacketId) && nextPacketId != _lastPacketId + 1)
                         {
-                            Logger.Error(string.Format(Language.Instance.GetMessageFromKey("CORRUPTED_KEEPALIVE"), _client.ClientId));
+                            Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("CORRUPTED_KEEPALIVE"), _client.ClientId));
                             _client.DisconnectClient();
                             return;
                         }
@@ -565,7 +565,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception ex)
             {
-                Logger.Error("Invalid packet (Crash Exploit)", ex);
+                Logger.Log.Error("Invalid packet (Crash Exploit)", ex);
                 Disconnect();
             }
         }
@@ -644,7 +644,7 @@ namespace OpenNos.GameObject
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(ex);
+                        Logger.Log.Error(ex);
                     }
                 }
 
@@ -734,20 +734,20 @@ namespace OpenNos.GameObject
                                                         }
                                                         catch (Exception ex)
                                                         {
-                                                            Logger.Error("PacketLog Error. SessionId: " + SessionId, ex);
+                                                            Logger.Log.Error("PacketLog Error. SessionId: " + SessionId, ex);
                                                         }
                                                     }
                                                 }
                                                 catch (Exception ex)
                                                 {
-                                                    Logger.Error("PacketLog Error. SessionId: " + SessionId, ex);
+                                                    Logger.Log.Error("PacketLog Error. SessionId: " + SessionId, ex);
                                                 }
                                             }*/
                                             methodReference.HandlerMethod(methodReference.ParentHandler, deserializedPacket);
                                         }
                                         else
                                         {
-                                            Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("CORRUPT_PACKET"), packetHeader, packet));
+                                            Logger.Log.Warn(string.Format(Language.Instance.GetMessageFromKey("CORRUPT_PACKET"), packetHeader, packet));
                                         }
                                     }
                                 }
@@ -760,7 +760,7 @@ namespace OpenNos.GameObject
                         catch (DivideByZeroException ex)
                         {
                             // disconnect if something unexpected happens
-                            Logger.Error("Handler Error SessionId: " + SessionId, ex);
+                            Logger.Log.Error("Handler Error SessionId: " + SessionId, ex);
                             Disconnect();
                         }
                     }
@@ -768,12 +768,12 @@ namespace OpenNos.GameObject
                 }
                 else
                 {
-                    Logger.Warn($"{ string.Format(Language.Instance.GetMessageFromKey("HANDLER_NOT_FOUND"), packetHeader)} From IP: {_client.IpAddress}");
+                    Logger.Log.Warn($"{ string.Format(Language.Instance.GetMessageFromKey("HANDLER_NOT_FOUND"), packetHeader)} From IP: {_client.IpAddress}");
                 }
             }
             else
             {
-                Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("CLIENTSESSION_DISPOSING"), packetHeader));
+                Logger.Log.Warn(string.Format(Language.Instance.GetMessageFromKey("CLIENTSESSION_DISPOSING"), packetHeader));
             }
         }
 

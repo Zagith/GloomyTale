@@ -1646,7 +1646,7 @@ namespace OpenNos.GameObject
                                     IEnumerable<RollGeneratedItemDTO> rollGeneratedItemDtos = roll as IList<RollGeneratedItemDTO> ?? roll.ToList();
                                     if (!rollGeneratedItemDtos.Any())
                                     {
-                                        Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("NO_HANDLER_ITEM"), GetType(), VNum, Effect, EffectValue));
+                                        Logger.Log.Warn(string.Format(Language.Instance.GetMessageFromKey("NO_HANDLER_ITEM"), GetType(), VNum, Effect, EffectValue));
                                         return;
                                     }
                                     int probabilities = rollGeneratedItemDtos.Where(s => s.Probability != 10000).Sum(s => s.Probability);

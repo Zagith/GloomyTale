@@ -2163,7 +2163,7 @@ namespace OpenNos.GameObject
                             }
                             catch (Exception ex)
                             {
-                                Logger.Error(ex);
+                                Logger.Log.Error(ex);
                             }
                         }
                         Mates.Where(s => s.CanPickUp).ToList().ForEach(s => Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, s.MateTransportId, 3007)));
@@ -2465,7 +2465,7 @@ namespace OpenNos.GameObject
                                     Session.SendPacket(GenerateStat());
                                     Session.SendPackets(GenerateStatChar());
 
-                                    Logger.LogUserEvent("CHARACTER_SPECIALIST_RETURN", Session.GenerateIdentity(), $"SpCooldown: {SpCooldown}");
+                                    Logger.Log.LogUserEvent("CHARACTER_SPECIALIST_RETURN", Session.GenerateIdentity(), $"SpCooldown: {SpCooldown}");
 
                                     Observable.Timer(TimeSpan.FromMilliseconds(SpCooldown * 1000)).Subscribe(o =>
                                     {
@@ -3039,7 +3039,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.Log.Error(ex);
             }
             return str;
         }
@@ -3059,7 +3059,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.Log.Error(ex);
             }
             return str;
         }
@@ -3079,7 +3079,7 @@ namespace OpenNos.GameObject
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.Log.Error(ex);
             }
             return str;
         }
@@ -3797,7 +3797,7 @@ namespace OpenNos.GameObject
 
         public string GenerateLevelUp()
         {
-            Logger.LogUserEvent("LEVELUP", Session.GenerateIdentity(), $"Level: {Level} JobLevel: {JobLevel} SPLevel: {Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear)?.SpLevel} HeroLevel: {HeroLevel} MapId: {Session.CurrentMapInstance?.Map.MapId} MapX: {PositionX} MapY: {PositionY}");
+            Logger.Log.LogUserEvent("LEVELUP", Session.GenerateIdentity(), $"Level: {Level} JobLevel: {JobLevel} SPLevel: {Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear)?.SpLevel} HeroLevel: {HeroLevel} MapId: {Session.CurrentMapInstance?.Map.MapId} MapX: {PositionX} MapY: {PositionY}");
             return $"levelup {CharacterId}";
         }
 
@@ -5400,7 +5400,7 @@ namespace OpenNos.GameObject
                     AccountDTO referrer = DAOFactory.AccountDAO.LoadById(character.AccountId);
                     if (referrer != null && !AccountId.Equals(character.AccountId))
                     {
-                        Logger.LogUserEvent("REFERRERREWARD", Session.GenerateIdentity(), $"AccountId: {AccountId} ReferrerId: {referrerId}");
+                        Logger.Log.LogUserEvent("REFERRERREWARD", Session.GenerateIdentity(), $"AccountId: {AccountId} ReferrerId: {referrerId}");
                         DAOFactory.AccountDAO.WriteGeneralLog(AccountId, Session.Account.RegistrationIP, CharacterId, GeneralLogType.ReferralProgram, $"ReferrerId: {referrerId}");
 
                         // send gifts like you want
@@ -5567,7 +5567,7 @@ namespace OpenNos.GameObject
                     ItemInstance newItem = Inventory.InstantiateItemInstance(itemVNum, CharacterId, amount);
                     if (newItem.Item == null)
                     {
-                        Logger.LogEventError("GIFT_ADD_ERROR", $"Item VNum {itemVNum} doesn't exist");
+                        Logger.Log.LogEventError("GIFT_ADD_ERROR", $"Item VNum {itemVNum} doesn't exist");
                     }
                     if (newItem != null)
                     {
@@ -6211,7 +6211,7 @@ namespace OpenNos.GameObject
 
         public void Save()
         {
-            Logger.LogUserEvent("CHARACTER_DB_SAVE", Session.GenerateIdentity(), "START");
+            Logger.Log.LogUserEvent("CHARACTER_DB_SAVE", Session.GenerateIdentity(), "START");
             try
             {
                 AccountDTO account = Session.Account;
@@ -6387,11 +6387,11 @@ namespace OpenNos.GameObject
                         DAOFactory.RespawnDAO.InsertOrUpdate(ref res);
                     }
                 }
-                Logger.LogUserEvent("CHARACTER_DB_SAVE", Session.GenerateIdentity(), "FINISH");
+                Logger.Log.LogUserEvent("CHARACTER_DB_SAVE", Session.GenerateIdentity(), "FINISH");
             }
             catch (Exception e)
             {
-                Logger.LogUserEventError("CHARACTER_DB_SAVE", Session.GenerateIdentity(), "ERROR", e);
+                Logger.Log.LogUserEventError("CHARACTER_DB_SAVE", Session.GenerateIdentity(), "ERROR", e);
             }
         }
 
@@ -6759,7 +6759,7 @@ namespace OpenNos.GameObject
                             }
                             catch (Exception e)
                             {
-                                Logger.Error(e);
+                                Logger.Log.Error(e);
                             }
                         }
                     }
@@ -6775,7 +6775,7 @@ namespace OpenNos.GameObject
                     }
                     catch (Exception e)
                     {
-                        Logger.Error(e);
+                        Logger.Log.Error(e);
                     }
                 }
             }
@@ -7303,7 +7303,7 @@ namespace OpenNos.GameObject
                 Session.SendPacket(GenerateStat());
                 Session.SendPackets(GenerateStatChar());
                 BattleEntity.RemoveOwnedMonsters();
-                Logger.LogUserEvent("CHARACTER_SPECIALIST_RETURN", Session.GenerateIdentity(),
+                Logger.Log.LogUserEvent("CHARACTER_SPECIALIST_RETURN", Session.GenerateIdentity(),
                     $"SpCooldown: {SpCooldown}");
                 if (SpCooldown > 0)
                 {

@@ -57,7 +57,7 @@ namespace OpenNos.GameObject
             // Start the server
             _server.Start();
             
-            Logger.Info(Language.Instance.GetMessageFromKey("STARTED"), memberName: "NetworkManager");
+            Logger.Log.Info(Language.Instance.GetMessageFromKey("STARTED"), memberName: "NetworkManager");
         }
 
         #endregion
@@ -81,7 +81,7 @@ namespace OpenNos.GameObject
         {
             if (!CheckGeneralLog(client))
             {
-                Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("FORCED_DISCONNECT"), client.ClientId));
+                Logger.Log.Warn(string.Format(Language.Instance.GetMessageFromKey("FORCED_DISCONNECT"), client.ClientId));
                 client.Initialize(_fallbackEncryptor);
                 client.SendPacket($"failc {LoginFailType.CantConnect}");
                 client.Disconnect();
