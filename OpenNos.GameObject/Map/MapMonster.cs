@@ -138,7 +138,11 @@ namespace OpenNos.GameObject
         public DateTime LastMove { get; set; }
         
         public DateTime LastSkill { get; set; }
-        
+
+        public DateTime LastEffect42 { get; set; }
+
+        public DateTime LastEffect43 { get; set; }
+
         public IDisposable LifeEvent { get; set; }
 
         public MapInstance MapInstance { get; set; }
@@ -1059,7 +1063,21 @@ namespace OpenNos.GameObject
 
                         int rnd = ServerManager.RandomNumber();
                         if (rnd <= 5 && attackerBattleEntity.Character.HasBuff(755))
+                        {
                             BattleEntity.AddBuff(new Buff(754, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, BattleEntity.MapMonster.MapMonsterId, 42));
+                            BattleEntity.MapMonster.LastEffect42 = DateTime.Now;
+                        }
+
+                        rnd = ServerManager.RandomNumber();
+                        if ((hitRequest.Skill.SkillVNum == 946 && rnd < 15 ||
+                           (hitRequest.Skill.SkillVNum == 948 && rnd >= 15 && rnd <= 35) ||
+                           (hitRequest.Skill.SkillVNum == 951 && rnd >= 36 && rnd <= 56)) && hitmode != 4)
+                            foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 3 && b.Card.BuffType == BuffType.Good))
+                                BattleEntity.RemoveBuff(b.Card.CardId);
+                       else if (hitRequest.Skill.SkillVNum == 952 && rnd < 80)
+                            foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 4))
+                                BattleEntity.RemoveBuff(b.Card.CardId);
                     }
                 }
 
@@ -1256,13 +1274,6 @@ namespace OpenNos.GameObject
                 {
                     if (hitRequest.Skill != null)
                     {
-                        short fairywings = 1;
-                        if (hitRequest.Session.Character.HasBuff(444))
-                        {
-                            int rnd = ServerManager.RandomNumber();
-                            if (rnd < 7)
-                                fairywings = 0;
-                        }
                         switch (hitRequest.TargetHitType)
                         {
                             case TargetHitType.SingleTargetHit:
@@ -1270,7 +1281,7 @@ namespace OpenNos.GameObject
                                 {
                                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                         attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                         hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                         attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                         IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1282,7 +1293,7 @@ namespace OpenNos.GameObject
                             case TargetHitType.SingleTargetHitCombo:
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.SkillCombo.Animation, hitRequest.SkillCombo.Effect,
                                     attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                     IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1303,7 +1314,7 @@ namespace OpenNos.GameObject
                                     }
                                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                         attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                         hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                         attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                         IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1333,7 +1344,7 @@ namespace OpenNos.GameObject
 
                                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                         attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                        -1, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                        -1, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                         hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                         attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                         IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1364,7 +1375,7 @@ namespace OpenNos.GameObject
 
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                     attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                     IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1374,7 +1385,7 @@ namespace OpenNos.GameObject
                             case TargetHitType.ZoneHit:
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect, hitRequest.MapX,
                                     hitRequest.MapY, IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
                                     (byte)(hitRequest.Skill.SkillType - 1)));
@@ -1383,7 +1394,7 @@ namespace OpenNos.GameObject
                             case TargetHitType.SpecialZoneHit:
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                     attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                     IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1438,6 +1449,7 @@ namespace OpenNos.GameObject
                                 {
                                     ski.LastUse = DateTime.Now.AddMilliseconds(ski.Skill.Cooldown * 100 * -1);
                                     attackerBattleEntity.Character.Session.SendPacket(StaticPacketHelper.SkillReset(ski.Skill.CastId));
+                                    attackerBattleEntity.Character.Session.CurrentMapInstance?.Broadcast(attackerBattleEntity.Character.GenerateEff(55));
                                 }
                             });
                         }
@@ -1557,6 +1569,22 @@ namespace OpenNos.GameObject
                     {
                         MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, MapMonsterId, 826));
                     }
+                }
+
+                if (MapInstance != null
+                    && Buff.ContainsKey(553)
+                    && LastEffect43.AddSeconds(1) <= DateTime.Now)
+                {
+                    LastEffect43 = DateTime.Now;
+                    MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, MapMonsterId, 43));
+                }
+
+                if (MapInstance != null
+                    && Buff.ContainsKey(754)
+                    && LastEffect42.AddSeconds(2) <= DateTime.Now)
+                {
+                    LastEffect42 = DateTime.Now;
+                    MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, MapMonsterId, 42));
                 }
 
                 if (IsBoss && IsAlive)
@@ -2342,8 +2370,11 @@ namespace OpenNos.GameObject
 
                     int rnd = ServerManager.RandomNumber();
                     if (rnd < 7 && target.Character.HasBuff(755))
+                    {
                         BattleEntity.AddBuff(new Buff(553, target.Character.Level), target, true);
-
+                        BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, BattleEntity.MapMonster.MapMonsterId, 43));
+                        BattleEntity.MapMonster.LastEffect43 = DateTime.Now;
+                    }
                     if (target.MapNpc != null)
                     {
                         if (target.MapNpc.Target == -1)

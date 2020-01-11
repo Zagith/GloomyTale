@@ -900,10 +900,11 @@ namespace OpenNos.GameObject
                         {
                             if (FirstData > 0)
                             {
-                                /*if (ServerManager.RandomNumber() < FirstData)
+                                if (ServerManager.RandomNumber() < FirstData && session != null && session.Character != null)
                                 {
-                                    session.DisableBuffs(BuffType.Good, SecondData + 1);
-                                }*/
+                                    foreach (Buff b in session.Character.Buff.Where(b => b.Card.Level <= 4 && b.Card.BuffType == BuffType.Good))
+                                        session.Character.RemoveBuff(b.Card.CardId);
+                                }
                             }
                             else
                             {

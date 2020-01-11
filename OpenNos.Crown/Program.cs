@@ -182,10 +182,10 @@ namespace OpenNos.World
             if (newChannelId.HasValue)
             {
                 ServerManager.Instance.ChannelId = newChannelId.Value;
-                if (newChannelId == 51)
+                /*if (newChannelId == 51)
                 {
                     DiscordServiceClient.Instance.Authenticate(authKey);
-                }
+                }*/
                 ServerManager.Instance.IpAddress = publicIp;
                 ServerManager.Instance.Port = (short)_port;
                 Console.Title = string.Format(Language.Instance.GetMessageFromKey("WORLD_SERVER_CONSOLE_TITLE"), ServerManager.Instance.ChannelId, ServerManager.Instance.Sessions.Count(),

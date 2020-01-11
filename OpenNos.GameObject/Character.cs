@@ -302,6 +302,10 @@ namespace OpenNos.GameObject
 
         public DateTime LastEffect { get; set; }
 
+        public DateTime LastEffect42 { get; set; }
+
+        public DateTime LastEffect43 { get; set; }
+
         public DateTime LastFunnelUse { get; set; }
 
         public DateTime LastHealth { get; set; }
@@ -2105,6 +2109,22 @@ namespace OpenNos.GameObject
                 {
                     LastFreeze = DateTime.Now;
                     MapInstance.Broadcast(GenerateEff(35));
+                }
+
+                if (MapInstance != null
+                    && HasBuff(754)
+                    && LastEffect42.AddSeconds(2) <= DateTime.Now)
+                {
+                    LastEffect42 = DateTime.Now;
+                    MapInstance.Broadcast(GenerateEff(42));
+                }
+
+                if (MapInstance != null
+                    && HasBuff(553)
+                    && LastEffect43.AddSeconds(1) <= DateTime.Now)
+                {
+                    LastEffect43 = DateTime.Now;
+                    MapInstance.Broadcast(GenerateEff(43));
                 }
 
                 if (MapInstance == Miniland && LastLoyalty.AddSeconds(10) <= DateTime.Now)
