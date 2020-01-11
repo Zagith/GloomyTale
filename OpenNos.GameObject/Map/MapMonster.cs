@@ -1069,6 +1069,12 @@ namespace OpenNos.GameObject
                             BattleEntity.MapMonster.LastEffect42 = DateTime.Now;
                         }
 
+                        if ((hitRequest.Skill.SkillVNum == 1122 ||
+                             hitRequest.Skill.SkillVNum == 1136 ||
+                             hitRequest.Skill.SkillVNum == 1139 ||
+                             hitRequest.Skill.SkillVNum == 1140) && hitmode == 4)
+                                hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, BattleEntity.MapMonster.MapMonsterId));
+
                         rnd = ServerManager.RandomNumber();
                         if ((hitRequest.Skill.SkillVNum == 946 && rnd < 15 ||
                            (hitRequest.Skill.SkillVNum == 948 && rnd >= 15 && rnd <= 35) ||

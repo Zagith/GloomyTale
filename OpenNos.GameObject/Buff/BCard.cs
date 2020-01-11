@@ -2320,12 +2320,16 @@ namespace OpenNos.GameObject
 
                                                 List<Character> friendCharacters = new List<Character>();
 
-                                                if (character.Family?.FamilyCharacters != null)
+                                                /* SHOULD BE ADDED ONLY IN CASE OF GUILD ARENA
+                                                if (character.Family?.FamilyCharacters != null && !character.MapInstance.IsPVP)
                                                 {
                                                     friendCharacters.AddRange(character.Family.FamilyCharacters.Select(fc => ServerManager.Instance.GetCharacterById(fc.CharacterId)).Where(c => c != null));
-                                                }
+                                                }*/
 
-                                                if (character.Group?.Sessions != null)
+                                                if (!character.MapInstance.IsPVP)
+                                                    friendCharacters.AddRange(character.MapInstance.GetCharactersInRange(character.MapX, character.MapY, 3));
+
+                                                if (character.Group?.Sessions != null && character.MapInstance.IsPVP)
                                                 {
                                                     friendCharacters.AddRange(character.Group.Sessions.Where(s => s.Character != null).Select(s => s.Character));
                                                 }

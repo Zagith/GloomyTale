@@ -658,7 +658,7 @@ namespace OpenNos.Handler
                     hitRequest.Skill.SkillVNum == 1136 || 
                     hitRequest.Skill.SkillVNum == 1139 || 
                     hitRequest.Skill.SkillVNum == 1140) && hitmode == 4)
-                        Session.SendPacket( StaticPacketHelper.Cancel(2, target.Character.CharacterId));
+                        hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.CharacterId));
 
                 //test removing malus by dg skills
                 int rnd = ServerManager.RandomNumber();
