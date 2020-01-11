@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.DAL;
-using OpenNos.Data;
+using GloomyTale.DAL;
+using GloomyTale.Data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Recipe : RecipeDTO
     {

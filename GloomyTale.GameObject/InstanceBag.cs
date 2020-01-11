@@ -15,7 +15,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class InstanceBag
     {

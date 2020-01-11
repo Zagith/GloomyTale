@@ -13,11 +13,11 @@
  */
 
 using System.Collections.Generic;
-using OpenNos.Data;
-using OpenNos.Data.Enums;
-using OpenNos.Domain;
+using GloomyTale.Data;
+using GloomyTale.Data.Enums;
+using GloomyTale.Domain;
 
-namespace OpenNos.DAL.Interface
+namespace GloomyTale.DAL.Interface
 {
     public interface IMinigameLogDAO
     {

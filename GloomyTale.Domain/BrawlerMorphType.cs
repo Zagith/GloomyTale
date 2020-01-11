@@ -1,5 +1,5 @@
 ﻿
-namespace OpenNos.Domain
+namespace GloomyTale.Domain
 {
     public enum BrawlerMorphType : byte
     {

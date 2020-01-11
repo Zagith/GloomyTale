@@ -1,8 +1,8 @@
-﻿using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Networking;
+﻿using GloomyTale.Core;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Networking;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class CustomHelper
     {

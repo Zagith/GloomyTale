@@ -1,10 +1,10 @@
 using Mapster;
 using GloomyTale.DAL.EF;
-using OpenNos.Data;
-using OpenNos.Data.Base;
-using OpenNos.Domain;
+using GloomyTale.Data;
+using GloomyTale.Data.Base;
+using GloomyTale.Domain;
 
-namespace OpenNos.Mapper.Mappers
+namespace GloomyTale.Mapper.Mappers
 {
     public static class ItemMapper
     {

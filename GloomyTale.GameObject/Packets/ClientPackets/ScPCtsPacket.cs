@@ -1,7 +1,7 @@
 ﻿
-using OpenNos.Core;
+using GloomyTale.Core;
 
-namespace OpenNos.GameObject.Packets.ClientPackets
+namespace GloomyTale.GameObject.Packets.ClientPackets
 {
     [PacketHeader("sc_p_cts")]
     public class ScPCtsPacket : PacketDefinition

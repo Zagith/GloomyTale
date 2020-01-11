@@ -12,13 +12,13 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
+using GloomyTale.Core;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class NoFunctionItem : Item
     {

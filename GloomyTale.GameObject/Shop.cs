@@ -12,11 +12,11 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Data;
+using GloomyTale.Data;
 using System.Collections.Generic;
-using OpenNos.GameObject.Networking;
+using GloomyTale.GameObject.Networking;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Shop : ShopDTO
     {

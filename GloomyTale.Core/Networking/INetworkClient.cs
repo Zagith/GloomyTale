@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public interface INetworkClient
     {

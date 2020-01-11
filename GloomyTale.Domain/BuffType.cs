@@ -14,7 +14,7 @@
 
 using System;
 
-namespace OpenNos.Domain
+namespace GloomyTale.Domain
 {
     [Flags]
     public enum BuffType : byte

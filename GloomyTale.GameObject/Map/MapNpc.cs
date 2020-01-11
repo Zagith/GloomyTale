@@ -12,21 +12,21 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.PathFinder;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.PathFinder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.GameObject.Networking;
-using static OpenNos.Domain.BCardType;
+using GloomyTale.GameObject.Networking;
+using static GloomyTale.Domain.BCardType;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class MapNpc : MapNpcDTO
     {

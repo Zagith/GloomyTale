@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class ShellGeneratorHelper
     {

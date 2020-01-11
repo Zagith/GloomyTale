@@ -1,7 +1,7 @@
 ﻿using GloomyTale.DAL.EF.Entities;
-using OpenNos.Data.I18N;
+using GloomyTale.Data.I18N;
 
-namespace OpenNos.Mapper.Mappers
+namespace GloomyTale.Mapper.Mappers
 {
     public static class I18NMapMapper
     {

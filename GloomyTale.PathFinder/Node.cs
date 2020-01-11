@@ -14,7 +14,7 @@
 
 using System;
 
-namespace OpenNos.PathFinder
+namespace GloomyTale.PathFinder
 {
     public class Node : GridPos, IComparable<Node>, IEquatable<Node>
     {

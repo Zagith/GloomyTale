@@ -13,9 +13,9 @@
  */
 
 using System;
-using OpenNos.GameObject.Networking;
+using GloomyTale.GameObject.Networking;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Buff
     {

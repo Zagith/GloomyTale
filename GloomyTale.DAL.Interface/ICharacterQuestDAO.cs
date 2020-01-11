@@ -1,9 +1,9 @@
-﻿using OpenNos.Data;
+﻿using GloomyTale.Data;
 using System.Collections.Generic;
-using OpenNos.Data.Enums;
+using GloomyTale.Data.Enums;
 using System;
 
-namespace OpenNos.DAL.Interface
+namespace GloomyTale.DAL.Interface
 {
     public interface ICharacterQuestDAO
     {

@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.DAL;
-using OpenNos.Data;
+using GloomyTale.DAL;
+using GloomyTale.Data;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class FamilyCharacter : FamilyCharacterDTO
     {

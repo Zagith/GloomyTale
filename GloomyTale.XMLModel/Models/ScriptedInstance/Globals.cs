@@ -1,7 +1,7 @@
-﻿using OpenNos.XMLModel.Objects;
+﻿using GloomyTale.XMLModel.Objects;
 using System;
 
-namespace OpenNos.XMLModel.Models.ScriptedInstance
+namespace GloomyTale.XMLModel.Models.ScriptedInstance
 {
     [Serializable]
     public class Globals

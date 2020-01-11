@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.Core;
+using GloomyTale.Core;
 using GloomyTale.DAL.EF;
-using OpenNos.DAL.Interface;
-using OpenNos.Data;
-using OpenNos.Data.Enums;
+using GloomyTale.DAL.Interface;
+using GloomyTale.Data;
+using GloomyTale.Data.Enums;
 using GloomyTale.DAL.EF.Helpers;
 using Microsoft.EntityFrameworkCore;
 
-namespace OpenNos.DAL.DAO
+namespace GloomyTale.DAL.DAO
 {
     public class QuestLogDAO : IQuestLogDAO
     {

@@ -1,4 +1,4 @@
-using OpenNos.Domain;
+using GloomyTale.Domain;
 
 /*
  * This file is part of the OpenNos Emulator Project. See AUTHORS file for Copyright information

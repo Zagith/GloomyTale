@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.GameObject.Helpers;
+using GloomyTale.GameObject.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Clock
     {

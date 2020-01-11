@@ -1,12 +1,12 @@
 ﻿using System;
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.DAL;
-using OpenNos.GameObject.Networking;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.DAL;
+using GloomyTale.GameObject.Networking;
 using System.Collections.Generic;
-using OpenNos.Domain;
+using GloomyTale.Domain;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class LogHelper
     {

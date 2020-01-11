@@ -12,16 +12,16 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Data;
+using GloomyTale.Data;
 using System;
-using OpenNos.GameObject.Networking;
+using GloomyTale.GameObject.Networking;
 using System.Collections.Generic;
-using OpenNos.GameObject.Helpers;
+using GloomyTale.GameObject.Helpers;
 using System.Linq;
-using OpenNos.Domain;
-using static OpenNos.Domain.BCardType;
+using GloomyTale.Domain;
+using static GloomyTale.Domain.BCardType;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class CharacterSkill : CharacterSkillDTO
     {

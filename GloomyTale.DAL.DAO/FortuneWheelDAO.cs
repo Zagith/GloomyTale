@@ -1,12 +1,12 @@
 ﻿using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Entities;
 using GloomyTale.DAL.EF.Helpers;
-using OpenNos.DAL.Interface;
-using OpenNos.Data;
+using GloomyTale.DAL.Interface;
+using GloomyTale.Data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenNos.DAL.DAO
+namespace GloomyTale.DAL.DAO
 {
     public class FortuneWheelDAO : IFortuneWheelDAO
     {

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using OpenNos.Data;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
-using OpenNos.Domain;
+using GloomyTale.Data;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
+using GloomyTale.Domain;
 using System;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Quest : QuestDTO
     {

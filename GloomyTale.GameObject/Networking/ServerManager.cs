@@ -24,26 +24,26 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.DAL;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.XMLModel.Models.Quest;
-using OpenNos.GameObject.Event;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.DAL;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.XMLModel.Models.Quest;
+using GloomyTale.GameObject.Event;
 using System.Net.Sockets;
-using OpenNos.Domain.I18N;
-using OpenNos.Data.I18N;
-using OpenNos.Data.Base;
+using GloomyTale.Domain.I18N;
+using GloomyTale.Data.I18N;
+using GloomyTale.Data.Base;
 using System.Reflection;
-using OpenNos.Data.Interfaces;
+using GloomyTale.Data.Interfaces;
 using Mapster;
-using OpenNos.GameObject.Event.ACT4;
+using GloomyTale.GameObject.Event.ACT4;
 using FastMember;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
 
-namespace OpenNos.GameObject.Networking
+namespace GloomyTale.GameObject.Networking
 {
     public class ServerManager : BroadcastableBase
     {

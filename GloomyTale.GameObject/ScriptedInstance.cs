@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
-using OpenNos.XMLModel.Models.ScriptedInstance;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
+using GloomyTale.XMLModel.Models.ScriptedInstance;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class ScriptedInstance : ScriptedInstanceDTO
     {

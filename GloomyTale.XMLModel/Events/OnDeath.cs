@@ -1,8 +1,8 @@
-﻿using OpenNos.XMLModel.Objects;
+﻿using GloomyTale.XMLModel.Objects;
 using System;
 using System.Xml.Serialization;
 
-namespace OpenNos.XMLModel.Events
+namespace GloomyTale.XMLModel.Events
 {
     [Serializable]
     public class OnDeath

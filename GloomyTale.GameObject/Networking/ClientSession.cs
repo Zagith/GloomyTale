@@ -13,13 +13,13 @@
  */
 
 using GloomyTale.GameObject.Networking;
-using OpenNos.Core;
-using OpenNos.Core.Handling;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
+using GloomyTale.Core;
+using GloomyTale.Core.Handling;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class ClientSession
     {

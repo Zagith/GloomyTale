@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
+using GloomyTale.Domain;
 
 namespace GloomyTale.DAL.EF
 {

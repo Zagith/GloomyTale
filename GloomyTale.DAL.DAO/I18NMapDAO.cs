@@ -1,15 +1,15 @@
-﻿using OpenNos.Core;
+﻿using GloomyTale.Core;
 using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Entities;
 using GloomyTale.DAL.EF.Helpers;
-using OpenNos.DAL.Interface;
-using OpenNos.Data.Enums;
-using OpenNos.Data.I18N;
+using GloomyTale.DAL.Interface;
+using GloomyTale.Data.Enums;
+using GloomyTale.Data.I18N;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenNos.DAL.DAO
+namespace GloomyTale.DAL.DAO
 {
     public class I18NMapDAO : II18NMapDAO
     {

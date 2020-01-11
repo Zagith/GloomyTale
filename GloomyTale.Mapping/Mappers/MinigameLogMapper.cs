@@ -1,7 +1,7 @@
 ﻿using GloomyTale.DAL.EF;
-using OpenNos.Data;
+using GloomyTale.Data;
 
-namespace OpenNos.Mapper.Mappers
+namespace GloomyTale.Mapper.Mappers
 {
     public static class MinigameLogMapper
     {

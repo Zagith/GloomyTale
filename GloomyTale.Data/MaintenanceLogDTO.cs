@@ -14,7 +14,7 @@
 
 using System;
 
-namespace OpenNos.Data
+namespace GloomyTale.Data
 {
     [Serializable]
     public class MaintenanceLogDTO

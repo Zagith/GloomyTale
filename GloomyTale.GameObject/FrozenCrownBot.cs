@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public static class FrozenCrownBot
     {

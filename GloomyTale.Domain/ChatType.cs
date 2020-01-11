@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.Domain
+namespace GloomyTale.Domain
 {
     public enum ChatType : byte
     {

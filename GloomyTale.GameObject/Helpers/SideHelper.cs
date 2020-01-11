@@ -1,11 +1,11 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public static class SideHelper
     {

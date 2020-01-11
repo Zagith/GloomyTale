@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core.ArrayExtensions;
+using GloomyTale.Core.ArrayExtensions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     namespace ArrayExtensions
     {

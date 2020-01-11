@@ -12,18 +12,18 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
+using GloomyTale.Core;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
+using GloomyTale.GameObject.Networking;
 using System.Text;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class ItemInstance : ItemInstanceDTO
     {

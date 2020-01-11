@@ -12,8 +12,8 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
-using OpenNos.Domain.I18N;
+using GloomyTale.Domain;
+using GloomyTale.Domain.I18N;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

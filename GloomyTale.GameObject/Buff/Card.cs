@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Data;
+using GloomyTale.Data;
 using System.Collections.Generic;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Card : CardDTO
     {

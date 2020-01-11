@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.GameObject.Helpers;
+using GloomyTale.GameObject.Helpers;
 using System.Collections.Generic;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class MapButton
     {

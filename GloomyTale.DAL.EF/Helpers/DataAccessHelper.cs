@@ -13,7 +13,7 @@
  */
 
 using Microsoft.EntityFrameworkCore;
-using OpenNos.Core;
+using GloomyTale.Core;
 using System;
 
 namespace GloomyTale.DAL.EF.Helpers

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public abstract class PacketDefinition
     {

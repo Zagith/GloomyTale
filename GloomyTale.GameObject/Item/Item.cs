@@ -12,13 +12,13 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public abstract class Item : ItemDTO
     {

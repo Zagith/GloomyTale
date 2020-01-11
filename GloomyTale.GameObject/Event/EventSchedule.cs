@@ -12,13 +12,13 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
+using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Xml;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class EventSchedule //: IConfigurationSectionHandler
     {

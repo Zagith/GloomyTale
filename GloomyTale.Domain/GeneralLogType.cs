@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-namespace OpenNos.Domain
+namespace GloomyTale.Domain
 {
     public enum GeneralLogType
     {

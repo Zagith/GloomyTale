@@ -12,30 +12,29 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Battle;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Packets.ServerPackets;
-using OpenNos.PathFinder;
+using GloomyTale.Core;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Battle;
+using GloomyTale.GameObject.Event;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Packets.ServerPackets;
+using GloomyTale.PathFinder;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
-using static OpenNos.Domain.BCardType;
-using OpenNos.Core.ConcurrencyExtensions;
-using OpenNos.GameObject.Networking;
-using System.Threading.Tasks;
-using OpenNos.Core.Extensions;
+using static GloomyTale.Domain.BCardType;
+using GloomyTale.Core.ConcurrencyExtensions;
 using GloomyTale.GameObject.Networking;
+using System.Threading.Tasks;
+using GloomyTale.Core.Extensions;
 using GloomyTale.Communication;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Character : CharacterDTO
     {

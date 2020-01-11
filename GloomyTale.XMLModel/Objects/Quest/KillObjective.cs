@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenNos.XMLModel.Objects.Quest
+namespace GloomyTale.XMLModel.Objects.Quest
 {
     [Serializable]
     public class KillObjective

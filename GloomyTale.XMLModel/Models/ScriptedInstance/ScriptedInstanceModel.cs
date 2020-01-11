@@ -1,8 +1,8 @@
-﻿using OpenNos.XMLModel.Objects;
+﻿using GloomyTale.XMLModel.Objects;
 using System;
 using System.Xml.Serialization;
 
-namespace OpenNos.XMLModel.Models.ScriptedInstance
+namespace GloomyTale.XMLModel.Models.ScriptedInstance
 {
     [XmlRoot("Definition"), Serializable]
     public class ScriptedInstanceModel

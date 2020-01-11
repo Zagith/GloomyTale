@@ -12,9 +12,9 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Data.Base;
+using GloomyTale.Data.Base;
 
-namespace OpenNos.Data
+namespace GloomyTale.Data
 {
     public interface IMapDTO
     {

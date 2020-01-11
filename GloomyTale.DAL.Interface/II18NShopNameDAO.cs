@@ -1,8 +1,8 @@
-﻿using OpenNos.Data.Enums;
-using OpenNos.Data.I18N;
+﻿using GloomyTale.Data.Enums;
+using GloomyTale.Data.I18N;
 using System.Collections.Generic;
 
-namespace OpenNos.DAL.Interface
+namespace GloomyTale.DAL.Interface
 {
     public interface II18NShopNameDAO
     {

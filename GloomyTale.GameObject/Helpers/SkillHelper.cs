@@ -1,7 +1,7 @@
-﻿using OpenNos.GameObject.Networking;
+﻿using GloomyTale.GameObject.Networking;
 using System;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class SkillHelper
     {

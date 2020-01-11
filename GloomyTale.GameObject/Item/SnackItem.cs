@@ -12,16 +12,16 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Networking;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Networking;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class SnackItem : Item
     {

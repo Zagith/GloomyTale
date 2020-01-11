@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
+using GloomyTale.Domain;
 using System;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public sealed class PacketHeaderAttribute : Attribute

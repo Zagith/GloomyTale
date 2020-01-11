@@ -12,13 +12,13 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
+using GloomyTale.Core;
+using GloomyTale.Data;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
+using GloomyTale.GameObject.Networking;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class ProduceItem : Item
     {

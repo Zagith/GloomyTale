@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Helpers;
-using OpenNos.DAL.Interface;
-using OpenNos.Data;
+using GloomyTale.DAL.Interface;
+using GloomyTale.Data;
 
-namespace OpenNos.DAL.DAO
+namespace GloomyTale.DAL.DAO
 {
     public class BoxItemDAO : IBoxItemDAO
     {

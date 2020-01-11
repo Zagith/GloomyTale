@@ -19,7 +19,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public static class PacketFactory
     {

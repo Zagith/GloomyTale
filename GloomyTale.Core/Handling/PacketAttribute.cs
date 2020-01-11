@@ -14,7 +14,7 @@
 
 using System;
 
-namespace OpenNos.Core.Handling
+namespace GloomyTale.Core.Handling
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public sealed class PacketAttribute : Attribute

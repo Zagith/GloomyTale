@@ -1,5 +1,5 @@
-﻿using OpenNos.Data;
-using OpenNos.Domain;
+﻿using GloomyTale.Data;
+using GloomyTale.Domain;
 
 namespace GloomyTale.Communication
 {

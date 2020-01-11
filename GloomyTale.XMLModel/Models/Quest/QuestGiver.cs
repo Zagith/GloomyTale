@@ -1,7 +1,7 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 using System;
 
-namespace OpenNos.XMLModel.Models.Quest
+namespace GloomyTale.XMLModel.Models.Quest
 {
     [Serializable]
     public class QuestGiver

@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.DAL.DAO;
-using OpenNos.DAL.Interface;
+using GloomyTale.DAL.DAO;
+using GloomyTale.DAL.Interface;
 
-namespace OpenNos.DAL
+namespace GloomyTale.DAL
 {
     public static class DAOFactory
     {

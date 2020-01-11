@@ -12,17 +12,17 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
+using GloomyTale.Core;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using OpenNos.GameObject.Networking;
+using GloomyTale.GameObject.Networking;
 
-namespace OpenNos.GameObject.Event
+namespace GloomyTale.GameObject.Event
 {
     public static class ACT4SHIP
     {

@@ -1,7 +1,7 @@
 ﻿
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenNos.Domain.I18N
+namespace GloomyTale.Domain.I18N
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum RegionType

@@ -1,8 +1,8 @@
-﻿using OpenNos.Data;
-using OpenNos.GameObject.Networking;
+﻿using GloomyTale.Data;
+using GloomyTale.GameObject.Networking;
 using System;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class PartnerSkill
     {

@@ -1,8 +1,8 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class PartnerHelper
     {

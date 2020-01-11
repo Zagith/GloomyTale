@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.Data.Interfaces
+namespace GloomyTale.Data.Interfaces
 {
     public interface IStaticDto
     {

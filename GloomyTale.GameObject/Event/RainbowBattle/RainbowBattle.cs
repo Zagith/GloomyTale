@@ -1,7 +1,7 @@
-﻿using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
+﻿using GloomyTale.Core;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 
-namespace OpenNos.GameObject.Event.RainbowBattle
+namespace GloomyTale.GameObject.Event.RainbowBattle
 {
     public static class RainbowBattle
     {

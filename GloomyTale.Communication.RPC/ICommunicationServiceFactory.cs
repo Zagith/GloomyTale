@@ -1,5 +1,5 @@
 ﻿using Grpc.Core;
-using OpenNos.Core;
+using GloomyTale.Core;
 using System.Threading.Tasks;
 
 namespace GloomyTale.Communication.RPC

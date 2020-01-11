@@ -12,24 +12,24 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Core.Extensions;
-using OpenNos.Core.Handling;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Packets.ClientPackets;
+using GloomyTale.Core;
+using GloomyTale.Core.Extensions;
+using GloomyTale.Core.Handling;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Packets.ClientPackets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using static OpenNos.Domain.BCardType;
+using GloomyTale.GameObject.Networking;
+using static GloomyTale.Domain.BCardType;
 using System.Collections.Concurrent;
-using OpenNos.DAL;
-using OpenNos.GameObject.Event.TIMESPACES;
+using GloomyTale.DAL;
+using GloomyTale.GameObject.Event.TIMESPACES;
 
-namespace OpenNos.Handler
+namespace GloomyTale.Handler
 {
     public class NpcPacketHandler : IPacketHandler
     {

@@ -1,12 +1,12 @@
-﻿using OpenNos.Data.Interfaces;
-using OpenNos.Domain.I18N;
+﻿using GloomyTale.Data.Interfaces;
+using GloomyTale.Domain.I18N;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.Data.I18N
+namespace GloomyTale.Data.I18N
 {
     public class II18NCardDto : II18NDto
     {

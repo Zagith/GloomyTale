@@ -12,11 +12,11 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
+using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public static class MapInstancePortalHandler
     {

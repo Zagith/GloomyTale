@@ -1,7 +1,7 @@
-﻿using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
+﻿using GloomyTale.Core;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OpenNos.GameObject.Event.BANDICOOTRUN
+namespace GloomyTale.GameObject.Event.BANDICOOTRUN
 {
     public static class BandicootRun
     {

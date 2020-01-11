@@ -1,7 +1,7 @@
 ﻿using Discord.Webhook;
 using System.Threading.Tasks;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class DiscordHelper
     {

@@ -1,7 +1,7 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 using System;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class ArenaTeamMember
     {

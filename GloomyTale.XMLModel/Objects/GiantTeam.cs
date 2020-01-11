@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenNos.XMLModel.Objects
+namespace GloomyTale.XMLModel.Objects
 {
     [Serializable]
     public class GiantTeam

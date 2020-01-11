@@ -1,11 +1,11 @@
-﻿using OpenNos.Domain.I18N;
+﻿using GloomyTale.Domain.I18N;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.Data.Interfaces
+namespace GloomyTale.Data.Interfaces
 {
     public interface II18NDto
     {

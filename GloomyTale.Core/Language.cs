@@ -19,7 +19,7 @@ using System.IO;
 using System.Reflection;
 using System.Resources;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public class Language
     {

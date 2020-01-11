@@ -1,9 +1,9 @@
-﻿using OpenNos.XMLModel.Events.Quest;
-using OpenNos.XMLModel.Objects.Quest;
+﻿using GloomyTale.XMLModel.Events.Quest;
+using GloomyTale.XMLModel.Objects.Quest;
 using System;
 using System.Xml.Serialization;
 
-namespace OpenNos.XMLModel.Models.Quest
+namespace GloomyTale.XMLModel.Models.Quest
 {
     [XmlRoot("Definition"), Serializable]
     public class QuestModel

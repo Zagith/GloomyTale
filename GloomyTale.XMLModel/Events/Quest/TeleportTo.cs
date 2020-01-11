@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace OpenNos.XMLModel.Events.Quest
+namespace GloomyTale.XMLModel.Events.Quest
 {
     [Serializable]
     public class TeleportTo

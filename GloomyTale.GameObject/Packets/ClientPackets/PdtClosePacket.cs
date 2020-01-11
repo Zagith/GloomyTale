@@ -1,6 +1,6 @@
-﻿using OpenNos.Core;
+﻿using GloomyTale.Core;
 
-namespace OpenNos.GameObject.Packets.ClientPackets
+namespace GloomyTale.GameObject.Packets.ClientPackets
 {
     [PacketHeader("pdtclose")]
     public class PdtClosePacket : PacketDefinition

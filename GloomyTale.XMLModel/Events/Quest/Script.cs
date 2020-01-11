@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenNos.XMLModel.Events.Quest
+namespace GloomyTale.XMLModel.Events.Quest
 {
     [Serializable]
     public class Script

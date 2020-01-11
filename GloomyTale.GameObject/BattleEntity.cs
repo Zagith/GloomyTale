@@ -1,21 +1,21 @@
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
-using OpenNos.PathFinder;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Event;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
+using GloomyTale.PathFinder;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.Core.ConcurrencyExtensions;
-using static OpenNos.Domain.BCardType;
+using GloomyTale.Core.ConcurrencyExtensions;
+using static GloomyTale.Domain.BCardType;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class BattleEntity
     {

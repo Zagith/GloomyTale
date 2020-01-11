@@ -12,23 +12,23 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.PathFinder;
-using static OpenNos.Domain.BCardType;
-using OpenNos.GameObject.Battle;
+using GloomyTale.PathFinder;
+using static GloomyTale.Domain.BCardType;
+using GloomyTale.GameObject.Battle;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Mate : MateDTO
     {

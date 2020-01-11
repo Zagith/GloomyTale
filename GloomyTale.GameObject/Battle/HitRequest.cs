@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Data;
-using OpenNos.Domain;
+using GloomyTale.Data;
+using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 
-namespace OpenNos.GameObject.Battle
+namespace GloomyTale.GameObject.Battle
 {
     public class HitRequest
     {

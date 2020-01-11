@@ -1,4 +1,4 @@
-﻿using OpenNos.Domain.I18N;
+﻿using GloomyTale.Domain.I18N;
 using System.ComponentModel.DataAnnotations;
 
 namespace GloomyTale.DAL.EF.Entities

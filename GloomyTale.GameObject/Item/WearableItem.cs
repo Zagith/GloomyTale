@@ -12,18 +12,18 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
 using System;
 using System.Diagnostics;
-using OpenNos.Core.ConcurrencyExtensions;
-using OpenNos.GameObject.Networking;
+using GloomyTale.Core.ConcurrencyExtensions;
+using GloomyTale.GameObject.Networking;
 using System.Linq;
-using OpenNos.Core.Extensions;
+using GloomyTale.Core.Extensions;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class WearableItem : Item
     {

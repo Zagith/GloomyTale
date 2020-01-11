@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OpenNos.GameObject.Event
+namespace GloomyTale.GameObject.Event
 {
     public class TalentArenaBattle
     {

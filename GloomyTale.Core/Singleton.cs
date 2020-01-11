@@ -1,4 +1,4 @@
-﻿namespace OpenNos.Core
+﻿namespace GloomyTale.Core
 {
     public class Singleton<T> where T : class, new()
     {

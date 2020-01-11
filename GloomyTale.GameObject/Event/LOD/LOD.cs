@@ -12,16 +12,16 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
+using GloomyTale.Core;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading;
 
-namespace OpenNos.GameObject.Event
+namespace GloomyTale.GameObject.Event
 {
     public static class LOD
     {

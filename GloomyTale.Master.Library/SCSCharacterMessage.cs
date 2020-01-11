@@ -1,4 +1,4 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 using System;
 
 namespace GloomyTale.Communication

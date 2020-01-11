@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class UpgradeItem : Item
     {

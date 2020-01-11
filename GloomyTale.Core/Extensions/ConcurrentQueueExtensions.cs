@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public static class ConcurrentQueueExtensions
     {

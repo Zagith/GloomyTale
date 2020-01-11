@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public class ThreadSafeGenericLockedList<T>
     {

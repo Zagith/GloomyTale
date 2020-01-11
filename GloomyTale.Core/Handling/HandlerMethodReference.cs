@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
+using GloomyTale.Domain;
 using System;
 
-namespace OpenNos.Core.Handling
+namespace GloomyTale.Core.Handling
 {
     public class HandlerMethodReference
     {

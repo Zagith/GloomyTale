@@ -1,4 +1,4 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

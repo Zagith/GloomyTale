@@ -1,7 +1,7 @@
-﻿using OpenNos.Core;
-using OpenNos.Domain;
+﻿using GloomyTale.Core;
+using GloomyTale.Domain;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     [PacketHeader("suctl")]
     public class SuctlPacket : PacketDefinition

@@ -12,9 +12,9 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
+using GloomyTale.Domain;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class MonsterMapItem : MapItem
     {

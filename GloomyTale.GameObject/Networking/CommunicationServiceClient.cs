@@ -1,7 +1,7 @@
 ﻿using GloomyTale.Communication;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;

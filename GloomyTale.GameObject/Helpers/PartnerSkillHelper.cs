@@ -1,9 +1,9 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 using System;
 using System.Linq;
-using static OpenNos.Domain.BCardType;
+using static GloomyTale.Domain.BCardType;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class PartnerSkillHelper
     {

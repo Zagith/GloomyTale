@@ -1,7 +1,7 @@
-﻿using OpenNos.Core;
-using OpenNos.Domain;
+﻿using GloomyTale.Core;
+using GloomyTale.Domain;
 
-namespace OpenNos.GameObject.CommandPackets
+namespace GloomyTale.GameObject.CommandPackets
 {
     [PacketHeader("$CH", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.DEV })] //for the momment
     public class CHPacket : PacketDefinition

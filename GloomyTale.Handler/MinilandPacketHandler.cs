@@ -12,19 +12,19 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject;
-using OpenNos.GameObject.Helpers;
+using GloomyTale.Core;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject;
+using GloomyTale.GameObject.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.Core.Extensions;
+using GloomyTale.GameObject.Networking;
+using GloomyTale.Core.Extensions;
 
-namespace OpenNos.Handler
+namespace GloomyTale.Handler
 {
     public class MinilandPacketHandler : IPacketHandler
     {

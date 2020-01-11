@@ -14,7 +14,7 @@
 
 using GloomyTale.DAL.EF.Base;
 using GloomyTale.DAL.EF.Entities;
-using OpenNos.Domain;
+using GloomyTale.Domain;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

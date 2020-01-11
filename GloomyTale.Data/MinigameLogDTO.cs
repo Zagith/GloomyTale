@@ -1,5 +1,5 @@
 ﻿using System;
-namespace OpenNos.Data
+namespace GloomyTale.Data
 {
     public class MinigameLogDTO
     {

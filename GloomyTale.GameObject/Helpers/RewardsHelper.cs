@@ -1,6 +1,6 @@
-﻿using OpenNos.Core;
+﻿using GloomyTale.Core;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class RewardsHelper
     {

@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject;
-using OpenNos.GameObject.Packets.ClientPackets;
+using GloomyTale.Core;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject;
+using GloomyTale.GameObject.Packets.ClientPackets;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -27,7 +27,7 @@ using GloomyTale.Communication;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace OpenNos.Handler
+namespace GloomyTale.Handler
 {
     public class LoginPacketHandler : IPacketHandler
     {

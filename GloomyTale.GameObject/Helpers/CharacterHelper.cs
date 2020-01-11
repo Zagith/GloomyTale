@@ -12,11 +12,11 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Domain;
+using GloomyTale.Core;
+using GloomyTale.Domain;
 using System;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class CharacterHelper
     {

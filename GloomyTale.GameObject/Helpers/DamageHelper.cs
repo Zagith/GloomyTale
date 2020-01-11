@@ -16,12 +16,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Networking;
-using static OpenNos.Domain.BCardType;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Networking;
+using static GloomyTale.Domain.BCardType;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class DamageHelper
     {

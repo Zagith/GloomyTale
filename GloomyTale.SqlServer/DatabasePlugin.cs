@@ -4,9 +4,9 @@ using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Base;
 using GloomyTale.Plugins;
 using GloomyTale.Plugins.Logging.Interface;
-using OpenNos.DAL;
-using OpenNos.DAL.DAO;
-using OpenNos.Data;
+using GloomyTale.DAL;
+using GloomyTale.DAL.DAO;
+using GloomyTale.Data;
 
 namespace GloomyTale.SqlServer
 {

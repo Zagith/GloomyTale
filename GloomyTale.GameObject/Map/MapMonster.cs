@@ -12,24 +12,24 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Battle;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Helpers;
-using OpenNos.PathFinder;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Battle;
+using GloomyTale.GameObject.Event;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.PathFinder;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.GameObject.Networking;
-using static OpenNos.Domain.BCardType;
+using GloomyTale.GameObject.Networking;
+using static GloomyTale.Domain.BCardType;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class MapMonster : MapMonsterDTO
     {

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-namespace OpenNos.Data.Enums
+namespace GloomyTale.Data.Enums
 {
     public enum SaveResult : byte
     {

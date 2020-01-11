@@ -13,12 +13,12 @@
  */
 
 using Mapster;
-using OpenNos.Data.Base;
-using OpenNos.Data.I18N;
-using OpenNos.Data.Interfaces;
+using GloomyTale.Data.Base;
+using GloomyTale.Data.I18N;
+using GloomyTale.Data.Interfaces;
 using System;
 
-namespace OpenNos.Data
+namespace GloomyTale.Data
 {
     [Serializable]
     public class ShopDTO : IStaticDto

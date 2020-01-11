@@ -12,11 +12,11 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
-using OpenNos.Domain.I18N;
+using GloomyTale.Domain;
+using GloomyTale.Domain.I18N;
 using System;
 
-namespace OpenNos.Data
+namespace GloomyTale.Data
 {
     [Serializable]
     public class AccountDTO

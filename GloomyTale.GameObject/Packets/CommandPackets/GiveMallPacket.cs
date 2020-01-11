@@ -1,7 +1,7 @@
-﻿using OpenNos.Core;
-using OpenNos.Domain;
+﻿using GloomyTale.Core;
+using GloomyTale.Domain;
 
-namespace OpenNos.GameObject.CommandPackets
+namespace GloomyTale.GameObject.CommandPackets
 {
     [PacketHeader("$GiveMall", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.TM })]
     public class GiveMallPacket : PacketDefinition

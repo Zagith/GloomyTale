@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace OpenNos.XMLModel.Objects
+namespace GloomyTale.XMLModel.Objects
 {
     [Serializable]
     public class StartPosition

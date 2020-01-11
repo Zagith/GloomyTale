@@ -1,6 +1,6 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class BandicootMember
     {

@@ -12,16 +12,16 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
+using GloomyTale.Core;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Helpers;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.GameObject.Event;
+using GloomyTale.GameObject.Networking;
+using GloomyTale.GameObject.Event;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class SessionManager
     {

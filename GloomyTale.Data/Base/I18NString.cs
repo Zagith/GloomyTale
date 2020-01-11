@@ -1,7 +1,7 @@
-﻿using OpenNos.Domain.I18N;
+﻿using GloomyTale.Domain.I18N;
 using System.Collections.Generic;
 
-namespace OpenNos.Data.Base
+namespace GloomyTale.Data.Base
 {
     public class I18NString : Dictionary<RegionType, string>
     {

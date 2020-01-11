@@ -12,16 +12,16 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
+using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain.I18N;
+using GloomyTale.GameObject.Networking;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain.I18N;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class UserInterfaceHelper
     {

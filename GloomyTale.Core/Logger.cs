@@ -16,7 +16,7 @@ using GloomyTale.Plugins.Logging.Interface;
 using System;
 using System.Runtime.CompilerServices;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public static class Logger
     {

@@ -1,6 +1,6 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 
-namespace OpenNos.Core.Interfaces.Packets.ClientPackets
+namespace GloomyTale.Core.Interfaces.Packets.ClientPackets
 {
     public interface ICharacterCreatePacket
     {

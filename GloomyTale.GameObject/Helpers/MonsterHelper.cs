@@ -1,6 +1,6 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class MonsterHelper
     {

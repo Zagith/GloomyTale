@@ -12,19 +12,19 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core.ArrayExtensions;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.PathFinder;
+using GloomyTale.Core.ArrayExtensions;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.PathFinder;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using OpenNos.GameObject.Networking;
+using GloomyTale.GameObject.Networking;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Map : IMapDTO
     {

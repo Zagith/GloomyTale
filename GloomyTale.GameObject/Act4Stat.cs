@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class Act4Stat
     {

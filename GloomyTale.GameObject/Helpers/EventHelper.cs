@@ -12,25 +12,25 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Event.GAMES;
-using OpenNos.GameObject.Event.ARENA;
-using OpenNos.PathFinder;
+using GloomyTale.Core;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Event;
+using GloomyTale.GameObject.Event.GAMES;
+using GloomyTale.GameObject.Event.ARENA;
+using GloomyTale.PathFinder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using OpenNos.GameObject.Networking;
-using OpenNos.Data;
-using OpenNos.GameObject.Event.RainbowBattle;
-using OpenNos.GameObject.Event.BANDICOOTRUN;
+using GloomyTale.GameObject.Networking;
+using GloomyTale.Data;
+using GloomyTale.GameObject.Event.RainbowBattle;
+using GloomyTale.GameObject.Event.BANDICOOTRUN;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class EventHelper
     {

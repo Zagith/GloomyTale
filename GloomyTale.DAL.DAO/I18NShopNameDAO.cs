@@ -1,17 +1,17 @@
-﻿using OpenNos.Core;
+﻿using GloomyTale.Core;
 using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Entities;
 using GloomyTale.DAL.EF.Helpers;
-using OpenNos.DAL.Interface;
-using OpenNos.Data.Enums;
-using OpenNos.Data.I18N;
+using GloomyTale.DAL.Interface;
+using GloomyTale.Data.Enums;
+using GloomyTale.Data.I18N;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.DAL.DAO
+namespace GloomyTale.DAL.DAO
 {
     public class I18NShopNameDAO : II18NShopNameDAO
     {

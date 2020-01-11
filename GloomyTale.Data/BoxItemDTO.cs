@@ -1,4 +1,4 @@
-﻿namespace OpenNos.Data
+﻿namespace GloomyTale.Data
 {
     public class BoxItemDTO
     {

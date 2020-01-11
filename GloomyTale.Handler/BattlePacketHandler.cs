@@ -12,25 +12,25 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject;
-using OpenNos.GameObject.Battle;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
+using GloomyTale.Core;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject;
+using GloomyTale.GameObject.Battle;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using static OpenNos.Domain.BCardType;
-using OpenNos.GameObject.Event;
+using static GloomyTale.Domain.BCardType;
+using GloomyTale.GameObject.Event;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
-using OpenNos.GameObject.Packets.ClientPackets;
+using GloomyTale.GameObject.Packets.ClientPackets;
 
-namespace OpenNos.Handler
+namespace GloomyTale.Handler
 {
     public class BattlePacketHandler : IPacketHandler
     {

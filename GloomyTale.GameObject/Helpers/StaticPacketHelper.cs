@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
-using OpenNos.GameObject.Packets.ServerPackets;
+using GloomyTale.Domain;
+using GloomyTale.GameObject.Packets.ServerPackets;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public static class StaticPacketHelper
     {

@@ -12,13 +12,13 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Data;
+using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
-using OpenNos.GameObject.Networking;
-using OpenNos.Domain.I18N;
+using GloomyTale.GameObject.Networking;
+using GloomyTale.Domain.I18N;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     public class NpcMonster : NpcMonsterDTO
     {

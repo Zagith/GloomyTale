@@ -14,7 +14,7 @@
 
 using System;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public sealed class PacketIndexAttribute : Attribute

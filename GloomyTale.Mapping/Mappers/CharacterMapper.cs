@@ -1,8 +1,8 @@
 using GloomyTale.DAL.EF;
-using OpenNos.Data;
-using OpenNos.Domain;
+using GloomyTale.Data;
+using GloomyTale.Domain;
 
-namespace OpenNos.Mapper.Mappers
+namespace GloomyTale.Mapper.Mappers
 {
     public static class CharacterMapper
     {

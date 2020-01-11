@@ -18,7 +18,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public static class DelegateBuilder
     {

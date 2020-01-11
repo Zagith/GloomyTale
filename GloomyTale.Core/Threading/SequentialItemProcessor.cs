@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace OpenNos.Core.Threading
+namespace GloomyTale.Core.Threading
 {
     /// <summary>
     /// This class is used to process items sequentially in a multithreaded manner.

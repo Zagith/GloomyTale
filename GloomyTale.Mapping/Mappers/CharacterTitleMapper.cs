@@ -1,12 +1,12 @@
 ﻿using GloomyTale.DAL.EF;
-using OpenNos.Data;
+using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.Mapper.Mappers
+namespace GloomyTale.Mapper.Mappers
 {
     public class CharacterTitleMapper
     {

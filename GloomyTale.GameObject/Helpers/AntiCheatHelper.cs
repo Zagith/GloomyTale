@@ -1,9 +1,9 @@
-﻿using OpenNos.GameObject.Networking;
+﻿using GloomyTale.GameObject.Networking;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public static class AntiCheatHelper
     {

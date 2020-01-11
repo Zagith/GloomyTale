@@ -20,7 +20,7 @@ using GloomyTale.Plugins.Exceptions;
 using GloomyTale.Plugins.Modules;
 using GloomyTale.SqlServer;
 using Grpc.Core;
-using OpenNos.Core;
+using GloomyTale.Core;
 using GloomyTale.DAL.EF.Helpers;
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ using System.Reflection;
 using GloomyTale.Plugins.Logging;
 using ILogger = GloomyTale.Plugins.Logging.Interface.ILogger;
 
-namespace OpenNos.Master
+namespace GloomyTale.Master
 {
     internal static class Program
     {

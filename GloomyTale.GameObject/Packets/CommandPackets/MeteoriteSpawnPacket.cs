@@ -1,7 +1,7 @@
-﻿using OpenNos.Core;
-using OpenNos.Domain;
+﻿using GloomyTale.Core;
+using GloomyTale.Domain;
 
-namespace OpenNos.GameObject.Packets.CommandPackets
+namespace GloomyTale.GameObject.Packets.CommandPackets
 {
     [PacketHeader("$Meteor", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.GM })]
     public class MeteoriteSpawnPacket : PacketDefinition

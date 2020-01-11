@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace OpenNos.PathFinder
+namespace GloomyTale.PathFinder
 {
     internal class MinHeap
     {

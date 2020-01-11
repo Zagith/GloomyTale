@@ -4,7 +4,7 @@
 // </auto-generated>
 //----------------------
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
 #pragma warning disable // Disable all warnings
 

@@ -1,6 +1,6 @@
-﻿using OpenNos.Core;
+﻿using GloomyTale.Core;
 
-namespace OpenNos.GameObject
+namespace GloomyTale.GameObject
 {
     [PacketHeader("rl")]
     public class RaidListPacket : PacketDefinition

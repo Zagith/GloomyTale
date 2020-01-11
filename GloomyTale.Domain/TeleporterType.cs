@@ -1,4 +1,4 @@
-﻿namespace OpenNos.Domain
+﻿namespace GloomyTale.Domain
 {
     public enum TeleporterType : byte
     {

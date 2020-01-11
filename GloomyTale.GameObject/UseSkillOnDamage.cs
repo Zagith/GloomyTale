@@ -1,4 +1,4 @@
-﻿namespace OpenNos.GameObject
+﻿namespace GloomyTale.GameObject
 {
     public class UseSkillOnDamage
     {

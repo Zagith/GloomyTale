@@ -16,7 +16,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     /// <summary>
     /// A random number generator based on the RNGCryptoServiceProvider. Adapted from the "Tales from

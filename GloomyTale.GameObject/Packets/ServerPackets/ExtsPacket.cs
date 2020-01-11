@@ -1,6 +1,6 @@
-﻿using OpenNos.Core;
+﻿using GloomyTale.Core;
 
-namespace OpenNos.GameObject.Packets.ServerPackets
+namespace GloomyTale.GameObject.Packets.ServerPackets
 {
     [PacketHeader("exts")]
     public class ExtsPacket : PacketDefinition

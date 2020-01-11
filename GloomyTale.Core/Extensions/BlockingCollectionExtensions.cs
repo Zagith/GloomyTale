@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Linq;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public static class ConcurrentBagExtensions
     {

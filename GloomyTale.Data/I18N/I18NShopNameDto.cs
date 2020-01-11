@@ -1,7 +1,7 @@
-﻿using OpenNos.Data.Interfaces;
-using OpenNos.Domain.I18N;
+﻿using GloomyTale.Data.Interfaces;
+using GloomyTale.Domain.I18N;
 
-namespace OpenNos.Data.I18N
+namespace GloomyTale.Data.I18N
 {
     public class I18NShopNameDto : II18NDto
     {

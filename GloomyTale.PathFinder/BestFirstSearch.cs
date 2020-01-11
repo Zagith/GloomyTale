@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core.ArrayExtensions;
+using GloomyTale.Core.ArrayExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenNos.PathFinder
+namespace GloomyTale.PathFinder
 {
     public static class BestFirstSearch
     {

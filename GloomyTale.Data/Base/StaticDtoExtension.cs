@@ -1,6 +1,6 @@
-﻿using OpenNos.Data.I18N;
-using OpenNos.Data.Interfaces;
-using OpenNos.Domain.I18N;
+﻿using GloomyTale.Data.I18N;
+using GloomyTale.Data.Interfaces;
+using GloomyTale.Domain.I18N;
 using FastMember;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.Data.Base
+namespace GloomyTale.Data.Base
 {
     public static class StaticDtoExtension
     {

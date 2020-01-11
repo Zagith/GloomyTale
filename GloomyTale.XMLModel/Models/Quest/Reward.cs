@@ -1,8 +1,8 @@
-﻿using OpenNos.XMLModel.Events.Quest;
-using OpenNos.XMLModel.Objects;
+﻿using GloomyTale.XMLModel.Events.Quest;
+using GloomyTale.XMLModel.Objects;
 using System;
 
-namespace OpenNos.XMLModel.Models.Quest
+namespace GloomyTale.XMLModel.Models.Quest
 {
     [Serializable]
     public class Reward

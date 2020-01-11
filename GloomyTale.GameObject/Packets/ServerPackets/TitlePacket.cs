@@ -1,11 +1,11 @@
-﻿using OpenNos.Core;
+﻿using GloomyTale.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenNos.GameObject.Packets.ServerPackets
+namespace GloomyTale.GameObject.Packets.ServerPackets
 {
     [PacketHeader("title")]
     public class TitlePacket : PacketDefinition

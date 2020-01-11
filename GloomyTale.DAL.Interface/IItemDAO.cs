@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Data;
+using GloomyTale.Data;
 using System.Collections.Generic;
 
-namespace OpenNos.DAL.Interface
+namespace GloomyTale.DAL.Interface
 {
     public interface IItemDAO
     {

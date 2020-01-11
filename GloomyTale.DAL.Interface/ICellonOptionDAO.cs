@@ -12,12 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Data;
-using OpenNos.Data.Enums;
+using GloomyTale.Data;
+using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 
-namespace OpenNos.DAL.Interface
+namespace GloomyTale.DAL.Interface
 {
     public interface ICellonOptionDAO
     {

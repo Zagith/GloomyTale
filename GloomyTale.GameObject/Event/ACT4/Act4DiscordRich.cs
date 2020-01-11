@@ -1,9 +1,9 @@
 ﻿using Discord;
 using Discord.Webhook;
-using OpenNos.Domain;
+using GloomyTale.Domain;
 using System.Threading.Tasks;
 
-namespace OpenNos.GameObject.Event.ACT4
+namespace GloomyTale.GameObject.Event.ACT4
 {
     public class Act4DiscordRich
     {

@@ -1,19 +1,19 @@
-﻿using OpenNos.Core;
-using OpenNos.Core.Extensions;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
+﻿using GloomyTale.Core;
+using GloomyTale.Core.Extensions;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain;
+using GloomyTale.GameObject;
+using GloomyTale.GameObject.Event;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OpenNos.Handler
+namespace GloomyTale.Handler
 {
     public class GuriPacketHandler : IPacketHandler
     {

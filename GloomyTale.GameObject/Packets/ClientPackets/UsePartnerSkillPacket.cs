@@ -1,7 +1,7 @@
-﻿using OpenNos.Core;
-using OpenNos.Domain;
+﻿using GloomyTale.Core;
+using GloomyTale.Domain;
 
-namespace OpenNos.GameObject.Packets.ClientPackets
+namespace GloomyTale.GameObject.Packets.ClientPackets
 {
     [PacketHeader("u_ps")]
     public class UsePartnerSkillPacket : PacketDefinition

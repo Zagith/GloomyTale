@@ -1,9 +1,9 @@
 using Mapster;
 using GloomyTale.DAL.EF;
-using OpenNos.Data;
-using OpenNos.Data.Base;
+using GloomyTale.Data;
+using GloomyTale.Data.Base;
 
-namespace OpenNos.Mapper.Mappers
+namespace GloomyTale.Mapper.Mappers
 {
     public static class CardMapper
     {

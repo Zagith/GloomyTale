@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenNos.Data.Base
+namespace GloomyTale.Data.Base
 {
     public class I18NFromAttribute : Attribute
     {

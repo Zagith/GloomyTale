@@ -14,16 +14,16 @@
 
 using GloomyTale.Communication;
 using GloomyTale.GameObject.Networking;
-using OpenNos.Core;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Data.I18N;
-using OpenNos.Domain;
-using OpenNos.GameObject;
-using OpenNos.GameObject.CommandPackets;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
-using OpenNos.GameObject.Packets.CommandPackets;
+using GloomyTale.Core;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Data.I18N;
+using GloomyTale.Domain;
+using GloomyTale.GameObject;
+using GloomyTale.GameObject.CommandPackets;
+using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Networking;
+using GloomyTale.GameObject.Packets.CommandPackets;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,7 +32,7 @@ using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace OpenNos.Handler
+namespace GloomyTale.Handler
 {
     public class CommandPacketHandler : IPacketHandler
     {

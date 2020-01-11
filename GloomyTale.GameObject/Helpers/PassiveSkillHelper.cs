@@ -1,7 +1,7 @@
-﻿using OpenNos.Domain;
+﻿using GloomyTale.Domain;
 using System.Collections.Generic;
 
-namespace OpenNos.GameObject.Helpers
+namespace GloomyTale.GameObject.Helpers
 {
     public class PassiveSkillHelper
     {

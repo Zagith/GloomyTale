@@ -12,11 +12,11 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.GameObject;
-using OpenNos.GameObject.Packets.ClientPackets;
+using GloomyTale.Core;
+using GloomyTale.GameObject;
+using GloomyTale.GameObject.Packets.ClientPackets;
 
-namespace OpenNos.Handler
+namespace GloomyTale.Handler
 {
     public class UselessPacketHandler : IPacketHandler
     {

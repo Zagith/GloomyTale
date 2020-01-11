@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-namespace OpenNos.PathFinder
+namespace GloomyTale.PathFinder
 {
     public class GridPos
     {

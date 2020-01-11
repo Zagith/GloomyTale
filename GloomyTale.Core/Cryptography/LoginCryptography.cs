@@ -15,7 +15,7 @@
 using System;
 using System.Text;
 
-namespace OpenNos.Core
+namespace GloomyTale.Core
 {
     public class LoginCryptography : CryptographyBase
     {

@@ -12,15 +12,15 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
+using GloomyTale.DAL;
+using GloomyTale.Data;
+using GloomyTale.Domain;
 using System;
 using System.Linq;
-using OpenNos.GameObject.Networking;
+using GloomyTale.GameObject.Networking;
 using GloomyTale.GameObject.Networking;
 
-namespace OpenNos.GameObject.Event
+namespace GloomyTale.GameObject.Event
 {
     public static class MinilandRefresh
     {
