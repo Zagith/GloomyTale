@@ -482,64 +482,6 @@ namespace GloomyTale.GameObject
 
                     if (!_isWorldServer)
                     {
-                        string nextRawPacketId = packetsplit[0];
-
-                        if (!int.TryParse(nextRawPacketId, out int nextPacketId) && nextPacketId != _lastPacketId + 1)
-                        {
-                            Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("CORRUPTED_KEEPALIVE"), IpAddress));
-                            _client.DisconnectClient();
-                            return;
-                        }
-
-                        if (nextPacketId == 0)
-                        {
-                            if (_lastPacketId == ushort.MaxValue)
-                            {
-                                _lastPacketId = nextPacketId;
-                            }
-                        }
-                        else
-                        {
-                            _lastPacketId = nextPacketId;
-                        }
-
-                        if (_waitForPacketsAmount.HasValue)
-                        {
-                            _waitForPacketList.Add(packetstring);
-
-                            string[] packetssplit = packetstring.Split(' ');
-
-                            if (packetssplit.Length > 3 && packetsplit[1] == "DAC")
-                            {
-                                _waitForPacketList.Add("0 CrossServerAuthenticate");
-                            }
-
-                            if (_waitForPacketList.Count == _waitForPacketsAmount)
-                            {
-                                _waitForPacketsAmount = null;
-                                string queuedPackets = string.Join(" ", _waitForPacketList.ToArray());
-                                string header = queuedPackets.Split(' ', '^')[1];
-                                TriggerHandler(header, queuedPackets, true);
-                                _waitForPacketList.Clear();
-                                return;
-                            }
-                        }
-                        else if (packetsplit.Length > 1)
-                        {
-                            if (packetsplit[1].Length >= 1 && (packetsplit[1][0] == '/' || packetsplit[1][0] == ':' || packetsplit[1][0] == ';'))
-                            {
-                                packetsplit[1] = packetsplit[1][0].ToString();
-                                packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
-                            }
-
-                            if (packetsplit[1] != "0")
-                            {
-                                TriggerHandler(packetsplit[1].Replace("#", ""), packetstring, false);
-                            }
-                        }
-                    }
-                    else
-                    {
                         string packetHeader = packetstring.Split(' ')[0];
 
                         // simple messaging
@@ -550,6 +492,62 @@ namespace GloomyTale.GameObject
                         }
 
                         TriggerHandler(packetHeader.Replace("#", ""), packetstring, false);
+                        return;
+                    }
+                    string nextRawPacketId = packetsplit[0];
+
+                    if (!int.TryParse(nextRawPacketId, out int nextPacketId) && nextPacketId != _lastPacketId + 1)
+                    {
+                        Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("CORRUPTED_KEEPALIVE"), IpAddress));
+                        _client.DisconnectClient();
+                        return;
+                    }
+
+                    if (nextPacketId == 0)
+                    {
+                        if (_lastPacketId == ushort.MaxValue)
+                        {
+                            _lastPacketId = nextPacketId;
+                        }
+                    }
+                    else
+                    {
+                        _lastPacketId = nextPacketId;
+                    }
+
+                    if (_waitForPacketsAmount.HasValue)
+                    {
+                        _waitForPacketList.Add(packetstring);
+
+                        string[] packetssplit = packetstring.Split(' ');
+
+                        if (packetssplit.Length > 3 && packetsplit[1] == "DAC")
+                        {
+                            _waitForPacketList.Add("0 CrossServerAuthenticate");
+                        }
+
+                        if (_waitForPacketList.Count == _waitForPacketsAmount)
+                        {
+                            _waitForPacketsAmount = null;
+                            string queuedPackets = string.Join(" ", _waitForPacketList.ToArray());
+                            string header = queuedPackets.Split(' ', '^')[1];
+                            TriggerHandler(header, queuedPackets, true);
+                            _waitForPacketList.Clear();
+                            return;
+                        }
+                    }
+                    else if (packetsplit.Length > 1)
+                    {
+                        if (packetsplit[1].Length >= 1 && (packetsplit[1][0] == '/' || packetsplit[1][0] == ':' || packetsplit[1][0] == ';'))
+                        {
+                            packetsplit[1] = packetsplit[1][0].ToString();
+                            packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
+                        }
+
+                        if (packetsplit[1] != "0")
+                        {
+                            TriggerHandler(packetsplit[1].Replace("#", ""), packetstring, false);
+                        }
                     }
                 }
             }
