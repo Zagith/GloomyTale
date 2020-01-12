@@ -486,7 +486,7 @@ namespace GloomyTale.GameObject
 
                         if (!int.TryParse(nextRawPacketId, out int nextPacketId) && nextPacketId != _lastPacketId + 1)
                         {
-                            Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("CORRUPTED_KEEPALIVE"), _client.ClientId));
+                            Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("CORRUPTED_KEEPALIVE"), IpAddress));
                             _client.DisconnectClient();
                             return;
                         }

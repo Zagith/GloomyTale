@@ -144,6 +144,9 @@
   <data name="CONNECTION_LOST" xml:space="preserve">
     <value>Connection to the server has been lost.</value>
   </data>
+  <data name="CORRUPTED_KEEPALIVE" xml:space="preserve">
+    <value>Corrupted connection detected {0}.</value>
+  </data>
   <data name="CORRUPT_PACKET" xml:space="preserve">
     <value>Packet with Header {0} is corrupt or PacketDefinition is invalid. Content: {1} </value>
   </data>

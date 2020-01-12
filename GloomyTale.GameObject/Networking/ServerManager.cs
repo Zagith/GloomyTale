@@ -1965,6 +1965,29 @@ namespace GloomyTale.GameObject.Networking
             Instance.Broadcast(UserInterfaceHelper.GenerateMsg(message, 2));
         }
 
+        public void Shutdown()
+        {
+            CommunicationServiceClient.Instance.SetWorldServerAsInvisible(WorldId);
+            string message = string.Format(Language.Instance.GetMessageFromKey("SHUTDOWN_SEC"), 15);
+            Instance.Broadcast($"say 1 0 10 ({Language.Instance.GetMessageFromKey("ADMINISTRATOR")}){message}");
+            Instance.Broadcast(UserInterfaceHelper.GenerateMsg(message, 2));
+
+            Observable.Timer(TimeSpan.FromSeconds(15)).Subscribe(c =>
+            {
+                Instance.SaveAll();
+                Instance.DisconnectAll();
+                CommunicationServiceClient.Instance.UnregisterWorldServer(WorldId);
+            });
+        }
+
+        public void DisconnectAll()
+        {
+            foreach (ClientSession session in Sessions)
+            {
+                session?.Destroy();
+            }
+        }
+
         public async Task ShutdownTaskAsync(int Time = 5)
         {
             /*Shout(string.Format(Language.Instance.GetMessageFromKey("SHUTDOWN_MIN"), Time));

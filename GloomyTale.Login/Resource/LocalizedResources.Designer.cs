@@ -151,6 +151,15 @@ namespace GloomyTale.Login.Resource {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Corrupted connection detected {0}..
+        /// </summary>
+        internal static string CORRUPTED_KEEPALIVE {
+            get {
+                return ResourceManager.GetString("CORRUPTED_KEEPALIVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Database has been initialized!.
         /// </summary>
         internal static string DATABASE_INITIALIZED {
