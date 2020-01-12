@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class ItemDAO : IItemDAO
     {
+        public ItemDAO() : base()
+        { }
+
         #region Methods
 
         public IEnumerable<ItemDTO> FindByName(string name)

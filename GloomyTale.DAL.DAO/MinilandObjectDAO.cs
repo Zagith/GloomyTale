@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class MinilandObjectDAO : IMinilandObjectDAO
     {
+        public MinilandObjectDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult DeleteById(long id)

@@ -27,6 +27,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class GeneralLogDAO : IGeneralLogDAO
     {
+        public GeneralLogDAO() : base()
+        { }
+
         #region Methods
 
         public bool IdAlreadySet(long id)

@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class PenaltyLogDAO : IPenaltyLogDAO
     {
+        public PenaltyLogDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult Delete(int penaltyLogId)

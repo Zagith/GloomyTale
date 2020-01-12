@@ -25,6 +25,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class ScriptedInstanceDAO : IScriptedInstanceDAO
     {
+        public ScriptedInstanceDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<ScriptedInstanceDTO> scriptedInstances)

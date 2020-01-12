@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class CharacterSkillDAO : ICharacterSkillDAO
     {
+        public CharacterSkillDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult Delete(long characterId, short skillVNum)

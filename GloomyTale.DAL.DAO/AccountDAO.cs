@@ -27,6 +27,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class AccountDAO : IAccountDAO
     {
+        public AccountDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult Delete(long accountId)

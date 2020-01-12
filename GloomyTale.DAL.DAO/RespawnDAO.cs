@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class RespawnDAO : IRespawnDAO
     {
+        public RespawnDAO() : base()
+        { }
+
         #region Methods
 
         public SaveResult InsertOrUpdate(ref RespawnDTO respawn)

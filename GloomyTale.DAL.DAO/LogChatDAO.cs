@@ -15,6 +15,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class LogChatDAO : ILogChatDAO
     {
+        public LogChatDAO() : base()
+        { }
+
         public LogChatDTO Insert(LogChatDTO generalLog)
         {
             try

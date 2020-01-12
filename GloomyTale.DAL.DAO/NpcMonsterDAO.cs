@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class NpcMonsterDAO : INpcMonsterDAO
     {
+        public NpcMonsterDAO() : base()
+        { }
+
         #region Methods
 
         public NpcMonsterDTO LoadByKey(string vNum)

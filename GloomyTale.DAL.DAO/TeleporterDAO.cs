@@ -25,6 +25,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class TeleporterDAO : ITeleporterDAO
     {
+        public TeleporterDAO() : base()
+        { }
+
         #region Methods
 
         public TeleporterDTO Insert(TeleporterDTO teleporter)

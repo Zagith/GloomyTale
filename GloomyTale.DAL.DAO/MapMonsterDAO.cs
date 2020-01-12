@@ -28,6 +28,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class MapMonsterDAO : IMapMonsterDAO
     {
+        public MapMonsterDAO() : base()
+        { }
+
         #region Methods
 
         public IEnumerable<MapMonsterDTO> LoadAll()

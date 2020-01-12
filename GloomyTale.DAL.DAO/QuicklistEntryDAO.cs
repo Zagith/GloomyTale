@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class QuicklistEntryDAO : IQuicklistEntryDAO
     {
+        public QuicklistEntryDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult Delete(Guid id)

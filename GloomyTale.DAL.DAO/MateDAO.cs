@@ -27,6 +27,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class MateDAO : IMateDAO
     {
+        public MateDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult Delete(long id)

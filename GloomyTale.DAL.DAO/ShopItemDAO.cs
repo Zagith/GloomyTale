@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class ShopItemDAO : IShopItemDAO
     {
+        public ShopItemDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult DeleteById(int itemId)

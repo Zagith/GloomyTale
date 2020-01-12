@@ -25,6 +25,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class QuestDAO : IQuestDAO
     {
+        public QuestDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult DeleteById(long id)

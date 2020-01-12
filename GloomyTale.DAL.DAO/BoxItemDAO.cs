@@ -8,6 +8,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class BoxItemDAO : IBoxItemDAO
     {
+        public BoxItemDAO() : base()
+        { }
+
         #region Methods
 
         public List<BoxItemDTO> LoadAll()

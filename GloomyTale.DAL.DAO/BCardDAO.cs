@@ -27,6 +27,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class BCardDAO : IBCardDAO
     {
+        public BCardDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult DeleteByItemVNum(short itemVNum)

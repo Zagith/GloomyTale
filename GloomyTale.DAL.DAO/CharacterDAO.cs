@@ -27,6 +27,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class CharacterDAO : ICharacterDAO
     {
+        public CharacterDAO() : base ()
+        { }
+
         #region Methods
 
         public DeleteResult DeleteByPrimaryKey(long accountId, byte characterSlot)

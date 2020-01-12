@@ -25,6 +25,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class ComboDAO : IComboDAO
     {
+        public ComboDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<ComboDTO> combos)

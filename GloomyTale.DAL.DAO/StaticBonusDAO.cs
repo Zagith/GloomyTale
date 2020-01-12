@@ -27,6 +27,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class StaticBonusDAO : IStaticBonusDAO
     {
+        public StaticBonusDAO() : base()
+        { }
+
         #region Methods
 
         public void Delete(short bonusToDelete, long characterId)

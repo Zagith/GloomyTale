@@ -13,6 +13,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class I18NNpcMonsterDAO : II18NNpcMonsterDAO
     {
+        public I18NNpcMonsterDAO() : base()
+        { }
+
         #region Methods
 
         public IEnumerable<II18NNpcMonsterDto> FindByName(string name)

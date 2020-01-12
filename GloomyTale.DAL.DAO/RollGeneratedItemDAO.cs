@@ -25,6 +25,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class RollGeneratedItemDAO : IRollGeneratedItemDAO
     {
+        public RollGeneratedItemDAO() : base()
+        { }
+
         #region Methods
 
         public RollGeneratedItemDTO Insert(RollGeneratedItemDTO item)

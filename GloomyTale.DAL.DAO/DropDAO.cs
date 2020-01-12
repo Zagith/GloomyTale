@@ -25,6 +25,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class DropDAO : IDropDAO
     {
+        public DropDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<DropDTO> drops)

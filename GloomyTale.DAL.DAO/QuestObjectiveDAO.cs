@@ -11,6 +11,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class QuestObjectiveDAO : IQuestObjectiveDAO
     {
+        public QuestObjectiveDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<QuestObjectiveDTO> quests)

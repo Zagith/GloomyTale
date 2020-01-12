@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class FamilyLogDAO : IFamilyLogDAO
     {
+        public FamilyLogDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult Delete(long familyLogId)

@@ -14,6 +14,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class TimeSpaceLogDAO : ITimeSpaceLogDAO
     {
+        public TimeSpaceLogDAO() : base()
+        { }
+
         public TimeSpacesLogDTO Insert(TimeSpacesLogDTO generalLog)
         {
             try

@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class MapTypeMapDAO : IMapTypeMapDAO
     {
+        public MapTypeMapDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<MapTypeMapDTO> mapTypeMaps)

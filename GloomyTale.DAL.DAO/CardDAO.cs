@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class CardDAO : ICardDAO
     {
+        public CardDAO() : base()
+        { }
+
         #region Methods
 
         public CardDTO Insert(ref CardDTO card)

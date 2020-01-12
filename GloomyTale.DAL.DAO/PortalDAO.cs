@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class PortalDAO : IPortalDAO
     {
+        public PortalDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<PortalDTO> portals)

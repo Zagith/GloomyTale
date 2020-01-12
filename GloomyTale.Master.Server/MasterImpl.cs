@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GloomyTale.DAL.Interface;
 
 namespace GloomyTale.Master
 {
@@ -19,16 +20,16 @@ namespace GloomyTale.Master
         private readonly MaintenanceManager _maintenanceManager;
         private readonly SessionManager _sessionManager;
         private readonly WorldServerManager _worldManager;
-        //private readonly ICharacterDAO _characterDao;
+        private readonly ICharacterDAO _characterDao;
 
-        public MasterImpl(MaintenanceManager maintenanceManager, WorldServerManager worldManager, SessionManager sessionManager, WorldServerCommunicationManager communicationManager)
-            //ICharacterDAO characterDao)
+        public MasterImpl(MaintenanceManager maintenanceManager, WorldServerManager worldManager, SessionManager sessionManager, WorldServerCommunicationManager communicationManager, 
+            ICharacterDAO characterDao)
         {
             _maintenanceManager = maintenanceManager;
             _worldManager = worldManager;
             _sessionManager = sessionManager;
             _communicationManager = communicationManager;
-            //_characterDao = characterDao;
+            _characterDao = characterDao;
         }
 
         public override Task<Bool> IsAccountConnected(Long request, ServerCallContext context) => Task.FromResult(_sessionManager.IsConnectedByAccountId(request.Id).ToBool());
@@ -73,7 +74,7 @@ namespace GloomyTale.Master
                 return Task.FromResult(false.ToBool());
             }
 
-            CharacterDTO character = null; //_characterDao.LoadById(request.CharacterId);
+            CharacterDTO character = _characterDao.LoadById(request.CharacterId);
             if (character == null)
             {
                 return Task.FromResult(false.ToBool());

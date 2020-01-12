@@ -15,6 +15,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class LogPutItemDAO : ILogPutItemDAO
     {
+        public LogPutItemDAO() : base()
+        { }
+
         public LogPutItemDTO Insert(LogPutItemDTO generalLog)
         {
             try

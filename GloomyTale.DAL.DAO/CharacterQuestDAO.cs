@@ -12,6 +12,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class CharacterQuestDAO : ICharacterQuestDAO
     {
+        public CharacterQuestDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult Delete(long characterId, long questId)

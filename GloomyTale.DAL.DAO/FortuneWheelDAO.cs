@@ -10,6 +10,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class FortuneWheelDAO : IFortuneWheelDAO
     {
+        public FortuneWheelDAO() : base()
+        { }
+
         public IEnumerable<FortuneWheelDTO> LoadByShopId(int shopId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())

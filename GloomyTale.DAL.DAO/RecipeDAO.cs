@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class RecipeDAO : IRecipeDAO
     {
+        public RecipeDAO() : base()
+        { }
+
         #region Methods
 
         public RecipeDTO Insert(RecipeDTO recipe)

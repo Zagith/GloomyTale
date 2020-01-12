@@ -12,6 +12,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class PartnerSkillDAO : IPartnerSkillDAO
     {
+        public PartnerSkillDAO() : base()
+        { }
+
         public PartnerSkillDTO Insert(PartnerSkillDTO partnerSkillDTO)
         {
             try

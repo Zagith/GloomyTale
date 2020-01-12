@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class CellonOptionDAO : ICellonOptionDAO
     {
+        public CellonOptionDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult DeleteByEquipmentSerialId(Guid id)

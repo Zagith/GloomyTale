@@ -11,6 +11,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class QuestRewardDAO : IQuestRewardDAO
     {
+        public QuestRewardDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<QuestRewardDTO> questRewards)

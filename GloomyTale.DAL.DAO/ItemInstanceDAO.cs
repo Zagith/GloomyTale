@@ -27,6 +27,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class ItemInstanceDAO : IItemInstanceDAO
     {
+        public ItemInstanceDAO() : base()
+        { }
+
         #region Methods
 
         public virtual DeleteResult Delete(Guid id)

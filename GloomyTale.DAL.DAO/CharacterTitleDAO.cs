@@ -14,8 +14,11 @@ namespace GloomyTale.DAL.DAO
 {
     public class CharacterTitleDAO : ICharacterTitlesDAO
     {
+        public CharacterTitleDAO() : base()
+        { }
+
         #region Methods
-               
+
         public SaveResult InsertOrUpdate(ref CharacterTitleDTO CharacterTitle)
         {
             try

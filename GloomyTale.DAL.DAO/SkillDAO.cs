@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class SkillDAO : ISkillDAO
     {
+        public SkillDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<SkillDTO> skills)

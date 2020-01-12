@@ -27,6 +27,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class MinigameLogDAO : IMinigameLogDAO
     {
+        public MinigameLogDAO() : base()
+        { }
+
         #region Methods
 
         public SaveResult InsertOrUpdate(ref MinigameLogDTO minigameLog)

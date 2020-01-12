@@ -28,6 +28,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class MapNpcDAO : IMapNpcDAO
     {
+        public MapNpcDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult DeleteById(int mapNpcId)

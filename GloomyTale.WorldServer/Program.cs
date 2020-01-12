@@ -242,7 +242,7 @@ namespace GloomyTale.World
                     return;
                 }
 
-                ServerManager.Instance.ServerGroup = Environment.GetEnvironmentVariable("SERVER_GROUP") ?? "WingsEmu";
+                ServerManager.Instance.ServerGroup = Environment.GetEnvironmentVariable("SERVER_GROUP") ?? "GloomyVille";
                 int sessionLimit = Convert.ToInt32(Environment.GetEnvironmentVariable("SERVER_SESSION_LIMIT") ?? "500");
                 int? newChannelId = CommunicationServiceClient.Instance.RegisterWorldServer(new SerializableWorldServer
                 {

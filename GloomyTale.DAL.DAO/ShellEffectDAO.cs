@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class ShellEffectDAO : IShellEffectDAO
     {
+        public ShellEffectDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult DeleteByEquipmentSerialId(Guid id)

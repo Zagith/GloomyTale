@@ -25,6 +25,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class ShopSkillDAO : IShopSkillDAO
     {
+        public ShopSkillDAO() : base()
+        { }
+
         #region Methods
 
         public ShopSkillDTO Insert(ShopSkillDTO shopSkill)

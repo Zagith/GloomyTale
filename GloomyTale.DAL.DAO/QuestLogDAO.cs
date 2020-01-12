@@ -13,6 +13,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class QuestLogDAO : IQuestLogDAO
     {
+        public QuestLogDAO() : base()
+        { }
+
         public SaveResult InsertOrUpdate(ref QuestLogDTO quest)
         {
             try

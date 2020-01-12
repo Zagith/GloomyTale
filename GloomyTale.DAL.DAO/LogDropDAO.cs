@@ -13,6 +13,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class LogDropDAO : ILogDropDAO
     {
+        public LogDropDAO() : base()
+        { }
+
         public LogDropDTO Insert(LogDropDTO generalLog)
         {
             try

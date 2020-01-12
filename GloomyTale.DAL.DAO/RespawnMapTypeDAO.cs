@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class RespawnMapTypeDAO : IRespawnMapTypeDAO
     {
+        public RespawnMapTypeDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<RespawnMapTypeDTO> respawnMapTypes)

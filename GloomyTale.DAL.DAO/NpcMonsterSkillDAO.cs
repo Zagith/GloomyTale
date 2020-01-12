@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class NpcMonsterSkillDAO : INpcMonsterSkillDAO
     {
+        public NpcMonsterSkillDAO() : base()
+        { }
+
         #region Methods
 
         public NpcMonsterSkillDTO Insert(ref NpcMonsterSkillDTO npcMonsterSkill)

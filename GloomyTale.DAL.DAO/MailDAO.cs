@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class MailDAO : IMailDAO
     {
+        public MailDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult DeleteById(long mailId)

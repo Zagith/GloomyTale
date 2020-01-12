@@ -13,6 +13,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class I18NSkillDAO : II18NSkillDAO
     {
+        public I18NSkillDAO() : base()
+        { }
+
         #region Methods
 
         public void Insert(List<II18NSkillDto> skills)

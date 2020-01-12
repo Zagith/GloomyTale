@@ -26,6 +26,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class MaintenanceLogDAO : IMaintenanceLogDAO
     {
+        public MaintenanceLogDAO() : base()
+        { }
+
         #region Methods
 
         public MaintenanceLogDTO Insert(MaintenanceLogDTO maintenanceLog)

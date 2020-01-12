@@ -27,6 +27,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class BazaarItemDAO : IBazaarItemDAO
     {
+        public BazaarItemDAO() : base()
+        { }
+
         #region Methods
 
         public DeleteResult Delete(long bazaarItemId)
