@@ -14,11 +14,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace GloomyTale.Core
 {
-    public interface INetworkClient
+    public interface INetworkSession
     {
         /// <summary>
         /// </summary>
@@ -29,14 +30,14 @@ namespace GloomyTale.Core
 
         /// <summary>
         /// </summary>
-        string IpAddress { get; }
+        IPAddress IpAddress { get; }
 
         bool IsConnected { get; }
 
         bool IsDisposing { get; set; }
         event EventHandler<string> PacketReceived;
 
-        Task ClearLowPriorityQueueAsync();
+        //Task ClearLowPriorityQueueAsync();
 
         void SendPacket(string packet);
         Task SendPacketAsync(string packet);

@@ -51,7 +51,7 @@ namespace GloomyTale.GameObject
 
         #region Methods
 
-        public void AddSession(INetworkClient customClient)
+        public void AddSession(INetworkSession customClient)
         {
             Logger.Log.Info(Language.Instance.GetMessageFromKey("NEW_CONNECT") + customClient.ClientId);
 
@@ -86,7 +86,7 @@ namespace GloomyTale.GameObject
             return session;
         }*/
 
-        protected void RemoveSession(INetworkClient client)
+        protected void RemoveSession(INetworkSession client)
         {
             _sessions.TryRemove(client.ClientId, out ClientSession session);
 

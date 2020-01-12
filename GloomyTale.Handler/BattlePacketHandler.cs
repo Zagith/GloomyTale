@@ -733,76 +733,69 @@ namespace GloomyTale.Handler
                             hitRequest.Session.Character.GetAct4Points(2);
                         }
 
-                        if (target.Character.Session.CleanIpAddress != hitRequest.Session.CleanIpAddress)
+                        if (hitRequest.Session.Character.Group == null)
                         {
-                            if (hitRequest.Session.Character.Group == null)
-                            {
-                                hitRequest.Session.Character.GetContributi(1500);
-                            }
-                            else
-                            {
-                                hitRequest.Session.Character.GetContributi(750);
-                                foreach (ClientSession s in hitRequest.Session.Character.Group.Sessions.GetAllItems())
-                                {
-                                    s.Character.GetContributi(250);
-                                }
-                            }
-                            /*int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
-
-                            if (levelDifference < 30)
-                            {
-                                int ReputationValue = 0;
-
-                                if (levelDifference >= 0)
-                                {
-                                    ReputationValue = 500 + (levelDifference * 100);
-                                }
-                                else if (levelDifference > -20)
-                                {
-                                    ReputationValue = 500 - (levelDifference * 25);
-                                }
-                                else
-                                {
-                                    ReputationValue -= 150 + (-levelDifference * 10);
-                                }
-
-                                ReputationValue *= ServerManager.Instance.Configuration.RateReputation;
-
-                                if (ReputationValue > 0)
-                                {
-                                    hitRequest.Session.Character.Reputation += ReputationValue;
-                                    hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
-                                        string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"),
-                                            (short)ReputationValue), 12));
-
-                                    int act4RaidPenalty =
-                                        ((target.Character.Faction == FactionType.Angel && ServerManager.Instance.Act4DemonStat.Mode == 3)
-                                        || (target.Character.Faction == FactionType.Demon && ServerManager.Instance.Act4AngelStat.Mode == 3))
-                                        ? 2 : 1;
-
-                                    target.Character.Reputation -= ReputationValue/* * act4RaidPenalty;
-                                    target.SendPacket(target.Character.GenerateSay(
-                                        string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
-                                            (short)ReputationValue/* * act4RaidPenalty), 11));
-                                }
-                                else
-                                {
-                                    hitRequest.Session.Character.Reputation -= ReputationValue;
-                                    hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
-                                        string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
-                                            (short)ReputationValue), 11));
-                                }
-                                hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateLev());
-                            }
-                            else
-                            {
-                                hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TOO_LEVEL_DIFFERENCE"), 11));
-                            }*/
+                            hitRequest.Session.Character.GetContributi(1500);
                         }
                         else
                         {
-                            hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TARGET_SAME_IP"), 11));
+                            hitRequest.Session.Character.GetContributi(750);
+                            foreach (ClientSession s in hitRequest.Session.Character.Group.Sessions.GetAllItems())
+                            {
+                                s.Character.GetContributi(250);
+                            }
                         }
+                        /*int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
+
+                        if (levelDifference < 30)
+                        {
+                            int ReputationValue = 0;
+
+                            if (levelDifference >= 0)
+                            {
+                                ReputationValue = 500 + (levelDifference * 100);
+                            }
+                            else if (levelDifference > -20)
+                            {
+                                ReputationValue = 500 - (levelDifference * 25);
+                            }
+                            else
+                            {
+                                ReputationValue -= 150 + (-levelDifference * 10);
+                            }
+
+                            ReputationValue *= ServerManager.Instance.Configuration.RateReputation;
+
+                            if (ReputationValue > 0)
+                            {
+                                hitRequest.Session.Character.Reputation += ReputationValue;
+                                hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
+                                    string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"),
+                                        (short)ReputationValue), 12));
+
+                                int act4RaidPenalty =
+                                    ((target.Character.Faction == FactionType.Angel && ServerManager.Instance.Act4DemonStat.Mode == 3)
+                                    || (target.Character.Faction == FactionType.Demon && ServerManager.Instance.Act4AngelStat.Mode == 3))
+                                    ? 2 : 1;
+
+                                target.Character.Reputation -= ReputationValue/* * act4RaidPenalty;
+                                target.SendPacket(target.Character.GenerateSay(
+                                    string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
+                                        (short)ReputationValue/* * act4RaidPenalty), 11));
+                            }
+                            else
+                            {
+                                hitRequest.Session.Character.Reputation -= ReputationValue;
+                                hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
+                                    string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
+                                        (short)ReputationValue), 11));
+                            }
+                            hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateLev());
+                        }
+                        else
+                        {
+                            hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TOO_LEVEL_DIFFERENCE"), 11));
+                        }*/
 
                         foreach (ClientSession sess in ServerManager.Instance.Sessions.Where(
                             s => s.HasSelectedCharacter))

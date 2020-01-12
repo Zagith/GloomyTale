@@ -39,7 +39,7 @@ namespace GloomyTale.GameObject
 
         private bool _isWorldServer;
 
-        private readonly INetworkClient _client;
+        private readonly INetworkSession _client;
 
         private readonly Random _random;
 
@@ -65,7 +65,7 @@ namespace GloomyTale.GameObject
 
         #region Instantiation
 
-        public ClientSession(INetworkClient client)
+        public ClientSession(INetworkSession client)
         {
             // set the time of last received packet
             _lastPacketReceive = DateTime.Now.Ticks;
@@ -154,17 +154,7 @@ namespace GloomyTale.GameObject
 
         public bool HasSession => _client != null;
 
-        public string IpAddress => _client.IpAddress;
-
-        public string CleanIpAddress
-        {
-            get
-            {
-                string cleanIp = _client.IpAddress.Replace("tcp://", "");
-                return cleanIp.Substring(0, cleanIp.LastIndexOf(":") > 0 ? cleanIp.LastIndexOf(":") : cleanIp.Length);
-            }
-            set { }
-        }
+        public string IpAddress => _client.IpAddress.ToString();
 
         public bool IsAuthenticated { get; private set; }
 
@@ -242,7 +232,7 @@ namespace GloomyTale.GameObject
 
         #endregion
 
-        public void ClearLowPriorityQueue() => _client.ClearLowPriorityQueueAsync();
+        //public void ClearLowPriorityQueue() => _client.ClearLowPriorityQueueAsync();
 
         public void Destroy()
         {
