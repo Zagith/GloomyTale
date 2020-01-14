@@ -865,6 +865,7 @@ namespace OpenNos.GameObject
 
                 // calculate damage
                 bool onyxWings = false;
+                bool windWings = hitRequest.Session.Character.HasBuff(686);
                 BattleEntity attackerBattleEntity = hitRequest.Mate == null
                     ? new BattleEntity(hitRequest.Session.Character, hitRequest.Skill)
                     : new BattleEntity(hitRequest.Mate);
@@ -923,6 +924,18 @@ namespace OpenNos.GameObject
                             0));
                         MapInstance.RemoveMonster(onyx);
                         MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, onyx.MapMonsterId));
+                    });
+                }
+                else if(windWings && ServerManager.RandomNumber() < 40)
+                {
+                    BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, BattleEntity.MapMonster.MapMonsterId, 553));
+                    Observable.Timer(TimeSpan.FromMilliseconds(350)).Subscribe(o =>
+                    {
+                        BattleEntity.GetDamage(damage / 4, attackerBattleEntity);
+                        MapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player, hitRequest.Session.Character.CharacterId, 3,
+                            MapMonsterId, -1, 0, -1, 257, -1, -1, IsAlive, (int)(CurrentHp / MaxHp * 100),
+                            (int)(damage / 4D), 0, 0));
+                        BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, BattleEntity.MapMonster.MapMonsterId, 553));
                     });
                 }
 

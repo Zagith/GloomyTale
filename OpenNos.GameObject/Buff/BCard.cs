@@ -2354,7 +2354,7 @@ namespace OpenNos.GameObject
                         break;
 
                     case BCardType.CardType.MartialArts:
-                        if (card == null)
+                        if (card == null && session.Character.Morph != (byte)BrawlerMorphType.Dragon)
                         {
                             return;
                         }
@@ -2362,7 +2362,9 @@ namespace OpenNos.GameObject
                         {
                             session.Character.Morph = (byte)BrawlerMorphType.Normal;
                             session.Character.Session.SendPacket(session.Character.GenerateCMode());
+                            session.Character.MapInstance?.Broadcast(session.Character.GenerateCMode());
                             session.Character.Session.SendPacket(session.Character.GenerateEff(196));
+                            session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(196));
                             session.Character.DragonModeObservable?.Dispose();
                             session.RemoveBuff(676);
                         }
@@ -2370,14 +2372,18 @@ namespace OpenNos.GameObject
                         {
                             session.Character.Morph = (byte)BrawlerMorphType.Dragon;
                             session.Character.Session.SendPacket(session.Character.GenerateCMode());
+                            session.Character.MapInstance?.Broadcast(session.Character.GenerateCMode());
                             session.Character.Session.SendPacket(session.Character.GenerateEff(196));
+                            session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(196));
                             session.Character.DragonModeObservable?.Dispose();
 
                             session.Character.DragonModeObservable = Observable.Timer(TimeSpan.FromSeconds(card.Duration * 0.1)).Subscribe(s =>
                             {
                                 session.Character.Morph = (byte)BrawlerMorphType.Normal;
                                 session.Character.Session.SendPacket(session.Character.GenerateCMode());
+                                session.Character.MapInstance?.Broadcast(session.Character.GenerateCMode());
                                 session.Character.Session.SendPacket(session.Character.GenerateEff(196));
+                                session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(196));
                             });
                         }
 

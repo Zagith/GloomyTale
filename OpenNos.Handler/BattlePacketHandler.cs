@@ -514,6 +514,18 @@ namespace OpenNos.Handler
                     damage -= reduce;
                 }
 
+                if(hitRequest.Session.Character.HasBuff(686) && ServerManager.RandomNumber() < 40 && hitmode != 4 && hitmode != 2)
+                {
+                    Observable.Timer(TimeSpan.FromMilliseconds(350)).Subscribe(o =>
+                    {
+                        target.Character.GetDamage((int)(damage / 4D), battleEntity);
+                        hitRequest.Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player, hitRequest.Session.Character.CharacterId, 1,
+                            target.Character.CharacterId, -1, 0, -1, 257, -1, -1, true, 92,
+                            (int)(damage / 4D), 0, 0));
+                        target.CurrentMapInstance?.Broadcast(target.Character.GenerateEff(553));
+                    });
+                }
+
                 if (onyxWings && hitmode != 4 && hitmode != 2)
                 {
                     short onyxX = (short) (hitRequest.Session.Character.PositionX + 2);
