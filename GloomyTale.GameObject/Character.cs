@@ -285,7 +285,7 @@ namespace GloomyTale.GameObject
 
         public bool IsSitting { get; set; }
 
-        public bool IsUsingFairyBooster => _isStaticBuffListInitial ? Buff.ContainsKey(131) : DAOFactory.StaticBuffDAO.LoadByCharacterId(CharacterId).Any(s => s.CardId.Equals(131));
+        public bool IsUsingFairyBooster => _isStaticBuffListInitial ? Buff.ContainsKey(131) : DAOFactory.Instance.StaticBuffDAO.LoadByCharacterId(CharacterId).Any(s => s.CardId.Equals(131));
 
         public bool IsVehicled { get; set; }
 
@@ -1170,7 +1170,7 @@ namespace GloomyTale.GameObject
             {
                 if (!characterQuest.Quest.IsDaily && !characterQuest.IsMainQuest && (QuestType)characterQuest.Quest.QuestType != QuestType.FlowerQuest)
                 {
-                    if (DAOFactory.QuestLogDAO.LoadByCharacterId(CharacterId).Any(s => s.QuestId == questId))
+                    if (DAOFactory.Instance.QuestLogDAO.LoadByCharacterId(CharacterId).Any(s => s.QuestId == questId))
                     {
                         Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("QUEST_ALREADY_DONE"), 0));
                         return;
@@ -1178,7 +1178,7 @@ namespace GloomyTale.GameObject
                 }
                 else if (characterQuest.Quest.IsDaily && (QuestType)characterQuest.Quest.QuestType != QuestType.FlowerQuest)
                 {
-                    if (DAOFactory.QuestLogDAO.LoadByCharacterId(CharacterId).Any(s => s.QuestId == questId && s.LastDaily != null && s.LastDaily.Value.AddHours(24) >= DateTime.Now))
+                    if (DAOFactory.Instance.QuestLogDAO.LoadByCharacterId(CharacterId).Any(s => s.QuestId == questId && s.LastDaily != null && s.LastDaily.Value.AddHours(24) >= DateTime.Now))
                     {
                         Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("QUEST_ALREADY_DONE_TODAY"), 0));
                         return;
@@ -1214,7 +1214,7 @@ namespace GloomyTale.GameObject
 
         public string GetSqst()
         {
-            List<QuestLogDTO> questLogs = DAOFactory.QuestLogDAO.LoadByCharacterId(CharacterId).ToList();
+            List<QuestLogDTO> questLogs = DAOFactory.Instance.QuestLogDAO.LoadByCharacterId(CharacterId).ToList();
             List<CharacterQuest> quests = Quests.ToList();
             string sqst = "sqst  3 ";
             for (int i = 0; i < 250; i++)
@@ -1802,7 +1802,7 @@ namespace GloomyTale.GameObject
                 RelationType = Relation
             };
 
-            DAOFactory.CharacterRelationDAO.InsertOrUpdate(ref addRelation);
+            DAOFactory.Instance.CharacterRelationDAO.InsertOrUpdate(ref addRelation);
             ServerManager.Instance.RelationRefresh(addRelation.CharacterRelationId);
             Session.SendPacket(GenerateFinit());
             ClientSession target = ServerManager.Instance.Sessions.FirstOrDefault(s => s.Character?.CharacterId == characterId);
@@ -1950,9 +1950,9 @@ namespace GloomyTale.GameObject
             Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 198), PositionX, PositionY);
             Session.Character.ResetSkills();
 
-            foreach (QuicklistEntryDTO quicklists in DAOFactory.QuicklistEntryDAO.LoadByCharacterId(CharacterId).Where(quicklists => QuicklistEntries.Any(qle => qle.Id == quicklists.Id)))
+            foreach (QuicklistEntryDTO quicklists in DAOFactory.Instance.QuicklistEntryDAO.LoadByCharacterId(CharacterId).Where(quicklists => QuicklistEntries.Any(qle => qle.Id == quicklists.Id)))
             {
-                DAOFactory.QuicklistEntryDAO.Delete(quicklists.Id);
+                DAOFactory.Instance.QuicklistEntryDAO.Delete(quicklists.Id);
             }
 
             QuicklistEntries = new List<QuicklistEntryDTO>
@@ -2538,7 +2538,7 @@ namespace GloomyTale.GameObject
             if (chara != null)
             {
                 long id = chara.CharacterRelationId;
-                DAOFactory.CharacterRelationDAO.Delete(id);
+                DAOFactory.Instance.CharacterRelationDAO.Delete(id);
                 ServerManager.Instance.RelationRefresh(id);
                 Session.SendPacket(GenerateBlinit());
             }
@@ -2568,8 +2568,8 @@ namespace GloomyTale.GameObject
             if (chara != null)
             {
                 long id = chara.CharacterRelationId;
-                CharacterDTO charac = DAOFactory.CharacterDAO.LoadById(characterId);
-                DAOFactory.CharacterRelationDAO.Delete(id);
+                CharacterDTO charac = DAOFactory.Instance.CharacterDAO.LoadById(characterId);
+                DAOFactory.Instance.CharacterRelationDAO.Delete(id);
                 ServerManager.Instance.RelationRefresh(id);
 
                 Session.SendPacket(GenerateFinit());
@@ -2581,7 +2581,7 @@ namespace GloomyTale.GameObject
                     {
                         long id2 = relation.RelatedCharacterId == charac.CharacterId ? relation.CharacterId : relation.RelatedCharacterId;
                         bool isOnline = CommunicationServiceClient.Instance.IsCharacterConnected(ServerManager.Instance.ServerGroup, id2);
-                        result += $" {id2}|{(short)relation.RelationType}|{(isOnline ? 1 : 0)}|{DAOFactory.CharacterDAO.LoadById(id2).Name}";
+                        result += $" {id2}|{(short)relation.RelationType}|{(isOnline ? 1 : 0)}|{DAOFactory.Instance.CharacterDAO.LoadById(id2).Name}";
                     }
                     int? sentChannelId = CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                     {
@@ -2776,7 +2776,7 @@ namespace GloomyTale.GameObject
 
             foreach (CharacterRelationDTO relation in CharacterRelations.Where(s => s.CharacterId == CharacterId && s.RelationType == CharacterRelationType.Blocked))
             {
-                result += $" {relation.RelatedCharacterId}|{DAOFactory.CharacterDAO.LoadById(relation.RelatedCharacterId)?.Name}";
+                result += $" {relation.RelatedCharacterId}|{DAOFactory.Instance.CharacterDAO.LoadById(relation.RelatedCharacterId)?.Name}";
             }
 
             return result;
@@ -3136,8 +3136,8 @@ namespace GloomyTale.GameObject
                         Type = MessageType.Family
                     });
                 }
-                DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref famchar);
-                DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
+                DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref famchar);
+                DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref fam);
                 ServerManager.Instance.FamilyRefresh(Family.FamilyId);
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
@@ -3195,7 +3195,7 @@ namespace GloomyTale.GameObject
             foreach (CharacterRelationDTO relation in CharacterRelations.ToList().Where(c => c.RelationType == CharacterRelationType.Friend || c.RelationType == CharacterRelationType.Spouse))
             {
                 long id = relation.RelatedCharacterId == CharacterId ? relation.CharacterId : relation.RelatedCharacterId;
-                if (DAOFactory.CharacterDAO.LoadById(id) is CharacterDTO character)
+                if (DAOFactory.Instance.CharacterDAO.LoadById(id) is CharacterDTO character)
                 {
                     bool isOnline = CommunicationServiceClient.Instance.IsCharacterConnected(ServerManager.Instance.ServerGroup, id);
                     result += $" {id}|{(short)relation.RelationType}|{(isOnline ? 1 : 0)}|{character.Name}";
@@ -3805,7 +3805,7 @@ namespace GloomyTale.GameObject
             if (Miniland == null)
             {
                 Miniland = ServerManager.GenerateMapInstance(20001, MapInstanceType.NormalInstance, new InstanceBag(), true);
-                foreach (MinilandObjectDTO obj in DAOFactory.MinilandObjectDAO.LoadByCharacterId(CharacterId))
+                foreach (MinilandObjectDTO obj in DAOFactory.Instance.MinilandObjectDAO.LoadByCharacterId(CharacterId))
                 {
                     MinilandObject mapobj = new MinilandObject(obj);
                     if (mapobj.ItemInstanceId != null)
@@ -4261,14 +4261,14 @@ namespace GloomyTale.GameObject
         {
             if (mail != null)
             {
-                return $"post 1 {type} {(MailList?.FirstOrDefault(s => s.Value?.MailId == mail?.MailId))?.Key} 0 {(mail.IsOpened ? 1 : 0)} {mail.Date.ToString("yyMMddHHmm")} {(type == 2 ? DAOFactory.CharacterDAO.LoadById(mail.ReceiverId).Name : DAOFactory.CharacterDAO.LoadById(mail.SenderId).Name)} {mail.Title}";
+                return $"post 1 {type} {(MailList?.FirstOrDefault(s => s.Value?.MailId == mail?.MailId))?.Key} 0 {(mail.IsOpened ? 1 : 0)} {mail.Date.ToString("yyMMddHHmm")} {(type == 2 ? DAOFactory.Instance.CharacterDAO.LoadById(mail.ReceiverId).Name : DAOFactory.Instance.CharacterDAO.LoadById(mail.SenderId).Name)} {mail.Title}";
             }
             return "";
         }
 
         public string GeneratePostMessage(MailDTO mailDTO, byte type)
         {
-            CharacterDTO sender = DAOFactory.CharacterDAO.LoadById(mailDTO.SenderId);
+            CharacterDTO sender = DAOFactory.Instance.CharacterDAO.LoadById(mailDTO.SenderId);
 
             return $"post 5 {type} {MailList.First(s => s.Value == mailDTO).Key} 0 0 {(byte)mailDTO.SenderClass} {(byte)mailDTO.SenderGender} {mailDTO.SenderMorphId} {(byte)mailDTO.SenderHairStyle} {(byte)mailDTO.SenderHairColor} {mailDTO.EqPacket} {sender.Name} {mailDTO.Title} {mailDTO.Message}";
         }
@@ -4533,7 +4533,7 @@ namespace GloomyTale.GameObject
                     if (bz.Item.Item.Type == InventoryType.Equipment)
                     {
                         bz.Item.ShellEffects.Clear();
-                        bz.Item.ShellEffects.AddRange(DAOFactory.ShellEffectDAO.LoadByEquipmentSerialId(bz.Item.EquipmentSerialId));
+                        bz.Item.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(bz.Item.EquipmentSerialId));
                         info = bz.Item?.GenerateEInfo().Replace(' ', '^').Replace("e_info^", "");
                     }
                     if (packet.Filter == 0 || packet.Filter == Status)
@@ -5388,19 +5388,19 @@ namespace GloomyTale.GameObject
             long referrerId = Session.Account.ReferrerId;
             if (Level >= 70 && referrerId != 0 && !CharacterId.Equals(referrerId))
             {
-                List<GeneralLogDTO> logs = DAOFactory.GeneralLogDAO.LoadByLogType("ReferralProgram", null).Where(g => g.IpAddress.Equals(Session.Account.RegistrationIP.Split(':')[1].Replace("//", ""))).ToList();
+                List<GeneralLogDTO> logs = DAOFactory.Instance.GeneralLogDAO.LoadByLogType("ReferralProgram", null).Where(g => g.IpAddress.Equals(Session.Account.RegistrationIP.Split(':')[1].Replace("//", ""))).ToList();
                 if (logs.Count <= 5)
                 {
-                    CharacterDTO character = DAOFactory.CharacterDAO.LoadById(referrerId);
+                    CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadById(referrerId);
                     if (character == null || character.Level < 70)
                     {
                         return;
                     }
-                    AccountDTO referrer = DAOFactory.AccountDAO.LoadById(character.AccountId);
+                    AccountDTO referrer = DAOFactory.Instance.AccountDAO.LoadById(character.AccountId);
                     if (referrer != null && !AccountId.Equals(character.AccountId))
                     {
                         Logger.Log.LogUserEvent("REFERRERREWARD", Session.GenerateIdentity(), $"AccountId: {AccountId} ReferrerId: {referrerId}");
-                        DAOFactory.AccountDAO.WriteGeneralLog(AccountId, Session.Account.RegistrationIP, CharacterId, GeneralLogType.ReferralProgram, $"ReferrerId: {referrerId}");
+                        DAOFactory.Instance.AccountDAO.WriteGeneralLog(AccountId, Session.Account.RegistrationIP, CharacterId, GeneralLogType.ReferralProgram, $"ReferrerId: {referrerId}");
 
                         // send gifts like you want
                         //SendGift(CharacterId, 5910, 1, 0, 0, false);
@@ -5687,7 +5687,7 @@ namespace GloomyTale.GameObject
 
         public static void InsertOrUpdatePenalty(PenaltyLogDTO log)
         {
-            DAOFactory.PenaltyLogDAO.InsertOrUpdate(ref log);
+            DAOFactory.Instance.PenaltyLogDAO.InsertOrUpdate(ref log);
             //CommunicationServiceClient.Instance.RefreshPenalty(log.PenaltyLogId);
         }
 
@@ -5923,16 +5923,16 @@ namespace GloomyTale.GameObject
         }
         public void LoadInventory()
         {
-            IEnumerable<ItemInstanceDTO> inventories = DAOFactory.ItemInstanceDAO.LoadByCharacterId(CharacterId).Where(s => s.Type != InventoryType.FamilyWareHouse).ToList();
-            IEnumerable<CharacterDTO> characters = DAOFactory.CharacterDAO.LoadAllByAccount(Session.Account.AccountId);
+            IEnumerable<ItemInstanceDTO> inventories = DAOFactory.Instance.ItemInstanceDAO.LoadByCharacterId(CharacterId).Where(s => s.Type != InventoryType.FamilyWareHouse).ToList();
+            IEnumerable<CharacterDTO> characters = DAOFactory.Instance.CharacterDAO.LoadAllByAccount(Session.Account.AccountId);
             IEnumerable<Guid> warehouseInventoryIds = new List<Guid>();
             foreach (CharacterDTO character in characters.Where(s => s.CharacterId != CharacterId))
             {
-                IEnumerable<ItemInstanceDTO> characterWarehouseInventory = DAOFactory.ItemInstanceDAO.LoadByCharacterId(character.CharacterId).Where(s => s.Type == InventoryType.Warehouse).ToList();
+                IEnumerable<ItemInstanceDTO> characterWarehouseInventory = DAOFactory.Instance.ItemInstanceDAO.LoadByCharacterId(character.CharacterId).Where(s => s.Type == InventoryType.Warehouse).ToList();
                 inventories = inventories.Concat(characterWarehouseInventory);
                 warehouseInventoryIds = warehouseInventoryIds.Concat(characterWarehouseInventory.Select(i => i.Id).ToList());
             }
-            DAOFactory.ItemInstanceDAO.DeleteGuidList(warehouseInventoryIds);
+            DAOFactory.Instance.ItemInstanceDAO.DeleteGuidList(warehouseInventoryIds);
 
             Inventory = new Inventory(this);
             foreach (ItemInstanceDTO inventory in inventories)
@@ -5941,7 +5941,7 @@ namespace GloomyTale.GameObject
                 Inventory[inventory.Id] = new ItemInstance(inventory);
                 ItemInstance iteminstance = inventory as ItemInstance;
                 iteminstance?.ShellEffects.Clear();
-                iteminstance?.ShellEffects.AddRange(DAOFactory.ShellEffectDAO.LoadByEquipmentSerialId(iteminstance.EquipmentSerialId));
+                iteminstance?.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(iteminstance.EquipmentSerialId));
             }
 
             ItemInstance ring = Inventory.LoadBySlotAndType((byte)EquipmentType.Ring, InventoryType.Wear);
@@ -5965,7 +5965,7 @@ namespace GloomyTale.GameObject
         public void LoadQuicklists()
         {
             QuicklistEntries = new List<QuicklistEntryDTO>();
-            IEnumerable<QuicklistEntryDTO> quicklistDTO = DAOFactory.QuicklistEntryDAO.LoadByCharacterId(CharacterId).ToList();
+            IEnumerable<QuicklistEntryDTO> quicklistDTO = DAOFactory.Instance.QuicklistEntryDAO.LoadByCharacterId(CharacterId).ToList();
             foreach (QuicklistEntryDTO qle in quicklistDTO)
             {
                 QuicklistEntries.Add(qle);
@@ -5974,7 +5974,7 @@ namespace GloomyTale.GameObject
 
         public void LoadSentMail()
         {
-            foreach (MailDTO mail in DAOFactory.MailDAO.LoadSentByCharacter(CharacterId))
+            foreach (MailDTO mail in DAOFactory.Instance.MailDAO.LoadSentByCharacter(CharacterId))
             {
                 MailList.Add((MailList.Count > 0 ? MailList.OrderBy(s => s.Key).Last().Key : 0) + 1, mail);
 
@@ -5985,7 +5985,7 @@ namespace GloomyTale.GameObject
         public void LoadSkills()
         {
             Skills = new ThreadSafeSortedList<int, CharacterSkill>();
-            IEnumerable<CharacterSkillDTO> characterskillDTO = DAOFactory.CharacterSkillDAO.LoadByCharacterId(CharacterId).ToList();
+            IEnumerable<CharacterSkillDTO> characterskillDTO = DAOFactory.Instance.CharacterSkillDAO.LoadByCharacterId(CharacterId).ToList();
             foreach (CharacterSkillDTO characterskill in characterskillDTO.OrderBy(s => s.SkillVNum))
             {
                 if (!Skills.ContainsKey(characterskill.SkillVNum))
@@ -6120,7 +6120,7 @@ namespace GloomyTale.GameObject
         public void LoadMail()
         {
             int parcel = 0, letter = 0;
-            foreach (MailDTO mail in DAOFactory.MailDAO.LoadSentToCharacter(CharacterId))
+            foreach (MailDTO mail in DAOFactory.Instance.MailDAO.LoadSentToCharacter(CharacterId))
             {
                 MailList.Add((MailList.Count > 0 ? MailList.OrderBy(s => s.Key).Last().Key : 0) + 1, mail);
 
@@ -6214,10 +6214,10 @@ namespace GloomyTale.GameObject
             try
             {
                 AccountDTO account = Session.Account;
-                DAOFactory.AccountDAO.InsertOrUpdate(ref account);
+                DAOFactory.Instance.AccountDAO.InsertOrUpdate(ref account);
 
                 CharacterDTO character = DeepCopy();
-                DAOFactory.CharacterDAO.InsertOrUpdate(ref character);
+                DAOFactory.Instance.CharacterDAO.InsertOrUpdate(ref character);
 
                 if (Inventory != null)
                 {
@@ -6226,25 +6226,25 @@ namespace GloomyTale.GameObject
                     {
                         // load and concat inventory with equipment
                         List<ItemInstance> inventories = Inventory.GetAllItems();
-                        IEnumerable<Guid> currentlySavedInventoryIds = DAOFactory.ItemInstanceDAO.LoadSlotAndTypeByCharacterId(CharacterId);
-                        IEnumerable<CharacterDTO> characters = DAOFactory.CharacterDAO.LoadByAccount(Session.Account.AccountId);
+                        IEnumerable<Guid> currentlySavedInventoryIds = DAOFactory.Instance.ItemInstanceDAO.LoadSlotAndTypeByCharacterId(CharacterId);
+                        IEnumerable<CharacterDTO> characters = DAOFactory.Instance.CharacterDAO.LoadByAccount(Session.Account.AccountId);
                         foreach (CharacterDTO characteraccount in characters.Where(s => s.CharacterId != CharacterId))
                         {
-                            currentlySavedInventoryIds = currentlySavedInventoryIds.Concat(DAOFactory.ItemInstanceDAO.LoadByCharacterId(characteraccount.CharacterId).Where(s => s.Type == InventoryType.Warehouse).Select(i => i.Id).ToList());
+                            currentlySavedInventoryIds = currentlySavedInventoryIds.Concat(DAOFactory.Instance.ItemInstanceDAO.LoadByCharacterId(characteraccount.CharacterId).Where(s => s.Type == InventoryType.Warehouse).Select(i => i.Id).ToList());
                         }
 
-                        IEnumerable<MinilandObjectDTO> currentlySavedMinilandObjectEntries = DAOFactory.MinilandObjectDAO.LoadByCharacterId(CharacterId).ToList();
+                        IEnumerable<MinilandObjectDTO> currentlySavedMinilandObjectEntries = DAOFactory.Instance.MinilandObjectDAO.LoadByCharacterId(CharacterId).ToList();
                         foreach (MinilandObjectDTO mobjToDelete in currentlySavedMinilandObjectEntries.Except(MinilandObjects))
                         {
-                            DAOFactory.MinilandObjectDAO.DeleteById(mobjToDelete.MinilandObjectId);
+                            DAOFactory.Instance.MinilandObjectDAO.DeleteById(mobjToDelete.MinilandObjectId);
                         }
 
-                        DAOFactory.ItemInstanceDAO.DeleteGuidList(currentlySavedInventoryIds.Except(inventories.Select(i => i.Id)));
+                        DAOFactory.Instance.ItemInstanceDAO.DeleteGuidList(currentlySavedInventoryIds.Except(inventories.Select(i => i.Id)));
 
                         // create or update all which are new or do still exist
                         List<ItemInstance> saveInventory = inventories.Where(s => s.Type != InventoryType.Bazaar && s.Type != InventoryType.FamilyWareHouse).ToList();
 
-                        DAOFactory.ItemInstanceDAO.InsertOrUpdateFromList(saveInventory);
+                        DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdateFromList(saveInventory);
 
                         foreach (ItemInstance itemInstance in saveInventory)
                         {
@@ -6256,18 +6256,18 @@ namespace GloomyTale.GameObject
                             {
                                 continue;
                             }
-                            DAOFactory.ShellEffectDAO.DeleteByEquipmentSerialId(itemInstance.EquipmentSerialId);
-                            DAOFactory.ShellEffectDAO.InsertOrUpdateFromList(itemInstance.ShellEffects, itemInstance.EquipmentSerialId);
-                            DAOFactory.CellonOptionDAO.InsertOrUpdateFromList(itemInstance.CellonOptions, itemInstance.EquipmentSerialId);
+                            DAOFactory.Instance.ShellEffectDAO.DeleteByEquipmentSerialId(itemInstance.EquipmentSerialId);
+                            DAOFactory.Instance.ShellEffectDAO.InsertOrUpdateFromList(itemInstance.ShellEffects, itemInstance.EquipmentSerialId);
+                            DAOFactory.Instance.CellonOptionDAO.InsertOrUpdateFromList(itemInstance.CellonOptions, itemInstance.EquipmentSerialId);
                             instance.ShellEffects.ForEach(s =>
                             {
                                 s.EquipmentSerialId = instance.EquipmentSerialId;
-                                DAOFactory.ShellEffectDAO.InsertOrUpdate(s);
+                                DAOFactory.Instance.ShellEffectDAO.InsertOrUpdate(s);
                             });
                             instance.CellonOptions.ForEach(s =>
                             {
                                 s.EquipmentSerialId = instance.EquipmentSerialId;
-                                DAOFactory.CellonOptionDAO.InsertOrUpdate(s);
+                                DAOFactory.Instance.CellonOptionDAO.InsertOrUpdate(s);
                             });
                         }
                     }
@@ -6275,54 +6275,54 @@ namespace GloomyTale.GameObject
 
                 if (Skills != null)
                 {
-                    IEnumerable<Guid> currentlySavedCharacterSkills = DAOFactory.CharacterSkillDAO.LoadKeysByCharacterId(CharacterId).ToList();
+                    IEnumerable<Guid> currentlySavedCharacterSkills = DAOFactory.Instance.CharacterSkillDAO.LoadKeysByCharacterId(CharacterId).ToList();
 
                     foreach (Guid characterSkillToDeleteId in currentlySavedCharacterSkills.Except(Skills.Select(s => s.Id)))
                     {
-                        DAOFactory.CharacterSkillDAO.Delete(characterSkillToDeleteId);
+                        DAOFactory.Instance.CharacterSkillDAO.Delete(characterSkillToDeleteId);
                     }
 
                     foreach (CharacterSkill characterSkill in Skills.GetAllItems())
                     {
-                        DAOFactory.CharacterSkillDAO.InsertOrUpdate(characterSkill);
+                        DAOFactory.Instance.CharacterSkillDAO.InsertOrUpdate(characterSkill);
                     }
                 }
 
-                IEnumerable<long> currentlySavedMates = DAOFactory.MateDAO.LoadByCharacterId(CharacterId).Select(s => s.MateId);
+                IEnumerable<long> currentlySavedMates = DAOFactory.Instance.MateDAO.LoadByCharacterId(CharacterId).Select(s => s.MateId);
 
                 foreach (long matesToDeleteId in currentlySavedMates.Except(Mates.Select(s => s.MateId)))
                 {
-                    DAOFactory.MateDAO.Delete(matesToDeleteId);
+                    DAOFactory.Instance.MateDAO.Delete(matesToDeleteId);
                 }
 
                 foreach (Mate mate in Mates)
                 {
                     MateDTO matesave = mate;
-                    DAOFactory.MateDAO.InsertOrUpdate(ref matesave);
+                    DAOFactory.Instance.MateDAO.InsertOrUpdate(ref matesave);
                 }
 
                 IEnumerable<QuicklistEntryDTO> quickListEntriesToInsertOrUpdate = QuicklistEntries.ToList();
 
-                IEnumerable<Guid> currentlySavedQuicklistEntries = DAOFactory.QuicklistEntryDAO.LoadKeysByCharacterId(CharacterId).ToList();
+                IEnumerable<Guid> currentlySavedQuicklistEntries = DAOFactory.Instance.QuicklistEntryDAO.LoadKeysByCharacterId(CharacterId).ToList();
                 foreach (Guid quicklistEntryToDelete in currentlySavedQuicklistEntries.Except(QuicklistEntries.Select(s => s.Id)))
                 {
-                    DAOFactory.QuicklistEntryDAO.Delete(quicklistEntryToDelete);
+                    DAOFactory.Instance.QuicklistEntryDAO.Delete(quicklistEntryToDelete);
                 }
                 foreach (QuicklistEntryDTO quicklistEntry in quickListEntriesToInsertOrUpdate)
                 {
-                    DAOFactory.QuicklistEntryDAO.InsertOrUpdate(quicklistEntry);
+                    DAOFactory.Instance.QuicklistEntryDAO.InsertOrUpdate(quicklistEntry);
                 }
 
                 foreach (MinilandObjectDTO mobjEntry in (IEnumerable<MinilandObjectDTO>)MinilandObjects.ToList())
                 {
                     MinilandObjectDTO mobj = mobjEntry;
-                    DAOFactory.MinilandObjectDAO.InsertOrUpdate(ref mobj);
+                    DAOFactory.Instance.MinilandObjectDAO.InsertOrUpdate(ref mobj);
                 }
 
-                IEnumerable<short> currentlySavedBuff = DAOFactory.StaticBuffDAO.LoadByTypeCharacterId(CharacterId);
+                IEnumerable<short> currentlySavedBuff = DAOFactory.Instance.StaticBuffDAO.LoadByTypeCharacterId(CharacterId);
                 foreach (short bonusToDelete in currentlySavedBuff.Except(Buff.Select(s => s.Card.CardId)))
                 {
-                    DAOFactory.StaticBuffDAO.Delete(bonusToDelete, CharacterId);
+                    DAOFactory.Instance.StaticBuffDAO.Delete(bonusToDelete, CharacterId);
                 }
                 if (_isStaticBuffListInitial)
                 {
@@ -6334,14 +6334,14 @@ namespace GloomyTale.GameObject
                             RemainingTime = (int)(buff.RemainingTime - (DateTime.Now - buff.Start).TotalSeconds),
                             CardId = buff.Card.CardId
                         };
-                        DAOFactory.StaticBuffDAO.InsertOrUpdate(ref bf);
+                        DAOFactory.Instance.StaticBuffDAO.InsertOrUpdate(ref bf);
                     }
                 }
 
                 //Quest
-                foreach (CharacterQuestDTO q in DAOFactory.CharacterQuestDAO.LoadByCharacterId(CharacterId).ToList())
+                foreach (CharacterQuestDTO q in DAOFactory.Instance.CharacterQuestDAO.LoadByCharacterId(CharacterId).ToList())
                 {
-                    DAOFactory.CharacterQuestDAO.Delete(CharacterId, q.QuestId);
+                    DAOFactory.Instance.CharacterQuestDAO.Delete(CharacterId, q.QuestId);
                 }
                 foreach (CharacterQuest qst in Quests.ToList())
                 {
@@ -6356,26 +6356,26 @@ namespace GloomyTale.GameObject
                         FifthObjective = qst.FifthObjective,
                         IsMainQuest = qst.IsMainQuest
                     };
-                    DAOFactory.CharacterQuestDAO.InsertOrUpdate(qstDTO);
+                    DAOFactory.Instance.CharacterQuestDAO.InsertOrUpdate(qstDTO);
                 }
 
                 foreach (StaticBonusDTO bonus in StaticBonusList.ToArray())
                 {
                     StaticBonusDTO bonus2 = bonus;
-                    DAOFactory.StaticBonusDAO.InsertOrUpdate(ref bonus2);
+                    DAOFactory.Instance.StaticBonusDAO.InsertOrUpdate(ref bonus2);
                 }
 
                 foreach (CharacterTitleDTO title in Titles.ToArray())
                 {
                     CharacterTitleDTO title2 = title;
-                    DAOFactory.CharacterTitleDAO.InsertOrUpdate(ref title2);
+                    DAOFactory.Instance.CharacterTitleDAO.InsertOrUpdate(ref title2);
                 }
 
                 foreach (GeneralLogDTO general in GeneralLogs.GetAllItems())
                 {
-                    if (!DAOFactory.GeneralLogDAO.IdAlreadySet(general.LogId))
+                    if (!DAOFactory.Instance.GeneralLogDAO.IdAlreadySet(general.LogId))
                     {
-                        DAOFactory.GeneralLogDAO.Insert(general);
+                        DAOFactory.Instance.GeneralLogDAO.Insert(general);
                     }
                 }
                 foreach (RespawnDTO Resp in Respawns)
@@ -6383,7 +6383,7 @@ namespace GloomyTale.GameObject
                     RespawnDTO res = Resp;
                     if (Resp.MapId != 0 && Resp.X != 0 && Resp.Y != 0)
                     {
-                        DAOFactory.RespawnDAO.InsertOrUpdate(ref res);
+                        DAOFactory.Instance.RespawnDAO.InsertOrUpdate(ref res);
                     }
                 }
                 Logger.Log.LogUserEvent("CHARACTER_DB_SAVE", Session.GenerateIdentity(), "FINISH");

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface ICharacterTitlesDAO
+    public interface ICharacterTitlesDAO : IMappingBaseDAO
     {
         SaveResult InsertOrUpdate(ref CharacterTitleDTO characterTitle);
 

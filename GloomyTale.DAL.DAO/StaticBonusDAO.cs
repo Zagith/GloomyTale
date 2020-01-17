@@ -22,12 +22,13 @@ using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class StaticBonusDAO : IStaticBonusDAO
+    public class StaticBonusDAO : MappingBaseDao<StaticBonus, StaticBonusDTO>, IStaticBonusDAO
     {
-        public StaticBonusDAO() : base()
+        public StaticBonusDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

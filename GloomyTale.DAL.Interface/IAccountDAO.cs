@@ -18,7 +18,7 @@ using GloomyTale.Domain;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IAccountDAO
+    public interface IAccountDAO : IMappingBaseDAO
     {
         #region Methods
 

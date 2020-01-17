@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class CharacterTitleDTO
+    public class CharacterTitleDTO : MappingBaseDTO
     {
         #region Properties
 

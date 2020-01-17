@@ -1004,7 +1004,7 @@ namespace GloomyTale.GameObject.Networking
                 mapInstance.LoadMonsters();
                 mapInstance.LoadNpcs();
                 mapInstance.LoadPortals();
-                foreach (ScriptedInstanceDTO si in DAOFactory.ScriptedInstanceDAO.LoadByMap(mapInstance.Map.MapId).ToList())
+                foreach (ScriptedInstanceDTO si in DAOFactory.Instance.ScriptedInstanceDAO.LoadByMap(mapInstance.Map.MapId).ToList())
                 {
                     ScriptedInstance siObj = new ScriptedInstance(si);
                     if (siObj.Type == ScriptedInstanceType.TimeSpace)
@@ -1314,11 +1314,11 @@ namespace GloomyTale.GameObject.Networking
                     {
                         {
                             typeof(I18NItemDto),
-                            DAOFactory.I18NItemDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                            DAOFactory.Instance.I18NItemDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
                     };
-            var items = DAOFactory.ItemDAO.LoadAll();
+            var items = DAOFactory.Instance.ItemDAO.LoadAll();
             var props = StaticDtoExtension.GetI18NProperties(typeof(ItemDTO));
 
             var regions = Enum.GetValues(typeof(RegionType));
@@ -1388,7 +1388,7 @@ namespace GloomyTale.GameObject.Networking
 
             #region BoxItem
 
-            BoxItems = DAOFactory.BoxItemDAO.LoadAll();
+            BoxItems = DAOFactory.Instance.BoxItemDAO.LoadAll();
 
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("BOX_ITEMS_LOADED"), BoxItems.Count));
 
@@ -1396,7 +1396,7 @@ namespace GloomyTale.GameObject.Networking
 
             // intialize monsterdrops
             _monsterDrops = new ThreadSafeSortedList<short, List<DropDTO>>();
-            Parallel.ForEach(DAOFactory.DropDAO.LoadAll().GroupBy(d => d.MonsterVNum), monsterDropGrouping =>
+            Parallel.ForEach(DAOFactory.Instance.DropDAO.LoadAll().GroupBy(d => d.MonsterVNum), monsterDropGrouping =>
             {
                 if (monsterDropGrouping.Key.HasValue)
                 {
@@ -1411,23 +1411,23 @@ namespace GloomyTale.GameObject.Networking
 
             // initialize monsterskills
             _monsterSkills = new ThreadSafeSortedList<short, List<NpcMonsterSkill>>();
-            Parallel.ForEach(DAOFactory.NpcMonsterSkillDAO.LoadAll().GroupBy(n => n.NpcMonsterVNum), monsterSkillGrouping => _monsterSkills[monsterSkillGrouping.Key] = monsterSkillGrouping.Select(n => new NpcMonsterSkill(n)).ToList());
+            Parallel.ForEach(DAOFactory.Instance.NpcMonsterSkillDAO.LoadAll().GroupBy(n => n.NpcMonsterVNum), monsterSkillGrouping => _monsterSkills[monsterSkillGrouping.Key] = monsterSkillGrouping.Select(n => new NpcMonsterSkill(n)).ToList());
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MONSTERSKILLS_LOADED"), _monsterSkills.Sum(i => i.Count)));
 
             // initialize bazaar
             BazaarList = new ThreadSafeGenericList<BazaarItemLink>();
-            OrderablePartitioner<BazaarItemDTO> bazaarPartitioner = Partitioner.Create(DAOFactory.BazaarItemDAO.LoadAll(), EnumerablePartitionerOptions.NoBuffering);
+            OrderablePartitioner<BazaarItemDTO> bazaarPartitioner = Partitioner.Create(DAOFactory.Instance.BazaarItemDAO.LoadAll(), EnumerablePartitionerOptions.NoBuffering);
             Parallel.ForEach(bazaarPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 8 }, bazaarItem =>
             {
                 BazaarItemLink item = new BazaarItemLink
                 {
                     BazaarItem = bazaarItem
                 };
-                CharacterDTO chara = DAOFactory.CharacterDAO.LoadById(bazaarItem.SellerId);
+                CharacterDTO chara = DAOFactory.Instance.CharacterDAO.LoadById(bazaarItem.SellerId);
                 if (chara != null)
                 {
                     item.Owner = chara.Name;
-                    item.Item = new ItemInstance(DAOFactory.ItemInstanceDAO.LoadById(bazaarItem.ItemInstanceId));
+                    item.Item = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bazaarItem.ItemInstanceId));
                 }
                 BazaarList.Add(item);
             });
@@ -1438,11 +1438,11 @@ namespace GloomyTale.GameObject.Networking
                     {
                         {
                             typeof(II18NNpcMonsterDto),
-                            DAOFactory.I18NNpcMonsterDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                            DAOFactory.Instance.I18NNpcMonsterDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
                     };
-            var npcMonsters = DAOFactory.NpcMonsterDAO.LoadAll();
+            var npcMonsters = DAOFactory.Instance.NpcMonsterDAO.LoadAll();
             var propsNpcMonsters = StaticDtoExtension.GetI18NProperties(typeof(NpcMonsterDTO));
 
             var regionsNpcMonster = Enum.GetValues(typeof(RegionType));
@@ -1453,14 +1453,14 @@ namespace GloomyTale.GameObject.Networking
                 NpcMonster npcMonsterObj = new NpcMonster(npcMonster);
                 npcMonsterObj.Initialize();
                 npcMonsterObj.BCards = new List<BCard>();
-                DAOFactory.BCardDAO.LoadByNpcMonsterVNum(npcMonster.OriginalNpcMonsterVNum > 0 ? npcMonster.OriginalNpcMonsterVNum : npcMonster.NpcMonsterVNum).ToList().ForEach(s => npcMonsterObj.BCards.Add(new BCard(s)));
+                DAOFactory.Instance.BCardDAO.LoadByNpcMonsterVNum(npcMonster.OriginalNpcMonsterVNum > 0 ? npcMonster.OriginalNpcMonsterVNum : npcMonster.NpcMonsterVNum).ToList().ForEach(s => npcMonsterObj.BCards.Add(new BCard(s)));
                 _npcmonsters.Add(npcMonsterObj);
             });
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("NPCMONSTERS_LOADED"), _npcmonsters.Count));
 
             // intialize recipes
             _recipes = new ThreadSafeSortedList<short, Recipe>();
-            Parallel.ForEach(DAOFactory.RecipeDAO.LoadAll(), recipeGrouping =>
+            Parallel.ForEach(DAOFactory.Instance.RecipeDAO.LoadAll(), recipeGrouping =>
             {
                 Recipe recipe = new Recipe(recipeGrouping);
                 _recipes[recipeGrouping.RecipeId] = recipe;
@@ -1470,17 +1470,17 @@ namespace GloomyTale.GameObject.Networking
 
             // initialize recipelist
             _recipeLists = new ThreadSafeSortedList<int, RecipeListDTO>();
-            Parallel.ForEach(DAOFactory.RecipeListDAO.LoadAll(), recipeListGrouping => _recipeLists[recipeListGrouping.RecipeListId] = recipeListGrouping);
+            Parallel.ForEach(DAOFactory.Instance.RecipeListDAO.LoadAll(), recipeListGrouping => _recipeLists[recipeListGrouping.RecipeListId] = recipeListGrouping);
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPELISTS_LOADED"), _recipeLists.Count));
 
             // initialize shopitems
             _shopItems = new ThreadSafeSortedList<int, List<ShopItemDTO>>();
-            Parallel.ForEach(DAOFactory.ShopItemDAO.LoadAll().GroupBy(s => s.ShopId), shopItemGrouping => _shopItems[shopItemGrouping.Key] = shopItemGrouping.ToList());
+            Parallel.ForEach(DAOFactory.Instance.ShopItemDAO.LoadAll().GroupBy(s => s.ShopId), shopItemGrouping => _shopItems[shopItemGrouping.Key] = shopItemGrouping.ToList());
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPITEMS_LOADED"), _shopItems.Sum(i => i.Count)));
 
             // initialize shopskills
             _shopSkills = new ThreadSafeSortedList<int, List<ShopSkillDTO>>();
-            Parallel.ForEach(DAOFactory.ShopSkillDAO.LoadAll().GroupBy(s => s.ShopId), shopSkillGrouping => _shopSkills[shopSkillGrouping.Key] = shopSkillGrouping.ToList());
+            Parallel.ForEach(DAOFactory.Instance.ShopSkillDAO.LoadAll().GroupBy(s => s.ShopId), shopSkillGrouping => _shopSkills[shopSkillGrouping.Key] = shopSkillGrouping.ToList());
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPSKILLS_LOADED"), _shopSkills.Sum(i => i.Count)));
 
             // initialize shops
@@ -1488,11 +1488,11 @@ namespace GloomyTale.GameObject.Networking
                     {
                         {
                             typeof(I18NShopNameDto),
-                            DAOFactory.I18NShopNameDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                            DAOFactory.Instance.I18NShopNameDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
                     };
-            var shops = DAOFactory.ShopDAO.LoadAll();
+            var shops = DAOFactory.Instance.ShopDAO.LoadAll();
             var propsShop = StaticDtoExtension.GetI18NProperties(typeof(ShopDTO));
 
             var regionsShop = Enum.GetValues(typeof(RegionType));
@@ -1509,7 +1509,7 @@ namespace GloomyTale.GameObject.Networking
 
             // initialize teleporters
             _teleporters = new ThreadSafeSortedList<int, List<TeleporterDTO>>();
-            Parallel.ForEach(DAOFactory.TeleporterDAO.LoadAll().GroupBy(t => t.MapNpcId), teleporterGrouping => _teleporters[teleporterGrouping.Key] = teleporterGrouping.Select(t => t).ToList());
+            Parallel.ForEach(DAOFactory.Instance.TeleporterDAO.LoadAll().GroupBy(t => t.MapNpcId), teleporterGrouping => _teleporters[teleporterGrouping.Key] = teleporterGrouping.Select(t => t).ToList());
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("TELEPORTERS_LOADED"), _teleporters.Sum(i => i.Count)));
 
             // initialize skills
@@ -1517,11 +1517,11 @@ namespace GloomyTale.GameObject.Networking
                     {
                         {
                             typeof(II18NSkillDto),
-                            DAOFactory.I18NSkillDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                            DAOFactory.Instance.I18NSkillDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
                     };
-            var skills = DAOFactory.SkillDAO.LoadAll();
+            var skills = DAOFactory.Instance.SkillDAO.LoadAll();
             var propsSkill = StaticDtoExtension.GetI18NProperties(typeof(SkillDTO));
 
             var regionsSkill = Enum.GetValues(typeof(RegionType));
@@ -1530,9 +1530,9 @@ namespace GloomyTale.GameObject.Networking
             {
                 skill.InjectI18N(propsSkill, dicSkill, regionsSkill, accessorsSkill);
                 Skill skillObj = new Skill(skill);
-                skillObj.Combos.AddRange(DAOFactory.ComboDAO.LoadBySkillVnum(skillObj.SkillVNum).ToList());
+                skillObj.Combos.AddRange(DAOFactory.Instance.ComboDAO.LoadBySkillVnum(skillObj.SkillVNum).ToList());
                 skillObj.BCards = new List<BCard>();
-                DAOFactory.BCardDAO.LoadBySkillVNum(skillObj.SkillVNum).ToList().ForEach(o => skillObj.BCards.Add(new BCard(o)));
+                DAOFactory.Instance.BCardDAO.LoadBySkillVNum(skillObj.SkillVNum).ToList().ForEach(o => skillObj.BCards.Add(new BCard(o)));
                 _skills.Add(skillObj);
             });
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SKILLS_LOADED"), _skills.Count));
@@ -1542,11 +1542,11 @@ namespace GloomyTale.GameObject.Networking
                     {
                         {
                             typeof(II18NCardDto),
-                            DAOFactory.I18NCardDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                            DAOFactory.Instance.I18NCardDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
                     };
-            var cards = DAOFactory.CardDAO.LoadAll();
+            var cards = DAOFactory.Instance.CardDAO.LoadAll();
             var propsCard = StaticDtoExtension.GetI18NProperties(typeof(CardDTO));
 
             var regionsCard = Enum.GetValues(typeof(RegionType));
@@ -1560,18 +1560,18 @@ namespace GloomyTale.GameObject.Networking
                     BCards = new List<BCard>()
                 };
 
-                DAOFactory.BCardDAO.LoadByCardId(cardObj.CardId).ToList().ForEach(o => cardObj.BCards.Add(new BCard(o)));
+                DAOFactory.Instance.BCardDAO.LoadByCardId(cardObj.CardId).ToList().ForEach(o => cardObj.BCards.Add(new BCard(o)));
                 _cards.Add(cardObj);
             });
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("CARDS_LOADED"), _cards.Count));
 
             // initialize quests
             Quests = new List<Quest>();
-            foreach (QuestDTO questdto in DAOFactory.QuestDAO.LoadAll())
+            foreach (QuestDTO questdto in DAOFactory.Instance.QuestDAO.LoadAll())
             {
                 Quest quest = new Quest(questdto);
-                quest.QuestRewards = DAOFactory.QuestRewardDAO.LoadByQuestId(quest.QuestId).ToList();
-                quest.QuestObjectives = DAOFactory.QuestObjectiveDAO.LoadByQuestId(quest.QuestId).ToList();
+                quest.QuestRewards = DAOFactory.Instance.QuestRewardDAO.LoadByQuestId(quest.QuestId).ToList();
+                quest.QuestObjectives = DAOFactory.Instance.QuestObjectiveDAO.LoadByQuestId(quest.QuestId).ToList();
                 Quests.Add(quest);
             }
             FlowerQuestId = Quests.FirstOrDefault(q => q.QuestType == (byte)QuestType.FlowerQuest)?.QuestId;
@@ -1580,7 +1580,7 @@ namespace GloomyTale.GameObject.Networking
 
             // intialize mapnpcs
             _mapNpcs = new ThreadSafeSortedList<short, List<MapNpc>>();
-            Parallel.ForEach(DAOFactory.MapNpcDAO.LoadAll().GroupBy(t => t.MapId), mapNpcGrouping => _mapNpcs[mapNpcGrouping.Key] = mapNpcGrouping.Select(t => t as MapNpc).ToList());
+            Parallel.ForEach(DAOFactory.Instance.MapNpcDAO.LoadAll().GroupBy(t => t.MapId), mapNpcGrouping => _mapNpcs[mapNpcGrouping.Key] = mapNpcGrouping.Select(t => t as MapNpc).ToList());
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPNPCS_LOADED"), _mapNpcs.Sum(i => i.Count)));
 
             try
@@ -1591,11 +1591,11 @@ namespace GloomyTale.GameObject.Networking
                     {
                         {
                             typeof(II18NMapDto),
-                            DAOFactory.I18NMapDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                            DAOFactory.Instance.I18NMapDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
                     };
-                var maps = DAOFactory.MapDAO.LoadAll();
+                var maps = DAOFactory.Instance.MapDAO.LoadAll();
                 var propsMap = StaticDtoExtension.GetI18NProperties(typeof(MapDTO));
 
                 var regionsMap = Enum.GetValues(typeof(RegionType));
@@ -1651,12 +1651,12 @@ namespace GloomyTale.GameObject.Networking
                 LaunchEvents();
                 RefreshRanking();
 
-                CharacterRelations = DAOFactory.CharacterRelationDAO.LoadAll().ToList();
-                PenaltyLogs = DAOFactory.PenaltyLogDAO.LoadAll().ToList();
+                CharacterRelations = DAOFactory.Instance.CharacterRelationDAO.LoadAll().ToList();
+                PenaltyLogs = DAOFactory.Instance.PenaltyLogDAO.LoadAll().ToList();
 
                 #region Normal Arena
 
-                if (DAOFactory.MapDAO.LoadById(2006) != null)
+                if (DAOFactory.Instance.MapDAO.LoadById(2006) != null)
                 {
                     ArenaInstance = GenerateMapInstance(2006, MapInstanceType.NormalInstance, new InstanceBag());
                     ArenaInstance.IsPVP = true;
@@ -1679,7 +1679,7 @@ namespace GloomyTale.GameObject.Networking
 
                 #region Family Arena
 
-                if (DAOFactory.MapDAO.LoadById(2106) != null)
+                if (DAOFactory.Instance.MapDAO.LoadById(2106) != null)
                 {
                     FamilyArenaInstance = GenerateMapInstance(2106, MapInstanceType.NormalInstance, new InstanceBag());
                     FamilyArenaInstance.IsPVP = true;
@@ -1702,7 +1702,7 @@ namespace GloomyTale.GameObject.Networking
 
                 #region Specialist Gem Map
 
-                if (DAOFactory.MapDAO.LoadById(2107) != null)
+                if (DAOFactory.Instance.MapDAO.LoadById(2107) != null)
                 {
                     Portal portal = new Portal
                     {
@@ -1838,9 +1838,9 @@ namespace GloomyTale.GameObject.Networking
 
         public void RefreshRanking()
         {
-            TopComplimented = DAOFactory.CharacterDAO.GetTopCompliment();
-            TopPoints = DAOFactory.CharacterDAO.GetTopPoints();
-            TopReputation = DAOFactory.CharacterDAO.GetTopReputation();
+            TopComplimented = DAOFactory.Instance.CharacterDAO.GetTopCompliment();
+            TopPoints = DAOFactory.Instance.CharacterDAO.GetTopPoints();
+            TopReputation = DAOFactory.Instance.CharacterDAO.GetTopReputation();
         }
 
         public void RelationRefresh(long relationId)
@@ -1956,7 +1956,7 @@ namespace GloomyTale.GameObject.Networking
             {
                 sess.Character?.Save();
             }
-            DAOFactory.BazaarItemDAO.RemoveOutDated();
+            DAOFactory.Instance.BazaarItemDAO.RemoveOutDated();
         }
 
         public static void Shout(string message, bool noAdminTag = false)
@@ -2685,7 +2685,7 @@ namespace GloomyTale.GameObject.Networking
             ClientSession sess = GetSessionByCharacterId(characterId);
             if (sess != null)
             {
-                sess.Character.StaticBonusList = DAOFactory.StaticBonusDAO.LoadByCharacterId(characterId).ToList();
+                sess.Character.StaticBonusList = DAOFactory.Instance.StaticBonusDAO.LoadByCharacterId(characterId).ToList();
             }
         }
 
@@ -2715,13 +2715,13 @@ namespace GloomyTale.GameObject.Networking
         private void LoadFamilies()
         {
             FamilyList = new ThreadSafeSortedList<long, Family>();
-            Parallel.ForEach(DAOFactory.FamilyDAO.LoadAll(), familyDto =>
+            Parallel.ForEach(DAOFactory.Instance.FamilyDAO.LoadAll(), familyDto =>
             {
                 Family family = new Family(familyDto)
                 {
                     FamilyCharacters = new List<FamilyCharacter>()
                 };
-                foreach (FamilyCharacterDTO famchar in DAOFactory.FamilyCharacterDAO.LoadByFamilyId(family.FamilyId).ToList())
+                foreach (FamilyCharacterDTO famchar in DAOFactory.Instance.FamilyCharacterDAO.LoadByFamilyId(family.FamilyId).ToList())
                 {
                     family.FamilyCharacters.Add(new FamilyCharacter(famchar));
                 }
@@ -2729,13 +2729,13 @@ namespace GloomyTale.GameObject.Networking
                 if (familyCharacter != null)
                 {
                     family.Warehouse = new Inventory(new Character(familyCharacter.Character));
-                    foreach (ItemInstanceDTO inventory in DAOFactory.ItemInstanceDAO.LoadByCharacterId(familyCharacter.CharacterId).Where(s => s.Type == InventoryType.FamilyWareHouse).ToList())
+                    foreach (ItemInstanceDTO inventory in DAOFactory.Instance.ItemInstanceDAO.LoadByCharacterId(familyCharacter.CharacterId).Where(s => s.Type == InventoryType.FamilyWareHouse).ToList())
                     {
                         inventory.CharacterId = familyCharacter.CharacterId;
                         family.Warehouse[inventory.Id] = new ItemInstance(inventory);
                     }
                 }
-                family.FamilyLogs = DAOFactory.FamilyLogDAO.LoadByFamilyId(family.FamilyId).ToList();
+                family.FamilyLogs = DAOFactory.Instance.FamilyLogDAO.LoadByFamilyId(family.FamilyId).ToList();
                 FamilyList[family.FamilyId] = family;
             });
         }
@@ -2750,7 +2750,7 @@ namespace GloomyTale.GameObject.Networking
                 {
                     map.Value.ScriptedInstances.Clear();
                     map.Value.Portals.Clear();
-                    foreach (ScriptedInstanceDTO si in DAOFactory.ScriptedInstanceDAO.LoadByMap(map.Value.Map.MapId).ToList())
+                    foreach (ScriptedInstanceDTO si in DAOFactory.Instance.ScriptedInstanceDAO.LoadByMap(map.Value.Map.MapId).ToList())
                     {
                         ScriptedInstance siObj = new ScriptedInstance(si);
                         switch (siObj.Type)
@@ -2790,9 +2790,9 @@ namespace GloomyTale.GameObject.Networking
         private void LoadBannedCharacters()
         {
             BannedCharacters.Clear();
-            DAOFactory.CharacterDAO.LoadAll().ToList().ForEach(s =>
+            DAOFactory.Instance.CharacterDAO.LoadAll().ToList().ForEach(s =>
             {
-                if (s.State != CharacterState.Active || DAOFactory.PenaltyLogDAO.LoadByAccount(s.AccountId).Any(c => c.DateEnd > DateTime.Now && c.Penalty == PenaltyType.Banned))
+                if (s.State != CharacterState.Active || DAOFactory.Instance.PenaltyLogDAO.LoadByAccount(s.AccountId).Any(c => c.DateEnd > DateTime.Now && c.Penalty == PenaltyType.Banned))
                 {
                     BannedCharacters.Add(s.CharacterId);
                 }
@@ -2920,7 +2920,7 @@ namespace GloomyTale.GameObject.Networking
         private void MaintenanceProcess()
         {
             List<ClientSession> sessions = Sessions.Where(c => c.IsConnected).ToList();
-            MaintenanceLogDTO maintenanceLog = DAOFactory.MaintenanceLogDAO.LoadFirst();
+            MaintenanceLogDTO maintenanceLog = DAOFactory.Instance.MaintenanceLogDAO.LoadFirst();
             if (maintenanceLog != null)
             {
                 if (maintenanceLog.DateStart <= DateTime.Now)
@@ -2943,19 +2943,19 @@ namespace GloomyTale.GameObject.Networking
         private void OnBazaarRefresh(object sender, EventArgs e)
         {
             long bazaarId = (long)sender;
-            BazaarItemDTO bzdto = DAOFactory.BazaarItemDAO.LoadById(bazaarId);
+            BazaarItemDTO bzdto = DAOFactory.Instance.BazaarItemDAO.LoadById(bazaarId);
             BazaarItemLink bzlink = BazaarList.Find(s => s.BazaarItem.BazaarItemId == bazaarId);
             lock (BazaarList)
             {
                 if (bzdto != null)
                 {
-                    CharacterDTO chara = DAOFactory.CharacterDAO.LoadById(bzdto.SellerId);
+                    CharacterDTO chara = DAOFactory.Instance.CharacterDAO.LoadById(bzdto.SellerId);
                     if (bzlink != null)
                     {
                         BazaarList.Remove(bzlink);
                         bzlink.BazaarItem = bzdto;
                         bzlink.Owner = chara.Name;
-                        bzlink.Item = new ItemInstance(DAOFactory.ItemInstanceDAO.LoadById(bzdto.ItemInstanceId));
+                        bzlink.Item = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bzdto.ItemInstanceId));
                         BazaarList.Add(bzlink);
                     }
                     else
@@ -2967,7 +2967,7 @@ namespace GloomyTale.GameObject.Networking
                         if (chara != null)
                         {
                             item.Owner = chara.Name;
-                            item.Item = new ItemInstance(DAOFactory.ItemInstanceDAO.LoadById(bzdto.ItemInstanceId));
+                            item.Item = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bzdto.ItemInstanceId));
                         }
                         BazaarList.Add(item);
                     }
@@ -2984,7 +2984,7 @@ namespace GloomyTale.GameObject.Networking
         {
             Tuple<long, bool> tuple = (Tuple<long, bool>)sender;
             long familyId = tuple.Item1;
-            FamilyDTO famdto = DAOFactory.FamilyDAO.LoadById(familyId);
+            FamilyDTO famdto = DAOFactory.Instance.FamilyDAO.LoadById(familyId);
             Family fam = FamilyList[familyId];
             lock (FamilyList)
             {
@@ -2999,7 +2999,7 @@ namespace GloomyTale.GameObject.Networking
                     }
 
                     newFam.FamilyCharacters = new List<FamilyCharacter>();
-                    foreach (FamilyCharacterDTO famchar in DAOFactory.FamilyCharacterDAO.LoadByFamilyId(famdto.FamilyId).ToList())
+                    foreach (FamilyCharacterDTO famchar in DAOFactory.Instance.FamilyCharacterDAO.LoadByFamilyId(famdto.FamilyId).ToList())
                     {
                         newFam.FamilyCharacters.Add(new FamilyCharacter(famchar));
                     }
@@ -3007,13 +3007,13 @@ namespace GloomyTale.GameObject.Networking
                     if (familyHead != null)
                     {
                         newFam.Warehouse = new Inventory(new Character(familyHead.Character));
-                        foreach (ItemInstanceDTO inventory in DAOFactory.ItemInstanceDAO.LoadByCharacterId(familyHead.CharacterId).Where(s => s.Type == InventoryType.FamilyWareHouse).ToList())
+                        foreach (ItemInstanceDTO inventory in DAOFactory.Instance.ItemInstanceDAO.LoadByCharacterId(familyHead.CharacterId).Where(s => s.Type == InventoryType.FamilyWareHouse).ToList())
                         {
                             inventory.CharacterId = familyHead.CharacterId;
                             newFam.Warehouse[inventory.Id] = new ItemInstance(inventory);
                         }
                     }
-                    newFam.FamilyLogs = DAOFactory.FamilyLogDAO.LoadByFamilyId(famdto.FamilyId).ToList();
+                    newFam.FamilyLogs = DAOFactory.Instance.FamilyLogDAO.LoadByFamilyId(famdto.FamilyId).ToList();
                     FamilyList[familyId] = newFam;
 
                     Parallel.ForEach(Sessions.Where(s => newFam.FamilyCharacters.Any(m => m.CharacterId == s.Character.CharacterId)), session =>
@@ -3079,7 +3079,7 @@ namespace GloomyTale.GameObject.Networking
                             }
                         }
                         else if (targetSession.Character.WhisperBlocked
-                            && DAOFactory.AccountDAO.LoadById(DAOFactory.CharacterDAO.LoadById(message.SourceCharacterId).AccountId).Authority < AuthorityType.TMOD)
+                            && DAOFactory.Instance.AccountDAO.LoadById(DAOFactory.Instance.CharacterDAO.LoadById(message.SourceCharacterId).AccountId).Authority < AuthorityType.TMOD)
                         {
                             if (message.DestinationCharacterId != null)
                             {
@@ -3169,7 +3169,7 @@ namespace GloomyTale.GameObject.Networking
         private void OnPenaltyLogRefresh(object sender, EventArgs e)
         {
             int relId = (int)sender;
-            PenaltyLogDTO reldto = DAOFactory.PenaltyLogDAO.LoadById(relId);
+            PenaltyLogDTO reldto = DAOFactory.Instance.PenaltyLogDAO.LoadById(relId);
             PenaltyLogDTO rel = PenaltyLogs.Find(s => s.PenaltyLogId == relId);
             if (reldto != null)
             {
@@ -3193,7 +3193,7 @@ namespace GloomyTale.GameObject.Networking
             long relId = (long)sender;
             lock (CharacterRelations)
             {
-                CharacterRelationDTO reldto = DAOFactory.CharacterRelationDAO.LoadById(relId);
+                CharacterRelationDTO reldto = DAOFactory.Instance.CharacterRelationDAO.LoadById(relId);
                 CharacterRelationDTO rel = CharacterRelations.Find(s => s.CharacterRelationId == relId);
                 if (reldto != null)
                 {

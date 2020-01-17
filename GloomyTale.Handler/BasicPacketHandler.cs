@@ -75,8 +75,8 @@ namespace GloomyTale.Handler
                 return;
             }
 
-            if (DAOFactory.CharacterDAO.LoadById(blInsPacket.CharacterId) is CharacterDTO character
-             && DAOFactory.AccountDAO.LoadById(character.AccountId).Authority >= AuthorityType.TMOD)
+            if (DAOFactory.Instance.CharacterDAO.LoadById(blInsPacket.CharacterId) is CharacterDTO character
+             && DAOFactory.Instance.AccountDAO.LoadById(character.AccountId).Authority >= AuthorityType.TMOD)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("CANT_BLACKLIST_TEAM")));
                 return;
@@ -523,7 +523,7 @@ namespace GloomyTale.Handler
 
             message = message.Trim();
 
-            CharacterDTO character = DAOFactory.CharacterDAO.LoadById(btkPacket.CharacterId);
+            CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadById(btkPacket.CharacterId);
             if (character != null)
             {
                 int? sentChannelId = CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
@@ -587,7 +587,7 @@ namespace GloomyTale.Handler
                                 string.Format(Language.Instance.GetMessageFromKey("ITEM_GIFTED"), newInv.Item.Name[Session.Account.Language],
                                     mail.AttachmentAmount), 12));
 
-                            DAOFactory.MailDAO.DeleteById(mail.MailId);
+                            DAOFactory.Instance.MailDAO.DeleteById(mail.MailId);
 
                             Session.SendPacket($"parcel 2 1 {giftId}");
 
@@ -606,9 +606,9 @@ namespace GloomyTale.Handler
                 {
                     Session.SendPacket($"parcel 7 1 {giftId}");
 
-                    if (DAOFactory.MailDAO.LoadById(mail.MailId) != null)
+                    if (DAOFactory.Instance.MailDAO.LoadById(mail.MailId) != null)
                     {
-                        DAOFactory.MailDAO.DeleteById(mail.MailId);
+                        DAOFactory.Instance.MailDAO.DeleteById(mail.MailId);
                     }
 
                     if (Session.Character.MailList.ContainsKey(giftId))
@@ -2272,7 +2272,7 @@ namespace GloomyTale.Handler
         {
             if (pstPacket?.Data != null)
             {
-                CharacterDTO receiver = DAOFactory.CharacterDAO.LoadByName(pstPacket.Receiver);
+                CharacterDTO receiver = DAOFactory.Instance.CharacterDAO.LoadByName(pstPacket.Receiver);
                 if (receiver != null)
                 {
                     string[] datasplit = pstPacket.Data.Split(' ');
@@ -2365,7 +2365,7 @@ namespace GloomyTale.Handler
                         {
                             Session.Character.MailList[id].IsOpened = true;
                             MailDTO mailupdate = Session.Character.MailList[id];
-                            DAOFactory.MailDAO.InsertOrUpdate(ref mailupdate);
+                            DAOFactory.Instance.MailDAO.InsertOrUpdate(ref mailupdate);
                         }
 
                         Session.SendPacket(Session.Character.GeneratePostMessage(Session.Character.MailList[id], type));
@@ -2379,9 +2379,9 @@ namespace GloomyTale.Handler
                         Session.SendPacket(
                             Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("MAIL_DELETED"), 11));
                         Session.SendPacket($"post 2 {type} {id}");
-                        if (DAOFactory.MailDAO.LoadById(mail.MailId) != null)
+                        if (DAOFactory.Instance.MailDAO.LoadById(mail.MailId) != null)
                         {
-                            DAOFactory.MailDAO.DeleteById(mail.MailId);
+                            DAOFactory.Instance.MailDAO.DeleteById(mail.MailId);
                         }
 
                         if (Session.Character.MailList.ContainsKey(id))
@@ -2636,7 +2636,7 @@ namespace GloomyTale.Handler
             Session.SendPacket(
                 $"twk 1 {Session.Character.CharacterId} {Session.Account.Name} {Session.Character.Name} shtmxpdlfeoqkr");
 
-            long? familyId = DAOFactory.FamilyCharacterDAO.LoadByCharacterId(Session.Character.CharacterId)?.FamilyId;
+            long? familyId = DAOFactory.Instance.FamilyCharacterDAO.LoadByCharacterId(Session.Character.CharacterId)?.FamilyId;
             if (familyId.HasValue)
             {
                 Session.Character.Family = ServerManager.Instance.FamilyList[familyId.Value];
@@ -2706,7 +2706,7 @@ namespace GloomyTale.Handler
 
             Session.Character.LastPVPRevive = DateTime.Now;
 
-            IEnumerable<PenaltyLogDTO> warning = DAOFactory.PenaltyLogDAO.LoadByAccount(Session.Character.AccountId)
+            IEnumerable<PenaltyLogDTO> warning = DAOFactory.Instance.PenaltyLogDAO.LoadByAccount(Session.Character.AccountId)
                 .Where(p => p.Penalty == PenaltyType.Warning);
             if (warning.Any())
             {
@@ -2897,7 +2897,7 @@ namespace GloomyTale.Handler
 
                 message = message.Trim();
                 Session.SendPacket(Session.Character.GenerateSpk(message, 5));
-                CharacterDTO receiver = DAOFactory.CharacterDAO.LoadByName(characterName);
+                CharacterDTO receiver = DAOFactory.Instance.CharacterDAO.LoadByName(characterName);
                 int? sentChannelId = null;
                 if (receiver != null)
                 {

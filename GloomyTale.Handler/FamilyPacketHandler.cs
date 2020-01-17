@@ -105,7 +105,7 @@ namespace GloomyTale.Handler
             }
 
             FamilyDTO fam = Session.Character.Family;
-            DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
+            DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref fam);
             ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);
             CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
             {
@@ -152,7 +152,7 @@ namespace GloomyTale.Handler
                 }
 
                 string name = createFamilyPacket.CharacterName;
-                if (DAOFactory.FamilyDAO.LoadByName(name) != null)
+                if (DAOFactory.Instance.FamilyDAO.LoadByName(name) != null)
                 {
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateInfo(
@@ -171,7 +171,7 @@ namespace GloomyTale.Handler
                     FamilyFaction = Session.Character.Faction != FactionType.None ? (byte)Session.Character.Faction : (byte)ServerManager.RandomNumber(1, 2),
                     MaxSize = 50
                 };
-                DAOFactory.FamilyDAO.InsertOrUpdate(ref family);
+                DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref family);
 
                 Logger.Log.LogUserEvent("GUILDCREATE", Session.GenerateIdentity(), $"[FamilyCreate][{family.FamilyId}]");
 
@@ -192,7 +192,7 @@ namespace GloomyTale.Handler
                         FamilyId = family.FamilyId,
                         Rank = 0
                     };
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref familyCharacter);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref familyCharacter);
                 }
 
                 ServerManager.Instance.FamilyRefresh(family.FamilyId);
@@ -387,9 +387,9 @@ namespace GloomyTale.Handler
 
             Family fam = Session.Character.Family;
 
-            fam.FamilyCharacters.ForEach(s => DAOFactory.FamilyCharacterDAO.Delete(s.Character.CharacterId));
-            fam.FamilyLogs.ForEach(s => DAOFactory.FamilyLogDAO.Delete(s.FamilyLogId));
-            DAOFactory.FamilyDAO.Delete(fam.FamilyId);
+            fam.FamilyCharacters.ForEach(s => DAOFactory.Instance.FamilyCharacterDAO.Delete(s.Character.CharacterId));
+            fam.FamilyLogs.ForEach(s => DAOFactory.Instance.FamilyLogDAO.Delete(s.FamilyLogId));
+            DAOFactory.Instance.FamilyDAO.Delete(fam.FamilyId);
             ServerManager.Instance.FamilyRefresh(fam.FamilyId);
 
             Logger.Log.LogUserEvent("GUILDDISMISS", Session.GenerateIdentity(), $"[FamilyDismiss][{fam.FamilyId}]");
@@ -463,7 +463,7 @@ namespace GloomyTale.Handler
 
                 if (kickSession != null)
                 {
-                    DAOFactory.FamilyCharacterDAO.Delete(familyCharacter.CharacterId);
+                    DAOFactory.Instance.FamilyCharacterDAO.Delete(familyCharacter.CharacterId);
 
                     Session.Character.Family.InsertFamilyLog(FamilyLogType.FamilyManaged, familyCharacter.Character.Name);
 
@@ -481,7 +481,7 @@ namespace GloomyTale.Handler
                         return;
                     }
 
-                    DAOFactory.FamilyCharacterDAO.Delete(familyCharacter.CharacterId);
+                    DAOFactory.Instance.FamilyCharacterDAO.Delete(familyCharacter.CharacterId);
 
                     Session.Character.Family.InsertFamilyLog(FamilyLogType.FamilyManaged, familyCharacter.Character.Name);
 
@@ -489,7 +489,7 @@ namespace GloomyTale.Handler
 
                     familyCharacterDTO.LastFamilyLeave = DateTime.Now.Ticks;
 
-                    DAOFactory.CharacterDAO.InsertOrUpdate(ref familyCharacterDTO);
+                    DAOFactory.Instance.CharacterDAO.InsertOrUpdate(ref familyCharacterDTO);
                 }
             }
         }
@@ -514,7 +514,7 @@ namespace GloomyTale.Handler
 
                 long familyId = Session.Character.Family.FamilyId;
 
-                DAOFactory.FamilyCharacterDAO.Delete(Session.Character.CharacterId);
+                DAOFactory.Instance.FamilyCharacterDAO.Delete(Session.Character.CharacterId);
 
                 Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                     $"[FamilyLeave][{Session.Character.Family.FamilyId}]");
@@ -567,13 +567,13 @@ namespace GloomyTale.Handler
             }
 
             long targetId = familyManagementPacket.TargetId;
-            if (DAOFactory.FamilyCharacterDAO.LoadByCharacterId(targetId)?.FamilyId
+            if (DAOFactory.Instance.FamilyCharacterDAO.LoadByCharacterId(targetId)?.FamilyId
                 != Session.Character.FamilyCharacter.FamilyId)
             {
                 return;
             }
 
-            FamilyCharacterDTO famChar = DAOFactory.FamilyCharacterDAO.LoadByCharacterId(targetId);
+            FamilyCharacterDTO famChar = DAOFactory.Instance.FamilyCharacterDAO.LoadByCharacterId(targetId);
             if (famChar.Authority == familyManagementPacket.FamilyAuthorityType)
             {
                 return;
@@ -597,16 +597,16 @@ namespace GloomyTale.Handler
                     }
 
                     famChar.Authority = FamilyAuthority.Head;
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
 
                     Session.Character.Family.Warehouse.ForEach(s =>
                     {
                         s.CharacterId = famChar.CharacterId;
-                        DAOFactory.ItemInstanceDAO.InsertOrUpdate(s);
+                        DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(s);
                     });
                     Session.Character.FamilyCharacter.Authority = FamilyAuthority.Familydeputy;
                     FamilyCharacterDTO chara2 = Session.Character.FamilyCharacter;
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref chara2);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref chara2);
                     Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("DONE")));
                     break;
 
@@ -625,7 +625,7 @@ namespace GloomyTale.Handler
                         return;
                     }
 
-                    if (DAOFactory.FamilyCharacterDAO.LoadByFamilyId(Session.Character.Family.FamilyId)
+                    if (DAOFactory.Instance.FamilyCharacterDAO.LoadByFamilyId(Session.Character.Family.FamilyId)
                             .Count(s => s.Authority == FamilyAuthority.Familydeputy) == 2)
                     {
                         Session.SendPacket(
@@ -637,7 +637,7 @@ namespace GloomyTale.Handler
                     famChar.Authority = FamilyAuthority.Familydeputy;
                     Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("DONE")));
 
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
                     break;
 
                 case FamilyAuthority.Familykeeper:
@@ -659,7 +659,7 @@ namespace GloomyTale.Handler
 
                     famChar.Authority = FamilyAuthority.Familykeeper;
                     Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("DONE")));
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
                     break;
 
                 case FamilyAuthority.Member:
@@ -682,10 +682,10 @@ namespace GloomyTale.Handler
                     famChar.Authority = FamilyAuthority.Member;
                     Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("DONE")));
 
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
                     break;
             }
-            CharacterDTO character = DAOFactory.CharacterDAO.LoadById(targetId);
+            CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadById(targetId);
             ClientSession targetSession = ServerManager.Instance.GetSessionByCharacterId(targetId);
 
             Session.Character.Family.InsertFamilyLog(FamilyLogType.AuthorityChanged, Session.Character.Name,
@@ -724,7 +724,7 @@ namespace GloomyTale.Handler
 
                     Session.Character.Family.FamilyMessage = msg;
                     FamilyDTO fam = Session.Character.Family;
-                    DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
+                    DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref fam);
                     ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);
                     CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                     {
@@ -851,7 +851,7 @@ namespace GloomyTale.Handler
                             sourceInventory.Amount -= fReposPacket.Amount;
                             if (sourceInventory.Amount == 0)
                             {
-                                DAOFactory.ItemInstanceDAO.Delete(sourceInventory.Id);
+                                DAOFactory.Instance.ItemInstanceDAO.Delete(sourceInventory.Id);
                                 sourceInventory = null;
                             }
                         }
@@ -866,12 +866,12 @@ namespace GloomyTale.Handler
 
             if (sourceInventory?.Amount > 0)
             {
-                DAOFactory.ItemInstanceDAO.InsertOrUpdate(sourceInventory);
+                DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(sourceInventory);
             }
 
             if (destinationInventory?.Amount > 0)
             {
-                DAOFactory.ItemInstanceDAO.InsertOrUpdate(destinationInventory);
+                DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(destinationInventory);
             }
 
             Session.Character.Family.SendPacket((destinationInventory != null)
@@ -932,7 +932,7 @@ namespace GloomyTale.Handler
             Session.Character.Family.SendPacket(UserInterfaceHelper.Instance.GenerateFStashRemove(fWithdrawPacket.Slot));
             if (previousInventory != null)
             {
-                DAOFactory.ItemInstanceDAO.InsertOrUpdate(previousInventory);
+                DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(previousInventory);
             }
             else
             {
@@ -943,7 +943,7 @@ namespace GloomyTale.Handler
                     return;
                 }
 
-                DAOFactory.ItemInstanceDAO.DeleteFromSlotAndType(fhead.CharacterId, fWithdrawPacket.Slot,
+                DAOFactory.Instance.ItemInstanceDAO.DeleteFromSlotAndType(fhead.CharacterId, fWithdrawPacket.Slot,
                     InventoryType.FamilyWareHouse);
             }
 
@@ -1073,7 +1073,7 @@ namespace GloomyTale.Handler
                         Rank = 0
                     };
 
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref familyCharacter);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref familyCharacter);
 
                     inviteSession.Character.Family.InsertFamilyLog(FamilyLogType.UserManaged,
                         inviteSession.Character.Name, Session.Character.Name);
@@ -1125,7 +1125,7 @@ namespace GloomyTale.Handler
                 {
                     FamilyCharacterDTO familyCharacterDto = familyCharacter;
                     familyCharacterDto.Rank = 0;
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref familyCharacterDto);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref familyCharacterDto);
                 }
 
                 Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
@@ -1133,7 +1133,7 @@ namespace GloomyTale.Handler
 
                 FamilyDTO fam = Session.Character.Family;
                 fam.FamilyHeadGender = (GenderType)rank;
-                DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
+                DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref fam);
                 ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
@@ -1179,7 +1179,7 @@ namespace GloomyTale.Handler
                     Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                         $"[Title][{Session.Character.Family.FamilyId}]CharacterName: {packetsplit[2]} Title: {fchar.Rank.ToString()}");
 
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref fchar);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref fchar);
                     ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);
                     CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                     {
@@ -1223,7 +1223,7 @@ namespace GloomyTale.Handler
                 {
                     Session.Character.FamilyCharacter.DailyMessage = msg;
                     FamilyCharacterDTO fchar = Session.Character.FamilyCharacter;
-                    DAOFactory.FamilyCharacterDAO.InsertOrUpdate(ref fchar);
+                    DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref fchar);
                     Session.SendPacket(Session.Character.GenerateFamilyMemberMessage());
                     Session.Character.Family.InsertFamilyLog(FamilyLogType.DailyMessage, Session.Character.Name,
                         message: msg);

@@ -210,8 +210,8 @@ namespace GloomyTale.GameObject
 
         public void BanForCheatUsing(int detectionCode)
         {
-            /*bool isFirstTime = !DAOFactory.PenaltyLogDAO.LoadByAccount(Account.AccountId).Any(s => s.AdminName == "Anti-Cheat")
-                && !DAOFactory.PenaltyLogDAO.LoadByIp(IpAddress).Any(s => s.AdminName == "Anti-Cheat");*/
+            /*bool isFirstTime = !DAOFactory.Instance.PenaltyLogDAO.LoadByAccount(Account.AccountId).Any(s => s.AdminName == "Anti-Cheat")
+                && !DAOFactory.Instance.PenaltyLogDAO.LoadByIp(IpAddress).Any(s => s.AdminName == "Anti-Cheat");*/
             String reason ="";
             if (detectionCode == 1)
                 reason = "Tried to dupe with bazar";

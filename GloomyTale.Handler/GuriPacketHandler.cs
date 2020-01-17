@@ -115,7 +115,7 @@ namespace GloomyTale.Handler
 
                             shell.ShellEffects.AddRange(shellOptions);
 
-                            DAOFactory.ShellEffectDAO.InsertOrUpdateFromList(shell.ShellEffects, shell.EquipmentSerialId);
+                            DAOFactory.Instance.ShellEffectDAO.InsertOrUpdateFromList(shell.ShellEffects, shell.EquipmentSerialId);
 
                             Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("OPTION_IDENTIFIED"), 0));
                             Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 3006));
@@ -393,7 +393,7 @@ namespace GloomyTale.Handler
                                         return;
                                     }
                                 }
-                                if (DAOFactory.TeleporterDAO.LoadFromNpc(npc.MapNpcId).FirstOrDefault() is TeleporterDTO teleport)
+                                if (DAOFactory.Instance.TeleporterDAO.LoadFromNpc(npc.MapNpcId).FirstOrDefault() is TeleporterDTO teleport)
                                 {
                                     Session.Character.PositionX = teleport.MapX;
                                     Session.Character.PositionY = teleport.MapY;
@@ -463,7 +463,7 @@ namespace GloomyTale.Handler
                     }
                     if (relictVNum > 0 && Session.Character.Inventory.CountItem(relictVNum) > 0)
                     {
-                        IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.RollGeneratedItemDAO.LoadByItemVNum(relictVNum);
+                        IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.Instance.RollGeneratedItemDAO.LoadByItemVNum(relictVNum);
                         IEnumerable<RollGeneratedItemDTO> rollGeneratedItemDtos = roll as IList<RollGeneratedItemDTO> ?? roll.ToList();
                         if (!rollGeneratedItemDtos.Any())
                         {
@@ -1130,11 +1130,11 @@ namespace GloomyTale.Handler
                     {
 
                         DateTime now = DateTime.Now;
-                        IEnumerable<MapNpcDTO> npcs = DAOFactory.MapNpcDAO.LoadFromMap(Session.Character.MapId);
+                        IEnumerable<MapNpcDTO> npcs = DAOFactory.Instance.MapNpcDAO.LoadFromMap(Session.Character.MapId);
                         foreach (MapNpcDTO npc in npcs.Where(n => n.MapNpcId.Equals(5)))
                         {
-                            ShopDTO shop = DAOFactory.ShopDAO.LoadByNpc(npc.MapNpcId);
-                            IEnumerable<FortuneWheelDTO> roll = DAOFactory.FortuneWheelDAO.LoadByShopId(shop.ShopId).ToList();
+                            ShopDTO shop = DAOFactory.Instance.ShopDAO.LoadByNpc(npc.MapNpcId);
+                            IEnumerable<FortuneWheelDTO> roll = DAOFactory.Instance.FortuneWheelDAO.LoadByShopId(shop.ShopId).ToList();
                             int probabilities = roll.Sum(s => s.Probability);
                             int rnd = ServerManager.RandomNumber(0, probabilities);
                             int currentrnd = 0;
@@ -1169,7 +1169,7 @@ namespace GloomyTale.Handler
 
                         DateTime now = DateTime.Now;
                         MapNpc npc = Session.CurrentMapInstance.Npcs.FirstOrDefault(n => n.MapNpcId.Equals(2));
-                        IEnumerable<FortuneWheelDTO> roll = DAOFactory.FortuneWheelDAO.LoadByShopId(npc.Shop.ShopId).ToList();
+                        IEnumerable<FortuneWheelDTO> roll = DAOFactory.Instance.FortuneWheelDAO.LoadByShopId(npc.Shop.ShopId).ToList();
                         int probabilities = roll.Sum(s => s.Probability);
                         int rnd = ServerManager.RandomNumber(0, probabilities);
                         int currentrnd = 0;

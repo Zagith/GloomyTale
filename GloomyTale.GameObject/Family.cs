@@ -143,7 +143,7 @@ namespace GloomyTale.GameObject
                 FamilyLogType = logtype,
                 Timestamp = DateTime.Now
             };
-            DAOFactory.FamilyLogDAO.InsertOrUpdate(ref log);
+            DAOFactory.Instance.FamilyLogDAO.InsertOrUpdate(ref log);
             ServerManager.Instance.FamilyRefresh(FamilyId);
             CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
             {
@@ -159,7 +159,7 @@ namespace GloomyTale.GameObject
             session.Character.Family.FamilyFaction = faction;
             session.Character.Family.LastFactionChange = DateTime.Now.Ticks;
             FamilyDTO fam = session.Character.Family;
-            DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
+            DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref fam);
 
             ServerManager.Instance.FamilyRefresh(FamilyId, true);
         }

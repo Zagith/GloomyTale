@@ -8,12 +8,13 @@ using GloomyTale.Data.I18N;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class I18NCardDAO : II18NCardDAO
+    public class I18NCardDAO : MappingBaseDao<I18NCard, II18NCardDto>, II18NCardDAO
     {
-        public I18NCardDAO() : base()
+        public I18NCardDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

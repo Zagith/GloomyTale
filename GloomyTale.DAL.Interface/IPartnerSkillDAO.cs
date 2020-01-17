@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IPartnerSkillDAO
+    public interface IPartnerSkillDAO : IMappingBaseDAO
     {
         PartnerSkillDTO Insert(PartnerSkillDTO partnerSkillDTO);
 

@@ -20,12 +20,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class ScriptedInstanceDAO : IScriptedInstanceDAO
+    public class ScriptedInstanceDAO : MappingBaseDao<ScriptedInstance, ScriptedInstanceDTO>, IScriptedInstanceDAO
     {
-        public ScriptedInstanceDAO() : base()
+        public ScriptedInstanceDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

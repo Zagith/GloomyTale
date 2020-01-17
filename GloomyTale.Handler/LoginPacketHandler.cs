@@ -99,7 +99,7 @@ namespace GloomyTale.Handler
             {
                 return;
             }
-            AccountDTO loadedAccount = DAOFactory.AccountDAO.LoadByName(user.Name);
+            AccountDTO loadedAccount = DAOFactory.Instance.AccountDAO.LoadByName(user.Name);
             if (loadedAccount != null && loadedAccount.Name != user.Name)
             {
                 _session.SendPacket($"failc {(byte)LoginFailType.WrongCaps}");
@@ -108,10 +108,10 @@ namespace GloomyTale.Handler
             if (loadedAccount?.Password.ToUpper().Equals(user.Password) == true)
             {
                 string ipAddress = _session.IpAddress;
-                DAOFactory.AccountDAO.WriteGeneralLog(loadedAccount.AccountId, ipAddress, null,
+                DAOFactory.Instance.AccountDAO.WriteGeneralLog(loadedAccount.AccountId, ipAddress, null,
                     GeneralLogType.Connection, "LoginServer");
 
-                if (DAOFactory.PenaltyLogDAO.LoadByIp(ipAddress).Count() > 0)
+                if (DAOFactory.Instance.PenaltyLogDAO.LoadByIp(ipAddress).Count() > 0)
                 {
                     _session.SendPacket($"failc {(byte)LoginFailType.CantConnect}");
                     return;
@@ -121,7 +121,7 @@ namespace GloomyTale.Handler
                 if (!CommunicationServiceClient.Instance.IsAccountConnected(loadedAccount.AccountId))
                 {
                     AuthorityType type = loadedAccount.Authority;
-                    PenaltyLogDTO penalty = DAOFactory.PenaltyLogDAO.LoadByAccount(loadedAccount.AccountId)
+                    PenaltyLogDTO penalty = DAOFactory.Instance.PenaltyLogDAO.LoadByAccount(loadedAccount.AccountId)
                         .FirstOrDefault(s => s.DateEnd > DateTime.Now && s.Penalty == PenaltyType.Banned);
                     if (penalty != null)
                     {
@@ -153,7 +153,7 @@ namespace GloomyTale.Handler
                             {
                                 if (loadedAccount.Authority < AuthorityType.SMOD)
                                 {
-                                    MaintenanceLogDTO maintenanceLog = DAOFactory.MaintenanceLogDAO.LoadFirst();
+                                    MaintenanceLogDTO maintenanceLog = DAOFactory.Instance.MaintenanceLogDAO.LoadFirst();
                                     if (maintenanceLog != null && maintenanceLog.DateStart < DateTime.Now)
                                         {
                                             _session.SendPacket($"failc {(byte)LoginFailType.Maintenance}");

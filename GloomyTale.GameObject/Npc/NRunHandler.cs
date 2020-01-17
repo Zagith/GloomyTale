@@ -242,7 +242,7 @@ namespace GloomyTale.GameObject
                         if (npc.Shop?.ShopId == 409)
                         {
                             DateTime now = DateTime.Now;
-                            IEnumerable<FortuneWheelDTO> roll = DAOFactory.FortuneWheelDAO.LoadByShopId(408);
+                            IEnumerable<FortuneWheelDTO> roll = DAOFactory.Instance.FortuneWheelDAO.LoadByShopId(408);
                             List<Recipe> recipeweek = new List<Recipe>();
                             foreach (FortuneWheelDTO rollitem in roll)
                             {
@@ -1516,7 +1516,7 @@ namespace GloomyTale.GameObject
                             Session.Character.Gold -= 500000;
                             Session.SendPacket(Session.Character.GenerateGold());
                             FamilyDTO fam = Session.Character.Family;
-                            DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
+                            DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref fam);
                             ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);
                         }
                         else
@@ -1541,7 +1541,7 @@ namespace GloomyTale.GameObject
                             Session.Character.Gold -= 2000000;
                             Session.SendPacket(Session.Character.GenerateGold());
                             FamilyDTO fam = Session.Character.Family;
-                            DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
+                            DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref fam);
                             ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);
                         }
                         else
@@ -1566,7 +1566,7 @@ namespace GloomyTale.GameObject
                             Session.Character.Gold -= 5000000;
                             Session.SendPacket(Session.Character.GenerateGold());
                             FamilyDTO fam = Session.Character.Family;
-                            DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
+                            DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref fam);
                             ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);
                         }
                         else
@@ -1591,7 +1591,7 @@ namespace GloomyTale.GameObject
                             Session.Character.Gold -= 10000000;
                             Session.SendPacket(Session.Character.GenerateGold());
                             FamilyDTO fam = Session.Character.Family;
-                            DAOFactory.FamilyDAO.InsertOrUpdate(ref fam);
+                            DAOFactory.Instance.FamilyDAO.InsertOrUpdate(ref fam);
                             ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);
                         }
                         else

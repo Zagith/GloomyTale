@@ -7,14 +7,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class CharacterTitleDAO : ICharacterTitlesDAO
+    public class CharacterTitleDAO : MappingBaseDao<CharacterTitle, CharacterTitleDTO>, ICharacterTitlesDAO
     {
-        public CharacterTitleDAO() : base()
+        public CharacterTitleDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

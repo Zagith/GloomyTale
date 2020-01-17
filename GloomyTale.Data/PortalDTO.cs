@@ -17,7 +17,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class PortalDTO
+    public class PortalDTO : MappingBaseDTO
     {
         #region Properties
 

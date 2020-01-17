@@ -29,6 +29,9 @@ using System.Globalization;
 using System.Reflection;
 using GloomyTale.Plugins.Logging;
 using ILogger = GloomyTale.Plugins.Logging.Interface.ILogger;
+using GloomyTale.DAL;
+using GloomyTale.SqlServer.Mapping;
+using AutoMapper;
 
 namespace GloomyTale.Master
 {
@@ -57,7 +60,7 @@ namespace GloomyTale.Master
                 }
             }
 
-            //coreBuilder.Register(_ => new ToolkitMapper()).As<Mapper>().SingleInstance();
+            coreBuilder.Register(_ => new ToolkitMapper()).As<IMapper>().SingleInstance();
             return coreBuilder.Build();
         }
         public static void Main(string[] args)
@@ -117,7 +120,10 @@ namespace GloomyTale.Master
                             return;
                         }
 
+                        DAOFactory.Initialize(coreContainer.Resolve<DAOFactory>());
+
                         Logger.Log.Info(Language.Instance.GetMessageFromKey("CONFIG_LOADED"));
+
                         // configure Services and Service Host
                         string ip = "127.0.0.1";
                         var serviceImpl = coreContainer.Resolve<MasterImpl>();

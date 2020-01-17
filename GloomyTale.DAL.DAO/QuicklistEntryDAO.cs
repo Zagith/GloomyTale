@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class QuicklistEntryDAO : IQuicklistEntryDAO
+    public class QuicklistEntryDAO : SynchronizableBaseDAO<QuicklistEntry, QuicklistEntryDTO>, IQuicklistEntryDAO
     {
-        public QuicklistEntryDAO() : base()
+        public QuicklistEntryDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

@@ -19,7 +19,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class AccountDTO
+    public class AccountDTO : MappingBaseDTO
     {
         #region Properties
 

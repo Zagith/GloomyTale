@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IRecipeListDAO
+    public interface IRecipeListDAO : IMappingBaseDAO
     {
         #region Methods
 

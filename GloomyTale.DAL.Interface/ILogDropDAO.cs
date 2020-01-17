@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface ILogDropDAO
+    public interface ILogDropDAO : IMappingBaseDAO
     {        
         LogDropDTO LoadById(long id);
 

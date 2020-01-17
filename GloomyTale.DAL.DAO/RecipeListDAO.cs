@@ -14,19 +14,19 @@
 
 using GloomyTale.Core;
 using GloomyTale.DAL.EF;
-
 using GloomyTale.DAL.EF.Helpers;
 using GloomyTale.DAL.Interface;
 using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class RecipeListDAO : IRecipeListDAO
+    public class RecipeListDAO : MappingBaseDao<RecipeList, RecipeListDTO>, IRecipeListDAO
     {
-        public RecipeListDAO() : base()
+        public RecipeListDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

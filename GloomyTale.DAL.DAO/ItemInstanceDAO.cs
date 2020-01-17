@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 
+using AutoMapper;
 using GloomyTale.Core;
 using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Helpers;
@@ -25,9 +26,9 @@ using System.Linq;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class ItemInstanceDAO : IItemInstanceDAO
+    public class ItemInstanceDAO : SynchronizableBaseDAO<ItemInstance, ItemInstanceDTO>, IItemInstanceDAO
     {
-        public ItemInstanceDAO() : base()
+        public ItemInstanceDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

@@ -8,12 +8,13 @@ using GloomyTale.Data;
 using GloomyTale.Data.Enums;
 using GloomyTale.DAL.EF.Helpers;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class QuestLogDAO : IQuestLogDAO
+    public class QuestLogDAO : MappingBaseDao<QuestLog, QuestLogDTO>, IQuestLogDAO
     {
-        public QuestLogDAO() : base()
+        public QuestLogDAO(IMapper mapper) : base(mapper)
         { }
 
         public SaveResult InsertOrUpdate(ref QuestLogDTO quest)

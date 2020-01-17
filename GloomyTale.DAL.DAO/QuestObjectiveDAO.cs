@@ -6,12 +6,13 @@ using GloomyTale.DAL.EF;
 using GloomyTale.DAL.Interface;
 using GloomyTale.Data;
 using GloomyTale.DAL.EF.Helpers;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class QuestObjectiveDAO : IQuestObjectiveDAO
+    public class QuestObjectiveDAO : MappingBaseDao<QuestObjective, QuestObjectiveDTO>, IQuestObjectiveDAO
     {
-        public QuestObjectiveDAO() : base()
+        public QuestObjectiveDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

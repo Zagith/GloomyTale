@@ -23,12 +23,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class MapNpcDAO : IMapNpcDAO
+    public class MapNpcDAO : MappingBaseDao<MapNpc, MapNpcDTO>, IMapNpcDAO
     {
-        public MapNpcDAO() : base()
+        public MapNpcDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

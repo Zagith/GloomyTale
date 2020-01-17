@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class ShellEffectDAO : IShellEffectDAO
+    public class ShellEffectDAO : MappingBaseDao<ShellEffect, ShellEffectDTO>, IShellEffectDAO
     {
-        public ShellEffectDAO() : base()
+        public ShellEffectDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

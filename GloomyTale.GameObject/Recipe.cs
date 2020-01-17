@@ -45,7 +45,7 @@ namespace GloomyTale.GameObject
         public void Initialize()
         {
             Items = new List<RecipeItemDTO>();
-            foreach (RecipeItemDTO recipe in DAOFactory.RecipeItemDAO.LoadByRecipe(RecipeId).ToList())
+            foreach (RecipeItemDTO recipe in DAOFactory.Instance.RecipeItemDAO.LoadByRecipe(RecipeId).ToList())
             {
                 Items.Add(recipe);
             }

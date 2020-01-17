@@ -446,7 +446,7 @@ namespace GloomyTale.GameObject
 
         public void LoadMonsters()
         {
-            Parallel.ForEach(DAOFactory.MapMonsterDAO.LoadFromMap(Map.MapId).ToList(), monster =>
+            Parallel.ForEach(DAOFactory.Instance.MapMonsterDAO.LoadFromMap(Map.MapId).ToList(), monster =>
             {
                 MapMonster mapMonster = new MapMonster(monster);
                 mapMonster.Initialize(this);
@@ -458,7 +458,7 @@ namespace GloomyTale.GameObject
 
         public void LoadNpcs()
         {
-            Parallel.ForEach(DAOFactory.MapNpcDAO.LoadFromMap(Map.MapId).ToList(), npc =>
+            Parallel.ForEach(DAOFactory.Instance.MapNpcDAO.LoadFromMap(Map.MapId).ToList(), npc =>
             {
                 MapNpc mapNpc = new MapNpc(npc);
                 mapNpc.Initialize(this);
@@ -470,7 +470,7 @@ namespace GloomyTale.GameObject
 
         public void LoadPortals()
         {
-            foreach (PortalDTO portal in DAOFactory.PortalDAO.LoadByMap(Map.MapId))
+            foreach (PortalDTO portal in DAOFactory.Instance.PortalDAO.LoadByMap(Map.MapId))
             {
                 Portal p = new Portal(portal)
                 {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IShellEffectDAO
+    public interface IShellEffectDAO : IMappingBaseDAO
     {
         #region Methods
 

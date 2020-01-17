@@ -7,14 +7,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class TimeSpaceLogDAO : ITimeSpaceLogDAO
+    public class TimeSpaceLogDAO : MappingBaseDao<TimeSpacesLog, TimeSpacesLogDTO>, ITimeSpaceLogDAO
     {
-        public TimeSpaceLogDAO() : base()
+        public TimeSpaceLogDAO(IMapper mapper) : base(mapper)
         { }
 
         public TimeSpacesLogDTO Insert(TimeSpacesLogDTO generalLog)

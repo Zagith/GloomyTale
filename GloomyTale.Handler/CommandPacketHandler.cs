@@ -276,10 +276,10 @@ namespace GloomyTale.Handler
                     IsMoving = packet.IsMoving,
                     MapMonsterId = ServerManager.Instance.GetNextMobId()
                 };
-                if (!DAOFactory.MapMonsterDAO.DoesMonsterExist(monst.MapMonsterId))
+                if (!DAOFactory.Instance.MapMonsterDAO.DoesMonsterExist(monst.MapMonsterId))
                 {
-                    DAOFactory.MapMonsterDAO.Insert(monst);
-                    if (DAOFactory.MapMonsterDAO.LoadById(monst.MapMonsterId) is MapMonsterDTO monsterDTO)
+                    DAOFactory.Instance.MapMonsterDAO.Insert(monst);
+                    if (DAOFactory.Instance.MapMonsterDAO.LoadById(monst.MapMonsterId) is MapMonsterDTO monsterDTO)
                     {
                         MapMonster monster = new MapMonster(monsterDTO);
                         monster.Initialize(Session.CurrentMapInstance);
@@ -328,10 +328,10 @@ namespace GloomyTale.Handler
                     IsMoving = packet.IsMoving,
                     MapNpcId = ServerManager.Instance.GetNextNpcId()
                 };
-                if (!DAOFactory.MapNpcDAO.DoesNpcExist(newNpc.MapNpcId))
+                if (!DAOFactory.Instance.MapNpcDAO.DoesNpcExist(newNpc.MapNpcId))
                 {
-                    DAOFactory.MapNpcDAO.Insert(newNpc);
-                    if (DAOFactory.MapNpcDAO.LoadById(newNpc.MapNpcId) is MapNpcDTO npcDTO)
+                    DAOFactory.Instance.MapNpcDAO.Insert(newNpc);
+                    if (DAOFactory.Instance.MapNpcDAO.LoadById(newNpc.MapNpcId) is MapNpcDTO npcDTO)
                     {
                         MapNpc npc = new MapNpc(npcDTO);
                         npc.Initialize(Session.CurrentMapInstance);
@@ -676,7 +676,7 @@ namespace GloomyTale.Handler
                 }
 
                 packet.Reason = packet.Reason?.Trim();
-                CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(packet.CharacterName);
+                CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadByName(packet.CharacterName);
                 if (character != null)
                 {
                     ClientSession session =
@@ -729,7 +729,7 @@ namespace GloomyTale.Handler
                 }
 
                 packet.Reason = packet.Reason?.Trim();
-                CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(packet.CharacterName);
+                CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadByName(packet.CharacterName);
                 if (character != null)
                 {
                     ClientSession session =
@@ -805,7 +805,7 @@ namespace GloomyTale.Handler
                 }
 
                 packet.Reason = packet.Reason?.Trim();
-                CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(packet.CharacterName);
+                CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadByName(packet.CharacterName);
                 if (character != null)
                 {
                     ClientSession session =
@@ -1222,7 +1222,7 @@ namespace GloomyTale.Handler
                     ActualChannelId = s[1];
                     Session.SendPacket(Session.Character.GenerateSay($"-------------Channel:{ActualChannelId}-------------", 11));
                 }
-                CharacterDTO Character = DAOFactory.CharacterDAO.LoadById(s[0]);
+                CharacterDTO Character = DAOFactory.Instance.CharacterDAO.LoadById(s[0]);
                 Session.SendPacket(
                     Session.Character.GenerateSay(
                         $"CharacterName: {Character.Name} | CharacterId: {Character.CharacterId} | SessionId: {s[2]}", 12));
@@ -1282,9 +1282,9 @@ namespace GloomyTale.Handler
                         Character character = ServerManager.Instance.GetSessionByCharacterName(name).Character;
                         SendStats(character);
                     }
-                    else if (DAOFactory.CharacterDAO.LoadByName(name) != null)
+                    else if (DAOFactory.Instance.CharacterDAO.LoadByName(name) != null)
                     {
-                        CharacterDTO characterDto = DAOFactory.CharacterDAO.LoadByName(name);
+                        CharacterDTO characterDto = DAOFactory.Instance.CharacterDAO.LoadByName(name);
                         SendStats(characterDto);
                     }
                     else
@@ -1588,7 +1588,7 @@ namespace GloomyTale.Handler
                 string name = packet.CharacterName;
                 try
                 {
-                    AccountDTO account = DAOFactory.AccountDAO.LoadById(DAOFactory.CharacterDAO.LoadByName(name).AccountId);
+                    AccountDTO account = DAOFactory.Instance.AccountDAO.LoadById(DAOFactory.Instance.CharacterDAO.LoadByName(name).AccountId);
                     if (account?.Authority > AuthorityType.User)
                     {
                         if (Session.Account.Authority >= account?.Authority)
@@ -1622,7 +1622,7 @@ namespace GloomyTale.Handler
                                     break;
                             }
                             account.Authority = newAuthority;
-                            DAOFactory.AccountDAO.InsertOrUpdate(ref account);
+                            DAOFactory.Instance.AccountDAO.InsertOrUpdate(ref account);
                             ClientSession session =
                                 ServerManager.Instance.Sessions.FirstOrDefault(s => s.Character?.Name == name);
                             if (session != null)
@@ -1641,12 +1641,12 @@ namespace GloomyTale.Handler
                                         ReceiverType.AllExceptMe);
                                 }
                                 ServerManager.Instance.ChangeMap(session.Character.CharacterId);
-                                DAOFactory.AccountDAO.WriteGeneralLog(session.Account.AccountId, session.IpAddress,
+                                DAOFactory.Instance.AccountDAO.WriteGeneralLog(session.Account.AccountId, session.IpAddress,
                                     session.Character.CharacterId, GeneralLogType.Demotion, $"by: {Session.Character.Name}");
                             }
                             else
                             {
-                                DAOFactory.AccountDAO.WriteGeneralLog(account.AccountId, "25.52.104.84", null,
+                                DAOFactory.Instance.AccountDAO.WriteGeneralLog(account.AccountId, "25.52.104.84", null,
                                     GeneralLogType.Demotion, $"by: {Session.Character.Name}");
                             }
 
@@ -1886,7 +1886,7 @@ namespace GloomyTale.Handler
                     int levelMin = packet.ReceiverLevelMin;
                     int levelMax = packet.ReceiverLevelMax == 0 ? 99 : packet.ReceiverLevelMax;
 
-                    DAOFactory.CharacterDAO.LoadAll().ToList().ForEach(chara =>
+                    DAOFactory.Instance.CharacterDAO.LoadAll().ToList().ForEach(chara =>
                     {
                         if (chara.Level >= levelMin && chara.Level <= levelMax)
                         {
@@ -1899,7 +1899,7 @@ namespace GloomyTale.Handler
                 }
                 else
                 {
-                    CharacterDTO chara = DAOFactory.CharacterDAO.LoadByName(packet.CharacterName);
+                    CharacterDTO chara = DAOFactory.Instance.CharacterDAO.LoadByName(packet.CharacterName);
                     if (chara != null)
                     {
                         Session.Character.SendGift(chara.CharacterId, packet.VNum, Amount,
@@ -2315,7 +2315,7 @@ namespace GloomyTale.Handler
                 }
 
                 Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
-                AccountDTO account = DAOFactory.AccountDAO.LoadByName(packet.AccountName);
+                AccountDTO account = DAOFactory.Instance.AccountDAO.LoadByName(packet.AccountName);
                 CommunicationServiceClient.Instance.KickSession(account?.AccountId, packet.SessionId);
             }
             else
@@ -2387,7 +2387,7 @@ namespace GloomyTale.Handler
                 string name = packet.CharacterName;
                 if (!string.IsNullOrEmpty(name))
                 {
-                    CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(name);
+                    CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadByName(name);
                     if (character != null)
                     {
                         bool separatorSent = false;
@@ -2633,7 +2633,7 @@ namespace GloomyTale.Handler
                     DateStart = dateStart,
                     Reason = packet.Reason
                 };
-                DAOFactory.MaintenanceLogDAO.Insert(maintenance);
+                DAOFactory.Instance.MaintenanceLogDAO.Insert(maintenance);
                 Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
             }
             else
@@ -2688,7 +2688,7 @@ namespace GloomyTale.Handler
                 string name = packet.CharacterName;
                 try
                 {
-                    AccountDTO account = DAOFactory.AccountDAO.LoadById(DAOFactory.CharacterDAO.LoadByName(name).AccountId);
+                    AccountDTO account = DAOFactory.Instance.AccountDAO.LoadById(DAOFactory.Instance.CharacterDAO.LoadByName(name).AccountId);
                     if (account?.Authority >= AuthorityType.User || account.Authority.Equals(AuthorityType.BitchNiggerFaggot))
                     {
                         if (account.Authority < Session.Account.Authority)
@@ -2722,7 +2722,7 @@ namespace GloomyTale.Handler
                                     break;
                             }
                             account.Authority = newAuthority;
-                            DAOFactory.AccountDAO.InsertOrUpdate(ref account);
+                            DAOFactory.Instance.AccountDAO.InsertOrUpdate(ref account);
                             ClientSession session =
                                 ServerManager.Instance.Sessions.FirstOrDefault(s => s.Character?.Name == name);
 
@@ -2731,12 +2731,12 @@ namespace GloomyTale.Handler
                                 session.Account.Authority = newAuthority;
                                 session.Character.Authority = newAuthority;
                                 ServerManager.Instance.ChangeMap(session.Character.CharacterId);
-                                DAOFactory.AccountDAO.WriteGeneralLog(session.Account.AccountId, session.IpAddress,
+                                DAOFactory.Instance.AccountDAO.WriteGeneralLog(session.Account.AccountId, session.IpAddress,
                                     session.Character.CharacterId, GeneralLogType.Promotion, $"by: {Session.Character.Name}");
                             }
                             else
                             {
-                                DAOFactory.AccountDAO.WriteGeneralLog(account.AccountId, "25.52.104.84", null,
+                                DAOFactory.Instance.AccountDAO.WriteGeneralLog(account.AccountId, "25.52.104.84", null,
                                     GeneralLogType.Promotion, $"by: {Session.Character.Name}");
                             }
 
@@ -2831,9 +2831,9 @@ namespace GloomyTale.Handler
                                 monster.Monster.Name[Session.Account.Language], monster.MapId, monster.MapX, monster.MapY), 12));
                         Session.CurrentMapInstance.RemoveMonster(monster);
                         Session.CurrentMapInstance.RemovedMobNpcList.Add(monster);
-                        if (DAOFactory.MapMonsterDAO.LoadById(monster.MapMonsterId) != null)
+                        if (DAOFactory.Instance.MapMonsterDAO.LoadById(monster.MapMonsterId) != null)
                         {
-                            DAOFactory.MapMonsterDAO.DeleteById(monster.MapMonsterId);
+                            DAOFactory.Instance.MapMonsterDAO.DeleteById(monster.MapMonsterId);
                         }
                     }
                     else
@@ -2869,14 +2869,14 @@ namespace GloomyTale.Handler
                                 npc.Npc.Name[Session.Account.Language], npc.MapId, npc.MapX, npc.MapY), 12));
                         Session.CurrentMapInstance.RemoveNpc(npc);
                         Session.CurrentMapInstance.RemovedMobNpcList.Add(npc);
-                        if (DAOFactory.ShopDAO.LoadByNpc(npc.MapNpcId) != null)
+                        if (DAOFactory.Instance.ShopDAO.LoadByNpc(npc.MapNpcId) != null)
                         {
-                            DAOFactory.ShopDAO.DeleteByNpcId(npc.MapNpcId);
+                            DAOFactory.Instance.ShopDAO.DeleteByNpcId(npc.MapNpcId);
                         }
 
-                        if (DAOFactory.MapNpcDAO.LoadById(npc.MapNpcId) != null)
+                        if (DAOFactory.Instance.MapNpcDAO.LoadById(npc.MapNpcId) != null)
                         {
-                            DAOFactory.MapNpcDAO.DeleteById(npc.MapNpcId);
+                            DAOFactory.Instance.MapNpcDAO.DeleteById(npc.MapNpcId);
                         }
                     }
                     else
@@ -3022,9 +3022,9 @@ namespace GloomyTale.Handler
                         ? ""
                         : packetsplit.Skip(withPage ? 1 : 0).Aggregate((a, b) => a + ' ' + b);
                 }
-                foreach (I18NItemDto i18nItemName in DAOFactory.I18NItemDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
+                foreach (I18NItemDto i18nItemName in DAOFactory.Instance.I18NItemDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
                 {
-                    ItemDTO item = DAOFactory.ItemDAO.LoadByKey(i18nItemName.Key);
+                    ItemDTO item = DAOFactory.Instance.ItemDAO.LoadByKey(i18nItemName.Key);
                     if (item != null)
                     {
                         Item vnum = ServerManager.GetItem(item.VNum);
@@ -3070,9 +3070,9 @@ namespace GloomyTale.Handler
                         ? ""
                         : packetsplit.Skip(withPage ? 1 : 0).Aggregate((a, b) => a + ' ' + b);
                 }
-                foreach (II18NNpcMonsterDto i18nItemName in DAOFactory.I18NNpcMonsterDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
+                foreach (II18NNpcMonsterDto i18nItemName in DAOFactory.Instance.I18NNpcMonsterDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
                 {
-                    NpcMonsterDTO npcMonsters = DAOFactory.NpcMonsterDAO.LoadByKey(i18nItemName.Key);
+                    NpcMonsterDTO npcMonsters = DAOFactory.Instance.NpcMonsterDAO.LoadByKey(i18nItemName.Key);
                     if (npcMonsters != null)
                     {
                         NpcMonster npcMonster = ServerManager.GetNpcMonster(npcMonsters.NpcMonsterVNum);
@@ -3771,7 +3771,7 @@ namespace GloomyTale.Handler
                     $"[Unban]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
-                CharacterDTO chara = DAOFactory.CharacterDAO.LoadByName(name);
+                CharacterDTO chara = DAOFactory.Instance.CharacterDAO.LoadByName(name);
                 if (chara != null)
                 {
                     PenaltyLogDTO log = ServerManager.Instance.PenaltyLogs.Find(s =>
@@ -3825,7 +3825,7 @@ namespace GloomyTale.Handler
                     $"[Unmute]CharacterName: {packet.CharacterName}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
-                CharacterDTO chara = DAOFactory.CharacterDAO.LoadByName(name);
+                CharacterDTO chara = DAOFactory.Instance.CharacterDAO.LoadByName(name);
                 if (chara != null)
                 {
                     if (ServerManager.Instance.PenaltyLogs.Any(s =>
@@ -3891,10 +3891,10 @@ namespace GloomyTale.Handler
                         IsMoving = mapMonster.IsMoving,
                         MapMonsterId = ServerManager.Instance.GetNextMobId()
                     };
-                    if (!DAOFactory.MapMonsterDAO.DoesMonsterExist(backMonst.MapMonsterId))
+                    if (!DAOFactory.Instance.MapMonsterDAO.DoesMonsterExist(backMonst.MapMonsterId))
                     {
-                        DAOFactory.MapMonsterDAO.Insert(backMonst);
-                        if (DAOFactory.MapMonsterDAO.LoadById(backMonst.MapMonsterId) is MapMonsterDTO monsterDTO)
+                        DAOFactory.Instance.MapMonsterDAO.Insert(backMonst);
+                        if (DAOFactory.Instance.MapMonsterDAO.LoadById(backMonst.MapMonsterId) is MapMonsterDTO monsterDTO)
                         {
                             MapMonster monster = new MapMonster(monsterDTO);
                             monster.Initialize(Session.CurrentMapInstance);
@@ -3917,10 +3917,10 @@ namespace GloomyTale.Handler
                         IsMoving = mapNpc.IsMoving,
                         MapNpcId = ServerManager.Instance.GetNextMobId()
                     };
-                    if (!DAOFactory.MapNpcDAO.DoesNpcExist(backNpc.MapNpcId))
+                    if (!DAOFactory.Instance.MapNpcDAO.DoesNpcExist(backNpc.MapNpcId))
                     {
-                        DAOFactory.MapNpcDAO.Insert(backNpc);
-                        if (DAOFactory.MapNpcDAO.LoadById(backNpc.MapNpcId) is MapNpcDTO npcDTO)
+                        DAOFactory.Instance.MapNpcDAO.Insert(backNpc);
+                        if (DAOFactory.Instance.MapNpcDAO.LoadById(backNpc.MapNpcId) is MapNpcDTO npcDTO)
                         {
                             MapNpc npc = new MapNpc(npcDTO);
                             npc.Initialize(Session.CurrentMapInstance);
@@ -4031,7 +4031,7 @@ namespace GloomyTale.Handler
             {
                 if (packet.MapId.HasValue)
                 {
-                    MapDTO map = DAOFactory.MapDAO.LoadById(packet.MapId.Value);
+                    MapDTO map = DAOFactory.Instance.MapDAO.LoadById(packet.MapId.Value);
                     GameObject.MapInstance mapInstance = ServerManager.GetMapInstanceByMapId(packet.MapId.Value);
                     if (map != null && mapInstance != null)
                     {
@@ -4040,7 +4040,7 @@ namespace GloomyTale.Handler
                 }
                 else if (Session.HasCurrentMapInstance)
                 {
-                    MapDTO map = DAOFactory.MapDAO.LoadById(Session.CurrentMapInstance.Map.MapId);
+                    MapDTO map = DAOFactory.Instance.MapDAO.LoadById(Session.CurrentMapInstance.Map.MapId);
                     if (map != null)
                     {
                         SendMapStats(map, Session.CurrentMapInstance);
@@ -4065,7 +4065,7 @@ namespace GloomyTale.Handler
                     $"[Warn]CharacterName: {packet.CharacterName} Reason: {packet.Reason}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 string characterName = packet.CharacterName;
-                CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(characterName);
+                CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadByName(characterName);
                 if (character != null)
                 {
                     ClientSession session = ServerManager.Instance.GetSessionByCharacterName(characterName);
@@ -4080,7 +4080,7 @@ namespace GloomyTale.Handler
                         DateEnd = DateTime.Now,
                         AdminName = Session.Character.Name
                     });
-                    switch (DAOFactory.PenaltyLogDAO.LoadByAccount(character.AccountId)
+                    switch (DAOFactory.Instance.PenaltyLogDAO.LoadByAccount(character.AccountId)
                         .Count(p => p.Penalty == PenaltyType.Warning))
                     {
                         case 1:
@@ -4433,11 +4433,11 @@ namespace GloomyTale.Handler
                             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                                 $"[ChangeShopName]ShopId: {shop.ShopId} Name: {packet.Name}");
                             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
-                            if (DAOFactory.ShopDAO.LoadById(shop.ShopId) is ShopDTO shopDTO)
+                            if (DAOFactory.Instance.ShopDAO.LoadById(shop.ShopId) is ShopDTO shopDTO)
                             {
                                 shop.NameI18NKey = packet.Name;
                                 shopDTO.NameI18NKey = packet.Name;
-                                DAOFactory.ShopDAO.Update(ref shopDTO);
+                                DAOFactory.Instance.ShopDAO.Update(ref shopDTO);
 
                                 Session.CurrentMapInstance.Broadcast($"shop 2 {npc.MapNpcId} {npc.Shop.ShopId} {npc.Shop.MenuType} {npc.Shop.ShopType} {npc.Shop.Name}");
                             }
@@ -4470,11 +4470,11 @@ namespace GloomyTale.Handler
                     Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[CustomNpcName]MapNpcId: {npc.MapNpcId} Name: {packet.Name}");
 
-                    if (DAOFactory.MapNpcDAO.LoadById(npc.MapNpcId) is MapNpcDTO npcDTO)
+                    if (DAOFactory.Instance.MapNpcDAO.LoadById(npc.MapNpcId) is MapNpcDTO npcDTO)
                     {
                         npc.Name = packet.Name;
                         npcDTO.Name = packet.Name;
-                        DAOFactory.MapNpcDAO.Update(ref npcDTO);
+                        DAOFactory.Instance.MapNpcDAO.Update(ref npcDTO);
 
                         Session.CurrentMapInstance.Broadcast(npc.GenerateIn());
                     }
@@ -4484,11 +4484,11 @@ namespace GloomyTale.Handler
                     Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[CustomNpcName]MapMonsterId: {monster.MapMonsterId} Name: {packet.Name}");
 
-                    if (DAOFactory.MapMonsterDAO.LoadById(monster.MapMonsterId) is MapMonsterDTO monsterDTO)
+                    if (DAOFactory.Instance.MapMonsterDAO.LoadById(monster.MapMonsterId) is MapMonsterDTO monsterDTO)
                     {
                         monster.Name = packet.Name;
                         monsterDTO.Name = packet.Name;
-                        DAOFactory.MapMonsterDAO.Update(ref monsterDTO);
+                        DAOFactory.Instance.MapMonsterDAO.Update(ref monsterDTO);
 
                         Session.CurrentMapInstance.Broadcast(monster.GenerateIn());
                     }
@@ -4884,7 +4884,7 @@ namespace GloomyTale.Handler
                 };
                 if (insertToDatabase)
                 {
-                    DAOFactory.PortalDAO.Insert(portal);
+                    DAOFactory.Instance.PortalDAO.Insert(portal);
                 }
 
                 Session.CurrentMapInstance.Portals.Add(portal);
@@ -4900,7 +4900,7 @@ namespace GloomyTale.Handler
         /// <param name="reason"></param>
         private void BanMethod(string characterName, int duration, string reason)
         {
-            CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(characterName);
+            CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadByName(characterName);
             if (character != null)
             {
                 ServerManager.Instance.Kick(characterName);
@@ -4932,7 +4932,7 @@ namespace GloomyTale.Handler
         /// <param name="duration"></param>
         private void MuteMethod(string characterName, string reason, int duration)
         {
-            CharacterDTO characterToMute = DAOFactory.CharacterDAO.LoadByName(characterName);
+            CharacterDTO characterToMute = DAOFactory.Instance.CharacterDAO.LoadByName(characterName);
             if (characterToMute != null)
             {
                 ClientSession session = ServerManager.Instance.GetSessionByCharacterName(characterName);
@@ -4989,7 +4989,7 @@ namespace GloomyTale.Handler
                 $"Fraction: {(characterDto.Faction == FactionType.Demon ? Language.Instance.GetMessageFromKey("DEMON") : Language.Instance.GetMessageFromKey("ANGEL"))}",
                 13));
             Session.SendPacket(Session.Character.GenerateSay("----- --------- -----", 13));
-            AccountDTO account = DAOFactory.AccountDAO.LoadById(characterDto.AccountId);
+            AccountDTO account = DAOFactory.Instance.AccountDAO.LoadById(characterDto.AccountId);
             if (account != null)
             {
                 Session.SendPacket(Session.Character.GenerateSay("----- ACCOUNT -----", 13));
@@ -5030,7 +5030,7 @@ namespace GloomyTale.Handler
             {
                 if (connection != null)
                 {
-                    CharacterDTO character = DAOFactory.CharacterDAO.LoadById(connection[0]);
+                    CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadById(connection[0]);
                     if (character != null)
                     {
                         Session.SendPacket(Session.Character.GenerateSay($"Character Name: {character.Name}", 13));

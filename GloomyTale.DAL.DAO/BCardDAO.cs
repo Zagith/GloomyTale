@@ -22,12 +22,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class BCardDAO : IBCardDAO
+    public class BCardDAO : MappingBaseDao<BCard, BCardDTO>, IBCardDAO
     {
-        public BCardDAO() : base()
+        public BCardDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

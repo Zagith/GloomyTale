@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GloomyTale.Data.I18N
 {
-    public class II18NNpcMonsterDto : II18NDto
+    public class II18NNpcMonsterDto : MappingBaseDTO, II18NDto
     {
         public int I18NNpcMonsterId { get; set; }
 

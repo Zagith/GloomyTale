@@ -53,9 +53,9 @@ namespace GloomyTale.GameObject
             Data = data;
             loadZone();
             MapTypes = new List<MapTypeDTO>();
-            foreach (MapTypeMapDTO maptypemap in DAOFactory.MapTypeMapDAO.LoadByMapId(mapId).ToList())
+            foreach (MapTypeMapDTO maptypemap in DAOFactory.Instance.MapTypeMapDAO.LoadByMapId(mapId).ToList())
             {
-                MapTypeDTO maptype = DAOFactory.MapTypeDAO.LoadById(maptypemap.MapTypeId);
+                MapTypeDTO maptype = DAOFactory.Instance.MapTypeDAO.LoadById(maptypemap.MapTypeId);
                 MapTypes.Add(maptype);
             }
 
@@ -65,11 +65,11 @@ namespace GloomyTale.GameObject
                 long? returnMapTypeId = MapTypes[0].ReturnMapTypeId;
                 if (respawnMapTypeId != null)
                 {
-                    DefaultRespawn = DAOFactory.RespawnMapTypeDAO.LoadById((long)respawnMapTypeId);
+                    DefaultRespawn = DAOFactory.Instance.RespawnMapTypeDAO.LoadById((long)respawnMapTypeId);
                 }
                 if (returnMapTypeId != null)
                 {
-                    DefaultReturn = DAOFactory.RespawnMapTypeDAO.LoadById((long)returnMapTypeId);
+                    DefaultReturn = DAOFactory.Instance.RespawnMapTypeDAO.LoadById((long)returnMapTypeId);
                 }
             }
         }

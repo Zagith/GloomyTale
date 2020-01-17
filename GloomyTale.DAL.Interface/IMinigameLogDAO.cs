@@ -19,7 +19,7 @@ using GloomyTale.Domain;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IMinigameLogDAO
+    public interface IMinigameLogDAO : IMappingBaseDAO
     {
         #region Methods
 

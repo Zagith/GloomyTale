@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class StaticBuffDAO : IStaticBuffDAO
+    public class StaticBuffDAO : MappingBaseDao<StaticBuff, StaticBuffDTO>, IStaticBuffDAO
     {
-        public StaticBuffDAO() : base()
+        public StaticBuffDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

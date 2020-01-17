@@ -13,6 +13,7 @@
  */
 
 using Autofac;
+using AutoMapper;
 using GloomyTale.Communication;
 using GloomyTale.Communication.RPC;
 using GloomyTale.Core;
@@ -28,6 +29,7 @@ using GloomyTale.Plugins.Logging;
 using GloomyTale.Plugins.Logging.Interface;
 using GloomyTale.Plugins.Modules;
 using GloomyTale.SqlServer;
+using GloomyTale.SqlServer.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -109,7 +111,7 @@ namespace GloomyTale.Login
                         plugin.OnLoad(coreBuilder);
                     }
 
-                    //coreBuilder.Register(_ => new ToolkitMapper()).As<IMapper>().SingleInstance();
+                    coreBuilder.Register(_ => new ToolkitMapper()).As<IMapper>().SingleInstance();
 
                     using (IContainer coreContainer = coreBuilder.Build())
                     {
@@ -146,7 +148,7 @@ namespace GloomyTale.Login
                             return;
                         }
 
-                        //DaoFactory.Initialize(coreContainer.Resolve<DaoFactory>());
+                        DAOFactory.Initialize(coreContainer.Resolve<DAOFactory>());
 
                         Logger.Log.Info(Language.Instance.GetMessageFromKey("CONFIG_LOADED"));
 

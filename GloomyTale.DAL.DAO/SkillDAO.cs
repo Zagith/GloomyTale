@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class SkillDAO : ISkillDAO
+    public class SkillDAO : MappingBaseDao<Skill, SkillDTO>, ISkillDAO
     {
-        public SkillDAO() : base()
+        public SkillDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

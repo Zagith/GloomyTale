@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IQuestObjectiveDAO
+    public interface IQuestObjectiveDAO : IMappingBaseDAO
     {
         #region Methods
 

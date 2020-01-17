@@ -20,12 +20,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class RollGeneratedItemDAO : IRollGeneratedItemDAO
+    public class RollGeneratedItemDAO : MappingBaseDao<RollGeneratedItem, RollGeneratedItemDTO>, IRollGeneratedItemDAO
     {
-        public RollGeneratedItemDAO() : base()
+        public RollGeneratedItemDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

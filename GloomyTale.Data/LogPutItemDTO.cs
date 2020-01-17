@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GloomyTale.Data
 {
-    public class LogPutItemDTO
+    public class LogPutItemDTO : MappingBaseDTO
     {
         public long LogId { get; set; }
 

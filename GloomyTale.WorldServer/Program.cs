@@ -1,7 +1,9 @@
 ﻿using Autofac;
+using AutoMapper;
 using GloomyTale.Communication;
 using GloomyTale.Communication.RPC;
 using GloomyTale.Core;
+using GloomyTale.DAL;
 using GloomyTale.DAL.EF.Helpers;
 using GloomyTale.GameObject;
 using GloomyTale.GameObject.Networking;
@@ -10,6 +12,7 @@ using GloomyTale.Plugins.Exceptions;
 using GloomyTale.Plugins.Logging;
 using GloomyTale.Plugins.Modules;
 using GloomyTale.SqlServer;
+using GloomyTale.SqlServer.Mapping;
 using Grpc.Core;
 using System;
 using System.Collections.Generic;
@@ -96,7 +99,7 @@ namespace GloomyTale.World
             }
 
             coreBuilder.RegisterType<WorldServiceImpl>();
-            //coreBuilder.Register(_ => new GameObjectMapper()).As<IMapper>().SingleInstance();
+            coreBuilder.Register(_ => new GameObjectMapper()).As<IMapper>().SingleInstance();
             return coreBuilder.Build();
         }
 
@@ -211,7 +214,7 @@ namespace GloomyTale.World
                     return;
                 }
 
-                //DaoFactory.Initialize(coreContainer.Resolve<DaoFactory>());
+                DAOFactory.Initialize(coreContainer.Resolve<DAOFactory>());
 
                 PacketFactory.Initialize<WalkPacket>();
                 string ip = "127.0.0.1";

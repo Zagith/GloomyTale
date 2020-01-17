@@ -22,7 +22,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class ItemDTO : IStaticDto
+    public class ItemDTO : MappingBaseDTO, IStaticDto
     {
         #region Properties
 

@@ -17,7 +17,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class MaintenanceLogDTO
+    public class MaintenanceLogDTO : MappingBaseDTO
     {
         #region Properties
 

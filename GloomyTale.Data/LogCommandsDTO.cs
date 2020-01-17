@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class LogCommandsDTO
+    public class LogCommandsDTO : MappingBaseDTO
     {
         public long CommandId { get; set; }
 

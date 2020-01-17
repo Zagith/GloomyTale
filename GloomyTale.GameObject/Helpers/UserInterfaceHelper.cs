@@ -53,7 +53,7 @@ namespace GloomyTale.GameObject.Helpers
             int rank = 0;
             long savecount = 0;
 
-            List<Family> familyordered = ServerManager.Instance.FamilyList.Where(s => DAOFactory.FamilyCharacterDAO.LoadByFamilyId(s.FamilyId).FirstOrDefault(c => c.Authority == FamilyAuthority.Head) is FamilyCharacterDTO famChar && DAOFactory.CharacterDAO.LoadById(famChar.CharacterId) is CharacterDTO character && DAOFactory.AccountDAO.LoadById(character.AccountId).Authority <= AuthorityType.GS);
+            List<Family> familyordered = ServerManager.Instance.FamilyList.Where(s => DAOFactory.Instance.FamilyCharacterDAO.LoadByFamilyId(s.FamilyId).FirstOrDefault(c => c.Authority == FamilyAuthority.Head) is FamilyCharacterDTO famChar && DAOFactory.Instance.CharacterDAO.LoadById(famChar.CharacterId) is CharacterDTO character && DAOFactory.Instance.AccountDAO.LoadById(character.AccountId).Authority <= AuthorityType.GS);
         
             switch (type)
             {
@@ -351,7 +351,7 @@ namespace GloomyTale.GameObject.Helpers
                         if (bzlink.Item is ItemInstance wear)
                         {
                             wear.ShellEffects.Clear();
-                            wear.ShellEffects.AddRange(DAOFactory.ShellEffectDAO.LoadByEquipmentSerialId(wear.EquipmentSerialId));
+                            wear.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(wear.EquipmentSerialId));
                         }
                         info = (bzlink.Item.Item.EquipmentSlot != EquipmentType.Sp ?
                             bzlink.Item?.GenerateEInfo() : bzlink.Item.Item.SpType == 0 && bzlink.Item.Item.ItemSubType == 4 ?

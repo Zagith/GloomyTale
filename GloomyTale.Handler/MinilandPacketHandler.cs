@@ -170,7 +170,7 @@ namespace GloomyTale.Handler
                             if (GetMinilandMaxPoint(game)[packet.Point.Value - 1] < Session.Character.MinigameLog.Score)
                             {
                                 MinigameLogDTO dto = Session.Character.MinigameLog;
-                                DAOFactory.MinigameLogDAO.InsertOrUpdate(ref dto);
+                                DAOFactory.Instance.MinigameLogDAO.InsertOrUpdate(ref dto);
                                 Session.Character.MinigameLog = null;
                                 Gift obj = GetMinilandGift(packet.MinigameVNum, (int) packet.Point);
                                 if (obj != null)

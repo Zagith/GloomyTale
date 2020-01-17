@@ -3,7 +3,7 @@ using GloomyTale.Domain.I18N;
 
 namespace GloomyTale.Data.I18N
 {
-    public class I18NShopNameDto : II18NDto
+    public class I18NShopNameDto : MappingBaseDTO, II18NDto
     {
         public int I18NShopNameId { get; set; }
 

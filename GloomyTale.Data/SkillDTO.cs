@@ -21,7 +21,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class SkillDTO : IStaticDto
+    public class SkillDTO : MappingBaseDTO, IStaticDto
     {
         #region Properties
 

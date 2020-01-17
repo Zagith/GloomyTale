@@ -7,12 +7,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class PartnerSkillDAO : IPartnerSkillDAO
+    public class PartnerSkillDAO : MappingBaseDao<PartnerSkill, PartnerSkillDTO>, IPartnerSkillDAO
     {
-        public PartnerSkillDAO() : base()
+        public PartnerSkillDAO(IMapper mapper) : base(mapper)
         { }
 
         public PartnerSkillDTO Insert(PartnerSkillDTO partnerSkillDTO)

@@ -3,7 +3,7 @@
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class QuestRewardDTO
+    public class QuestRewardDTO : MappingBaseDTO
     {
 
         #region Properties

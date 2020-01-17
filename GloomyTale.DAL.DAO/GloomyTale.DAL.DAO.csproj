@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GloomyTale.Core\GloomyTale.Core.csproj" />
     <ProjectReference Include="..\GloomyTale.DAL.EF\GloomyTale.DAL.EF.csproj" />
     <ProjectReference Include="..\GloomyTale.DAL.Interface\GloomyTale.DAL.Interface.csproj" />

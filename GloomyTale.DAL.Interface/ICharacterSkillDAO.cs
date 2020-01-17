@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface ICharacterSkillDAO
+    public interface ICharacterSkillDAO : ISynchronizableBaseDAO<CharacterSkillDTO>
     {
         #region Methods
 
@@ -28,14 +28,6 @@ namespace GloomyTale.DAL.Interface
         IEnumerable<CharacterSkillDTO> LoadByCharacterId(long characterId);
 
         IEnumerable<Guid> LoadKeysByCharacterId(long characterId);
-
-        DeleteResult Delete(Guid id);
-
-        CharacterSkillDTO InsertOrUpdate(CharacterSkillDTO dto);
-
-        IEnumerable<CharacterSkillDTO> InsertOrUpdate(IEnumerable<CharacterSkillDTO> dtos);
-
-        CharacterSkillDTO LoadById(Guid id);
 
         #endregion
     }

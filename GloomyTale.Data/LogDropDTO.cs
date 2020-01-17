@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GloomyTale.Data
 {
-    public class LogDropDTO
+    public class LogDropDTO : MappingBaseDTO
     {
         public long LogId { get; set; }
 

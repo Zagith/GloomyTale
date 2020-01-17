@@ -20,12 +20,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class ComboDAO : IComboDAO
+    public class ComboDAO : MappingBaseDao<Combo, ComboDTO>, IComboDAO
     {
-        public ComboDAO() : base()
+        public ComboDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

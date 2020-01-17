@@ -8,14 +8,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class LogPutItemDAO : ILogPutItemDAO
+    public class LogPutItemDAO : MappingBaseDao<LogPutItem, LogPutItemDTO>, ILogPutItemDAO
     {
-        public LogPutItemDAO() : base()
+        public LogPutItemDAO(IMapper mapper) : base(mapper)
         { }
 
         public LogPutItemDTO Insert(LogPutItemDTO generalLog)

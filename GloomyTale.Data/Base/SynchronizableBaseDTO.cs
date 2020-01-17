@@ -17,7 +17,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public abstract class SynchronizableBaseDTO
+    public abstract class SynchronizableBaseDTO : MappingBaseDTO
     {
         #region Instantiation
 

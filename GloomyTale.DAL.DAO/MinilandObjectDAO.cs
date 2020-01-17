@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class MinilandObjectDAO : IMinilandObjectDAO
+    public class MinilandObjectDAO : MappingBaseDao<MinilandObject, MinilandObjectDTO>, IMinilandObjectDAO
     {
-        public MinilandObjectDAO() : base()
+        public MinilandObjectDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

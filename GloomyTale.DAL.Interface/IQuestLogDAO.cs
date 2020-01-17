@@ -8,7 +8,7 @@ using GloomyTale.Data.Enums;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IQuestLogDAO
+    public interface IQuestLogDAO : IMappingBaseDAO
     {
         SaveResult InsertOrUpdate(ref QuestLogDTO questLog);
 

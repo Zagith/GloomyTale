@@ -1,6 +1,6 @@
 ﻿namespace GloomyTale.Data
 {
-    public class BoxItemDTO
+    public class BoxItemDTO : MappingBaseDTO
     {
         #region Properties
 

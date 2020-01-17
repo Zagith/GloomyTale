@@ -47,7 +47,7 @@ namespace GloomyTale.GameObject
 
         #region Properties
 
-        public CharacterDTO Character => _character ?? (_character = DAOFactory.CharacterDAO.LoadById(CharacterId));
+        public CharacterDTO Character => _character ?? (_character = DAOFactory.Instance.CharacterDAO.LoadById(CharacterId));
 
         #endregion
     }

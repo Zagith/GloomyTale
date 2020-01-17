@@ -285,7 +285,7 @@ namespace GloomyTale.Handler
                         for (int i = 0; i < 2; i++)
                         {
                             Gift gift = null;
-                            if (!DAOFactory.TimeSpaceLogDAO.LoadByCharacterId(Session.Character.CharacterId).Any(s => s.TimeSpaceId == Session.Character.Timespace.ScriptedInstanceId))
+                            if (!DAOFactory.Instance.TimeSpaceLogDAO.LoadByCharacterId(Session.Character.CharacterId).Any(s => s.TimeSpaceId == Session.Character.Timespace.ScriptedInstanceId))
                             {
                                 gift = Session.Character.Timespace.SpecialItems.ElementAtOrDefault(i);
                             }

@@ -20,12 +20,13 @@ using GloomyTale.Data;
 using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class QuestDAO : IQuestDAO
+    public class QuestDAO : MappingBaseDao<Quest, QuestDTO>, IQuestDAO
     {
-        public QuestDAO() : base()
+        public QuestDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

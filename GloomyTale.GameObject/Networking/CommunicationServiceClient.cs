@@ -38,13 +38,13 @@ namespace GloomyTale.GameObject.Networking
 
         public void OnCharacterConnected(long characterId)
         {
-            string characterName = DAOFactory.CharacterDAO.LoadById(characterId)?.Name;
+            string characterName = DAOFactory.Instance.CharacterDAO.LoadById(characterId)?.Name;
             CharacterConnectedEvent?.Invoke(new Tuple<long, string>(characterId, characterName), null);
         }
 
         public void OnCharacterDisconnected(long characterId)
         {
-            string characterName = DAOFactory.CharacterDAO.LoadById(characterId)?.Name;
+            string characterName = DAOFactory.Instance.CharacterDAO.LoadById(characterId)?.Name;
             CharacterDisconnectedEvent?.Invoke(new Tuple<long, string>(characterId, characterName), null);
         }
 

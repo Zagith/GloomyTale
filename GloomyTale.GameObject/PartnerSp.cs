@@ -48,7 +48,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -64,7 +64,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -80,7 +80,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -96,7 +96,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -112,7 +112,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -128,7 +128,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -144,7 +144,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -160,7 +160,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -176,7 +176,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -192,7 +192,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -208,7 +208,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -224,7 +224,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -240,7 +240,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -256,7 +256,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -272,7 +272,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -288,7 +288,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -304,7 +304,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -320,7 +320,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -336,7 +336,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -352,7 +352,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -368,7 +368,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -384,7 +384,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -400,7 +400,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -416,7 +416,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -432,7 +432,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -448,7 +448,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -464,7 +464,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -480,7 +480,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -496,7 +496,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -512,7 +512,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -528,7 +528,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -544,7 +544,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -560,7 +560,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -576,7 +576,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -592,7 +592,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -608,7 +608,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -624,7 +624,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -640,7 +640,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -656,7 +656,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -672,7 +672,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -688,7 +688,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -704,7 +704,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -720,7 +720,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -736,7 +736,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -752,7 +752,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -768,7 +768,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -784,7 +784,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -800,7 +800,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -816,7 +816,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -832,7 +832,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -848,7 +848,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -864,7 +864,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -880,7 +880,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -896,7 +896,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -912,7 +912,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -928,7 +928,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -944,7 +944,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -960,7 +960,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -976,7 +976,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -992,7 +992,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1008,7 +1008,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1024,7 +1024,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1040,7 +1040,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1056,7 +1056,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1072,7 +1072,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1088,7 +1088,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1104,7 +1104,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1120,7 +1120,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1136,7 +1136,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1152,7 +1152,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1168,7 +1168,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1184,7 +1184,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1200,7 +1200,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1216,7 +1216,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1232,7 +1232,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1248,7 +1248,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1264,7 +1264,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1280,7 +1280,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1296,7 +1296,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1312,7 +1312,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1328,7 +1328,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1344,7 +1344,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1360,7 +1360,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1376,7 +1376,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1392,7 +1392,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1408,7 +1408,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1424,7 +1424,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1440,7 +1440,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1456,7 +1456,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1472,7 +1472,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1488,7 +1488,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1504,7 +1504,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1520,7 +1520,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1536,7 +1536,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1552,7 +1552,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1568,7 +1568,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1584,7 +1584,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1600,7 +1600,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1616,7 +1616,7 @@ namespace GloomyTale.GameObject
                     Level = ServerManager.RandomNumber<byte>(1, 8)
                 };
 
-                if (DAOFactory.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
+                if (DAOFactory.Instance.PartnerSkillDAO.Insert(partnerSkillDTO) is PartnerSkillDTO result)
                 {
                     Skills.Add(new PartnerSkill(result));
 
@@ -1770,7 +1770,7 @@ namespace GloomyTale.GameObject
 
         private void LoadSkills()
         {
-            Skills = DAOFactory.PartnerSkillDAO.LoadByEquipmentSerialId(Instance.EquipmentSerialId)
+            Skills = DAOFactory.Instance.PartnerSkillDAO.LoadByEquipmentSerialId(Instance.EquipmentSerialId)
                 .Select(partnerSkillDTO => new PartnerSkill(partnerSkillDTO)).ToList();
         }
 
@@ -1780,7 +1780,7 @@ namespace GloomyTale.GameObject
         {
             PartnerSkill partnerSkill = GetSkill(castId);
 
-            return partnerSkill != null && DAOFactory.PartnerSkillDAO.Remove(partnerSkill.PartnerSkillId) != DeleteResult.Error;
+            return partnerSkill != null && DAOFactory.Instance.PartnerSkillDAO.Remove(partnerSkill.PartnerSkillId) != DeleteResult.Error;
         }
 
         public void ResetXp()

@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class RespawnDAO : IRespawnDAO
+    public class RespawnDAO : MappingBaseDao<Respawn, RespawnDTO>, IRespawnDAO
     {
-        public RespawnDAO() : base()
+        public RespawnDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

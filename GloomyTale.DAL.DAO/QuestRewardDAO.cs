@@ -6,12 +6,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class QuestRewardDAO : IQuestRewardDAO
+    public class QuestRewardDAO : MappingBaseDao<QuestReward, QuestRewardDTO>, IQuestRewardDAO
     {
-        public QuestRewardDAO() : base()
+        public QuestRewardDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

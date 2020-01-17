@@ -4,7 +4,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class ShellEffectDTO
+    public class ShellEffectDTO : MappingBaseDTO
     {
         #region Properties
 

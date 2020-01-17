@@ -22,12 +22,13 @@ using GloomyTale.Data.Enums;
 using GloomyTale.Domain;
 using System;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class AccountDAO : IAccountDAO
+    public class AccountDAO : MappingBaseDao<Account, AccountDTO>, IAccountDAO
     {
-        public AccountDAO() : base()
+        public AccountDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

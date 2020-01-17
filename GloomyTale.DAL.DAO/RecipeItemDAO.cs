@@ -21,12 +21,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class RecipeItemDAO : IRecipeItemDAO
+    public class RecipeItemDAO : MappingBaseDao<RecipeItem, RecipeItemDTO>, IRecipeItemDAO
     {
-        public RecipeItemDAO() : base()
+        public RecipeItemDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

@@ -21,12 +21,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class MapDAO : IMapDAO
+    public class MapDAO : MappingBaseDao<Map, MapDTO>, IMapDAO
     {
-        public MapDAO() : base()
+        public MapDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

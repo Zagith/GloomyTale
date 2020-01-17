@@ -18,6 +18,12 @@ namespace GloomyTale.DAL
 {
     public class DAOFactory
     {
+        public static DAOFactory Instance { get; private set; }
+
+        public static void Initialize(DAOFactory dao)
+        {
+            Instance = dao;
+        }
 
         public DAOFactory (IAccountDAO _accountDAO,IBazaarItemDAO _bazaarItemDAO,IBCardDAO _bcardDAO,IBoxItemDAO _boxItemDAO,
             ICardDAO _cardDAO,ICellonOptionDAO _cellonOptionDAO,ICharacterDAO _characterDAO,ICharacterRelationDAO _characterRelationDAO,

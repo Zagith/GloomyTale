@@ -57,7 +57,7 @@ namespace GloomyTale.Handler
                 return;
             }
 
-            BazaarItemDTO bz = DAOFactory.BazaarItemDAO.LoadById(cBuyPacket.BazaarId);
+            BazaarItemDTO bz = DAOFactory.Instance.BazaarItemDAO.LoadById(cBuyPacket.BazaarId);
             if (bz != null && cBuyPacket.Amount > 0)
             {
                 long price = cBuyPacket.Amount * bz.Price;
@@ -65,10 +65,10 @@ namespace GloomyTale.Handler
                 if (Session.Character.Gold >= price)
                 {
                     BazaarItemLink bzcree = new BazaarItemLink {BazaarItem = bz};
-                    if (DAOFactory.CharacterDAO.LoadById(bz.SellerId) != null)
+                    if (DAOFactory.Instance.CharacterDAO.LoadById(bz.SellerId) != null)
                     {
-                        bzcree.Owner = DAOFactory.CharacterDAO.LoadById(bz.SellerId)?.Name;
-                        bzcree.Item = new ItemInstance(DAOFactory.ItemInstanceDAO.LoadById(bz.ItemInstanceId));
+                        bzcree.Owner = DAOFactory.Instance.CharacterDAO.LoadById(bz.SellerId)?.Name;
+                        bzcree.Item = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bz.ItemInstanceId));
                     }
                     else
                     {
@@ -93,7 +93,7 @@ namespace GloomyTale.Handler
                             }
 
                             ItemInstanceDTO bzitemdto =
-                                DAOFactory.ItemInstanceDAO.LoadById(bzcree.BazaarItem.ItemInstanceId);
+                                DAOFactory.Instance.ItemInstanceDAO.LoadById(bzcree.BazaarItem.ItemInstanceId);
                             if (bzitemdto.Amount < cBuyPacket.Amount)
                             {
                                 return;
@@ -111,7 +111,7 @@ namespace GloomyTale.Handler
                                 bzitemdto.Amount -= cBuyPacket.Amount;
                                 Session.Character.Gold -= price;
                                 Session.SendPacket(Session.Character.GenerateGold());
-                                DAOFactory.ItemInstanceDAO.InsertOrUpdate(bzitemdto);
+                                DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(bzitemdto);
                                 ServerManager.Instance.BazaarRefresh(bzcree.BazaarItem.BazaarItemId);
                                 Session.SendPacket(
                                     $"rc_buy 1 {bzcree.Item.Item.VNum} {bzcree.Owner} {cBuyPacket.Amount} {cBuyPacket.Price} 0 0 0");
@@ -168,11 +168,11 @@ namespace GloomyTale.Handler
 
             SpinWait.SpinUntil(() => !ServerManager.Instance.InBazaarRefreshMode);
 
-            BazaarItemDTO bazaarItemDTO = DAOFactory.BazaarItemDAO.LoadById(cScalcPacket.BazaarId);
+            BazaarItemDTO bazaarItemDTO = DAOFactory.Instance.BazaarItemDAO.LoadById(cScalcPacket.BazaarId);
 
             if (bazaarItemDTO != null)
             {
-                ItemInstanceDTO itemInstanceDTO = DAOFactory.ItemInstanceDAO.LoadById(bazaarItemDTO.ItemInstanceId);
+                ItemInstanceDTO itemInstanceDTO = DAOFactory.Instance.ItemInstanceDAO.LoadById(bazaarItemDTO.ItemInstanceId);
 
                 if (itemInstanceDTO == null)
                 {
@@ -223,12 +223,12 @@ namespace GloomyTale.Handler
 
                         Logger.Log.LogUserEvent("BAZAAR_REMOVE", Session.GenerateIdentity(), $"BazaarId: {cScalcPacket.BazaarId}, IId: {itemInstance.Id} VNum: {itemInstance.ItemVNum} Amount: {bazaarItemDTO.Amount} RemainingAmount: {itemInstance.Amount} Price: {bazaarItemDTO.Price}");
 
-                        if (DAOFactory.BazaarItemDAO.LoadById(bazaarItemDTO.BazaarItemId) != null)
+                        if (DAOFactory.Instance.BazaarItemDAO.LoadById(bazaarItemDTO.BazaarItemId) != null)
                         {
-                            DAOFactory.BazaarItemDAO.Delete(bazaarItemDTO.BazaarItemId);
+                            DAOFactory.Instance.BazaarItemDAO.Delete(bazaarItemDTO.BazaarItemId);
                         }
 
-                        DAOFactory.ItemInstanceDAO.Delete(itemInstance.Id);
+                        DAOFactory.Instance.ItemInstanceDAO.Delete(itemInstance.Id);
 
                         Session.Character.Inventory.RemoveItemFromInventory(itemInstance.Id, itemInstance.Amount);
 
@@ -411,7 +411,7 @@ namespace GloomyTale.Handler
                     return;
             }
 
-            DAOFactory.ItemInstanceDAO.InsertOrUpdate(bazaar);
+            DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(bazaar);
 
             BazaarItemDTO bazaarItem = new BazaarItemDTO
             {
@@ -425,7 +425,7 @@ namespace GloomyTale.Handler
                 ItemInstanceId = bazaar.Id
             };
 
-            DAOFactory.BazaarItemDAO.InsertOrUpdate(ref bazaarItem);
+            DAOFactory.Instance.BazaarItemDAO.InsertOrUpdate(ref bazaarItem);
             ServerManager.Instance.BazaarRefresh(bazaarItem.BazaarItemId);
 
             Session.Character.Gold -= tax;
@@ -464,7 +464,7 @@ namespace GloomyTale.Handler
                 return;
             }
 
-            BazaarItemDTO bz = DAOFactory.BazaarItemDAO.LoadById(cModPacket.BazaarId);
+            BazaarItemDTO bz = DAOFactory.Instance.BazaarItemDAO.LoadById(cModPacket.BazaarId);
             if (bz != null)
             {
                 if (bz.SellerId != Session.Character.CharacterId)
@@ -472,7 +472,7 @@ namespace GloomyTale.Handler
                     return;
                 }
 
-                ItemInstance itemInstance = new ItemInstance(DAOFactory.ItemInstanceDAO.LoadById(bz.ItemInstanceId));
+                ItemInstance itemInstance = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bz.ItemInstanceId));
                 if (itemInstance == null || bz.Amount != itemInstance.Amount)
                 {
                     return;
@@ -500,7 +500,7 @@ namespace GloomyTale.Handler
 
                 bz.Price = cModPacket.Price;
 
-                DAOFactory.BazaarItemDAO.InsertOrUpdate(ref bz);
+                DAOFactory.Instance.BazaarItemDAO.InsertOrUpdate(ref bz);
                 ServerManager.Instance.BazaarRefresh(bz.BazaarItemId);
                 
                 Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("OBJECT_MOD_IN_BAZAAR"), bz.Price),

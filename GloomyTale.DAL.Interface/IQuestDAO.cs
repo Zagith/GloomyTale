@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IQuestDAO
+    public interface IQuestDAO : IMappingBaseDAO
     {
         #region Methods
 

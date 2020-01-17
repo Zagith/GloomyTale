@@ -3,7 +3,7 @@
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class QuestObjectiveDTO
+    public class QuestObjectiveDTO : MappingBaseDTO
     {
         public int QuestObjectiveId { get; set; }
 

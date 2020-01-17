@@ -19,21 +19,13 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IQuicklistEntryDAO
+    public interface IQuicklistEntryDAO : ISynchronizableBaseDAO<QuicklistEntryDTO>
     {
         #region Methods
 
         IEnumerable<QuicklistEntryDTO> LoadByCharacterId(long characterId);
 
         IEnumerable<Guid> LoadKeysByCharacterId(long characterId);
-
-        DeleteResult Delete(Guid id);
-
-        QuicklistEntryDTO InsertOrUpdate(QuicklistEntryDTO dto);
-
-        IEnumerable<QuicklistEntryDTO> InsertOrUpdate(IEnumerable<QuicklistEntryDTO> dtos);
-
-        QuicklistEntryDTO LoadById(Guid id);
 
         #endregion
     }

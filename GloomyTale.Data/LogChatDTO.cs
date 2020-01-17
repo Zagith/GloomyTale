@@ -4,7 +4,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class LogChatDTO
+    public class LogChatDTO : MappingBaseDTO
     {
         public long LogId { get; set; }
 

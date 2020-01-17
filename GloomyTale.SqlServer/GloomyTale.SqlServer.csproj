@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GloomyTale.DAL.DAO\GloomyTale.DAL.DAO.csproj" />
     <ProjectReference Include="..\GloomyTale.DAL\GloomyTale.DAL.csproj" />
+    <ProjectReference Include="..\GloomyTale.GameObject\GloomyTale.GameObject.csproj" />
     <ProjectReference Include="..\GloomyTale.Plugins\GloomyTale.Plugins.csproj" />
   </ItemGroup>
 

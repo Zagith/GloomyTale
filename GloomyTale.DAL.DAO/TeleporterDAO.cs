@@ -20,12 +20,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class TeleporterDAO : ITeleporterDAO
+    public class TeleporterDAO : MappingBaseDao<Teleporter, TeleporterDTO>, ITeleporterDAO
     {
-        public TeleporterDAO() : base()
+        public TeleporterDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

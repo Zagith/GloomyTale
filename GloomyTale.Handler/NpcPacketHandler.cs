@@ -1390,7 +1390,7 @@ namespace GloomyTale.Handler
                 }
                 else if (npc.Shop?.ShopId == 5)
                 {
-                    ItemDTO item = DAOFactory.ItemDAO.LoadById(15297);
+                    ItemDTO item = DAOFactory.Instance.ItemDAO.LoadById(15297);
                     Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10, item.Name[Session.Account.Language])}");
                 }
                 else if (!string.IsNullOrEmpty(npc.GetNpcDialog()))

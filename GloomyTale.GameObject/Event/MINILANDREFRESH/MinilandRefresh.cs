@@ -29,10 +29,10 @@ namespace GloomyTale.GameObject.Event
         public static void GenerateMinilandEvent()
         {
             ServerManager.Instance.SaveAll();
-            foreach (CharacterDTO chara in DAOFactory.CharacterDAO.LoadAll())
+            foreach (CharacterDTO chara in DAOFactory.Instance.CharacterDAO.LoadAll())
             {
-                GeneralLogDTO gen = DAOFactory.GeneralLogDAO.LoadByAccount(null).LastOrDefault(s => s.LogData == nameof(MinilandRefresh) && s.LogType == "World" && s.Timestamp.Day == DateTime.Now.Day);
-                int count = DAOFactory.GeneralLogDAO.LoadByAccount(chara.AccountId).Count(s => s.LogData == "MINILAND" && s.Timestamp > DateTime.Now.AddDays(-1) && s.CharacterId == chara.CharacterId);
+                GeneralLogDTO gen = DAOFactory.Instance.GeneralLogDAO.LoadByAccount(null).LastOrDefault(s => s.LogData == nameof(MinilandRefresh) && s.LogType == "World" && s.Timestamp.Day == DateTime.Now.Day);
+                int count = DAOFactory.Instance.GeneralLogDAO.LoadByAccount(chara.AccountId).Count(s => s.LogData == "MINILAND" && s.Timestamp > DateTime.Now.AddDays(-1) && s.CharacterId == chara.CharacterId);
 
                 ClientSession Session = ServerManager.Instance.GetSessionByCharacterId(chara.CharacterId);
                 if (Session != null)
@@ -48,10 +48,10 @@ namespace GloomyTale.GameObject.Event
                     }
                     chara.MinilandPoint = 2000;
                     CharacterDTO chara2 = chara;
-                    DAOFactory.CharacterDAO.InsertOrUpdate(ref chara2);
+                    DAOFactory.Instance.CharacterDAO.InsertOrUpdate(ref chara2);
                 }
             }
-            DAOFactory.GeneralLogDAO.Insert(new GeneralLogDTO { LogData = nameof(MinilandRefresh), LogType = "World", Timestamp = DateTime.Now });
+            DAOFactory.Instance.GeneralLogDAO.Insert(new GeneralLogDTO { LogData = nameof(MinilandRefresh), LogType = "World", Timestamp = DateTime.Now });
             ServerManager.Instance.StartedEvents.Remove(EventType.MINILANDREFRESHEVENT);
         }
 

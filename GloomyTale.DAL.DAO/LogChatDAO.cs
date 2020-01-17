@@ -8,14 +8,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class LogChatDAO : ILogChatDAO
+    public class LogChatDAO : MappingBaseDao<LogChat, LogChatDTO>, ILogChatDAO
     {
-        public LogChatDAO() : base()
+        public LogChatDAO(IMapper mapper) : base(mapper)
         { }
 
         public LogChatDTO Insert(LogChatDTO generalLog)

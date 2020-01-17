@@ -17,7 +17,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class RollGeneratedItemDTO
+    public class RollGeneratedItemDTO : MappingBaseDTO
     {
         #region Properties
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface ILogChatDAO
+    public interface ILogChatDAO : IMappingBaseDAO
     {
         LogChatDTO Insert(LogChatDTO generalLog);
 

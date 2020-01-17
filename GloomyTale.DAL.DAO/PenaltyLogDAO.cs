@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class PenaltyLogDAO : IPenaltyLogDAO
+    public class PenaltyLogDAO : MappingBaseDao<PenaltyLog, PenaltyLogDTO>, IPenaltyLogDAO
     {
-        public PenaltyLogDAO() : base()
+        public PenaltyLogDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

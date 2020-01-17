@@ -135,9 +135,9 @@ namespace GloomyTale.GameObject
             }
         }
 
-        public List<CellonOptionDTO> CellonOptions => _cellonOptions ?? (_cellonOptions = DAOFactory.CellonOptionDAO.GetOptionsByWearableInstanceId(EquipmentSerialId == Guid.Empty ? EquipmentSerialId = Guid.NewGuid() : EquipmentSerialId).ToList());
+        public List<CellonOptionDTO> CellonOptions => _cellonOptions ?? (_cellonOptions = DAOFactory.Instance.CellonOptionDAO.GetOptionsByWearableInstanceId(EquipmentSerialId == Guid.Empty ? EquipmentSerialId = Guid.NewGuid() : EquipmentSerialId).ToList());
 
-        public List<ShellEffectDTO> ShellEffects => _shellEffects ?? (_shellEffects = DAOFactory.ShellEffectDAO.LoadByEquipmentSerialId(EquipmentSerialId == Guid.Empty ? EquipmentSerialId = Guid.NewGuid() : EquipmentSerialId).ToList());
+        public List<ShellEffectDTO> ShellEffects => _shellEffects ?? (_shellEffects = DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(EquipmentSerialId == Guid.Empty ? EquipmentSerialId = Guid.NewGuid() : EquipmentSerialId).ToList());
 
 
         #endregion
@@ -1014,7 +1014,7 @@ namespace GloomyTale.GameObject
             foreach (CellonOptionDTO effect in CellonOptions)
             {
                 effect.EquipmentSerialId = EquipmentSerialId;
-                effect.CellonOptionId = DAOFactory.CellonOptionDAO.InsertOrUpdate(effect).CellonOptionId;
+                effect.CellonOptionId = DAOFactory.Instance.CellonOptionDAO.InsertOrUpdate(effect).CellonOptionId;
             }
         }
 
@@ -1804,7 +1804,7 @@ namespace GloomyTale.GameObject
                 IsPartnerEquipment = true;
                 ShellEffects.Clear();
                 ShellRarity = null;
-                DAOFactory.ShellEffectDAO.DeleteByEquipmentSerialId(EquipmentSerialId);
+                DAOFactory.Instance.ShellEffectDAO.DeleteByEquipmentSerialId(EquipmentSerialId);
                 BoundCharacterId = null;
                 HoldingVNum = ItemVNum;
                 

@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class CharacterRelationDAO : ICharacterRelationDAO
+    public class CharacterRelationDAO : MappingBaseDao<CharacterRelation, CharacterRelationDTO>, ICharacterRelationDAO
     {
-        public CharacterRelationDAO() : base()
+        public CharacterRelationDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

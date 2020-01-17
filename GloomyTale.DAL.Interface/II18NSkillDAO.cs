@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface II18NSkillDAO
+    public interface II18NSkillDAO : IMappingBaseDAO
     {
         #region Methods
 

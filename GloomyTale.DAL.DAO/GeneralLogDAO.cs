@@ -22,12 +22,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class GeneralLogDAO : IGeneralLogDAO
+    public class GeneralLogDAO : MappingBaseDao<GeneralLog, GeneralLogDTO>, IGeneralLogDAO
     {
-        public GeneralLogDAO() : base()
+        public GeneralLogDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

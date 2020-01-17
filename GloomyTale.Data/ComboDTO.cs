@@ -17,7 +17,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class ComboDTO
+    public class ComboDTO : MappingBaseDTO
     {
         #region Properties
 

@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class MailDAO : IMailDAO
+    public class MailDAO : MappingBaseDao<Mail, MailDTO>, IMailDAO
     {
-        public MailDAO() : base()
+        public MailDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

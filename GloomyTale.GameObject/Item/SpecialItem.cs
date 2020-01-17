@@ -161,7 +161,7 @@ namespace GloomyTale.GameObject
                 session.Character.GeneralLogs.Where(s => s.LogType == "InstanceEntry" && (short.Parse(s.LogData) == 16 || short.Parse(s.LogData) == 17) && s.Timestamp.Date == DateTime.Today).ToList().ForEach(s =>
                 {
                     s.LogType = "NulledInstanceEntry";
-                    DAOFactory.GeneralLogDAO.InsertOrUpdate(ref s);
+                    DAOFactory.Instance.GeneralLogDAO.InsertOrUpdate(ref s);
                 });
                 session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                 return;
@@ -456,7 +456,7 @@ namespace GloomyTale.GameObject
                         {
                             wearInstance.ShellEffects.Clear();
                             wearInstance.ShellRarity = null;
-                            DAOFactory.ShellEffectDAO.DeleteByEquipmentSerialId(wearInstance.EquipmentSerialId);
+                            DAOFactory.Instance.ShellEffectDAO.DeleteByEquipmentSerialId(wearInstance.EquipmentSerialId);
                             if (wearInstance.EquipmentSerialId == Guid.Empty)
                             {
                                 wearInstance.EquipmentSerialId = Guid.NewGuid();
@@ -1642,7 +1642,7 @@ namespace GloomyTale.GameObject
                                     {
                                         return;
                                     }
-                                    IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.RollGeneratedItemDAO.LoadByItemVNum(VNum);
+                                    IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.Instance.RollGeneratedItemDAO.LoadByItemVNum(VNum);
                                     IEnumerable<RollGeneratedItemDTO> rollGeneratedItemDtos = roll as IList<RollGeneratedItemDTO> ?? roll.ToList();
                                     if (!rollGeneratedItemDtos.Any())
                                     {

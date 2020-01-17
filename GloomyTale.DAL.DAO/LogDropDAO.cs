@@ -8,12 +8,13 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class LogDropDAO : ILogDropDAO
+    public class LogDropDAO : MappingBaseDao<LogDrop, LogDropDTO>, ILogDropDAO
     {
-        public LogDropDAO() : base()
+        public LogDropDAO(IMapper mapper) : base(mapper)
         { }
 
         public LogDropDTO Insert(LogDropDTO generalLog)

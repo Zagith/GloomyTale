@@ -20,12 +20,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class DropDAO : IDropDAO
+    public class DropDAO : MappingBaseDao<Drop, DropDTO>, IDropDAO
     {
-        public DropDAO() : base()
+        public DropDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

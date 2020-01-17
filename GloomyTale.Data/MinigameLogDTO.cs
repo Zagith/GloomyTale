@@ -1,7 +1,7 @@
 ﻿using System;
 namespace GloomyTale.Data
 {
-    public class MinigameLogDTO
+    public class MinigameLogDTO : MappingBaseDTO
     {
         public long MinigameLogId { get; set; }
 

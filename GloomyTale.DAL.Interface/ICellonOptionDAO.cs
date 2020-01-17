@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface ICellonOptionDAO
+    public interface ICellonOptionDAO : IMappingBaseDAO
     {
         #region Methods
 

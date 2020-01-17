@@ -134,13 +134,13 @@ namespace GloomyTale.GameObject
                                             wearable.BoundCharacterId = session.Character.CharacterId;
                                             wearable.ShellRarity = inv.Rare;
                                             wearable.ShellEffects.Clear();
-                                            DAOFactory.ShellEffectDAO.DeleteByEquipmentSerialId(wearable.EquipmentSerialId);
+                                            DAOFactory.Instance.ShellEffectDAO.DeleteByEquipmentSerialId(wearable.EquipmentSerialId);
                                             wearable.ShellEffects.AddRange(inv.ShellEffects);
                                             if (wearable.EquipmentSerialId == Guid.Empty)
                                             {
                                                 wearable.EquipmentSerialId = Guid.NewGuid();
                                             }
-                                            DAOFactory.ShellEffectDAO.InsertOrUpdateFromList(wearable.ShellEffects, wearable.EquipmentSerialId);
+                                            DAOFactory.Instance.ShellEffectDAO.InsertOrUpdateFromList(wearable.ShellEffects, wearable.EquipmentSerialId);
                                             session.Character.DeleteItemByItemInstanceId(inv.Id);
                                             session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("OPTION_SUCCESS"), 0));
                                         }

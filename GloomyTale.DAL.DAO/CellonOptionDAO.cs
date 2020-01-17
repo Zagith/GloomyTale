@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class CellonOptionDAO : ICellonOptionDAO
+    public class CellonOptionDAO : MappingBaseDao<CellonOption, CellonOptionDTO>, ICellonOptionDAO
     {
-        public CellonOptionDAO() : base()
+        public CellonOptionDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

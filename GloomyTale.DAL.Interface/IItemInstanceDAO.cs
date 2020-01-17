@@ -20,7 +20,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IItemInstanceDAO
+    public interface IItemInstanceDAO : ISynchronizableBaseDAO<ItemInstanceDTO>
     {
         #region Methods
 
@@ -37,14 +37,6 @@ namespace GloomyTale.DAL.Interface
         IEnumerable<ItemInstanceDTO> LoadByType(long characterId, InventoryType type);
 
         IList<Guid> LoadSlotAndTypeByCharacterId(long characterId);
-
-        DeleteResult Delete(Guid id);
-
-        ItemInstanceDTO InsertOrUpdate(ItemInstanceDTO dto);
-
-        IEnumerable<ItemInstanceDTO> InsertOrUpdate(IEnumerable<ItemInstanceDTO> dtos);
-
-        ItemInstanceDTO LoadById(Guid id);
 
         #endregion
     }

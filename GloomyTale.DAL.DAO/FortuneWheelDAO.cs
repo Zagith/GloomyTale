@@ -5,12 +5,13 @@ using GloomyTale.DAL.Interface;
 using GloomyTale.Data;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class FortuneWheelDAO : IFortuneWheelDAO
+    public class FortuneWheelDAO : MappingBaseDao<FortuneWheel, FortuneWheelDTO>, IFortuneWheelDAO
     {
-        public FortuneWheelDAO() : base()
+        public FortuneWheelDAO(IMapper mapper) : base(mapper)
         { }
 
         public IEnumerable<FortuneWheelDTO> LoadByShopId(int shopId)

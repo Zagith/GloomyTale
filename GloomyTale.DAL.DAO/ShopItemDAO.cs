@@ -21,12 +21,13 @@ using GloomyTale.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class ShopItemDAO : IShopItemDAO
+    public class ShopItemDAO : MappingBaseDao<ShopItem, ShopItemDTO>, IShopItemDAO
     {
-        public ShopItemDAO() : base()
+        public ShopItemDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

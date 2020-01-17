@@ -19,7 +19,7 @@ namespace GloomyTale.GameObject.Helpers
                 QuestId = questId,
                 LastDaily = lastDaily
             };
-            DAOFactory.QuestLogDAO.InsertOrUpdate(ref log);
+            DAOFactory.Instance.QuestLogDAO.InsertOrUpdate(ref log);
         }
 
         public void InsertCommandLog(long characterId, PacketDefinition commandPacket, string ipAddress)
@@ -39,7 +39,7 @@ namespace GloomyTale.GameObject.Helpers
                 IpAddress = ipAddress,
                 Timestamp = DateTime.Now
             };
-            DAOFactory.LogCommandsDAO.Insert(command);
+            DAOFactory.Instance.LogCommandsDAO.Insert(command);
         }
 
         public void InsertChatLog(ChatType type, long characterId, string message, string ipAddress)
@@ -52,7 +52,7 @@ namespace GloomyTale.GameObject.Helpers
                 ChatType = type,
                 Timestamp = DateTime.Now
             };
-            DAOFactory.LogChatDAO.Insert(log);
+            DAOFactory.Instance.LogChatDAO.Insert(log);
         }
 
         public void InsertDropLog(ItemInstance inv, ClientSession character, short amount, string ipAddress)
@@ -69,7 +69,7 @@ namespace GloomyTale.GameObject.Helpers
                 IpAddress = ipAddress,
                 Timestamp = DateTime.Now
             };
-            DAOFactory.LogDropDAO.Insert(log);
+            DAOFactory.Instance.LogDropDAO.Insert(log);
         }
 
         public void InsertPutItemLog(MapItem inv, ClientSession character, string ipAddress)
@@ -85,7 +85,7 @@ namespace GloomyTale.GameObject.Helpers
                 IpAddress = ipAddress,
                 Timestamp = DateTime.Now
             };
-            DAOFactory.LogPutItemDAO.Insert(log);
+            DAOFactory.Instance.LogPutItemDAO.Insert(log);
         }
 
         public void InsertTimeSpacesLog(long characterId, long timespaceId, DateTime time)
@@ -96,7 +96,7 @@ namespace GloomyTale.GameObject.Helpers
                 TimeSpaceId = timespaceId,
                 Timestamp = time
             };
-            DAOFactory.TimeSpaceLogDAO.Insert(log);
+            DAOFactory.Instance.TimeSpaceLogDAO.Insert(log);
         }
 
         #region Singleton

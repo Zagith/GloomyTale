@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GloomyTale.Data
 {
-    public class FortuneWheelDTO
+    public class FortuneWheelDTO : MappingBaseDTO
     {
         public bool IsRareRandom { get; set; }
 

@@ -18,7 +18,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class CellonOptionDTO
+    public class CellonOptionDTO : MappingBaseDTO
     {
         #region Properties
 

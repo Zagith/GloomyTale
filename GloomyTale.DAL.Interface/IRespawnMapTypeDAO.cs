@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IRespawnMapTypeDAO
+    public interface IRespawnMapTypeDAO : IMappingBaseDAO
     {
         #region Methods
 

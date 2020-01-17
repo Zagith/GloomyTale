@@ -20,12 +20,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class ShopSkillDAO : IShopSkillDAO
+    public class ShopSkillDAO : MappingBaseDao<ShopSkill, ShopSkillDTO>, IShopSkillDAO
     {
-        public ShopSkillDAO() : base()
+        public ShopSkillDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

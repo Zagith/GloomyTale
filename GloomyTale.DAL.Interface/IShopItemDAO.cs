@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IShopItemDAO
+    public interface IShopItemDAO : IMappingBaseDAO
     {
         #region Methods
 

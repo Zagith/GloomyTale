@@ -21,12 +21,13 @@ using GloomyTale.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class NpcMonsterSkillDAO : INpcMonsterSkillDAO
+    public class NpcMonsterSkillDAO : MappingBaseDao<NpcMonsterSkill, NpcMonsterSkillDTO>, INpcMonsterSkillDAO
     {
-        public NpcMonsterSkillDAO() : base()
+        public NpcMonsterSkillDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

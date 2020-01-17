@@ -3,7 +3,7 @@
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class TimeSpacesLogDTO
+    public class TimeSpacesLogDTO : MappingBaseDTO
     {
         public long LogId { get; set; }
 

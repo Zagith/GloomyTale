@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface IFortuneWheelDAO
+    public interface IFortuneWheelDAO : IMappingBaseDAO
     {
         IEnumerable<FortuneWheelDTO> LoadByShopId(int shopId);
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface ITimeSpaceLogDAO
+    public interface ITimeSpaceLogDAO : IMappingBaseDAO
     {
         TimeSpacesLogDTO Insert(TimeSpacesLogDTO generalLog);
 

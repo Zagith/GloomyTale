@@ -7,12 +7,13 @@ using GloomyTale.DAL.Interface;
 using GloomyTale.Data;
 using GloomyTale.Data.Enums;
 using GloomyTale.DAL.EF.Helpers;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class CharacterQuestDAO : ICharacterQuestDAO
+    public class CharacterQuestDAO : SynchronizableBaseDAO<CharacterQuest, CharacterQuestDTO>, ICharacterQuestDAO
     {
-        public CharacterQuestDAO() : base()
+        public CharacterQuestDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods

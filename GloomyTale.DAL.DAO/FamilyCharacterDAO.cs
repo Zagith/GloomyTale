@@ -22,12 +22,13 @@ using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class FamilyCharacterDAO : IFamilyCharacterDAO
+    public class FamilyCharacterDAO : MappingBaseDao<FamilyCharacter, FamilyCharacterDTO>, IFamilyCharacterDAO
     {
-        public FamilyCharacterDAO() : base()
+        public FamilyCharacterDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods
