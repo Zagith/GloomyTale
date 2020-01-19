@@ -1281,7 +1281,7 @@ namespace OpenNos.Handler
                             Session.SendPacket(Session.Character.GenerateEquipment());
                             Session.CurrentMapInstance?.Broadcast(Session.Character.GeneratePairy());
                             Session.SendPacket(Session.Character.GenerateFd());
-                            Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(), ReceiverType.AllExceptMe);
+                            Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                             Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
                         }
                         else if (mate != null)
