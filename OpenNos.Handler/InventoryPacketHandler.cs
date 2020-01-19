@@ -2442,6 +2442,10 @@ namespace OpenNos.Handler
 
             if (packet.Length >= 2 && packet[1].Length > 0)
             {
+                if (itemInstance.Item.VNum == 15282 || itemInstance.Item.VNum == 15284)
+                {
+                    return;
+                }
                 itemInstance?.Item.Use(Session, ref itemInstance, packet[1][0] == '#' ? (byte)255 : (byte)0, packet);
             }            
         }

@@ -3571,7 +3571,13 @@ namespace OpenNos.GameObject
                     if (monsterToAttack.Monster.MonsterType != MonsterType.Special)
                     {
                         #region item drop
-
+                        bool divideRate = true;
+                        if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act4)
+                         || MapInstance.Map.MapId == 20001 // Miniland
+                         || explodeMonsters.Contains(monsterToAttack.MonsterVNum))
+                        {
+                            divideRate = false;
+                        }
                         int dropRate = (ServerManager.Instance.Configuration.RateDrop + MapInstance.DropRate);
                         int x = 0;
                         double rndamount = ServerManager.RandomNumber() * random.NextDouble();
@@ -3583,14 +3589,7 @@ namespace OpenNos.GameObject
                                 {
                                     rndamount = ServerManager.RandomNumber() * random.NextDouble();
                                 }
-                                bool divideRate = true;
-                                if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act4)
-                                 || MapInstance.Map.MapId == 20001 // Miniland
-                                 || explodeMonsters.Contains(monsterToAttack.MonsterVNum)
-                                 || drop.IsLevelPenalty == false)
-                                {
-                                    divideRate = false;
-                                }
+                                
                                 double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
                                 if (rndamount <= (double)drop.DropChance * dropRate / 1000.000 / divider)
                                 {
@@ -3710,8 +3709,8 @@ namespace OpenNos.GameObject
                                             {
                                                 double multiplier = 1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseEarnedGold)[0] / 100D);
                                                 multiplier += (ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreGold)?.Value ?? 0) / 100D;
-
-                                                session.Character.Gold += (int)(drop2.Amount * multiplier);
+                                                double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
+                                                session.Character.Gold += (int)(drop2.Amount * multiplier / divider);
                                                 if (session.Character.Gold > maxGold)
                                                 {
                                                     session.Character.Gold = maxGold;

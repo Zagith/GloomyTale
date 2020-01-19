@@ -1637,11 +1637,7 @@ namespace OpenNos.GameObject
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                     break;                                
 
-                                default:
-                                    if (inv.Item.VNum == 15282 || inv.Item.VNum == 15284)
-                                    {
-                                        return;
-                                    }
+                                default:                                    
                                     IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.RollGeneratedItemDAO.LoadByItemVNum(VNum);
                                     IEnumerable<RollGeneratedItemDTO> rollGeneratedItemDtos = roll as IList<RollGeneratedItemDTO> ?? roll.ToList();
                                     if (!rollGeneratedItemDtos.Any())
