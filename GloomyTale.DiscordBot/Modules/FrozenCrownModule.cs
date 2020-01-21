@@ -14,7 +14,7 @@ namespace GloomyTale.DiscordBot.Modules
         [Summary("Give the act4 percentage stat (You have to be on #bot-commands)")]
         public async Task Act4Statistic()
         {
-            //if (Context.Channel.Name == "bot-commands")
+            if (Context.Channel.Name == "bot-commands")
             {
                 Tuple<int, int> stats = DiscordServiceClient.Instance.GetAct4Stat();
                 string message = "Act4 stats:";

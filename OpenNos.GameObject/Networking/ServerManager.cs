@@ -2340,7 +2340,7 @@ namespace OpenNos.GameObject.Networking
             {
                 return;
             }
-
+            FrozenCrownBot.RefreshAct4BotStat(Act4AngelStat.Percentage / 100, Act4DemonStat.Percentage / 100);
             MapInstance angelMapInstance = GetMapInstance(GetBaseMapInstanceIdByMapId(132));
             MapInstance demonMapInstance = GetMapInstance(GetBaseMapInstanceIdByMapId(133));
 

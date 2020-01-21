@@ -27,11 +27,6 @@ namespace OpenNos.Master.Server
 
         public void RefreshAct4Stat(int angel, int demon)
         {
-            /*if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
-            {
-                return;
-            }*/
-
             MSManager.Instance.Act4Stat = new Tuple<int,int>(angel,demon);
         }
 
