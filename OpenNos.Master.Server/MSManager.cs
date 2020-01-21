@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 
+using GloomyTale.AdminTool.Shared.ChatLog;
 using OpenNos.Core;
 using OpenNos.Master.Library.Data;
 using OpenNos.SCS.Communication.ScsServices.Service;
@@ -40,6 +41,8 @@ namespace OpenNos.Master.Server
             LoginServers = new List<IScsServiceClient>();
             ConnectedAccounts = new ThreadSafeGenericList<AccountConnection>();
             AuthentificatedClients = new ThreadSafeGenericLockedList<long>();
+            ChatLogs = new ThreadSafeGenericList<ChatLogEntry>();
+            AllChatLogs = new ThreadSafeGenericList<ChatLogEntry>();
             ConfigurationObject = new ConfigurationObject
             {
                 RateXP = int.Parse(ConfigurationManager.AppSettings["RateXp"]),
@@ -93,7 +96,9 @@ namespace OpenNos.Master.Server
 
         public List<WorldServer> WorldServers { get; set; }
 
-        //public List<DiscordServer> DiscordServers { get; set; }
+        public ThreadSafeGenericList<ChatLogEntry> ChatLogs { get; set; }
+
+        public ThreadSafeGenericList<ChatLogEntry> AllChatLogs { get; set; }
         #endregion
     }
 }

@@ -117,6 +117,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminToolService.cs" />
     <Compile Include="CommunicationService.cs" />
     <Compile Include="AuthentificationService.cs" />
     <Compile Include="DiscordService.cs" />
@@ -164,6 +165,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GloomyTale.AdminTool.Shared\GloomyTale.AdminTool.Shared.csproj">
+      <Project>{CB47DC8B-EF9A-44F9-9F28-E6CDC7CB7752}</Project>
+      <Name>GloomyTale.AdminTool.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenNos.Core\OpenNos.Core.csproj">
       <Project>{c93a0a40-0551-4732-b594-171b87679ac1}</Project>
       <Name>OpenNos.Core</Name>

@@ -499,10 +499,6 @@
     <Resource Include="on-logo-icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GloomyTale.AdminTool.Networking\GloomyTale.AdminTool.Networking.csproj">
-      <Project>{3CDEC84B-42FB-49BD-90E9-5893A827359E}</Project>
-      <Name>OpenNos.ChatLog.Networking</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GloomyTale.AdminTool.Shared\GloomyTale.AdminTool.Shared.csproj">
       <Project>{CB47DC8B-EF9A-44F9-9F28-E6CDC7CB7752}</Project>
       <Name>OpenNos.ChatLog.Shared</Name>

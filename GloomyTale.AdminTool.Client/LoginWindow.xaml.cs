@@ -1,9 +1,11 @@
 ﻿using OpenNos.Master.Library.Client;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,10 +23,19 @@ namespace GloomyTale.AdminTool.Client
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow() => InitializeComponent();
+        public LoginWindow()
+        {
+            InitializeComponent();
+        }
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
+            // initialize api
+            if (AdminToolServiceClient.Instance.Authenticate(ConfigurationManager.AppSettings["MasterAuthKey"]))
+            {
+                Console.WriteLine();
+                //Logger.Info(Language.Instance.GetMessageFromKey("API_INITIALIZED"));
+            }
             string Sha512(string inputString)
             {
                 using (SHA512 hash = SHA512.Create())

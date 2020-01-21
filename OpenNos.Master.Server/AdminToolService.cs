@@ -1,17 +1,17 @@
 ﻿using GloomyTale.AdminTool.Shared.ChatLog;
-using Hik.Communication.ScsServices.Service;
 using OpenNos.Core;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.Domain.AdminTool;
 using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Interface;
+using OpenNos.SCS.Communication.ScsServices.Service;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 
-namespace GloomyTale.AdminTool.Server
+namespace OpenNos.Master.Server
 {
     internal class AdminToolService : ScsService, IAdminToolService
     {
@@ -24,7 +24,7 @@ namespace GloomyTale.AdminTool.Server
 
             if (AuthentificationServiceClient.Instance.ValidateAccount(user, passHash) is AccountDTO account && account.Authority > AuthorityType.User)
             {
-                AdminToolManager.Instance.AuthentificatedClients.Add(CurrentClient.ClientId);
+                MSManager.Instance.AuthentificatedClients.Add(CurrentClient.ClientId);
                 return true;
             }
 
@@ -38,9 +38,9 @@ namespace GloomyTale.AdminTool.Server
                 return false;
             }
 
-            if (authKey == ConfigurationManager.AppSettings["AdminToolgKey"])
+            if (authKey == ConfigurationManager.AppSettings["MasterAuthkey"])
             {
-                AdminToolManager.Instance.AuthentificatedClients.Add(CurrentClient.ClientId);
+                MSManager.Instance.AuthentificatedClients.Add(CurrentClient.ClientId);
                 return true;
             }
 
@@ -50,7 +50,7 @@ namespace GloomyTale.AdminTool.Server
         public List<ChatLogEntry> GetChatLogEntries(string sender, long? senderid, string receiver, long? receiverid, string message, DateTime? start, DateTime? end, ChatLogType? logType)
         {
             Logger.Info($"Received Log Request - Sender: {sender} SenderId: {senderid} Receiver: {receiver} ReceiverId: {receiverid} Message: {message} DateStart: {start} DateEnd: {end} ChatLogType: {logType}");
-            List<ChatLogEntry> tmp = AdminToolManager.Instance.AllChatLogs.GetAllItems();
+            List<ChatLogEntry> tmp = MSManager.Instance.AllChatLogs.GetAllItems();
             if (!string.IsNullOrWhiteSpace(sender))
             {
                 tmp = tmp.Where(s => s.Sender.IndexOf(sender, StringComparison.CurrentCultureIgnoreCase) >= 0).ToList();
@@ -88,14 +88,14 @@ namespace GloomyTale.AdminTool.Server
 
         public void LogChatMessage(ChatLogEntry logEntry)
         {
-            if (!AdminToolManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)) || logEntry == null)
+            if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)) || logEntry == null)
             {
                 return;
             }
 
             logEntry.Timestamp = DateTime.Now;
-            AdminToolManager.Instance.ChatLogs.Add(logEntry);
-            AdminToolManager.Instance.AllChatLogs.Add(logEntry);
+            MSManager.Instance.ChatLogs.Add(logEntry);
+            MSManager.Instance.AllChatLogs.Add(logEntry);
         }
     }
 }

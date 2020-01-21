@@ -101,6 +101,7 @@ namespace OpenNos.Master.Server
                     string ipAddress = ConfigurationManager.AppSettings["MasterIP"];
                     IScsServiceApplication _server = ScsServiceBuilder.CreateService(new ScsTcpEndPoint(ipAddress, port));
 
+                    _server.AddService<IAdminToolService, AdminToolService>(new AdminToolService());
                     _server.AddService<ICommunicationService, CommunicationService>(new CommunicationService());
                     _server.AddService<IConfigurationService, ConfigurationService>(new ConfigurationService());
                     _server.AddService<IMailService, MailService>(new MailService());

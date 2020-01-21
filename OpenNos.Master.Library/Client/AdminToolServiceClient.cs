@@ -1,13 +1,13 @@
-﻿using Hik.Communication.ScsServices.Client;
-using Hik.Communication.Scs.Communication;
-using Hik.Communication.Scs.Communication.EndPoints.Tcp;
-using OpenNos.Master.Library.Interface;
+﻿using OpenNos.Master.Library.Interface;
 using System;
 using System.Collections.Generic;
 using OpenNos.Core;
 using GloomyTale.AdminTool.Shared.ChatLog;
 using OpenNos.Domain.AdminTool;
 using System.Configuration;
+using OpenNos.SCS.Communication.ScsServices.Client;
+using OpenNos.SCS.Communication.Scs.Communication;
+using OpenNos.SCS.Communication.Scs.Communication.EndPoints.Tcp;
 
 namespace OpenNos.Master.Library.Client
 {
@@ -25,8 +25,8 @@ namespace OpenNos.Master.Library.Client
 
         public AdminToolServiceClient()
         {
-            string ip = ConfigurationManager.AppSettings["AdminToolIP"];
-            int port = Convert.ToInt32(ConfigurationManager.AppSettings["AdminToolPort"]);
+            string ip = ConfigurationManager.AppSettings["MasterIP"];
+            int port = Convert.ToInt32(ConfigurationManager.AppSettings["MasterPort"]);
             _client = ScsServiceClientBuilder.CreateClient<IAdminToolService>(new ScsTcpEndPoint(ip, port));
             System.Threading.Thread.Sleep(1000);
             while (_client.CommunicationState != CommunicationStates.Connected)
