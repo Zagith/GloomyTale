@@ -1,14 +1,8 @@
-﻿using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.Master.Library.Data;
-using OpenNos.Master.Library.Interface;
+﻿using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.ScsServices.Service;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Reactive.Linq;
 
 
 namespace OpenNos.Master.Server
@@ -29,6 +23,22 @@ namespace OpenNos.Master.Server
             }
 
             return false;
+        }
+
+        public void RefreshAct4Stat(int angel, int demon)
+        {
+            if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
+            {
+                return;
+            }
+
+            MSManager.Instance.Act4Stat = new Tuple<int,int>(angel,demon);
+        }
+
+        public Tuple<int, int> GetAct4Stat()
+        {
+            Tuple<int, int> stats = MSManager.Instance.Act4Stat;
+            return stats;
         }
     }
 }

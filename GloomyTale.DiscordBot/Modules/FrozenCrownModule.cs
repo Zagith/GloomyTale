@@ -1,6 +1,8 @@
 ﻿using Discord;
 using Discord.Commands;
 using GloomyTale.DiscordBot.Extensions;
+using OpenNos.Master.Library.Client;
+using System;
 using System.Threading.Tasks;
 
 namespace GloomyTale.DiscordBot.Modules
@@ -14,20 +16,21 @@ namespace GloomyTale.DiscordBot.Modules
         {
             if (Context.Channel.Name == "bot-announcement")
             {
+                Tuple<int, int> stats = DiscordServiceClient.Instance.GetAct4Stat();
                 string message = "Act4 stats:";
                 EmbedBuilder angel = new EmbedBuilder
                 {
                     Color = Color.Gold,
                     ImageUrl = "https://cdn.discordapp.com/attachments/420774865369300993/650332113576525844/angel.png",
                     Title = "Faction Angel",
-                    Description = $"Percentage: {FrozenCrownExtension.Instance.SendAct4Stat(1)}%"
+                    Description = $"Percentage: {stats.Item1}%"
                 };
                 await ReplyAsync(message, false, angel.Build());
                 EmbedBuilder demon = new EmbedBuilder
                 {
                     ImageUrl = "https://cdn.discordapp.com/attachments/420774865369300993/650332109025574935/demon.png",
                     Title = "Faction Demon",
-                    Description = $"Percentage: {FrozenCrownExtension.Instance.SendAct4Stat(2)}%"
+                    Description = $"Percentage: {stats.Item2}%"
                 };
 
                 await ReplyAsync("", false, demon.Build());

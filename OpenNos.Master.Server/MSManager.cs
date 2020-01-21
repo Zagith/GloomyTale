@@ -93,6 +93,9 @@ namespace OpenNos.Master.Server
         public List<IScsServiceClient> LoginServers { get; set; }
 
         public List<WorldServer> WorldServers { get; set; }
+
+        public Tuple<int, int> Act4Stat { get; set; }
+
         #endregion
     }
 }

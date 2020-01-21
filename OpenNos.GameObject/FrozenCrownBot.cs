@@ -1,9 +1,4 @@
-﻿using GloomyTale.DiscordBot.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OpenNos.Master.Library.Client;
 
 namespace OpenNos.GameObject
 {
@@ -11,8 +6,7 @@ namespace OpenNos.GameObject
     {
         public static void RefreshAct4BotStat(int angel, int demon)
         {
-            FrozenCrownExtension.Instance.AngelStat = angel;
-            FrozenCrownExtension.Instance.DemonStat = demon;
+            DiscordServiceClient.Instance.RefreshAct4Stat(angel, demon);
         }
     }
 }

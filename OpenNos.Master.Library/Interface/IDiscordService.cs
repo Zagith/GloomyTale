@@ -1,4 +1,6 @@
 ﻿using OpenNos.SCS.Communication.ScsServices.Service;
+using System;
+using System.Collections.Generic;
 
 namespace OpenNos.Master.Library.Interface
 {
@@ -12,6 +14,8 @@ namespace OpenNos.Master.Library.Interface
         /// <returns>true if successful, else false</returns>
         bool Authenticate(string authKey);
 
-        //void GetAct4Stat(int angel, int demon);
+        void RefreshAct4Stat(int angel, int demon);
+
+        Tuple<int, int> GetAct4Stat();
     }
 }

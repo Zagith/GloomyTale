@@ -57,8 +57,9 @@ namespace OpenNos.Master.Library.Client
 
         //public AccountDTO ValidateAccount(string userName, string passHash) => _client.ServiceProxy.ValidateAccount(userName, passHash);
 
-        //public void GetAct4Stat(int angel, int demon) => _client.ServiceProxy.GetAct4Stat(angel, angel);
+        public void RefreshAct4Stat(int angel, int demon) => _client.ServiceProxy.RefreshAct4Stat(angel, demon);
 
+        public Tuple<int, int> GetAct4Stat() => _client.ServiceProxy.GetAct4Stat();
         //public void SendItem(long characterId, MallItem item) => _client.ServiceProxy.SendItem(characterId, item);
 
         //public void SendStaticBonus(long characterId, MallStaticBonus item) => _client.ServiceProxy.SendStaticBonus(characterId, item);

@@ -144,7 +144,6 @@
   <ItemGroup>
     <Compile Include="Enumerations\RegionType.cs" />
     <Compile Include="Extensions\ChannelExtension.cs" />
-    <Compile Include="Extensions\FrozenCrownExtension.cs" />
     <Compile Include="Modules\FrozenCrownModule.cs" />
     <Compile Include="Modules\HelpModule.cs" />
     <Compile Include="Modules\LanguageModule.cs" />
@@ -186,24 +185,24 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-  <None Update="Copy\ffmpeg.exe">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-  </None>
-  <None Update="Copy\libsodium.dll">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-  </None>
-  <None Update="Copy\opus.dll">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-  </None>
-  <None Update="ffmpeg.exe">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </None>
-  <None Update="libsodium.dll">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </None>
-  <None Update="opus.dll">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </None>
+    <None Update="Copy\ffmpeg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Copy\libsodium.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Copy\opus.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libsodium.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="opus.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
