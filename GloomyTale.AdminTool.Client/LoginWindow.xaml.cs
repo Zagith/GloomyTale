@@ -31,7 +31,7 @@ namespace GloomyTale.AdminTool.Client
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
             // initialize api
-            if (AdminToolServiceClient.Instance.Authenticate(ConfigurationManager.AppSettings["MasterAuthKey"]))
+            if (CommunicationServiceClient.Instance.Authenticate(ConfigurationManager.AppSettings["MasterAuthKey"]))
             {
                 Console.WriteLine();
                 //Logger.Info(Language.Instance.GetMessageFromKey("API_INITIALIZED"));
