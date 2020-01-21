@@ -4,6 +4,8 @@ using OpenNos.Domain;
 using OpenNos.Master.Library.Data;
 using System;
 using System.Collections.Generic;
+using OpenNos.Domain.AdminTool;
+using GloomyTale.AdminTool.Shared.ChatLog;
 
 namespace OpenNos.Master.Library.Interface
 {
@@ -11,28 +13,26 @@ namespace OpenNos.Master.Library.Interface
     public interface IAdminToolService
     {
         /// <summary>
-        /// Authenticates the AdminTool Client to the Service
+        /// Authenticates a Client to the Service
         /// </summary>
-        /// <param name="username">AccountName of the User</param>
-        /// <param name="password">SHA512 Hash of the Users password</param>
-        /// <returns>AuthorityType as byte, 0 if access forbidden or wrong credentials</returns>
-        byte Authenticate(string username, string password);
+        /// <param name="authKey">The private Authentication key</param>
+        /// <returns>true if successful, else false</returns>
+        bool Authenticate(string authKey);
 
         /// <summary>
-        /// Adds a penalty to the specified Account and refreshes the PenaltyLog
+        /// Authenticates a Client to the Service
         /// </summary>
-        /// <param name="accountId">Id of the Account</param>
-        /// <param name="penaltyType">Type of the Penalty</param>
-        /// <param name="dateEnd">Date when the penalty should end</param>
-        /// <param name="reason">Reason for the penalty</param>
-        void AddPenalty(long accountId, PenaltyType penaltyType, DateTime dateEnd, string reason);
+        /// <param name="user"></param>
+        /// <param name="passHash"></param>
+        /// <returns></returns>
+        bool AuthenticateAdmin(string user, string passHash);
 
         /// <summary>
         /// Teleports a Character to another one on the same Channel
         /// </summary>
         /// <param name="sourceCharacter">Id of the Character to teleport</param>
         /// <param name="destCharacter">Id of the Destination Character</param>
-        void TeleportToPlayer(long sourceCharacter, long destCharacter);
+        /*void TeleportToPlayer(long sourceCharacter, long destCharacter);
 
         /// <summary>
         /// Teleports a player to a specified position
@@ -160,7 +160,7 @@ namespace OpenNos.Master.Library.Interface
         /// <param name="mapInstanceId">Id of the MapInstance to summon the NPCMonster on</param>
         /// <param name="mapX">X Coordinate</param>
         /// <param name="mapY">Y Coordinate</param>
-        void SummonNPCMonster(Guid channelId, short npcMonsterVnum, short amount, Guid mapInstanceId, short mapX = 0, short mapY = 0);
+        void SummonNPCMonster(Guid channelId, short npcMonsterVnum, short amount, Guid mapInstanceId, short mapX = 0, short mapY = 0);*/
 
         /// <summary>
         /// Get all currently registered MapInstances (for a specific MapId)
@@ -168,6 +168,26 @@ namespace OpenNos.Master.Library.Interface
         /// <param name="worldId">Guid of the Channel</param>
         /// <param name="mapId">Id of the Map</param>
         /// <returns></returns>
-        List<MapInstance> GetAllMapInstances(Guid worldId, short mapId = -1);
+        // List<MapInstance> GetAllMapInstances(Guid worldId, short mapId = -1);
+
+        /// <summary>
+        /// Log Chat Message to Chat Log Server
+        /// </summary>
+        /// <param name="logEntry"></param>
+        void LogChatMessage(ChatLogEntry logEntry);
+
+        /// <summary>
+        /// Receive Log Entries from Chat Log Server
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="senderid"></param>
+        /// <param name="receiver"></param>
+        /// <param name="receiverid"></param>
+        /// <param name="message"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="logType"></param>
+        /// <returns></returns>
+        List<ChatLogEntry> GetChatLogEntries(string sender, long? senderid, string receiver, long? receiverid, string message, DateTime? start, DateTime? end, ChatLogType? logType);
     }
 }

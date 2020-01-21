@@ -67,11 +67,15 @@
     <Reference Include="OpenNos.SCS">
       <HintPath>..\OpenNos.SCS.dll</HintPath>
     </Reference>
+    <Reference Include="Scs, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Scs.1.1.1\lib\net40-client\Scs.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\AdminToolServiceClient.cs" />
     <Compile Include="Client\CommunicationClient.cs" />
     <Compile Include="Client\CommunicationServiceClient.cs" />
     <Compile Include="Client\ConfigurationServiceClient.cs" />
@@ -103,6 +107,10 @@
     <Compile Include="Data\SerializableWorldServer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GloomyTale.AdminTool.Shared\GloomyTale.AdminTool.Shared.csproj">
+      <Project>{cb47dc8b-ef9a-44f9-9f28-e6cdc7cb7752}</Project>
+      <Name>GloomyTale.AdminTool.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenNos.Core\OpenNos.Core.csproj">
       <Project>{c93a0a40-0551-4732-b594-171b87679ac1}</Project>
       <Name>OpenNos.Core</Name>
@@ -127,6 +135,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Changes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
