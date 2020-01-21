@@ -39,10 +39,7 @@ namespace GloomyTale.DiscordBot
 
         public async Task MainAsync()
         {
-            if (DiscordServiceClient.Instance.Authenticate(ConfigurationManager.AppSettings["MasterAuth"]))
-            {
-                Logger.Info(Language.Instance.GetMessageFromKey("API_INITIALIZED"));
-            }
+            
             using (var services = ConfigureServices())
             {               
                 var client = services.GetRequiredService<DiscordSocketClient>();
@@ -55,7 +52,10 @@ namespace GloomyTale.DiscordBot
                 await client.StartAsync();
 
                 await services.GetRequiredService<CommandHandlingService>().InitializeAsync();
-
+                if (DiscordServiceClient.Instance.Authenticate("A22pp#kS4SUaCqZ"))
+                {
+                    Logger.Info(Language.Instance.GetMessageFromKey("API_INITIALIZED"));
+                }
                 await Task.Delay(-1);
             }
         }
