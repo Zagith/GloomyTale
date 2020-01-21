@@ -11,7 +11,7 @@ namespace GloomyTale.DiscordBot.Modules
     {
         [Command("act4stat")]
         [Name("act4stat")]
-        [Summary("Give the act4 percentage stat (You have to be on #bot-commands)")]
+        [Summary("Give the act4 percentage stat (You have to be on #bot-commands) WARN: It will update every minute")]
         public async Task Act4Statistic()
         {
             if (Context.Channel.Name == "bot-commands")
