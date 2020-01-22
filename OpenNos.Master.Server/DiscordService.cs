@@ -90,7 +90,7 @@ namespace OpenNos.Master.Server
 
         public void RestartAll()
         {
-            string worldGroup = ServerManager.Instance.ServerGroup;
+            string worldGroup = "*";
 
             CommunicationServiceClient.Instance.Restart(worldGroup, 1);
         }

@@ -336,10 +336,10 @@ namespace OpenNos.Master.Server
 
         public void Restart(string worldGroup, int time = 5)
         {
-            if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
+            /*if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
             {
                 return;
-            }
+            }*/
 
             if (worldGroup == "*")
             {
