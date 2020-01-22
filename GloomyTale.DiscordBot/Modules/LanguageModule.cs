@@ -39,6 +39,10 @@ namespace GloomyTale.DiscordBot.Modules
                     await ReplyAsync($"{user.Username} got the role {role.Name}.");
                 }
             }
+            else
+            {
+                await ReplyAsync("You have to be on #language-chooise.");
+            }
         }
     }
 }

@@ -11,6 +11,6 @@ namespace GloomyTale.DiscordBot.Enumerations
         SPANISH,
         RUSSIAN,
         TURKISH,
-        POLISH
+        POLISH,
     }
 }
