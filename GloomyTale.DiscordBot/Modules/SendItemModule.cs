@@ -21,6 +21,7 @@ namespace GloomyTale.DiscordBot.Modules
                     ItemVNum = vnum,
                     Amount = amount,
                 });
+                await ReplyAsync($"Item Sended to {characterName} succesfully!");
             }
         }
     }
