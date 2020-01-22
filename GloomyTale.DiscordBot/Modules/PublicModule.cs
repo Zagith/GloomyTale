@@ -17,7 +17,7 @@ namespace GloomyTale.DiscordBot.Modules
     {
         [Command("del-msg")]
         [Name("del-msg <amount>")]
-        [Summary("Deletes a specified amount of messages")]
+        [Summary("STAFF: Deletes a specified amount of messages")]
         [RequireUserPermission(GuildPermission.ManageMessages)]
         [RequireBotPermission(GuildPermission.ManageMessages)]
         public async Task Delete(int amount)
@@ -28,7 +28,7 @@ namespace GloomyTale.DiscordBot.Modules
 
         [Command("reboot")]
         [Name("reboot")]
-        [Summary("Restart all channels")]
+        [Summary("STAFF: Restart all channels")]
         [RequireUserPermission(GuildPermission.Administrator)]
         public async Task Reboot()
         {

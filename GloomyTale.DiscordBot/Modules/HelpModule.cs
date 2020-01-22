@@ -28,7 +28,7 @@ namespace GloomyTale.DiscordBot.Modules
             {
                 string description = null;
                 string title = null;
-                foreach (var cmd in module.Commands)
+                foreach (var cmd in module.Commands.Where(s => !s.Summary.Contains("STAFF")))
                 {
                     var result = await cmd.CheckPreconditionsAsync(Context);
                     if (result.IsSuccess)
