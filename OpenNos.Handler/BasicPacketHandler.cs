@@ -1125,6 +1125,10 @@ namespace OpenNos.Handler
                         });*/
                         break;
                     default:
+                        if (tit.Active == false)
+                        {
+                            Session.Character.GenerateEffs(titEqPacket.Type);
+                        }
                         foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
                         {
                             title.Active = false;
