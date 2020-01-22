@@ -63,6 +63,7 @@ namespace OpenNos.Master.Library.Client
 
         public void SendItem(string characterName, DiscordItem item) => _client.ServiceProxy.SendItem(characterName, item);
 
+        public void RestartAll() => _client.ServiceProxy.RestartAll();
         //public void SendStaticBonus(long characterId, MallStaticBonus item) => _client.ServiceProxy.SendStaticBonus(characterId, item);
 
         #endregion

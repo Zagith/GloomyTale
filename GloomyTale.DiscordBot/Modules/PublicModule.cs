@@ -3,6 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using GloomyTale.DiscordBot.Extensions;
 using GloomyTale.DiscordBot.Services;
+using OpenNos.Master.Library.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,16 @@ namespace GloomyTale.DiscordBot.Modules
             await ((SocketTextChannel)Context.Channel).DeleteMessagesAsync(messages);
         }
 
+        [Command("reboot")]
+        [Name("reboot")]
+        [Summary("Restart all channels")]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task Reboot()
+        {
+            DiscordServiceClient.Instance.RestartAll();
+            await ReplyAsync("In restarting...");
+        }
+
         /*[Command("clear")]
         [Name("clear")]
         [Summary("clear all messages")]
@@ -37,6 +48,6 @@ namespace GloomyTale.DiscordBot.Modules
             {
                 await clone;
             }
-        }  */      
+        }  */
     }
 }

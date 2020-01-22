@@ -1,6 +1,8 @@
 ﻿using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
+using OpenNos.GameObject.Networking;
+using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Data;
 using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.ScsServices.Service;
@@ -84,6 +86,13 @@ namespace OpenNos.Master.Server
                     } while (item.Amount > 0);
                 }
             }
+        }
+
+        public void RestartAll()
+        {
+            string worldGroup = ServerManager.Instance.ServerGroup;
+
+            CommunicationServiceClient.Instance.Restart(worldGroup, 1);
         }
     }
 }

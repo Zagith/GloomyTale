@@ -20,5 +20,7 @@ namespace OpenNos.Master.Library.Interface
         Tuple<int, int> GetAct4Stat();
 
         void SendItem(string characterName, DiscordItem item);
+
+        void RestartAll();
     }
 }
