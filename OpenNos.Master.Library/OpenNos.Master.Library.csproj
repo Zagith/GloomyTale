@@ -83,6 +83,7 @@
     <Compile Include="Client\MallServiceClient.cs" />
     <Compile Include="Data\AccountConnection.cs" />
     <Compile Include="Data\ConfigurationObject.cs" />
+    <Compile Include="Data\DiscordItem.cs" />
     <Compile Include="Data\Mail.cs" />
     <Compile Include="Data\MallItem.cs" />
     <Compile Include="Data\MallStaticBonus.cs" />

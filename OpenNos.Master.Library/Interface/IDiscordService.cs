@@ -1,4 +1,5 @@
-﻿using OpenNos.SCS.Communication.ScsServices.Service;
+﻿using OpenNos.Master.Library.Data;
+using OpenNos.SCS.Communication.ScsServices.Service;
 using System;
 using System.Collections.Generic;
 
@@ -17,5 +18,7 @@ namespace OpenNos.Master.Library.Interface
         void RefreshAct4Stat(int angel, int demon);
 
         Tuple<int, int> GetAct4Stat();
+
+        void SendItem(string characterName, DiscordItem item);
     }
 }
