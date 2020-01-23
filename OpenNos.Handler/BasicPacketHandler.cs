@@ -1114,6 +1114,10 @@ namespace OpenNos.Handler
                 switch (titEqPacket.Type)
                 {
                     case TiteqPacketType.Wiev:
+                        if (tit.Visible == false)
+                        {
+                            Session.SendPacket(Session.Character.GenerateEffs(titEqPacket.Type));
+                        }
                         foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
                         {
                             title.Visible = false;
@@ -1127,7 +1131,7 @@ namespace OpenNos.Handler
                     default:
                         if (tit.Active == false)
                         {
-                            Session.Character.GenerateEffs(titEqPacket.Type);
+                            Session.SendPacket(Session.Character.GenerateEffs(titEqPacket.Type));
                         }
                         foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
                         {
@@ -1141,6 +1145,7 @@ namespace OpenNos.Handler
                         break;
                 }
 
+                Session.SendPackets(Session.Character.GenerateStatChar());
                 Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateTitleInfo());
                 Session.SendPacket(Session.Character.GenerateTitle());
             }                
