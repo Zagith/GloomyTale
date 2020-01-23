@@ -45,7 +45,7 @@ namespace GloomyTale.DAL.EF.Helpers
             {
                 try
                 {
-                    context.Database.GetDbConnection().Open();
+                    context.Database.EnsureCreated();
                     Logger.Log.Info(Language.Instance.GetMessageFromKey("DATABASE_INITIALIZED"));
                 }
                 catch (Exception ex)

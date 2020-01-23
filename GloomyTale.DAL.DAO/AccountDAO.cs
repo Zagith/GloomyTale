@@ -91,11 +91,7 @@ namespace GloomyTale.DAL.DAO
                     Account account = context.Account.FirstOrDefault(a => a.AccountId.Equals(accountId));
                     if (account != null)
                     {
-                        AccountDTO accountDTO = new AccountDTO();
-                        if (Mapper.Mappers.AccountMapper.ToAccountDTO(account, accountDTO))
-                        {
-                            return accountDTO;
-                        }
+                        return _mapper.Map<AccountDTO>(account);
                     }
                 }
             }
@@ -115,11 +111,7 @@ namespace GloomyTale.DAL.DAO
                     Account account = context.Account.FirstOrDefault(a => a.Name.Equals(name));
                     if (account != null)
                     {
-                        AccountDTO accountDTO = new AccountDTO();
-                        if (Mapper.Mappers.AccountMapper.ToAccountDTO(account, accountDTO))
-                        {
-                            return accountDTO;
-                        }
+                        return _mapper.Map<AccountDTO>(account);
                     }
                 }
             }
@@ -156,30 +148,30 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static AccountDTO insert(AccountDTO account, OpenNosContext context)
+        private AccountDTO insert(AccountDTO account, OpenNosContext context)
         {
-            Account entity = new Account();
-            Mapper.Mappers.AccountMapper.ToAccount(account, entity);
+            var entity = _mapper.Map<Account>(account);
             context.Account.Add(entity);
             context.SaveChanges();
-            Mapper.Mappers.AccountMapper.ToAccountDTO(entity, account);
-            return account;
+            return _mapper.Map<AccountDTO>(entity);
         }
 
-        private static AccountDTO update(Account entity, AccountDTO account, OpenNosContext context)
+        private AccountDTO update(Account entity, AccountDTO account, OpenNosContext context)
         {
-            if (entity != null)
+            if (entity == null)
             {
-                Mapper.Mappers.AccountMapper.ToAccount(account, entity);
-                context.Entry(entity).State = EntityState.Modified;
-                context.SaveChanges();
-            }
-            if (Mapper.Mappers.AccountMapper.ToAccountDTO(entity, account))
-            {
-                return account;
+                return null;
             }
 
-            return null;
+            // The _mapper breaks context.SaveChanges(), so we need to "map" the data by hand...
+            // entity = _mapper.Map<Account>(account);
+            entity.Authority = account.Authority;
+            entity.Name = account.Name;
+            entity.Password = account.Password;
+            context.Entry(entity).State = EntityState.Modified;
+            context.SaveChanges();
+
+            return _mapper.Map<AccountDTO>(entity);
         }
 
         #endregion

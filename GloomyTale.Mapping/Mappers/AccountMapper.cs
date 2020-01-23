@@ -5,7 +5,7 @@ namespace GloomyTale.Mapper.Mappers
 {
     public static class AccountMapper
     {
-        #region Methods
+       /* #region Methods
 
         public static bool ToAccount(AccountDTO input, Account output)
         {
@@ -47,6 +47,6 @@ namespace GloomyTale.Mapper.Mappers
             return true;
         }
 
-        #endregion
+        #endregion*/
     }
 }
