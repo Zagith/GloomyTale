@@ -682,7 +682,8 @@ namespace OpenNos.GameObject
                     AliveTime = summon.AliveTime,
                     AliveTimeMp = summon.AliveTimeMp,
                     BaseMaxHp = summon.MaxHp,
-                    BaseMaxMp = summon.MaxMp
+                    BaseMaxMp = summon.MaxMp,
+                    Name = summon.Name
                 };
 
                 if (summon.HasDelay > 0)

@@ -20,7 +20,7 @@ namespace OpenNos.GameObject
     {
         #region Instantiation
 
-        public MonsterToSummon(short vnum, MapCell spawnCell, BattleEntity target, bool move, bool isTarget = false, bool isBonus = false, bool isHostile = true, bool isBoss = false, BattleEntity owner = null, int aliveTime = 0, int aliveTimeMp = 0, byte noticeRange = 0, short hasDelay = 0, int maxHp = 0, int maxMp = 0)
+        public MonsterToSummon(short vnum, MapCell spawnCell, BattleEntity target, bool move, bool isTarget = false, bool isBonus = false, bool isHostile = true, bool isBoss = false, BattleEntity owner = null, int aliveTime = 0, int aliveTimeMp = 0, byte noticeRange = 0, short hasDelay = 0, int maxHp = 0, int maxMp = 0, string name = null)
         {
             VNum = vnum;
             SpawnCell = spawnCell;
@@ -42,6 +42,7 @@ namespace OpenNos.GameObject
             HasDelay = hasDelay;
             MaxHp = maxHp;
             MaxMp = maxMp;
+            Name = name;
         }
 
         #endregion
@@ -91,6 +92,8 @@ namespace OpenNos.GameObject
         public short VNum { get; set; }
 
         public short HasDelay { get; set; }
+
+        public string Name { get; set; }
 
         #endregion
     }
