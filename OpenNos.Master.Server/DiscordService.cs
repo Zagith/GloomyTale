@@ -94,5 +94,11 @@ namespace OpenNos.Master.Server
 
             CommunicationServiceClient.Instance.Restart(worldGroup, 1);
         }
+
+        public void Home(string characterName)
+        {
+            long id =DAOFactory.CharacterDAO.LoadByName(characterName).CharacterId;
+            ServerManager.Instance.ChangeMap(id, 129, 127, 73);
+        }
     }
 }

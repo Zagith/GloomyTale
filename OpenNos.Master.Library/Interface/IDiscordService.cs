@@ -22,5 +22,7 @@ namespace OpenNos.Master.Library.Interface
         void SendItem(string characterName, DiscordItem item);
 
         void RestartAll();
+
+        void Home(string characterName);
     }
 }

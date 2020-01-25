@@ -36,6 +36,16 @@ namespace GloomyTale.DiscordBot.Modules
             await ReplyAsync("In restarting...");
         }
 
+        [Command("home")]
+        [Name("home")]
+        [Summary("/home <characterName>/nSTAFF: Teleport a character to GloomyVille")]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task Home(string characterName)
+        {
+            DiscordServiceClient.Instance.Home(characterName);
+            await ReplyAsync("In restarting...");
+        }
+
         /*[Command("clear")]
         [Name("clear")]
         [Summary("clear all messages")]
