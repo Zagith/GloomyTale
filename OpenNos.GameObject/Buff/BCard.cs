@@ -116,6 +116,7 @@ namespace OpenNos.GameObject
             }
 
             if (BCardId > 0) session.BCardDisposables[skill?.SkillVNum == 1098 ? skill.SkillVNum * 1000 : BCardId]?.Dispose();
+            if(session.MapInstance.MapInstanceType != MapInstanceType.EventGameInstance)
             session.BCardDisposables[skill?.SkillVNum == 1098 ? skill.SkillVNum * 1000 : BCardId] = Observable.Timer(TimeSpan.FromMilliseconds(delayTime)).Subscribe(o =>
             {
                 switch ((BCardType.CardType)Type)
@@ -1082,7 +1083,8 @@ namespace OpenNos.GameObject
                                     session.Character.HPLoad();
                                     session.Character.Session?.SendPacket(session.Character.GenerateStat());
                                 }
-                                else if (SubType == (byte)AdditionalTypes.MaxHPMP.IncreasesMaximumMP / 10)
+                                else if (SubType == (byte)AdditionalTypes.MaxHPMP.IncreasesMaximumMP / 10 
+                                        || SubType == (byte)AdditionalTypes.MaxHPMP.MaximumMPIncreased / 10)
                                 {
                                     session.Character.MPLoad();
                                     session.Character.Session?.SendPacket(session.Character.GenerateStat());

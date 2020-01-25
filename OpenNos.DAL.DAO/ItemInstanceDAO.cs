@@ -186,6 +186,19 @@ namespace OpenNos.DAL.DAO
             }
         }
 
+        public ItemInstanceDTO LoadByCharacterIdAndItemId(long characterId, short itemId)
+        {
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                ItemInstanceDTO ItemInstanceDTO = new ItemInstanceDTO();
+                if (map(context.ItemInstance.FirstOrDefault(i => i.CharacterId.Equals(characterId) && i.ItemVNum.Equals(itemId)), ItemInstanceDTO))
+                {
+                    return ItemInstanceDTO;
+                }
+
+                return null;
+            }
+        }
         public IEnumerable<ItemInstanceDTO> LoadByCharacterId(long characterId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())

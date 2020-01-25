@@ -29,6 +29,7 @@ using OpenNos.Master.Library.Data;
 using OpenNos.Data;
 using OpenNos.GameObject.Event.RainbowBattle;
 using OpenNos.GameObject.Event.BANDICOOTRUN;
+using OpenNos.GameObject.Event.TRUEORFALSE;
 
 namespace OpenNos.GameObject.Helpers
 {
@@ -176,6 +177,10 @@ namespace OpenNos.GameObject.Helpers
 
                         case EventType.BANDICOOTRUN:
                             BandicootRun.GenerateBandicootRun();
+                            break;
+
+                        case EventType.TorF:
+                            TorFEvent.GenerateTorF();
                             break;
                     }
                 });

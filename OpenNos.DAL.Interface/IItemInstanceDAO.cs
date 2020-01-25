@@ -46,6 +46,7 @@ namespace OpenNos.DAL.Interface
 
         ItemInstanceDTO LoadById(Guid id);
 
+        ItemInstanceDTO LoadByCharacterIdAndItemId(long characterId, short itemId);
         #endregion
     }
 }

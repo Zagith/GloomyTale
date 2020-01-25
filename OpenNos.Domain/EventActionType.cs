@@ -64,6 +64,7 @@ namespace OpenNos.Domain
         REMOVEAFTER,
         REMOVELAURENABUFF,
         DROPMETEORITE,
-        BOMBARDAMENTOMETEORITE
+        BOMBARDAMENTOMETEORITE,
+        TRUEORFALSE
     }
 }

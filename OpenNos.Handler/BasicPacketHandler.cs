@@ -1129,9 +1129,11 @@ namespace OpenNos.Handler
                         });*/
                         break;
                     default:
+                        
                         if (tit.Active == false)
                         {
-                            Session.SendPacket(Session.Character.GenerateEffs(titEqPacket.Type));
+                           
+                           Session.SendPacket(Session.Character.GenerateEffs(titEqPacket.Type));
                         }
                         foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
                         {

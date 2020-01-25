@@ -239,6 +239,7 @@
     <Compile Include="Buff\BCard.cs" />
     <Compile Include="Buff\Card.cs" />
     <Compile Include="CharacterQuest.cs" />
+    <Compile Include="CharacterTitle.cs" />
     <Compile Include="Event\ACT4\Act4DiscordRich.cs" />
     <Compile Include="Event\ACT4\Act4Raid.cs" />
     <Compile Include="Event\ACT4\Act4Ship.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="Event\TALENTARENA %28Unused%29\TalentArenaBattle.cs" />
     <Compile Include="Event\TIMESPACES\Bts.cs" />
     <Compile Include="Event\TIMESPACES\Pts.cs" />
+    <Compile Include="Event\TRUEORFALSE\TorFEvent.cs" />
     <Compile Include="FrozenCrownBot.cs" />
     <Compile Include="Helpers\ChangeClassHelper.cs" />
     <Compile Include="Helpers\CustomHelper.cs" />

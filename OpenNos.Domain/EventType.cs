@@ -28,6 +28,7 @@ namespace OpenNos.Domain
         ICEBREAKER,
         SHEEPGAME,
         RAINBOWBATTLE,
-        BANDICOOTRUN
+        BANDICOOTRUN,
+        TorF
     }
 }

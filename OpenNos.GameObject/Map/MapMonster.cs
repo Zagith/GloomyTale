@@ -698,6 +698,8 @@ namespace OpenNos.GameObject
                     {
                         RemoveTarget();
                     }
+                    else if (MapInstance.MapInstanceType == MapInstanceType.EventGameInstance)
+                        RemoveTarget();
                     else
                     {
                         Target = newTarget;
@@ -722,7 +724,7 @@ namespace OpenNos.GameObject
                 return;
             }
 
-            if (OnNoticeEvents.Any())
+            if (OnNoticeEvents.Any() && MapInstance.MapInstanceType != MapInstanceType.EventGameInstance)
             {
                 OnNoticeEvents.ToList().ForEach(e => { EventHelper.Instance.RunEvent(e, monster: this); });
                 OnNoticeEvents.Clear();
@@ -733,7 +735,7 @@ namespace OpenNos.GameObject
 
             Target = target;
             AddToAggroList(target);
-            if (!Monster.NoAggresiveIcon && target.Character != null)
+            if (!Monster.NoAggresiveIcon && target.Character != null && MapInstance.MapInstanceType != MapInstanceType.EventGameInstance)
             {
                 Target.Character.Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Monster, MapMonsterId, 5000));
             }
@@ -1674,7 +1676,7 @@ namespace OpenNos.GameObject
                 }
 
                 // target following
-                else if (MapInstance != null)
+                else if (MapInstance != null && MapInstance.MapInstanceType != MapInstanceType.EventGameInstance)
                 {
                     HostilityTarget();
                     NpcMonsterSkill npcMonsterSkill = null;
