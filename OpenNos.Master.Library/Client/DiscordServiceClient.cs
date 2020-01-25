@@ -65,7 +65,7 @@ namespace OpenNos.Master.Library.Client
 
         public void RestartAll() => _client.ServiceProxy.RestartAll();
 
-        public void Home(string characterName) => _client.ServiceProxy.Home(string characterName);
+        public void Home(string characterName) => _client.ServiceProxy.Home(characterName);
         //public void SendStaticBonus(long characterId, MallStaticBonus item) => _client.ServiceProxy.SendStaticBonus(characterId, item);
 
         #endregion
