@@ -896,6 +896,10 @@ namespace OpenNos.GameObject
                 {
                     damage = (int)CurrentHp - 1;
                 }
+
+                else if(damage >= CurrentHp && BattleEntity.MapInstance.MapInstanceType == MapInstanceType.EventGameInstance)
+                    damage = (int)CurrentHp - 1;
+
                 else if (onyxWings)
                 {
                     short onyxX = (short)(hitRequest.Session.Character.PositionX + 2);
