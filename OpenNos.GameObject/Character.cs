@@ -219,8 +219,6 @@ namespace OpenNos.GameObject
 
         public ThreadSafeGenericLockedList<BCard> EquipmentBCards => BattleEntity.BCards;
 
-        public ThreadSafeGenericLockedList<BCard> TitleBCards => BattleEntity.BCards;
-
         public ExchangeInfo ExchangeInfo { get; set; }
 
         public Family Family { get; set; }
@@ -2308,15 +2306,6 @@ namespace OpenNos.GameObject
                     SkillComboCount = 0;
                     Session.SendPackets(GenerateQuicklist());
                     Session.SendPacket("ms_c 1");
-                }
-
-                if (Titles.Where(t => t.Active == true).Any())
-                {
-                    foreach (CharacterTitleDTO titItems in Titles.Where(t => t.Active == true))
-                    {
-                        Item titItem = ServerManager.GetItem(titItems.TitleType);
-                        titItem.BCards.ForEach(s => s.ApplyBCards(Session.Character.BattleEntity, Session.Character.BattleEntity));
-                    }
                 }
                 if (LastPermBuffRefresh.AddSeconds(2) <= DateTime.Now)
                 {
