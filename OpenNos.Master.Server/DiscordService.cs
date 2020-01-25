@@ -97,8 +97,11 @@ namespace OpenNos.Master.Server
 
         public void Home(string characterName)
         {
-            long id =DAOFactory.CharacterDAO.LoadByName(characterName).CharacterId;
-            ServerManager.Instance.ChangeMap(id, 129, 127, 73);
+            CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(characterName);
+            if (character != null)
+            {
+                ServerManager.Instance.ChangeMap(character.CharacterId, 129, 127, 73);
+            }
         }
     }
 }
