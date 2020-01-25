@@ -1775,7 +1775,7 @@ namespace OpenNos.GameObject
                                             if (oldSkill?.Skill != null && newSkill?.Skill != null)
                                             {
                                                 newSkill.FirstCastId = oldSkill.FirstCastId;
-
+#warning TODO: check skill combo con veggente
                                                 if ((newSkillVNum == 1126 && character.SkillComboCount > 4)
                                                  || (newSkillVNum == 1140 && character.SkillComboCount > 8))
                                                 {
