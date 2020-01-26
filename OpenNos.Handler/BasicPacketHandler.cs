@@ -1129,21 +1129,34 @@ namespace OpenNos.Handler
                         });*/
                         break;
                     default:
-                        
-                        if (tit.Active == false)
                         {
-                           
-                           Session.SendPacket(Session.Character.GenerateEffs(titEqPacket.Type));
+                            if (tit.Active == false)
+                            {
+                                Session.SendPacket(Session.Character.GenerateEffs(titEqPacket.Type));
+                                Session.Character.ActiveTitle = tit;
+                            }
+                            else
+                            {
+                                Session.Character.ActiveTitle = null;
+                            }
+                            foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
+                            {
+                                title.Active = false;
+                            }
+                            tit.Active = !tit.Active;
+                            Session.Character.GenerateEquipment();
+                            Session?.SendPacket(Session.Character.GenerateStat());
+                            /*if (tit.TitleType == 9395)
+                            {
+                                Session.Character.HPLoad();
+                                Session?.SendPacket(Session.Character.GenerateStat());
+                            }
+                            
+                            Session.SendPacket(new InfoPacket
+                            {
+                                Message = Session.GetMessageFromKey(LanguageKey.TITLE_EFFECT_CHANGED)
+                            });*/
                         }
-                        foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
-                        {
-                            title.Active = false;
-                        }
-                        tit.Active = !tit.Active;
-                        /*Session.SendPacket(new InfoPacket
-                        {
-                            Message = Session.GetMessageFromKey(LanguageKey.TITLE_EFFECT_CHANGED)
-                        });*/
                         break;
                 }
 

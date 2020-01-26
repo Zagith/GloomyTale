@@ -156,6 +156,8 @@ namespace OpenNos.GameObject
 
         public AuthorityType Authority { get; set; }
 
+        public CharacterTitleDTO ActiveTitle { get; set; }
+
         public Node[][] BrushFireJagged { get; set; }
 
         public string BubbleMessage { get; set; }
@@ -2316,6 +2318,12 @@ namespace OpenNos.GameObject
                         bcard.ApplyBCards(BattleEntity, BattleEntity);
                     }
 
+                    ActiveTitle = Titles.Where(t => t.Active).FirstOrDefault();
+
+                    if (ActiveTitle != null)
+                        foreach (BCard b in EquipmentBCards.Where(bc => bc.ItemVNum == ActiveTitle.TitleType))
+                            b.ApplyBCards(BattleEntity, BattleEntity);
+
                     if (UseSp)
                     {
                         ItemInstance specialist = Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
@@ -3027,7 +3035,16 @@ namespace OpenNos.GameObject
                             eqlist += $" {i}.{item.Item.VNum}.{item.Rare}.{(item.Item.IsColored ? item.Design : item.Upgrade)}.0";
                         }
                     }
+                    
                 }
+
+                Item title = null;
+                if (ActiveTitle != null)
+                    title = ServerManager.GetItem(ActiveTitle.TitleType);
+                else if (Titles.Where(t => t.Active == true).FirstOrDefault() != null)
+                    title = ServerManager.GetItem(Titles.Where(t => t.Active == true).FirstOrDefault().TitleType);
+                if (title != null)
+                    EquipmentBCards.AddRange(title.BCards);
             });
 
             return $"equip {GenerateEqRareUpgradeForPacket()}{eqlist}";
@@ -5028,6 +5045,8 @@ namespace OpenNos.GameObject
                     DistanceDefenceRate += item.DistanceDefenceDodge + item.Item.DistanceDefenceDodge;
                 }
             }
+
+
 
             //BCards
             int BCardFireResistance = GetStuffBuff(CardType.ElementResistance, (byte)AdditionalTypes.ElementResistance.FireIncreased)[0] + GetStuffBuff(CardType.ElementResistance, (byte)AdditionalTypes.ElementResistance.AllIncreased)[0];
