@@ -1906,6 +1906,15 @@ namespace OpenNos.GameObject.Helpers
                 defender.RemoveBuff(619);
             }
 
+            #region Title damage
+
+            if(defender.EntityType == EntityType.Monster)
+            {
+                // defender.MapMonster.Monster.MonsterType;
+            }
+
+            #endregion
+
             return totalDamage;
         }
 

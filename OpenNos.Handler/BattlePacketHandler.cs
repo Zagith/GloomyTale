@@ -697,6 +697,11 @@ namespace OpenNos.Handler
                     target.Character.LastEffect43 = DateTime.Now;
                 }
 
+                //Pestilence by Swordsman 8th SP
+                rnd = ServerManager.RandomNumber();
+                if (rnd <= 80)
+                    target.Character.AddBuff(new Buff(628, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity, true);
+
                 // Magical Fetters
 
                 if (damage > 0)

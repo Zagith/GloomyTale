@@ -1103,6 +1103,10 @@ namespace OpenNos.GameObject
                        else if (hitRequest.Skill.SkillVNum == 952 && rnd < 80)
                             foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 4))
                                 BattleEntity.RemoveBuff(b.Card.CardId);
+
+                        rnd = ServerManager.RandomNumber();
+                        if (rnd <= 80)
+                            BattleEntity.AddBuff(new Buff(628, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
                     }
                 }
 
