@@ -1776,11 +1776,14 @@ namespace OpenNos.GameObject
                                             {
                                                 newSkill.FirstCastId = oldSkill.FirstCastId;
 #warning TODO: check skill combo con veggente
-                                                if ((newSkillVNum == 1126 && character.SkillComboCount > 4)
-                                                 || (newSkillVNum == 1140 && character.SkillComboCount > 8))
+                                                if (((newSkillVNum == 1126 || newSkillVNum == 1125) && character.SkillComboCount > 4)
+                                                 || ((newSkillVNum == 1140 || newSkillVNum == 1139) && character.SkillComboCount > 8))
                                                 {
                                                     character.SkillComboCount = 0;
-                                                    character.LastSkillComboUse = DateTime.Now.AddSeconds(3);
+                                                    character.LastSkillComboUse = DateTime.Now.AddSeconds(5);
+                                                    character.Session.SendPacket(StaticPacketHelper.Cancel(2, character.CharacterId));
+                                                    character.Session.SendPackets(character.GenerateQuicklist());
+
                                                 }
                                                 else
                                                 {

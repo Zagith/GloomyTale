@@ -1070,6 +1070,8 @@ namespace OpenNos.GameObject.Helpers
                     if (attacker.Character.SkillComboCount > 0)
                     {
                         attacker.Character.SkillComboCount = 0;
+                        attacker.Character.LastSkillComboUse = DateTime.Now.AddSeconds(5);
+                        attacker.Character.Session.SendPacket(StaticPacketHelper.Cancel(2, attacker.Character.CharacterId));
                         attacker.Character.Session.SendPackets(attacker.Character.GenerateQuicklist());
                         attacker.Character.Session.SendPacket("ms_c 1");
                     }

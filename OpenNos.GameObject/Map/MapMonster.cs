@@ -1105,7 +1105,7 @@ namespace OpenNos.GameObject
                                 BattleEntity.RemoveBuff(b.Card.CardId);
 
                         rnd = ServerManager.RandomNumber();
-                        if (rnd <= 80)
+                        if (rnd <= 80 && hitRequest.Skill.SkillVNum == 1347) 
                             BattleEntity.AddBuff(new Buff(628, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
                     }
                 }
