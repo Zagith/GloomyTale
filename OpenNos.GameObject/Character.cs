@@ -259,6 +259,8 @@ namespace OpenNos.GameObject
 
         public bool HasShopOpened { get; set; }
 
+        public bool HasBlocked { get; set; }  //wolf master block
+
         public int HitCriticalRate { get; set; }
 
         public int HitCriticalChance { get; set; }
@@ -897,7 +899,13 @@ namespace OpenNos.GameObject
 
         public void AddUltimatePoints(short points)
         {
-            UltimatePoints += points;
+            if (points < 0 && HasBlocked)
+            {
+                UltimatePoints -= points;
+                HasBlocked = false;
+            }
+            else if(points > 0)
+                UltimatePoints += points;
 
             if (UltimatePoints > 3000)
             {

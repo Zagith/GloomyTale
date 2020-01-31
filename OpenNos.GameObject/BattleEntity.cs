@@ -1249,7 +1249,8 @@ namespace OpenNos.GameObject
                         }
                         if (indicator.Card.BCards.Any(s => s.Type == (byte)CardType.SpecialActions && s.SubType.Equals((byte)AdditionalTypes.SpecialActions.Hide / 10))
                          || indicator.Card.BCards.Any(s => s.Type == (byte)CardType.FalconSkill && s.SubType.Equals((byte)AdditionalTypes.FalconSkill.Hide / 10))
-                         || indicator.Card.BCards.Any(s => s.Type == (byte)CardType.FalconSkill && s.SubType.Equals((byte)AdditionalTypes.FalconSkill.Ambush / 10)))
+                         || indicator.Card.BCards.Any(s => s.Type == (byte)CardType.FalconSkill && s.SubType.Equals((byte)AdditionalTypes.FalconSkill.Ambush / 10))
+                         || indicator.Card.BCards.Any(s => s.CardId == 746))
                         {
                             Character.Invisible = false;
                             foreach (Mate teamMate in Character.Mates?.Where(m => m != null && m.IsTeamMember))
@@ -1384,7 +1385,7 @@ namespace OpenNos.GameObject
                                 break;
 
                             case 724:
-                                Character.RemoveUltimatePoints(1000);
+                                //Character.RemoveUltimatePoints(1000);
                                 break;
                         }
                     }
@@ -1665,20 +1666,17 @@ namespace OpenNos.GameObject
                     }
                 }
                 hp += CellonOptions.Where(s => s.Type == CellonOptionType.HPMax).Sum(s => s.Value);
-                multiplicator += GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;
+                if(!Character.UseSp && Character.HasBuff(155))
+                    multiplicator += GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;
                 multiplicator += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.IncreasesMaximumHP)[0] / 100D;
 
                 MaxHp = (int)((CharacterHelper.HPData[(byte)Character.Class, Level] + hp + GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPIncreased)[0] + GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPMPIncreased)[0]) * multiplicator);
 
-                /*if (Character.Titles != null && Character.Titles.Count > 0)
-                {
-                    CharacterTitleDTO actualActive = Character.Titles.Where(t => t.Active).FirstOrDefault();
+                if (MaxHp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D > 5000)
+                    MaxHp += 5000;
+                else
+                    MaxHp += MaxHp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;
 
-                    if (actualActive != null && actualActive.TitleType == 9395)
-                    {
-                        MaxHp += 200;
-                    }
-                }*/
             }
             else
             {
@@ -1724,16 +1722,12 @@ namespace OpenNos.GameObject
                 multiplicator += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.IncreasesMaximumMP)[0] / 100D;
 
                 MaxMp = (int)((CharacterHelper.MPData[(byte)Character.Class, Level] + mp + GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumMPIncreased)[0] + GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPMPIncreased)[0]) * multiplicator);
+                
+               /* if (MaxMp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D > 5000)
+                    MaxMp += 5000;
+                else
+                    MaxMp += MaxMp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;*/
 
-                /*if (Character.Titles != null && Character.Titles.Count > 0)
-                {
-                    CharacterTitleDTO actualActive = Character.Titles.Where(t => t.Active).FirstOrDefault();
-
-                    if (actualActive != null && actualActive.TitleType == 9395)
-                    {
-                        MaxMp += 200;
-                    }
-                }*/
             }
             else
             {

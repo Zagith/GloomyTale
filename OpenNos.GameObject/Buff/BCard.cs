@@ -121,6 +121,11 @@ namespace OpenNos.GameObject
             {
                 switch ((BCardType.CardType)Type)
                 {
+
+                    case BCardType.CardType.SpecialAttack:
+                        
+                        break;
+
                     case BCardType.CardType.Buff:
                         {
                             short cardId = (short)SecondData;
@@ -232,7 +237,19 @@ namespace OpenNos.GameObject
                                     }
                                     else
                                     {
-                                        session.AddBuff(buff, sender, x: x, y: y);
+                                        if (cardId == 118 && session.Character.HasBuff(155))
+                                            return;
+                                        //Overwriting BearSpirit buff on Energy pot buff
+                                        if (cardId == 155)
+                                        {
+                                            session.RemoveBuff(118);
+                                            session.AddBuff(buff, sender, x: x, y: y);
+                                            session.Character.HPLoad();
+                                            session.Character.MPLoad();
+                                            session.Character.Session?.SendPacket(session.Character.GenerateStat());
+                                        }
+                                        else
+                                            session.AddBuff(buff, sender, x: x, y: y);
                                     }
                                 }
                                 else if (Chance < 0 && ServerManager.RandomNumber() < -Chance)
@@ -249,6 +266,21 @@ namespace OpenNos.GameObject
                                 session.Character.LastSpeedChange = DateTime.Now;
                                 session.Character.LoadSpeed();
                                 session.Character.Session?.SendPacket(session.Character.GenerateCond());
+
+                                //Invisible 4th class 4th sp
+                                if (session.Character is Character charact && CardId == 746)
+                                {
+                                    if (charact.MapInstance.MapInstanceType != MapInstanceType.NormalInstance || charact.MapInstance.Map.MapId != 2004)
+                                    {
+                                        charact.Invisible = true;
+                                        charact.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => charact.Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
+                                        charact.Session.CurrentMapInstance?.Broadcast(charact.GenerateInvisible());
+                                    }
+                                    else if (card != null)
+                                    {
+                                        charact.RemoveBuff(card.CardId);
+                                    }
+                                }
                             }
                         }
                         break;
@@ -338,9 +370,6 @@ namespace OpenNos.GameObject
                                     break;
                             }
                         }
-                        break;
-
-                    case BCardType.CardType.SpecialAttack:
                         break;
 
                     case BCardType.CardType.SpecialDefence:

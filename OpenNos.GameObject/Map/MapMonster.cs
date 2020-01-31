@@ -2393,12 +2393,25 @@ namespace OpenNos.GameObject
                         hitmode = 0;
                     }
 
+                    //Wolf master Block
+                    if(target.Character != null)
+                        if (target.Character.HasBuff(724))
+                        {
+                            target.Character.HasBlocked = true;
+                            damage = 0;
+                            target.Character.AddUltimatePoints(-1000); //works properly with -1000
+                            target.Character.RemoveBuff(724);
+                            target.Character.AddWolfBuffs();
+                        }
+                        else
+                            target.Character.HasBlocked = false;
+
                     bool firstHit = false;
 
                     target.GetDamage(damage, BattleEntity);
 
                     int rnd = ServerManager.RandomNumber();
-                    if (rnd < 7 && target.Character.HasBuff(755))
+                    if (rnd < 7 && target.Character != null && target.Character.HasBuff(755))
                     {
                         BattleEntity.AddBuff(new Buff(553, target.Character.Level), target, true);
                         BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, BattleEntity.MapMonster.MapMonsterId, 43));

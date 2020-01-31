@@ -489,6 +489,7 @@ namespace OpenNos.Handler
                     });
                     target.Character.RemoveBuff(36);
                     target.Character.RemoveBuff(548);
+                    target.Character.RemoveBuff(746);
                 }
 
                 if (Session.Character.Buff.FirstOrDefault(s => s.Card.BCards.Any(b => b.Type == (byte)BCardType.CardType.FalconSkill && b.SubType.Equals((byte)AdditionalTypes.FalconSkill.Hide / 10))) is Buff FalconHideBuff)
@@ -514,7 +515,18 @@ namespace OpenNos.Handler
                     damage -= reduce;
                 }
 
-                if(hitRequest.Session.Character.HasBuff(686) && ServerManager.RandomNumber() < 40 && hitmode != 4 && hitmode != 2)
+                //Wolf master Block
+                if (target.Character.HasBuff(724))
+                {
+                    target.Character.HasBlocked = true;
+                    damage = 0;
+                    target.Character.AddUltimatePoints(-1000); //works properly with -1000
+                    target.Character.RemoveBuff(724);
+                }
+                else
+                    target.Character.HasBlocked = false;
+
+                if (hitRequest.Session.Character.HasBuff(686) && ServerManager.RandomNumber() < 40 && hitmode != 4 && hitmode != 2)
                 {
                     Observable.Timer(TimeSpan.FromMilliseconds(350)).Subscribe(o =>
                     {
