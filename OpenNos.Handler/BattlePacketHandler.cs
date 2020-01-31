@@ -498,6 +498,74 @@ namespace OpenNos.Handler
                     Session.Character.AddBuff(new Buff(560, Session.Character.Level), Session.Character.BattleEntity);
                 }
 
+                //Remove invisiblity on hit
+                if(Session.Character.HasBuff(746))
+                    Session.Character.RemoveBuff(746);
+
+                if (hitRequest.Skill.SkillVNum == 1607 && target.Character.MapX != 0 && target.Character.MapY != 0)
+                    Session.Character.TeleportOnMap(target.Character.PositionX, target.Character.PositionY);
+
+                //2nd MA Sp
+
+                if(hitRequest.Session.Character.HasBuff(703)) // attack Possibility
+                    switch(hitRequest.Skill.SkillVNum)
+                    {
+                        case 1611:
+                            hitRequest.Session.Character.AddBuff(new Buff(698, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
+                            break;
+
+                        case 1612:
+                            {
+                                int mpSteal = (int)(target.Character.Mp * 0.20);
+                                if(mpSteal > 0)
+                                {
+                                    if (hitRequest.Session.Character.Mp + mpSteal > hitRequest.Session.Character.BattleEntity?.MpMax)
+                                        hitRequest.Session.Character.Mp = hitRequest.Session.Character.BattleEntity.MpMax;
+                                    else
+                                        hitRequest.Session.Character.Mp += mpSteal;
+
+                                    if (target.Character.Mp - mpSteal <= 0)
+                                        target.Character.Mp = 1;
+                                    else
+                                        target.Character.Mp -= mpSteal;
+
+                                    hitRequest.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
+                                    target.Character.Session?.SendPacket(target.Character.GenerateStat());
+                                }
+                                
+                            }
+                            break;
+
+                        case 1620:
+                            {
+                                if(target.Character.HasBuff(702))
+                                {
+                                    target.Character.RemoveBuff(702);
+                                    target.Character.RemoveBuff(701);
+                                    target.Character.AddBuff(new Buff(702, hitRequest.Session.Character.Level), target.Character.BattleEntity);
+                                    target.Character.AddBuff(new Buff(701, hitRequest.Session.Character.Level), target.Character.BattleEntity);
+                                }
+                                else
+                                    target.Character.AddBuff(new Buff(702, hitRequest.Session.Character.Level), target.Character.BattleEntity);
+                            }
+                            break;
+                    }
+
+                
+
+                if (target.Character.HasBuff(694))
+                {
+                    target.Character.AddBuff(new Buff(703, target.Character.Level), target.Character.BattleEntity);
+                    target.Character.RemoveBuff(694);
+                }
+
+                if(target.Character.HasBuff(688))
+                {
+                    target.Character.AddBuff(new Buff(689, target.Character.Level), target.Character.BattleEntity);
+                    target.Character.RemoveBuff(688);
+                }
+
+
                 int[] manaShield = target.Character.GetBuff(CardType.LightAndShadow,
                     (byte) AdditionalTypes.LightAndShadow.InflictDamageToMP);
                 if (manaShield[0] != 0 && hitmode != 4)
@@ -526,6 +594,41 @@ namespace OpenNos.Handler
                 }
                 else
                     target.Character.HasBlocked = false;
+
+                //4th MA Sp Chains
+                int hpmplost ;
+                if(target.Character.HasBuff(748) && damage > 0)
+                {
+                    //MP increasing to the enemy
+                    hpmplost = (int)(damage * 0.05);
+                    if (hitRequest.Session.Character.Mp + hpmplost > hitRequest.Session.Character.BattleEntity?.MpMax)
+                        hitRequest.Session.Character.Mp = hitRequest.Session.Character.BattleEntity.MpMax;
+                    else
+                        hitRequest.Session.Character.Mp += hpmplost;
+
+                    hitRequest.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
+                   
+
+                }
+
+               
+                //4th MA Sp Chain malus
+                if(hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Session.Character.HasBuff(748))
+                {
+                    //HP reduction
+                    hpmplost = (int)(damage * 0.10);
+                    if (hitRequest.Session.Character.Hp - hpmplost < 1)
+                    {
+                        hitRequest.Session.Character.Hp = 1;
+                        hpmplost = hitRequest.Session.Character.Hp - 1;
+                    }
+                    else
+                        hitRequest.Session.Character.Hp -= hpmplost;
+
+                    hitRequest.Session.CurrentMapInstance.Broadcast(hitRequest.Session.Character.BattleEntity?.GenerateDm(hpmplost));
+                    hitRequest.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
+                }
+                
 
                 if (hitRequest.Session.Character.HasBuff(686) && ServerManager.RandomNumber() < 40 && hitmode != 4 && hitmode != 2)
                 {
@@ -2395,6 +2498,18 @@ namespace OpenNos.Handler
                                 }
                             });
                         }
+
+                        //Reset 2nd MA S skill
+                        if(Session.Character.HasBuff(703) && ski.SkillVNum == 1617)
+                            Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(o =>
+                            {
+                                if (ski != null)
+                                {
+                                    ski.LastUse = DateTime.Now.AddMilliseconds(ski.Skill.Cooldown * 100 * -1);
+                                    Session.SendPacket(StaticPacketHelper.SkillReset(ski.Skill.CastId));
+                                    Session?.CurrentMapInstance?.Broadcast(Session.Character.GenerateEff(55));
+                                }
+                            });
                     }
                     else
                     {

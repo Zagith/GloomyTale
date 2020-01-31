@@ -1798,6 +1798,24 @@ namespace OpenNos.GameObject.Helpers
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
                     }
                 }
+                else if(ReflectsMaximumDamageFrom[0] > 0)
+                {
+                    int maxReflectDamage = ReflectsMaximumDamageFrom[0];
+
+                    int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
+                    totalDamage -= reflectedDamage;
+
+                    if (!percentDamage)
+                    {
+                        reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
+
+                        defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)realAttacker.UserType, realAttacker.MapEntityId,
+                            -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
+
+                        defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
+                    }
+                }
+
             }
 
             #endregion

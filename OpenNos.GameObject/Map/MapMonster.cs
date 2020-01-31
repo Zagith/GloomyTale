@@ -900,6 +900,28 @@ namespace OpenNos.GameObject
                 else if(damage >= CurrentHp && BattleEntity.MapInstance.MapInstanceType == MapInstanceType.EventGameInstance)
                     damage = (int)CurrentHp - 1;
 
+                //4th MA Sp Chains
+                int hpmplost = (int)(damage * 0.1);
+                if (BattleEntity.HasBuff(748))
+                {
+                    //MP increasing to the enemy
+                    hpmplost = (int)(damage * 0.05);
+                    if (attackerBattleEntity.Mp + hpmplost > attackerBattleEntity.MpMax)
+                        attackerBattleEntity.Mp = attackerBattleEntity.MpMax;
+                    else
+                        attackerBattleEntity.Mp += hpmplost;
+
+                    attackerBattleEntity.Character?.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
+
+                }
+
+                //Remove invisiblity on hit
+                if (attackerBattleEntity.Character != null && attackerBattleEntity.Character.HasBuff(746))
+                    attackerBattleEntity.Character.RemoveBuff(746);
+
+                if (hitRequest.Session!= null && hitRequest.Session.Character!= null && hitRequest.Skill.SkillVNum == 1607)
+                    hitRequest.Session.Character.TeleportOnMap(BattleEntity.MapMonster.MapX, BattleEntity.MapMonster.MapY);
+
                 else if (onyxWings)
                 {
                     short onyxX = (short)(hitRequest.Session.Character.PositionX + 2);
@@ -2423,6 +2445,20 @@ namespace OpenNos.GameObject
                         {
                             target.MapNpc.Target = MapMonsterId;
                         }
+                    }
+
+                    int hpmplost;
+                    if (BattleEntity.HasBuff(748))
+                    {
+                        //HP reduction
+                        hpmplost = (int)(damage * 0.10);
+                        if (BattleEntity.Hp - hpmplost < 1)
+                            hpmplost = BattleEntity.Hp - 1;
+                        else
+                            BattleEntity.Hp -= hpmplost;
+
+                        BattleEntity.MapInstance.Broadcast(BattleEntity?.GenerateDm(hpmplost));
+                        BattleEntity.GetDamage(hpmplost, BattleEntity);
                     }
 
                     if (target.Character != null)

@@ -562,6 +562,7 @@ namespace OpenNos.GameObject
                                     
                                     sender.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(sender.UserType, sender.MapEntityId, 18));
                                     sender.MapInstance.Broadcast(sender.GenerateRc(amount));
+                                    session.MapInstance.Broadcast(session.GenerateDm(amount));
                                     sender.Character?.Session?.SendPacket(sender.Character?.GenerateStat());
                                     session.Character?.Session?.SendPacket(session.Character?.GenerateStat());
                                 }
