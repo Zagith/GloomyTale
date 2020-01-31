@@ -522,6 +522,7 @@ namespace OpenNos.Handler
                     damage = 0;
                     target.Character.AddUltimatePoints(-1000); //works properly with -1000
                     target.Character.RemoveBuff(724);
+                    target.Character.AddWolfBuffs();
                 }
                 else
                     target.Character.HasBlocked = false;
