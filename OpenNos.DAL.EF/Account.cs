@@ -64,6 +64,10 @@ namespace OpenNos.DAL.EF
         public bool DailyRewardSent { get; set; }
 
         public RegionType Language { get; set; }
+
+        [MaxLength(255)]
+        public string AdminName { get; set; }
+
         #endregion
     }
 }
