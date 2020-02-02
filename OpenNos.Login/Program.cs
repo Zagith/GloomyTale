@@ -16,7 +16,6 @@ using log4net;
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.DAL.EF.Helpers;
-using OpenNos.Data;
 using OpenNos.GameObject;
 using OpenNos.Handler;
 using OpenNos.Master.Library.Client;

@@ -34,7 +34,6 @@ using System.Text;
 using System.Threading;
 using OpenNos.GameObject.Networking;
 using System.IO;
-using OpenNos.SCS.Communication.Scs.Communication;
 using OpenNos.World.Resource;
 using OpenNos.GameObject.Helpers;
 

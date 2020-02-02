@@ -66,9 +66,6 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Reactive, Version=4.3.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
@@ -84,7 +81,6 @@
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -130,10 +126,6 @@
       <Project>{eadd17be-20a4-4589-830e-e41be9314928}</Project>
       <Name>OpenNos.GameObject</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OpenNos.Mapper\OpenNos.Mapper.csproj">
-      <Project>{057B5A6F-378A-4BD9-B17B-074C7F5C9FEC}</Project>
-      <Name>OpenNos.Mapper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OpenNos.Master.Library\OpenNos.Master.Library.csproj">
       <Project>{8FABDA5B-C873-4E32-A78F-08A9A4768595}</Project>
       <Name>OpenNos.Master.Library</Name>
@@ -141,10 +133,6 @@
     <ProjectReference Include="..\OpenNos.PathFinder\OpenNos.PathFinder.csproj">
       <Project>{4BC2B4B0-2A38-4274-98A2-37CEF5F03B42}</Project>
       <Name>OpenNos.PathFinder</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OpenNos.XMLModel\OpenNos.XMLModel.csproj">
-      <Project>{CE1BCBE7-EDB7-4564-A11E-8D90868DF9D0}</Project>
-      <Name>OpenNos.XMLModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
