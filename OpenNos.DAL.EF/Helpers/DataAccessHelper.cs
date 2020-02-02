@@ -71,22 +71,20 @@ namespace OpenNos.DAL.EF.Helpers
 
         public static bool Initialize()
         {
-            using (OpenNosContext context = CreateContext())
+            using OpenNosContext context = CreateContext();
+            try
             {
-                try
-                {
-                    context.Database.Initialize(true);
-                    context.Database.Connection.Open();
-                    Logger.Info(Language.Instance.GetMessageFromKey("DATABASE_INITIALIZED"));
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogEventError("DATABASE_INITIALIZATION", "Database Error", ex);
-                    Logger.LogEventError("DATABASE_INITIALIZATION", Language.Instance.GetMessageFromKey("DATABASE_NOT_UPTODATE"));
-                    return false;
-                }
-                return true;
+                context.Database.Initialize(true);
+                context.Database.Connection.Open();
+                Logger.Info(Language.Instance.GetMessageFromKey("DATABASE_INITIALIZED"));
             }
+            catch (Exception ex)
+            {
+                Logger.LogEventError("DATABASE_INITIALIZATION", "Database Error", ex);
+                Logger.LogEventError("DATABASE_INITIALIZATION", Language.Instance.GetMessageFromKey("DATABASE_NOT_UPTODATE"));
+                return false;
+            }
+            return true;
         }
 
         #endregion
