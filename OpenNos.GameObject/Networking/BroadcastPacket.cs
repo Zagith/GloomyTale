@@ -14,7 +14,7 @@
 
 using OpenNos.Domain;
 
-namespace OpenNos.GameObject.Networking
+namespace OpenNos.GameObject
 {
     public class BroadcastPacket
     {

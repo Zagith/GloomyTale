@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenNos.Core.Threading
+namespace OpenNos.Core
 {
     public class ThreadSafeGenericLockedList<T>
     {

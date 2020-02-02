@@ -31,9 +31,6 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenNos.Core.Cryptography;
-using OpenNos.Core.Serializing;
-using OpenNos.GameObject.Packets.ClientPackets;
 
 namespace OpenNos.World
 {

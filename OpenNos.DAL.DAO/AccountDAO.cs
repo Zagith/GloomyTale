@@ -22,8 +22,6 @@ using OpenNos.Domain;
 using System;
 using System.Data.Entity;
 using System.Linq;
-using OpenNos.DAL.EF.Context;
-using OpenNos.DAL.EF.Entities;
 
 namespace OpenNos.DAL.DAO
 {

@@ -12,11 +12,11 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.DAL.EF.Entities;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using OpenNos.DAL.EF.Entities;
 
-namespace OpenNos.DAL.EF.Context
+namespace OpenNos.DAL.EF
 {
     public class OpenNosContext : DbContext
     {

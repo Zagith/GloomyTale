@@ -1,5 +1,4 @@
 ﻿using System;
-using OpenNos.Data.Base;
 
 namespace OpenNos.Data
 {

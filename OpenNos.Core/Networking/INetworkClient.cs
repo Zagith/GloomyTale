@@ -12,13 +12,12 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Core.Networking.Communication.Scs.Communication.Messages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using OpenNos.Core.Cryptography;
-using OpenNos.Core.Networking.Communication.Scs.Communication.Messages;
 
-namespace OpenNos.Core.Networking
+namespace OpenNos.Core
 {
     public interface INetworkClient
     {

@@ -12,18 +12,17 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Core;
+using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Map;
-using OpenNos.GameObject.Networking;
 
-namespace OpenNos.GameObject.Event.INSTANTBATTLE
+namespace OpenNos.GameObject.Event
 {
     public static class InstantBattle
     {
@@ -178,7 +177,7 @@ namespace OpenNos.GameObject.Event.INSTANTBATTLE
             }
 
 
-            private static IEnumerable<Tuple<short, int, short, short>> GenerateDrop(Map.Map map, short vnum, int amountofdrop, int amount)
+            private static IEnumerable<Tuple<short, int, short, short>> GenerateDrop(Map map, short vnum, int amountofdrop, int amount)
             {
                 List<Tuple<short, int, short, short>> dropParameters = new List<Tuple<short, int, short, short>>();
                 for (int i = 0; i < amountofdrop; i++)
@@ -189,7 +188,7 @@ namespace OpenNos.GameObject.Event.INSTANTBATTLE
                 return dropParameters;
             }
 
-            private static List<Tuple<short, int, short, short>> getInstantBattleDrop(Map.Map map, short instantbattletype, int wave)
+            private static List<Tuple<short, int, short, short>> getInstantBattleDrop(Map map, short instantbattletype, int wave)
             {
                 List<Tuple<short, int, short, short>> dropParameters = new List<Tuple<short, int, short, short>>();
                 switch (instantbattletype)
@@ -341,7 +340,7 @@ namespace OpenNos.GameObject.Event.INSTANTBATTLE
                 return dropParameters;
             }
 
-            private static List<MonsterToSummon> getInstantBattleMonster(Map.Map map, Tuple<MapInstance, byte> mapinstance, short instantbattletype, int wave)
+            private static List<MonsterToSummon> getInstantBattleMonster(Map map, Tuple<MapInstance, byte> mapinstance, short instantbattletype, int wave)
             {
                 List<MonsterToSummon> summonParameters = new List<MonsterToSummon>();
                 switch (instantbattletype)

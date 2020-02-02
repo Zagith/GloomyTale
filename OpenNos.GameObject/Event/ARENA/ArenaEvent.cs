@@ -10,9 +10,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.Core.Extensions;
-using OpenNos.GameObject.Item.Instance;
-using MapInstance = OpenNos.GameObject.Map.MapInstance;
 
 namespace OpenNos.GameObject.Event.ARENA
 {
@@ -644,7 +641,7 @@ namespace OpenNos.GameObject.Event.ARENA
                 {
                     if (sess.Session?.Character.Buff.Any(bf => bf.Card.CardId == 491) == false)
                     {
-                        sess.Session?.Character.AddBuff(new Buff.Buff(491, 1), sess.Session?.Character.BattleEntity);
+                        sess.Session?.Character.AddBuff(new Buff(491, 1), sess.Session?.Character.BattleEntity);
                     }
                 });
             }
@@ -658,7 +655,7 @@ namespace OpenNos.GameObject.Event.ARENA
                 {
                     if (sess.Session?.Character.Buff.Any(bf => bf.Card.CardId == 490) == false)
                     {
-                        sess.Session?.Character.AddBuff(new Buff.Buff(490, 1), sess.Session?.Character.BattleEntity);
+                        sess.Session?.Character.AddBuff(new Buff(490, 1), sess.Session?.Character.BattleEntity);
                     }
                 });
             }

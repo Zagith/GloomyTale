@@ -12,24 +12,20 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Core;
+using OpenNos.Data;
+using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
+using OpenNos.PathFinder;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Media.Media3D;
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Item.Instance;
-using OpenNos.GameObject.Map;
-using OpenNos.GameObject.Networking;
-using OpenNos.GameObject.Npc;
-using OpenNos.PathFinder;
 
-namespace OpenNos.GameObject.Buff
+namespace OpenNos.GameObject
 {
     public class BCard : BCardDTO
     {
@@ -1758,7 +1754,7 @@ namespace OpenNos.GameObject.Buff
                                             bcardDisposable.Dispose();
                                             return;
                                         }
-                                        if (!sender.Character.Session.HasCurrentMapInstance || Map.Map.GetDistance(new MapCell { X = session.PositionX, Y = session.PositionY }, new MapCell { X = sender.PositionX, Y = sender.PositionY }) > 10 || session.MapInstance != sender.MapInstance || !sender.Buffs.Any(c => c.Card.CardId == 546))
+                                        if (!sender.Character.Session.HasCurrentMapInstance || Map.GetDistance(new MapCell { X = session.PositionX, Y = session.PositionY }, new MapCell { X = sender.PositionX, Y = sender.PositionY }) > 10 || session.MapInstance != sender.MapInstance || !sender.Buffs.Any(c => c.Card.CardId == 546))
                                         {
                                             sender.Character.Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("SACRIFICE_OUT_OF_RANGE")), 3));
                                             session.Character?.Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("SACRIFICE_OUT_OF_RANGE")), 3));
@@ -2373,7 +2369,7 @@ namespace OpenNos.GameObject.Buff
                                                     }
 
                                                     friendCharacters.Where(c => c.CharacterId != character.CharacterId && c.MapInstanceId == character.MapInstanceId
-                                                        && Map.Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom) <= skill.TargetRange).OrderBy(c => Map.Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom)).Take(FirstData).ToList()
+                                                        && Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom) <= skill.TargetRange).OrderBy(c => Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom)).Take(FirstData).ToList()
                                                     .ForEach(c => c.BattleEntity.TeleportTo(mapCellTo, 3));
                                                 });
                                         }

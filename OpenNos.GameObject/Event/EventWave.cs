@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenNos.GameObject.Event
+namespace OpenNos.GameObject
 {
     public class EventWave
     {

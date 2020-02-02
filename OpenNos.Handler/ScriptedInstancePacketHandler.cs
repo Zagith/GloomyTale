@@ -1,4 +1,5 @@
 ﻿using OpenNos.Core;
+using OpenNos.Core.Extensions;
 using OpenNos.DAL;
 using OpenNos.Domain;
 using OpenNos.GameObject;
@@ -10,11 +11,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.Core.Extensions;
-using OpenNos.Core.Handling;
-using OpenNos.GameObject.Map;
-using OpenNos.GameObject.Packets;
-using OpenNos.GameObject.Packets.ClientPackets;
 
 namespace OpenNos.Handler
 {

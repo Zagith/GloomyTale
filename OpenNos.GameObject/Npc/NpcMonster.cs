@@ -12,14 +12,13 @@
  * GNU General Public License for more details.
  */
 
-using System;
-using System.Collections.Generic;
 using OpenNos.Data;
 using OpenNos.Domain.I18N;
-using OpenNos.GameObject.Buff;
 using OpenNos.GameObject.Networking;
+using System;
+using System.Collections.Generic;
 
-namespace OpenNos.GameObject.Npc
+namespace OpenNos.GameObject
 {
     public class NpcMonster : NpcMonsterDTO
     {

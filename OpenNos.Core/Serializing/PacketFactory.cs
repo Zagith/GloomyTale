@@ -19,7 +19,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace OpenNos.Core.Serializing
+namespace OpenNos.Core
 {
     public static class PacketFactory
     {

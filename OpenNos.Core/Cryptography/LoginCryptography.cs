@@ -15,7 +15,7 @@
 using System;
 using System.Text;
 
-namespace OpenNos.Core.Cryptography
+namespace OpenNos.Core
 {
     public class LoginCryptography : CryptographyBase
     {

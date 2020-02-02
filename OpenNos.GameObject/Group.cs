@@ -21,7 +21,6 @@ using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.Core.Threading;
 
 namespace OpenNos.GameObject
 {
@@ -125,7 +124,7 @@ namespace OpenNos.GameObject
             lock (_syncObj)
             {
                 _order++;
-                List<ClientSession> sessions = Sessions.Where(s => Map.Map.GetDistance(s.Character, character) < 50);
+                List<ClientSession> sessions = Sessions.Where(s => Map.GetDistance(s.Character, character) < 50);
                 if (_order > sessions.Count - 1) // if order wents out of amount of ppl, reset it -> zero based index
                 {
                     _order = 0;

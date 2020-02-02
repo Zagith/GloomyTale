@@ -12,11 +12,11 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Domain;
 using System;
 using System.Collections.Generic;
-using OpenNos.Domain;
 
-namespace OpenNos.GameObject.Map
+namespace OpenNos.GameObject
 {
     public static class MapInstancePortalHandler
     {

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-namespace OpenNos.Core.Serializing
+namespace OpenNos.Core
 {
     public abstract class PacketDefinition
     {

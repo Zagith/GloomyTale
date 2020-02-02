@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace OpenNos.GameObject.Map
+namespace OpenNos.GameObject
 {
     public class MapShop
     {

@@ -12,26 +12,21 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Core;
+using OpenNos.Data;
+using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
+using OpenNos.PathFinder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenNos.Core;
-using OpenNos.Core.Serializing;
-using OpenNos.Core.Threading;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Buff;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
-using OpenNos.GameObject.Npc;
-using OpenNos.PathFinder;
 using static OpenNos.Domain.BCardType;
 
-namespace OpenNos.GameObject.Map
+namespace OpenNos.GameObject
 {
     public class MapNpc : MapNpcDTO
     {
@@ -74,7 +69,7 @@ namespace OpenNos.GameObject.Map
 
         public Node[][] BrushFireJagged { get; set; }
 
-        public ThreadSafeSortedList<short, Buff.Buff> Buff => BattleEntity.Buffs;
+        public ThreadSafeSortedList<short, Buff> Buff => BattleEntity.Buffs;
 
         public new ThreadSafeSortedList<short, IDisposable> BuffObservables => BattleEntity.BuffObservables;
 
@@ -157,7 +152,7 @@ namespace OpenNos.GameObject.Map
 
         public BattleEntity BattleEntity { get; set; }
 
-        public void AddBuff(Buff.Buff indicator, BattleEntity battleEntity) => BattleEntity.AddBuff(indicator, battleEntity);
+        public void AddBuff(Buff indicator, BattleEntity battleEntity) => BattleEntity.AddBuff(indicator, battleEntity);
 
         public void RemoveBuff(short cardId) => BattleEntity.RemoveBuff(cardId);
 
@@ -613,7 +608,7 @@ namespace OpenNos.GameObject.Map
 
                             foreach (BCard skillBcard in npcMonsterSkill.Skill.BCards)
                             {
-                                if (skillBcard.Type == 25 && skillBcard.SubType == 1 && new Buff.Buff((short)skillBcard.SecondData, Npc.Level)?.Card?.BuffType == BuffType.Good)
+                                if (skillBcard.Type == 25 && skillBcard.SubType == 1 && new Buff((short)skillBcard.SecondData, Npc.Level)?.Card?.BuffType == BuffType.Good)
                                 {
                                     if (clientSessions != null)
                                     {

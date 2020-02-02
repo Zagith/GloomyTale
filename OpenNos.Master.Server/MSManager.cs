@@ -18,7 +18,6 @@ using OpenNos.SCS.Communication.ScsServices.Service;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using OpenNos.Core.Threading;
 
 namespace OpenNos.Master.Server
 {

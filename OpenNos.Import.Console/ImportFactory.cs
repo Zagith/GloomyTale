@@ -26,8 +26,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenNos.Core.Cryptography;
-using OpenNos.Core.Threading;
 
 namespace OpenNos.Import.Console
 {

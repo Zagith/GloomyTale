@@ -1,6 +1,5 @@
 ﻿using OpenNos.Domain;
 using System;
-using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject
 {

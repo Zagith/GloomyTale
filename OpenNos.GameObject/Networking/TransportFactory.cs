@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-namespace OpenNos.GameObject.Networking
+namespace OpenNos.GameObject
 {
     public class TransportFactory
     {

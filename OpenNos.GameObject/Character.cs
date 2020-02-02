@@ -13,6 +13,8 @@
  */
 
 using OpenNos.Core;
+using OpenNos.Core.ConcurrencyExtensions;
+using OpenNos.Core.Extensions;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
@@ -31,18 +33,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using OpenNos.Core.ConcurrencyExtensions;
-using OpenNos.Core.Extensions;
-using OpenNos.Core.Threading;
-using OpenNos.GameObject.Buff;
-using OpenNos.GameObject.Event.ACT4;
-using OpenNos.GameObject.Event.ICEBREAKER;
-using OpenNos.GameObject.Item.Instance;
-using OpenNos.GameObject.Map;
-using OpenNos.GameObject.Npc;
-using OpenNos.GameObject.Packets.ClientPackets;
 using static OpenNos.Domain.BCardType;
-using MapInstance = OpenNos.GameObject.Map.MapInstance;
 
 namespace OpenNos.GameObject
 {
@@ -173,7 +164,7 @@ namespace OpenNos.GameObject
 
         public DateTime BubbleMessageEnd { get; set; }
 
-        public ThreadSafeSortedList<short, Buff.Buff> Buff => BattleEntity.Buffs;
+        public ThreadSafeSortedList<short, Buff> Buff => BattleEntity.Buffs;
 
         public ThreadSafeSortedList<short, IDisposable> BuffObservables => BattleEntity.BuffObservables;
 
@@ -602,7 +593,7 @@ namespace OpenNos.GameObject
 
         public byte VehicleSpeed { private get; set; }
 
-        public Item.Item VehicleItem { get; set; }
+        public Item VehicleItem { get; set; }
 
         public int WareHouseSize
         {
@@ -635,7 +626,7 @@ namespace OpenNos.GameObject
 
         public BattleEntity BattleEntity { get; set; }
 
-        public void AddBuff(Buff.Buff indicator, BattleEntity sender, bool noMessage = false, short x = 0, short y = 0) => BattleEntity.AddBuff(indicator, sender, noMessage, x, y);
+        public void AddBuff(Buff indicator, BattleEntity sender, bool noMessage = false, short x = 0, short y = 0) => BattleEntity.AddBuff(indicator, sender, noMessage, x, y);
 
         public void RemoveBuff(short cardId, bool removePermaBuff = false) => BattleEntity.RemoveBuff(cardId, removePermaBuff);
 
@@ -712,7 +703,7 @@ namespace OpenNos.GameObject
             switch (Reputation)
             {
                 case (long)SideReputType.Side1:
-                    AddBuff(new Buff.Buff(4003, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4003, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4005);
                     RemoveBuff(4006);
                     RemoveBuff(4007);
@@ -725,7 +716,7 @@ namespace OpenNos.GameObject
                     break;
                 case (long)SideReputType.Side2:
                     RemoveBuff(4003);
-                    AddBuff(new Buff.Buff(4005, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4005, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4006);
                     RemoveBuff(4007);
                     RemoveBuff(4008);
@@ -737,7 +728,7 @@ namespace OpenNos.GameObject
                     break;
                 case (long)SideReputType.Side3:
                     RemoveBuff(4003);
-                    AddBuff(new Buff.Buff(4006, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4006, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4005);
                     RemoveBuff(4007);
                     RemoveBuff(4008);
@@ -749,7 +740,7 @@ namespace OpenNos.GameObject
                     break;
                 case (long)SideReputType.Side4:
                     RemoveBuff(4003);
-                    AddBuff(new Buff.Buff(4007, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4007, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4006);
                     RemoveBuff(4005);
                     RemoveBuff(4008);
@@ -761,7 +752,7 @@ namespace OpenNos.GameObject
                     break;
                 case (long)SideReputType.Side5:
                     RemoveBuff(4003);
-                    AddBuff(new Buff.Buff(4008, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4008, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4006);
                     RemoveBuff(4007);
                     RemoveBuff(4005);
@@ -773,7 +764,7 @@ namespace OpenNos.GameObject
                     break;
                 case (long)SideReputType.Side6:
                     RemoveBuff(4003);
-                    AddBuff(new Buff.Buff(4009, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4009, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4006);
                     RemoveBuff(4007);
                     RemoveBuff(4008);
@@ -785,7 +776,7 @@ namespace OpenNos.GameObject
                     break;
                 case (long)SideReputType.Side7:
                     RemoveBuff(4003);
-                    AddBuff(new Buff.Buff(4010, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4010, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4006);
                     RemoveBuff(4007);
                     RemoveBuff(4008);
@@ -797,7 +788,7 @@ namespace OpenNos.GameObject
                     break;
                 case (long)SideReputType.Side8:
                     RemoveBuff(4003);
-                    AddBuff(new Buff.Buff(4012, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4012, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4006);
                     RemoveBuff(4007);
                     RemoveBuff(4008);
@@ -809,7 +800,7 @@ namespace OpenNos.GameObject
                     break;
                 case (long)SideReputType.Side9:
                     RemoveBuff(4003);
-                    AddBuff(new Buff.Buff(4013, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4013, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4006);
                     RemoveBuff(4007);
                     RemoveBuff(4008);
@@ -821,7 +812,7 @@ namespace OpenNos.GameObject
                     break;
                 case (long)SideReputType.Side10:
                     RemoveBuff(4003);
-                    AddBuff(new Buff.Buff(4004, Level, isPermaBuff: true), BattleEntity);
+                    AddBuff(new Buff(4004, Level, isPermaBuff: true), BattleEntity);
                     RemoveBuff(4006);
                     RemoveBuff(4007);
                     RemoveBuff(4008);
@@ -886,21 +877,21 @@ namespace OpenNos.GameObject
         {
             if (UltimatePoints >= 1000 && !Buff.Any(s => s.Card.CardId == 727 || s.Card.CardId == 728 || s.Card.CardId == 729))
             {
-                AddBuff(new Buff.Buff(727, 10, false), BattleEntity);
+                AddBuff(new Buff(727, 10, false), BattleEntity);
                 RemoveBuff(728);
                 RemoveBuff(729);
             }
 
             if (UltimatePoints >= 2000 && !Buff.Any(s => s.Card.CardId == 728 || s.Card.CardId == 729))
             {
-                AddBuff(new Buff.Buff(728, 10, false), BattleEntity);
+                AddBuff(new Buff(728, 10, false), BattleEntity);
                 RemoveBuff(727);
                 RemoveBuff(729);
             }
 
             if (UltimatePoints >= 3000 && !Buff.Any(s => s.Card.CardId == 729))
             {
-                AddBuff(new Buff.Buff(729, 10, false), BattleEntity);
+                AddBuff(new Buff(729, 10, false), BattleEntity);
                 RemoveBuff(727);
                 RemoveBuff(728);
             }
@@ -938,14 +929,14 @@ namespace OpenNos.GameObject
             {
                 RemoveBuff(729);
                 RemoveBuff(727);
-                AddBuff(new Buff.Buff(728, 10, false), BattleEntity);
+                AddBuff(new Buff(728, 10, false), BattleEntity);
             }
 
             if (UltimatePoints < 2000)
             {
                 RemoveBuff(728);
                 RemoveBuff(729);
-                AddBuff(new Buff.Buff(727, 10, false), BattleEntity);
+                AddBuff(new Buff(727, 10, false), BattleEntity);
             }
 
             if (UltimatePoints < 1000)
@@ -1643,12 +1634,12 @@ namespace OpenNos.GameObject
                     if (ServerManager.RandomNumber() < 50)
                     {
                         RemoveBuff(379);
-                        AddBuff(new Buff.Buff(378, Level), BattleEntity);
+                        AddBuff(new Buff(378, Level), BattleEntity);
                     }
                     else
                     {
                         RemoveBuff(378);
-                        AddBuff(new Buff.Buff(379, Level), BattleEntity);
+                        AddBuff(new Buff(379, Level), BattleEntity);
                     }
                     return true;
             }
@@ -1838,12 +1829,12 @@ namespace OpenNos.GameObject
 
         public void AddStaticBuff(StaticBuffDTO staticBuff, bool isPermaBuff = false)
         {
-            Buff.Buff bf = new Buff.Buff(staticBuff.CardId, Level, isPermaBuff)
+            Buff bf = new Buff(staticBuff.CardId, Level, isPermaBuff)
             {
                 Start = DateTime.Now,
                 StaticBuff = true
             };
-            Buff.Buff oldbuff = Buff[staticBuff.CardId];
+            Buff oldbuff = Buff[staticBuff.CardId];
             if (oldbuff != null)
             {
                 oldbuff.Card.BCards.Where(s => BattleEntity.BCardDisposables[s.BCardId] != null).ToList().ForEach(b => BattleEntity.BCardDisposables[b.BCardId].Dispose());
@@ -1884,7 +1875,7 @@ namespace OpenNos.GameObject
                     RemoveBuff(bf.Card.CardId);
                     if (bf.Card.TimeoutBuff != 0 && ServerManager.RandomNumber() < bf.Card.TimeoutBuffChance)
                     {
-                        AddBuff(new Buff.Buff(bf.Card.TimeoutBuff, Level), BattleEntity);
+                        AddBuff(new Buff(bf.Card.TimeoutBuff, Level), BattleEntity);
                     }
                 });
             }
@@ -2095,7 +2086,7 @@ namespace OpenNos.GameObject
                 {
                     if (!HasBuff(684))
                     {
-                        AddBuff(new Buff.Buff(684, Level), BattleEntity);
+                        AddBuff(new Buff(684, Level), BattleEntity);
                     }
                 }
                 else
@@ -2285,7 +2276,7 @@ namespace OpenNos.GameObject
                     if (MeditationDictionary.ContainsKey(534) && MeditationDictionary[534] < DateTime.Now)
                     {
                         Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 4344));
-                        AddBuff(new Buff.Buff(534, Level), BattleEntity);
+                        AddBuff(new Buff(534, Level), BattleEntity);
                         if (BuffObservables.ContainsKey(533))
                         {
                             BuffObservables[533].Dispose();
@@ -2296,7 +2287,7 @@ namespace OpenNos.GameObject
                     else if (MeditationDictionary.ContainsKey(533) && MeditationDictionary[533] < DateTime.Now)
                     {
                         Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 4343));
-                        AddBuff(new Buff.Buff(533, Level), BattleEntity);
+                        AddBuff(new Buff(533, Level), BattleEntity);
                         if (BuffObservables.ContainsKey(532))
                         {
                             BuffObservables[532].Dispose();
@@ -2307,7 +2298,7 @@ namespace OpenNos.GameObject
                     else if (MeditationDictionary.ContainsKey(532) && MeditationDictionary[532] < DateTime.Now)
                     {
                         Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 4343));
-                        AddBuff(new Buff.Buff(532, Level), BattleEntity);
+                        AddBuff(new Buff(532, Level), BattleEntity);
                         if (BuffObservables.ContainsKey(534))
                         {
                             BuffObservables[534].Dispose();
@@ -2331,7 +2322,7 @@ namespace OpenNos.GameObject
                 {
                     LastPermBuffRefresh = DateTime.Now;
 
-                    foreach (BCard bcard in EquipmentBCards.Where(b => b.Type.Equals(CardType.Buff) && new Buff.Buff((short)b.CardId, Level).Card?.BuffType == BuffType.Good))
+                    foreach (BCard bcard in EquipmentBCards.Where(b => b.Type.Equals(CardType.Buff) && new Buff((short)b.CardId, Level).Card?.BuffType == BuffType.Good))
                     {
                         bcard.ApplyBCards(BattleEntity, BattleEntity);
                     }
@@ -2354,77 +2345,77 @@ namespace OpenNos.GameObject
                             case 6:
                                 if (!Buff.ContainsKey(387))
                                 {
-                                    AddBuff(new Buff.Buff(387, Level), BattleEntity, true);
+                                    AddBuff(new Buff(387, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 7:
                                 if (!Buff.ContainsKey(395))
                                 {
-                                    AddBuff(new Buff.Buff(395, Level), BattleEntity, true);
+                                    AddBuff(new Buff(395, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 8:
                                 if (!Buff.ContainsKey(396))
                                 {
-                                    AddBuff(new Buff.Buff(396, Level), BattleEntity, true);
+                                    AddBuff(new Buff(396, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 9:
                                 if (!Buff.ContainsKey(397))
                                 {
-                                    AddBuff(new Buff.Buff(397, Level), BattleEntity, true);
+                                    AddBuff(new Buff(397, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 10:
                                 if (!Buff.ContainsKey(398))
                                 {
-                                    AddBuff(new Buff.Buff(398, Level), BattleEntity, true);
+                                    AddBuff(new Buff(398, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 11:
                                 if (!Buff.ContainsKey(410))
                                 {
-                                    AddBuff(new Buff.Buff(410, Level), BattleEntity, true);
+                                    AddBuff(new Buff(410, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 12:
                                 if (!Buff.ContainsKey(411))
                                 {
-                                    AddBuff(new Buff.Buff(411, Level), BattleEntity, true);
+                                    AddBuff(new Buff(411, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 13:
                                 if (!Buff.ContainsKey(444))
                                 {
-                                    AddBuff(new Buff.Buff(444, Level), BattleEntity, true);
+                                    AddBuff(new Buff(444, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 14:
                                 if (!Buff.ContainsKey(663))
                                 {
-                                    AddBuff(new Buff.Buff(663, Level), BattleEntity, true);
+                                    AddBuff(new Buff(663, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 15:
                                 if (!Buff.ContainsKey(686))
                                 {
-                                    AddBuff(new Buff.Buff(686, Level), BattleEntity, true);
+                                    AddBuff(new Buff(686, Level), BattleEntity, true);
                                 }
                                 break;
 
                             case 16:
                                 if (!Buff.ContainsKey(755))
                                 {
-                                    AddBuff(new Buff.Buff(755, Level), BattleEntity, true);
+                                    AddBuff(new Buff(755, Level), BattleEntity, true);
                                 }
                                 break;
                         }
@@ -3056,7 +3047,7 @@ namespace OpenNos.GameObject
 
                 }
 
-                Item.Item title = null;
+                Item title = null;
                 if (ActiveTitle != null)
                     title = ServerManager.GetItem(ActiveTitle.TitleType);
                 else if (Titles.Where(t => t.Active == true).FirstOrDefault() != null)
@@ -5771,7 +5762,7 @@ namespace OpenNos.GameObject
         /// <returns>True if the object is in Range, False if not.</returns>
         public bool IsInRange(int xCoordinate, int yCoordinate, int range = 50)
         {
-            return Map.Map.GetDistance(new MapCell
+            return Map.GetDistance(new MapCell
             {
                 X = (short)xCoordinate,
                 Y = (short)yCoordinate
@@ -6385,7 +6376,7 @@ namespace OpenNos.GameObject
                 }
                 if (_isStaticBuffListInitial)
                 {
-                    foreach (Buff.Buff buff in Buff.Where(s => s.StaticBuff).ToArray())
+                    foreach (Buff buff in Buff.Where(s => s.StaticBuff).ToArray())
                     {
                         StaticBuffDTO bf = new StaticBuffDTO
                         {
@@ -6455,7 +6446,7 @@ namespace OpenNos.GameObject
 
         public void SendGift(long id, short vnum, short amount, sbyte rare, byte upgrade, short design, bool isNosmall)
         {
-            Item.Item it = ServerManager.GetItem(vnum);
+            Item it = ServerManager.GetItem(vnum);
 
             if (it != null)
             {
@@ -7151,7 +7142,7 @@ namespace OpenNos.GameObject
             short NewX = PositionX;
             short NewY = PositionY;
             bool BlockedZone = false;
-            for (short i = 1; Map.Map.GetDistance(new MapCell { X = PositionX, Y = PositionY }, new MapCell { X = NewX, Y = NewY }) < Math.Abs(Distance) && i < +Math.Abs(Distance) + 5 && !BlockedZone; i++)
+            for (short i = 1; Map.GetDistance(new MapCell { X = PositionX, Y = PositionY }, new MapCell { X = NewX, Y = NewY }) < Math.Abs(Distance) && i < +Math.Abs(Distance) + 5 && !BlockedZone; i++)
             {
                 switch (Dir)
                 {

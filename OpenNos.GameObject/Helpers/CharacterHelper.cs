@@ -15,8 +15,6 @@
 using OpenNos.Core;
 using OpenNos.Domain;
 using System;
-using OpenNos.GameObject.Item.Instance;
-using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject.Helpers
 {
@@ -263,13 +261,13 @@ namespace OpenNos.GameObject.Helpers
                     switch (item.ItemVNum)
                     {
                         case 180:
-                            session.Character.AddBuff(new Buff.Buff(96, session.Character.Level, isPermaBuff: true), session.Character.BattleEntity);
+                            session.Character.AddBuff(new Buff(96, session.Character.Level, isPermaBuff: true), session.Character.BattleEntity);
                             break;
                         case 181:
-                            session.Character.AddBuff(new Buff.Buff(162, session.Character.Level, isPermaBuff: true), session.Character.BattleEntity);
+                            session.Character.AddBuff(new Buff(162, session.Character.Level, isPermaBuff: true), session.Character.BattleEntity);
                             break;
                         case 182:
-                            session.Character.AddBuff(new Buff.Buff(479, session.Character.Level, isPermaBuff: true), session.Character.BattleEntity);
+                            session.Character.AddBuff(new Buff(479, session.Character.Level, isPermaBuff: true), session.Character.BattleEntity);
                             break;
                     }
                 }

@@ -16,7 +16,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace OpenNos.Core.Cryptography
+namespace OpenNos.Core
 {
     public abstract class CryptographyBase
     {

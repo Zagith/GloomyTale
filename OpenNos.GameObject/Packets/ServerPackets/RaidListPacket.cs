@@ -1,6 +1,6 @@
-﻿using OpenNos.Core.Serializing;
+﻿using OpenNos.Core;
 
-namespace OpenNos.GameObject.Packets.ServerPackets
+namespace OpenNos.GameObject
 {
     [PacketHeader("rl")]
     public class RaidListPacket : PacketDefinition

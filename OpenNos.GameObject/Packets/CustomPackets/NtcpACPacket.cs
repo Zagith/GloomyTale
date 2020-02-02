@@ -1,6 +1,6 @@
-﻿using OpenNos.Core.Serializing;
+﻿using OpenNos.Core;
 
-namespace OpenNos.GameObject.Packets.CustomPackets
+namespace OpenNos.GameObject
 {
     [PacketHeader("ntcp_ac")]
     public class NtcpAcPacket : PacketDefinition

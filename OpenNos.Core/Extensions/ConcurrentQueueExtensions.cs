@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace OpenNos.Core.Extensions
+namespace OpenNos.Core
 {
     public static class ConcurrentQueueExtensions
     {

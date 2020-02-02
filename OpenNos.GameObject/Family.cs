@@ -20,7 +20,6 @@ using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Data;
 using System;
 using System.Collections.Generic;
-using MapInstance = OpenNos.GameObject.Map.MapInstance;
 
 namespace OpenNos.GameObject
 {

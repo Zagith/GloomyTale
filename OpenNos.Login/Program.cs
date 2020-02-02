@@ -23,10 +23,6 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using OpenNos.Core.Cryptography;
-using OpenNos.Core.Serializing;
-using OpenNos.GameObject.Networking;
-using OpenNos.GameObject.Packets.ClientPackets;
 
 namespace OpenNos.Login
 {

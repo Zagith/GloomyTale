@@ -12,8 +12,6 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.GameObject.Item.Instance;
-
 namespace OpenNos.GameObject
 {
     public class PersonalShopItem

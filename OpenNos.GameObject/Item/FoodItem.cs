@@ -12,19 +12,17 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Core;
+using OpenNos.Data;
+using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Buff;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Item.Instance;
-using OpenNos.GameObject.Networking;
 
-namespace OpenNos.GameObject.Item
+namespace OpenNos.GameObject
 {
     public class FoodItem : Item
     {

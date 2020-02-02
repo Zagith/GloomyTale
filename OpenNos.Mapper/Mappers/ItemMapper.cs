@@ -1,5 +1,4 @@
 using OpenNos.DAL.EF;
-using OpenNos.DAL.EF.Entities;
 using OpenNos.Data;
 using OpenNos.Domain;
 

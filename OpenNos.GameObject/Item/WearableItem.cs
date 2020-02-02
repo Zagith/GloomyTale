@@ -12,18 +12,18 @@
  * GNU General Public License for more details.
  */
 
-using System;
-using System.Diagnostics;
-using System.Linq;
 using OpenNos.Core;
+using OpenNos.Core.ConcurrencyExtensions;
 using OpenNos.Core.Extensions;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Item.Instance;
 using OpenNos.GameObject.Networking;
+using System;
+using System.Diagnostics;
+using System.Linq;
 
-namespace OpenNos.GameObject.Item
+namespace OpenNos.GameObject
 {
     public class WearableItem : Item
     {
@@ -376,7 +376,7 @@ namespace OpenNos.GameObject.Item
                             inv.BoundCharacterId = session.Character.CharacterId;
                             if (inv.ItemDeleteTime > DateTime.Now || inv.DurabilityPoint > 0)
                             {
-                                session.Character.AddBuff(new Buff.Buff(62, session.Character.Level), session.Character.BattleEntity);
+                                session.Character.AddBuff(new Buff(62, session.Character.Level), session.Character.BattleEntity);
                             }
                         }
                     }

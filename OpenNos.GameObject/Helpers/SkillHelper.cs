@@ -1,6 +1,5 @@
 ﻿using OpenNos.GameObject.Networking;
 using System;
-using OpenNos.GameObject.Map;
 
 namespace OpenNos.GameObject.Helpers
 {

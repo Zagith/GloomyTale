@@ -12,13 +12,12 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.GameObject.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Helpers;
 
-namespace OpenNos.GameObject.ScriptedObjects
+namespace OpenNos.GameObject
 {
     public class Clock
     {

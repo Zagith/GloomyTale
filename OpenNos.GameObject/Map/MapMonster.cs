@@ -12,6 +12,14 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Core;
+using OpenNos.Data;
+using OpenNos.Domain;
+using OpenNos.GameObject.Battle;
+using OpenNos.GameObject.Event;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
+using OpenNos.PathFinder;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -19,22 +27,9 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenNos.Core;
-using OpenNos.Core.Threading;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Battle;
-using OpenNos.GameObject.Buff;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Event.ACT4;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Item.Instance;
-using OpenNos.GameObject.Networking;
-using OpenNos.GameObject.Npc;
-using OpenNos.PathFinder;
 using static OpenNos.Domain.BCardType;
 
-namespace OpenNos.GameObject.Map
+namespace OpenNos.GameObject
 {
     public class MapMonster : MapMonsterDTO
     {
@@ -104,7 +99,7 @@ namespace OpenNos.GameObject.Map
 
         public Node[][] BrushFireJagged { get; set; }
 
-        public ThreadSafeSortedList<short, Buff.Buff> Buff => BattleEntity.Buffs;
+        public ThreadSafeSortedList<short, Buff> Buff => BattleEntity.Buffs;
 
         public new ThreadSafeSortedList<short, IDisposable> BuffObservables => BattleEntity.BuffObservables;
 
@@ -235,7 +230,7 @@ namespace OpenNos.GameObject.Map
 
         public BattleEntity BattleEntity { get; set; }
 
-        public void AddBuff(Buff.Buff indicator, BattleEntity battleEntity, bool forced = false) => BattleEntity.AddBuff(indicator, battleEntity, forced: forced);
+        public void AddBuff(Buff indicator, BattleEntity battleEntity, bool forced = false) => BattleEntity.AddBuff(indicator, battleEntity, forced: forced);
 
         public void RemoveBuff(short cardId) => BattleEntity.RemoveBuff(cardId);
 
@@ -379,7 +374,7 @@ namespace OpenNos.GameObject.Map
             {
                 MaxHp = 500000;
                 CurrentHp = MaxHp;
-                BattleEntity.BCards.AddRange(new Buff.Buff(196, 99).Card.BCards);
+                BattleEntity.BCards.AddRange(new Buff(196, 99).Card.BCards);
             }
 
             Monster.BCards.Where(s => s.Type != 25).ToList().ForEach(s => s.ApplyBCards(BattleEntity, BattleEntity));
@@ -1024,7 +1019,7 @@ namespace OpenNos.GameObject.Map
                         if (itemInUse != null && itemInUse.Item.VNum == 4981 && ServerManager.RandomNumber() <= 3)
                         {
                             attackerBattleEntity.Character.ConvertedDamageToHP = (int)(damage * 8 / 100D);
-                            attackerBattleEntity.Character.AddBuff(new Buff.Buff(413, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            attackerBattleEntity.Character.AddBuff(new Buff(413, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                             attackerBattleEntity.Character.RemoveBuff(413);
                         }
 
@@ -1032,7 +1027,7 @@ namespace OpenNos.GameObject.Map
                         if (itemInUse != null && itemInUse.Item.VNum == 4982 && ServerManager.RandomNumber() <= 4)
                         {
                             attackerBattleEntity.Character.ConvertedDamageToHP = (int)(damage * 15 / 100D);
-                            attackerBattleEntity.Character.AddBuff(new Buff.Buff(416, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            attackerBattleEntity.Character.AddBuff(new Buff(416, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                             attackerBattleEntity.Character.RemoveBuff(416);
                         }
 
@@ -1040,17 +1035,17 @@ namespace OpenNos.GameObject.Map
 
                         if (itemInUse != null && itemInUse.Item.VNum == 4983 && ServerManager.RandomNumber() <= 4)
                         {
-                            AddBuff(new Buff.Buff(415, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            AddBuff(new Buff(415, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                         }
 
                         if (Buff.ContainsKey(415) && ServerManager.RandomNumber() <= 50)
-                            foreach (Buff.Buff b in Buff.Where(b => b.Card.BuffType == BuffType.Good && b.Card.Level < 4))
+                            foreach (Buff b in Buff.Where(b => b.Card.BuffType == BuffType.Good && b.Card.Level < 4))
                                 RemoveBuff(b.Card.CardId);
 
                         //Punch
                         if (itemInUse != null && itemInUse.Item.VNum == 4736 && ServerManager.RandomNumber() <= 7)
                         {
-                            AddBuff(new Buff.Buff(672, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            AddBuff(new Buff(672, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                         }
 
                         //Secondary weapons
@@ -1059,20 +1054,20 @@ namespace OpenNos.GameObject.Map
                         //Crossbow
                         if (itemInUse != null && itemInUse.Item.VNum == 4978 && ServerManager.RandomNumber() <= 5)
                         {
-                            this.AddBuff(new Buff.Buff(417, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            this.AddBuff(new Buff(417, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                         }
 
                         //Gun
                         if (itemInUse != null && itemInUse.Item.VNum == 4979 && ServerManager.RandomNumber() <= 5)
                         {
-                            this.AddBuff(new Buff.Buff(418, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            this.AddBuff(new Buff(418, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                         }
 
                         //Dagger
                         if (itemInUse != null && itemInUse.Item.VNum == 4980 && ServerManager.RandomNumber() <= 3)
                         {
                             attackerBattleEntity.Character.ConvertedDamageToHP = (int)(damage * 8 / 100D);
-                            attackerBattleEntity.Character.AddBuff(new Buff.Buff(414, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            attackerBattleEntity.Character.AddBuff(new Buff(414, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                             attackerBattleEntity.Character.RemoveBuff(414);
                         }
 
@@ -1084,25 +1079,25 @@ namespace OpenNos.GameObject.Map
                         //Swordsman
                         if (itemInUse != null && itemInUse.Item.VNum == 4984 && ServerManager.RandomNumber() <= 2)
                         {
-                            attackerBattleEntity.Character.AddBuff(new Buff.Buff(419, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            attackerBattleEntity.Character.AddBuff(new Buff(419, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                         }
 
                         //Mage
                         if (itemInUse != null && itemInUse.Item.VNum == 4985 && ServerManager.RandomNumber() <= 2)
                         {
-                            attackerBattleEntity.Character.AddBuff(new Buff.Buff(421, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            attackerBattleEntity.Character.AddBuff(new Buff(421, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                         }
 
                         //Archer
                         if (itemInUse != null && itemInUse.Item.VNum == 4986 && ServerManager.RandomNumber() <= 2)
                         {
-                            attackerBattleEntity.Character.AddBuff(new Buff.Buff(420, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            attackerBattleEntity.Character.AddBuff(new Buff(420, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                         }
 
                         //Martial Artist
                         if (itemInUse != null && itemInUse.Item.VNum == 4754 && ServerManager.RandomNumber() <= 2)
                         {
-                            attackerBattleEntity.Character.AddBuff(new Buff.Buff(673, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            attackerBattleEntity.Character.AddBuff(new Buff(673, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                         }
 
                         #endregion
@@ -1110,7 +1105,7 @@ namespace OpenNos.GameObject.Map
                         int rnd = ServerManager.RandomNumber();
                         if (rnd <= 5 && attackerBattleEntity.Character.HasBuff(755))
                         {
-                            BattleEntity.AddBuff(new Buff.Buff(754, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.AddBuff(new Buff(754, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
                             BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, BattleEntity.MapMonster.MapMonsterId, 42));
                             BattleEntity.MapMonster.LastEffect42 = DateTime.Now;
                         }
@@ -1125,15 +1120,15 @@ namespace OpenNos.GameObject.Map
                         if ((hitRequest.Skill.SkillVNum == 946 && rnd < 15 ||
                            (hitRequest.Skill.SkillVNum == 948 && rnd >= 15 && rnd <= 35) ||
                            (hitRequest.Skill.SkillVNum == 951 && rnd >= 36 && rnd <= 56)) && hitmode != 4)
-                            foreach (Buff.Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 3 && b.Card.BuffType == BuffType.Good))
+                            foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 3 && b.Card.BuffType == BuffType.Good))
                                 BattleEntity.RemoveBuff(b.Card.CardId);
                         else if (hitRequest.Skill.SkillVNum == 952 && rnd < 80)
-                            foreach (Buff.Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 4))
+                            foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 4))
                                 BattleEntity.RemoveBuff(b.Card.CardId);
 
                         rnd = ServerManager.RandomNumber();
                         if (rnd <= 80 && hitRequest.Skill.SkillVNum == 1347)
-                            BattleEntity.AddBuff(new Buff.Buff(628, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.AddBuff(new Buff(628, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
                     }
                 }
 
@@ -1160,7 +1155,7 @@ namespace OpenNos.GameObject.Map
                     {
                         if (s.Type == (byte)CardType.Buff)
                         {
-                            Buff.Buff b = new Buff.Buff((short)s.SecondData, Monster.Level);
+                            Buff b = new Buff((short)s.SecondData, Monster.Level);
                             if (b.Card != null)
                             {
                                 switch (b.Card?.BuffType)
@@ -1182,7 +1177,7 @@ namespace OpenNos.GameObject.Map
                     {
                         if (s.Type == (byte)CardType.Buff)
                         {
-                            Buff.Buff b = new Buff.Buff((short)s.SecondData, BattleEntity.Level);
+                            Buff b = new Buff((short)s.SecondData, BattleEntity.Level);
                             if (b.Card != null)
                             {
                                 switch (b.Card?.BuffType)
@@ -1203,7 +1198,7 @@ namespace OpenNos.GameObject.Map
                         }
                     });
 
-                    hitRequest.SkillBCards.Where(s => s.Type.Equals((byte)CardType.Buff) && new Buff.Buff((short)s.SecondData, hitRequest.Session.Character.Level).Card?.BuffType == BuffType.Bad).ToList()
+                    hitRequest.SkillBCards.Where(s => s.Type.Equals((byte)CardType.Buff) && new Buff((short)s.SecondData, hitRequest.Session.Character.Level).Card?.BuffType == BuffType.Bad).ToList()
                         .ForEach(s => s.ApplyBCards(BattleEntity, attackerBattleEntity));
 
                     hitRequest.SkillBCards.Where(s => s.Type.Equals((byte)CardType.Capture)).ToList()
@@ -1220,7 +1215,7 @@ namespace OpenNos.GameObject.Map
                             {
                                 case (byte)ShellWeaponEffectType.Blackout:
                                     {
-                                        Buff.Buff buff = new Buff.Buff(7, attackerBattleEntity.Level);
+                                        Buff buff = new Buff(7, attackerBattleEntity.Level);
                                         if (ServerManager.RandomNumber() < shell.Value)
                                         {
                                             AddBuff(buff, attackerBattleEntity);
@@ -1230,7 +1225,7 @@ namespace OpenNos.GameObject.Map
                                     }
                                 case (byte)ShellWeaponEffectType.DeadlyBlackout:
                                     {
-                                        Buff.Buff buff = new Buff.Buff(66, attackerBattleEntity.Level);
+                                        Buff buff = new Buff(66, attackerBattleEntity.Level);
                                         if (ServerManager.RandomNumber() < shell.Value)
                                         {
                                             AddBuff(buff, attackerBattleEntity);
@@ -1240,7 +1235,7 @@ namespace OpenNos.GameObject.Map
                                     }
                                 case (byte)ShellWeaponEffectType.MinorBleeding:
                                     {
-                                        Buff.Buff buff = new Buff.Buff(1, attackerBattleEntity.Level);
+                                        Buff buff = new Buff(1, attackerBattleEntity.Level);
                                         if (ServerManager.RandomNumber() < shell.Value)
                                         {
                                             AddBuff(buff, attackerBattleEntity);
@@ -1250,7 +1245,7 @@ namespace OpenNos.GameObject.Map
                                     }
                                 case (byte)ShellWeaponEffectType.Bleeding:
                                     {
-                                        Buff.Buff buff = new Buff.Buff(21, attackerBattleEntity.Level);
+                                        Buff buff = new Buff(21, attackerBattleEntity.Level);
                                         if (ServerManager.RandomNumber() < shell.Value)
                                         {
                                             AddBuff(buff, attackerBattleEntity);
@@ -1260,7 +1255,7 @@ namespace OpenNos.GameObject.Map
                                     }
                                 case (byte)ShellWeaponEffectType.HeavyBleeding:
                                     {
-                                        Buff.Buff buff = new Buff.Buff(42, attackerBattleEntity.Level);
+                                        Buff buff = new Buff(42, attackerBattleEntity.Level);
                                         if (ServerManager.RandomNumber() < shell.Value)
                                         {
                                             AddBuff(buff, attackerBattleEntity);
@@ -1270,7 +1265,7 @@ namespace OpenNos.GameObject.Map
                                     }
                                 case (byte)ShellWeaponEffectType.Freeze:
                                     {
-                                        Buff.Buff buff = new Buff.Buff(27, attackerBattleEntity.Level);
+                                        Buff buff = new Buff(27, attackerBattleEntity.Level);
                                         if (ServerManager.RandomNumber() < shell.Value)
                                         {
                                             AddBuff(buff, attackerBattleEntity);
@@ -1486,7 +1481,7 @@ namespace OpenNos.GameObject.Map
                             {
                                 new KeyValuePair<byte, byte>((byte)CardType.FalconSkill, (byte)AdditionalTypes.FalconSkill.Hide)
                             });
-                        attackerBattleEntity.AddBuff(new Buff.Buff(560, attackerBattleEntity.Level), attackerBattleEntity);
+                        attackerBattleEntity.AddBuff(new Buff(560, attackerBattleEntity.Level), attackerBattleEntity);
                     }
 
                     //Test reset skill by fairy wings
@@ -1576,7 +1571,7 @@ namespace OpenNos.GameObject.Map
                     {
                         if (ServerManager.RandomNumber() < EffectOnKill.FirstData)
                         {
-                            attackerBattleEntity.AddBuff(new Buff.Buff((short)EffectOnKill.SecondData, attackerBattleEntity.Level), attackerBattleEntity);
+                            attackerBattleEntity.AddBuff(new Buff((short)EffectOnKill.SecondData, attackerBattleEntity.Level), attackerBattleEntity);
                         }
                     }
                 }
@@ -2214,8 +2209,8 @@ namespace OpenNos.GameObject.Map
                     }
                     if (npcMonsterSkill.SkillVNum == 1226)
                     {
-                        AddBuff(new Buff.Buff(529, BattleEntity.Level), BattleEntity, true);
-                        AddBuff(new Buff.Buff(530, BattleEntity.Level), BattleEntity, true);
+                        AddBuff(new Buff(529, BattleEntity.Level), BattleEntity, true);
+                        AddBuff(new Buff(530, BattleEntity.Level), BattleEntity, true);
                     }
                 }
 
@@ -2440,7 +2435,7 @@ namespace OpenNos.GameObject.Map
                     int rnd = ServerManager.RandomNumber();
                     if (rnd < 7 && target.Character != null && target.Character.HasBuff(755))
                     {
-                        BattleEntity.AddBuff(new Buff.Buff(553, target.Character.Level), target, true);
+                        BattleEntity.AddBuff(new Buff(553, target.Character.Level), target, true);
                         BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, BattleEntity.MapMonster.MapMonsterId, 43));
                         BattleEntity.MapMonster.LastEffect43 = DateTime.Now;
                     }
@@ -2479,7 +2474,7 @@ namespace OpenNos.GameObject.Map
                             {
                                 // Magic Spell
 
-                                target.Character.AddBuff(new Buff.Buff(617, target.Character.Level), target.Character.BattleEntity);
+                                target.Character.AddBuff(new Buff(617, target.Character.Level), target.Character.BattleEntity);
 
                                 int castId = 10 + Monster.Element;
 
@@ -2544,7 +2539,7 @@ namespace OpenNos.GameObject.Map
                         {
                             if (s.Type == (byte)CardType.Buff)
                             {
-                                Buff.Buff b = new Buff.Buff((short)s.SecondData, Monster.Level);
+                                Buff b = new Buff((short)s.SecondData, Monster.Level);
                                 if (b.Card != null)
                                 {
                                     switch (b.Card?.BuffType)
@@ -2566,7 +2561,7 @@ namespace OpenNos.GameObject.Map
                         {
                             if (s.Type == (byte)CardType.Buff)
                             {
-                                Buff.Buff b = new Buff.Buff((short)s.SecondData, BattleEntity.Level);
+                                Buff b = new Buff((short)s.SecondData, BattleEntity.Level);
                                 if (b.Card != null)
                                 {
                                     switch (b.Card?.BuffType)
@@ -2705,7 +2700,7 @@ namespace OpenNos.GameObject.Map
                     {
                         npcMonsterSkill.Skill.BCards.Where(s => s.Type == (byte)CardType.Buff).ToList().ForEach(s =>
                         {
-                            if (new Buff.Buff((short)s.SecondData, Monster.Level) is Buff.Buff b)
+                            if (new Buff((short)s.SecondData, Monster.Level) is Buff b)
                             {
                                 switch (b.Card?.BuffType)
                                 {
@@ -2754,7 +2749,7 @@ namespace OpenNos.GameObject.Map
                                 {
                                     if (s.Type == (byte)CardType.Buff)
                                     {
-                                        Buff.Buff b = new Buff.Buff((short)s.SecondData, Monster.Level);
+                                        Buff b = new Buff((short)s.SecondData, Monster.Level);
                                         if (b.Card != null)
                                         {
                                             switch (b.Card?.BuffType)
@@ -2776,7 +2771,7 @@ namespace OpenNos.GameObject.Map
                                 {
                                     if (s.Type == (byte)CardType.Buff)
                                     {
-                                        Buff.Buff b = new Buff.Buff((short)s.SecondData, BattleEntity.Level);
+                                        Buff b = new Buff((short)s.SecondData, BattleEntity.Level);
                                         if (b.Card != null)
                                         {
                                             switch (b.Card?.BuffType)
@@ -2886,7 +2881,7 @@ namespace OpenNos.GameObject.Map
                     {
                         npcMonsterSkill.Skill.BCards.Where(s => s.Type == (byte)CardType.Buff).ToList().ForEach(s =>
                         {
-                            if (new Buff.Buff((short)s.SecondData, Monster.Level) is Buff.Buff b)
+                            if (new Buff((short)s.SecondData, Monster.Level) is Buff b)
                             {
                                 switch (b.Card?.BuffType)
                                 {
@@ -2915,7 +2910,7 @@ namespace OpenNos.GameObject.Map
                     {
                         npcMonsterSkill.Skill.BCards.Where(s => s.Type == (byte)CardType.Buff).ToList().ForEach(s =>
                         {
-                            if (new Buff.Buff((short)s.SecondData, Monster.Level) is Buff.Buff b)
+                            if (new Buff((short)s.SecondData, Monster.Level) is Buff b)
                             {
                                 switch (b.Card?.BuffType)
                                 {
@@ -2977,7 +2972,7 @@ namespace OpenNos.GameObject.Map
                                 {
                                     if (s.Type == (byte)CardType.Buff)
                                     {
-                                        Buff.Buff b = new Buff.Buff((short)s.SecondData, Monster.Level);
+                                        Buff b = new Buff((short)s.SecondData, Monster.Level);
                                         if (b.Card != null)
                                         {
                                             switch (b.Card?.BuffType)
@@ -2999,7 +2994,7 @@ namespace OpenNos.GameObject.Map
                                 {
                                     if (s.Type == (byte)CardType.Buff)
                                     {
-                                        Buff.Buff b = new Buff.Buff((short)s.SecondData, BattleEntity.Level);
+                                        Buff b = new Buff((short)s.SecondData, BattleEntity.Level);
                                         if (b.Card != null)
                                         {
                                             switch (b.Card?.BuffType)
@@ -3098,7 +3093,7 @@ namespace OpenNos.GameObject.Map
                     {
                         npcMonsterSkill.Skill.BCards.Where(s => s.Type == (byte)CardType.Buff).ToList().ForEach(s =>
                         {
-                            if (new Buff.Buff((short)s.SecondData, Monster.Level) is Buff.Buff b)
+                            if (new Buff((short)s.SecondData, Monster.Level) is Buff b)
                             {
                                 switch (b.Card?.BuffType)
                                 {
@@ -3141,7 +3136,7 @@ namespace OpenNos.GameObject.Map
                                 {
                                     if (s.Type == (byte)CardType.Buff)
                                     {
-                                        Buff.Buff b = new Buff.Buff((short)s.SecondData, Monster.Level);
+                                        Buff b = new Buff((short)s.SecondData, Monster.Level);
                                         if (b.Card != null)
                                         {
                                             switch (b.Card?.BuffType)
@@ -3163,7 +3158,7 @@ namespace OpenNos.GameObject.Map
                                 {
                                     if (s.Type == (byte)CardType.Buff)
                                     {
-                                        Buff.Buff b = new Buff.Buff((short)s.SecondData, BattleEntity.Level);
+                                        Buff b = new Buff((short)s.SecondData, BattleEntity.Level);
                                         if (b.Card != null)
                                         {
                                             switch (b.Card?.BuffType)

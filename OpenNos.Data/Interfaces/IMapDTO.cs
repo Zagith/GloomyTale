@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  */
 
-namespace OpenNos.Data.Interfaces
+namespace OpenNos.Data
 {
     public interface IMapDTO
     {

@@ -1,6 +1,5 @@
 ﻿using OpenNos.Core;
 using OpenNos.Domain;
-using OpenNos.GameObject.Item.Instance;
 using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject.Helpers

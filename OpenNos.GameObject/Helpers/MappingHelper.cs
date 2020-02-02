@@ -14,7 +14,7 @@
 
 using System.Collections.Generic;
 
-namespace OpenNos.GameObject.Helpers
+namespace OpenNos.GameObject
 {
     public static class MappingHelper
     {

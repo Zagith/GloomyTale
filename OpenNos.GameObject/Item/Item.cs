@@ -12,16 +12,13 @@
  * GNU General Public License for more details.
  */
 
-using System.Collections.Generic;
-using System.Linq;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
-using OpenNos.GameObject.Buff;
-using OpenNos.GameObject.Item.Instance;
-using OpenNos.GameObject.Networking;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace OpenNos.GameObject.Item
+namespace OpenNos.GameObject
 {
     public abstract class Item : ItemDTO
     {

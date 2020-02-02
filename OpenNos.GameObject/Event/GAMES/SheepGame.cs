@@ -8,8 +8,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using OpenNos.GameObject.Item.Instance;
-using OpenNos.GameObject.Map;
 
 namespace OpenNos.GameObject.Event.GAMES
 {
@@ -173,7 +171,7 @@ namespace OpenNos.GameObject.Event.GAMES
                 //ended
             }
 
-            private static IEnumerable<Tuple<short, int, short, short>> generateDrop(Map.Map map, short vnum, int amountofdrop, int amount)
+            private static IEnumerable<Tuple<short, int, short, short>> generateDrop(Map map, short vnum, int amountofdrop, int amount)
             {
                 List<Tuple<short, int, short, short>> dropParameters = new List<Tuple<short, int, short, short>>();
                 for (int i = 0; i < amountofdrop; i++)

@@ -12,11 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using System.Collections.Generic;
-using OpenNos.GameObject.Event;
 using OpenNos.GameObject.Helpers;
+using System.Collections.Generic;
 
-namespace OpenNos.GameObject.Map
+namespace OpenNos.GameObject
 {
     public class MapButton
     {

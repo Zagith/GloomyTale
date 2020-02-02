@@ -14,10 +14,9 @@
 
 using OpenNos.Core;
 using OpenNos.Data;
-using OpenNos.GameObject.Item.Instance;
 using OpenNos.GameObject.Networking;
 
-namespace OpenNos.GameObject.Item
+namespace OpenNos.GameObject
 {
     public class NoFunctionItem : Item
     {

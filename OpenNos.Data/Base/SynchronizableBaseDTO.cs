@@ -14,7 +14,7 @@
 
 using System;
 
-namespace OpenNos.Data.Base
+namespace OpenNos.Data
 {
     [Serializable]
     public abstract class SynchronizableBaseDTO

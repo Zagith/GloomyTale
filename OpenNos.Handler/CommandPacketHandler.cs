@@ -18,6 +18,7 @@ using OpenNos.Data;
 using OpenNos.Data.I18N;
 using OpenNos.Domain;
 using OpenNos.GameObject;
+using OpenNos.GameObject.CommandPackets;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
 using OpenNos.GameObject.Packets.CommandPackets;
@@ -30,16 +31,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using OpenNos.Core.Cryptography;
-using OpenNos.Core.Handling;
-using OpenNos.Core.Serializing;
-using OpenNos.GameObject.Buff;
-using OpenNos.GameObject.Event;
-using OpenNos.GameObject.Item;
-using OpenNos.GameObject.Item.Instance;
-using OpenNos.GameObject.Map;
-using OpenNos.GameObject.Npc;
-using MapInstance = OpenNos.GameObject.Map.MapInstance;
 
 namespace OpenNos.Handler
 {
@@ -2265,7 +2256,7 @@ namespace OpenNos.Handler
                 int count = packet.Count;
                 int time = packet.Time;
 
-                MapInstance instance = Session.CurrentMapInstance;
+                GameObject.MapInstance instance = Session.CurrentMapInstance;
 
                 Observable.Timer(TimeSpan.FromSeconds(0)).Subscribe(observer =>
                 {
@@ -4004,7 +3995,7 @@ namespace OpenNos.Handler
         {
 
             // lower the boilerplate
-            void SendMapStats(MapDTO map, MapInstance mapInstance)
+            void SendMapStats(MapDTO map, GameObject.MapInstance mapInstance)
             {
                 if (map != null && mapInstance != null)
                 {
@@ -4041,7 +4032,7 @@ namespace OpenNos.Handler
                 if (packet.MapId.HasValue)
                 {
                     MapDTO map = DAOFactory.MapDAO.LoadById(packet.MapId.Value);
-                    MapInstance mapInstance = ServerManager.GetMapInstanceByMapId(packet.MapId.Value);
+                    GameObject.MapInstance mapInstance = ServerManager.GetMapInstanceByMapId(packet.MapId.Value);
                     if (map != null && mapInstance != null)
                     {
                         SendMapStats(map, mapInstance);
@@ -4373,7 +4364,7 @@ namespace OpenNos.Handler
                     Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[MapReset]MapId: {Session.CurrentMapInstance.Map.MapId}");
                     LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
-                    MapInstance newMapInstance = ServerManager.ResetMapInstance(Session.CurrentMapInstance);
+                    GameObject.MapInstance newMapInstance = ServerManager.ResetMapInstance(Session.CurrentMapInstance);
 
                     Parallel.ForEach(Session.CurrentMapInstance.Sessions, sess =>
                     ServerManager.Instance.ChangeMapInstance(sess.Character.CharacterId, newMapInstance.MapInstanceId, sess.Character.PositionX, sess.Character.PositionY));
@@ -4404,7 +4395,7 @@ namespace OpenNos.Handler
                 if (count < 1) { count = 1; }
                 int time = packet.Time;
 
-                MapInstance instance = Session.CurrentMapInstance;
+                GameObject.MapInstance instance = Session.CurrentMapInstance;
 
                 Observable.Timer(TimeSpan.FromSeconds(0)).Subscribe(observer =>
                 {

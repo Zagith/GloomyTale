@@ -12,17 +12,16 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Core;
+using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading;
-using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Map;
-using OpenNos.GameObject.Networking;
 
-namespace OpenNos.GameObject.Event.LOD
+namespace OpenNos.GameObject.Event
 {
     public static class LOD
     {

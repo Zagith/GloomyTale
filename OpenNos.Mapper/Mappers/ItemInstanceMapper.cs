@@ -1,7 +1,6 @@
 using OpenNos.DAL.EF;
 using OpenNos.Data;
 using System;
-using OpenNos.DAL.EF.Entities;
 
 namespace OpenNos.Mapper.Mappers
 {
