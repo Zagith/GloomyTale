@@ -12,10 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.GameObject.Helpers;
 using System;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Item.Instance;
+using OpenNos.GameObject.Networking;
 
-namespace OpenNos.GameObject
+namespace OpenNos.GameObject.Map
 {
     public abstract class MapItem
     {

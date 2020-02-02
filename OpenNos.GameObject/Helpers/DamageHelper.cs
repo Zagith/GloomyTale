@@ -18,6 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using OpenNos.GameObject.Buff;
+using OpenNos.GameObject.Item.Instance;
+using OpenNos.GameObject.Map;
 using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject.Helpers
@@ -90,7 +93,7 @@ namespace OpenNos.GameObject.Helpers
             }
 
             if ((attacker.EntityType == defender.EntityType && attacker.MapEntityId == defender.MapEntityId)
-              || attacker.Character == null && attacker.Mate == null && Map.GetDistance(new MapCell { X = attacker.PositionX, Y = attacker.PositionY }, new MapCell { X = defender.PositionX, Y = defender.PositionY }) > maxRange)
+              || attacker.Character == null && attacker.Mate == null && Map.Map.GetDistance(new MapCell { X = attacker.PositionX, Y = attacker.PositionY }, new MapCell { X = defender.PositionX, Y = defender.PositionY }) > maxRange)
             {
                 if (skill == null || skill.TargetRange != 0 || skill.Range != 0 && !attackGreaterDistance)
                 {
@@ -953,7 +956,7 @@ namespace OpenNos.GameObject.Helpers
 
             if (!attacker.HasBuff(CardType.GuarantedDodgeRangedAttack, (byte)AdditionalTypes.GuarantedDodgeRangedAttack.NoPenatly))
             {
-                if (attacker.AttackType == AttackType.Range && Map.GetDistance(
+                if (attacker.AttackType == AttackType.Range && Map.Map.GetDistance(
                         new MapCell { X = attacker.PositionX, Y = attacker.PositionY },
                         new MapCell { X = defender.PositionX, Y = defender.PositionY }) < 4)
                 {
@@ -963,7 +966,7 @@ namespace OpenNos.GameObject.Helpers
 
             if (attacker.AttackType == AttackType.Range && attacker.HasBuff(CardType.GuarantedDodgeRangedAttack, (byte)AdditionalTypes.GuarantedDodgeRangedAttack.DistanceDamageIncreasing))
             {
-                double distance = Map.GetDistance(
+                double distance = Map.Map.GetDistance(
                         new MapCell { X = attacker.PositionX, Y = attacker.PositionY },
                         new MapCell { X = defender.PositionX, Y = defender.PositionY });
 
@@ -1652,7 +1655,7 @@ namespace OpenNos.GameObject.Helpers
                             {
                                 foreach (ClientSession session in clientSessions)
                                 {
-                                    session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                                    session.Character.AddBuff(new Buff.Buff(443, defender.Character.Level), session.Character.BattleEntity);
                                 }
                             }
                         }
@@ -1668,7 +1671,7 @@ namespace OpenNos.GameObject.Helpers
                                 {
                                     foreach (ClientSession session in clientSessions)
                                     {
-                                        session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                                        session.Character.AddBuff(new Buff.Buff(443, defender.Character.Level), session.Character.BattleEntity);
                                     }
                                 }
                             }
@@ -1681,7 +1684,7 @@ namespace OpenNos.GameObject.Helpers
                                 {
                                     foreach (ClientSession session in clientSessions)
                                     {
-                                        session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                                        session.Character.AddBuff(new Buff.Buff(443, defender.Character.Level), session.Character.BattleEntity);
                                     }
                                 }
                             }
@@ -1695,13 +1698,13 @@ namespace OpenNos.GameObject.Helpers
                             {
                                 foreach (ClientSession session in clientSessions)
                                 {
-                                    session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                                    session.Character.AddBuff(new Buff.Buff(443, defender.Character.Level), session.Character.BattleEntity);
                                 }
                             }
                         }
                         else
                         {
-                            defender.Character.AddBuff(new Buff(443, defender.Character.Level), defender);
+                            defender.Character.AddBuff(new Buff.Buff(443, defender.Character.Level), defender);
                         }
                     }
                     else
@@ -1713,7 +1716,7 @@ namespace OpenNos.GameObject.Helpers
                         {
                             foreach (ClientSession session in clientSessions)
                             {
-                                session.Character.AddBuff(new Buff(443, defender.Character.Level), session.Character.BattleEntity);
+                                session.Character.AddBuff(new Buff.Buff(443, defender.Character.Level), session.Character.BattleEntity);
                             }
                         }
                     }
@@ -1731,7 +1734,7 @@ namespace OpenNos.GameObject.Helpers
                     });
                     defender.Character.ChargeValue = totalDamage;
                     if (defender.Character.ChargeValue > 7000) defender.Character.ChargeValue = 7000;
-                    defender.AddBuff(new Buff(0, defender.Level), defender);
+                    defender.AddBuff(new Buff.Buff(0, defender.Level), defender);
                 }
                 hitMode = 0;
                 return 0;
@@ -1772,7 +1775,7 @@ namespace OpenNos.GameObject.Helpers
             {
                 if (ServerManager.RandomNumber() < CounterDebuff[0])
                 {
-                    realAttacker.AddBuff(new Buff((short)CounterDebuff[1], defender.Level), defender);
+                    realAttacker.AddBuff(new Buff.Buff((short)CounterDebuff[1], defender.Level), defender);
                 }
             }
 
@@ -1937,7 +1940,7 @@ namespace OpenNos.GameObject.Helpers
             return totalDamage;
         }
 
-        private static int[] GetBuff(byte level, List<Buff> buffs, List<BCard> bcards, CardType type,
+        private static int[] GetBuff(byte level, List<Buff.Buff> buffs, List<BCard> bcards, CardType type,
             byte subtype, BuffType btype, ref int count, bool castTypeNotZero = false)
         {
             int value1 = 0;
@@ -1981,7 +1984,7 @@ namespace OpenNos.GameObject.Helpers
 
             if (buffs != null)
             {
-                foreach (Buff buff in buffs.ToList().Where(b => b.Card.BuffType.Equals(btype)))
+                foreach (Buff.Buff buff in buffs.ToList().Where(b => b.Card.BuffType.Equals(btype)))
                 {
                     cards = subtype % 10 == 1
                         ? buff.Card.BCards.Where(s =>

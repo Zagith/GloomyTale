@@ -12,9 +12,10 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Core.Cryptography;
 using OpenNos.Core.Networking.Communication.Scs.Communication.Protocols;
 
-namespace OpenNos.Core
+namespace OpenNos.Core.Networking
 {
     public class WireProtocolFactory<EncryptorT> : IScsWireProtocolFactory where EncryptorT : CryptographyBase
     {

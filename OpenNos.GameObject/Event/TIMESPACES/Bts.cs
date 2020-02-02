@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
+using OpenNos.GameObject.Map;
 
 namespace OpenNos.GameObject.Event.TIMESPACES
 {
@@ -108,7 +109,7 @@ namespace OpenNos.GameObject.Event.TIMESPACES
             }
 
 
-            private static List<MonsterToSummon> getInstantBattleMonster(Map map, short instantbattletype, int wave)
+            private static List<MonsterToSummon> getInstantBattleMonster(Map.Map map, short instantbattletype, int wave)
             {
                 List<MonsterToSummon> SummonParameters = new List<MonsterToSummon>();
 

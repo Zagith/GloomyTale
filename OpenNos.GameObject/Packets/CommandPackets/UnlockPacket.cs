@@ -1,7 +1,7 @@
-﻿using OpenNos.Core;
+﻿using OpenNos.Core.Serializing;
 using OpenNos.Domain;
 
-namespace OpenNos.GameObject.CommandPackets
+namespace OpenNos.GameObject.Packets.CommandPackets
 {
     [PacketHeader("$Pw", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.User })]
     public class UnlockPacket : PacketDefinition

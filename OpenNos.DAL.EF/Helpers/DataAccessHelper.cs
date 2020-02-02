@@ -16,6 +16,7 @@ using OpenNos.Core;
 using System;
 using System.Data;
 using System.Data.Common;
+using OpenNos.DAL.EF.Context;
 
 namespace OpenNos.DAL.EF.Helpers
 {

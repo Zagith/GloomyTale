@@ -12,15 +12,15 @@
  * GNU General Public License for more details.
  */
 
+using System;
+using System.Linq;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Networking;
 using OpenNos.Master.Library.Client;
-using System;
-using System.Linq;
 
-namespace OpenNos.GameObject.Event
+namespace OpenNos.GameObject.Event.MINILANDREFRESH
 {
     public static class MinilandRefresh
     {

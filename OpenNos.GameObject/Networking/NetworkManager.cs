@@ -12,16 +12,17 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Core.Networking.Communication.Scs.Communication.EndPoints.Tcp;
-using OpenNos.Core.Networking.Communication.Scs.Server;
-using OpenNos.Domain;
-using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenNos.Core;
+using OpenNos.Core.Cryptography;
+using OpenNos.Core.Networking;
+using OpenNos.Core.Networking.Communication.Scs.Communication.EndPoints.Tcp;
+using OpenNos.Core.Networking.Communication.Scs.Server;
+using OpenNos.Domain;
 
-namespace OpenNos.GameObject
+namespace OpenNos.GameObject.Networking
 {
     public class NetworkManager<EncryptorT> : SessionManager where EncryptorT : CryptographyBase
     {

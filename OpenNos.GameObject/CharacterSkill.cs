@@ -19,6 +19,7 @@ using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenNos.GameObject.Buff;
 using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject

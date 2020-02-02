@@ -1,6 +1,7 @@
 ﻿using OpenNos.Domain;
 using System;
 using System.Linq;
+using OpenNos.GameObject.Buff;
 using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject.Helpers

@@ -1,7 +1,7 @@
-﻿using OpenNos.Core;
+﻿using OpenNos.Core.Serializing;
 using OpenNos.Domain;
 
-namespace OpenNos.GameObject.CommandPackets
+namespace OpenNos.GameObject.Packets.CommandPackets
 {
     [PacketHeader("$CH", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.DEV })] //for the momment
     public class CHPacket : PacketDefinition

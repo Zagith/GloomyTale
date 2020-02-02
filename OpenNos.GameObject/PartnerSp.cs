@@ -7,6 +7,7 @@ using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenNos.GameObject.Item.Instance;
 
 namespace OpenNos.GameObject
 {

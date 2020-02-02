@@ -1,5 +1,6 @@
 ﻿using OpenNos.Core;
 using System.Collections.Generic;
+using OpenNos.Core.Serializing;
 
 namespace OpenNos.GameObject.Packets.ServerPackets
 {

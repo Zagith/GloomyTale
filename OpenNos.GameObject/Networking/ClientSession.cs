@@ -12,14 +12,6 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Core.Handling;
-using OpenNos.Core.Networking.Communication.Scs.Communication.Messages;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
-using OpenNos.Master.Library.Client;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -27,8 +19,20 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
+using OpenNos.Core;
+using OpenNos.Core.Cryptography;
+using OpenNos.Core.Handling;
+using OpenNos.Core.Networking;
+using OpenNos.Core.Networking.Communication.Scs.Communication.Messages;
+using OpenNos.Core.Serializing;
+using OpenNos.Core.Threading;
+using OpenNos.Data;
+using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Map;
+using OpenNos.Master.Library.Client;
 
-namespace OpenNos.GameObject
+namespace OpenNos.GameObject.Networking
 {
     public class ClientSession
     {

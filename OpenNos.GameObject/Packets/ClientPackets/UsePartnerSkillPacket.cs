@@ -1,4 +1,5 @@
 ﻿using OpenNos.Core;
+using OpenNos.Core.Serializing;
 using OpenNos.Domain;
 
 namespace OpenNos.GameObject.Packets.ClientPackets

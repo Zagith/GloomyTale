@@ -1,5 +1,4 @@
 using OpenNos.Core;
-using OpenNos.Core.ConcurrencyExtensions;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Event;
@@ -12,6 +11,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using OpenNos.Core.Threading;
+using OpenNos.GameObject.Buff;
+using OpenNos.GameObject.Event.ICEBREAKER;
+using OpenNos.GameObject.Item.Instance;
+using OpenNos.GameObject.Map;
 using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject
@@ -35,7 +39,7 @@ namespace OpenNos.GameObject
             }
             else
             {
-                Buffs = new ThreadSafeSortedList<short, Buff>();
+                Buffs = new ThreadSafeSortedList<short, Buff.Buff>();
                 BuffObservables = new ThreadSafeSortedList<short, IDisposable>();
                 BCardDisposables = new ThreadSafeSortedList<int, IDisposable>();
                 BCards = new ThreadSafeGenericLockedList<BCard>();
@@ -221,7 +225,7 @@ namespace OpenNos.GameObject
             }
             else
             {
-                Buffs = new ThreadSafeSortedList<short, Buff>();
+                Buffs = new ThreadSafeSortedList<short, Buff.Buff>();
                 BuffObservables = new ThreadSafeSortedList<short, IDisposable>();
                 BCardDisposables = new ThreadSafeSortedList<int, IDisposable>();
                 BCards = new ThreadSafeGenericLockedList<BCard>(mate.Monster.BCards);
@@ -275,7 +279,7 @@ namespace OpenNos.GameObject
             }
             else
             {
-                Buffs = new ThreadSafeSortedList<short, Buff>();
+                Buffs = new ThreadSafeSortedList<short, Buff.Buff>();
                 BuffObservables = new ThreadSafeSortedList<short, IDisposable>();
                 BCardDisposables = new ThreadSafeSortedList<int, IDisposable>();
                 OnDeathEvents = new List<EventContainer>();
@@ -336,7 +340,7 @@ namespace OpenNos.GameObject
             }
             else
             {
-                Buffs = new ThreadSafeSortedList<short, Buff>();
+                Buffs = new ThreadSafeSortedList<short, Buff.Buff>();
                 BuffObservables = new ThreadSafeSortedList<short, IDisposable>();
                 BCardDisposables = new ThreadSafeSortedList<int, IDisposable>();
                 BCards = new ThreadSafeGenericLockedList<BCard>();
@@ -422,7 +426,7 @@ namespace OpenNos.GameObject
             }
         }
 
-        public ThreadSafeSortedList<short, Buff> Buffs { get; set; }
+        public ThreadSafeSortedList<short, Buff.Buff> Buffs { get; set; }
 
         public ThreadSafeSortedList<short, IDisposable> BuffObservables { get; set; }
 
@@ -773,7 +777,7 @@ namespace OpenNos.GameObject
                 .FirstOrDefault();
         }
 
-        public void AddBuff(Buff indicator, BattleEntity sender, bool noMessage = false, short x = 0, short y = 0, bool forced = false)
+        public void AddBuff(Buff.Buff indicator, BattleEntity sender, bool noMessage = false, short x = 0, short y = 0, bool forced = false)
         {
             if (indicator.Card != null)
             {
@@ -925,7 +929,7 @@ namespace OpenNos.GameObject
                         RemoveBuff(567);
                         break;
                     case 589:
-                        sender?.AddBuff(new Buff(592, sender.Level), sender);
+                        sender?.AddBuff(new Buff.Buff(592, sender.Level), sender);
                         break;
                     case 601:
                         RemoveBuff(602);
@@ -1003,7 +1007,7 @@ namespace OpenNos.GameObject
                 }
 
                 indicator.Card.BCards.ForEach(b => BCardDisposables[b.BCardId]?.Dispose());
-                if (Buffs[indicator.Card.CardId] is Buff oldBuff)
+                if (Buffs[indicator.Card.CardId] is Buff.Buff oldBuff)
                 {
                     Buffs.Remove(indicator.Card.CardId);
                 }
@@ -1128,7 +1132,7 @@ namespace OpenNos.GameObject
                         RemoveBuff(indicator.Card.CardId);
                         if (indicator.Card.TimeoutBuff != 0 && ServerManager.RandomNumber() < indicator.Card.TimeoutBuffChance)
                         {
-                            AddBuff(new Buff(indicator.Card.TimeoutBuff, indicator.Level), sender);
+                            AddBuff(new Buff.Buff(indicator.Card.TimeoutBuff, indicator.Level), sender);
                         }
                     }
                 });
@@ -1139,7 +1143,7 @@ namespace OpenNos.GameObject
         {
             if (Character != null)
             {
-                foreach (Buff indicator in Buffs.GetAllItems())
+                foreach (Buff.Buff indicator in Buffs.GetAllItems())
                 {
                     if (indicator.StaticBuff)
                     {
@@ -1183,7 +1187,7 @@ namespace OpenNos.GameObject
                 return;
             }
 
-            Buff indicator = Buffs[id];
+            Buff.Buff indicator = Buffs[id];
 
             if (indicator?.Card != null)
             {
@@ -1408,14 +1412,14 @@ namespace OpenNos.GameObject
                 ClearSacrificeBuff();
             }
 
-            List<Buff> BuffsCopy = new List<Buff>();
+            List<Buff.Buff> BuffsCopy = new List<Buff.Buff>();
 
             lock (Buffs)
             {
                 BuffsCopy = Buffs.GetAllItems();
             }
 
-            List<Buff> buff = BuffsCopy.Where(s => (type == BuffType.All || s.Card.BuffType == type) && !s.StaticBuff && s.Card.Level < level && s.Card.CardId != 62).ToList();
+            List<Buff.Buff> buff = BuffsCopy.Where(s => (type == BuffType.All || s.Card.BuffType == type) && !s.StaticBuff && s.Card.Level < level && s.Card.CardId != 62).ToList();
 
             buff.ForEach(s =>
             {
@@ -1493,7 +1497,7 @@ namespace OpenNos.GameObject
 
             lock (Buffs)
             {
-                foreach (Buff buff in Buffs.GetAllItems())
+                foreach (Buff.Buff buff in Buffs.GetAllItems())
                 {
                     // THIS ONE DOES NOT FOR STUFFS
 

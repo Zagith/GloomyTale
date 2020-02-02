@@ -38,6 +38,14 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenNos.Core.Extensions;
+using OpenNos.Core.Threading;
+using OpenNos.GameObject.Buff;
+using OpenNos.GameObject.Item;
+using OpenNos.GameObject.Item.Instance;
+using OpenNos.GameObject.Map;
+using OpenNos.GameObject.Npc;
+using MapInstance = OpenNos.GameObject.Map.MapInstance;
 
 namespace OpenNos.GameObject.Networking
 {
@@ -55,11 +63,11 @@ namespace OpenNos.GameObject.Networking
 
         private static readonly ConcurrentBag<Card> _cards = new ConcurrentBag<Card>();
 
-        private static readonly ConcurrentBag<Item> _items = new ConcurrentBag<Item>();
+        private static readonly ConcurrentBag<Item.Item> _items = new ConcurrentBag<Item.Item>();
 
         private static readonly ConcurrentDictionary<Guid, MapInstance> _mapinstances = new ConcurrentDictionary<Guid, MapInstance>();
 
-        private static readonly ConcurrentBag<Map> _maps = new ConcurrentBag<Map>();
+        private static readonly ConcurrentBag<Map.Map> _maps = new ConcurrentBag<Map.Map>();
 
         private static readonly ConcurrentBag<NpcMonster> _npcmonsters = new ConcurrentBag<NpcMonster>();
 
@@ -952,7 +960,7 @@ namespace OpenNos.GameObject.Networking
         //public void Act4StatRefresh(int Angel, int Demon) => DiscordServiceClient.Instance.GetAct4Stat(Angel, Demon);
         public static MapInstance GenerateMapInstance(short mapId, MapInstanceType type, InstanceBag mapclock, bool dropAllowed = false, bool isScriptedInstance = false)
         {
-            Map map = _maps.FirstOrDefault(m => m.MapId.Equals(mapId));
+            Map.Map map = _maps.FirstOrDefault(m => m.MapId.Equals(mapId));
             if (map != null)
             {
                 Guid guid = Guid.NewGuid();
@@ -983,7 +991,7 @@ namespace OpenNos.GameObject.Networking
         {
             if (baseMapInstance != null)
             {
-                Map mapinfo = new Map(baseMapInstance.Map.MapId, baseMapInstance.Map.GridMapId, baseMapInstance.Map.Data)
+                Map.Map mapinfo = new Map.Map(baseMapInstance.Map.MapId, baseMapInstance.Map.GridMapId, baseMapInstance.Map.Data)
                 {
                     Music = baseMapInstance.Map.Music,
                     NameI18NKey = baseMapInstance.Map.NameI18NKey,
@@ -1056,7 +1064,7 @@ namespace OpenNos.GameObject.Networking
 
         public Group GetGroupByCharacterId(long characterId) => Groups?.SingleOrDefault(g => g.IsMemberOfGroup(characterId));
 
-        public static Item GetItem(short vnum) => _items.FirstOrDefault(m => m.VNum.Equals(vnum));
+        public static Item.Item GetItem(short vnum) => _items.FirstOrDefault(m => m.VNum.Equals(vnum));
 
         public static MapInstance GetMapInstance(Guid id) => _mapinstances.ContainsKey(id) ? _mapinstances[id] : null;
 
@@ -1539,7 +1547,7 @@ namespace OpenNos.GameObject.Networking
                 {
                     map.InjectI18N(propsMap, dicMap, regionsMap, accessorsMap);
                     Guid guid = Guid.NewGuid();
-                    Map mapinfo = new Map(map.MapId, map.GridMapId, map.Data)
+                    Map.Map mapinfo = new Map.Map(map.MapId, map.GridMapId, map.Data)
                     {
                         Music = map.Music,
                         NameI18NKey = map.NameI18NKey,
@@ -2382,7 +2390,7 @@ namespace OpenNos.GameObject.Networking
                         raidType = MapInstanceType.Act4Demetra;
                         break;
                 }
-                Event.Act4Raid.GenerateRaid(raidType, faction);
+                Act4Raid.GenerateRaid(raidType, faction);
                 return rng;
             }
 

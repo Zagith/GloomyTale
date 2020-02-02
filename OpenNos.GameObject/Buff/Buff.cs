@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.GameObject.Networking;
 using System;
+using OpenNos.GameObject.Networking;
 
-namespace OpenNos.GameObject
+namespace OpenNos.GameObject.Buff
 {
     public class Buff
     {

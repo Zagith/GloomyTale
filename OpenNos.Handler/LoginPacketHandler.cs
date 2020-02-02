@@ -22,6 +22,9 @@ using OpenNos.Master.Library.Client;
 using System;
 using System.Configuration;
 using System.Linq;
+using OpenNos.Core.Cryptography;
+using OpenNos.Core.Handling;
+using OpenNos.GameObject.Networking;
 
 namespace OpenNos.Handler
 {

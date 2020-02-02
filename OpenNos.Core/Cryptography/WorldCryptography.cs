@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenNos.Core
+namespace OpenNos.Core.Cryptography
 {
     public class WorldCryptography : CryptographyBase
     {

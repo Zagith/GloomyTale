@@ -16,7 +16,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OpenNos.DAL.EF
+namespace OpenNos.DAL.EF.Base
 {
     public abstract class SynchronizableBaseEntity
     {

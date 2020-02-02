@@ -13,6 +13,7 @@
  */
 
 using System.Collections.Concurrent;
+using OpenNos.GameObject.ScriptedObjects;
 
 namespace OpenNos.GameObject
 {

@@ -12,18 +12,18 @@
  * GNU General Public License for more details.
  */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace OpenNos.GameObject
+namespace OpenNos.GameObject.Item.Instance
 {
     public class ItemInstance : ItemInstanceDTO
     {
@@ -1392,7 +1392,7 @@ namespace OpenNos.GameObject
                         }
                         else
                         {
-                            session.Character.AddBuff(new Buff(62, session.Character.Level), session.Character.BattleEntity);
+                            session.Character.AddBuff(new Buff.Buff(62, session.Character.Level), session.Character.BattleEntity);
                         }
                         break;
                     case RarifyProtection.None:

@@ -12,15 +12,15 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core.ExceptionExtensions;
-using OpenNos.Core.Networking.Communication.Scs.Communication.Messages;
-using OpenNos.Core.Networking.Communication.Scs.Communication.Protocols;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using OpenNos.Core.ExceptionExtensions;
+using OpenNos.Core.Networking.Communication.Scs.Communication.Messages;
+using OpenNos.Core.Networking.Communication.Scs.Communication.Protocols;
 
-namespace OpenNos.Core
+namespace OpenNos.Core.Networking
 {
     public class WireProtocol : IScsWireProtocol, IDisposable
     {

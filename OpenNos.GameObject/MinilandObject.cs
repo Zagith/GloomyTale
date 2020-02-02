@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 using OpenNos.Data;
+using OpenNos.GameObject.Item.Instance;
 
 namespace OpenNos.GameObject
 {

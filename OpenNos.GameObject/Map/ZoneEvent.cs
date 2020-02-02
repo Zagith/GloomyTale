@@ -13,8 +13,9 @@
  */
 
 using System.Collections.Generic;
+using OpenNos.GameObject.Event;
 
-namespace OpenNos.GameObject
+namespace OpenNos.GameObject.Map
 {
     public class ZoneEvent
     {

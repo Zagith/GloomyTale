@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace OpenNos.Core
+namespace OpenNos.Core.Threading
 {
     /// <summary>
     /// This class is used to store key-value based items in a thread safe manner. It uses

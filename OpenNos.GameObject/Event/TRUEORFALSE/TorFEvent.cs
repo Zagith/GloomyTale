@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
+using OpenNos.GameObject.Map;
 
 namespace OpenNos.GameObject.Event.TRUEORFALSE
 {

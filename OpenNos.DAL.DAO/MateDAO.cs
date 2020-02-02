@@ -22,6 +22,7 @@ using OpenNos.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenNos.DAL.EF.Context;
 
 namespace OpenNos.DAL.DAO
 {

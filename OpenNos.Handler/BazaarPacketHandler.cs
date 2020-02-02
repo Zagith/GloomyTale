@@ -25,6 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading;
+using OpenNos.Core.Handling;
+using OpenNos.GameObject.Item.Instance;
+using OpenNos.GameObject.Packets.ClientPackets;
 
 namespace OpenNos.Handler
 {

@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace OpenNos.Core
+namespace OpenNos.Core.Threading
 {
     public class ThreadSafeGenericList<T> : IDisposable
     {

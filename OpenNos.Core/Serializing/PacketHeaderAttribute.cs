@@ -12,10 +12,10 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Domain;
 using System;
+using OpenNos.Domain;
 
-namespace OpenNos.Core
+namespace OpenNos.Core.Serializing
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public sealed class PacketHeaderAttribute : Attribute

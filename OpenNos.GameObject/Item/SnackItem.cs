@@ -12,16 +12,18 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Networking;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
+using OpenNos.Core;
+using OpenNos.Data;
+using OpenNos.Domain;
+using OpenNos.GameObject.Buff;
+using OpenNos.GameObject.Item.Instance;
+using OpenNos.GameObject.Networking;
 
-namespace OpenNos.GameObject
+namespace OpenNos.GameObject.Item
 {
     public class SnackItem : Item
     {
@@ -70,7 +72,7 @@ namespace OpenNos.GameObject
                     {
                         if (ServerManager.RandomNumber() < Buff.FirstData)
                         {
-                            session.Character.AddBuff(new Buff((short)Buff.SecondData, session.Character.Level), session.Character.BattleEntity);
+                            session.Character.AddBuff(new Buff.Buff((short)Buff.SecondData, session.Character.Level), session.Character.BattleEntity);
                         }
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }

@@ -12,18 +12,20 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core.ArrayExtensions;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.PathFinder;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using OpenNos.Core.ArrayExtensions;
+using OpenNos.DAL;
+using OpenNos.Data;
+using OpenNos.Data.Interfaces;
+using OpenNos.GameObject.Event;
+using OpenNos.PathFinder;
 
-namespace OpenNos.GameObject
+namespace OpenNos.GameObject.Map
 {
     public class Map : IMapDTO
     {

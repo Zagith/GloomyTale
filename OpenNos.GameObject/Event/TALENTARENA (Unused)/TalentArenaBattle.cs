@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OpenNos.GameObject.Map;
 
 namespace OpenNos.GameObject.Event
 {

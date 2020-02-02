@@ -3,6 +3,8 @@ using OpenNos.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using System.Collections.Generic;
+using OpenNos.DAL.EF.Context;
+using OpenNos.DAL.EF.Entities;
 
 namespace OpenNos.DAL.DAO
 {
