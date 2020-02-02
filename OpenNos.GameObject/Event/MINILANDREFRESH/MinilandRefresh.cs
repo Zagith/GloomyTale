@@ -15,10 +15,10 @@
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
+using OpenNos.GameObject.Networking;
 using OpenNos.Master.Library.Client;
 using System;
 using System.Linq;
-using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject.Event
 {

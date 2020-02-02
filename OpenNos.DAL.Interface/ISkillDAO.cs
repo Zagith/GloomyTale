@@ -31,7 +31,7 @@ namespace OpenNos.DAL.Interface
         SkillDTO LoadById(short skillId);
 
         SaveResult InsertOrUpdate(SkillDTO skill);
-        
+
         #endregion
     }
 }

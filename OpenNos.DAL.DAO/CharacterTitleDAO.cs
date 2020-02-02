@@ -7,15 +7,13 @@ using OpenNos.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenNos.DAL.DAO
 {
     public class CharacterTitleDAO : ICharacterTitlesDAO
     {
         #region Methods
-               
+
         public SaveResult InsertOrUpdate(ref CharacterTitleDTO CharacterTitle)
         {
             try

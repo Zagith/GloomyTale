@@ -13,13 +13,9 @@
  */
 
 using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Concurrent;
-using System.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.GameObject.Event;
 
 namespace OpenNos.GameObject
 {

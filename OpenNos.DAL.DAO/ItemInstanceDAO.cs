@@ -80,7 +80,7 @@ namespace OpenNos.DAL.DAO
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogUserEventError("DELETEGUIDLIST_EXCEPTION", "Saving Process","Items were not deleted!", ex);
+                    Logger.LogUserEventError("DELETEGUIDLIST_EXCEPTION", "Saving Process", "Items were not deleted!", ex);
                     foreach (Guid id in guids)
                     {
                         try

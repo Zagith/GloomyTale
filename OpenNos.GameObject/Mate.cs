@@ -15,18 +15,17 @@
 using OpenNos.Core;
 using OpenNos.Data;
 using OpenNos.Domain;
+using OpenNos.GameObject.Battle;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
+using OpenNos.PathFinder;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.PathFinder;
-using static OpenNos.Domain.BCardType;
-using OpenNos.GameObject.Battle;
-using System.IO;
 using System.Threading.Tasks;
+using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject
 {
@@ -110,8 +109,8 @@ namespace OpenNos.GameObject
             Name = npcMonster.Name[owner.Session.Account.Language];
             MateType = matetype;
             Loyalty = 1000;
-            PositionY = (short) (owner.PositionY + 1);
-            PositionX = (short) (owner.PositionX + 1);
+            PositionY = (short)(owner.PositionY + 1);
+            PositionX = (short)(owner.PositionX + 1);
             if (owner.MapInstance.Map.IsBlockedZone(MapX, MapY))
             {
                 PositionY = owner.PositionY;
@@ -216,7 +215,7 @@ namespace OpenNos.GameObject
             get
             {
                 byte tempSpeed = (byte)(Monster.Speed + 4);
-                
+
                 byte fixSpeed = (byte)GetBuff(CardType.Move, (byte)AdditionalTypes.Move.SetMovement)[0];
                 if (fixSpeed != 0)
                 {
@@ -227,7 +226,7 @@ namespace OpenNos.GameObject
                     tempSpeed += (byte)GetBuff(CardType.Move, (byte)AdditionalTypes.Move.MovementSpeedIncreased)[0];
                     tempSpeed = (byte)(tempSpeed * (1 + (GetBuff(CardType.Move, (byte)AdditionalTypes.Move.MoveSpeedIncreased)[0] / 100D)));
                 }
-                
+
                 if (tempSpeed >= 59 || tempSpeed < 1)
                 {
                     return 1;
@@ -238,7 +237,7 @@ namespace OpenNos.GameObject
             set
             {
                 LastSpeedChange = DateTime.Now;
-                Monster.Speed = value > 59 ? (byte) 59 : value;
+                Monster.Speed = value > 59 ? (byte)59 : value;
             }
         }
 
@@ -468,7 +467,7 @@ namespace OpenNos.GameObject
         int EquipmentLightResistance => GetStuffBuff(CardType.ElementResistance, (byte)AdditionalTypes.ElementResistance.LightIncreased)[0] + GetStuffBuff(CardType.ElementResistance, (byte)AdditionalTypes.ElementResistance.AllIncreased)[0];
 
         int EquipmentDarkResistance => GetStuffBuff(CardType.ElementResistance, (byte)AdditionalTypes.ElementResistance.DarkIncreased)[0] + GetStuffBuff(CardType.ElementResistance, (byte)AdditionalTypes.ElementResistance.AllIncreased)[0];
-        
+
         public string GenerateScPacket()
         {
             if (IsTemporalMate)
@@ -480,7 +479,7 @@ namespace OpenNos.GameObject
 
             if (xp > int.MaxValue)
             {
-                xp = (int) (xp / 100);
+                xp = (int)(xp / 100);
             }
 
             switch (MateType)
@@ -568,7 +567,7 @@ namespace OpenNos.GameObject
             return "";
         }
 
-        public string GenerateStatInfo() => $"st 2 {MateTransportId} {Level} 0 {(int) (Hp / MaxHp * 100)} {(int) (Mp / MaxMp * 100)} {Hp} {Mp}{Buff.GetAllItems().Aggregate("", (current, buff) => current + $" {buff.Card.CardId}.{buff.Level}")}";
+        public string GenerateStatInfo() => $"st 2 {MateTransportId} {Level} 0 {(int)(Hp / MaxHp * 100)} {(int)(Mp / MaxMp * 100)} {Hp} {Mp}{Buff.GetAllItems().Aggregate("", (current, buff) => current + $" {buff.Card.CardId}.{buff.Level}")}";
 
         public void GenerateXp(int xp)
         {
@@ -579,7 +578,7 @@ namespace OpenNos.GameObject
                 {
                     if (Level + 1 < Owner.Level)
                     {
-                        Experience = (long) (Experience - XpLoad());
+                        Experience = (long)(Experience - XpLoad());
                         Level++;
                         Hp = MaxHp;
                         Mp = MaxMp;
@@ -605,7 +604,7 @@ namespace OpenNos.GameObject
         public int HealthHpLoad()
         {
             int regen = GetBuff(CardType.Recovery, (byte)AdditionalTypes.Recovery.HPRecoveryIncreased)[0];
-                //- GetBuff(CardType.Recovery, (byte)AdditionalTypes.Recovery.HPRecoveryDecreased)[0];
+            //- GetBuff(CardType.Recovery, (byte)AdditionalTypes.Recovery.HPRecoveryDecreased)[0];
             return IsSitting ? regen + 50 :
                 (DateTime.Now - LastDefence).TotalSeconds > 4 ? regen + 20 : 0;
         }
@@ -613,7 +612,7 @@ namespace OpenNos.GameObject
         public int HealthMpLoad()
         {
             int regen = GetBuff(CardType.Recovery, (byte)AdditionalTypes.Recovery.MPRecoveryIncreased)[0];
-                //- GetBuff(CardType.Recovery, (byte)AdditionalTypes.Recovery.MPRecoveryDecreased)[0];
+            //- GetBuff(CardType.Recovery, (byte)AdditionalTypes.Recovery.MPRecoveryDecreased)[0];
             return IsSitting ? regen + 50 :
                 (DateTime.Now - LastDefence).TotalSeconds > 4 ? regen + 20 : 0;
         }
@@ -633,7 +632,7 @@ namespace OpenNos.GameObject
             multiplicator += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.IncreasesMaximumHP)[0] / 100D;
             hp += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPIncreased)[0];
             hp += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPMPIncreased)[0];
-            
+
             return (int)((MateHelper.Instance.HpData[GetMateType(), Level] + hp) * multiplicator);
         }
 
@@ -845,7 +844,7 @@ namespace OpenNos.GameObject
                 GenerateRevive();
                 return;
             }
-            
+
             if (MateType == MateType.Pet ? Owner.IsPetAutoRelive : Owner.IsPartnerAutoRelive)
             {
                 if (MateType == MateType.Pet)
@@ -1019,7 +1018,7 @@ namespace OpenNos.GameObject
                     ? new BattleEntity(hitRequest.Mate)
                     : hitRequest.Session?.Character != null
                     ? new BattleEntity(hitRequest.Session.Character, hitRequest.Skill)
-                    :  hitRequest.Monster != null 
+                    : hitRequest.Monster != null
                     ? new BattleEntity(hitRequest.Monster)
                     : null;
 
@@ -1156,7 +1155,7 @@ namespace OpenNos.GameObject
 
                     hitRequest.SkillBCards.Where(s => s.Type.Equals((byte)CardType.Buff) && new Buff((short)s.SecondData, attackerBattleEntity.Level).Card?.BuffType == BuffType.Bad).ToList()
                         .ForEach(s => s.ApplyBCards(BattleEntity, attackerBattleEntity));
-                    
+
                     hitRequest.SkillBCards.Where(s => s.Type.Equals((byte)CardType.SniperAttack)).ToList()
                         .ForEach(s => s.ApplyBCards(BattleEntity, attackerBattleEntity));
 

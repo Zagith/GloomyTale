@@ -13,9 +13,7 @@
  */
 
 using OpenNos.Core;
-using OpenNos.DAL;
 using OpenNos.Data;
-using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject

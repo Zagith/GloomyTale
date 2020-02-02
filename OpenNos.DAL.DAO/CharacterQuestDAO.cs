@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using OpenNos.Core;
+﻿using OpenNos.Core;
 using OpenNos.DAL.EF;
+using OpenNos.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using OpenNos.Data.Enums;
-using OpenNos.DAL.EF.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OpenNos.DAL.DAO
 {
@@ -51,7 +51,7 @@ namespace OpenNos.DAL.DAO
                 return null;
             }
         }
-        
+
         protected static CharacterQuestDTO InsertOrUpdate(OpenNosContext context, CharacterQuestDTO dto)
         {
             Guid primaryKey = dto.Id;
@@ -65,7 +65,7 @@ namespace OpenNos.DAL.DAO
                 return Update(entity, dto, context);
             }
         }
-        
+
         private static CharacterQuestDTO Insert(CharacterQuestDTO charQuest, OpenNosContext context)
         {
             CharacterQuest entity = new CharacterQuest();

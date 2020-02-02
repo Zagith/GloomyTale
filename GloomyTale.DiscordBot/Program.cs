@@ -1,17 +1,17 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Discord;
-using Discord.WebSocket;
+﻿using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using GloomyTale.DiscordBot.Services;
-using OpenNos.Master.Library.Client;
+using Microsoft.Extensions.DependencyInjection;
 using OpenNos.Core;
+using OpenNos.Master.Library.Client;
+using System;
 using System.Configuration;
-using System.Reflection;
 using System.Diagnostics;
 using System.Globalization;
+using System.Net.Http;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace GloomyTale.DiscordBot
 {
@@ -44,7 +44,7 @@ namespace GloomyTale.DiscordBot
                 Logger.Info(Language.Instance.GetMessageFromKey("API_INITIALIZED"));
             }
             using (var services = ConfigureServices())
-            {               
+            {
                 var client = services.GetRequiredService<DiscordSocketClient>();
 
                 client.Log += LogAsync;

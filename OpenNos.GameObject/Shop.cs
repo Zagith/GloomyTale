@@ -13,8 +13,8 @@
  */
 
 using OpenNos.Data;
-using System.Collections.Generic;
 using OpenNos.GameObject.Networking;
+using System.Collections.Generic;
 
 namespace OpenNos.GameObject
 {

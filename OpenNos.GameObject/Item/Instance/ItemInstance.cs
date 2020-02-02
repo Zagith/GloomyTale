@@ -17,10 +17,10 @@ using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
 using System.Text;
 
 namespace OpenNos.GameObject
@@ -40,7 +40,7 @@ namespace OpenNos.GameObject
 
         public ItemInstance()
         {
-            
+
         }
 
         public ItemInstance(short vNum, short amount)
@@ -479,7 +479,7 @@ namespace OpenNos.GameObject
             {
                 return;
             }
-            
+
             int[] goldprice = { 200000, 200000, 200000, 200000, 200000, 500000, 500000, 500000, 500000, 500000, 1000000, 1000000, 1000000, 1000000, 1000000 };
             byte[] feather = { 3, 5, 8, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70 };
             byte[] fullmoon = { 1, 3, 5, 7, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30 };
@@ -835,7 +835,7 @@ namespace OpenNos.GameObject
                         case 1:
                             return HoldingVNum == 0 ?
                                 $"e_info 7 {ItemVNum} 0" : $"e_info 7 {ItemVNum} 1 {HoldingVNum} {SpLevel} {XP} 100 {SpDamage} {SpDefence}";
-                            
+
                         case 2:
                             Item spitem = ServerManager.GetItem(HoldingVNum);
                             return HoldingVNum == 0 ?
@@ -1046,7 +1046,7 @@ namespace OpenNos.GameObject
                 return;
             }
             rnd = ServerManager.RandomNumber(0, 1000) / 10D;
-            
+
             if (session != null)
             {
                 switch (mode)
@@ -1130,7 +1130,7 @@ namespace OpenNos.GameObject
             {
                 switch (protection)
                 {
-                    
+
                     case RarifyProtection.None:
                         session.Character.DeleteItemByItemInstanceId(Id);
                         session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("RARIFY_FAILED"), 11));
@@ -1501,7 +1501,7 @@ namespace OpenNos.GameObject
                     break;
             }
         }
-        
+
         public void Sum(ClientSession session, ItemInstance itemToSum)
         {
             if (!session.HasCurrentMapInstance)
@@ -1795,7 +1795,7 @@ namespace OpenNos.GameObject
         {
             const int sandVnum = 1027;
             long goldprice = 2000 + Item.LevelMinimum * 300;
-            
+
             if (session.Character.Gold >= goldprice && session.Character.Inventory.CountItem(sandVnum) >= Item.LevelMinimum)
             {
                 session.Character.Inventory.RemoveItemAmount(sandVnum, Item.LevelMinimum);
@@ -1807,7 +1807,7 @@ namespace OpenNos.GameObject
                 DAOFactory.ShellEffectDAO.DeleteByEquipmentSerialId(EquipmentSerialId);
                 BoundCharacterId = null;
                 HoldingVNum = ItemVNum;
-                
+
                 switch (Item.EquipmentSlot)
                 {
                     case EquipmentType.MainWeapon:

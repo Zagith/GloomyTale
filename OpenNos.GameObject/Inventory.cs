@@ -14,15 +14,12 @@
 
 using OpenNos.Core;
 using OpenNos.DAL;
-using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.Master.Library.Client;
-using OpenNos.Master.Library.Data;
 using System.Reactive.Linq;
 
 namespace OpenNos.GameObject

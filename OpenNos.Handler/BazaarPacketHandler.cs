@@ -18,14 +18,13 @@ using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Threading;
 using OpenNos.GameObject.Networking;
 using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Data;
-using System.Linq;
+using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Threading;
 
 namespace OpenNos.Handler
 {
@@ -64,7 +63,7 @@ namespace OpenNos.Handler
 
                 if (Session.Character.Gold >= price)
                 {
-                    BazaarItemLink bzcree = new BazaarItemLink {BazaarItem = bz};
+                    BazaarItemLink bzcree = new BazaarItemLink { BazaarItem = bz };
                     if (DAOFactory.CharacterDAO.LoadById(bz.SellerId) != null)
                     {
                         bzcree.Owner = DAOFactory.CharacterDAO.LoadById(bz.SellerId)?.Name;
@@ -127,7 +126,7 @@ namespace OpenNos.Handler
                                     Message = StaticPacketHelper.Say(1, bz.SellerId, 12, string.Format(Language.Instance.GetMessageFromKey("BAZAAR_ITEM_SOLD"), cBuyPacket.Amount, bzcree.Item.Item.Name[Session.Account.Language])),
                                     Type = MessageType.Other
                                 });
-                                
+
                                 Logger.LogUserEvent("BAZAAR_BUY", Session.GenerateIdentity(),
                                     $"BazaarId: {cBuyPacket.BazaarId} VNum: {cBuyPacket.VNum} Amount: {cBuyPacket.Amount} Price: {cBuyPacket.Price}");
                             }
@@ -301,7 +300,7 @@ namespace OpenNos.Handler
         /// <param name="csListPacket"></param>
         public void RefreshPersonalBazarList(CSListPacket csListPacket)
         {
-            if(!Session.Character.CanUseNosBazaar())
+            if (!Session.Character.CanUseNosBazaar())
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("INFO_BAZAAR")));
                 return;
@@ -353,7 +352,7 @@ namespace OpenNos.Handler
             }
 
             ItemInstance it = Session.Character.Inventory.LoadBySlotAndType(cRegPacket.Slot,
-                cRegPacket.Inventory == 4 ? 0 : (InventoryType) cRegPacket.Inventory);
+                cRegPacket.Inventory == 4 ? 0 : (InventoryType)cRegPacket.Inventory);
 
             if (it == null || !it.Item.IsSoldable || !it.Item.IsTradable || it.IsBound)
             {
@@ -379,9 +378,9 @@ namespace OpenNos.Handler
             {
                 return;
             }
-            
+
             ItemInstance bazaar = Session.Character.Inventory.AddIntoBazaarInventory(
-                cRegPacket.Inventory == 4 ? 0 : (InventoryType) cRegPacket.Inventory, cRegPacket.Slot,
+                cRegPacket.Inventory == 4 ? 0 : (InventoryType)cRegPacket.Inventory, cRegPacket.Slot,
                 cRegPacket.Amount);
             if (bazaar == null)
             {
@@ -502,7 +501,7 @@ namespace OpenNos.Handler
 
                 DAOFactory.BazaarItemDAO.InsertOrUpdate(ref bz);
                 ServerManager.Instance.BazaarRefresh(bz.BazaarItemId);
-                
+
                 Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("OBJECT_MOD_IN_BAZAAR"), bz.Price),
                     10));
                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("OBJECT_MOD_IN_BAZAAR"), bz.Price),
@@ -510,7 +509,7 @@ namespace OpenNos.Handler
 
                 Logger.LogUserEvent("BAZAAR_MOD", Session.GenerateIdentity(),
                     $"BazaarId: {bz.BazaarItemId}, IIId: {bz.ItemInstanceId} VNum: {itemInstance.ItemVNum} Amount: {bz.Amount} Price: {bz.Price} Time: {bz.Duration}");
-                
+
                 RefreshPersonalBazarList(new CSListPacket());
             }
         }

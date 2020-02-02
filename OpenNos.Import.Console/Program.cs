@@ -14,9 +14,7 @@
 
 using log4net;
 using OpenNos.Core;
-using OpenNos.DAL;
 using OpenNos.DAL.EF.Helpers;
-using OpenNos.Data;
 using System;
 using System.Configuration;
 using System.Diagnostics;

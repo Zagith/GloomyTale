@@ -1,18 +1,16 @@
 ﻿using OpenNos.Core;
 using OpenNos.Core.Extensions;
+using OpenNos.DAL;
 using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using OpenNos.GameObject.Packets.ServerPackets;
 using System;
-using System.Linq;
-using OpenNos.GameObject.Networking;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
-using System.Threading;
-using OpenNos.Data;
-using OpenNos.DAL;
 
 namespace OpenNos.Handler
 {
@@ -171,7 +169,7 @@ namespace OpenNos.Handler
             {
                 if (Session.Character.MapId == Session.Character.Group.Raid.MapId
                     && Map.GetDistance(
-                        new MapCell { X = Session.Character.PositionX, Y = Session.Character.PositionY }, 
+                        new MapCell { X = Session.Character.PositionX, Y = Session.Character.PositionY },
                         new MapCell { X = Session.Character.Group.Raid.PositionX, Y = Session.Character.Group.Raid.PositionY }) < 2)
                 {
                     if ((Session.Character.Group.SessionCount > 2 || Session.Character.Authority >= AuthorityType.TGM)
@@ -336,7 +334,7 @@ namespace OpenNos.Handler
                 }
             }
         }
-        
+
         /// <summary>
         /// wreq packet
         /// </summary>
@@ -357,7 +355,7 @@ namespace OpenNos.Handler
                     switch (packet.Value)
                     {
                         case 0:
-                            if (packet.Param != 1 
+                            if (packet.Param != 1
                                 && Session.Character.Group?.Sessions.Find(s =>
                                     s.CurrentMapInstance.InstanceBag?.Lock == false
                                     && s.CurrentMapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance

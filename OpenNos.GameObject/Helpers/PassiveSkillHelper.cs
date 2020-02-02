@@ -234,7 +234,7 @@ namespace OpenNos.GameObject.Helpers
                     }
                 }
             }
-            
+
             return bcards;
         }
 

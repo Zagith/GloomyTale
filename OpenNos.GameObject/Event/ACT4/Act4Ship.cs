@@ -15,14 +15,12 @@
 using OpenNos.Core;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using OpenNos.GameObject.Networking;
-using OpenNos.Master.Library.Client;
-using System.Net.NetworkInformation;
 
 namespace OpenNos.GameObject.Event
 {

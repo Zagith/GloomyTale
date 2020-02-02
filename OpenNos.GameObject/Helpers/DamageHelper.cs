@@ -12,13 +12,12 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Domain;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Networking;
 using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject.Helpers
@@ -288,7 +287,7 @@ namespace OpenNos.GameObject.Helpers
             int[] defenderpercentdefense = GetDefenderBenefitingBuffs(CardType.RecoveryAndDamagePercent, (byte)AdditionalTypes.RecoveryAndDamagePercent.DecreaseSelfHP);
 
 
-            
+
             if (attackerpercentdamage2[3] != 0)
             {
                 totalDamage = defender.HpMax / 100 * Math.Abs(attackerpercentdamage2[0]);
@@ -337,7 +336,7 @@ namespace OpenNos.GameObject.Helpers
 
             if (attacker.MapMonster != null)
             {
-                if (attacker.MapMonster.MonsterVNum <= 2334 &&  attacker.MapMonster.MonsterVNum >= 2331 || attacker.MapMonster.MonsterVNum == 2309)
+                if (attacker.MapMonster.MonsterVNum <= 2334 && attacker.MapMonster.MonsterVNum >= 2331 || attacker.MapMonster.MonsterVNum == 2309)
                 {
                     totalDamage = 0;
                     percentDamage = false;
@@ -1059,8 +1058,8 @@ namespace OpenNos.GameObject.Helpers
             //C45 Mage armor buff --> Not sure it goes here <--
             if (defender.Buffs.ContainsKey(421))
             {
-               chance = 50;
-               bonus = 0;
+                chance = 50;
+                bonus = 0;
             }
 
             if (!defender.Invincible && ServerManager.RandomNumber() - bonus < chance)
@@ -1445,7 +1444,7 @@ namespace OpenNos.GameObject.Helpers
 
             #endregion
 
-                #region Elemental Damage Advantage
+            #region Elemental Damage Advantage
 
             double elementalBoost = 0;
 
@@ -1798,7 +1797,7 @@ namespace OpenNos.GameObject.Helpers
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
                     }
                 }
-                else if(ReflectsMaximumDamageFrom[0] > 0)
+                else if (ReflectsMaximumDamageFrom[0] > 0)
                 {
                     int maxReflectDamage = ReflectsMaximumDamageFrom[0];
 
@@ -1928,7 +1927,7 @@ namespace OpenNos.GameObject.Helpers
 
             #region Title damage
 
-            if(defender.EntityType == EntityType.Monster)
+            if (defender.EntityType == EntityType.Monster)
             {
                 // defender.MapMonster.Monster.MonsterType;
             }
@@ -2021,7 +2020,7 @@ namespace OpenNos.GameObject.Helpers
                 }
             }
 
-            return new[] {value1, value2, value3};
+            return new[] { value1, value2, value3 };
         }
 
         private static int GetMonsterDamageBonus(byte level)

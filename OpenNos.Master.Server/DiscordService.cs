@@ -7,7 +7,6 @@ using OpenNos.Master.Library.Data;
 using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.ScsServices.Service;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 
 
@@ -33,7 +32,7 @@ namespace OpenNos.Master.Server
 
         public void RefreshAct4Stat(int angel, int demon)
         {
-            MSManager.Instance.Act4Stat = new Tuple<int,int>(angel,demon);
+            MSManager.Instance.Act4Stat = new Tuple<int, int>(angel, demon);
         }
 
         public Tuple<int, int> GetAct4Stat()

@@ -1,7 +1,5 @@
-using Mapster;
 using OpenNos.DAL.EF;
 using OpenNos.Data;
-using OpenNos.Data.Base;
 using OpenNos.Domain;
 
 namespace OpenNos.Mapper.Mappers

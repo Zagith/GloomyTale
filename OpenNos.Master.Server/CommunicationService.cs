@@ -14,9 +14,7 @@
 
 using OpenNos.Core;
 using OpenNos.DAL;
-using OpenNos.Data;
 using OpenNos.Domain;
-using OpenNos.GameObject;
 using OpenNos.Master.Library.Data;
 using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.Scs.Communication.EndPoints.Tcp;
@@ -179,7 +177,7 @@ namespace OpenNos.Master.Server
             {
                 return null;
             }
-            
+
             List<AccountConnection> connections = MSManager.Instance.ConnectedAccounts.Where(s => s.CharacterId != 0);
 
             long[][] result = new long[connections.Count][];

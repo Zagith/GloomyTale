@@ -1,16 +1,4 @@
-﻿using OpenNos.Core;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.GameObject.Networking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace OpenNos.GameObject.Event.BANDICOOTRUN
+﻿namespace OpenNos.GameObject.Event.BANDICOOTRUN
 {
     public static class BandicootRun
     {

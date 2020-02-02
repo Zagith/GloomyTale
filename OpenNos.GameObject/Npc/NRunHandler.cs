@@ -102,7 +102,7 @@ namespace OpenNos.GameObject
                     break;
 
                 case 3:
-                    NpcMonster heldMonster = ServerManager.GetNpcMonster((short)packet.Type);
+                    NpcMonster heldMonster = ServerManager.GetNpcMonster(packet.Type);
                     if (heldMonster != null && !Session.Character.Mates.Any(m => m.NpcMonsterVNum == heldMonster.NpcMonsterVNum && !m.IsTemporalMate) && Session.Character.Mates.FirstOrDefault(s => s.NpcMonsterVNum == heldMonster.NpcMonsterVNum && s.IsTemporalMate && s.IsTsReward) is Mate partnerToReceive)
                     {
                         Session.Character.RemoveTemporalMates();
@@ -1468,7 +1468,7 @@ namespace OpenNos.GameObject
                         return;
                     }
 
-                    if ( Session.Character.Quests.Any(s => s.Quest.DialogNpcVNum == npc.NpcVNum && s.Quest.QuestObjectives.Any(o => o.SpecialData == packet.Type)))
+                    if (Session.Character.Quests.Any(s => s.Quest.DialogNpcVNum == npc.NpcVNum && s.Quest.QuestObjectives.Any(o => o.SpecialData == packet.Type)))
                     {
                         if (ServerManager.Instance.TimeSpaces.FirstOrDefault(s => s.QuestTimeSpaceId == packet.Type) is ScriptedInstance timeSpace)
                         {
@@ -2078,7 +2078,7 @@ namespace OpenNos.GameObject
                         {
                             BandicootRunType = EventType.BANDICOOTRUN,
                             Session = Session,
-                        });                        
+                        });
                     }
                     break;
 

@@ -1,5 +1,4 @@
-﻿using System;
-namespace OpenNos.Data
+﻿namespace OpenNos.Data
 {
     public class MinigameLogDTO
     {

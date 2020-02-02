@@ -57,7 +57,7 @@ namespace OpenNos.GameObject
             {
                 return;
             }
-            
+
             Item item = inv.Item;
             switch (Effect)
             {

@@ -28,7 +28,7 @@ namespace OpenNos.XMLModel.Events
 
         [XmlElement]
         public OnMapClean RefreshOnMapClean { get; set; }
-        
+
         [XmlElement]
         public AddClockTime AddClockTime { get; set; }
 

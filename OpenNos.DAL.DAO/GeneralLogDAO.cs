@@ -44,7 +44,7 @@ namespace OpenNos.DAL.DAO
                 return false;
             }
         }
-        
+
         public GeneralLogDTO Insert(GeneralLogDTO generalLog)
         {
             try

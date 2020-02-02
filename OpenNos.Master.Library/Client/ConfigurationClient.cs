@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace OpenNos.Master.Library.Client
 {
-    internal  class ConfigurationClient : IConfigurationClient
+    internal class ConfigurationClient : IConfigurationClient
     {
         public void ConfigurationUpdated(ConfigurationObject configurationObject) => Task.Run(() => ConfigurationServiceClient.Instance.OnConfigurationUpdated(configurationObject));
     }

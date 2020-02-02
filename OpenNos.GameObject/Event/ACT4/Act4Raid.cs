@@ -14,15 +14,15 @@
 
 using OpenNos.Core;
 using OpenNos.Domain;
+using OpenNos.GameObject.Event.ACT4;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenNos.GameObject.Networking;
-using OpenNos.GameObject.Event.ACT4;
 
 namespace OpenNos.GameObject.Event
 {
@@ -184,7 +184,7 @@ namespace OpenNos.GameObject.Event
         private int _raidTime = 3600;
 
         private const int _interval = 60;
-        
+
         #endregion
 
         #region Methods
@@ -251,7 +251,7 @@ namespace OpenNos.GameObject.Event
                 Thread.Sleep(_interval * 1000);
                 refreshRaid(_raidTime);
             }
-            
+
             endRaid();
         }
 
@@ -302,7 +302,7 @@ namespace OpenNos.GameObject.Event
 
             ServerManager.Instance.StartedEvents.Remove(EventType.Act4Raid);
 
-            foreach(MapMonster monster in Act4Raid.Guardians)
+            foreach (MapMonster monster in Act4Raid.Guardians)
             {
                 bitoren.Broadcast(StaticPacketHelper.Out(UserType.Monster, monster.MapMonsterId));
                 bitoren.RemoveMonster(monster);
@@ -337,7 +337,7 @@ namespace OpenNos.GameObject.Event
             };
             EventHelper.Instance.RunEvent(new EventContainer(fam.Act4RaidBossMap, EventActionType.SPAWNMONSTER, bossMob));
             EventHelper.Instance.RunEvent(new EventContainer(fam.Act4Raid, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("ACT4RAID_OPEN"), 0)));
-            
+
             //Observable.Timer(TimeSpan.FromSeconds(90)).Subscribe(o =>
             //{
             //TODO: Summon Monsters
@@ -368,7 +368,7 @@ namespace OpenNos.GameObject.Event
                     });
                     openRaid(fam);
                 }
-                
+
                 if (fam.Act4RaidBossMap.Monsters.Find(s => s.MonsterVNum == _bossVNum && s.CurrentHp / s.MaxHp < 0.5) != null
                 && fam.Act4Raid.Portals.Find(s => s.SourceX == _sourcePortalX && s.SourceY == _sourcePortalY && !s.IsDisabled) is Portal portal)
                 {
@@ -378,7 +378,7 @@ namespace OpenNos.GameObject.Event
                 }
             });
         }
-        
+
         #endregion
     }
 }

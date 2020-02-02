@@ -850,7 +850,7 @@ namespace OpenNos.Handler
             if (packet != null)
             {
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
-                Buff buff = new Buff(packet.CardId, packet.Level ?? (byte)1);
+                Buff buff = new Buff(packet.CardId, packet.Level ?? 1);
                 Session.Character.AddBuff(buff, Session.Character.BattleEntity);
             }
             else
@@ -2255,7 +2255,7 @@ namespace OpenNos.Handler
                 if (amount > 999) { amount = 999; }
                 int count = packet.Count;
                 int time = packet.Time;
-                
+
                 GameObject.MapInstance instance = Session.CurrentMapInstance;
 
                 Observable.Timer(TimeSpan.FromSeconds(0)).Subscribe(observer =>
@@ -2747,7 +2747,7 @@ namespace OpenNos.Handler
                             Session.SendPacket(
                                 Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("CANT_DO_THAT"), 10));
                         }
-                    
+
                     }
                     else
                     {
@@ -3088,7 +3088,7 @@ namespace OpenNos.Handler
                                 Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("MONSTER_NOT_FOUND"), 11));
                         }
                     }
-                }               
+                }
             }
             else
             {
@@ -3951,7 +3951,7 @@ namespace OpenNos.Handler
                 {
                     ServerManager.Instance.JoinMiniland(Session, Session);
                 }
-                else if (!Session.Character.IsSeal 
+                else if (!Session.Character.IsSeal
                       && !Session.CurrentMapInstance.MapInstanceType.Equals(MapInstanceType.TalentArenaMapInstance)
                       && !Session.CurrentMapInstance.MapInstanceType.Equals(MapInstanceType.IceBreakerInstance))
                 {
@@ -4325,7 +4325,7 @@ namespace OpenNos.Handler
                 {
                     return;
                 }
-                
+
                 if (Session.CurrentMapInstance != null)
                 {
                     Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
@@ -4394,7 +4394,7 @@ namespace OpenNos.Handler
                 int count = packet.Count;
                 if (count < 1) { count = 1; }
                 int time = packet.Time;
-                
+
                 GameObject.MapInstance instance = Session.CurrentMapInstance;
 
                 Observable.Timer(TimeSpan.FromSeconds(0)).Subscribe(observer =>
@@ -4813,7 +4813,7 @@ namespace OpenNos.Handler
                 Session.SendPacket(Session.Character.GenerateSay(HomePacket.ReturnHelp(), 10));
             }
         }
-        
+
         /// <summary>
         /// private addMate method
         /// </summary>
@@ -4854,7 +4854,7 @@ namespace OpenNos.Handler
                 Session.SendPacket(Session.Character.GenerateSay(ReloadSIPacket.ReturnHelp(), 10));
             }
         }
-        
+
         /// <summary>
         /// private add portal command
         /// </summary>

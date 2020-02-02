@@ -15,19 +15,19 @@
 using OpenNos.Core;
 using OpenNos.Core.Extensions;
 using OpenNos.Core.Handling;
+using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject;
+using OpenNos.GameObject.Event.TIMESPACES;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using OpenNos.GameObject.Packets.ClientPackets;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
 using static OpenNos.Domain.BCardType;
-using System.Collections.Concurrent;
-using OpenNos.DAL;
-using OpenNos.GameObject.Event.TIMESPACES;
 
 namespace OpenNos.Handler
 {
@@ -133,8 +133,8 @@ namespace OpenNos.Handler
                     if (npc != null)
                     {
                         int dist = Map.GetDistance(
-                            new MapCell {X = Session.Character.PositionX, Y = Session.Character.PositionY},
-                            new MapCell {X = npc.MapX, Y = npc.MapY});
+                            new MapCell { X = Session.Character.PositionX, Y = Session.Character.PositionY },
+                            new MapCell { X = npc.MapX, Y = npc.MapY });
                         if (npc.Shop == null || dist > 5)
                         {
                             return;
@@ -250,7 +250,7 @@ namespace OpenNos.Handler
                                 }
                                 else
                                 {
-                                    if ((byte) Session.Character.Class != skillinfo.Class)
+                                    if ((byte)Session.Character.Class != skillinfo.Class)
                                     {
                                         Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                                             Language.Instance.GetMessageFromKey("SKILL_CANT_LEARN"), 0));
@@ -355,15 +355,15 @@ namespace OpenNos.Handler
                                     return;
                                 }
 
-                                byte ra = (byte) ServerManager.RandomNumber();
-                                
+                                byte ra = (byte)ServerManager.RandomNumber();
+
                                 if (iteminfo.ReputPrice != 0)
                                 {
                                     for (int i = 0; i < ItemHelper.BuyCraftRareRate.Length; i++)
                                     {
                                         if (ra <= ItemHelper.BuyCraftRareRate[i])
                                         {
-                                            rare = (sbyte) i;
+                                            rare = (sbyte)i;
                                         }
                                     }
                                 }
@@ -398,13 +398,13 @@ namespace OpenNos.Handler
                                         case EquipmentType.Boots:
                                         case EquipmentType.Gloves:
                                             itemInst.FireResistance =
-                                                (short) (itemInst.Item.FireResistance * shopItem.Upgrade);
+                                                (short)(itemInst.Item.FireResistance * shopItem.Upgrade);
                                             itemInst.DarkResistance =
-                                                (short) (itemInst.Item.DarkResistance * shopItem.Upgrade);
+                                                (short)(itemInst.Item.DarkResistance * shopItem.Upgrade);
                                             itemInst.LightResistance =
-                                                (short) (itemInst.Item.LightResistance * shopItem.Upgrade);
+                                                (short)(itemInst.Item.LightResistance * shopItem.Upgrade);
                                             itemInst.WaterResistance =
-                                                (short) (itemInst.Item.WaterResistance * shopItem.Upgrade);
+                                                (short)(itemInst.Item.WaterResistance * shopItem.Upgrade);
                                             break;
                                     }
                                 }
@@ -414,7 +414,7 @@ namespace OpenNos.Handler
                                     Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1,
                                         string.Format(Language.Instance.GetMessageFromKey("BUY_ITEM_VALID"),
                                             iteminfo.Name[Session.Account.Language], amount)));
-                                    Session.Character.Gold -= (long) (price * percent);
+                                    Session.Character.Gold -= (long)(price * percent);
                                     Session.SendPacket(Session.Character.GenerateGold());
                                 }
                                 else
@@ -497,7 +497,7 @@ namespace OpenNos.Handler
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SHOP_NOT_ALLOWED"), 0));
                     return;
                 }
-                
+
                 switch (typePacket)
                 {
                     case 2:
@@ -780,7 +780,7 @@ namespace OpenNos.Handler
                                     new MapCell { X = 125, Y = 61 });
                                 if (dist < 5)
                                 {
-                                   Pts.GeneratePTS(recipe.ItemVNum, Session);
+                                    Pts.GeneratePTS(recipe.ItemVNum, Session);
                                     foreach (RecipeItemDTO ite in recipe.Items)
                                     {
                                         Session.Character.Inventory.RemoveItemAmount(ite.ItemVNum, ite.Amount);
@@ -829,7 +829,7 @@ namespace OpenNos.Handler
                     || item.EquipmentSlot == EquipmentType.SecondaryWeapon)
                 {
                     byte ra = (byte)ServerManager.RandomNumber();
-                    
+
                     for (int i = 0; i < ItemHelper.BuyCraftRareRate.Length; i++)
                     {
                         if (ra <= ItemHelper.BuyCraftRareRate[i])
@@ -901,7 +901,7 @@ namespace OpenNos.Handler
                     if (mate != null && mate.IsAlive && !mate.HasBuff(CardType.Move, (byte)AdditionalTypes.Move.MovementImpossible) && mate.Owner.Session.HasCurrentMapInstance && !mate.Owner.IsChangingMapInstance
                         && Session.CurrentMapInstance?.Map?.IsBlockedZone(positionX, positionY) == false)
                     {
-                        if  (mate.Loyalty > 0)
+                        if (mate.Loyalty > 0)
                         {
                             mate.PositionX = positionX;
                             mate.PositionY = positionY;
@@ -1127,7 +1127,7 @@ namespace OpenNos.Handler
                         break;
 
                     default:
-                        if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short) MapTypeEnum.Act4))
+                        if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4))
                         {
                             percent *= 1.5;
                             typeshop = 150;
@@ -1137,26 +1137,26 @@ namespace OpenNos.Handler
                 }
 
                 if (Session.CurrentMapInstance.Map.MapTypes.Any(s =>
-                    s.MapTypeId == (short) MapTypeEnum.Act4 && Session.Character.GetDignityIco() == 3))
+                    s.MapTypeId == (short)MapTypeEnum.Act4 && Session.Character.GetDignityIco() == 3))
                 {
                     percent = 1.6;
                     typeshop = 160;
                 }
                 else if (Session.CurrentMapInstance.Map.MapTypes.Any(s =>
-                    s.MapTypeId == (short) MapTypeEnum.Act4 && Session.Character.GetDignityIco() == 4))
+                    s.MapTypeId == (short)MapTypeEnum.Act4 && Session.Character.GetDignityIco() == 4))
                 {
                     percent = 1.7;
                     typeshop = 170;
                 }
                 else if (Session.CurrentMapInstance.Map.MapTypes.Any(s =>
-                    s.MapTypeId == (short) MapTypeEnum.Act4 && Session.Character.GetDignityIco() == 5))
+                    s.MapTypeId == (short)MapTypeEnum.Act4 && Session.Character.GetDignityIco() == 5))
                 {
                     percent = 2;
                     typeshop = 200;
                 }
                 else if
                 (Session.CurrentMapInstance.Map.MapTypes.Any(s =>
-                    s.MapTypeId == (short) MapTypeEnum.Act4 && Session.Character.GetDignityIco() == 6))
+                    s.MapTypeId == (short)MapTypeEnum.Act4 && Session.Character.GetDignityIco() == 6))
                 {
                     percent = 2;
                     typeshop = 200;
@@ -1165,20 +1165,20 @@ namespace OpenNos.Handler
                 if (iteminfo.ReputPrice > 0 && iteminfo.Type == 0)
                 {
                     shoplist +=
-                        $" {(byte) iteminfo.Type}.{item.Slot}.{item.ItemVNum}.{item.Rare}.{(iteminfo.IsColored ? item.Color : item.Upgrade)}.{iteminfo.ReputPrice}";
+                        $" {(byte)iteminfo.Type}.{item.Slot}.{item.ItemVNum}.{item.Rare}.{(iteminfo.IsColored ? item.Color : item.Upgrade)}.{iteminfo.ReputPrice}";
                 }
                 else if (iteminfo.ReputPrice > 0 && iteminfo.Type != 0)
                 {
-                    shoplist += $" {(byte) iteminfo.Type}.{item.Slot}.{item.ItemVNum}.-1.{iteminfo.ReputPrice}";
+                    shoplist += $" {(byte)iteminfo.Type}.{item.Slot}.{item.ItemVNum}.-1.{iteminfo.ReputPrice}";
                 }
                 else if (iteminfo.Type != 0)
                 {
-                    shoplist += $" {(byte) iteminfo.Type}.{item.Slot}.{item.ItemVNum}.-1.{iteminfo.Price * percent}";
+                    shoplist += $" {(byte)iteminfo.Type}.{item.Slot}.{item.ItemVNum}.-1.{iteminfo.Price * percent}";
                 }
                 else
                 {
                     shoplist +=
-                        $" {(byte) iteminfo.Type}.{item.Slot}.{item.ItemVNum}.{item.Rare}.{(iteminfo.IsColored ? item.Color : item.Upgrade)}.{iteminfo.Price * percent}";
+                        $" {(byte)iteminfo.Type}.{item.Slot}.{item.ItemVNum}.{item.Rare}.{(iteminfo.IsColored ? item.Color : item.Upgrade)}.{iteminfo.Price * percent}";
                 }
             }
 
@@ -1189,7 +1189,7 @@ namespace OpenNos.Handler
                 if (skill.Type != 0)
                 {
                     typeshop = 1;
-                    if (skillinfo.Class == (byte) Session.Character.Class)
+                    if (skillinfo.Class == (byte)Session.Character.Class)
                     {
                         shoplist += $" {skillinfo.SkillVNum}";
                     }
@@ -1225,7 +1225,7 @@ namespace OpenNos.Handler
             else
             {
                 // Npc Shop , ignore if has drop
-                MapNpc npc = Session.CurrentMapInstance.Npcs.Find(n => n.MapNpcId.Equals((int) requestNpcPacket.Owner));
+                MapNpc npc = Session.CurrentMapInstance.Npcs.Find(n => n.MapNpcId.Equals((int)requestNpcPacket.Owner));
                 if (npc == null)
                 {
                     return;
@@ -1343,7 +1343,7 @@ namespace OpenNos.Handler
                 }
 
                 #endregion
-                
+
                 if (Session.Character.Quests.FirstOrDefault(s => s.Quest.DialogNpcVNum == npc.NpcVNum) is CharacterQuest npcDialogQuest && npcDialogQuest.Quest.DialogNpcId != null)
                 {
                     Session.SendPacket($"npc_req 2 {npc.MapNpcId} {npcDialogQuest.Quest.DialogNpcId}");
@@ -1508,7 +1508,7 @@ namespace OpenNos.Handler
                         else
                         {
                             packetToSend +=
-                                $" {(byte) item.ItemInstance.Item.Type}.{item.ShopSlot}.{item.ItemInstance.ItemVNum}.{item.SellAmount}.{item.Price}.-1";
+                                $" {(byte)item.ItemInstance.Item.Type}.{item.ShopSlot}.{item.ItemInstance.ItemVNum}.{item.SellAmount}.{item.Price}.-1";
                         }
                     }
                     else

@@ -1002,9 +1002,9 @@ namespace OpenNos.Import.Console
 
                     if (DAOFactory.NpcMonsterDAO.LoadByVNum(npctest.NpcVNum) == null || DAOFactory.MapNpcDAO.LoadById(npctest.MapNpcId) != null || npcs.Any(i => i.MapNpcId == npctest.MapNpcId)
                      )
-                     // Skip duplicated npcs
-                     //|| DAOFactory.MapNpcDAO.LoadFromMap(map).Any(s => s.NpcVNum == npctest.NpcVNum && s.MapX == npctest.MapX && s.MapY == npctest.MapY) 
-                     //|| npcs.Any(s => s.NpcVNum == npctest.NpcVNum && s.MapId == npctest.MapId && s.MapX == npctest.MapX && s.MapY == npctest.MapY))
+                    // Skip duplicated npcs
+                    //|| DAOFactory.MapNpcDAO.LoadFromMap(map).Any(s => s.NpcVNum == npctest.NpcVNum && s.MapX == npctest.MapX && s.MapY == npctest.MapY) 
+                    //|| npcs.Any(s => s.NpcVNum == npctest.NpcVNum && s.MapId == npctest.MapId && s.MapX == npctest.MapX && s.MapY == npctest.MapY))
                     {
                         continue;
                     }
@@ -1562,7 +1562,7 @@ namespace OpenNos.Import.Console
                 monsters.Add(monster);
             }
             DAOFactory.MapMonsterDAO.Insert(monsters);
-            
+
             Logger.Info(string.Format(Language.Instance.GetMessageFromKey("MONSTERS_PARSED"), monsters.Count));
         }
 
@@ -3156,7 +3156,7 @@ namespace OpenNos.Import.Console
             regioncode = regioncode == "en" ? "uk" : regioncode;
             return string.Format(textfilename, regioncode);
         }
-        
+
         public void InsertI18NCard()
         {
             string file = _folder + "\\_code_{0}_Card.txt";
@@ -3165,13 +3165,13 @@ namespace OpenNos.Import.Console
 
             Parallel.ForEach((RegionType[])Enum.GetValues(typeof(RegionType)), region =>
             {
-                
+
                 try
                 {
                     List<II18NCardDto> dtos = new List<II18NCardDto>();
                     using var stream = new StreamReader(I18NTextFileName(file, region),
                         Encoding.Default);
-                    
+
                     while ((_line = stream.ReadLine()) != null)
                     {
                         var currentLine = _line.Split('\t');
@@ -3212,7 +3212,7 @@ namespace OpenNos.Import.Console
                     List<I18NItemDto> dtos = new List<I18NItemDto>();
                     using var stream = new StreamReader(I18NTextFileName(file, region),
                         Encoding.Default);
-                   
+
                     while ((_line = stream.ReadLine()) != null)
                     {
                         var currentLine = _line.Split('\t');
@@ -3253,7 +3253,7 @@ namespace OpenNos.Import.Console
                     List<II18NNpcMonsterDto> dtos = new List<II18NNpcMonsterDto>();
                     using var stream = new StreamReader(I18NTextFileName(file, region),
                         Encoding.Default);
-                    
+
                     while ((_line = stream.ReadLine()) != null)
                     {
                         var currentLine = _line.Split('\t');
@@ -3294,7 +3294,7 @@ namespace OpenNos.Import.Console
                     List<II18NSkillDto> dtos = new List<II18NSkillDto>();
                     using var stream = new StreamReader(I18NTextFileName(file, region),
                         Encoding.Default);
-                   
+
                     while ((_line = stream.ReadLine()) != null)
                     {
                         var currentLine = _line.Split('\t');
@@ -3334,7 +3334,7 @@ namespace OpenNos.Import.Console
                     List<II18NMapDto> dtos = new List<II18NMapDto>();
                     using var stream = new StreamReader(I18NTextFileName(file, region),
                         Encoding.Default);
-                    
+
                     while ((_line = stream.ReadLine()) != null)
                     {
                         var currentLine = _line.Split('\t');
@@ -3772,14 +3772,14 @@ namespace OpenNos.Import.Console
                                 item.Speed = 20;
                                 item.WaitDelay = 3000;
                                 break;
-                                
+
                             case 5712:
                             case 9138:
                                 item.Morph = 2440;
                                 item.Speed = 20;
                                 item.WaitDelay = 3000;
                                 break;
-                                
+
                             case 5714:
                             case 9140:
                                 item.Morph = 2442;
@@ -3950,7 +3950,7 @@ namespace OpenNos.Import.Console
                                 if (item.EquipmentSlot.Equals(EquipmentType.Amulet))
                                 {
                                     item.LevelMinimum = byte.Parse(currentLine[2]);
-                                    if ((item.VNum > 4055 && item.VNum < 4061) || (item.VNum > 4172 && item.VNum < 4176) || (item.VNum > 4045 && item.VNum < 4056) 
+                                    if ((item.VNum > 4055 && item.VNum < 4061) || (item.VNum > 4172 && item.VNum < 4176) || (item.VNum > 4045 && item.VNum < 4056)
                                      || (item.VNum > 8104 && item.VNum < 8115) || item.VNum == 967 || item.VNum == 968)
                                     {
                                         item.ItemValidTime = 10800;
@@ -4288,7 +4288,7 @@ namespace OpenNos.Import.Console
                                     case 5207:
                                         item.EffectValue = 50;
                                         break;
-                                        
+
                                     case 5519:
                                         item.EffectValue = 60;
                                         break;

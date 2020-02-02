@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject.Helpers
 {
@@ -52,13 +50,13 @@ namespace OpenNos.GameObject.Helpers
         public short[,] Concentrate { get; private set; }
 
         public short[,] HpData { get; private set; }
-        
+
         public short[,] MpData { get; private set; }
 
         public short[,] MinDamageData { get; private set; }
 
         public short[,] MaxDamageData { get; private set; }
-        
+
         public double[] XpData { get; private set; }
 
         // Vnum - CardId
@@ -133,7 +131,7 @@ namespace OpenNos.GameObject.Helpers
         }
 
         #endregion
-        
+
         #region Concentrate
 
         public void LoadConcentrate()
@@ -199,7 +197,7 @@ namespace OpenNos.GameObject.Helpers
         #endregion
 
         #region Damage
-        
+
         public void LoadMinDamageData()
         {
             MinDamageData = new short[3, 100];
@@ -387,7 +385,7 @@ namespace OpenNos.GameObject.Helpers
         #endregion
 
         #region Defences
-        
+
         public void LoadDefences()
         {
             MeleeDefenseData = new short[3, 100];
@@ -522,7 +520,7 @@ namespace OpenNos.GameObject.Helpers
                 TrainerUpgradeHits[i] = baseValue;
             }
         }
-        
+
         public void LoadTrainerUpRate()
         {
             TrainerUpRate = new short[] { 67, 67, 44, 34, 22, 15, 14, 8, 1, 0 };

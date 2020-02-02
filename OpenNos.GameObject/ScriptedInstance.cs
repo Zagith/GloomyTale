@@ -132,7 +132,6 @@ namespace OpenNos.GameObject
         public string GenerateRbr()
         {
             string drawgift = "";
-            string requireditem = "";
             string bonusitems = "";
             string specialitems = "";
 
@@ -493,7 +492,7 @@ namespace OpenNos.GameObject
                         onLockerOpenEvents.Add(new EventContainer(mapInstance, EventActionType.NPCDIALOG, npcdialog.Value));
                     }
                 }
-                
+
                 // RefreshOnLockerOpen
                 onLockerOpenEvents.AddRange(OnLockerOpen(mapInstance, onLockerOpen.RefreshOnLockerOpen));
 
@@ -597,7 +596,7 @@ namespace OpenNos.GameObject
                 }
 
                 // Set Monster Lockers
-                if(createMap.OnCharacterDiscoveringMap.SetMonsterLockers != null)
+                if (createMap.OnCharacterDiscoveringMap.SetMonsterLockers != null)
                 {
                     onDiscoverEvents.Add(new EventContainer(mapInstance, EventActionType.SETMONSTERLOCKERS, createMap.OnCharacterDiscoveringMap.SetMonsterLockers.Value));
                 }
@@ -606,7 +605,7 @@ namespace OpenNos.GameObject
                 {
                     onDiscoverEvents.Add(new EventContainer(mapInstance, EventActionType.SETBUTTONLOCKERS, createMap.OnCharacterDiscoveringMap.SetButtonLockers.Value));
                 }
-                
+
                 // RefreshRaidGoals
                 if (createMap.OnCharacterDiscoveringMap.RefreshRaidGoals != null)
                 {
@@ -615,7 +614,7 @@ namespace OpenNos.GameObject
 
                 // OnMapClean
                 onDiscoverEvents.AddRange(OnMapClean(mapInstance, createMap.OnCharacterDiscoveringMap.OnMapClean));
-                
+
                 // Wave
                 if (createMap.OnCharacterDiscoveringMap.Wave != null)
                 {
@@ -690,7 +689,7 @@ namespace OpenNos.GameObject
                         onMapCleanEvents.Add(new EventContainer(mapInstance, EventActionType.SENDPACKET, sendpacket.Value));
                     }
                 }
-                
+
                 // NpcDialog
                 if (onMapClean.NpcDialog != null)
                 {
@@ -711,7 +710,7 @@ namespace OpenNos.GameObject
 
                 // RefreshOnMapClean
                 onMapCleanEvents.AddRange(OnMapClean(mapInstance, onMapClean.RefreshOnMapClean));
-                
+
                 evts.Add(new EventContainer(mapInstance, EventActionType.REGISTEREVENT, new Tuple<string, List<EventContainer>>(nameof(XMLModel.Events.OnMapClean), onMapCleanEvents)));
             }
 
@@ -930,7 +929,7 @@ namespace OpenNos.GameObject
         private List<EventContainer> OnTimeout(MapInstance mapInstance, XMLModel.Events.OnTimeout OnTimeout)
         {
             List<EventContainer> evts = new List<EventContainer>();
-            
+
             if (OnTimeout.StopMapWaves != null)
             {
                 evts.Add(new EventContainer(mapInstance, EventActionType.STOPMAPWAVES, null));
@@ -973,7 +972,7 @@ namespace OpenNos.GameObject
             {
                 evts.Add(new EventContainer(mapInstance, EventActionType.CLEARMAPMONSTERS, null));
             }
-            
+
             return evts;
         }
 
@@ -1233,7 +1232,7 @@ namespace OpenNos.GameObject
                                 monster.DeathEvents.Add(new EventContainer(mapInstance, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg(SendMessage.Value, SendMessage.Type)));
                             }
                         }
-                        
+
                         // NpcDialog
                         if (summon.OnDeath.NpcDialog != null)
                         {
@@ -1330,7 +1329,7 @@ namespace OpenNos.GameObject
                             monster.NoticingEvents.AddRange(SummonMonster(mapInstance, summon.OnDeath?.SummonMonster, true));
                         }
                     }
-                    
+
                     // SendMessage
                     if (summon.SendMessage != null)
                     {

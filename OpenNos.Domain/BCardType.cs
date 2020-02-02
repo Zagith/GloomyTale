@@ -1080,7 +1080,7 @@ namespace OpenNos.Domain
             StealGoodEffect = 41,
             StealGoodEffectNegated = 42
         }
-        
+
         public enum EffectSummon : byte
         {
             // TODO

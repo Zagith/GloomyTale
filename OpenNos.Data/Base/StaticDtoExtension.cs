@@ -1,13 +1,10 @@
-﻿using OpenNos.Data.I18N;
-using OpenNos.Data.Interfaces;
+﻿using OpenNos.Data.Interfaces;
 using OpenNos.Domain.I18N;
 using ServiceStack.Text.FastMember;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenNos.Data.Base
 {

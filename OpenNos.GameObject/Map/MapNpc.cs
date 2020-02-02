@@ -16,15 +16,15 @@ using OpenNos.Core;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using OpenNos.PathFinder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.GameObject.Networking;
-using static OpenNos.Domain.BCardType;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject
 {
@@ -220,7 +220,7 @@ namespace OpenNos.GameObject
             Npc = ServerManager.GetNpcMonster(NpcVNum);
             MaxHp = Npc.MaxHP;
             MaxMp = Npc.MaxMP;
-            
+
             if (MapInstance?.MapInstanceType == MapInstanceType.TimeSpaceInstance)
             {
                 if (IsProtected)
@@ -491,7 +491,7 @@ namespace OpenNos.GameObject
                 {
                     short xoffset = (short)ServerManager.RandomNumber(-1, 1);
                     short yoffset = (short)ServerManager.RandomNumber(-1, 1);
-                    
+
                     MapCell moveToPosition = new MapCell { X = FirstX, Y = FirstY };
                     if (RunToX != 0 || RunToY != 0)
                     {

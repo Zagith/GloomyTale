@@ -12,10 +12,9 @@
  * GNU General Public License for more details.
  */
 
-using System.Collections.Generic;
 using OpenNos.Data;
 using OpenNos.Data.Enums;
-using OpenNos.Domain;
+using System.Collections.Generic;
 
 namespace OpenNos.DAL.Interface
 {

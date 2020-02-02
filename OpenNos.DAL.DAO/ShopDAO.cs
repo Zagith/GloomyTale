@@ -149,7 +149,7 @@ namespace OpenNos.DAL.DAO
                 {
                     int shopId = shop.ShopId;
                     Shop entity = context.Shop.FirstOrDefault(c => c.ShopId.Equals(shopId));
-                    
+
                     shop = update(entity, shop, context);
                     return SaveResult.Updated;
                 }

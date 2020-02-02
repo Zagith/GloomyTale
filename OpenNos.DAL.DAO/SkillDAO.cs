@@ -109,7 +109,7 @@ namespace OpenNos.DAL.DAO
                 return null;
             }
         }
-        
+
         public SaveResult InsertOrUpdate(SkillDTO skill)
         {
             try
@@ -135,7 +135,7 @@ namespace OpenNos.DAL.DAO
                 return SaveResult.Error;
             }
         }
-        
+
         private static SkillDTO insert(SkillDTO skill, OpenNosContext context)
         {
             Skill entity = new Skill();
@@ -165,7 +165,7 @@ namespace OpenNos.DAL.DAO
 
             return null;
         }
-        
+
         #endregion
     }
 }

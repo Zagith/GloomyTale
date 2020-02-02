@@ -1,9 +1,5 @@
 ﻿using OpenNos.DAL.EF.Entities;
 using OpenNos.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenNos.Mapper.Mappers
 {

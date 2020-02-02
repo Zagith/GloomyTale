@@ -3,13 +3,10 @@ using OpenNos.DAL.EF;
 using OpenNos.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
-using OpenNos.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenNos.DAL.DAO
 {

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using OpenNos.DAL.EF;
+﻿using OpenNos.DAL.EF;
 using OpenNos.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
+using System.Collections.Generic;
 
 namespace OpenNos.DAL.DAO
 {

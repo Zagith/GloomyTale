@@ -3,7 +3,7 @@
     public class CharacterQuest : SynchronizableBaseEntity
     {
         #region Properties
-        
+
         public long CharacterId { get; set; }
 
         public virtual Quest Quest { get; set; }

@@ -254,7 +254,7 @@ namespace OpenNos.GameObject
                         session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateRc(hpAmount));
                     }
                 }
-                
+
                 session.Character.Mp += mpAmount;
 
                 foreach (Mate mate in session.Character.Mates.Where(s => s.IsTeamMember && s.IsAlive && s.IsSitting))
@@ -283,7 +283,7 @@ namespace OpenNos.GameObject
                         session.CurrentMapInstance?.Broadcast(session, mate.GenerateRc(hpAmount));
                     }
                 }
-                
+
                 if (session.IsConnected)
                 {
                     session.SendPacket(session.Character.GenerateStat());
@@ -294,7 +294,7 @@ namespace OpenNos.GameObject
                     }
 
                     Thread.Sleep(1800);
-                }                
+                }
             }
         }
 

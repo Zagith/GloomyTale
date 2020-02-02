@@ -13,16 +13,16 @@
  */
 
 using OpenNos.Core;
+using OpenNos.Core.Extensions;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.Core.Extensions;
 
 namespace OpenNos.Handler
 {
@@ -82,7 +82,7 @@ namespace OpenNos.Handler
         public void MinigamePlay(MinigamePacket packet)
         {
             //Minigames desactivated
-            #if DEBUG
+#if DEBUG
 
             ClientSession client =
                 ServerManager.Instance.Sessions.FirstOrDefault(s =>
@@ -92,7 +92,7 @@ namespace OpenNos.Handler
             if (mlobj != null)
             {
                 const bool full = false;
-                byte game = (byte) (mlobj.ItemInstance.Item.EquipmentSlot);
+                byte game = (byte)(mlobj.ItemInstance.Item.EquipmentSlot);
                 switch (packet.Type)
                 {
                     //play
@@ -112,7 +112,7 @@ namespace OpenNos.Handler
 
                         Session.Character.MapInstance.Broadcast(
                             UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.CharacterId));
-                        Session.Character.CurrentMinigame = (short) (game == 0 ? 5102 :
+                        Session.Character.CurrentMinigame = (short)(game == 0 ? 5102 :
                             game == 1 ? 5103 :
                             game == 2 ? 5105 :
                             game == 3 ? 5104 :
@@ -172,7 +172,7 @@ namespace OpenNos.Handler
                                 MinigameLogDTO dto = Session.Character.MinigameLog;
                                 DAOFactory.MinigameLogDAO.InsertOrUpdate(ref dto);
                                 Session.Character.MinigameLog = null;
-                                Gift obj = GetMinilandGift(packet.MinigameVNum, (int) packet.Point);
+                                Gift obj = GetMinilandGift(packet.MinigameVNum, (int)packet.Point);
                                 if (obj != null)
                                 {
                                     Session.SendPacket($"mlo_rw {obj.VNum} {obj.Amount}");
@@ -229,12 +229,12 @@ namespace OpenNos.Handler
 
                         if (Session.Character.Gold > packet.Point)
                         {
-                            Session.Character.Gold -= (int) packet.Point;
+                            Session.Character.Gold -= (int)packet.Point;
                             Session.SendPacket(Session.Character.GenerateGold());
-                            mlobj.ItemInstance.DurabilityPoint += (int) (packet.Point / 100);
+                            mlobj.ItemInstance.DurabilityPoint += (int)(packet.Point / 100);
                             Session.SendPacket(UserInterfaceHelper.GenerateInfo(
                                 string.Format(Language.Instance.GetMessageFromKey("REFILL_MINIGAME"),
-                                    (int) packet.Point / 100)));
+                                    (int)packet.Point / 100)));
                             Session.SendPacket(Session.Character.GenerateMloMg(mlobj, packet));
                         }
 
@@ -277,7 +277,7 @@ namespace OpenNos.Handler
                         {
                             if (packet.Point != null)
                             {
-                                Gift gift = GetMinilandGift(packet.MinigameVNum, (int) packet.Point);
+                                Gift gift = GetMinilandGift(packet.MinigameVNum, (int)packet.Point);
                                 if (gift != null)
                                 {
                                     if (gifts.Any(o => o.VNum == gift.VNum))
@@ -343,7 +343,7 @@ namespace OpenNos.Handler
                 }
             }
 
-            #endif
+#endif
         }
 
         /// <summary>
@@ -399,10 +399,10 @@ namespace OpenNos.Handler
                                 == minilandobject.Item.ItemSubType);
                             if (min != null)
                             {
-                                MinilandRemoveObject(new RmvobjPacket {Slot = min.ItemInstance.Slot});
+                                MinilandRemoveObject(new RmvobjPacket { Slot = min.ItemInstance.Slot });
                             }
                         }
-                        
+
                         Session.Character.MinilandObjects.Add(minilandobj);
                         Session.SendPacket(minilandobj.GenerateMinilandEffect(false));
                         Session.SendPacket(Session.Character.GenerateMinilandPoint());
@@ -529,9 +529,9 @@ namespace OpenNos.Handler
                 {
                     if (!minilandObjectItem.Item.IsMinilandObject)
                     {
-                        byte game = (byte) (minilandObject.ItemInstance.Item.EquipmentSlot == 0
+                        byte game = (byte)(minilandObject.ItemInstance.Item.EquipmentSlot == 0
                             ? 4 + (minilandObject.ItemInstance.ItemVNum % 10)
-                            : (int) minilandObject.ItemInstance.Item.EquipmentSlot / 3);
+                            : (int)minilandObject.ItemInstance.Item.EquipmentSlot / 3);
                         const bool full = false;
                         Session.SendPacket(
                             $"mlo_info {(client == Session ? 1 : 0)} {minilandObjectItem.ItemVNum} {packet.Slot} {Session.Character.MinilandPoint} {(minilandObjectItem.DurabilityPoint < 1000 ? 1 : 0)} {(full ? 1 : 0)} 0 {GetMinilandMaxPoint(game)[0]} {GetMinilandMaxPoint(game)[0] + 1} {GetMinilandMaxPoint(game)[1]} {GetMinilandMaxPoint(game)[1] + 1} {GetMinilandMaxPoint(game)[2]} {GetMinilandMaxPoint(game)[2] + 2} {GetMinilandMaxPoint(game)[3]} {GetMinilandMaxPoint(game)[3] + 1} {GetMinilandMaxPoint(game)[4]} {GetMinilandMaxPoint(game)[4] + 1} {GetMinilandMaxPoint(game)[5]}");
@@ -557,7 +557,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2099, 3));
                             gifts.Add(new Gift(2100, 3));
                             gifts.Add(new Gift(2102, 3));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
@@ -566,14 +566,14 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(1033, 2));
                             gifts.Add(new Gift(1034, 2));
                             gifts.Add(new Gift(2205, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2205, 1));
                             gifts.Add(new Gift(2189, 1));
                             gifts.Add(new Gift(2034, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -581,7 +581,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2189, 1));
                             gifts.Add(new Gift(2034, 2));
                             gifts.Add(new Gift(2105, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -589,7 +589,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2189, 1));
                             gifts.Add(new Gift(2034, 2));
                             gifts.Add(new Gift(2193, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -602,20 +602,20 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2099, 3));
                             gifts.Add(new Gift(2100, 3));
                             gifts.Add(new Gift(2102, 3));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2206, 1));
                             gifts.Add(new Gift(2032, 3));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2206, 1));
                             gifts.Add(new Gift(2106, 1));
                             gifts.Add(new Gift(2038, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -623,7 +623,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2190, 1));
                             gifts.Add(new Gift(2039, 2));
                             gifts.Add(new Gift(2109, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -631,7 +631,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2190, 1));
                             gifts.Add(new Gift(2040, 2));
                             gifts.Add(new Gift(2194, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -644,20 +644,20 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2099, 3));
                             gifts.Add(new Gift(2100, 3));
                             gifts.Add(new Gift(2102, 3));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2027, 15));
                             gifts.Add(new Gift(2207, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2207, 1));
                             gifts.Add(new Gift(2046, 2));
                             gifts.Add(new Gift(2191, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -665,7 +665,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2047, 2));
                             gifts.Add(new Gift(2191, 1));
                             gifts.Add(new Gift(2117, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -673,7 +673,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2048, 2));
                             gifts.Add(new Gift(2191, 1));
                             gifts.Add(new Gift(2195, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -686,20 +686,20 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2099, 3));
                             gifts.Add(new Gift(2100, 3));
                             gifts.Add(new Gift(2102, 3));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2208, 1));
                             gifts.Add(new Gift(2017, 10));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2208, 1));
                             gifts.Add(new Gift(2192, 1));
                             gifts.Add(new Gift(2042, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -707,7 +707,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2192, 1));
                             gifts.Add(new Gift(2043, 2));
                             gifts.Add(new Gift(2118, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -715,7 +715,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2192, 1));
                             gifts.Add(new Gift(2044, 2));
                             gifts.Add(new Gift(2196, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -732,28 +732,28 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(1032, 3));
                             gifts.Add(new Gift(1033, 3));
                             gifts.Add(new Gift(1034, 3));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2034, 3));
                             gifts.Add(new Gift(2205, 1));
                             gifts.Add(new Gift(2189, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2035, 3));
                             gifts.Add(new Gift(2193, 1));
                             gifts.Add(new Gift(2275, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
                             gifts.Add(new Gift(2036, 3));
                             gifts.Add(new Gift(2193, 1));
                             gifts.Add(new Gift(1028, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -762,7 +762,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(1028, 1));
                             gifts.Add(new Gift(1029, 1));
                             gifts.Add(new Gift(2197, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -776,28 +776,28 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2100, 4));
                             gifts.Add(new Gift(2102, 4));
                             gifts.Add(new Gift(2032, 4));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2038, 3));
                             gifts.Add(new Gift(2206, 1));
                             gifts.Add(new Gift(2190, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2039, 3));
                             gifts.Add(new Gift(2194, 1));
                             gifts.Add(new Gift(2105, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
                             gifts.Add(new Gift(2040, 3));
                             gifts.Add(new Gift(2194, 1));
                             gifts.Add(new Gift(1028, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -806,7 +806,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(1028, 1));
                             gifts.Add(new Gift(1029, 1));
                             gifts.Add(new Gift(2198, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -820,28 +820,28 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2100, 4));
                             gifts.Add(new Gift(2102, 4));
                             gifts.Add(new Gift(2047, 15));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2046, 3));
                             gifts.Add(new Gift(2205, 1));
                             gifts.Add(new Gift(2189, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2047, 3));
                             gifts.Add(new Gift(2195, 1));
                             gifts.Add(new Gift(2117, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
                             gifts.Add(new Gift(2048, 3));
                             gifts.Add(new Gift(2195, 1));
                             gifts.Add(new Gift(1028, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -850,7 +850,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(1028, 1));
                             gifts.Add(new Gift(1029, 1));
                             gifts.Add(new Gift(2199, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -864,28 +864,28 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2100, 4));
                             gifts.Add(new Gift(2102, 4));
                             gifts.Add(new Gift(2017, 10));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2042, 3));
                             gifts.Add(new Gift(2192, 1));
                             gifts.Add(new Gift(2189, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2043, 3));
                             gifts.Add(new Gift(2196, 1));
                             gifts.Add(new Gift(2118, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
                             gifts.Add(new Gift(2044, 3));
                             gifts.Add(new Gift(2196, 1));
                             gifts.Add(new Gift(1028, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -894,7 +894,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(1028, 1));
                             gifts.Add(new Gift(1029, 1));
                             gifts.Add(new Gift(2200, 1));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -907,19 +907,19 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2034, 4));
                             gifts.Add(new Gift(2189, 2));
                             gifts.Add(new Gift(2205, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2035, 4));
                             gifts.Add(new Gift(2105, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2036, 4));
                             gifts.Add(new Gift(2193, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -929,7 +929,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2226, 2));
                             gifts.Add(new Gift(1028, 2));
                             gifts.Add(new Gift(1029, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -938,7 +938,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2034, 2));
                             gifts.Add(new Gift(2226, 2));
                             gifts.Add(new Gift(1030, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -951,19 +951,19 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2038, 4));
                             gifts.Add(new Gift(2106, 2));
                             gifts.Add(new Gift(2206, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2039, 4));
                             gifts.Add(new Gift(2109, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2040, 4));
                             gifts.Add(new Gift(2194, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -973,7 +973,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2231, 2));
                             gifts.Add(new Gift(1028, 2));
                             gifts.Add(new Gift(1029, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -982,7 +982,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2231, 2));
                             gifts.Add(new Gift(2202, 1));
                             gifts.Add(new Gift(1030, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -994,19 +994,19 @@ namespace OpenNos.Handler
                         case 0:
                             gifts.Add(new Gift(2046, 4));
                             gifts.Add(new Gift(2207, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2047, 4));
                             gifts.Add(new Gift(2117, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2048, 4));
                             gifts.Add(new Gift(2195, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -1015,7 +1015,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2199, 2));
                             gifts.Add(new Gift(1028, 2));
                             gifts.Add(new Gift(1029, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -1023,7 +1023,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2195, 2));
                             gifts.Add(new Gift(2203, 1));
                             gifts.Add(new Gift(1030, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -1036,19 +1036,19 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2042, 4));
                             gifts.Add(new Gift(2192, 2));
                             gifts.Add(new Gift(2208, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2043, 4));
                             gifts.Add(new Gift(2118, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2044, 4));
                             gifts.Add(new Gift(2196, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -1057,7 +1057,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2200, 2));
                             gifts.Add(new Gift(1028, 2));
                             gifts.Add(new Gift(1029, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -1065,7 +1065,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2196, 2));
                             gifts.Add(new Gift(2204, 1));
                             gifts.Add(new Gift(1030, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -1079,19 +1079,19 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2042, 4));
                             gifts.Add(new Gift(2192, 2));
                             gifts.Add(new Gift(2208, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2043, 4));
                             gifts.Add(new Gift(2118, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2044, 4));
                             gifts.Add(new Gift(2196, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -1100,7 +1100,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2200, 2));
                             gifts.Add(new Gift(1028, 2));
                             gifts.Add(new Gift(1029, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -1108,7 +1108,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2196, 2));
                             gifts.Add(new Gift(2204, 1));
                             gifts.Add(new Gift(1030, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -1121,19 +1121,19 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2042, 4));
                             gifts.Add(new Gift(2192, 2));
                             gifts.Add(new Gift(2208, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 1:
                             gifts.Add(new Gift(2043, 4));
                             gifts.Add(new Gift(2118, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 2:
                             gifts.Add(new Gift(2044, 4));
                             gifts.Add(new Gift(2196, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 3:
@@ -1142,7 +1142,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2200, 2));
                             gifts.Add(new Gift(1028, 2));
                             gifts.Add(new Gift(1029, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
 
                         case 4:
@@ -1150,7 +1150,7 @@ namespace OpenNos.Handler
                             gifts.Add(new Gift(2196, 2));
                             gifts.Add(new Gift(2204, 1));
                             gifts.Add(new Gift(1030, 2));
-                            gifts.Add(new Gift(1013, (byte) (point + 1)));
+                            gifts.Add(new Gift(1013, (byte)(point + 1)));
                             break;
                     }
 
@@ -1165,23 +1165,23 @@ namespace OpenNos.Handler
             switch (game)
             {
                 case 0:
-                    return new[] {999, 4999, 7999, 11999, 15999, 1000000};
+                    return new[] { 999, 4999, 7999, 11999, 15999, 1000000 };
 
                 case 1:
-                    return new[] {999, 4999, 9999, 13999, 17999, 1000000};
+                    return new[] { 999, 4999, 9999, 13999, 17999, 1000000 };
 
                 case 2:
-                    return new[] {999, 3999, 7999, 14999, 24999, 1000000};
+                    return new[] { 999, 3999, 7999, 14999, 24999, 1000000 };
 
                 case 3:
-                    return new[] {999, 3999, 7999, 11999, 19999, 1000000};
+                    return new[] { 999, 3999, 7999, 11999, 19999, 1000000 };
 
                 case 4:
                 case 5:
-                    return new[] {999, 4999, 7999, 11999, 15999, 1000000};
+                    return new[] { 999, 4999, 7999, 11999, 15999, 1000000 };
 
                 default:
-                    return new[] {999, 4999, 7999, 14999, 24999, 1000000};
+                    return new[] { 999, 4999, 7999, 14999, 24999, 1000000 };
             }
         }
 
