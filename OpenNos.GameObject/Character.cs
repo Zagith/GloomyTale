@@ -4329,6 +4329,30 @@ namespace OpenNos.GameObject
             return Inventory.Where(s => s.Type == InventoryType.PetWarehouse).Aggregate(stash, (current, item) => current + $" {item.GenerateStashPacket()}");
         }
 
+        private void GenerateQuickListSp1Am(ref string[] pktQs)
+        {
+            var morph = Morph;
+            if (Class == ClassType.MartialArtist && Morph == (byte)BrawlerMorphType.Dragon || Morph == (byte)BrawlerMorphType.Normal)
+            {
+                morph = 30;
+            }
+
+            for (var i = 0; i < 30; i++)
+            {
+                for (var j = 0; j < 2; j++)
+                {
+                    QuicklistEntryDTO qi = QuicklistEntries.Find(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? morph : 0));
+                    short? pos = qi?.Pos;
+                    if (pos <= 8)
+                    {
+                        pos += 8;
+                    }
+
+                    pktQs[j] += $" {qi?.Type ?? 7}.{qi?.Slot ?? 7}.{pos.ToString() ?? "-1"}";
+                }
+            }
+        }
+
         private void GenerateQuickListSp2Am(ref string[] pktQs)
         {
             var morph = Morph;
@@ -4399,6 +4423,11 @@ namespace OpenNos.GameObject
                 case ClassType.MartialArtist when Morph == 33 && UseSp && SpInstance.SpLevel >= 20 && HasBuff(CardType.WolfMaster, (byte)AdditionalTypes.WolfMaster.CanExecuteUltimateSkills):
                     GenerateQuickListSp3Am(ref pktQs);
                     break;
+
+                case ClassType.MartialArtist when Morph == 30 && UseSp && SpInstance.SpLevel >= 20 && HasBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.Transformation):
+                    GenerateQuickListSp1Am(ref pktQs);
+                    break;
+
                 default:
                     for (int i = 0; i < 30; i++)
                     {
@@ -7115,9 +7144,9 @@ namespace OpenNos.GameObject
             if (IsSitting)
             {
                 int regen = GetBuff(CardType.Recovery, (byte)AdditionalTypes.Recovery.MPRecoveryIncreased)[0];
-                return (int)((regen + CharacterHelper.MPHealth[(byte)Class] + CellonOptions.Where(s => s.Type == CellonOptionType.MPRestore).Sum(s => s.Value)) * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMPOnRest) / 100D));
+                return (int)((regen + CharacterHelper.MPHealth[(byte)Class] + CellonOptions.Where(s => s.Type == CellonOptionType.MPRestore).Sum(s => s.Value)) * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMPOnRest) / 100D) + (HasBuff(704) ? 30 : 0));
             }
-            return (DateTime.Now - LastDefence).TotalSeconds > 4 ? (int)((CharacterHelper.MPHealthStand[(byte)Class] * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMP) / 100D)) * naturalRecovery) : 0;
+            return (DateTime.Now - LastDefence).TotalSeconds > 4 ? (int)(((CharacterHelper.MPHealthStand[(byte)Class] * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMP) / 100D)) * naturalRecovery) + (HasBuff(704) ? 30 : 0)) : 0;
         }
 
         private double HeroXPLoad() => HeroLevel == 0 ? 1 : CharacterHelper.HeroXpData[HeroLevel - 1];

@@ -1129,6 +1129,7 @@ namespace OpenNos.GameObject
                         rnd = ServerManager.RandomNumber();
                         if (rnd <= 80 && hitRequest.Skill.SkillVNum == 1347)
                             BattleEntity.AddBuff(new Buff(628, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+
                     }
                 }
 
@@ -1467,7 +1468,7 @@ namespace OpenNos.GameObject
                 }
                 if (attackerBattleEntity.Character != null)
                 {
-                    if (hitmode != 4 && hitmode != 2 && damage > 0)
+                    if (hitmode != 4 && hitmode != 2 && damage > 0 && hitRequest.Skill.SkillVNum != 1611 && hitRequest.Skill.SkillVNum != 1614)
                     {
                         attackerBattleEntity.Character.RemoveBuffByBCardTypeSubType(new List<KeyValuePair<byte, byte>>
                             {
@@ -1607,6 +1608,9 @@ namespace OpenNos.GameObject
                     RunToX = FirstX;
                     RunToY = FirstY;
                 }
+
+                if (Buff.ContainsKey(692) && Buff.ContainsKey(691))
+                    RemoveBuff(691);
 
                 if ((DateTime.Now - LastEffect).TotalSeconds >= 5)
                 {
@@ -1773,7 +1777,7 @@ namespace OpenNos.GameObject
                         return;
                     }
 
-                    bool instantAttack = MonsterVNum == 1439 || MonsterVNum == 1436 || MonsterVNum == 946 || MonsterVNum == 1382;
+                    bool instantAttack = MonsterVNum == 1439 || MonsterVNum == 1436 || MonsterVNum == 946 || MonsterVNum == 1382 || MonsterVNum == 974;
 
                     if ((DateTime.Now - LastSkill).TotalMilliseconds >= 1100 + (instantAttack ? 0 : (Monster.BasicCooldown * 200)))
                     {
@@ -1978,9 +1982,9 @@ namespace OpenNos.GameObject
             }
             HostilityTarget();
             */
-        }
+                    }
 
-        public void MoveTest()
+                    public void MoveTest()
         {
             double walkWaitTime = (Target == null && RunToX == 0 && RunToY == 0 ? ServerManager.RandomNumber(400, 3200) : 0) + (Speed / 1.5f) * 100 - (DateTime.Now - LastMove).TotalMilliseconds;
             double skillWaitTime = 0 /*800 - (DateTime.Now - LastSkill).TotalMilliseconds*/;
@@ -2465,6 +2469,18 @@ namespace OpenNos.GameObject
                     {
                         MapInstance.Broadcast(null, target.Character.GenerateStat(), ReceiverType.OnlySomeone,
                             "", target.MapEntityId);
+
+                        if (target.Character.HasBuff(694))
+                        {
+                            target.Character.AddBuff(new Buff(703, target.Character.Level), target.Character.BattleEntity);
+                            target.Character.RemoveBuff(694);
+                        }
+
+                        if (target.Character.HasBuff(688))
+                        {
+                            target.Character.AddBuff(new Buff(689, target.Character.Level), target.Character.BattleEntity);
+                            target.Character.RemoveBuff(688);
+                        }
 
                         // Magical Fetters
 

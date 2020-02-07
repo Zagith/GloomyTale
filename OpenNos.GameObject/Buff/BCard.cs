@@ -236,10 +236,22 @@ namespace OpenNos.GameObject
                                         }
                                         else
                                         {
-                                            if (cardId == 118 && session.Character.HasBuff(155))
+                                            if(buff.Card?.BuffType == BuffType.Bad && session.HasBuff(746))
                                                 return;
+
+                                            if (cardId != null && cardId == 118 && session.HasBuff(155))
+                                                return;
+
+                                            if ((SkillVNum == null || (SkillVNum == 1614 && session.HasBuff(703))) && buff.Card.CardId != 698)
+                                            {
+                                                if (session.HasBuff(691))
+                                                    session.RemoveBuff(691);
+                                                return;
+                                            }
+                                            
+
                                             //Overwriting BearSpirit buff on Energy pot buff
-                                            if (cardId == 155)
+                                            if (cardId != null && cardId == 155)
                                             {
                                                 session.RemoveBuff(118);
                                                 session.AddBuff(buff, sender, x: x, y: y);
@@ -250,6 +262,15 @@ namespace OpenNos.GameObject
                                             else
                                                 session.AddBuff(buff, sender, x: x, y: y);
                                         }
+
+                                        if (SkillVNum != null && SkillVNum == 1610)
+                                        {
+                                            session.Character.Session.SendPackets(session.Character.GenerateQuicklist());
+                                        }
+
+                                        if (SkillVNum != null && SkillVNum == 1609 && session.Character.HasBuff(689))
+                                            session.AddBuff(new Buff(704, session.Level), session);
+
                                     }
                                     else if (Chance < 0 && ServerManager.RandomNumber() < -Chance)
                                     {
@@ -285,13 +306,15 @@ namespace OpenNos.GameObject
                             break;
 
                         case BCardType.CardType.Summons:
-                            if (sender.MapMonster?.MonsterVNum == 154)
+                            if (sender == null || (sender.EntityType == EntityType.Monster && (sender.MapMonster == null || sender.MapMonster?.MonsterVNum == 154)))
                             {
                                 return;
                             }
                             bool move = SecondData != 1382;
                             List<MonsterToSummon> summonParameters = new List<MonsterToSummon>();
                             int amountToSpawn = firstData;
+                            if (sender.Character != null && sender.Character.HasBuff(703))
+                                amountToSpawn = 4;
                             int aliveTime = ServerManager.GetNpcMonster((short)SecondData).RespawnTime / (ServerManager.GetNpcMonster((short)SecondData).RespawnTime < 2400 ? ServerManager.GetNpcMonster((short)SecondData).RespawnTime < 150 ? 1 : 10 : 40) * (ServerManager.GetNpcMonster((short)SecondData).RespawnTime >= 150 ? 4 : 1);
                             for (int i = 0; i < amountToSpawn; i++)
                             {
@@ -385,6 +408,7 @@ namespace OpenNos.GameObject
 
                                         session.Character.ChargeValue = skills.Where(s => s.SkillVNum == skill.SkillVNum).Sum(s => s.GetSkillBCards().Sum(b => b.FirstData));
                                         session.AddBuff(new Buff(0, session.Level), session);
+
                                     }
                                 }
                             }

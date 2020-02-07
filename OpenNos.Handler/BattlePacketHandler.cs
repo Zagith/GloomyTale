@@ -273,6 +273,8 @@ namespace OpenNos.Handler
                                 }
                             }
                         }
+
+                        
                     }
                 }
 
@@ -457,6 +459,12 @@ namespace OpenNos.Handler
                     hitmode = 4;
                 }
 
+                if (target.Character.HasBuff(746))
+                {
+                    damage = 0;
+                    hitmode = 4;
+                }
+
                 if (ServerManager.RandomNumber() < target.Character.GetBuff(CardType.DarkCloneSummon,
                     (byte)AdditionalTypes.DarkCloneSummon.ConvertDamageToHPChance)[0])
                 {
@@ -497,14 +505,17 @@ namespace OpenNos.Handler
                     Session.Character.AddBuff(new Buff(560, Session.Character.Level), Session.Character.BattleEntity);
                 }
 
-                //Remove invisiblity on hit
+                //Remove invisiblity on hit 
                 if (Session.Character.HasBuff(746))
                     Session.Character.RemoveBuff(746);
+
+                //2nd MA Sp
 
                 if (hitRequest.Skill.SkillVNum == 1607 && target.Character.MapX != 0 && target.Character.MapY != 0)
                     Session.Character.TeleportOnMap(target.Character.PositionX, target.Character.PositionY);
 
-                //2nd MA Sp
+                if (hitRequest.Skill.SkillVNum == 1619)
+                    target.Character.AddBuff(new Buff(7, battleEntity.Level), battleEntity);
 
                 if (hitRequest.Session.Character.HasBuff(703)) // attack Possibility
                     switch (hitRequest.Skill.SkillVNum)
@@ -535,6 +546,26 @@ namespace OpenNos.Handler
                             }
                             break;
 
+                        case 1614:
+                        {
+                            target.Character.RemoveBuff(691);
+                            target.Character.AddBuff(new Buff(692, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
+                        }
+                            break;
+
+                        case 1619:
+                            {
+                                Observable.Timer(TimeSpan.FromMilliseconds(5500)).Subscribe(o =>
+                                {
+                                    target.CurrentMapInstance?.Broadcast(target.Character.GenerateEff(1072));
+                                    target.Character.GetDamage((int)(10 * hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
+                                    target.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player, hitRequest.Session.Character.CharacterId, 1,
+                                        target.Character.CharacterId, -1, 0, 0, 0, 0, 0, target.Character.Hp > 0, 92,
+                                        (int)(10 * hitRequest.Session.Character.Level), 0, 1));
+                                });
+                            }
+                            break;
+
                         case 1620:
                             {
                                 if (target.Character.HasBuff(702))
@@ -550,6 +581,13 @@ namespace OpenNos.Handler
                             break;
                     }
 
+                if (hitRequest.Session.Character.HasBuff(689)) // Illuminazione
+                    switch (hitRequest.Skill.SkillVNum)
+                    {
+                        case 1611:
+                            break;
+                    }
+
 
 
                 if (target.Character.HasBuff(694))
@@ -560,6 +598,7 @@ namespace OpenNos.Handler
 
                 if (target.Character.HasBuff(688))
                 {
+                    target.CurrentMapInstance.Broadcast(target.Character.GenerateEff(1075));
                     target.Character.AddBuff(new Buff(689, target.Character.Level), target.Character.BattleEntity);
                     target.Character.RemoveBuff(688);
                 }
@@ -787,7 +826,7 @@ namespace OpenNos.Handler
                     hitRequest.Skill.SkillVNum == 1140) && hitmode == 4)
                     hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.CharacterId));
 
-                //test removing malus by dg skills
+                //Removing malus by dg skills
                 int rnd = ServerManager.RandomNumber();
                 if ((hitRequest.Skill.SkillVNum == 946 && rnd < 15 ||
                    (hitRequest.Skill.SkillVNum == 948 && rnd >= 15 && rnd <= 35) ||
@@ -948,8 +987,8 @@ namespace OpenNos.Handler
                             {
                                 hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TOO_LEVEL_DIFFERENCE"), 11));
                             }*/
-                        }
-                        else
+            }
+            else
                         {
                             hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TARGET_SAME_IP"), 11));
                         }
@@ -2509,6 +2548,15 @@ namespace OpenNos.Handler
                                     Session?.CurrentMapInstance?.Broadcast(Session.Character.GenerateEff(55));
                                 }
                             });
+
+                        //Test lotus position additional buff fix
+                        if(Session.Character.HasBuff(689) && ski.SkillVNum == 1610)
+                            Session.Character.AddBuff(new Buff(705,Session.Character.Level), Session?.Character?.BattleEntity);
+
+                        if (ski != null && ski.Skill.SkillVNum == 1618)
+                        {
+                            ski.GetSkillBCards().ForEach(s => s.ApplyBCards(Session.Character.BattleEntity, Session.Character.BattleEntity));
+                        }
                     }
                     else
                     {
