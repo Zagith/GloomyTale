@@ -241,13 +241,6 @@ namespace OpenNos.GameObject
 
                                             if (cardId != null && cardId == 118 && session.HasBuff(155))
                                                 return;
-
-                                            if ((SkillVNum == null || (SkillVNum == 1614 && session.HasBuff(703))) && buff.Card.CardId != 698)
-                                            {
-                                                if (session.HasBuff(691))
-                                                    session.RemoveBuff(691);
-                                                return;
-                                            }
                                             
 
                                             //Overwriting BearSpirit buff on Energy pot buff
@@ -2425,6 +2418,7 @@ namespace OpenNos.GameObject
                                 session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(196));
                                 session.Character.DragonModeObservable?.Dispose();
                                 session.RemoveBuff(676);
+                                session.Character.Session.SendPackets(session.Character.GenerateQuicklist());
                             }
                             else if (SubType == (byte)AdditionalTypes.MartialArts.Transformation / 10)
                             {
@@ -2434,6 +2428,7 @@ namespace OpenNos.GameObject
                                 session.Character.Session.SendPacket(session.Character.GenerateEff(196));
                                 session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(196));
                                 session.Character.DragonModeObservable?.Dispose();
+                                session.Character.Session.SendPackets(session.Character.GenerateQuicklist());
 
                                 session.Character.DragonModeObservable = Observable.Timer(TimeSpan.FromSeconds(card.Duration * 0.1)).Subscribe(s =>
                                 {
@@ -2442,6 +2437,7 @@ namespace OpenNos.GameObject
                                     session.Character.MapInstance?.Broadcast(session.Character.GenerateCMode());
                                     session.Character.Session.SendPacket(session.Character.GenerateEff(196));
                                     session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(196));
+                                    session.Character.Session.SendPackets(session.Character.GenerateQuicklist());
                                 });
                             }
 

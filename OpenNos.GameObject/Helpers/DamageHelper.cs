@@ -1738,6 +1738,44 @@ namespace OpenNos.GameObject.Helpers
 
             #region MA 2 sp
 
+            //PVM / PVP SIDE
+            if (attacker.HasBuff(704))
+                totalDamage += (int)(totalDamage * 0.20);
+
+            if (defender.HasBuff(705) && ServerManager.RandomNumber() < 30)
+                totalDamage += (int)(totalDamage * 0.20);
+
+            if (defender.HasBuff(691) && !defender.HasBuff(692))
+            {
+                totalDamage += (int)(totalDamage * 0.50);
+                defender.RemoveBuff(691);
+            }
+
+            if (defender.HasBuff(692))
+            {
+                totalDamage += (int)(totalDamage * 1);
+                defender.RemoveBuff(692);
+            }
+
+            if (attacker.HasBuff(703) && skill.SkillVNum == 1613)
+                foreach (Buff bf in attacker.Buffs.GetAllItems().Where(b => b.Card.Level <= 4))
+                    attacker.RemoveBuff(bf.Card.CardId);
+
+            if (defender.HasBuff(699) && skill.SkillVNum == 1614)
+                defender.MapMonster.AddBuff(new Buff(700, attacker.Level), attacker);
+
+            if (defender.HasBuff(694))
+            {
+                defender.AddBuff(new Buff(703, defender.Level), defender);
+                defender.RemoveBuff(694);
+            }
+
+            if (defender.HasBuff(688))
+            {
+                defender.AddBuff(new Buff(689, defender.Level), defender);
+                defender.RemoveBuff(688);
+            }
+
             // PVM SIDE
             if (attacker.EntityType == EntityType.Player && defender.EntityType == EntityType.Monster && attacker.Character.HasBuff(703)) // attack Possibility
             {
@@ -1809,43 +1847,8 @@ namespace OpenNos.GameObject.Helpers
                 }
             }
 
-            //PVM / PVP SIDE
-            if (attacker.HasBuff(704))
-                totalDamage += (int)(totalDamage * 0.20);
-
-            if(defender.HasBuff(705) && ServerManager.RandomNumber() < 30)
-                totalDamage += (int)(totalDamage * 0.20);
-
-            if(defender.HasBuff(691) && !defender.HasBuff(692))
-            {
-                totalDamage += (int)(totalDamage * 0.50);
-                defender.RemoveBuff(691);
-            }
-
-            if (defender.HasBuff(692))
-            {
-                totalDamage += (int)(totalDamage * 1);
-                defender.RemoveBuff(692);
-            }
-
-            if (attacker.HasBuff(703) && skill.SkillVNum == 1613)
-                foreach(Buff bf in attacker.Buffs.GetAllItems().Where(b => b.Card.Level <= 4))
-                    attacker.RemoveBuff(bf.Card.CardId);
-
-            if (defender.HasBuff(699) && skill.SkillVNum == 1614)
-                defender.MapMonster.AddBuff(new Buff(700,attacker.Level), attacker);
-
-            if (defender.HasBuff(694))
-            {
-                defender.AddBuff(new Buff(703, defender.Level), defender);
-                defender.RemoveBuff(694);
-            }
-
-            if (defender.HasBuff(688))
-            {
-                defender.AddBuff(new Buff(689, defender.Level), defender);
-                defender.RemoveBuff(688);
-            }
+            
+            
 
             #endregion 
 

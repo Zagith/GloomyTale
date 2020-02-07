@@ -581,13 +581,6 @@ namespace OpenNos.Handler
                             break;
                     }
 
-                if (hitRequest.Session.Character.HasBuff(689)) // Illuminazione
-                    switch (hitRequest.Skill.SkillVNum)
-                    {
-                        case 1611:
-                            break;
-                    }
-
 
 
                 if (target.Character.HasBuff(694))

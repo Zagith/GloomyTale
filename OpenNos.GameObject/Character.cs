@@ -2104,6 +2104,12 @@ namespace OpenNos.GameObject
                     BubbleMessage = null;
                 }
 
+                if(Morph == 29 || Morph == 30)
+                    Session.SendPackets(GenerateQuicklist());
+
+                if(HasBuff(691) && HasBuff(692))
+                    RemoveBuff(691);
+
                 if (CurrentMinigame != 0 && LastEffect.AddSeconds(3) <= DateTime.Now)
                 {
                     Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, CurrentMinigame));
@@ -4343,7 +4349,7 @@ namespace OpenNos.GameObject
                 {
                     QuicklistEntryDTO qi = QuicklistEntries.Find(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? morph : 0));
                     short? pos = qi?.Pos;
-                    if (pos <= 8)
+                    if (pos < 8)
                     {
                         pos += 8;
                     }
