@@ -2253,6 +2253,12 @@ namespace OpenNos.GameObject
                         damage = 0;
                     }
 
+                    if (target.Character.HasBuff(746))
+                    {
+                        damage = 0;
+                        hitmode = 4;
+                    }
+
                     if (target.Character != null)
                     {
                         if (ServerManager.RandomNumber() < target.Character.GetBuff(CardType.DarkCloneSummon,
@@ -2737,6 +2743,12 @@ namespace OpenNos.GameObject
                         }
 
                         if (characterInRange.HasGodMode)
+                        {
+                            damage = 0;
+                            hitmode = 4;
+                        }
+
+                        if (characterInRange.HasBuff(746))
                         {
                             damage = 0;
                             hitmode = 4;
