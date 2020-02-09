@@ -579,7 +579,7 @@ namespace OpenNos.GameObject
                         {
                             return;
                         }
-                        if (session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance && new short[] { 1, 145 }.Contains(session.CurrentMapInstance.Map.MapId))
+                        if (session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance && new short[] { 1, 129 }.Contains(session.CurrentMapInstance.Map.MapId))
                         {
                             MapNpc signPost = new MapNpc
                             {

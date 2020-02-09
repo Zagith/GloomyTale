@@ -289,8 +289,8 @@ namespace OpenNos.GameObject
                                     Session.Character.SetRespawnPoint(20, 9, 92);
                                     break;
 
-                                case 145:
-                                    Session.Character.SetRespawnPoint(145, 13, 110);
+                                case 129:
+                                    Session.Character.SetRespawnPoint(129, 127, 73);
                                     break;
 
                                 case 170:

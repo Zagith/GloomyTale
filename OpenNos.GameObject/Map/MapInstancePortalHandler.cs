@@ -45,19 +45,6 @@ namespace OpenNos.GameObject
                         DestinationMapInstanceId = exitMapinstanceId
                     });
                     break;
-
-                case 145:
-                    list.Add(new Portal
-                    {
-                        SourceX = 9,
-                        SourceY = 171,
-                        DestinationX = 5,
-                        DestinationY = 8,
-                        Type = (short)PortalType.Miniland,
-                        SourceMapId = 145,
-                        DestinationMapInstanceId = exitMapinstanceId
-                    });
-                    break;
             }
             return list;
         }

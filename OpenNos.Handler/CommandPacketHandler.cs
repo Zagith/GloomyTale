@@ -4218,8 +4218,7 @@ namespace OpenNos.Handler
                     switch (Session.Character.Faction)
                     {
                         case FactionType.None:
-#warning change port alveus
-                            ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 145, 51, 41);
+                            ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 129, 77, 141);
                             Session.SendPacket(UserInterfaceHelper.GenerateInfo("You need to be part of a faction to join Act 4"));
                             return;
 
@@ -4240,8 +4239,7 @@ namespace OpenNos.Handler
                 }
                 else
                 {
-#warning change port alveus
-                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 145, 51, 41);
+                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 129, 77, 141);
                     Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("ACT4_OFFLINE")));
                 }
             }
@@ -4266,10 +4264,9 @@ namespace OpenNos.Handler
                     {
                         return;
                     }
-#warning change port alveus
-                    Session.Character.MapId = 145;
-                    Session.Character.MapX = 51;
-                    Session.Character.MapY = 41;
+                    Session.Character.MapId = 129;
+                    Session.Character.MapX = 77;
+                    Session.Character.MapY = 141;
                     int port = Convert.ToInt32(connection.Split(':')[1]);
                     Session.Character.ChangeChannel(connection.Split(':')[0], port, 3);
                 }

@@ -2434,10 +2434,10 @@ namespace OpenNos.Import.Console
                 SourceMapId = 2586,
                 SourceX = 34,
                 SourceY = 54,
-                DestinationMapId = 145,
+                DestinationMapId = 129,
                 Type = -1,
-                DestinationX = 61,
-                DestinationY = 165,
+                DestinationX = 15,
+                DestinationY = 131,
                 IsDisabled = false
             };
             DAOFactory.PortalDAO.Insert(weddingPortal);
