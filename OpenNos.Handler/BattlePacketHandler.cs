@@ -465,6 +465,9 @@ namespace OpenNos.Handler
                     hitmode = 4;
                 }
 
+                if(hitRequest.Skill.SkillVNum == 1593)
+                    return;
+
                 if (ServerManager.RandomNumber() < target.Character.GetBuff(CardType.DarkCloneSummon,
                     (byte)AdditionalTypes.DarkCloneSummon.ConvertDamageToHPChance)[0])
                 {

@@ -853,6 +853,10 @@ namespace OpenNos.GameObject
             if (IsAlive && hitRequest.Session.Character.Hp > 0 &&
                     (hitRequest.Mate == null || hitRequest.Mate.Hp > 0))
             {
+
+                if (hitRequest.Skill.SkillVNum == 1593)
+                    return;
+
                 double cooldownReduction = hitRequest.Session.Character.GetBuff(CardType.Morale, (byte)AdditionalTypes.Morale.SkillCooldownDecreased)[0];
 
                 int[] increaseEnemyCooldownChance = hitRequest.Session.Character.GetBuff(CardType.DarkCloneSummon, (byte)AdditionalTypes.DarkCloneSummon.IncreaseEnemyCooldownChance);
@@ -2253,7 +2257,7 @@ namespace OpenNos.GameObject
                         damage = 0;
                     }
 
-                    if (target.Character.HasBuff(746))
+                    if (target != null && target.Character != null && target.Character.HasBuff(746))
                     {
                         damage = 0;
                         hitmode = 4;
