@@ -2,14 +2,14 @@
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
+using OpenNos.Master.Library.Client;
+using OpenNos.Master.Library.Data;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.Master.Library.Client;
-using OpenNos.Master.Library.Data;
 
 namespace OpenNos.GameObject.Event.ARENA
 {

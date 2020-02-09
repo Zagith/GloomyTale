@@ -648,7 +648,7 @@ namespace OpenNos.Handler
                     {
                         if ((byte)faction < 3) // Single family change
                         {
-                            if (Session.Character.Faction == (FactionType)faction)
+                            if (Session.Character.Faction == faction)
                             {
                                 return;
                             }
@@ -660,7 +660,7 @@ namespace OpenNos.Handler
                                 return;
                             }
                             Session.Character.Inventory.RemoveItemAmount(baseVnum + (byte)faction);
-                            Session.Character.ChangeFaction((FactionType)faction);
+                            Session.Character.ChangeFaction(faction);
                         }
                         else // Family faction change
                         {

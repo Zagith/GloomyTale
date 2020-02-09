@@ -20,7 +20,6 @@ using OpenNos.Data;
 using OpenNos.Data.Enums;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace OpenNos.DAL.DAO

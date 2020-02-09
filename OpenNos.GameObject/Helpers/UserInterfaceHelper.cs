@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.DAL;
+using OpenNos.Data;
 using OpenNos.Domain;
+using OpenNos.Domain.I18N;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.DAL;
-using OpenNos.Data;
-using OpenNos.Domain.I18N;
 
 namespace OpenNos.GameObject.Helpers
 {
@@ -54,7 +54,7 @@ namespace OpenNos.GameObject.Helpers
             long savecount = 0;
 
             List<Family> familyordered = ServerManager.Instance.FamilyList.Where(s => DAOFactory.FamilyCharacterDAO.LoadByFamilyId(s.FamilyId).FirstOrDefault(c => c.Authority == FamilyAuthority.Head) is FamilyCharacterDTO famChar && DAOFactory.CharacterDAO.LoadById(famChar.CharacterId) is CharacterDTO character && DAOFactory.AccountDAO.LoadById(character.AccountId).Authority <= AuthorityType.GS);
-        
+
             switch (type)
             {
                 case 0:

@@ -19,7 +19,7 @@ namespace OpenNos.GameObject.Packets.ClientPackets
 
         [PacketIndex(3)]
         public byte CastId { get; set; }
-        
+
         [PacketIndex(4)]
         public short MapX { get; set; }
 

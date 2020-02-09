@@ -13,12 +13,12 @@
  */
 
 using OpenNos.Data;
-using System;
-using OpenNos.GameObject.Networking;
-using System.Collections.Generic;
-using OpenNos.GameObject.Helpers;
-using System.Linq;
 using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject
@@ -62,7 +62,7 @@ namespace OpenNos.GameObject
         }
 
         public short Hit { get; set; }
-        
+
         public DateTime LastUse { get; set; }
 
         public Skill Skill => _skill ?? (_skill = ServerManager.GetSkill(SkillVNum));

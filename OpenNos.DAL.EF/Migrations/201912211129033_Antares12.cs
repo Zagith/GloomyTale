@@ -1,8 +1,7 @@
 ﻿namespace OpenNos.DAL.EF.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class Antares12 : DbMigration
     {
         public override void Up()
@@ -19,7 +18,7 @@
             AddColumn("dbo.Portal", "NomeOggetto", c => c.String());
             AddForeignKey("dbo.RecipeList", "RecipeId", "dbo.Recipe", "RecipeId", cascadeDelete: true);
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.RecipeList", "RecipeId", "dbo.Recipe");

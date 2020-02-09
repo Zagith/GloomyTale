@@ -13,15 +13,13 @@
  */
 
 using OpenNos.Core;
-using OpenNos.Master.Library.Data;
+using OpenNos.Data;
 using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.Scs.Communication;
 using OpenNos.SCS.Communication.Scs.Communication.EndPoints.Tcp;
 using OpenNos.SCS.Communication.ScsServices.Client;
 using System;
 using System.Configuration;
-using OpenNos.Data;
-using System.Collections.Generic;
 
 namespace OpenNos.Master.Library.Client
 {

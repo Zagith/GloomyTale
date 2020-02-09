@@ -12,13 +12,12 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Domain;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.Data;
-using OpenNos.Domain;
-using OpenNos.GameObject.Networking;
 using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject.Helpers
@@ -288,7 +287,7 @@ namespace OpenNos.GameObject.Helpers
             int[] defenderpercentdefense = GetDefenderBenefitingBuffs(CardType.RecoveryAndDamagePercent, (byte)AdditionalTypes.RecoveryAndDamagePercent.DecreaseSelfHP);
 
 
-            
+
             if (attackerpercentdamage2[3] != 0)
             {
                 totalDamage = defender.HpMax / 100 * Math.Abs(attackerpercentdamage2[0]);
@@ -337,7 +336,7 @@ namespace OpenNos.GameObject.Helpers
 
             if (attacker.MapMonster != null)
             {
-                if (attacker.MapMonster.MonsterVNum <= 2334 &&  attacker.MapMonster.MonsterVNum >= 2331 || attacker.MapMonster.MonsterVNum == 2309)
+                if (attacker.MapMonster.MonsterVNum <= 2334 && attacker.MapMonster.MonsterVNum >= 2331 || attacker.MapMonster.MonsterVNum == 2309)
                 {
                     totalDamage = 0;
                     percentDamage = false;
@@ -857,7 +856,7 @@ namespace OpenNos.GameObject.Helpers
             switch (attacker.AttackType)
             {
                 case AttackType.Melee:
-                    defender.Defense = defender.MeleeDefense;
+                    defender.Defense = defender.MeleeDefense + (int)(defender.HasBuff(705) ? (defender.MeleeDefense * 0.20) : 0);
                     defender.ArmorDefense = defender.ArmorMeleeDefense;
                     defender.Dodge = defender.MeleeDefenseDodge;
                     staticBoostCategory3 += GetAttackerBenefitingBuffs(CardType.AttackPower, (byte)AdditionalTypes.AttackPower.MeleeAttacksIncreased)[0];
@@ -871,7 +870,7 @@ namespace OpenNos.GameObject.Helpers
                     break;
 
                 case AttackType.Range:
-                    defender.Defense = defender.RangeDefense;
+                    defender.Defense = defender.RangeDefense + (int)(defender.HasBuff(705) ? (defender.RangeDefense * 0.20) : 0);
                     defender.ArmorDefense = defender.ArmorRangeDefense;
                     defender.Dodge = defender.RangeDefenseDodge;
                     staticBoostCategory3 += GetAttackerBenefitingBuffs(CardType.AttackPower, (byte)AdditionalTypes.AttackPower.RangedAttacksIncreased)[0];
@@ -885,7 +884,7 @@ namespace OpenNos.GameObject.Helpers
                     break;
 
                 case AttackType.Magical:
-                    defender.Defense = defender.MagicalDefense;
+                    defender.Defense = defender.MagicalDefense + (int)(defender.HasBuff(705) ? (defender.MagicalDefense * 0.20) : 0);
                     defender.ArmorDefense = defender.ArmorMagicalDefense;
                     staticBoostCategory3 += GetAttackerBenefitingBuffs(CardType.AttackPower, (byte)AdditionalTypes.AttackPower.MagicalAttacksIncreased)[0];
                     if (GetDefenderBenefitingBuffs(CardType.Target, (byte)AdditionalTypes.Target.MagicalConcentrationIncreased)[0] is int MagicalConcentrationIncreased)
@@ -1059,8 +1058,8 @@ namespace OpenNos.GameObject.Helpers
             //C45 Mage armor buff --> Not sure it goes here <--
             if (defender.Buffs.ContainsKey(421))
             {
-               chance = 50;
-               bonus = 0;
+                chance = 50;
+                bonus = 0;
             }
 
             if (!defender.Invincible && ServerManager.RandomNumber() - bonus < chance)
@@ -1355,9 +1354,24 @@ namespace OpenNos.GameObject.Helpers
             attacker.CritChance += GetAttackerBenefitingBuffs(CardType.Critical, (byte)AdditionalTypes.Critical.InflictingIncreased)[0];
             attacker.CritChance += GetDefenderBenefitingBuffs(CardType.Critical, (byte)AdditionalTypes.Critical.ReceivingIncreased)[0];
 
+            //MA 2nd sp crit chance
+            if(attacker.HasBuff(699))
+                attacker.CritChance += 20;
+
+            if (attacker.HasBuff(700))
+                attacker.CritChance += 50;
+
+
             attacker.CritRate += GetShellWeaponEffectValue(ShellWeaponEffectType.CriticalDamage);
             attacker.CritRate += GetAttackerBenefitingBuffs(CardType.Critical, (byte)AdditionalTypes.Critical.DamageIncreased)[0];
             attacker.CritRate += GetDefenderBenefitingBuffs(CardType.Critical, (byte)AdditionalTypes.Critical.DamageFromCriticalIncreased)[0];
+
+            // MA 2nd sp crit damage
+            if (attacker.HasBuff(691) && !attacker.HasBuff(692))
+                attacker.CritRate += 50;
+
+            if (attacker.HasBuff(692))
+                attacker.CritRate += 100;
 
             if (defender.CellonOptions != null)
             {
@@ -1444,8 +1458,8 @@ namespace OpenNos.GameObject.Helpers
                 fairyDamage = (int)((baseDamage + 100) * realAttacker.ElementRate / 100D);
 
             #endregion
-
-                #region Elemental Damage Advantage
+            
+            #region Elemental Damage Advantage
 
             double elementalBoost = 0;
 
@@ -1722,6 +1736,122 @@ namespace OpenNos.GameObject.Helpers
             }
             #endregion
 
+            #region MA 2 sp
+
+            //PVM / PVP SIDE
+            if (attacker.HasBuff(704))
+                totalDamage += (int)(totalDamage * 0.20);
+
+            if (defender.HasBuff(705) && ServerManager.RandomNumber() < 30)
+                totalDamage += (int)(totalDamage * 0.20);
+
+            if (defender.HasBuff(691) && !defender.HasBuff(692))
+            {
+                totalDamage += (int)(totalDamage * 0.50);
+                defender.RemoveBuff(691);
+            }
+
+            if (defender.HasBuff(692))
+            {
+                totalDamage += (int)(totalDamage * 1);
+                defender.RemoveBuff(692);
+            }
+
+            if (attacker.HasBuff(703) && skill.SkillVNum == 1613)
+                foreach (Buff bf in attacker.Buffs.GetAllItems().Where(b => b.Card.Level <= 4))
+                    attacker.RemoveBuff(bf.Card.CardId);
+
+            if (defender.HasBuff(699) && skill.SkillVNum == 1614)
+                defender.MapMonster.AddBuff(new Buff(700, attacker.Level), attacker);
+
+            if (defender.HasBuff(694))
+            {
+                defender.AddBuff(new Buff(703, defender.Level), defender);
+                defender.RemoveBuff(694);
+            }
+
+            if (defender.HasBuff(688))
+            {
+                defender.AddBuff(new Buff(689, defender.Level), defender);
+                defender.RemoveBuff(688);
+            }
+
+            // PVM SIDE
+            if (attacker.EntityType == EntityType.Player && defender.EntityType == EntityType.Monster && attacker.Character.HasBuff(703)) // attack Possibility
+            {
+                if (skill.SkillVNum == 1619)
+                    defender.MapMonster.AddBuff(new Buff(7, attacker.Character.Level), attacker);
+                switch (skill.SkillVNum)
+                {
+                    case 1611:
+                        attacker.Character.AddBuff(new Buff(698, attacker.Character.Level), attacker);
+                        break;
+
+                    case 1612:
+                        {
+                            int mpSteal = (int)(defender.Mp * 0.20);
+                            if (mpSteal > 0)
+                            {
+                                if (attacker.Character.Mp + mpSteal > attacker.Character.BattleEntity?.MpMax)
+                                    attacker.Character.Mp = attacker.Character.BattleEntity.MpMax;
+                                else
+                                    attacker.Character.Mp += mpSteal;
+
+                                if (defender.Mp - mpSteal <= 0)
+                                    defender.Mp = 1;
+                                else
+                                    defender.Mp -= mpSteal;
+
+                                attacker?.Character.Session?.SendPacket(attacker.Character?.GenerateStat());
+                                if (defender.EntityType == EntityType.Player)
+                                    defender.Character.Session?.SendPacket(defender.Character.GenerateStat());
+                            }
+
+                        }
+                        break;
+
+                    case 1614:
+                        {
+                            defender.RemoveBuff(691);
+                            defender.AddBuff(new Buff(692, attacker.Character.Level), attacker);
+                        }
+                        break;
+
+                    case 1619:
+                        {
+                            Observable.Timer(TimeSpan.FromMilliseconds(5000)).Subscribe(o =>
+                            {
+                                defender.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, defender.MapMonster.MapMonsterId, 1072));
+                                defender.MapInstance.Broadcast(defender?.GenerateDm(10 * attacker.Character.Level));
+                                defender.GetDamage(10 * attacker.Character.Level, attacker);
+                                defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player, attacker.Character.CharacterId, 1,
+                                    defender.MapMonster.MapMonsterId, -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, 92,
+                                    (int)(10 * attacker.Character.Level), 0, 1));
+                            });
+                        }
+                        break;
+
+                    case 1620:
+                        {
+                            if (defender.HasBuff(702))
+                            {
+                                defender.RemoveBuff(702);
+                                defender.RemoveBuff(701);
+                                defender.AddBuff(new Buff(702, attacker.Character.Level), defender);
+                                defender.AddBuff(new Buff(701, attacker.Character.Level), defender);
+                            }
+                            else
+                                defender.AddBuff(new Buff(702, attacker.Character.Level), defender);
+                        }
+                        break;
+                }
+            }
+
+            
+            
+
+            #endregion 
+
             if (defender.Character != null && defender.HasBuff(CardType.NoDefeatAndNoDamage, (byte)AdditionalTypes.NoDefeatAndNoDamage.TransferAttackPower))
             {
                 if (!percentDamage)
@@ -1798,7 +1928,7 @@ namespace OpenNos.GameObject.Helpers
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
                     }
                 }
-                else if(ReflectsMaximumDamageFrom[0] > 0)
+                else if (ReflectsMaximumDamageFrom[0] > 0)
                 {
                     int maxReflectDamage = ReflectsMaximumDamageFrom[0];
 
@@ -1928,7 +2058,7 @@ namespace OpenNos.GameObject.Helpers
 
             #region Title damage
 
-            if(defender.EntityType == EntityType.Monster)
+            if (defender.EntityType == EntityType.Monster)
             {
                 // defender.MapMonster.Monster.MonsterType;
             }
@@ -2021,7 +2151,7 @@ namespace OpenNos.GameObject.Helpers
                 }
             }
 
-            return new[] {value1, value2, value3};
+            return new[] { value1, value2, value3 };
         }
 
         private static int GetMonsterDamageBonus(byte level)

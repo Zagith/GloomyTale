@@ -1,14 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using GloomyTale.DiscordBot.Extensions;
-using GloomyTale.DiscordBot.Services;
 using OpenNos.Master.Library.Client;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GloomyTale.DiscordBot.Modules

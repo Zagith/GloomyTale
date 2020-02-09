@@ -15,12 +15,12 @@
 using OpenNos.Core;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject.Event
 {
@@ -343,7 +343,7 @@ namespace OpenNos.GameObject.Event
             private static List<MonsterToSummon> getInstantBattleMonster(Map map, Tuple<MapInstance, byte> mapinstance, short instantbattletype, int wave)
             {
                 List<MonsterToSummon> summonParameters = new List<MonsterToSummon>();
-                    switch (instantbattletype)
+                switch (instantbattletype)
                 {
                     case 1:
                         switch (wave)

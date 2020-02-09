@@ -13,10 +13,10 @@
  */
 
 using OpenNos.Data;
+using OpenNos.Domain;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.Domain;
 
 namespace OpenNos.GameObject
 {
@@ -168,7 +168,7 @@ namespace OpenNos.GameObject
                                             session.CurrentMapInstance.Broadcast(session.Character.GenerateRc(hpLoad - session.Character.Hp));
                                             session.Character.Hp = hpLoad;
                                         }
-                                        
+
                                         session.Character.Mp = mpLoad;
                                     }
                                     break;

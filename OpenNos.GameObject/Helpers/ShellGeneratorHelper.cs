@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenNos.Core;
-using OpenNos.Data;
+﻿using OpenNos.Data;
 using OpenNos.Domain;
+using System;
+using System.Collections.Generic;
 
 namespace OpenNos.GameObject.Helpers
 {

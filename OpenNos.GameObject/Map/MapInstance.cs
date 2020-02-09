@@ -17,6 +17,7 @@ using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using OpenNos.PathFinder;
 using System;
 using System.Collections.Concurrent;
@@ -24,7 +25,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject
 {
@@ -41,7 +41,7 @@ namespace OpenNos.GameObject
         private readonly ThreadSafeSortedList<long, MapMonster> _monsters;
 
         private readonly ThreadSafeSortedList<long, MapMonster> _delayedMonsters;
-        
+
         private readonly ThreadSafeSortedList<long, MapNpc> _npcs;
 
         private readonly Random _random;
@@ -149,7 +149,7 @@ namespace OpenNos.GameObject
             {
                 if (!IsScriptedInstance)
                 {
-                    switch(Map.MapId)
+                    switch (Map.MapId)
                     {
                         case 134:
                         case 153:
@@ -198,9 +198,9 @@ namespace OpenNos.GameObject
         public Guid MapInstanceId { get; set; }
 
         public MapInstanceType MapInstanceType { get; set; }
-        
+
         public byte MinLevel { get; set; }
-        
+
         public byte MaxLevel { get; set; }
 
         public List<MapMonster> Monsters => _monsters.GetAllItems();
@@ -248,7 +248,7 @@ namespace OpenNos.GameObject
                 return Sessions.Select(s => s.Character?.BattleEntity).Concat(Mates.Select(s => s.BattleEntity)).Concat(Monsters.Select(s => s.BattleEntity)).Concat(Npcs.Select(s => s.BattleEntity));
             }
         }
-        
+
         public void AddMonster(MapMonster monster) => _monsters[monster.MapMonsterId] = monster;
 
         public void AddDelayedMonster(MapMonster monster) => _delayedMonsters[monster.MapMonsterId] = monster;
@@ -316,7 +316,7 @@ namespace OpenNos.GameObject
                 Broadcast($"drop {droppedItem.ItemVNum} {droppedItem.TransportId} {droppedItem.PositionX} {droppedItem.PositionY} {(droppedItem.GoldAmount > 1 ? droppedItem.GoldAmount : droppedItem.Amount)} 0 {droppedItem.OwnerId ?? -1}");
             }
         }
-        
+
         public string GenerateMapDesignObjects()
         {
             var mlobjstring = "mltobj";
@@ -752,7 +752,7 @@ namespace OpenNos.GameObject
                                 x =>
                                 {
                                     if (x.Mate != null || x.MapNpc != null || x.MapMonster?.IsBoss == true
-                                        || (x.Character != null && x.Character.CharacterId == mapMonster.Owner?.MapEntityId) 
+                                        || (x.Character != null && x.Character.CharacterId == mapMonster.Owner?.MapEntityId)
                                         || (x.MapMonster != null && monsterToSummon.Owner == null))
                                     {
                                         return;
@@ -818,7 +818,7 @@ namespace OpenNos.GameObject
                     IsTsReward = npcToSummon.IsTsReward,
                     IsProtected = npcToSummon.IsProtected,
                 };
-                
+
                 mapNpc.OnSpawnEvents = npcToSummon.SpawnEvents.ToList();
                 mapNpc.Initialize(this);
                 mapNpc.IsHostile = npcToSummon.IsHostile;

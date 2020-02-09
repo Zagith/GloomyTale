@@ -14,17 +14,14 @@
 
 using OpenNos.Core;
 using OpenNos.Core.Extensions;
-using OpenNos.DAL;
-using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
-using OpenNos.Master.Library.Client;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject.Event
 {
@@ -174,7 +171,7 @@ namespace OpenNos.GameObject.Event
                                     sess.SendPacketAfter(UserInterfaceHelper.GenerateTeamArenaMenu(3, 0, 0, 60, 0), 5000);
                                 }
 
-                                #warning TODO: Other Setup stuff
+#warning TODO: Other Setup stuff
 
                                 PlayingGroups[g.GroupId] = new List<Group> { g, prevGroup };
 
@@ -199,7 +196,7 @@ namespace OpenNos.GameObject.Event
 
             public void Run(List<Group> groups) => Characters = groups[0].Sessions.GetAllItems().Concat(groups[1].Sessions.GetAllItems()).ToList();
 
-            #warning TODO: Battle Thread System main loop
+#warning TODO: Battle Thread System main loop
 
         }
 

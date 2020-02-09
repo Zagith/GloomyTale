@@ -15,7 +15,6 @@
 using OpenNos.Core;
 using OpenNos.Core.Handling;
 using OpenNos.Core.Networking.Communication.Scs.Communication.Messages;
-using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
@@ -24,7 +23,6 @@ using OpenNos.Master.Library.Client;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -169,7 +167,7 @@ namespace OpenNos.GameObject
         public bool IsLocalhost => IpAddress.Contains("127.0.0.1");// i dont know because this is here
 
         public bool IsOnMap => CurrentMapInstance != null;
-        
+
         public DateTime RegisterTime { get; internal set; }
 
         public int SessionId { get; private set; }
@@ -212,7 +210,7 @@ namespace OpenNos.GameObject
         {
             /*bool isFirstTime = !DAOFactory.PenaltyLogDAO.LoadByAccount(Account.AccountId).Any(s => s.AdminName == "Anti-Cheat")
                 && !DAOFactory.PenaltyLogDAO.LoadByIp(IpAddress).Any(s => s.AdminName == "Anti-Cheat");*/
-            String reason ="";
+            String reason = "";
             if (detectionCode == 1)
                 reason = "Tried to dupe with bazar";
 

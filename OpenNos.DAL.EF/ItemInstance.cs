@@ -73,9 +73,9 @@ namespace OpenNos.DAL.EF
         public byte Upgrade { get; set; }
 
         public short? HoldingVNum { get; set; }
-        
+
         public short? ShellRarity { get; set; }
-        
+
         public short? SlDamage { get; set; }
 
         public short? SlDefence { get; set; }

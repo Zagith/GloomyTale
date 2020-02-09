@@ -17,11 +17,10 @@ using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.GameObject.Networking;
-using System.Collections.Generic;
 
 namespace OpenNos.GameObject
 {

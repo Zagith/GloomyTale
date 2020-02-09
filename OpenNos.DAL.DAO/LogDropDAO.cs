@@ -3,7 +3,6 @@ using OpenNos.DAL.EF;
 using OpenNos.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data;
-using OpenNos.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -36,7 +35,7 @@ namespace OpenNos.DAL.DAO
                 Logger.Error(e);
                 return null;
             }
-        }        
+        }
 
         public LogDropDTO Update(LogDrop old, LogDropDTO replace, OpenNosContext context)
         {

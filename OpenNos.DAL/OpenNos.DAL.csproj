@@ -65,21 +65,13 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAOFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenNos.Core\OpenNos.Core.csproj">
-      <Project>{C93A0A40-0551-4732-B594-171B87679AC1}</Project>
-      <Name>OpenNos.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OpenNos.DAL.DAO\OpenNos.DAL.DAO.csproj">
       <Project>{b438a1df-0cfb-4854-82b5-2751793279bf}</Project>
       <Name>OpenNos.DAL.DAO</Name>
@@ -91,9 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

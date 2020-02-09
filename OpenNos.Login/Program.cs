@@ -14,9 +14,7 @@
 
 using log4net;
 using OpenNos.Core;
-using OpenNos.DAL;
 using OpenNos.DAL.EF.Helpers;
-using OpenNos.Data;
 using OpenNos.GameObject;
 using OpenNos.Handler;
 using OpenNos.Master.Library.Client;
@@ -135,7 +133,7 @@ namespace OpenNos.Login
             {
                 Logger.Error(ex);
             }
-            
+
             Logger.Debug("Login Server crashed! Rebooting gracefully...");
             Process.Start("OpenNos.Login.exe", $"--nomsg --port {_port}");
             Environment.Exit(1);

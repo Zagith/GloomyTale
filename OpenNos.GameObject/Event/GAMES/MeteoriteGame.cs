@@ -15,13 +15,13 @@
 using OpenNos.Core;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using OpenNos.GameObject.Networking;
 
 namespace OpenNos.GameObject.Event.GAMES
 {
@@ -134,7 +134,7 @@ namespace OpenNos.GameObject.Event.GAMES
                 }
                 return dropParameters;
             }
-            
+
             private void runRound(int number)
             {
                 int amount = 120 + (60 * number);

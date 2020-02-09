@@ -18,10 +18,10 @@ using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
-using System;
-using System.Linq;
 using OpenNos.GameObject.Networking;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OpenNos.GameObject
@@ -180,8 +180,8 @@ namespace OpenNos.GameObject
 
             if (BCards.Count > 0 && Effect != 1000)
             {
-                if (BCards.Any(s => s.Type == (byte)BCardType.CardType.Buff && s.SubType == 1 && new Buff((short)s.SecondData, session.Character.Level).Card.BCards.Any(newbuff => session.Character.Buff.GetAllItems().Any(b => b.Card.BCards.Any(buff => 
-                    buff.CardId != newbuff.CardId 
+                if (BCards.Any(s => s.Type == (byte)BCardType.CardType.Buff && s.SubType == 1 && new Buff((short)s.SecondData, session.Character.Level).Card.BCards.Any(newbuff => session.Character.Buff.GetAllItems().Any(b => b.Card.BCards.Any(buff =>
+                    buff.CardId != newbuff.CardId
                  && ((buff.Type == 33 && buff.SubType == 5 && (newbuff.Type == 33 || newbuff.Type == 58)) || (newbuff.Type == 33 && newbuff.SubType == 5 && (buff.Type == 33 || buff.Type == 58))
                  || (buff.Type == 33 && (buff.SubType == 1 || buff.SubType == 3) && (newbuff.Type == 58 && (newbuff.SubType == 1))) || (buff.Type == 33 && (buff.SubType == 2 || buff.SubType == 4) && (newbuff.Type == 58 && (newbuff.SubType == 3)))
                  || (newbuff.Type == 33 && (newbuff.SubType == 1 || newbuff.SubType == 3) && (buff.Type == 58 && (buff.SubType == 1))) || (newbuff.Type == 33 && (newbuff.SubType == 2 || newbuff.SubType == 4) && (buff.Type == 58 && (buff.SubType == 3)))
@@ -956,7 +956,7 @@ namespace OpenNos.GameObject
                                             break;
 
                                         case 1:
-                                            if (session.HasCurrentMapInstance && (session.Character.MapInstance == session.Character.Miniland  || session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance) && (session.Character.LastVessel.AddSeconds(1) <= DateTime.Now || session.Character.StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.FastVessels)))
+                                            if (session.HasCurrentMapInstance && (session.Character.MapInstance == session.Character.Miniland || session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance) && (session.Character.LastVessel.AddSeconds(1) <= DateTime.Now || session.Character.StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.FastVessels)))
                                             {
                                                 short[] vnums = { 1386, 1387, 1388, 1389, 1390, 1391, 1392, 1393, 1394, 1395, 1396, 1397, 1398, 1399, 1400, 1401, 1402, 1403, 1404, 1405 };
                                                 short vnum = vnums[ServerManager.RandomNumber(0, 20)];
@@ -1630,14 +1630,14 @@ namespace OpenNos.GameObject
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                     break;
 
-                                    // Mother Nature's Rune Pack (limited)
+                                // Mother Nature's Rune Pack (limited)
                                 case 15295:
                                     vnums = new short[] { 8316, 8317, 8318, 8319 };
                                     session.Character.GiftAdd(vnums[ServerManager.RandomNumber(0, 4)], 1);
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                                    break;                                
+                                    break;
 
-                                default:                                    
+                                default:
                                     IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.RollGeneratedItemDAO.LoadByItemVNum(VNum);
                                     IEnumerable<RollGeneratedItemDTO> rollGeneratedItemDtos = roll as IList<RollGeneratedItemDTO> ?? roll.ToList();
                                     if (!rollGeneratedItemDtos.Any())
@@ -1654,7 +1654,7 @@ namespace OpenNos.GameObject
                                         sbyte rare = 0;
                                         if (rollitem.IsRareRandom)
                                         {
-                                            
+
 
                                             for (int j = ItemHelper.RareRate.Length - 1; j >= 0; j--)
                                             {

@@ -77,10 +77,6 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
     </Reference>
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
@@ -173,17 +169,9 @@
     <Compile Include="MinigameLogDTO.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenNos.Core\OpenNos.Core.csproj">
-      <Project>{c93a0a40-0551-4732-b594-171b87679ac1}</Project>
-      <Name>OpenNos.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OpenNos.Domain\OpenNos.Domain.csproj">
       <Project>{20addddd-dad9-44f3-9beb-026c73090660}</Project>
       <Name>OpenNos.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OpenNos.XMLModel\OpenNos.XMLModel.csproj">
-      <Project>{ce1bcbe7-edb7-4564-a11e-8d90868df9d0}</Project>
-      <Name>OpenNos.XMLModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

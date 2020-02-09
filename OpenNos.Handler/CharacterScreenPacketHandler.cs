@@ -14,20 +14,19 @@
 
 using OpenNos.Core;
 using OpenNos.Core.Handling;
+using OpenNos.Core.Interfaces.Packets.ClientPackets;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject;
+using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using OpenNos.Master.Library.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text.RegularExpressions;
-using OpenNos.GameObject.Networking;
-using System.Collections.Concurrent;
-using OpenNos.Core.Interfaces.Packets.ClientPackets;
-using OpenNos.GameObject.Helpers;
 
 namespace OpenNos.Handler
 {
@@ -156,7 +155,7 @@ namespace OpenNos.Handler
                         CharacterId = characterDTO.CharacterId,
                         QuestId = 1997,
                         IsMainQuest = true
-                    });                    
+                    });
 
                     DAOFactory.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 200 });
                     DAOFactory.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 201 });
@@ -238,7 +237,7 @@ namespace OpenNos.Handler
                 {
                     return;
                 }
-                
+
                 //DAOFactory.GeneralLogDAO.SetCharIdNull(Convert.ToInt64(character.CharacterId));
                 DAOFactory.CharacterDAO.DeleteByPrimaryKey(account.AccountId, characterDeletePacket.Slot);
                 LoadCharacters("");
@@ -340,7 +339,7 @@ namespace OpenNos.Handler
             {
                 if (byte.TryParse(loginPacketParts[6], out byte slot))
                 {
-                    SelectCharacter(new SelectPacket {Slot = slot});
+                    SelectCharacter(new SelectPacket { Slot = slot });
                 }
             }
             else
@@ -367,7 +366,7 @@ namespace OpenNos.Handler
 
                         if (currentInstance != null)
                         {
-                            equipment[(short) currentInstance.Item.EquipmentSlot] = currentInstance;
+                            equipment[(short)currentInstance.Item.EquipmentSlot] = currentInstance;
                         }
                     }
 
@@ -382,7 +381,7 @@ namespace OpenNos.Handler
                     }
 
                     // 1 1 before long string of -1.-1 = act completion
-                    Session.SendPacket($"clist {character.Slot} {character.Name} 0 {(byte) character.Gender} {(byte) character.HairStyle} {(byte) character.HairColor} 0 {(byte) character.Class} {character.Level} {character.HeroLevel} {equipment[(byte) EquipmentType.Hat]?.ItemVNum ?? -1}.{equipment[(byte) EquipmentType.Armor]?.ItemVNum ?? -1}.{equipment[(byte) EquipmentType.WeaponSkin]?.ItemVNum ?? (equipment[(byte) EquipmentType.MainWeapon]?.ItemVNum ?? -1)}.{equipment[(byte) EquipmentType.SecondaryWeapon]?.ItemVNum ?? -1}.{equipment[(byte) EquipmentType.Mask]?.ItemVNum ?? -1}.{equipment[(byte) EquipmentType.Fairy]?.ItemVNum ?? -1}.{equipment[(byte) EquipmentType.CostumeSuit]?.ItemVNum ?? -1}.{equipment[(byte) EquipmentType.CostumeHat]?.ItemVNum ?? -1} {character.JobLevel}  1 1 {petlist} {(equipment[(byte) EquipmentType.Hat]?.Item.IsColored == true ? equipment[(byte) EquipmentType.Hat].Design : 0)} 0");
+                    Session.SendPacket($"clist {character.Slot} {character.Name} 0 {(byte)character.Gender} {(byte)character.HairStyle} {(byte)character.HairColor} 0 {(byte)character.Class} {character.Level} {character.HeroLevel} {equipment[(byte)EquipmentType.Hat]?.ItemVNum ?? -1}.{equipment[(byte)EquipmentType.Armor]?.ItemVNum ?? -1}.{equipment[(byte)EquipmentType.WeaponSkin]?.ItemVNum ?? (equipment[(byte)EquipmentType.MainWeapon]?.ItemVNum ?? -1)}.{equipment[(byte)EquipmentType.SecondaryWeapon]?.ItemVNum ?? -1}.{equipment[(byte)EquipmentType.Mask]?.ItemVNum ?? -1}.{equipment[(byte)EquipmentType.Fairy]?.ItemVNum ?? -1}.{equipment[(byte)EquipmentType.CostumeSuit]?.ItemVNum ?? -1}.{equipment[(byte)EquipmentType.CostumeHat]?.ItemVNum ?? -1} {character.JobLevel}  1 1 {petlist} {(equipment[(byte)EquipmentType.Hat]?.Item.IsColored == true ? equipment[(byte)EquipmentType.Hat].Design : 0)} 0");
                 }
 
                 Session.SendPacket("clist_end");

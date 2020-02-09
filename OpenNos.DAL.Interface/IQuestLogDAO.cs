@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using OpenNos.Data;
+﻿using OpenNos.Data;
 using OpenNos.Data.Enums;
+using System.Collections.Generic;
 
 namespace OpenNos.DAL.Interface
 {

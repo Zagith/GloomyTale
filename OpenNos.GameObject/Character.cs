@@ -13,12 +13,15 @@
  */
 
 using OpenNos.Core;
+using OpenNos.Core.ConcurrencyExtensions;
+using OpenNos.Core.Extensions;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Battle;
 using OpenNos.GameObject.Event;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using OpenNos.GameObject.Packets.ServerPackets;
 using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Data;
@@ -29,11 +32,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
-using static OpenNos.Domain.BCardType;
-using OpenNos.Core.ConcurrencyExtensions;
-using OpenNos.GameObject.Networking;
 using System.Threading.Tasks;
-using OpenNos.Core.Extensions;
+using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject
 {
@@ -472,7 +472,7 @@ namespace OpenNos.GameObject
                         respawn.DefaultX = resp.X;
                         respawn.DefaultY = resp.Y;
                         respawn.DefaultMapId = resp.MapId;
-                        respawn.RespawnMapTypeId = (long)1;
+                        respawn.RespawnMapTypeId = 1;
                     }
                 }
                 return respawn;
@@ -904,7 +904,7 @@ namespace OpenNos.GameObject
                 UltimatePoints -= points;
                 HasBlocked = false;
             }
-            else if(points > 0)
+            else if (points > 0)
                 UltimatePoints += points;
 
             if (UltimatePoints > 3000)
@@ -1531,7 +1531,8 @@ namespace OpenNos.GameObject
 
                     case QuestType.Brings:
                     case QuestType.Required:
-                        quest.Quest.QuestObjectives.Where(o => o.Data == firstData).ToList().ForEach(d => {
+                        quest.Quest.QuestObjectives.Where(o => o.Data == firstData).ToList().ForEach(d =>
+                        {
                             if (Inventory.CountItem(d.SpecialData ?? -1) >= d.Objective)
                             {
                                 Inventory.RemoveItemAmount(d.SpecialData ?? -1, d.Objective ?? 1);
@@ -2102,6 +2103,12 @@ namespace OpenNos.GameObject
                 {
                     BubbleMessage = null;
                 }
+
+                if(Morph == 29 || Morph == 30)
+                    Session.SendPackets(GenerateQuicklist());
+
+                if(HasBuff(691) && HasBuff(692))
+                    RemoveBuff(691);
 
                 if (CurrentMinigame != 0 && LastEffect.AddSeconds(3) <= DateTime.Now)
                 {
@@ -3043,7 +3050,7 @@ namespace OpenNos.GameObject
                             eqlist += $" {i}.{item.Item.VNum}.{item.Rare}.{(item.Item.IsColored ? item.Design : item.Upgrade)}.0";
                         }
                     }
-                    
+
                 }
 
                 Item title = null;
@@ -3210,7 +3217,7 @@ namespace OpenNos.GameObject
         }
 
         public string GenerateFc()
-        {            
+        {
             return $"fc {(byte)Faction} {ServerManager.Instance.Act4AngelStat.MinutesUntilReset} {ServerManager.Instance.Act4AngelStat.Percentage / 100} {ServerManager.Instance.Act4AngelStat.Mode}" +
                 $" {ServerManager.Instance.Act4AngelStat.CurrentTime} {ServerManager.Instance.Act4AngelStat.TotalTime} {Convert.ToByte(ServerManager.Instance.Act4AngelStat.IsMorcos)}" +
                 $" {Convert.ToByte(ServerManager.Instance.Act4AngelStat.IsHatus)} {Convert.ToByte(ServerManager.Instance.Act4AngelStat.IsCalvina)} {Convert.ToByte(ServerManager.Instance.Act4AngelStat.IsBerios)}" +
@@ -3539,7 +3546,7 @@ namespace OpenNos.GameObject
                                     ItemVNum = (short)d.Data,
                                     Amount = 1,
                                     MonsterVNum = monsterToAttack.MonsterVNum,
-                                    DropChance = (int)((d.DropRate ?? 100) * 100 * ServerManager.Instance.Configuration.QuestDropRate) // Approx
+                                    DropChance = (d.DropRate ?? 100) * 100 * ServerManager.Instance.Configuration.QuestDropRate // Approx
                                 });
                             }
                         });
@@ -3613,7 +3620,7 @@ namespace OpenNos.GameObject
                                 {
                                     rndamount = ServerManager.RandomNumber() * random.NextDouble();
                                 }
-                                
+
                                 double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
                                 if (rndamount <= (double)drop.DropChance * dropRate / 1000.000 / divider)
                                 {
@@ -3668,7 +3675,7 @@ namespace OpenNos.GameObject
                                                     dropOwner = group.GetNextOrderedCharacterId(this);
                                                     if (dropOwner.HasValue)
                                                     {
-                                                        group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ITEM_BOUND_TO"), ServerManager.GetItem(drop.ItemVNum).Name[Session.Account.Language], group.Sessions.Single(c => c.Character.CharacterId == (long)dropOwner).Character.Name, drop.Amount), 10)));
+                                                        group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ITEM_BOUND_TO"), ServerManager.GetItem(drop.ItemVNum).Name[Session.Account.Language], group.Sessions.Single(c => c.Character.CharacterId == dropOwner).Character.Name, drop.Amount), 10)));
                                                     }
                                                 }
                                                 else
@@ -3757,7 +3764,7 @@ namespace OpenNos.GameObject
 
                                             if (dropOwner.HasValue)
                                             {
-                                                group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ITEM_BOUND_TO"), ServerManager.GetItem(drop2.ItemVNum).Name[Session.Account.Language], group.Sessions.Single(c => c.Character.CharacterId == (long)dropOwner).Character.Name, drop2.Amount), 10)));
+                                                group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ITEM_BOUND_TO"), ServerManager.GetItem(drop2.ItemVNum).Name[Session.Account.Language], group.Sessions.Single(c => c.Character.CharacterId == dropOwner).Character.Name, drop2.Amount), 10)));
                                             }
                                         }
                                         else
@@ -4037,7 +4044,7 @@ namespace OpenNos.GameObject
             {
                 LevelXp -= (long)t;
                 Level++;
-             
+
                 t = XpLoad();
                 if (Level >= ServerManager.Instance.Configuration.MaxLevel)
                 {
@@ -4328,6 +4335,30 @@ namespace OpenNos.GameObject
             return Inventory.Where(s => s.Type == InventoryType.PetWarehouse).Aggregate(stash, (current, item) => current + $" {item.GenerateStashPacket()}");
         }
 
+        private void GenerateQuickListSp1Am(ref string[] pktQs)
+        {
+            var morph = Morph;
+            if (Class == ClassType.MartialArtist && Morph == (byte)BrawlerMorphType.Dragon || Morph == (byte)BrawlerMorphType.Normal)
+            {
+                morph = 30;
+            }
+
+            for (var i = 0; i < 30; i++)
+            {
+                for (var j = 0; j < 2; j++)
+                {
+                    QuicklistEntryDTO qi = QuicklistEntries.Find(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? morph : 0));
+                    short? pos = qi?.Pos;
+                    if (pos < 8)
+                    {
+                        pos += 8;
+                    }
+
+                    pktQs[j] += $" {qi?.Type ?? 7}.{qi?.Slot ?? 7}.{pos.ToString() ?? "-1"}";
+                }
+            }
+        }
+
         private void GenerateQuickListSp2Am(ref string[] pktQs)
         {
             var morph = Morph;
@@ -4398,6 +4429,11 @@ namespace OpenNos.GameObject
                 case ClassType.MartialArtist when Morph == 33 && UseSp && SpInstance.SpLevel >= 20 && HasBuff(CardType.WolfMaster, (byte)AdditionalTypes.WolfMaster.CanExecuteUltimateSkills):
                     GenerateQuickListSp3Am(ref pktQs);
                     break;
+
+                case ClassType.MartialArtist when Morph == 30 && UseSp && SpInstance.SpLevel >= 20 && HasBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.Transformation):
+                    GenerateQuickListSp1Am(ref pktQs);
+                    break;
+
                 default:
                     for (int i = 0; i < 30; i++)
                     {
@@ -4409,7 +4445,7 @@ namespace OpenNos.GameObject
                     }
                     break;
             }
-            
+
 
             return pktQs;
         }
@@ -6199,7 +6235,7 @@ namespace OpenNos.GameObject
 
         public void RemoveBuffByBCardTypeSubType(List<KeyValuePair<byte, byte>> bcardTypes)
         {
-            bcardTypes.ForEach(bt => Buff.Where(b => b.Card.BCards.Any(s => s.Type.Equals((byte)bt.Key) && s.SubType.Equals((byte)(bt.Value / 10)) && (s.CastType == 0 || b.Start.AddMilliseconds(b.Card.Delay * 100 + 1500) < DateTime.Now))).ToList().ForEach(a => RemoveBuff(a.Card.CardId)));
+            bcardTypes.ForEach(bt => Buff.Where(b => b.Card.BCards.Any(s => s.Type.Equals(bt.Key) && s.SubType.Equals((byte)(bt.Value / 10)) && (s.CastType == 0 || b.Start.AddMilliseconds(b.Card.Delay * 100 + 1500) < DateTime.Now))).ToList().ForEach(a => RemoveBuff(a.Card.CardId)));
         }
 
         public void RemoveVehicle()
@@ -6972,7 +7008,7 @@ namespace OpenNos.GameObject
             {
                 actMultiplier = 5;
             }
-            return (int)(lowBaseGold * actMultiplier);
+            return lowBaseGold * actMultiplier;
         }
 
         private int GetHXP(MapMonster mapMonster, Group group)
@@ -7114,9 +7150,9 @@ namespace OpenNos.GameObject
             if (IsSitting)
             {
                 int regen = GetBuff(CardType.Recovery, (byte)AdditionalTypes.Recovery.MPRecoveryIncreased)[0];
-                return (int)((regen + CharacterHelper.MPHealth[(byte)Class] + CellonOptions.Where(s => s.Type == CellonOptionType.MPRestore).Sum(s => s.Value)) * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMPOnRest) / 100D));
+                return (int)((regen + CharacterHelper.MPHealth[(byte)Class] + CellonOptions.Where(s => s.Type == CellonOptionType.MPRestore).Sum(s => s.Value)) * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMPOnRest) / 100D) + (HasBuff(704) ? 30 : 0));
             }
-            return (DateTime.Now - LastDefence).TotalSeconds > 4 ? (int)((CharacterHelper.MPHealthStand[(byte)Class] * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMP) / 100D)) * naturalRecovery) : 0;
+            return (DateTime.Now - LastDefence).TotalSeconds > 4 ? (int)(((CharacterHelper.MPHealthStand[(byte)Class] * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMP) / 100D)) * naturalRecovery) + (HasBuff(704) ? 30 : 0)) : 0;
         }
 
         private double HeroXPLoad() => HeroLevel == 0 ? 1 : CharacterHelper.HeroXpData[HeroLevel - 1];

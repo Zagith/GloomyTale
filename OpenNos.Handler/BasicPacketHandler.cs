@@ -13,7 +13,6 @@
  */
 
 using OpenNos.Core;
-using OpenNos.Core.Extensions;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
@@ -63,7 +62,7 @@ namespace OpenNos.Handler
                 BlacklistAdd(new BlInsPacket { CharacterId = receiverSession.Character.CharacterId });
             }
         }
-        
+
         /// <summary>
         /// blins packet
         /// </summary>
@@ -156,16 +155,16 @@ namespace OpenNos.Handler
                 case CharacterOption.PetAutoRelive:
                     Session.Character.IsPetAutoRelive = characterOptionPacket.IsActive;
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                        Language.Instance.GetMessageFromKey(Session.Character.IsPetAutoRelive 
-                        ? "PET_AUTO_RELIVE_ENABLED" 
+                        Language.Instance.GetMessageFromKey(Session.Character.IsPetAutoRelive
+                        ? "PET_AUTO_RELIVE_ENABLED"
                         : "PET_AUTO_RELIVE_DISABLED"), 0));
                     break;
 
                 case CharacterOption.PartnerAutoRelive:
                     Session.Character.IsPartnerAutoRelive = characterOptionPacket.IsActive;
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                        Language.Instance.GetMessageFromKey(Session.Character.IsPartnerAutoRelive 
-                        ? "PARTNER_AUTO_RELIVE_ENABLED" 
+                        Language.Instance.GetMessageFromKey(Session.Character.IsPartnerAutoRelive
+                        ? "PARTNER_AUTO_RELIVE_ENABLED"
                         : "PARTNER_AUTO_RELIVE_DISABLED"), 0));
                     break;
 
@@ -730,14 +729,14 @@ namespace OpenNos.Handler
         public void GetStats(NpinfoPacket npinfoPacket)
         {
             Session.SendPackets(Session.Character.GenerateStatChar());
-            
+
             if (npinfoPacket.Page != Session.Character.ScPage)
             {
                 Session.Character.ScPage = npinfoPacket.Page;
                 Session.SendPacket(UserInterfaceHelper.GeneratePClear());
                 Session.SendPackets(Session.Character.GenerateScP(npinfoPacket.Page));
                 Session.SendPackets(Session.Character.GenerateScN());
-            }            
+            }
         }
 
         /// <summary>
@@ -763,11 +762,11 @@ namespace OpenNos.Handler
                 bool createNewGroup = true;
                 ClientSession targetSession = ServerManager.Instance.GetSessionByCharacterId(pjoinPacket.CharacterId);
 
-                if ((targetSession == null && !pjoinPacket.RequestType.Equals(GroupRequestType.Sharing)) 
-                || targetSession?.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance 
+                if ((targetSession == null && !pjoinPacket.RequestType.Equals(GroupRequestType.Sharing))
+                || targetSession?.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance
                 || ServerManager.Instance.ArenaMembers.ToList().Any(s => s.Session?.Character?.CharacterId == Session.Character.CharacterId)
                 || (targetSession != null && ServerManager.Instance.ChannelId == 51 && targetSession.Character.Faction != Session.Character.Faction)
-                || Session.Character.Timespace != null 
+                || Session.Character.Timespace != null
                 || targetSession?.Character.Timespace != null)
                 {
                     return;
@@ -1163,7 +1162,7 @@ namespace OpenNos.Handler
                 Session.SendPackets(Session.Character.GenerateStatChar());
                 Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateTitleInfo());
                 Session.SendPacket(Session.Character.GenerateTitle());
-            }                
+            }
         }
 
         /// <summary>
@@ -1325,7 +1324,7 @@ namespace OpenNos.Handler
                             Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("PORTAL_BLOCKED"), 10));
                         return;
                 }
-                
+
                 if (Session?.CurrentMapInstance?.MapInstanceType == MapInstanceType.TimeSpaceInstance
                     && Session?.Character?.Timespace != null && !Session.Character.Timespace.InstanceBag.Lock)
                 {
@@ -2172,7 +2171,7 @@ namespace OpenNos.Handler
                     break;
 
                 case 2:
-                    if ((Session.CurrentMapInstance == ServerManager.Instance.ArenaInstance || Session.CurrentMapInstance == ServerManager.Instance.FamilyArenaInstance) && 
+                    if ((Session.CurrentMapInstance == ServerManager.Instance.ArenaInstance || Session.CurrentMapInstance == ServerManager.Instance.FamilyArenaInstance) &&
                         Session.Character.Gold >= 100)
                     {
                         Session.Character.Hp = (int)Session.Character.HPLoad();
@@ -2285,7 +2284,7 @@ namespace OpenNos.Handler
                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateSay(message.Trim(), type, Session.Character.Authority >= AuthorityType.GS), ReceiverType.AllExceptMe);
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -2454,6 +2453,18 @@ namespace OpenNos.Handler
                         Pos = data2,
                         Morph = Session.Character.UseSp ? (short)Session.Character.Morph : (short)0
                     });
+
+                    if(Session.Character.Morph == 29 || Session.Character.Morph == 30)
+                        Session.Character.QuicklistEntries.Add(new QuicklistEntryDTO
+                        {
+                            CharacterId = Session.Character.CharacterId,
+                            Type = type,
+                            Q1 = q1,
+                            Q2 = q2,
+                            Slot = data1,
+                            Pos = data2 == 7 ? (short)(data2 + 9) : (short)(data2 + 8),
+                            Morph = (short) (Session.Character.Morph == 29 ? 30 : 29)
+                        });
                     Session.SendPacket($"qset {q1} {q2} {type}.{data1}.{data2}.0");
                     break;
 
@@ -2492,7 +2503,41 @@ namespace OpenNos.Handler
                             Session.SendPacket($"qset {qlTo.Q1} {qlTo.Q2} {qlTo.Type}.{qlTo.Slot}.{qlTo.Pos}.0");
                         }
                     }
+                    if (Session.Character.Morph == 29 || Session.Character.Morph == 30)
+                    {
+                         qlFrom = Session.Character.QuicklistEntries.SingleOrDefault(n =>
+                            n.Q1 == data1 && n.Q2 == data2
+                                          && (Session.Character.UseSp ? n.Morph == (Session.Character.Morph == 29 ? 30 : 29) : n.Morph == 0));
+                         if (qlFrom != null)
+                         {
+                            QuicklistEntryDTO qlTo = Session.Character.QuicklistEntries.SingleOrDefault(n =>
+                                n.Q1 == q1 && n.Q2 == q2 && (Session.Character.UseSp
+                                    ? n.Morph == (Session.Character.Morph == 29 ? 30 : 29)
+                                    : n.Morph == 0));
+                            qlFrom.Q1 = q1;
+                            qlFrom.Q2 = q2;
+                            if (qlTo == null)
+                            {
+                                // Put 'from' to new position (datax)
+                                Session.SendPacket(
+                                    $"qset {qlFrom.Q1} {qlFrom.Q2} {qlFrom.Type}.{qlFrom.Slot}.{qlFrom.Pos}.0");
 
+                                // old 'from' is now empty.
+                                Session.SendPacket($"qset {data1} {data2} 7.7.-1.0");
+                            }
+                            else
+                            {
+                                // Put 'from' to new position (datax)
+                                Session.SendPacket(
+                                    $"qset {qlFrom.Q1} {qlFrom.Q2} {qlFrom.Type}.{qlFrom.Slot}.{qlFrom.Pos}.0");
+
+                                // 'from' is now 'to' because they exchanged
+                                qlTo.Q1 = data1;
+                                qlTo.Q2 = data2;
+                                Session.SendPacket($"qset {qlTo.Q1} {qlTo.Q2} {qlTo.Type}.{qlTo.Slot}.{qlTo.Pos}.0");
+                            }
+                        }
+                    }
                     break;
 
                 case 3:
@@ -2501,6 +2546,10 @@ namespace OpenNos.Handler
                     Session.Character.QuicklistEntries.RemoveAll(n =>
                         n.Q1 == q1 && n.Q2 == q2
                         && (Session.Character.UseSp ? n.Morph == Session.Character.Morph : n.Morph == 0));
+                    if(Session.Character.Morph == 29 || Session.Character.Morph == 30)
+                        Session.Character.QuicklistEntries.RemoveAll(n =>
+                            n.Q1 == q1 && n.Q2 == q2
+                                       && (Session.Character.UseSp ? n.Morph == (Session.Character.Morph == 29 ? 30 : 29) : n.Morph == 0));
                     Session.SendPacket($"qset {q1} {q2} 7.7.-1.0");
                     break;
 
@@ -2594,7 +2643,7 @@ namespace OpenNos.Handler
 
             Session.Character.Quests?.Where(q => q?.Quest?.TargetMap != null).ToList()
                 .ForEach(qst => Session.SendPacket(qst.Quest.TargetPacket()));
-            
+
             if (Session.Character.Hp <= 0 && (!Session.Character.IsSeal || ServerManager.Instance.ChannelId != 51))
             {
                 ServerManager.Instance.ReviveFirstPosition(Session.Character.CharacterId);
@@ -2869,7 +2918,7 @@ namespace OpenNos.Handler
                         {
                             Session.Character.UpdateBushFire();
                         }
-                        
+
                         Session.CurrentMapInstance?.OnAreaEntryEvents
                             ?.Where(s => s.InZone(Session.Character.PositionX, Session.Character.PositionY)).ToList()
                             .ForEach(e => e.Events.ForEach(evt => EventHelper.Instance.RunEvent(evt)));
@@ -2956,12 +3005,12 @@ namespace OpenNos.Handler
                                 $"(whisper)(From {Session.Character.Authority} {Session.Character.Name}):{message}", 11)
                             : Session.Character.GenerateSpk(message,
                                 Session.Account.Authority >= AuthorityType.TMOD ? 15 : 5),
-                        Type = Enum.GetNames(typeof(AuthorityType)).Any(a => 
+                        Type = Enum.GetNames(typeof(AuthorityType)).Any(a =>
                         {
                             if (a.Equals(packetsplit[0]))
                             {
                                 Enum.TryParse(a, out AuthorityType auth);
-                                if (auth  >= AuthorityType.TMOD)
+                                if (auth >= AuthorityType.TMOD)
                                 {
                                     return true;
                                 }

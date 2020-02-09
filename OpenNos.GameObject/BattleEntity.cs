@@ -1,4 +1,5 @@
 using OpenNos.Core;
+using OpenNos.Core.ConcurrencyExtensions;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Event;
@@ -10,10 +11,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.Core.ConcurrencyExtensions;
-using static OpenNos.Domain.BCardType;
 using System.Threading.Tasks;
-using System.Threading;
+using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject
 {
@@ -732,9 +731,9 @@ namespace OpenNos.GameObject
             return (int)Math.Sqrt(Math.Pow(other.PositionX - PositionX, 2) + Math.Pow(other.PositionY - PositionY, 2));
         }
 
-        public int HpPercent() => (int)((double)Hp / (double)HpMax * 100D);
+        public int HpPercent() => (int)(Hp / (double)HpMax * 100D);
 
-        public int MpPercent() => (int)((double)Mp / (double)MpMax * 100D);
+        public int MpPercent() => (int)(Mp / (double)MpMax * 100D);
 
         public MapCell GetRandomMapCellInRange(short numberOfCells)
         {
@@ -1571,7 +1570,8 @@ namespace OpenNos.GameObject
                 }
                 else
                 {
-                    ownedMonsters.ToList().ForEach(m => {
+                    ownedMonsters.ToList().ForEach(m =>
+                    {
                         m.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, m.MapMonsterId));
                         m.MapInstance.RemoveMonster(m);
                     });
@@ -1600,7 +1600,8 @@ namespace OpenNos.GameObject
                 }
                 else
                 {
-                    ownedNpcs.ToList().ForEach(m => {
+                    ownedNpcs.ToList().ForEach(m =>
+                    {
                         m.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Npc, m.MapNpcId));
                         m.MapInstance.RemoveNpc(m);
                     });
@@ -1666,7 +1667,7 @@ namespace OpenNos.GameObject
                     }
                 }
                 hp += CellonOptions.Where(s => s.Type == CellonOptionType.HPMax).Sum(s => s.Value);
-                if(!Character.UseSp && Character.HasBuff(155))
+                if (!Character.UseSp && Character.HasBuff(155))
                     multiplicator += GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;
                 multiplicator += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.IncreasesMaximumHP)[0] / 100D;
 
@@ -1722,11 +1723,11 @@ namespace OpenNos.GameObject
                 multiplicator += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.IncreasesMaximumMP)[0] / 100D;
 
                 MaxMp = (int)((CharacterHelper.MPData[(byte)Character.Class, Level] + mp + GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumMPIncreased)[0] + GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPMPIncreased)[0]) * multiplicator);
-                
-               /* if (MaxMp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D > 5000)
-                    MaxMp += 5000;
-                else
-                    MaxMp += MaxMp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;*/
+
+                /* if (MaxMp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D > 5000)
+                     MaxMp += 5000;
+                 else
+                     MaxMp += MaxMp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;*/
 
             }
             else
@@ -2284,7 +2285,7 @@ namespace OpenNos.GameObject
                                     if (receiver.MapMonster.Owner == null || receiver.MapMonster.Owner.MapEntityId != MapEntityId && CanAttackEntity(receiver.MapMonster.Owner, true)
                                     || (receiver.MapMonster.Owner.MapEntityId == MapEntityId && MapInstance == Character.Miniland && IsMateTrainer(receiver.MapMonster.MonsterVNum)))
                                     {
-                                        if (ServerManager.Instance.ChannelId != 51 || 
+                                        if (ServerManager.Instance.ChannelId != 51 ||
                                             receiver.MapMonster.Faction == FactionType.None ||
                                             receiver.MapMonster.Faction != Character.Faction)
                                         {
@@ -2350,7 +2351,7 @@ namespace OpenNos.GameObject
                                             {
                                                 return false;
                                             }
-                                            if ((ServerManager.Instance.ChannelId != 51 || 
+                                            if ((ServerManager.Instance.ChannelId != 51 ||
                                                 MapMonster.Faction == FactionType.None ||
                                                 MapMonster.Faction != receiver.Character.Faction)
                                               && !receiver.Character.InvisibleGm)
@@ -2407,14 +2408,14 @@ namespace OpenNos.GameObject
                                 {
                                     case EntityType.Player:
                                         return false;
-                                        /*{
-                                            
-                                            if (!receiver.Character.InvisibleGm)
-                                            {
-                                                return true;
-                                            }
+                                    /*{
+
+                                        if (!receiver.Character.InvisibleGm)
+                                        {
+                                            return true;
                                         }
-                                        break;*/
+                                    }
+                                    break;*/
                                     case EntityType.Mate:
                                         {
                                             if ((receiver.Mate.Owner.IsVehicled || receiver.Mate.Owner.Invisible) && !receiver.Mate.IsTemporalMate)

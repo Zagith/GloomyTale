@@ -151,7 +151,7 @@ namespace OpenNos.GameObject
             }
         }
 
-        public bool IsMemberOfGroup(long entityId) => 
+        public bool IsMemberOfGroup(long entityId) =>
             Sessions?.Any(s => s?.Character != null && (s.Character.CharacterId == entityId || s.Character.Mates.Any(m => m.IsTeamMember && m.MateTransportId == entityId))) == true;
 
         public bool IsMemberOfGroup(ClientSession session) => Sessions?.Any(s => s?.Character?.CharacterId == session.Character.CharacterId) == true;

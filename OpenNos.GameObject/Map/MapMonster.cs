@@ -18,16 +18,16 @@ using OpenNos.Domain;
 using OpenNos.GameObject.Battle;
 using OpenNos.GameObject.Event;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using OpenNos.PathFinder;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using OpenNos.GameObject.Networking;
-using static OpenNos.Domain.BCardType;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.GameObject
 {
@@ -38,7 +38,7 @@ namespace OpenNos.GameObject
         public object _onHitLockObject = new object();
 
         private int _movetime;
-        
+
         private int _waitCount;
 
         private const int _maxDistance = 20;
@@ -136,7 +136,7 @@ namespace OpenNos.GameObject
         public DateTime LastMonsterAggro { get; set; }
 
         public DateTime LastMove { get; set; }
-        
+
         public DateTime LastSkill { get; set; }
 
         public DateTime LastEffect42 { get; set; }
@@ -261,7 +261,7 @@ namespace OpenNos.GameObject
             if (IsAlive && !IsDisabled && !IsJumping)
             {
                 return StaticPacketHelper.In(UserType.Monster, Monster.OriginalNpcMonsterVNum > 0 ? Monster.OriginalNpcMonsterVNum : MonsterVNum, MapMonsterId, MapX, MapY, Position,
-                    (int) (CurrentHp / MaxHp * 100), (int) (CurrentMp / MaxMp * 100), 0,
+                    (int)(CurrentHp / MaxHp * 100), (int)(CurrentMp / MaxMp * 100), 0,
                     NoAggresiveIcon ? InRespawnType.NoEffect : InRespawnType.TeleportationEffect, false, string.IsNullOrEmpty(Name) ? "-" : Name, Invisible);
             }
 
@@ -308,7 +308,7 @@ namespace OpenNos.GameObject
             }
             MaxHp = BaseMaxHp;
             MaxMp = BaseMaxMp;
-            
+
             if (MapInstance?.MapInstanceType == MapInstanceType.RaidInstance)
             {
                 if (IsBoss)
@@ -366,9 +366,9 @@ namespace OpenNos.GameObject
             DamageList = new Dictionary<BattleEntity, long>();
             AggroList = new List<BattleEntity>();
             _movetime = ServerManager.RandomNumber(400, 3200);
-            
+
             BattleEntity = new BattleEntity(this);
-            
+
             // Test damage on arena spawned by command mobs
             if (Owner == null && MapInstance.Map.MapId == 2006)
             {
@@ -377,8 +377,8 @@ namespace OpenNos.GameObject
                 BattleEntity.BCards.AddRange(new Buff(196, 99).Card.BCards);
             }
 
-            Monster.BCards.Where(s => s.Type !=  25).ToList().ForEach(s => s.ApplyBCards(BattleEntity, BattleEntity));
-            
+            Monster.BCards.Where(s => s.Type != 25).ToList().ForEach(s => s.ApplyBCards(BattleEntity, BattleEntity));
+
             if (MonsterVNum == 1382)
             {
                 AliveTime = 20;
@@ -626,7 +626,7 @@ namespace OpenNos.GameObject
                 MapInstance.Broadcast(Owner.GenerateRc((int)recoverHp));
             }
 
-            if (OnDeathEvents.Any(s => s.EventActionType == EventActionType.SPAWNMONSTERS) 
+            if (OnDeathEvents.Any(s => s.EventActionType == EventActionType.SPAWNMONSTERS)
             && (List<MonsterToSummon>)OnDeathEvents.FirstOrDefault(e => e.EventActionType == EventActionType.SPAWNMONSTERS).Parameter is List<MonsterToSummon> summonParameters)
             {
                 Parallel.ForEach(summonParameters, npcMonster =>
@@ -643,7 +643,7 @@ namespace OpenNos.GameObject
             }
 
             OnDeathEvents.ForEach(e => EventHelper.Instance.RunEvent(e, monster: this));
-            
+
             BattleEntity.ClearEnemyFalcon();
         }
 
@@ -853,6 +853,10 @@ namespace OpenNos.GameObject
             if (IsAlive && hitRequest.Session.Character.Hp > 0 &&
                     (hitRequest.Mate == null || hitRequest.Mate.Hp > 0))
             {
+
+                if (hitRequest.Skill.SkillVNum == 1593)
+                    return;
+
                 double cooldownReduction = hitRequest.Session.Character.GetBuff(CardType.Morale, (byte)AdditionalTypes.Morale.SkillCooldownDecreased)[0];
 
                 int[] increaseEnemyCooldownChance = hitRequest.Session.Character.GetBuff(CardType.DarkCloneSummon, (byte)AdditionalTypes.DarkCloneSummon.IncreaseEnemyCooldownChance);
@@ -861,7 +865,7 @@ namespace OpenNos.GameObject
                 {
                     cooldownReduction -= increaseEnemyCooldownChance[1];
                 }
-                
+
                 int hitmode = 0;
                 bool isCaptureSkill = hitRequest.SkillBCards.Any(s => s.Type.Equals((byte)CardType.Capture));
 
@@ -897,7 +901,7 @@ namespace OpenNos.GameObject
                     damage = (int)CurrentHp - 1;
                 }
 
-                else if(damage >= CurrentHp && BattleEntity.MapInstance.MapInstanceType == MapInstanceType.EventGameInstance)
+                else if (damage >= CurrentHp && BattleEntity.MapInstance.MapInstanceType == MapInstanceType.EventGameInstance)
                     damage = (int)CurrentHp - 1;
 
                 //4th MA Sp Chains
@@ -919,7 +923,7 @@ namespace OpenNos.GameObject
                 if (attackerBattleEntity.Character != null && attackerBattleEntity.Character.HasBuff(746))
                     attackerBattleEntity.Character.RemoveBuff(746);
 
-                if (hitRequest.Session!= null && hitRequest.Session.Character!= null && hitRequest.Skill.SkillVNum == 1607)
+                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Skill.SkillVNum == 1607)
                     hitRequest.Session.Character.TeleportOnMap(BattleEntity.MapMonster.MapX, BattleEntity.MapMonster.MapY);
 
                 else if (onyxWings)
@@ -954,7 +958,7 @@ namespace OpenNos.GameObject
                         MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, onyx.MapMonsterId));
                     });
                 }
-                else if(windWings && ServerManager.RandomNumber() < 40)
+                else if (windWings && ServerManager.RandomNumber() < 40)
                 {
                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, BattleEntity.MapMonster.MapMonsterId, 553));
                     Observable.Timer(TimeSpan.FromMilliseconds(350)).Subscribe(o =>
@@ -1032,7 +1036,7 @@ namespace OpenNos.GameObject
                         }
 
                         //Bow
-                        
+
                         if (itemInUse != null && itemInUse.Item.VNum == 4983 && ServerManager.RandomNumber() <= 4)
                         {
                             AddBuff(new Buff(415, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
@@ -1058,7 +1062,7 @@ namespace OpenNos.GameObject
                         }
 
                         //Gun
-                        if(itemInUse != null && itemInUse.Item.VNum == 4979 && ServerManager.RandomNumber() <= 5)
+                        if (itemInUse != null && itemInUse.Item.VNum == 4979 && ServerManager.RandomNumber() <= 5)
                         {
                             this.AddBuff(new Buff(418, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
                         }
@@ -1114,7 +1118,7 @@ namespace OpenNos.GameObject
                              hitRequest.Skill.SkillVNum == 1136 ||
                              hitRequest.Skill.SkillVNum == 1139 ||
                              hitRequest.Skill.SkillVNum == 1140) && hitmode == 4)
-                                hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, BattleEntity.MapMonster.MapMonsterId));
+                            hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, BattleEntity.MapMonster.MapMonsterId));
 
                         rnd = ServerManager.RandomNumber();
                         if ((hitRequest.Skill.SkillVNum == 946 && rnd < 15 ||
@@ -1122,13 +1126,14 @@ namespace OpenNos.GameObject
                            (hitRequest.Skill.SkillVNum == 951 && rnd >= 36 && rnd <= 56)) && hitmode != 4)
                             foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 3 && b.Card.BuffType == BuffType.Good))
                                 BattleEntity.RemoveBuff(b.Card.CardId);
-                       else if (hitRequest.Skill.SkillVNum == 952 && rnd < 80)
+                        else if (hitRequest.Skill.SkillVNum == 952 && rnd < 80)
                             foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 4))
                                 BattleEntity.RemoveBuff(b.Card.CardId);
 
                         rnd = ServerManager.RandomNumber();
-                        if (rnd <= 80 && hitRequest.Skill.SkillVNum == 1347) 
+                        if (rnd <= 80 && hitRequest.Skill.SkillVNum == 1347)
                             BattleEntity.AddBuff(new Buff(628, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+
                     }
                 }
 
@@ -1467,7 +1472,7 @@ namespace OpenNos.GameObject
                 }
                 if (attackerBattleEntity.Character != null)
                 {
-                    if (hitmode != 4 && hitmode != 2 && damage > 0)
+                    if (hitmode != 4 && hitmode != 2 && damage > 0 && hitRequest.Skill.SkillVNum != 1611 && hitRequest.Skill.SkillVNum != 1614)
                     {
                         attackerBattleEntity.Character.RemoveBuffByBCardTypeSubType(new List<KeyValuePair<byte, byte>>
                             {
@@ -1505,7 +1510,7 @@ namespace OpenNos.GameObject
                             });
                         }
                     }
-                    
+
                 }
 
                 if (CurrentHp > 0)
@@ -1601,12 +1606,15 @@ namespace OpenNos.GameObject
                 }
 
                 if (MonsterVNum == 2305 && MapInstance.MapInstanceType == MapInstanceType.CaligorInstance
-                    && RunToX == 0 && RunToY == 0 
+                    && RunToX == 0 && RunToY == 0
                     && Map.GetDistance(new MapCell { X = FirstX, Y = FirstY }, new MapCell { X = MapX, Y = MapY }) > 30)
                 {
                     RunToX = FirstX;
                     RunToY = FirstY;
                 }
+
+                if (Buff.ContainsKey(692) && Buff.ContainsKey(691))
+                    RemoveBuff(691);
 
                 if ((DateTime.Now - LastEffect).TotalSeconds >= 5)
                 {
@@ -1773,7 +1781,7 @@ namespace OpenNos.GameObject
                         return;
                     }
 
-                    bool instantAttack = MonsterVNum == 1439 || MonsterVNum == 1436 || MonsterVNum == 946 || MonsterVNum == 1382;
+                    bool instantAttack = MonsterVNum == 1439 || MonsterVNum == 1436 || MonsterVNum == 946 || MonsterVNum == 1382 || MonsterVNum == 974;
 
                     if ((DateTime.Now - LastSkill).TotalMilliseconds >= 1100 + (instantAttack ? 0 : (Monster.BasicCooldown * 200)))
                     {
@@ -1835,7 +1843,7 @@ namespace OpenNos.GameObject
                                 }
                             }
                         }
-                        
+
                         if (_previousSkillVNum == 1255 && LastSkill.AddSeconds(10) > DateTime.Now) //Glacerus wait after storm skill)
                         {
                             return;
@@ -1978,9 +1986,9 @@ namespace OpenNos.GameObject
             }
             HostilityTarget();
             */
-        }
-        
-        public void MoveTest()
+                    }
+
+                    public void MoveTest()
         {
             double walkWaitTime = (Target == null && RunToX == 0 && RunToY == 0 ? ServerManager.RandomNumber(400, 3200) : 0) + (Speed / 1.5f) * 100 - (DateTime.Now - LastMove).TotalMilliseconds;
             double skillWaitTime = 0 /*800 - (DateTime.Now - LastSkill).TotalMilliseconds*/;
@@ -2076,7 +2084,7 @@ namespace OpenNos.GameObject
             }
             HostilityTarget();
         }
-        
+
         private void Respawn()
         {
             if (Monster != null)
@@ -2133,7 +2141,7 @@ namespace OpenNos.GameObject
                         FollowTarget(target);
                         return;
                     }
-                    
+
                     _previousSkillVNum = npcMonsterSkill.SkillVNum;
 
                     npcMonsterSkill.LastSkillUse = DateTime.Now;
@@ -2247,6 +2255,12 @@ namespace OpenNos.GameObject
                     if (target.Character != null && target.Character.HasGodMode || target.Mate != null && target.Mate.Owner.HasGodMode)
                     {
                         damage = 0;
+                    }
+
+                    if (target != null && target.Character != null && target.Character.HasBuff(746))
+                    {
+                        damage = 0;
+                        hitmode = 4;
                     }
 
                     if (target.Character != null)
@@ -2407,7 +2421,7 @@ namespace OpenNos.GameObject
                     if (damage >= target.Hp &&
                         target.BCards.Any(s => s.Type == (byte)CardType.NoDefeatAndNoDamage && s.SubType == (byte)AdditionalTypes.NoDefeatAndNoDamage.DecreaseHPNoDeath / 10 && s.FirstData == -1))
                     {
-                        damage = (int)target.Hp - 1;
+                        damage = target.Hp - 1;
                     }
 
                     if (Owner != null && MonsterVNum == 945)
@@ -2416,7 +2430,7 @@ namespace OpenNos.GameObject
                     }
 
                     //Wolf master Block
-                    if(target.Character != null)
+                    if (target.Character != null)
                         if (target.Character.HasBuff(724))
                         {
                             target.Character.HasBlocked = true;
@@ -2465,6 +2479,18 @@ namespace OpenNos.GameObject
                     {
                         MapInstance.Broadcast(null, target.Character.GenerateStat(), ReceiverType.OnlySomeone,
                             "", target.MapEntityId);
+
+                        if (target.Character.HasBuff(694))
+                        {
+                            target.Character.AddBuff(new Buff(703, target.Character.Level), target.Character.BattleEntity);
+                            target.Character.RemoveBuff(694);
+                        }
+
+                        if (target.Character.HasBuff(688))
+                        {
+                            target.Character.AddBuff(new Buff(689, target.Character.Level), target.Character.BattleEntity);
+                            target.Character.RemoveBuff(688);
+                        }
 
                         // Magical Fetters
 
@@ -2721,6 +2747,12 @@ namespace OpenNos.GameObject
                         }
 
                         if (characterInRange.HasGodMode)
+                        {
+                            damage = 0;
+                            hitmode = 4;
+                        }
+
+                        if (characterInRange.HasBuff(746))
                         {
                             damage = 0;
                             hitmode = 4;

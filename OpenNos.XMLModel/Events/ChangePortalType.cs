@@ -13,7 +13,7 @@ namespace OpenNos.XMLModel.Events
 
         [XmlAttribute]
         public sbyte Type { get; set; }
-        
+
         [XmlAttribute]
         public int Map { get; set; }
 

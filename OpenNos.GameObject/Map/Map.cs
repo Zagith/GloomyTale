@@ -17,11 +17,10 @@ using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.PathFinder;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
 namespace OpenNos.GameObject
@@ -212,7 +211,7 @@ namespace OpenNos.GameObject
 
             return false;
         }
-        
+
         public MapCell GetRandomPositionByDistance(short xPos, short yPos, short distance, bool randomInRange = false)
         {
             if (Cells == null)

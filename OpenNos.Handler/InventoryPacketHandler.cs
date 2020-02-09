@@ -18,16 +18,16 @@ using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Helpers;
+using OpenNos.GameObject.Networking;
 using OpenNos.GameObject.Packets.ClientPackets;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using OpenNos.GameObject.Networking;
 using static OpenNos.Domain.BCardType;
-using System.IO;
 
 namespace OpenNos.Handler
 {
@@ -123,7 +123,7 @@ namespace OpenNos.Handler
                 {
                     return;
                 }
-                
+
                 // actually move the item from source to destination
                 Session.Character.Inventory.DepositItem(depositPacket.Inventory, depositPacket.Slot,
                     depositPacket.Amount, depositPacket.NewSlot, ref item, ref itemdest, depositPacket.PartnerBackpack);
@@ -454,7 +454,7 @@ namespace OpenNos.Handler
                                         Language.Instance.GetMessageFromKey("HAS_SHOP_OPENED"), 10));
                                 return;
                             }
-                            
+
                             if (targetSession.Character.ExchangeBlocked)
                             {
                                 Session.SendPacket(
@@ -940,7 +940,7 @@ namespace OpenNos.Handler
 
                                 double multiplier = 1 + (Session.Character.GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseEarnedGold)[0] / 100D);
                                 multiplier += (Session.Character.ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreGold)?.Value ?? 0) / 100D;
-                                
+
                                 if (mapItem is MonsterMapItem droppedGold
                                     && Session.Character.Gold + (droppedGold.GoldAmount * multiplier) <= maxGold)
                                 {
@@ -1104,7 +1104,7 @@ namespace OpenNos.Handler
             {
                 return;
             }
-            
+
             lock (Session.Character.Inventory)
             {
                 ItemInstance invitem =
@@ -1134,7 +1134,7 @@ namespace OpenNos.Handler
 
                             Logger.LogUserEvent("CHARACTER_ITEM_DROP", Session.GenerateIdentity(),
                                 $"[PutItem]IIId: {invitem.Id} ItemVNum: {droppedItem.ItemVNum} Amount: {droppedItem.Amount} MapId: {Session.CurrentMapInstance.Map.MapId} MapX: {droppedItem.PositionX} MapY: {droppedItem.PositionY}");
-                            LogHelper.Instance.InsertPutItemLog(droppedItem, Session, Session.IpAddress); 
+                            LogHelper.Instance.InsertPutItemLog(droppedItem, Session, Session.IpAddress);
                             Session.CurrentMapInstance?.Broadcast(
                                 $"drop {droppedItem.ItemVNum} {droppedItem.TransportId} {droppedItem.PositionX} {droppedItem.PositionY} {droppedItem.Amount} 0 -1");
                         }
@@ -1243,7 +1243,7 @@ namespace OpenNos.Handler
                                     Language.Instance.GetMessageFromKey("REMOVE_FAIRY_WHILE_USING_BOOSTER"), 0));
                                 return;
                             }
-                            
+
                             if ((inventory.ItemDeleteTime >= DateTime.Now || inventory.DurabilityPoint > 0) && Session.Character.Buff.ContainsKey(62))
                             {
                                 Session.Character.RemoveBuff(62);
@@ -2447,7 +2447,7 @@ namespace OpenNos.Handler
                     return;
                 }
                 itemInstance?.Item.Use(Session, ref itemInstance, packet[1][0] == '#' ? (byte)255 : (byte)0, packet);
-            }            
+            }
         }
 
         /// <summary>
@@ -2711,7 +2711,7 @@ namespace OpenNos.Handler
 
 
             // all items and gold from sourceSession have been transferred, clean exchange info
-            
+
             Logger.LogUserEvent("TRADE_COMPLETE", sourceSession.GenerateIdentity(),
                 $"[{targetSession.GenerateIdentity()}]Data: {data}");
             try
@@ -2744,9 +2744,8 @@ namespace OpenNos.Handler
             catch { }
             sourceSession.Character.ExchangeInfo = null;
         }
-        
+
 
         #endregion
     }
 }
- 

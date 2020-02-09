@@ -7,7 +7,7 @@ namespace OpenNos.GameObject.Helpers
     public class CustomHelper
     {
         #region Method
-        
+
         public void SpeedPerfection(ClientSession Session, ItemInstance specialistInstance, ItemInstance inv = null)
         {
             short[] upsuccess = { 50, 40, 30, 20, 10 };
@@ -204,7 +204,7 @@ namespace OpenNos.GameObject.Helpers
             else
             {
                 Session.SendPacket(Session.Character.GenerateSay("You don't have enough perfection's stones or gold", 10));
-            }      
+            }
         }
 
         public void RemovePerfection(ClientSession session, ItemInstance SP, ItemInstance inv = null)

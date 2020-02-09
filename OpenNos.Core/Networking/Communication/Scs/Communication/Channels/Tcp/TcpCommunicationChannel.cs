@@ -12,14 +12,12 @@
  * GNU General Public License for more details.
  */
 
-using OpenNos.Core.ConcurrencyExtensions;
 using OpenNos.Core.Networking.Communication.Scs.Communication.EndPoints;
 using OpenNos.Core.Networking.Communication.Scs.Communication.EndPoints.Tcp;
 using OpenNos.Core.Networking.Communication.Scs.Communication.Messages;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -326,7 +324,7 @@ namespace OpenNos.Core.Networking.Communication.Scs.Communication.Channels.Tcp
                     Disconnect();
                 }
 
-                CONT_RECEIVE:
+            CONT_RECEIVE:
                 // Read more bytes if still running
                 if (_running)
                 {

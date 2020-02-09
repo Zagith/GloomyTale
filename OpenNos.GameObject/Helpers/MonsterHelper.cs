@@ -11,6 +11,7 @@ namespace OpenNos.GameObject.Helpers
                 case 854: // Black Meteorite
                 case 945: // Bomb
                 case 946: // Fire Mine
+                case 974: // Lotus Flower
                 case 1382: // Pumpkin Bomb
                 case 1436: // Mobile Trap
                 case 1439: // Giant Swirl

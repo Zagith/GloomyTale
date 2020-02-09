@@ -64,12 +64,12 @@ namespace OpenNos.GameObject.Battle
                 MapY = mapY.Value;
             }
 
-            
+
             if (skillCombo != null)
             {
                 SkillCombo = skillCombo;
             }
-            
+
             if (skillBCards != null)
             {
                 SkillBCards = skillBCards;

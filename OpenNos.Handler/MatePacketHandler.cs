@@ -270,7 +270,7 @@ namespace OpenNos.Handler
             {
                 return;
             }
-            
+
             if (suctlPacket.TargetType != UserType.Npc
                 && Session.Account.IsLimited)
             {
@@ -325,7 +325,7 @@ namespace OpenNos.Handler
                             break;
                         }
                     }
-                    
+
                     switch (suctlPacket.TargetType)
                     {
                         case UserType.Monster:
@@ -364,7 +364,7 @@ namespace OpenNos.Handler
                         case UserType.Player:
                             if (attacker.Hp > 0)
                             {
-                                Character target = Session.CurrentMapInstance?.GetSessionByCharacterId(suctlPacket.TargetId) ?.Character;
+                                Character target = Session.CurrentMapInstance?.GetSessionByCharacterId(suctlPacket.TargetId)?.Character;
                                 if (target != null)
                                 {
                                     if (attacker.Owner.BattleEntity.CanAttackEntity(target.BattleEntity))

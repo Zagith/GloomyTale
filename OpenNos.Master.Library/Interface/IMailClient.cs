@@ -1,5 +1,4 @@
 ﻿using OpenNos.Data;
-using OpenNos.Master.Library.Data;
 
 namespace OpenNos.Master.Library.Interface
 {

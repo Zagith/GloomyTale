@@ -129,30 +129,30 @@ namespace OpenNos.Handler
                                 break;
 
                             default:
-                            {
-                                if (loadedAccount.Authority < AuthorityType.SMOD)
                                 {
-                                    MaintenanceLogDTO maintenanceLog = DAOFactory.MaintenanceLogDAO.LoadFirst();
-                                    if (maintenanceLog != null && maintenanceLog.DateStart < DateTime.Now)
+                                    if (loadedAccount.Authority < AuthorityType.SMOD)
+                                    {
+                                        MaintenanceLogDTO maintenanceLog = DAOFactory.MaintenanceLogDAO.LoadFirst();
+                                        if (maintenanceLog != null && maintenanceLog.DateStart < DateTime.Now)
                                         {
                                             _session.SendPacket($"failc {(byte)LoginFailType.Maintenance}");
                                             return;
+                                        }
                                     }
-                                }
 
-                                int newSessionId = SessionFactory.Instance.GenerateSessionId();
-                                Logger.Debug(string.Format(Language.Instance.GetMessageFromKey("CONNECTION"), user.Name,
-                                    newSessionId));
-                                try
-                                {
-                                    ipAddress = ipAddress.Substring(6, ipAddress.LastIndexOf(':') - 6);
-                                    CommunicationServiceClient.Instance.RegisterAccountLogin(loadedAccount.AccountId,
-                                        newSessionId, ipAddress);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Logger.Error("General Error SessionId: " + newSessionId, ex);
-                                }
+                                    int newSessionId = SessionFactory.Instance.GenerateSessionId();
+                                    Logger.Debug(string.Format(Language.Instance.GetMessageFromKey("CONNECTION"), user.Name,
+                                        newSessionId));
+                                    try
+                                    {
+                                        ipAddress = ipAddress.Substring(6, ipAddress.LastIndexOf(':') - 6);
+                                        CommunicationServiceClient.Instance.RegisterAccountLogin(loadedAccount.AccountId,
+                                            newSessionId, ipAddress);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Logger.Error("General Error SessionId: " + newSessionId, ex);
+                                    }
 
                                     string[] clientData = loginPacket.ClientData.Split('.');
 

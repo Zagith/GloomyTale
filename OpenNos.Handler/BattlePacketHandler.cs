@@ -17,19 +17,18 @@ using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Battle;
+using OpenNos.GameObject.Event;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
-using OpenNos.Master.Library.Client;
+using OpenNos.GameObject.Packets.ClientPackets;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using static OpenNos.Domain.BCardType;
-using OpenNos.GameObject.Event;
 using System.Threading.Tasks;
-using System.Collections.Concurrent;
-using OpenNos.GameObject.Packets.ClientPackets;
+using static OpenNos.Domain.BCardType;
 
 namespace OpenNos.Handler
 {
@@ -238,7 +237,7 @@ namespace OpenNos.Handler
                             Session.SendPacket(StaticPacketHelper.Cancel());
                             return;
                         }
-                    } 
+                    }
                 }
 
                 List<CharacterSkill> skills = Session.Character.GetSkills();
@@ -274,6 +273,8 @@ namespace OpenNos.Handler
                                 }
                             }
                         }
+
+                        
                     }
                 }
 
@@ -299,7 +300,7 @@ namespace OpenNos.Handler
                 {
                     Session.Character.Rest();
                 }
-                
+
                 switch (useSkillPacket.UserType)
                 {
                     case UserType.Npc:
@@ -439,7 +440,7 @@ namespace OpenNos.Handler
                 {
                     cooldownReduction -= increaseEnemyCooldownChance[1];
                 }
-                
+
                 int hitmode = 0;
                 bool onyxWings = false;
                 BattleEntity battleEntity = new BattleEntity(hitRequest.Session.Character, hitRequest.Skill);
@@ -457,6 +458,15 @@ namespace OpenNos.Handler
                     damage = 0;
                     hitmode = 4;
                 }
+
+                if (target.Character.HasBuff(746))
+                {
+                    damage = 0;
+                    hitmode = 4;
+                }
+
+                if(hitRequest.Skill.SkillVNum == 1593)
+                    return;
 
                 if (ServerManager.RandomNumber() < target.Character.GetBuff(CardType.DarkCloneSummon,
                     (byte)AdditionalTypes.DarkCloneSummon.ConvertDamageToHPChance)[0])
@@ -498,17 +508,20 @@ namespace OpenNos.Handler
                     Session.Character.AddBuff(new Buff(560, Session.Character.Level), Session.Character.BattleEntity);
                 }
 
-                //Remove invisiblity on hit
-                if(Session.Character.HasBuff(746))
+                //Remove invisiblity on hit 
+                if (Session.Character.HasBuff(746))
                     Session.Character.RemoveBuff(746);
+
+                //2nd MA Sp
 
                 if (hitRequest.Skill.SkillVNum == 1607 && target.Character.MapX != 0 && target.Character.MapY != 0)
                     Session.Character.TeleportOnMap(target.Character.PositionX, target.Character.PositionY);
 
-                //2nd MA Sp
+                if (hitRequest.Skill.SkillVNum == 1619)
+                    target.Character.AddBuff(new Buff(7, battleEntity.Level), battleEntity);
 
-                if(hitRequest.Session.Character.HasBuff(703)) // attack Possibility
-                    switch(hitRequest.Skill.SkillVNum)
+                if (hitRequest.Session.Character.HasBuff(703)) // attack Possibility
+                    switch (hitRequest.Skill.SkillVNum)
                     {
                         case 1611:
                             hitRequest.Session.Character.AddBuff(new Buff(698, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
@@ -517,7 +530,7 @@ namespace OpenNos.Handler
                         case 1612:
                             {
                                 int mpSteal = (int)(target.Character.Mp * 0.20);
-                                if(mpSteal > 0)
+                                if (mpSteal > 0)
                                 {
                                     if (hitRequest.Session.Character.Mp + mpSteal > hitRequest.Session.Character.BattleEntity?.MpMax)
                                         hitRequest.Session.Character.Mp = hitRequest.Session.Character.BattleEntity.MpMax;
@@ -532,13 +545,33 @@ namespace OpenNos.Handler
                                     hitRequest.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
                                     target.Character.Session?.SendPacket(target.Character.GenerateStat());
                                 }
-                                
+
+                            }
+                            break;
+
+                        case 1614:
+                        {
+                            target.Character.RemoveBuff(691);
+                            target.Character.AddBuff(new Buff(692, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
+                        }
+                            break;
+
+                        case 1619:
+                            {
+                                Observable.Timer(TimeSpan.FromMilliseconds(5500)).Subscribe(o =>
+                                {
+                                    target.CurrentMapInstance?.Broadcast(target.Character.GenerateEff(1072));
+                                    target.Character.GetDamage((int)(10 * hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
+                                    target.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player, hitRequest.Session.Character.CharacterId, 1,
+                                        target.Character.CharacterId, -1, 0, 0, 0, 0, 0, target.Character.Hp > 0, 92,
+                                        (int)(10 * hitRequest.Session.Character.Level), 0, 1));
+                                });
                             }
                             break;
 
                         case 1620:
                             {
-                                if(target.Character.HasBuff(702))
+                                if (target.Character.HasBuff(702))
                                 {
                                     target.Character.RemoveBuff(702);
                                     target.Character.RemoveBuff(701);
@@ -551,7 +584,7 @@ namespace OpenNos.Handler
                             break;
                     }
 
-                
+
 
                 if (target.Character.HasBuff(694))
                 {
@@ -559,15 +592,16 @@ namespace OpenNos.Handler
                     target.Character.RemoveBuff(694);
                 }
 
-                if(target.Character.HasBuff(688))
+                if (target.Character.HasBuff(688))
                 {
+                    target.CurrentMapInstance.Broadcast(target.Character.GenerateEff(1075));
                     target.Character.AddBuff(new Buff(689, target.Character.Level), target.Character.BattleEntity);
                     target.Character.RemoveBuff(688);
                 }
 
 
                 int[] manaShield = target.Character.GetBuff(CardType.LightAndShadow,
-                    (byte) AdditionalTypes.LightAndShadow.InflictDamageToMP);
+                    (byte)AdditionalTypes.LightAndShadow.InflictDamageToMP);
                 if (manaShield[0] != 0 && hitmode != 4)
                 {
                     int reduce = damage / 100 * manaShield[0];
@@ -596,8 +630,8 @@ namespace OpenNos.Handler
                     target.Character.HasBlocked = false;
 
                 //4th MA Sp Chains
-                int hpmplost ;
-                if(target.Character.HasBuff(748) && damage > 0)
+                int hpmplost;
+                if (target.Character.HasBuff(748) && damage > 0)
                 {
                     //MP increasing to the enemy
                     hpmplost = (int)(damage * 0.05);
@@ -607,13 +641,13 @@ namespace OpenNos.Handler
                         hitRequest.Session.Character.Mp += hpmplost;
 
                     hitRequest.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
-                   
+
 
                 }
 
-               
+
                 //4th MA Sp Chain malus
-                if(hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Session.Character.HasBuff(748))
+                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Session.Character.HasBuff(748))
                 {
                     //HP reduction
                     hpmplost = (int)(damage * 0.10);
@@ -628,7 +662,7 @@ namespace OpenNos.Handler
                     hitRequest.Session.CurrentMapInstance.Broadcast(hitRequest.Session.Character.BattleEntity?.GenerateDm(hpmplost));
                     hitRequest.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
                 }
-                
+
 
                 if (hitRequest.Session.Character.HasBuff(686) && ServerManager.RandomNumber() < 40 && hitmode != 4 && hitmode != 2)
                 {
@@ -644,8 +678,8 @@ namespace OpenNos.Handler
 
                 if (onyxWings && hitmode != 4 && hitmode != 2)
                 {
-                    short onyxX = (short) (hitRequest.Session.Character.PositionX + 2);
-                    short onyxY = (short) (hitRequest.Session.Character.PositionY + 2);
+                    short onyxX = (short)(hitRequest.Session.Character.PositionX + 2);
+                    short onyxY = (short)(hitRequest.Session.Character.PositionY + 2);
                     int onyxId = target.CurrentMapInstance.GetNextMonsterId();
                     MapMonster onyx = new MapMonster
                     {
@@ -721,7 +755,7 @@ namespace OpenNos.Handler
                         target.Character.RemoveBuff(b.Card.CardId);
 
                 //Punch
-                if(itemInUse != null && itemInUse.Item.VNum == 4736 && ServerManager.RandomNumber() <= 7)
+                if (itemInUse != null && itemInUse.Item.VNum == 4736 && ServerManager.RandomNumber() <= 7)
                 {
                     target.Character.AddBuff(new Buff(672, Session.Character.Level), Session.Character.BattleEntity);
                 }
@@ -772,7 +806,7 @@ namespace OpenNos.Handler
                 }
 
                 //Martial Artist
-                if(itemInUse != null && itemInUse.Item.VNum == 4754 && ServerManager.RandomNumber() <= 2)
+                if (itemInUse != null && itemInUse.Item.VNum == 4754 && ServerManager.RandomNumber() <= 2)
                 {
                     Session.Character.AddBuff(new Buff(673, Session.Character.Level), Session.Character.BattleEntity);
                 }
@@ -782,13 +816,13 @@ namespace OpenNos.Handler
                 target.Character.GetDamage(damage / 2, battleEntity);
                 target.SendPacket(target.Character.GenerateStat());
 
-                if((hitRequest.Skill.SkillVNum == 1122 || 
-                    hitRequest.Skill.SkillVNum == 1136 || 
-                    hitRequest.Skill.SkillVNum == 1139 || 
+                if ((hitRequest.Skill.SkillVNum == 1122 ||
+                    hitRequest.Skill.SkillVNum == 1136 ||
+                    hitRequest.Skill.SkillVNum == 1139 ||
                     hitRequest.Skill.SkillVNum == 1140) && hitmode == 4)
-                        hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.CharacterId));
+                    hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.CharacterId));
 
-                //test removing malus by dg skills
+                //Removing malus by dg skills
                 int rnd = ServerManager.RandomNumber();
                 if ((hitRequest.Skill.SkillVNum == 946 && rnd < 15 ||
                    (hitRequest.Skill.SkillVNum == 948 && rnd >= 15 && rnd <= 35) ||
@@ -799,14 +833,14 @@ namespace OpenNos.Handler
 
 
                 rnd = ServerManager.RandomNumber();
-                if(rnd <= 5 && hitRequest.Session.Character.HasBuff(755))
+                if (rnd <= 5 && hitRequest.Session.Character.HasBuff(755))
                 {
                     target.Character.AddBuff(new Buff(754, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity, true);
                     target?.CurrentMapInstance?.Broadcast(target.Character.GenerateEff(42));
                     target.Character.LastEffect42 = DateTime.Now;
                 }
                 rnd = ServerManager.RandomNumber();
-                if(rnd < 7 && target.Character.HasBuff(755))
+                if (rnd < 7 && target.Character.HasBuff(755))
                 {
                     hitRequest.Session.Character.AddBuff(new Buff(553, target.Character.Level), target.Character.BattleEntity, true);
                     target?.CurrentMapInstance?.Broadcast(target.Character.GenerateEff(43));
@@ -855,9 +889,9 @@ namespace OpenNos.Handler
                             hitRequest.Session.Character.AddBuff(new Buff((short)EffectOnKill.SecondData, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
                         }
                     }
-                    
+
                     target.Character.LastPvPKiller = Session;
-                    if (target.CurrentMapInstance.Map?.MapTypes.Any(s => s.MapTypeId == (short) MapTypeEnum.Act4)
+                    if (target.CurrentMapInstance.Map?.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4)
                         == true)
                     {
                         if (ServerManager.Instance.ChannelId == 51 && ServerManager.Instance.Act4DemonStat.Mode == 0
@@ -949,8 +983,8 @@ namespace OpenNos.Handler
                             {
                                 hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TOO_LEVEL_DIFFERENCE"), 11));
                             }*/
-                        }
-                        else
+            }
+            else
                         {
                             hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TARGET_SAME_IP"), 11));
                         }
@@ -963,7 +997,7 @@ namespace OpenNos.Handler
                                 sess.SendPacket(sess.Character.GenerateSay(
                                     string.Format(
                                         Language.Instance.GetMessageFromKey(
-                                            $"ACT4_PVP_KILL{(int) target.Character.Faction}"), Session.Character.Name),
+                                            $"ACT4_PVP_KILL{(int)target.Character.Faction}"), Session.Character.Name),
                                     12));
                             }
                             else if (sess.Character.Faction == target.Character.Faction)
@@ -971,7 +1005,7 @@ namespace OpenNos.Handler
                                 sess.SendPacket(sess.Character.GenerateSay(
                                     string.Format(
                                         Language.Instance.GetMessageFromKey(
-                                            $"ACT4_PVP_DEATH{(int) target.Character.Faction}"), target.Character.Name),
+                                            $"ACT4_PVP_DEATH{(int)target.Character.Faction}"), target.Character.Name),
                                     11));
                             }
                         }
@@ -1079,7 +1113,7 @@ namespace OpenNos.Handler
                             }
                         }
                     });
-                    
+
                     battleEntityDefense.BCards.Where(s => s.CastType == 0).ForEach(s =>
                     {
                         if (s.Type == (byte)CardType.Buff)
@@ -1090,7 +1124,7 @@ namespace OpenNos.Handler
                                 switch (b.Card?.BuffType)
                                 {
                                     case BuffType.Bad:
-                                        s.ApplyBCards(Session.Character.BattleEntity , target.Character.BattleEntity);
+                                        s.ApplyBCards(Session.Character.BattleEntity, target.Character.BattleEntity);
                                         break;
 
                                     case BuffType.Good:
@@ -1114,9 +1148,9 @@ namespace OpenNos.Handler
                         {
                             switch (shell.Effect)
                             {
-                                case (byte) ShellWeaponEffectType.Blackout:
-                                {
-                                    Buff buff = new Buff(7, battleEntity.Level);
+                                case (byte)ShellWeaponEffectType.Blackout:
+                                    {
+                                        Buff buff = new Buff(7, battleEntity.Level);
 
                                         var shellRes = shell.Value * (battleEntityDefense.ShellArmorEffects?.Find(s =>
                                                   s.Effect == (byte)ShellArmorEffectType.ReducedStun)?.Value
@@ -1132,11 +1166,11 @@ namespace OpenNos.Handler
                                         }
 
                                         break;
-                                }
-                                case (byte) ShellWeaponEffectType.DeadlyBlackout:
-                                {
-                                    Buff buff = new Buff(66, battleEntity.Level);
-                                        var shellRes = shell.Value * (battleEntityDefense.ShellArmorEffects?.Find(s => 
+                                    }
+                                case (byte)ShellWeaponEffectType.DeadlyBlackout:
+                                    {
+                                        Buff buff = new Buff(66, battleEntity.Level);
+                                        var shellRes = shell.Value * (battleEntityDefense.ShellArmorEffects?.Find(s =>
                                         s.Effect == (byte)ShellArmorEffectType.ReducedAllStun)?.Value
                                         + battleEntityDefense.ShellArmorEffects?.Find(s =>
                                         s.Effect == (byte)ShellArmorEffectType.ReducedAllNegativeEffect).Value) / 100D;
@@ -1147,33 +1181,33 @@ namespace OpenNos.Handler
                                         }
 
                                         break;
-                                }
-                                case (byte) ShellWeaponEffectType.MinorBleeding:
-                                {
-                                    Buff buff = new Buff(1, battleEntity.Level);
-                                            var shellRes = shell.Value * (battleEntityDefense.ShellArmorEffects?.Find(s =>
-                                                              s.Effect == (byte)ShellArmorEffectType
-                                                                  .ReducedMinorBleeding)?.Value
-                                                          + battleEntityDefense.ShellArmorEffects?.Find(s =>
-                                                              s.Effect == (byte)ShellArmorEffectType
-                                                                  .ReducedBleedingAndMinorBleeding)?.Value
-                                                          + battleEntityDefense.ShellArmorEffects?.Find(s =>
-                                                              s.Effect == (byte)ShellArmorEffectType
-                                                                  .ReducedAllBleedingType)?.Value
-                                                          + battleEntityDefense.ShellArmorEffects?.Find(s =>
-                                                              s.Effect == (byte)ShellArmorEffectType
-                                                                  .ReducedAllNegativeEffect)?.Value) / 100D;
+                                    }
+                                case (byte)ShellWeaponEffectType.MinorBleeding:
+                                    {
+                                        Buff buff = new Buff(1, battleEntity.Level);
+                                        var shellRes = shell.Value * (battleEntityDefense.ShellArmorEffects?.Find(s =>
+                                                          s.Effect == (byte)ShellArmorEffectType
+                                                              .ReducedMinorBleeding)?.Value
+                                                      + battleEntityDefense.ShellArmorEffects?.Find(s =>
+                                                          s.Effect == (byte)ShellArmorEffectType
+                                                              .ReducedBleedingAndMinorBleeding)?.Value
+                                                      + battleEntityDefense.ShellArmorEffects?.Find(s =>
+                                                          s.Effect == (byte)ShellArmorEffectType
+                                                              .ReducedAllBleedingType)?.Value
+                                                      + battleEntityDefense.ShellArmorEffects?.Find(s =>
+                                                          s.Effect == (byte)ShellArmorEffectType
+                                                              .ReducedAllNegativeEffect)?.Value) / 100D;
                                         var shellValue = shell.Value - shellRes;
                                         if (ServerManager.RandomNumber() <= shell.Value)
-                                    {
-                                        target.Character.AddBuff(buff, battleEntity);
-                                    }
+                                        {
+                                            target.Character.AddBuff(buff, battleEntity);
+                                        }
 
-                                    break;
-                                }
-                                case (byte) ShellWeaponEffectType.Bleeding:
-                                {
-                                    Buff buff = new Buff(21, battleEntity.Level);
+                                        break;
+                                    }
+                                case (byte)ShellWeaponEffectType.Bleeding:
+                                    {
+                                        Buff buff = new Buff(21, battleEntity.Level);
                                         var shellRes = shell.Value * (battleEntityDefense.ShellArmorEffects?.Find(s =>
                                         s.Effect == (byte)ShellArmorEffectType.ReducedBleedingAndMinorBleeding)?.Value
                                         + battleEntityDefense.ShellArmorEffects?.Find(s =>
@@ -1181,13 +1215,13 @@ namespace OpenNos.Handler
                                         var shellValue = shell.Value - shellRes;
                                         if (ServerManager.RandomNumber() <= shell.Value)
                                         {
-                                        target.Character.AddBuff(buff, battleEntity);
-                                    }
+                                            target.Character.AddBuff(buff, battleEntity);
+                                        }
 
-                                    break;
-                                }
-                                case (byte) ShellWeaponEffectType.HeavyBleeding:
-                                {
+                                        break;
+                                    }
+                                case (byte)ShellWeaponEffectType.HeavyBleeding:
+                                    {
                                         Buff buff = new Buff(42, battleEntity.Level);
                                         var shellRes = shell.Value * (battleEntityDefense.ShellArmorEffects?.Find(s =>
                                         s.Effect == (byte)ShellArmorEffectType.ReducedAllBleedingType)?.Value
@@ -1196,26 +1230,26 @@ namespace OpenNos.Handler
                                         var shellValue = shell.Value - shellRes;
                                         if (ServerManager.RandomNumber() <= shell.Value)
                                         {
-                                        target.Character.AddBuff(buff, battleEntity);
+                                            target.Character.AddBuff(buff, battleEntity);
                                         }
 
-                                    break;
-                                }
-                                case (byte) ShellWeaponEffectType.Freeze:
-                                {
-                                    Buff buff = new Buff(27, battleEntity.Level);
+                                        break;
+                                    }
+                                case (byte)ShellWeaponEffectType.Freeze:
+                                    {
+                                        Buff buff = new Buff(27, battleEntity.Level);
                                         var shellRes = shell.Value * (battleEntityDefense.ShellArmorEffects?.Find(s =>
                                         s.Effect == (byte)ShellArmorEffectType.ReducedFreeze)?.Value
                                         + battleEntityDefense.ShellArmorEffects?.Find(s =>
                                         s.Effect == (byte)ShellArmorEffectType.ReducedAllNegativeEffect)?.Value) / 100D;
                                         var shellValue = shell.Value - shellRes;
-                                    if (ServerManager.RandomNumber() <= shell.Value)
-                                    {
-                                        target.Character.AddBuff(buff, battleEntity);
-                                    }
+                                        if (ServerManager.RandomNumber() <= shell.Value)
+                                        {
+                                            target.Character.AddBuff(buff, battleEntity);
+                                        }
 
-                                    break;
-                                }
+                                        break;
+                                    }
                             }
                         }
                     }
@@ -1255,9 +1289,9 @@ namespace OpenNos.Handler
                                     hitRequest.Session.CurrentMapInstance.Broadcast(hitRequest.Session.Character.GenerateTp());
                                 }
                                 hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(
-                                    UserType.Player, hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId, 
+                                    UserType.Player, hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId,
                                     hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
-                                    hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect, 
+                                    hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                     hitRequest.Session.Character.PositionX, hitRequest.Session.Character.PositionY, isAlive,
                                     (int)(target.Character.Hp / (float)target.Character.HPLoad() * 100), damage, hitmode,
                                     (byte)(hitRequest.Skill.SkillType - 1)));
@@ -1285,9 +1319,9 @@ namespace OpenNos.Handler
                                 }
 
                                 hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(
-                                    UserType.Player, hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId, 
+                                    UserType.Player, hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId,
                                     -1, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
-                                    hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect, 
+                                    hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                     hitRequest.Session.Character.PositionX, hitRequest.Session.Character.PositionY, isAlive,
                                     (int)(target.Character.Hp / (float)target.Character.HPLoad() * 100), damage, hitmode,
                                     (byte)(hitRequest.Skill.SkillType - 1)));
@@ -1372,7 +1406,7 @@ namespace OpenNos.Handler
 
             bool shouldCancel = true;
             bool isSacrificeSkill = false;
-            
+
             if ((DateTime.Now - Session.Character.LastTransform).TotalSeconds < 3)
             {
                 Session.SendPacket(StaticPacketHelper.Cancel());
@@ -1492,7 +1526,7 @@ namespace OpenNos.Handler
                     {
                         cooldownReduction -= increaseEnemyCooldownChance[1];
                     }
-                    
+
                     short mpCost = ski.MpCost();
                     short hpCost = 0;
 
@@ -1885,7 +1919,7 @@ namespace OpenNos.Handler
                                         {
                                             ski.Hit++;
                                             ski.ComboCount++;
-                                            if(ski.SkillVNum == 1122 && ski.ComboCount > 5)
+                                            if (ski.SkillVNum == 1122 && ski.ComboCount > 5)
                                                 Session.SendPacket(
                                                         StaticPacketHelper.Cancel(2, targetId));
                                         }
@@ -2500,7 +2534,7 @@ namespace OpenNos.Handler
                         }
 
                         //Reset 2nd MA S skill
-                        if(Session.Character.HasBuff(703) && ski.SkillVNum == 1617)
+                        if (Session.Character.HasBuff(703) && ski.SkillVNum == 1617)
                             Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(o =>
                             {
                                 if (ski != null)
@@ -2510,6 +2544,15 @@ namespace OpenNos.Handler
                                     Session?.CurrentMapInstance?.Broadcast(Session.Character.GenerateEff(55));
                                 }
                             });
+
+                        //Test lotus position additional buff fix
+                        if(Session.Character.HasBuff(689) && ski.SkillVNum == 1610)
+                            Session.Character.AddBuff(new Buff(705,Session.Character.Level), Session?.Character?.BattleEntity);
+
+                        if (ski != null && ski.Skill.SkillVNum == 1618)
+                        {
+                            ski.GetSkillBCards().ForEach(s => s.ApplyBCards(Session.Character.BattleEntity, Session.Character.BattleEntity));
+                        }
                     }
                     else
                     {
@@ -2577,7 +2620,7 @@ namespace OpenNos.Handler
                     {
                         cooldownReduction -= increaseEnemyCooldownChance[1];
                     }
-                    
+
                     Session.CurrentMapInstance.Broadcast(
                         $"ct_n 1 {Session.Character.CharacterId} 3 -1 {characterSkill.Skill.CastAnimation}" +
                         $" {characterSkill.Skill.CastEffect} {characterSkill.Skill.SkillVNum}");
@@ -2598,7 +2641,7 @@ namespace OpenNos.Handler
                         byte Range = characterSkill.TargetRange();
                         if (characterSkill.GetSkillBCards().Any(s => s.Type == (byte)CardType.FalconSkill && s.SubType == (byte)AdditionalTypes.FalconSkill.FalconFocusLowestHP / 10))
                         {
-                            if (Session.CurrentMapInstance.BattleEntities.Where(s => s.IsInRange(x, y, Range) 
+                            if (Session.CurrentMapInstance.BattleEntities.Where(s => s.IsInRange(x, y, Range)
                                 && Session.Character.BattleEntity.CanAttackEntity(s)).OrderBy(s => s.Hp).FirstOrDefault() is BattleEntity lowestHPEntity)
                             {
                                 Session.Character.MTListTargetQueue.Push(new MTListHitTarget(lowestHPEntity.UserType, lowestHPEntity.MapEntityId, (TargetHitType)characterSkill.Skill.HitType));
@@ -2642,7 +2685,7 @@ namespace OpenNos.Handler
                             }
                         }
 
-                        characterSkill.GetSkillBCards().ToList().Where(s => 
+                        characterSkill.GetSkillBCards().ToList().Where(s =>
                            (s.Type.Equals((byte)CardType.Buff) && new Buff((short)s.SecondData, Session.Character.Level).Card.BuffType.Equals(BuffType.Good))
                         || (s.Type.Equals((byte)CardType.FalconSkill) && s.SubType.Equals((byte)AdditionalTypes.FalconSkill.CausingChanceLocation / 10))
                         || (s.Type.Equals((byte)CardType.FearSkill) && s.SubType.Equals((byte)AdditionalTypes.FearSkill.ProduceWhenAmbushe / 10))).ToList()

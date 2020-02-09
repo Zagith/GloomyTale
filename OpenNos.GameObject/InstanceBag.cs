@@ -13,7 +13,6 @@
  */
 
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace OpenNos.GameObject
 {
@@ -56,7 +55,7 @@ namespace OpenNos.GameObject
         public int NpcsKilled { get; set; }
 
         public int Point { get; set; }
-        
+
         public int RoomsVisited { get; set; }
 
         public int LaurenaRound { get; set; }

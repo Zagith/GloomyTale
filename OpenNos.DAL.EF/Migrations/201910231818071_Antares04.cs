@@ -1,8 +1,7 @@
 ﻿namespace OpenNos.DAL.EF.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class Antares04 : DbMigration
     {
         public override void Up()
@@ -12,7 +11,7 @@
             DropColumn("dbo.CharacterTitle", "IsUsed");
             DropColumn("dbo.CharacterTitle", "IsDisplay");
         }
-        
+
         public override void Down()
         {
             AddColumn("dbo.CharacterTitle", "IsDisplay", c => c.Boolean(nullable: false));

@@ -12,36 +12,32 @@
  * GNU General Public License for more details.
  */
 
+using Mapster;
+using OpenNos.Core;
+using OpenNos.DAL;
+using OpenNos.Data;
+using OpenNos.Data.Base;
+using OpenNos.Data.I18N;
+using OpenNos.Data.Interfaces;
+using OpenNos.Domain;
+using OpenNos.Domain.I18N;
+using OpenNos.GameObject.Event;
+using OpenNos.GameObject.Event.ACT4;
+using OpenNos.GameObject.Helpers;
+using OpenNos.Master.Library.Client;
+using OpenNos.Master.Library.Data;
+using OpenNos.XMLModel.Models.Quest;
+using ServiceStack.Text.FastMember;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using OpenNos.Core;
-using OpenNos.Data;
-using OpenNos.DAL;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
-using OpenNos.Master.Library.Client;
-using OpenNos.Master.Library.Data;
-using OpenNos.XMLModel.Models.Quest;
-using OpenNos.GameObject.Event;
-using System.Net.Sockets;
-using OpenNos.Domain.I18N;
-using OpenNos.Data.I18N;
-using ServiceStack.Text.FastMember;
-using OpenNos.Data.Base;
-using System.Reflection;
-using OpenNos.Data.Interfaces;
-using Mapster;
-using OpenNos.GameObject.Event.ACT4;
 
 namespace OpenNos.GameObject.Networking
 {
@@ -1556,7 +1552,7 @@ namespace OpenNos.GameObject.Networking
                     MapInstance newMap = new MapInstance(mapinfo, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, map.Side, map.GoldMapRate, true);
                     _mapinstances.TryAdd(guid, newMap);
 
-                    Task.Run((Action)newMap.LoadPortals);
+                    Task.Run(newMap.LoadPortals);
                     newMap.LoadNpcs();
                     newMap.LoadMonsters();
 
@@ -2075,7 +2071,7 @@ namespace OpenNos.GameObject.Networking
             foreach (MapInstance map in maps)
             {
                 IEnumerable<MapMonster> spawnedMonsters = map.Monsters.Where(s => s.MonsterVNum.Equals(424));
-                if(spawnedMonsters.Count() > 4)
+                if (spawnedMonsters.Count() > 4)
                 {
                     continue;
                 }
@@ -2092,12 +2088,10 @@ namespace OpenNos.GameObject.Networking
                 short MonsterVNUM = 0;
                 byte element = (byte)RandomNumber(1, 5);
                 short NumeroMob = 0;
-                long MaxHp = 0;
 
                 switch (map.MeteoriteLevel)
                 {
                     case 25:
-                        MaxHp = 250000;
                         NumeroMob = 1;
                         switch (element)
                         {
@@ -2116,7 +2110,6 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
                     case 35:
-                        MaxHp = 250000;
                         NumeroMob = 2;
                         switch (element)
                         {
@@ -2135,7 +2128,6 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
                     case 45:
-                        MaxHp = 250000;
                         NumeroMob = 3;
                         switch (element)
                         {
@@ -2154,7 +2146,6 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
                     case 55:
-                        MaxHp = 250000;
                         NumeroMob = 4;
                         switch (element)
                         {
@@ -2173,7 +2164,6 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
                     case 65:
-                        MaxHp = 2500000;
                         NumeroMob = 5;
                         switch (element)
                         {
@@ -2192,7 +2182,6 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
                     case 75:
-                        MaxHp = 2500000;
                         NumeroMob = 5;
                         switch (element)
                         {
@@ -2211,7 +2200,6 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
                     case 85:
-                        MaxHp = 2500000;
                         NumeroMob = 6;
                         switch (element)
                         {
@@ -2230,7 +2218,6 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
                     case 90:
-                        MaxHp = 10000000;
                         NumeroMob = 6;
                         switch (element)
                         {
@@ -2249,7 +2236,6 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
                     case 95:
-                        MaxHp = 10000000;
                         NumeroMob = 7;
                         switch (element)
                         {
@@ -2268,7 +2254,6 @@ namespace OpenNos.GameObject.Networking
                         }
                         break;
                     case 100:
-                        MaxHp = 10000000;
                         NumeroMob = 7;
                         switch (element)
                         {

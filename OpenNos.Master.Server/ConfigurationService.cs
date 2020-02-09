@@ -17,8 +17,6 @@ using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.ScsServices.Service;
 using System;
 using System.Configuration;
-using System.Linq;
-using System.Reactive.Linq;
 
 namespace OpenNos.Master.Server
 {
@@ -63,7 +61,7 @@ namespace OpenNos.Master.Server
             }
             MSManager.Instance.ConfigurationObject = configurationObject;
 
-            foreach(WorldServer ws in MSManager.Instance.WorldServers)
+            foreach (WorldServer ws in MSManager.Instance.WorldServers)
             {
                 ws.ConfigurationServiceClient.GetClientProxy<IConfigurationClient>().ConfigurationUpdated(MSManager.Instance.ConfigurationObject);
             }

@@ -1,6 +1,5 @@
 ﻿using Discord;
 using Discord.Commands;
-using GloomyTale.DiscordBot.Extensions;
 using OpenNos.Master.Library.Client;
 using System;
 using System.Threading.Tasks;

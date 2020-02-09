@@ -15,12 +15,11 @@
 using OpenNos.Core;
 using OpenNos.Core.Networking.Communication.Scs.Communication.EndPoints.Tcp;
 using OpenNos.Core.Networking.Communication.Scs.Server;
+using OpenNos.Domain;
+using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenNos.GameObject.Networking;
-using OpenNos.Domain;
-using OpenNos.GameObject.Helpers;
 
 namespace OpenNos.GameObject
 {
@@ -58,7 +57,7 @@ namespace OpenNos.GameObject
 
             // Start the server
             _server.Start();
-            
+
             Logger.Info(Language.Instance.GetMessageFromKey("STARTED"), memberName: "NetworkManager");
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-namespace OpenNos.DAL.EF
+﻿namespace OpenNos.DAL.EF
 {
     public class MinigameLog
     {
