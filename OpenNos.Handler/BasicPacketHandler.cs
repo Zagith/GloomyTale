@@ -2454,7 +2454,15 @@ namespace OpenNos.Handler
                         Morph = Session.Character.UseSp ? (short)Session.Character.Morph : (short)0
                     });
 
-                    if(Session.Character.Morph == 29 || Session.Character.Morph == 30)
+                    if(Session.Character.Morph == 29 || (Session.Character.Morph == 30 && data2 != 15))
+                    {
+                        Session.Character.QuicklistEntries.RemoveAll(n =>
+                        n.Q1 == q1 && n.Q2 == q2
+                        && (Session.Character.UseSp ? n.Morph == (Session.Character.Morph == 29 ? 30 : 29) : n.Morph == 0));
+                        if (type == 1 && Session.Character.Morph == 29)
+                            data2 = data2 == 7 ? (short)(data2 + 9) : (short)(data2 + 8);
+                        else if(type == 1 && Session.Character.Morph == 30)
+                            data2 = data2 == 16 ? (short)(data2 - 9) : (short)(data2 - 8);
                         Session.Character.QuicklistEntries.Add(new QuicklistEntryDTO
                         {
                             CharacterId = Session.Character.CharacterId,
@@ -2462,9 +2470,10 @@ namespace OpenNos.Handler
                             Q1 = q1,
                             Q2 = q2,
                             Slot = data1,
-                            Pos = data2 == 7 ? (short)(data2 + 9) : (short)(data2 + 8),
-                            Morph = (short) (Session.Character.Morph == 29 ? 30 : 29)
+                            Pos = data2,
+                            Morph = (short)(Session.Character.Morph == 29 ? 30 : 29)
                         });
+                    }
                     Session.SendPacket($"qset {q1} {q2} {type}.{data1}.{data2}.0");
                     break;
 

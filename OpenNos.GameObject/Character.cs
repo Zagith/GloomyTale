@@ -4349,7 +4349,7 @@ namespace OpenNos.GameObject
                 {
                     QuicklistEntryDTO qi = QuicklistEntries.Find(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? morph : 0));
                     short? pos = qi?.Pos;
-                    if (pos < 8)
+                    if (pos < 8 && qi.Type == 1 && Morph == 29)
                     {
                         pos += 8;
                     }
@@ -5896,7 +5896,7 @@ namespace OpenNos.GameObject
 
             foreach (Skill ski in ServerManager.GetAllSkill())
             {
-                if (specialist != null && ski.Class == Morph + 31 && specialist.SpLevel >= ski.LevelMinimum)
+                if (specialist != null && (ski.Class == Morph + 31 || (Morph == 29 && ski.Class == 61) || (Morph == 30 && ski.Class == 60)) && specialist.SpLevel >= ski.LevelMinimum)
                 {
                     SkillsSp[ski.SkillVNum] = new CharacterSkill { SkillVNum = ski.SkillVNum, CharacterId = CharacterId };
                 }
