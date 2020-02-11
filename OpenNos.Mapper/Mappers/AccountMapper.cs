@@ -20,6 +20,7 @@ namespace OpenNos.Mapper.Mappers
             output.Name = input.Name;
             output.Password = input.Password;
             output.ReferrerId = input.ReferrerId;
+            output.ReferToken = input.ReferToken;
             output.RegistrationIP = input.RegistrationIP;
             output.VerificationToken = input.VerificationToken;
             output.Language = input.Language;
@@ -40,6 +41,7 @@ namespace OpenNos.Mapper.Mappers
             output.Name = input.Name;
             output.Password = input.Password;
             output.ReferrerId = input.ReferrerId;
+            output.ReferToken = input.ReferToken;
             output.RegistrationIP = input.RegistrationIP;
             output.VerificationToken = input.VerificationToken;
             output.Language = input.Language;

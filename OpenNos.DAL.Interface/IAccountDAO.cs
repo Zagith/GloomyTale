@@ -28,6 +28,8 @@ namespace OpenNos.DAL.Interface
 
         AccountDTO LoadById(long accountId);
 
+        AccountDTO LoadByRefToken(string token);
+
         AccountDTO LoadByName(string name);
 
         void WriteGeneralLog(long accountId, string ipAddress, long? characterId, GeneralLogType logType, string logData);

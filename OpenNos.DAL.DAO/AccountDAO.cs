@@ -102,6 +102,30 @@ namespace OpenNos.DAL.DAO
             return null;
         }
 
+        public AccountDTO LoadByRefToken(string token)
+        {
+            try
+            {
+                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                {
+                    Account account = context.Account.FirstOrDefault(a => a.ReferToken.Equals(token));
+                    if (account != null)
+                    {
+                        AccountDTO accountDTO = new AccountDTO();
+                        if (Mapper.Mappers.AccountMapper.ToAccountDTO(account, accountDTO))
+                        {
+                            return accountDTO;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+            return null;
+        }
+
         public AccountDTO LoadByName(string name)
         {
             try

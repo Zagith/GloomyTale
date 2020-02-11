@@ -30,6 +30,7 @@ namespace OpenNos.GameObject
             Name = input.Name;
             Password = input.Password;
             ReferrerId = input.ReferrerId;
+            ReferToken = input.ReferToken;
             RegistrationIP = input.RegistrationIP;
             VerificationToken = input.VerificationToken;
             Language = input.Language;

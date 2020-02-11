@@ -5470,13 +5470,18 @@ namespace OpenNos.GameObject
 
         public void GetReferrerReward()
         {
-            long referrerId = Session.Account.ReferrerId;
-            if (Level >= 70 && referrerId != 0 && !CharacterId.Equals(referrerId))
+            string referrerId = Session.Account.ReferrerId;
+            if (Level >= 70 && referrerId != "0" && !CharacterId.Equals(referrerId))
             {
                 List<GeneralLogDTO> logs = DAOFactory.GeneralLogDAO.LoadByLogType("ReferralProgram", null).Where(g => g.IpAddress.Equals(Session.Account.RegistrationIP.Split(':')[1].Replace("//", ""))).ToList();
                 if (logs.Count <= 5)
                 {
-                    CharacterDTO character = DAOFactory.CharacterDAO.LoadById(referrerId);
+                    AccountDTO account = DAOFactory.AccountDAO.LoadByRefToken(referrerId);
+                    if (account == null)
+                    {
+                        return;
+                    }
+                    CharacterDTO character = DAOFactory.CharacterDAO.LoadById(account.AccountId);
                     if (character == null || character.Level < 70)
                     {
                         return;

@@ -35,6 +35,8 @@ namespace OpenNos.Data
 
         public string ReferrerId { get; set; }
 
+        public string ReferToken { get; set; }
+
         public string RegistrationIP { get; set; }
 
         public string VerificationToken { get; set; }
