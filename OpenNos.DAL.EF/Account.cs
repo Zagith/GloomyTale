@@ -53,7 +53,9 @@ namespace OpenNos.DAL.EF
 
         public virtual ICollection<PenaltyLog> PenaltyLog { get; set; }
 
-        public long ReferrerId { get; set; }
+        public string ReferrerId { get; set; }
+
+        public string ReferToken { get; set; }
 
         [MaxLength(45)]
         public string RegistrationIP { get; set; }
