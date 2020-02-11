@@ -920,7 +920,7 @@ namespace OpenNos.GameObject
                 if (attackerBattleEntity.Character != null && attackerBattleEntity.Character.HasBuff(746))
                     attackerBattleEntity.Character.RemoveBuff(746);
 
-                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Skill.SkillVNum == 1607)
+                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Skill?.SkillVNum == 1607)
                     hitRequest.Session.Character.TeleportOnMap(BattleEntity.MapMonster.MapX, BattleEntity.MapMonster.MapY);
 
                 else if (onyxWings)
