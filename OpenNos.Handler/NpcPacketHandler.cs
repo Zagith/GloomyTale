@@ -1380,7 +1380,7 @@ namespace OpenNos.Handler
                     Session.SendPacket(UserInterfaceHelper.GenerateDelay(5000, 1,
                         $"#guri^710^{npc.MapX}^{npc.MapY}^{npc.MapNpcId}")); // #guri^710^DestinationX^DestinationY^MapNpcId
                 }
-                else if (npc.Shop?.ShopId == 19496)
+                else if (npc.Shop?.ShopId == 202)
                 {
                     Session.SendPacket($"qna #guri^7600 {string.Format(Language.Instance.GetMessageFromKey("PERFECT_ALL"))}");
                 }
