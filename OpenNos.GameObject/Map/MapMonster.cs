@@ -853,10 +853,7 @@ namespace OpenNos.GameObject
             if (IsAlive && hitRequest.Session.Character.Hp > 0 &&
                     (hitRequest.Mate == null || hitRequest.Mate.Hp > 0))
             {
-
-                if (hitRequest.Skill.SkillVNum == 1593)
-                    return;
-
+                
                 double cooldownReduction = hitRequest.Session.Character.GetBuff(CardType.Morale, (byte)AdditionalTypes.Morale.SkillCooldownDecreased)[0];
 
                 int[] increaseEnemyCooldownChance = hitRequest.Session.Character.GetBuff(CardType.DarkCloneSummon, (byte)AdditionalTypes.DarkCloneSummon.IncreaseEnemyCooldownChance);
@@ -923,7 +920,7 @@ namespace OpenNos.GameObject
                 if (attackerBattleEntity.Character != null && attackerBattleEntity.Character.HasBuff(746))
                     attackerBattleEntity.Character.RemoveBuff(746);
 
-                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Skill.SkillVNum == 1607)
+                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Skill?.SkillVNum == 1607)
                     hitRequest.Session.Character.TeleportOnMap(BattleEntity.MapMonster.MapX, BattleEntity.MapMonster.MapY);
 
                 else if (onyxWings)

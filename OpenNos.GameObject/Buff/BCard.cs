@@ -239,12 +239,12 @@ namespace OpenNos.GameObject
                                             if(buff.Card?.BuffType == BuffType.Bad && session.HasBuff(746))
                                                 return;
 
-                                            if (cardId != null && cardId == 118 && session.HasBuff(155))
+                                            if (cardId != null && (cardId == 118 || ItemVNum == 1248 || buff.Card?.CardId == 118) && session.HasBuff(155))
                                                 return;
                                             
 
                                             //Overwriting BearSpirit buff on Energy pot buff
-                                            if (cardId != null && cardId == 155)
+                                            if (cardId != null && session.Character != null && cardId == 155)
                                             {
                                                 session.RemoveBuff(118);
                                                 session.AddBuff(buff, sender, x: x, y: y);

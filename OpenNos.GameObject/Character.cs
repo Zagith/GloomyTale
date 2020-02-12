@@ -4349,7 +4349,7 @@ namespace OpenNos.GameObject
                 {
                     QuicklistEntryDTO qi = QuicklistEntries.Find(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? morph : 0));
                     short? pos = qi?.Pos;
-                    if (pos < 8)
+                    if (pos < 8 && qi.Type == 1 && Morph == 29)
                     {
                         pos += 8;
                     }
@@ -5470,13 +5470,18 @@ namespace OpenNos.GameObject
 
         public void GetReferrerReward()
         {
-            long referrerId = Session.Account.ReferrerId;
-            if (Level >= 70 && referrerId != 0 && !CharacterId.Equals(referrerId))
+            string referrerId = Session.Account.ReferrerId;
+            if (Level >= 70 && referrerId != "0" && !CharacterId.Equals(referrerId))
             {
                 List<GeneralLogDTO> logs = DAOFactory.GeneralLogDAO.LoadByLogType("ReferralProgram", null).Where(g => g.IpAddress.Equals(Session.Account.RegistrationIP.Split(':')[1].Replace("//", ""))).ToList();
                 if (logs.Count <= 5)
                 {
-                    CharacterDTO character = DAOFactory.CharacterDAO.LoadById(referrerId);
+                    AccountDTO account = DAOFactory.AccountDAO.LoadByRefToken(referrerId);
+                    if (account == null)
+                    {
+                        return;
+                    }
+                    CharacterDTO character = DAOFactory.CharacterDAO.LoadById(account.AccountId);
                     if (character == null || character.Level < 70)
                     {
                         return;
@@ -5896,7 +5901,7 @@ namespace OpenNos.GameObject
 
             foreach (Skill ski in ServerManager.GetAllSkill())
             {
-                if (specialist != null && ski.Class == Morph + 31 && specialist.SpLevel >= ski.LevelMinimum)
+                if (specialist != null && (ski.Class == Morph + 31 || (Morph == 29 && ski.Class == 61) || (Morph == 30 && ski.Class == 60)) && specialist.SpLevel >= ski.LevelMinimum)
                 {
                     SkillsSp[ski.SkillVNum] = new CharacterSkill { SkillVNum = ski.SkillVNum, CharacterId = CharacterId };
                 }

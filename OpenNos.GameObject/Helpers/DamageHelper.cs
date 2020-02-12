@@ -695,6 +695,14 @@ namespace OpenNos.GameObject.Helpers
                     if (attacker.Buffs.ContainsKey(413) || attacker.Buffs.ContainsKey(414))
                         defender.FireResistance -= 10;
 
+                    //MA 1st sp malus
+                    if (defender.Buffs.ContainsKey(683))
+                    {
+                        defender.FireResistance -= 30;
+                        defender.RemoveBuff(683);
+                    }
+                    
+
                     defender.FireResistance += GetShellArmorEffectValue(ShellArmorEffectType.IncreasedFireResistence);
                     defender.FireResistance += GetShellArmorEffectValue(ShellArmorEffectType.IncreasedAllResistence);
                     staticBoostCategory5 += GetShellWeaponEffectValue(ShellWeaponEffectType.IncreasedFireProperties);
@@ -1361,6 +1369,14 @@ namespace OpenNos.GameObject.Helpers
             if (attacker.HasBuff(700))
                 attacker.CritChance += 50;
 
+            // MA 1st Sp crit chance
+            if (defender.HasBuff(681))
+            {
+                attacker.CritChance += 10;
+                defender.RemoveBuff(681);
+            }
+            
+
 
             attacker.CritRate += GetShellWeaponEffectValue(ShellWeaponEffectType.CriticalDamage);
             attacker.CritRate += GetAttackerBenefitingBuffs(CardType.Critical, (byte)AdditionalTypes.Critical.DamageIncreased)[0];
@@ -1371,7 +1387,19 @@ namespace OpenNos.GameObject.Helpers
                 attacker.CritRate += 50;
 
             if (attacker.HasBuff(692))
+            {
                 attacker.CritRate += 100;
+                defender.RemoveBuff(692);
+            }
+            
+
+            //MA 1st sp crit damage
+            if (defender.HasBuff(682))
+            {
+                attacker.CritRate += 20;
+                defender.RemoveBuff(682);
+            }
+            
 
             if (defender.CellonOptions != null)
             {
@@ -1847,10 +1875,28 @@ namespace OpenNos.GameObject.Helpers
                 }
             }
 
-            
-            
 
-            #endregion 
+
+
+            #endregion
+
+            #region MA 1 sp malus
+
+            
+            if (defender != null && skill != null && skill.SkillVNum == 1593)
+            {
+                rnd = ServerManager.RandomNumber();
+                if (rnd <= 33)
+                    defender.AddBuff(new Buff(683, attacker.Level), attacker);
+                rnd = ServerManager.RandomNumber();
+                if (rnd <= 33)
+                    defender.AddBuff(new Buff(682, attacker.Level), attacker);
+                rnd = ServerManager.RandomNumber();
+                if (rnd <= 33)
+                    defender.AddBuff(new Buff(681, attacker.Level), attacker);
+            }
+            
+            #endregion
 
             if (defender.Character != null && defender.HasBuff(CardType.NoDefeatAndNoDamage, (byte)AdditionalTypes.NoDefeatAndNoDamage.TransferAttackPower))
             {

@@ -465,9 +465,6 @@ namespace OpenNos.Handler
                     hitmode = 4;
                 }
 
-                if(hitRequest.Skill.SkillVNum == 1593)
-                    return;
-
                 if (ServerManager.RandomNumber() < target.Character.GetBuff(CardType.DarkCloneSummon,
                     (byte)AdditionalTypes.DarkCloneSummon.ConvertDamageToHPChance)[0])
                 {
@@ -1600,6 +1597,7 @@ namespace OpenNos.Handler
                             (int)(Session.Character.Hp / Session.Character.HPLoad() * 100), 0, -2,
                             (byte)(ski.Skill.SkillType - 1)));
 
+
                             if (targetRange != 0)
                             {
                                 foreach (ClientSession character in ServerManager.Instance.Sessions.Where(s =>
@@ -1698,6 +1696,24 @@ namespace OpenNos.Handler
                                 Session.Character.PositionX, Session.Character.PositionY, true,
                                 (int)(Session.Character.Hp / Session.Character.HPLoad() * 100), 0, -1,
                                 (byte)(ski.Skill.SkillType - 1)));
+
+                            //MA 1sp sp same cooldown for both transformation
+                            if (ski.Skill.SkillVNum == 1585)
+                                Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player,
+                                    Session.Character.CharacterId, 1, Session.Character.CharacterId, 1594,
+                                    (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), 41,
+                                    7494, Session.Character.PositionX,
+                                    Session.Character.PositionY, true,
+                                    (int)(Session.Character.Hp / Session.Character.HPLoad() * 100), 0, -2,
+                                    (byte)(ski.Skill.SkillType - 1)));
+                            else if (ski.Skill.SkillVNum == 1594)
+                                Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player,
+                                    Session.Character.CharacterId, 1, Session.Character.CharacterId, 1585,
+                                    (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), 41,
+                                    7495, Session.Character.PositionX,
+                                    Session.Character.PositionY, true,
+                                    (int)(Session.Character.Hp / Session.Character.HPLoad() * 100), 0, -2,
+                                    (byte)(ski.Skill.SkillType - 1)));
 
                             if (ski.SkillVNum != 1330)
                             {
@@ -2518,6 +2534,53 @@ namespace OpenNos.Handler
                                 }
                             });
 
+                        if (ski.Skill.SkillVNum == 1585)
+                            Observable.Timer(TimeSpan.FromMilliseconds(cdResetMilliseconds))
+                                .Subscribe(o =>
+                                {
+                                    sendSkillReset();
+                                    if (cdResetMilliseconds <= 500) Observable.Timer(TimeSpan.FromMilliseconds(500)).Subscribe(obs => sendSkillReset());
+                                    void sendSkillReset()
+                                    {
+                                        List<CharacterSkill> charSkills = Session.Character.GetSkills();
+
+                                        CharacterSkill skill = charSkills.Find(s => s.Skill?.CastId == 16 && (s.Skill?.UpgradeSkill == 0 || s.Skill?.SkillType == 1));
+
+                                        if (skill != null && skill.LastUse.AddMilliseconds((short)(skill.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D) * 100 - 100) <= DateTime.Now)
+                                        {
+                                            if (cooldownReduction < 0)
+                                            {
+                                                skill.LastUse = DateTime.Now.AddMilliseconds(skill.Skill.Cooldown * 100 * -1);
+                                            }
+
+                                            Session.SendPacket(StaticPacketHelper.SkillReset(16));
+                                        }
+                                    }
+                                });
+                        else if (ski.Skill.SkillVNum == 1594)
+                            Observable.Timer(TimeSpan.FromMilliseconds(cdResetMilliseconds))
+                                .Subscribe(o =>
+                                {
+                                    sendSkillReset();
+                                    if (cdResetMilliseconds <= 500) Observable.Timer(TimeSpan.FromMilliseconds(500)).Subscribe(obs => sendSkillReset());
+                                    void sendSkillReset()
+                                    {
+                                        List<CharacterSkill> charSkills = Session.Character.GetSkills();
+
+                                        CharacterSkill skill = charSkills.Find(s => s.Skill?.CastId == 7 && (s.Skill?.UpgradeSkill == 0 || s.Skill?.SkillType == 1));
+
+                                        if (skill != null && skill.LastUse.AddMilliseconds((short)(skill.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D) * 100 - 100) <= DateTime.Now)
+                                        {
+                                            if (cooldownReduction < 0)
+                                            {
+                                                skill.LastUse = DateTime.Now.AddMilliseconds(skill.Skill.Cooldown * 100 * -1);
+                                            }
+
+                                            Session.SendPacket(StaticPacketHelper.SkillReset(7));
+                                        }
+                                    }
+                                });
+
                         int[] fairyWings = Session.Character.GetBuff(CardType.EffectSummon, 11);
                         int random = ServerManager.RandomNumber();
                         if (fairyWings[0] > random)
@@ -2545,7 +2608,7 @@ namespace OpenNos.Handler
                                 }
                             });
 
-                        //Test lotus position additional buff fix
+                        //Lotus position additional buff fix
                         if(Session.Character.HasBuff(689) && ski.SkillVNum == 1610)
                             Session.Character.AddBuff(new Buff(705,Session.Character.Level), Session?.Character?.BattleEntity);
 

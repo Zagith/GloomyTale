@@ -33,7 +33,9 @@ namespace OpenNos.Data
 
         public string Password { get; set; }
 
-        public long ReferrerId { get; set; }
+        public string ReferrerId { get; set; }
+
+        public string ReferToken { get; set; }
 
         public string RegistrationIP { get; set; }
 

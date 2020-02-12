@@ -193,7 +193,7 @@ namespace OpenNos.World
                 Console.ReadKey();
             }
 #if !DEBUG
-            DiscordHelper serverStatus = new DiscordHelper();
+            //DiscordHelper serverStatus = new DiscordHelper();
 #endif
         }
 
