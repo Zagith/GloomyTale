@@ -4430,8 +4430,8 @@ namespace OpenNos.Handler
                             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                             if (DAOFactory.ShopDAO.LoadById(shop.ShopId) is ShopDTO shopDTO)
                             {
-                                shop.NameI18NKey = packet.Name;
-                                shopDTO.NameI18NKey = packet.Name;
+                                shop.Name = packet.Name;
+                                shopDTO.Name = packet.Name;
                                 DAOFactory.ShopDAO.Update(ref shopDTO);
 
                                 Session.CurrentMapInstance.Broadcast($"shop 2 {npc.MapNpcId} {npc.Shop.ShopId} {npc.Shop.MenuType} {npc.Shop.ShopType} {npc.Shop.Name}");

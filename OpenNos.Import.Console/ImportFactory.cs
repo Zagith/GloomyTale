@@ -2767,7 +2767,7 @@ namespace OpenNos.Import.Console
                         name = name.Trim();
                         ShopDTO shop = new ShopDTO
                         {
-                            NameI18NKey = $"zts{ztsNum}e",
+                            Name = $"zts{ztsNum}e",
                             MapNpcId = npc.MapNpcId,
                             MenuType = byte.Parse(currentPacket[4]),
                             ShopType = byte.Parse(currentPacket[5])

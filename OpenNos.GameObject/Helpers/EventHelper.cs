@@ -1046,15 +1046,35 @@ namespace OpenNos.GameObject.Helpers
                                     short perc = 0;
                                     switch (meteo.Item1)
                                     {
-#warning TODO: Add other levels
-                                        case 55:
-                                            perc = 25;
+                                        case 25:
+                                            perc = 1;
                                             break;
-                                        case 80:
-                                            perc = 60;
+                                        case 35:
+                                            perc = 2;
+                                            break;
+                                        case 45:
+                                            perc = 3;
+                                            break;
+                                        case 55:
+                                            perc = 4;
+                                            break;
+                                        case 65:
+                                            perc = 5;
+                                            break;
+                                        case 75:
+                                            perc = 6;
+                                            break;
+                                        case 85:
+                                            perc = 7;
+                                            break;
+                                        case 90:
+                                            perc = 8;
+                                            break;
+                                        case 95:
+                                            perc = 9;
                                             break;
                                         case 99:
-                                            perc = 80;
+                                            perc = 10;
                                             break;
                                     }
                                     foreach (ClientSession c in evt.MapInstance.Sessions)

@@ -330,7 +330,7 @@ namespace OpenNos.GameObject
             return mlobjstring;
         }
 
-        public IEnumerable<string> GenerateNPCShopOnMap(ClientSession session) => (from npc in Npcs where npc.Shop != null select $"shop 2 {npc.MapNpcId} {npc.Shop.ShopId} {npc.Shop.MenuType} {npc.Shop.ShopType} {npc.Shop.Name[session.Account.Language]}").ToList();
+        public IEnumerable<string> GenerateNPCShopOnMap(ClientSession session) => (from npc in Npcs where npc.Shop != null select $"shop 2 {npc.MapNpcId} {npc.Shop.ShopId} {npc.Shop.MenuType} {npc.Shop.ShopType} {npc.Shop.Name}").ToList();
 
         public IEnumerable<string> GeneratePlayerShopOnMap() => UserShops.Select(shop => $"pflag 1 {shop.Value.OwnerId} {shop.Key + 1}").ToList();
 

@@ -16,7 +16,7 @@ namespace OpenNos.Mapper.Mappers
 
             output.MapNpcId = input.MapNpcId;
             output.MenuType = input.MenuType;
-            output.Name = input.NameI18NKey;
+            output.Name = input.Name;
             output.ShopId = input.ShopId;
             output.ShopType = input.ShopType;
 
@@ -32,7 +32,7 @@ namespace OpenNos.Mapper.Mappers
 
             output.MapNpcId = input.MapNpcId;
             output.MenuType = input.MenuType;
-            output.NameI18NKey = input.Name;
+            output.Name = input.Name;
             output.ShopId = input.ShopId;
             output.ShopType = input.ShopType;
 

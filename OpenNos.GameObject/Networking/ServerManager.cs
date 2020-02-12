@@ -2071,9 +2071,9 @@ namespace OpenNos.GameObject.Networking
             foreach (MapInstance map in maps)
             {
                 IEnumerable<MapMonster> spawnedMonsters = map.Monsters.Where(s => s.MonsterVNum.Equals(424));
-                if (spawnedMonsters.Count() > 4)
+                if (spawnedMonsters.Count() == 4)
                 {
-                    continue;
+                    return;
                 }
                 if (map.MeteoriteLevel > 0)
                 {
