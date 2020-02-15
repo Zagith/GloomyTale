@@ -42,6 +42,7 @@ using GloomyTale.GameObject.Event.ACT4;
 using FastMember;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
+using GloomyTale.Cofiguration;
 
 namespace GloomyTale.GameObject.Networking
 {
@@ -67,7 +68,7 @@ namespace GloomyTale.GameObject.Networking
 
         private static readonly ConcurrentDictionary<Guid, MapInstance> _mapinstances = new ConcurrentDictionary<Guid, MapInstance>();
 
-        private static readonly ConcurrentBag<Map> _maps = new ConcurrentBag<Map>();
+        private static readonly List<Map> _maps = new List<Map>();
 
         private static readonly ConcurrentBag<NpcMonster> _npcmonsters = new ConcurrentBag<NpcMonster>();
 
@@ -1290,7 +1291,7 @@ namespace GloomyTale.GameObject.Networking
             Act6Zenas = new PercentBar();*/
         }
 
-        public void Initialize()
+        /*public void Initialize()
         {
             Act4RaidStart = DateTime.Now;
             Act4AngelStat = new Act4Stat();
@@ -1741,6 +1742,239 @@ namespace GloomyTale.GameObject.Networking
                 Logger.Log.Error("General Error", ex);
             }
 
+            WorldId = Guid.NewGuid();
+        }*/
+
+        public void LoadItems()
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            IEnumerable<ItemDTO> items = DAOFactory.Instance.ItemDAO.LoadAll();
+            Dictionary<short?, BCardDTO[]> bcards = DAOFactory.Instance.BCardDAO.LoadAll().Where(s => s.ItemVNum.HasValue).GroupBy(s => s.ItemVNum).ToDictionary(s => s.Key, s => s.ToArray());
+            Dictionary<short, RollGeneratedItemDTO[]> rollItems = DAOFactory.Instance.RollGeneratedItemDAO.LoadAll().GroupBy(s => s.OriginalItemVNum).ToDictionary(s => s.Key, s => s.ToArray());
+            Dictionary<short, Item> item = new Dictionary<short, Item>();
+            foreach (ItemDTO itemDto in items)
+            {
+                Item newItem;
+                switch (itemDto.ItemType)
+                {
+                    case ItemType.Ammo:
+                        newItem = new NoFunctionItem(itemDto);
+                        break;
+
+                    case ItemType.Armor:
+                        newItem = new WearableItem(itemDto);
+                        break;
+
+                    case ItemType.Box:
+                        newItem = new BoxItem(itemDto);
+                        break;
+
+                    case ItemType.Event:
+                        newItem = new MagicalItem(itemDto);
+                        break;
+
+                    case ItemType.Fashion:
+                        newItem = new WearableItem(itemDto);
+                        break;
+
+                    case ItemType.Food:
+                        newItem = new FoodItem(itemDto);
+                        break;
+
+                    case ItemType.Jewelery:
+                        newItem = new WearableItem(itemDto);
+                        break;
+
+                    case ItemType.Magical:
+                        newItem = new MagicalItem(itemDto);
+                        break;
+
+
+                    case ItemType.Potion:
+                        newItem = new PotionItem(itemDto);
+                        break;
+
+                    case ItemType.Production:
+                        newItem = new ProduceItem(itemDto);
+                        break;
+
+
+                    case ItemType.Shell:
+                        newItem = new MagicalItem(itemDto);
+                        break;
+
+                    case ItemType.Snack:
+                        newItem = new SnackItem(itemDto);
+                        break;
+
+                    case ItemType.Special:
+                        newItem = new SpecialItem(itemDto);
+                        break;
+
+                    case ItemType.Specialist:
+                        newItem = new WearableItem(itemDto);
+                        break;
+
+                    case ItemType.Teacher:
+                        newItem = new TeacherItem(itemDto);
+                        break;
+
+                    case ItemType.Upgrade:
+                        newItem = new UpgradeItem(itemDto);
+                        break;
+
+                    case ItemType.Weapon:
+                        newItem = new WearableItem(itemDto);
+                        break;
+
+                    case ItemType.Main:
+                    case ItemType.Map:
+                    case ItemType.Part:
+                    case ItemType.Quest1:
+                    case ItemType.Quest2:
+                    case ItemType.Sell:
+                    default:
+                        newItem = new NoFunctionItem(itemDto);
+                        break;
+                }
+
+                if (bcards.TryGetValue(newItem.VNum, out BCardDTO[] bcardDtos))
+                {
+                    newItem.BCards.AddRange(bcardDtos.Cast<BCard>());
+                }
+                if (rollItems.TryGetValue(newItem.VNum, out RollGeneratedItemDTO[] rolls))
+                {
+                    newItem.RollGeneratedItems.AddRange(rolls);
+                }
+
+                item[itemDto.VNum] = newItem;
+            }
+
+            //Items.AddRange(item.Values);
+            //Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("ITEMS_LOADED"), Items.Count));
+        }
+
+        private static void LoadMapsAndContent()
+        {
+            try
+            {
+                int i = 0;
+                int monstercount = 0;
+
+                var monsters = DAOFactory.Instance.MapMonsterDAO.LoadAll().GroupBy(s => s.MapId).ToDictionary(s => s.Key, s => s.ToArray());
+                var npcs = DAOFactory.Instance.MapNpcDAO.LoadAll().GroupBy(s => s.MapId).ToDictionary(s => s.Key, s => s.ToArray());
+                //var portals = DAOFactory.Instance.PortalDAO.LoadAll().GroupBy(s => s.SourceMapId).ToDictionary(s => s.Key, s => s.ToArray());
+                MapTypeMapDTO[] mapTypes = DAOFactory.Instance.MapTypeMapDAO.LoadAll().ToArray();
+                MapTypeDTO[] mapTypeMap = DAOFactory.Instance.MapTypeDAO.LoadAll().ToArray();
+                //IEnumerable<RespawnMapTypeDTO> respawns = DAOFactory.Instance.RespawnMapTypeDAO.LoadAll();
+
+                foreach (MapDTO map in DAOFactory.Instance.MapDAO.LoadAll().ToArray())
+                {
+                    Guid guid = Guid.NewGuid();
+                    IEnumerable<MapTypeMapDTO> mapType = mapTypes.Where(s => map.MapId == s.MapId);
+                    var mapObject = new Map(map.MapId, map.GridMapId, map.Data)
+                        //mapTypeMap.Where(s => mapType.Any(p => p.MapTypeId == s.MapTypeId)), respawns)
+                    {
+                        Music = map.Music,
+                        NameI18NKey = map.NameI18NKey,
+                        ShopAllowed = map.ShopAllowed,
+                        XpRate = map.XpRate,
+                        MeteoriteLevel = map.MeteoriteLevel,
+                        GoldMapRate = map.GoldMapRate
+                    };
+                    var newMap = new MapInstance(mapObject, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, map.Side, map.GoldMapRate);
+                    _mapinstances.TryAdd(guid, newMap);
+
+                    /*if (portals.TryGetValue(map.MapId, out PortalDTO[] port))
+                    {
+                        newMap.LoadPortals(port);
+                    }*/
+
+                    /*if (npcs.TryGetValue(map.MapId, out MapNpcDTO[] np))
+                    {
+                        newMap.LoadNpcs(np);
+                    }*/
+
+                    /*if (monsters.TryGetValue(map.MapId, out MapMonsterDTO[] monst))
+                    {
+                        newMap.LoadMonsters(monst);
+                    }*/
+
+                    /*foreach (MapNpc mapNpc in newMap.Npcs)
+                    {
+                        mapNpc.MapInstance = newMap;
+                        newMap.AddNpc(mapNpc);
+                    }*/
+
+                    foreach (MapMonster mapMonster in newMap.Monsters)
+                    {
+                        mapMonster.MapInstance = newMap;
+                        newMap.AddMonster(mapMonster);
+                    }
+
+
+                    monstercount += newMap.Monsters.Count;
+                    _maps.Add(mapObject);
+                    i++;
+                }
+
+                Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPS_LOADED"), i));
+                Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPMONSTERS_LOADED"), monstercount));
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error("General Error", e);
+            }
+        }
+
+        public void Initialize(GameRateConfiguration rateConf, GameMinMaxConfiguration levelConf, GameTrueFalseConfiguration eventsConf)//, GameScheduledEventsConfiguration gameScheduledConf)
+        {
+            //RateConfiguration = rateConf;
+            //GameMinMaxConfiguration = levelConf;
+            //GameTrueFalseConfiguration = eventsConf;
+            //GameScheduledEventsConfiguration = gameScheduledConf;
+            /*
+             * Rates
+             */
+            InitializeConfigurations();
+            //CharacterHomes = DaoFactory.Instance.CharacterHomeDao.LoadAll();
+
+            //CommunicationServiceClient.Instance.SetMaintenanceState(Maintenance);
+            //LoadItems();
+            //LoadMonsterDrops();
+            //LoadMonsterSkills();
+            //LoadBazaar();
+            //LoadNpcMonsters();
+            //LoadRecipes();
+            //LoadShopItems();
+            //LoadShopSkills();
+            //LoadShops();
+            //LoadTeleporters();
+            //LoadSkills();
+            //LoadCards();
+            //LoadQuests();
+            //LoadMapNpcs();
+            LoadMapsAndContent();
+            LoadFamilies();
+            LaunchEvents();
+            //LoadAct4ShipMaps();
+            RefreshRanking();
+            CharacterRelations = DAOFactory.Instance.CharacterRelationDAO.LoadAll().ToList();
+            PenaltyLogs = DAOFactory.Instance.PenaltyLogDAO.LoadAll().ToList();
+
+            /*if (DAOFactory.Instance.MapDAO.LoadById((short)SpecialMapIdType.Lobby) != null)
+            {
+                Logger.Log.Info("[LOBBY] Lobby Map Loaded");
+                LobbyMapInstance = GenerateMapInstance((short)SpecialMapIdType.Lobby,
+                    MapInstanceType.LobbyMapInstance, new InstanceBag());
+            }*/
+
+            //LoadArenaMap();
+            //LoadAct4Maps();
+            //LoadAct4();
+            LoadScriptedInstances();
+
+            //Register the new created TCPIP server to the api
             WorldId = Guid.NewGuid();
         }
 
@@ -2621,24 +2855,24 @@ namespace GloomyTale.GameObject.Networking
             Observable.Interval(TimeSpan.FromMinutes(RandomNumber(5, 20))).Subscribe(x => MeteoriteSpawn());
 
             EventHelper.Instance.RunEvent(new EventContainer(GetMapInstance(GetBaseMapInstanceIdByMapId(98)), EventActionType.NPCSEFFECTCHANGESTATE, true));
-            Parallel.ForEach(Schedules, schedule => Observable.Timer(TimeSpan.FromSeconds(EventHelper.GetMilisecondsBeforeTime(schedule.Time).TotalSeconds), TimeSpan.FromDays(1)).Subscribe(e =>
+            /*Parallel.ForEach(Schedules, schedule => Observable.Timer(TimeSpan.FromSeconds(EventHelper.GetMilisecondsBeforeTime(schedule.Time).TotalSeconds), TimeSpan.FromDays(1)).Subscribe(e =>
             {
                 if (schedule.DayOfWeek == "" || schedule.DayOfWeek == DateTime.Now.DayOfWeek.ToString())
                 {
                     EventHelper.GenerateEvent(schedule.Event, schedule.LvlBracket);
                 }
-            }));
-            EventHelper.GenerateEvent(EventType.ACT4SHIP);
+            }));*/
+            //EventHelper.GenerateEvent(EventType.ACT4SHIP);
 
-            Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(x => RemoveItemProcess());
-            Observable.Interval(TimeSpan.FromMilliseconds(400)).Subscribe(x =>
+            //Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(x => RemoveItemProcess());
+            /*Observable.Interval(TimeSpan.FromMilliseconds(400)).Subscribe(x =>
             {
                 Parallel.ForEach(_mapinstances, map =>
                 {
                     Parallel.ForEach(map.Value.Npcs, npc => npc.StartLife());
                     Parallel.ForEach(map.Value.Monsters, monster => monster.StartLife());
                 });
-            });
+            });*/
 
             CommunicationServiceEvents.Instance.SessionKickedEvent += OnSessionKicked;
             CommunicationServiceEvents.Instance.MessageSentToCharacter += OnMessageSentToCharacter;

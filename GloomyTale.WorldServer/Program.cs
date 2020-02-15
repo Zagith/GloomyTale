@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
+using GloomyTale.Cofiguration;
 using GloomyTale.Communication;
 using GloomyTale.Communication.RPC;
 using GloomyTale.Core;
@@ -215,6 +216,14 @@ namespace GloomyTale.World
                 }
 
                 DAOFactory.Initialize(coreContainer.Resolve<DAOFactory>());
+
+                // initialilize maps
+                ServerManager.Instance.Initialize(
+                    DependencyContainer.Instance.Get<GameRateConfiguration>(),
+                    DependencyContainer.Instance.Get<GameMinMaxConfiguration>(),
+                    DependencyContainer.Instance.Get<GameTrueFalseConfiguration>()
+                    //DependencyContainer.Instance.Get<GameScheduledEventsConfiguration>()
+                );
 
                 PacketFactory.Initialize<WalkPacket>();
                 string ip = "127.0.0.1";

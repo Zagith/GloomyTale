@@ -21,9 +21,9 @@
     },
     "Without Crown": {
       "Projects": {
-        "Opennos.World": {},
-        "Opennos.Login": {},
-        "Opennos.Master.Server": {}
+        "GloomyTale.World": {},
+        "GloomyTale.Login": {},
+        "GloomyTale.Master": {}
       }
     },
     "With Crown": {

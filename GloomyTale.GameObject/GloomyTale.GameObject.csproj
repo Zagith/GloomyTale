@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GloomyTale.Cofiguration\GloomyTale.Cofiguration.csproj" />
     <ProjectReference Include="..\GloomyTale.Core\GloomyTale.Core.csproj" />
     <ProjectReference Include="..\GloomyTale.DAL.Interface\GloomyTale.DAL.Interface.csproj" />
     <ProjectReference Include="..\GloomyTale.DAL\GloomyTale.DAL.csproj" />
