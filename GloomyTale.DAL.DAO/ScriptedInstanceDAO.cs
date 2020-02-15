@@ -1,0 +1,99 @@
+﻿/*
+ * This file is part of the OpenNos Emulator Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+using GloomyTale.Core;
+using GloomyTale.DAL.EF;
+using GloomyTale.DAL.EF.Helpers;
+using GloomyTale.DAL.Interface;
+using GloomyTale.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+
+namespace GloomyTale.DAL.DAO
+{
+    public class ScriptedInstanceDAO : MappingBaseDao<ScriptedInstance, ScriptedInstanceDTO>, IScriptedInstanceDAO
+    {
+        public ScriptedInstanceDAO(IMapper mapper) : base(mapper)
+        { }
+
+        #region Methods
+
+        public void Insert(List<ScriptedInstanceDTO> scriptedInstances)
+        {
+            try
+            {
+                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                {
+                    
+                    foreach (ScriptedInstanceDTO scriptedInstance in scriptedInstances)
+                    {
+                        ScriptedInstance entity = new ScriptedInstance();
+                        Mapper.Mappers.ScriptedInstanceMapper.ToScriptedInstance(scriptedInstance, entity);
+                        context.ScriptedInstance.Add(entity);
+                    }
+                    
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(e);
+            }
+        }
+
+        public ScriptedInstanceDTO Insert(ScriptedInstanceDTO scriptedInstance)
+        {
+            try
+            {
+                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                {
+                    ScriptedInstance entity = new ScriptedInstance();
+                    Mapper.Mappers.ScriptedInstanceMapper.ToScriptedInstance(scriptedInstance, entity);
+                    context.ScriptedInstance.Add(entity);
+                    context.SaveChanges();
+                    if (Mapper.Mappers.ScriptedInstanceMapper.ToScriptedInstanceDTO(entity, scriptedInstance))
+                    {
+                        return scriptedInstance;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(e);
+                return null;
+            }
+        }
+
+        public IEnumerable<ScriptedInstanceDTO> LoadByMap(short mapId)
+        {
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                List<ScriptedInstanceDTO> result = new List<ScriptedInstanceDTO>();
+                foreach (ScriptedInstance timespaceObject in context.ScriptedInstance.Where(c => c.MapId.Equals(mapId)))
+                {
+                    ScriptedInstanceDTO dto = new ScriptedInstanceDTO();
+                    Mapper.Mappers.ScriptedInstanceMapper.ToScriptedInstanceDTO(timespaceObject, dto);
+                    result.Add(dto);
+                }
+                return result;
+            }
+        }
+
+        #endregion
+    }
+}

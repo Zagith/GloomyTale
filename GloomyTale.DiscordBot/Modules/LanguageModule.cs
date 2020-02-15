@@ -15,11 +15,6 @@ namespace GloomyTale.DiscordBot.Modules
         {
             if (Context.Channel.Name == "language-chooise")
             {
-                if (region.ToString() == "English")
-                {
-                    await ReplyAsync("English language is default.");
-                    return;
-                }
                 var role = Context.Guild.Roles.FirstOrDefault(r => r.Name == $"{region.ToString()}");
                 if (role == null)
                 {
@@ -38,10 +33,6 @@ namespace GloomyTale.DiscordBot.Modules
                     await user.AddRoleAsync(role);
                     await ReplyAsync($"{user.Username} got the role {role.Name}.");
                 }
-            }
-            else
-            {
-                await ReplyAsync("You have to be on #language-chooise.");
             }
         }
     }

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Discord.Net" Version="2.1.1" />
+    <PackageReference Include="FastMember" Version="1.5.0" />
+    <PackageReference Include="Mapster" Version="4.1.1" />
+    <PackageReference Include="System.Reactive" Version="4.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GloomyTale.Cofiguration\GloomyTale.Cofiguration.csproj" />
+    <ProjectReference Include="..\GloomyTale.Core\GloomyTale.Core.csproj" />
+    <ProjectReference Include="..\GloomyTale.DAL.Interface\GloomyTale.DAL.Interface.csproj" />
+    <ProjectReference Include="..\GloomyTale.DAL\GloomyTale.DAL.csproj" />
+    <ProjectReference Include="..\GloomyTale.Data\GloomyTale.Data.csproj" />
+    <ProjectReference Include="..\GloomyTale.Domain\GloomyTale.Domain.csproj" />
+    <ProjectReference Include="..\GloomyTale.Master.Library\GloomyTale.Communication.csproj" />
+    <ProjectReference Include="..\GloomyTale.PathFinder\GloomyTale.PathFinder.csproj" />
+    <ProjectReference Include="..\GloomyTale.XMLModel\GloomyTale.XMLModel.csproj" />
+  </ItemGroup>
+
+</Project>
