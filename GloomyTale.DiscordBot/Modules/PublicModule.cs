@@ -1,13 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using GloomyTale.DiscordBot.Extensions;
-using GloomyTale.DiscordBot.Services;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+using OpenNos.Master.Library.Client;
 using System.Threading.Tasks;
 
 namespace GloomyTale.DiscordBot.Modules
@@ -16,13 +10,33 @@ namespace GloomyTale.DiscordBot.Modules
     {
         [Command("del-msg")]
         [Name("del-msg <amount>")]
-        [Summary("Deletes a specified amount of messages")]
+        [Summary("STAFF: Deletes a specified amount of messages")]
         [RequireUserPermission(GuildPermission.ManageMessages)]
         [RequireBotPermission(GuildPermission.ManageMessages)]
         public async Task Delete(int amount)
         {
             var messages = await Context.Channel.GetMessagesAsync(amount + 1).FlattenAsync();
             await ((SocketTextChannel)Context.Channel).DeleteMessagesAsync(messages);
+        }
+
+        [Command("reboot")]
+        [Name("reboot")]
+        [Summary("STAFF: Restart all channels")]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task Reboot()
+        {
+            DiscordServiceClient.Instance.RestartAll();
+            await ReplyAsync("In restarting...");
+        }
+
+        [Command("home")]
+        [Name("home")]
+        [Summary("/home <characterName>/nSTAFF: Teleport a character to GloomyVille")]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task Home(string characterName)
+        {
+            DiscordServiceClient.Instance.Home(characterName);
+            await ReplyAsync("In restarting...");
         }
 
         /*[Command("clear")]
@@ -37,6 +51,6 @@ namespace GloomyTale.DiscordBot.Modules
             {
                 await clone;
             }
-        }  */      
+        }  */
     }
 }
