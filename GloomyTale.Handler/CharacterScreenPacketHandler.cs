@@ -28,6 +28,7 @@ using System.Collections.Concurrent;
 using GloomyTale.Core.Interfaces.Packets.ClientPackets;
 using GloomyTale.GameObject.Helpers;
 using GloomyTale.GameObject.Networking;
+using GloomyTale.Core.Extensions;
 
 namespace GloomyTale.Handler
 {
@@ -229,7 +230,7 @@ namespace GloomyTale.Handler
                 return;
             }
 
-            if (account.Password.ToLower() == CryptographyBase.Sha512(characterDeletePacket.Password))
+            if (account.Password.ToLower() == characterDeletePacket.Password.ToSha512())
             {
                 CharacterDTO character =
                     DAOFactory.Instance.CharacterDAO.LoadBySlot(account.AccountId, characterDeletePacket.Slot);
@@ -306,7 +307,7 @@ namespace GloomyTale.Handler
                 {
                     if (account != null)
                     {
-                        if (account.Password.ToLower().Equals(CryptographyBase.Sha512(loginPacketParts[6]))
+                        if (account.Password.Equals(loginPacketParts[6].ToSha512(), StringComparison.OrdinalIgnoreCase)
                             || isCrossServerLogin)
                         {
                             Session.InitializeAccount(new Account(account), isCrossServerLogin);

@@ -144,7 +144,8 @@ namespace GloomyTale.GameObject
         public IDictionary<string[], HandlerMethodReference> HandlerMethods
         {
             get => _handlerMethods ?? (_handlerMethods = new Dictionary<string[], HandlerMethodReference>());
-            private set => _handlerMethods = value;
+
+            set => _handlerMethods = value;
         }
 
         public bool HasCurrentMapInstance => CurrentMapInstance != null;
@@ -388,27 +389,34 @@ namespace GloomyTale.GameObject
 
         private void GenerateHandlerReferences(Type type, bool isWorldServer)
         {
-            IEnumerable<Type> handlerTypes = !isWorldServer ? type.Assembly.GetTypes().Where(t => t.Name.Equals("LoginPacketHandler")) // shitty but it works
-                                                            : type.Assembly.GetTypes().Where(p =>
-                                                            {
-                                                                Type interfaceType = type.GetInterfaces().FirstOrDefault();
-                                                                return interfaceType != null && !p.IsInterface && interfaceType.IsAssignableFrom(p);
-                                                            });
+            IEnumerable<Type> handlerTypes = !isWorldServer
+                ? type.Assembly.GetTypes()
+                    .Where(t => t.Name.Equals("LoginPacketHandler")) // shitty but it works, reflection?
+                : type.Assembly.GetTypes().Where(p =>
+                {
+                    Type interfaceType = type.GetInterfaces().FirstOrDefault();
+                    return interfaceType != null && !p.IsInterface && interfaceType.IsAssignableFrom(p);
+                });
 
             // iterate thru each type in the given assembly
             foreach (Type handlerType in handlerTypes)
             {
-                IPacketHandler handler = (IPacketHandler)Activator.CreateInstance(handlerType, this);
+                var handler = (IPacketHandler)Activator.CreateInstance(handlerType, this);
 
                 // include PacketDefinition
-                foreach (MethodInfo methodInfo in handlerType.GetMethods().Where(x => x.GetCustomAttributes(false).OfType<PacketAttribute>().Any() || x.GetParameters().FirstOrDefault()?.ParameterType.BaseType == typeof(PacketDefinition)))
+                foreach (MethodInfo methodInfo in handlerType.GetMethods().Where(x =>
+                    x.GetCustomAttributes(false).OfType<PacketAttribute>().Any() ||
+                    x.GetParameters().FirstOrDefault()?.ParameterType.BaseType == typeof(PacketDefinition)))
                 {
-                    List<PacketAttribute> packetAttributes = methodInfo.GetCustomAttributes(false).OfType<PacketAttribute>().ToList();
+                    List<PacketAttribute> packetAttributes =
+                        methodInfo.GetCustomAttributes(false).OfType<PacketAttribute>().ToList();
 
                     // assume PacketDefinition based handler method
                     if (packetAttributes.Count == 0)
                     {
-                        HandlerMethodReference methodReference = new HandlerMethodReference(DelegateBuilder.BuildDelegate<Action<object, object>>(methodInfo), handler, methodInfo.GetParameters().FirstOrDefault()?.ParameterType);
+                        var methodReference = new HandlerMethodReference(
+                            DelegateBuilder.BuildDelegate<Action<object, object>>(methodInfo), handler,
+                            methodInfo.GetParameters().FirstOrDefault()?.ParameterType);
                         HandlerMethods.Add(methodReference.Identification, methodReference);
                     }
                     else
@@ -416,7 +424,9 @@ namespace GloomyTale.GameObject
                         // assume string based handler method
                         foreach (PacketAttribute packetAttribute in packetAttributes)
                         {
-                            HandlerMethodReference methodReference = new HandlerMethodReference(DelegateBuilder.BuildDelegate<Action<object, object>>(methodInfo), handler, packetAttribute);
+                            var methodReference = new HandlerMethodReference(
+                                DelegateBuilder.BuildDelegate<Action<object, object>>(methodInfo), handler,
+                                packetAttribute);
                             HandlerMethods.Add(methodReference.Identification, methodReference);
                         }
                     }

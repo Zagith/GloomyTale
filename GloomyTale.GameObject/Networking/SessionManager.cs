@@ -27,8 +27,6 @@ namespace GloomyTale.GameObject
     {
         #region Members
 
-        protected Type _packetHandler;
-
         protected ConcurrentDictionary<long, ClientSession> _sessions = new ConcurrentDictionary<long, ClientSession>();
 
         #endregion
@@ -37,13 +35,15 @@ namespace GloomyTale.GameObject
 
         public SessionManager(Type packetHandler, bool isWorldServer)
         {
-            _packetHandler = packetHandler;
+            PacketHandler = packetHandler;
             IsWorldServer = isWorldServer;
         }
 
         #endregion
 
         #region Properties
+
+        protected Type PacketHandler { get; }
 
         public bool IsWorldServer { get; set; }
 
@@ -56,7 +56,7 @@ namespace GloomyTale.GameObject
             Logger.Log.Info(Language.Instance.GetMessageFromKey("NEW_CONNECT") + customClient.ClientId);
 
             ClientSession session = new ClientSession(customClient);
-            session.Initialize(_packetHandler, IsWorldServer);
+            session.Initialize(PacketHandler, IsWorldServer);
 
             if (!IsWorldServer)
             {
