@@ -21,7 +21,7 @@ namespace GloomyTale.Core.Handling
     {
         #region Instantiation
 
-        //[Obsolete]
+        [Obsolete]
         public PacketAttribute(int amount = 1, params string[] header)
         {
             Header = header;

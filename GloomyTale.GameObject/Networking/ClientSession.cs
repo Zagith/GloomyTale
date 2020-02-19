@@ -33,32 +33,31 @@ namespace GloomyTale.GameObject
     public class ClientSession
     {
         #region Members
-
-        public bool HealthStop;
-
         private bool _isWorldServer;
-
+        private Character _character;
         private readonly INetworkSession _client;
-
-        private readonly Random _random;
-
+        private IDictionary<string[], HandlerMethodReference> _handlerMethods;
         private readonly IList<string> _waitForPacketList = new List<string>();
 
+        // Packetwait Packets
+        private int? _waitForPacketsAmount;
+
+        // public bool HealthStop;
+
+        //private readonly Random _random;
         private readonly CommunicationServiceEvents _communicationServiceEvents = new CommunicationServiceEvents();
 
         private readonly char[] PACKET_SPLITTER = { (char)0xFF };
 
-        private Character _character;
+        //private IDictionary<string[], HandlerMethodReference> _handlerMethods;
 
-        private IDictionary<string[], HandlerMethodReference> _handlerMethods;
-
-        private int _lastPacketId;
+        //private int _lastPacketId;
 
         // private byte countPacketReceived;
 
-        private long _lastPacketReceive;
+        //private long _lastPacketReceive;
 
-        private int? _waitForPacketsAmount;
+        //private int? _waitForPacketsAmount;
 
         #endregion
 
@@ -66,12 +65,6 @@ namespace GloomyTale.GameObject
 
         public ClientSession(INetworkSession client)
         {
-            // set the time of last received packet
-            _lastPacketReceive = DateTime.Now.Ticks;
-
-            // lag mode
-            _random = new Random((int)client.ClientId);
-
             // initialize network client
             _client = client;
 
@@ -156,23 +149,39 @@ namespace GloomyTale.GameObject
 
         public string IpAddress => _client.IpAddress.ToString();
 
-        public bool IsAuthenticated { get; private set; }
+        private bool _isAuthenticated;
+
+        public bool IsAuthenticated 
+        {
+            get
+                => _isAuthenticated;
+            set
+            {
+                _isAuthenticated = value;
+                _client.SessionId = SessionId;
+            }
+        }
 
         public bool IsConnected => _client.IsConnected;
 
         public bool IsDisposing
         {
             get => _client.IsDisposing;
-            internal set => _client.IsDisposing = value;
+
+            set => _client.IsDisposing = value;
         }
 
-        public bool IsLocalhost => IpAddress.Contains("127.0.0.1");// i dont know because this is here
-
         public bool IsOnMap => CurrentMapInstance != null;
-        
+
+        public int LastKeepAliveIdentity { get; set; }
+
         public DateTime RegisterTime { get; internal set; }
 
-        public int SessionId { get; private set; }
+        public int SessionId 
+        {
+            get => _client.SessionId;
+            set => _client.SessionId = value;
+        }
 
         #endregion
 
@@ -232,7 +241,10 @@ namespace GloomyTale.GameObject
 
         #endregion
 
-        //public void ClearLowPriorityQueue() => _client.ClearLowPriorityQueueAsync();
+        public void ClearLowPriorityQueue()
+        {
+
+        }
 
         public void Destroy()
         {
@@ -316,8 +328,8 @@ namespace GloomyTale.GameObject
         public void ReceivePacket(string packet, bool ignoreAuthority = false)
         {
             string header = packet.Split(' ')[0];
-            TriggerHandler(header, $"{_lastPacketId} {packet}", false, ignoreAuthority);
-            _lastPacketId++;
+            TriggerHandler(header, $"{LastKeepAliveIdentity} {packet}", false, ignoreAuthority);
+            LastKeepAliveIdentity++;
         }
 
         public void SendPacket(string packet)
@@ -447,7 +459,7 @@ namespace GloomyTale.GameObject
                 Disconnect();
             }
 
-            _lastPacketId = lastka;
+            LastKeepAliveIdentity = lastka;
 
             // set the SessionId if Session Packet arrives
             if (sessionParts.Length < 2)
@@ -509,7 +521,7 @@ namespace GloomyTale.GameObject
 
                 // keep alive
                 string nextKeepAliveRaw = packetsplit[0];
-                if (!int.TryParse(nextKeepAliveRaw, out int nextKeepaliveIdentity) && nextKeepaliveIdentity != (_lastPacketId + 1))
+                if (!int.TryParse(nextKeepAliveRaw, out int nextKeepaliveIdentity) && nextKeepaliveIdentity != (LastKeepAliveIdentity + 1))
                 {
                     Logger.Log.WarnFormat(Language.Instance.GetMessageFromKey("CORRUPTED_KEEPALIVE"), IpAddress);
                     _client.DisconnectClient();
@@ -518,14 +530,14 @@ namespace GloomyTale.GameObject
 
                 if (nextKeepaliveIdentity == 0)
                 {
-                    if (_lastPacketId == ushort.MaxValue)
+                    if (LastKeepAliveIdentity == ushort.MaxValue)
                     {
-                        _lastPacketId = nextKeepaliveIdentity;
+                        LastKeepAliveIdentity = nextKeepaliveIdentity;
                     }
                 }
                 else
                 {
-                    _lastPacketId = nextKeepaliveIdentity;
+                    LastKeepAliveIdentity = nextKeepaliveIdentity;
                 }
 
                 if (_waitForPacketsAmount.HasValue)

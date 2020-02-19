@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace GloomyTale.Core
@@ -114,7 +115,7 @@ namespace GloomyTale.Core
             {
                 // load pregenerated serialization information
                 KeyValuePair<Tuple<Type, string>, Dictionary<PacketIndexAttribute, PropertyInfo>> serializationInformation = GetSerializationInformation(packet.GetType());
-                string deserializedPacket = serializationInformation.Key.Item2; // set header
+                var deserializedPacket = new StringBuilder(serializationInformation.Key.Item2); // set header
                 int lastIndex = 0;
                 foreach (KeyValuePair<PacketIndexAttribute, PropertyInfo> packetBasePropertyInfo in serializationInformation.Value)
                 {
@@ -125,12 +126,12 @@ namespace GloomyTale.Core
 
                         for (int i = 0; i < amountOfEmptyValuesToAdd; i++)
                         {
-                            deserializedPacket += " 0";
+                            deserializedPacket.Append(" 0");
                         }
                     }
 
                     // add value for current configuration
-                    deserializedPacket += SerializeValue(packetBasePropertyInfo.Value.PropertyType, packetBasePropertyInfo.Value.GetValue(packet), packetBasePropertyInfo.Key);
+                    deserializedPacket.Append(SerializeValue(packetBasePropertyInfo.Value.PropertyType, packetBasePropertyInfo.Value.GetValue(packet), packetBasePropertyInfo.Key));
 
                     // check if the value should be serialized to end
                     if (packetBasePropertyInfo.Key.SerializeToEnd)
@@ -143,19 +144,19 @@ namespace GloomyTale.Core
                     lastIndex = packetBasePropertyInfo.Key.Index;
                 }
 
-                return deserializedPacket;
+                return deserializedPacket.ToString();
             }
             catch (Exception e)
             {
                 //Logger.Log.Warn("Wrong Packet Format!", e);
-                return "";
+                return string.Empty;
             }
         }
 
         private static PacketDefinition Deserialize(string packetContent, PacketDefinition deserializedPacket, KeyValuePair<Tuple<Type, string>,
                                                                                     Dictionary<PacketIndexAttribute, PropertyInfo>> serializationInformation, bool includesKeepAliveIdentity)
         {
-            MatchCollection matches = Regex.Matches(packetContent, @"([^\s]+[\.][^\s]+[\s]?)+((?=\s)|$)|([^\s]+)((?=\s)|$)");
+            MatchCollection matches = Regex.Matches(packetContent, @"([^\040]+[\.][^\040]+[\040]?)+((?=\040)|$)|([^\040]+)((?=\040)|$)");
 
             if (matches.Count > 0)
             {
@@ -174,6 +175,11 @@ namespace GloomyTale.Core
                         }
 
                         string currentValue = matches[currentIndex].Value;
+
+                        if (packetBasePropertyInfo.Value.PropertyType == typeof(string) && string.IsNullOrEmpty(currentValue))
+                        {
+                            throw new NullReferenceException();
+                        }
 
                         // set the value & convert currentValue
                         packetBasePropertyInfo.Value.SetValue(deserializedPacket, DeserializeValue(packetBasePropertyInfo.Value.PropertyType, currentValue, packetBasePropertyInfo.Key, matches, includesKeepAliveIdentity));
@@ -238,7 +244,7 @@ namespace GloomyTale.Core
             List<string> splittedSubpackets = currentValue.Split(' ').ToList();
 
             // generate new list
-            IList subpackets = (IList)Convert.ChangeType(Activator.CreateInstance(packetBasePropertyType), packetBasePropertyType);
+            var subpackets = (IList)Convert.ChangeType(Activator.CreateInstance(packetBasePropertyType), packetBasePropertyType);
 
             Type subPacketType = packetBasePropertyType.GetGenericArguments()[0];
             KeyValuePair<Tuple<Type, string>, Dictionary<PacketIndexAttribute, PropertyInfo>> subpacketSerializationInfo = GetSerializationInformation(subPacketType);
@@ -254,7 +260,7 @@ namespace GloomyTale.Core
                 List<string> splittedSubpacketParts = packetMatchCollections.Cast<Match>().Select(m => m.Value).ToList();
                 splittedSubpackets = new List<string>();
 
-                string generatedPseudoDelimitedString = "";
+                string generatedPseudoDelimitedString = string.Empty;
                 int subPacketTypePropertiesCount = subpacketSerializationInfo.Value.Count;
 
                 // check if the amount of properties can be serialized properly
@@ -276,7 +282,7 @@ namespace GloomyTale.Core
 
                         // add delimited values to list of values to serialize
                         splittedSubpackets.Add(generatedPseudoDelimitedString);
-                        generatedPseudoDelimitedString = "";
+                        generatedPseudoDelimitedString = string.Empty;
                     }
                 }
                 else
@@ -293,6 +299,18 @@ namespace GloomyTale.Core
             return subpackets;
         }
 
+        private static readonly IEnumerable<Type> EnumerableOfAcceptedTypes = new[]
+        {
+            typeof(int),
+            typeof(double),
+            typeof(long),
+            typeof(short),
+            typeof(int?),
+            typeof(double?),
+            typeof(long?),
+            typeof(short?),
+        };
+
         private static object DeserializeValue(Type packetPropertyType, string currentValue, PacketIndexAttribute packetIndexAttribute, MatchCollection packetMatches, bool includesKeepAliveIdentity = false)
         {
             // check for empty value and cast it to null
@@ -302,7 +320,7 @@ namespace GloomyTale.Core
             }
 
             // enum should be casted to number
-            if (packetPropertyType.BaseType?.Equals(typeof(Enum)) == true)
+            if (packetPropertyType.BaseType != null && packetPropertyType.BaseType == typeof(Enum))
             {
                 object convertedValue = null;
                 try
@@ -319,17 +337,17 @@ namespace GloomyTale.Core
 
                 return convertedValue;
             }
-            if (packetPropertyType.Equals(typeof(bool))) // handle boolean values
+            if (packetPropertyType == typeof(bool)) // handle boolean values
             {
-                return !currentValue.Equals("0");
+                return currentValue != "0";
             }
-            if (packetPropertyType.BaseType?.Equals(typeof(PacketDefinition)) == true) // subpacket
+            if (packetPropertyType.BaseType != null && packetPropertyType.BaseType == typeof(PacketDefinition)) // subpacket
             {
                 KeyValuePair<Tuple<Type, string>, Dictionary<PacketIndexAttribute, PropertyInfo>> subpacketSerializationInfo = GetSerializationInformation(packetPropertyType);
                 return DeserializeSubpacket(currentValue, packetPropertyType, subpacketSerializationInfo, packetIndexAttribute?.IsReturnPacket ?? false);
             }
             if (packetPropertyType.IsGenericType && packetPropertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>)) // subpacket list
-                && packetPropertyType.GenericTypeArguments[0].BaseType.Equals(typeof(PacketDefinition)))
+                && packetPropertyType.GenericTypeArguments[0].BaseType == typeof(PacketDefinition))
             {
                 return DeserializeSubpackets(currentValue, packetPropertyType, packetIndexAttribute?.RemoveSeparator ?? false, packetMatches, packetIndexAttribute?.Index, includesKeepAliveIdentity);
             }
@@ -337,22 +355,53 @@ namespace GloomyTale.Core
             {
                 return DeserializeSimpleList(currentValue, packetPropertyType);
             }
-            if (Nullable.GetUnderlyingType(packetPropertyType) != null && string.IsNullOrEmpty(currentValue)) // empty nullable value
+            if (Nullable.GetUnderlyingType(packetPropertyType) == null)
             {
-                return null;
+                return Convert.ChangeType(currentValue, packetPropertyType); // cast to specified type
             }
-            if (Nullable.GetUnderlyingType(packetPropertyType) != null) // nullable value
+
+            if (packetPropertyType.GenericTypeArguments[0]?.BaseType == typeof(Enum))
             {
-                if (packetPropertyType.GenericTypeArguments[0]?.BaseType.Equals(typeof(Enum)) == true)
-                {
-                    return Enum.Parse(packetPropertyType.GenericTypeArguments[0], currentValue);
-                }
+                return Enum.Parse(packetPropertyType.GenericTypeArguments[0], currentValue);
+            }
+
+            if (!EnumerableOfAcceptedTypes.Contains(packetPropertyType))
+            {
                 return Convert.ChangeType(currentValue, packetPropertyType.GenericTypeArguments[0]);
             }
-            return Convert.ChangeType(currentValue, packetPropertyType); // cast to specified type
+
+            switch (packetPropertyType)
+            {
+                case Type _ when packetPropertyType == typeof(long):
+                case Type _ when packetPropertyType == typeof(int):
+                case Type _ when packetPropertyType == typeof(double):
+                case Type _ when packetPropertyType == typeof(short):
+                    if (int.TryParse(currentValue, out int b) && b < 0)
+                    {
+                        currentValue = "0";
+                    }
+                    break;
+
+                case Type _ when packetPropertyType == typeof(long?):
+                case Type _ when packetPropertyType == typeof(int?):
+                case Type _ when packetPropertyType == typeof(double?):
+                case Type _ when packetPropertyType == typeof(short?):
+                    if (currentValue == null)
+                    {
+                        currentValue = "0";
+                    }
+                    if (int.TryParse(currentValue, out int c) && c < 0)
+                    {
+                        currentValue = "0";
+                    }
+                    break;
+            }
+
+            return Convert.ChangeType(currentValue, packetPropertyType.GenericTypeArguments[0]);
         }
 
-        private static void GenerateSerializationInformations<TPacketDefinition>() where TPacketDefinition : PacketDefinition
+        private static void GenerateSerializationInformations<TPacketDefinition>() 
+            where TPacketDefinition : PacketDefinition
         {
             _packetSerializationInformations = new Dictionary<Tuple<Type, string>, Dictionary<PacketIndexAttribute, PropertyInfo>>();
 
@@ -360,7 +409,7 @@ namespace GloomyTale.Core
             foreach (Type packetBaseType in typeof(TPacketDefinition).Assembly.GetTypes().Where(p => !p.IsInterface && typeof(TPacketDefinition).BaseType.IsAssignableFrom(p)))
             {
                 // add to serialization informations
-                KeyValuePair<Tuple<Type, string>, Dictionary<PacketIndexAttribute, PropertyInfo>> serializationInformations = GenerateSerializationInformations(packetBaseType);
+                GenerateSerializationInformations(packetBaseType);
             }
         }
 
@@ -417,7 +466,7 @@ namespace GloomyTale.Core
         /// <returns>String of serialized bytes</returns>
         private static string SerializeSimpleList(IList listValues, Type propertyType)
         {
-            string resultListPacket = "";
+            string resultListPacket = string.Empty;
             int listValueCount = listValues.Count;
             if (listValueCount > 0)
             {
@@ -442,7 +491,8 @@ namespace GloomyTale.Core
                 // first element
                 if (subpacketPropertyInfo.Key.Index != 0)
                 {
-                    serializedSubpacket += isReturnPacket ? "^" : shouldRemoveSeparator ? " " : ".";
+                    serializedSubpacket += isReturnPacket ? "^" : 
+                        shouldRemoveSeparator ? " " : ".";
                 }
 
                 serializedSubpacket += SerializeValue(subpacketPropertyInfo.Value.PropertyType, subpacketPropertyInfo.Value.GetValue(value)).Replace(" ", "");
@@ -453,7 +503,7 @@ namespace GloomyTale.Core
 
         private static string SerializeSubpackets(IList listValues, Type packetBasePropertyType, bool shouldRemoveSeparator)
         {
-            string serializedSubPacket = "";
+            string serializedSubPacket = string.Empty;
             KeyValuePair<Tuple<Type, string>, Dictionary<PacketIndexAttribute, PropertyInfo>> subpacketSerializationInfo = GetSerializationInformation(packetBasePropertyType.GetGenericArguments()[0]);
 
             if (listValues.Count > 0)
@@ -472,7 +522,7 @@ namespace GloomyTale.Core
             if (propertyType != null)
             {
                 // check for nullable without value or string
-                if (propertyType.Equals(typeof(string)) && string.IsNullOrEmpty(Convert.ToString(value)))
+                if (propertyType == typeof(string) && string.IsNullOrEmpty(Convert.ToString(value)))
                 {
                     return " -";
                 }
@@ -482,11 +532,11 @@ namespace GloomyTale.Core
                 }
 
                 // enum should be casted to number
-                if (propertyType.BaseType?.Equals(typeof(Enum)) == true)
+                if (propertyType.BaseType == typeof(Enum))
                 {
                     return $" {Convert.ToInt16(value)}";
                 }
-                if (propertyType.Equals(typeof(bool)))
+                if (propertyType == typeof(bool))
                 {
                     // bool is 0 or 1 not True or False
                     return Convert.ToBoolean(value) ? " 1" : " 0";
@@ -497,7 +547,7 @@ namespace GloomyTale.Core
                     return SerializeSubpacket(value, subpacketSerializationInfo, packetIndexAttribute?.IsReturnPacket ?? false, packetIndexAttribute?.RemoveSeparator ?? false);
                 }
                 if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>))
-                    && propertyType.GenericTypeArguments[0].BaseType.Equals(typeof(PacketDefinition)))
+                    && propertyType.GenericTypeArguments[0].BaseType == typeof(PacketDefinition))
                 {
                     return SerializeSubpackets((IList)value, propertyType, packetIndexAttribute?.RemoveSeparator ?? false);
                 }
@@ -508,7 +558,7 @@ namespace GloomyTale.Core
                 return $" {value}";
             }
 
-            return "";
+            return string.Empty;
         }
 
         private static PacketDefinition SetDeserializationInformations(PacketDefinition packetDefinition, string packetContent, string packetHeader)

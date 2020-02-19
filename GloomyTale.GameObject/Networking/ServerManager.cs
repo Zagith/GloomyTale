@@ -647,7 +647,7 @@ namespace GloomyTale.GameObject.Networking
                     LeaveMap(session.Character.CharacterId);
 
                     // cleanup sending queue to avoid sending uneccessary packets to it
-                    //session.ClearLowPriorityQueue();
+                    session.ClearLowPriorityQueue();
 
                     session.Character.IsSitting = false;
                     session.Character.MapInstanceId = mapInstanceId;
