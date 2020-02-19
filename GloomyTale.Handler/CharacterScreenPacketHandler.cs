@@ -27,7 +27,6 @@ using GloomyTale.GameObject.Networking;
 using System.Collections.Concurrent;
 using GloomyTale.Core.Interfaces.Packets.ClientPackets;
 using GloomyTale.GameObject.Helpers;
-using GloomyTale.GameObject.Networking;
 using GloomyTale.Core.Extensions;
 
 namespace GloomyTale.Handler

@@ -42,7 +42,7 @@ namespace GloomyTale.GameObject
         // Packetwait Packets
         private int? _waitForPacketsAmount;
 
-        // public bool HealthStop;
+        public bool HealthStop;
 
         //private readonly Random _random;
         private readonly CommunicationServiceEvents _communicationServiceEvents = new CommunicationServiceEvents();

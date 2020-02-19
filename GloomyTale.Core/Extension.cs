@@ -229,8 +229,6 @@ namespace GloomyTale.Core
                 }
             }
 
-            public static string Truncate(this string str, int length) => str.Length > length ? str.Substring(0, length) : str;
-
             #endregion
         }
 

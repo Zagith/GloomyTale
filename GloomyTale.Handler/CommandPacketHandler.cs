@@ -31,6 +31,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using GloomyTale.Core.Extensions;
 
 namespace GloomyTale.Handler
 {
@@ -164,7 +165,7 @@ namespace GloomyTale.Handler
                 {
                     if (p.Message.Length >= 8)
                     {
-                        Session.Character.SecondPassword = CryptographyBase.Sha512(p.Message);
+                        Session.Character.SecondPassword = p.Message.ToSha512();
                         Session.Character.Save();
                         Session.Character.hasVerifiedSecondPassword = true;
                         Session.SendPacket(Session.Character.GenerateSay($"Done! Your second password (or pin) is now: {p.Message}. Do not forget it.", 10));
@@ -192,7 +193,7 @@ namespace GloomyTale.Handler
             {
                 if (Session.Character.SecondPassword != null)
                 {
-                    if (CryptographyBase.Sha512(p.Message) == Session.Character.SecondPassword)
+                    if (p.Message.ToSha512() == Session.Character.SecondPassword)
                     {
                         Session.Character.hasVerifiedSecondPassword = true;
                         Session.SendPacket(Session.Character.GenerateSay($"You have successfully verified your identity!", 10));
