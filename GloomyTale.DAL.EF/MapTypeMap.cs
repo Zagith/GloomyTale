@@ -23,6 +23,9 @@ namespace GloomyTale.DAL.EF
 
         public virtual Map Map { get; set; }
 
+        [Key]
+        public short MapTypeMapId { get; set; }
+
         [Key, Column(Order = 0)]
         public short MapId { get; set; }
 

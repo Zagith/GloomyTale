@@ -465,7 +465,7 @@ namespace GloomyTale.DAL.EF
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MapTypeMap>()
-                .HasKey(s => s.MapTypeId);
+                .HasKey(s => s.MapTypeMapId);
 
             modelBuilder.Entity<MapTypeMap>()
                 .HasOne(e => e.Map)

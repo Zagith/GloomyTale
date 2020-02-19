@@ -19,7 +19,6 @@ using GloomyTale.DAL;
 using GloomyTale.Data;
 using GloomyTale.Domain;
 using GloomyTale.GameObject.Helpers;
-using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -465,96 +464,105 @@ namespace GloomyTale.GameObject
         /// </summary>
         private void HandlePackets(IEnumerable<string> packets)
         {
-            try
+            // determine first packet
+            if (_isWorldServer && SessionId == 0)
             {
-                // determine first packet
-                if (_isWorldServer && SessionId == 0)
+                ProcessUnAuthedPacket(packets.FirstOrDefault());
+                return;
+            }
+
+            foreach (string packet in packets)
+            {
+                string packetstring = packet.Replace('^', ' ');
+                string[] packetsplit = packetstring.Split(' ');
+
+                // wtf ???
+                if (!_isWorldServer)
                 {
-                    ProcessUnAuthedPacket(packets.FirstOrDefault());
+                    string packetHeader = packetstring.Split(' ')[0];
+                    if (string.IsNullOrWhiteSpace(packetHeader))
+                    {
+                        Disconnect();
+                        return;
+                    }
+
+                    // simple messaging
+                    if (packetHeader[0] == '/' || packetHeader[0] == ':' || packetHeader[0] == ';')
+                    {
+                        packetHeader = packetHeader[0].ToString();
+                        packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
+                    }
+
+                    TriggerHandler(packetHeader.Replace("#", ""), packetstring, false);
                     return;
                 }
 
-
-                foreach (string packet in packets)
+                // keep alive
+                string nextKeepAliveRaw = packetsplit[0];
+                if (!int.TryParse(nextKeepAliveRaw, out int nextKeepaliveIdentity) && nextKeepaliveIdentity != (_lastPacketId + 1))
                 {
-                    string packetstring = packet.Replace('^', ' ');
-                    string[] packetsplit = packetstring.Split(' ');
+                    Logger.Log.WarnFormat(Language.Instance.GetMessageFromKey("CORRUPTED_KEEPALIVE"), IpAddress);
+                    _client.DisconnectClient();
+                    return;
+                }
 
-                    if (!_isWorldServer)
+                if (nextKeepaliveIdentity == 0)
+                {
+                    if (_lastPacketId == ushort.MaxValue)
                     {
-                        string packetHeader = packetstring.Split(' ')[0];
-
-                        // simple messaging
-                        if (packetHeader[0] == '/' || packetHeader[0] == ':' || packetHeader[0] == ';')
-                        {
-                            packetHeader = packetHeader[0].ToString();
-                            packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
-                        }
-
-                        TriggerHandler(packetHeader.Replace("#", ""), packetstring, false);
-                        return;
-                    }
-                    string nextRawPacketId = packetsplit[0];
-
-                    if (!int.TryParse(nextRawPacketId, out int nextPacketId) && nextPacketId != _lastPacketId + 1)
-                    {
-                        Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("CORRUPTED_KEEPALIVE"), IpAddress));
-                        _client.DisconnectClient();
-                        return;
-                    }
-
-                    if (nextPacketId == 0)
-                    {
-                        if (_lastPacketId == ushort.MaxValue)
-                        {
-                            _lastPacketId = nextPacketId;
-                        }
-                    }
-                    else
-                    {
-                        _lastPacketId = nextPacketId;
-                    }
-
-                    if (_waitForPacketsAmount.HasValue)
-                    {
-                        _waitForPacketList.Add(packetstring);
-
-                        string[] packetssplit = packetstring.Split(' ');
-
-                        if (packetssplit.Length > 3 && packetsplit[1] == "DAC")
-                        {
-                            _waitForPacketList.Add("0 CrossServerAuthenticate");
-                        }
-
-                        if (_waitForPacketList.Count == _waitForPacketsAmount)
-                        {
-                            _waitForPacketsAmount = null;
-                            string queuedPackets = string.Join(" ", _waitForPacketList.ToArray());
-                            string header = queuedPackets.Split(' ', '^')[1];
-                            TriggerHandler(header, queuedPackets, true);
-                            _waitForPacketList.Clear();
-                            return;
-                        }
-                    }
-                    else if (packetsplit.Length > 1)
-                    {
-                        if (packetsplit[1].Length >= 1 && (packetsplit[1][0] == '/' || packetsplit[1][0] == ':' || packetsplit[1][0] == ';'))
-                        {
-                            packetsplit[1] = packetsplit[1][0].ToString();
-                            packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
-                        }
-
-                        if (packetsplit[1] != "0")
-                        {
-                            TriggerHandler(packetsplit[1].Replace("#", ""), packetstring, false);
-                        }
+                        _lastPacketId = nextKeepaliveIdentity;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.Error("Invalid packet (Crash Exploit)", ex);
-                Disconnect();
+                else
+                {
+                    _lastPacketId = nextKeepaliveIdentity;
+                }
+
+                if (_waitForPacketsAmount.HasValue)
+                {
+                    _waitForPacketList.Add(packetstring);
+                    string[] packetssplit = packetstring.Split(' ');
+                    if (packetssplit.Length > 3 && packetsplit[1] == "DAC")
+                    {
+                        _waitForPacketList.Add("0 CrossServerAuthenticate");
+                    }
+
+                    if (_waitForPacketList.Count != _waitForPacketsAmount)
+                    {
+                        continue;
+                    }
+
+                    _waitForPacketsAmount = null;
+                    string queuedPackets = string.Join(" ", _waitForPacketList.ToArray());
+                    string header = queuedPackets.Split(' ', '^')[1];
+                    TriggerHandler(header, queuedPackets, true);
+                    _waitForPacketList.Clear();
+                    return;
+                }
+
+                if (packetsplit.Length <= 1)
+                {
+                    continue;
+                }
+
+                //if (packetsplit[1][0] == COMMAND_PREFIX)
+                {
+                    // todo Essentials plugin
+                    //_commandsExecutor.HandleCommand(packet.Substring(packet.IndexOf(' ') + 1), this);
+                    //return;
+                }
+
+                if (packetsplit[1].Length >= 1 &&
+                    (packetsplit[1][0] == '/' || packetsplit[1][0] == ':' || packetsplit[1][0] == ';'))
+                {
+                    packetsplit[1] = packetsplit[1][0].ToString();
+                    packetstring = packet.Insert(packet.IndexOf(' ') + 2, " ");
+                }
+
+                if (packetsplit[1] != "0")
+                {
+                    TriggerHandler(packetsplit[1].Replace("#", ""), packetstring, false);
+                }
             }
         }
 
@@ -622,55 +630,47 @@ namespace GloomyTale.GameObject
             {
                 return;
             }
-            if (!IsDisposing)
+
+            if (IsDisposing)
             {
-                if (Account?.Name != null && UserLog.Contains(Account.Name))
+                Logger.Log.WarnFormat(Language.Instance.GetMessageFromKey("CLIENTSESSION_DISPOSING"), packetHeader);
+                return;
+            }
+            string[] key = HandlerMethods.Keys.FirstOrDefault(s => s.Any(m => string.Equals(m, packetHeader, StringComparison.CurrentCultureIgnoreCase)));
+            HandlerMethodReference methodReference = key != null ? HandlerMethods[key] : null;
+            if (methodReference == null)
+            {
+                Logger.Log.WarnFormat(Language.Instance.GetMessageFromKey("HANDLER_NOT_FOUND"), packetHeader);
+                return;
+            }
+
+            if (methodReference.HandlerMethodAttribute != null && !force &&
+                methodReference.HandlerMethodAttribute.Amount > 1 && !_waitForPacketsAmount.HasValue)
+            {
+                // we need to wait for more
+                _waitForPacketsAmount = methodReference.HandlerMethodAttribute.Amount;
+                _waitForPacketList.Add(packet != string.Empty ? packet : $"1 {packetHeader} ");
+                return;
+            }
+
+            try
+            {
+                if (!HasSelectedCharacter &&
+                    methodReference.ParentHandler.GetType().Name != "CharacterScreenPacketHandler" &&
+                    methodReference.ParentHandler.GetType().Name != "LoginPacketHandler")
                 {
-                    try
-                    {
-                        File.AppendAllText($"C:\\OpenNos\\{Account.Name.Replace(" ", "")}.txt", packet + "\n");
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Log.Error(ex);
-                    }
+                    return;
                 }
 
-                string[] key = HandlerMethods.Keys.FirstOrDefault(s => s.Any(m => string.Equals(m, packetHeader, StringComparison.CurrentCultureIgnoreCase)));
-                HandlerMethodReference methodReference = key != null ? HandlerMethods[key] : null;
-                if (methodReference != null)
+                // call actual handler method
+                if (methodReference.PacketDefinitionParameterType == null)
                 {
-                    if (((HasSelectedCharacter && ((Character.SecondPassword != null && Character.hasVerifiedSecondPassword) ||
-                        (packetHeader == "walk"
-                        || packetHeader.ToLower() == "$setpw"
-                        || packetHeader.ToLower() == "$pw"
-                        || packetHeader == "select"
-                        || packetHeader == "lbs"
-                        || packetHeader == "c_close"
-                        || packetHeader == "f_stash_end"
-                        || packetHeader == "npinfo"
-                        || packetHeader == "glist"
-                        || packetHeader == "game_start"
-                        || packetHeader == "ncif"
-                        || packetHeader == "rest")))
-                        || !HasSelectedCharacter))
-                    {
-                        if (methodReference.HandlerMethodAttribute != null && !force && methodReference.HandlerMethodAttribute.Amount > 1 && !_waitForPacketsAmount.HasValue)
-                        {
-                            // we need to wait for more
-                            _waitForPacketsAmount = methodReference.HandlerMethodAttribute.Amount;
-                            _waitForPacketList.Add(packet != "" ? packet : $"1 {packetHeader} ");
-                            return;
-                        }
-                        try
-                        {
-                            if (HasSelectedCharacter || methodReference.ParentHandler.GetType().Name == "CharacterScreenPacketHandler" || methodReference.ParentHandler.GetType().Name == "LoginPacketHandler")
-                            {
-                                // call actual handler method
-                                if (methodReference.PacketDefinitionParameterType != null)
-                                {
-                                    //check for the correct authority
-                                    if (!IsAuthenticated
+                    methodReference.HandlerMethod(methodReference.ParentHandler, packet);
+                    return;
+                }
+
+                //check for the correct authority
+                if (!IsAuthenticated
                                         || Account.Authority.Equals(AuthorityType.Administrator)
                                         || methodReference.Authorities.Any(a => a.Equals(Account.Authority))
                                         || methodReference.Authorities.Any(a => a.Equals(AuthorityType.User)) && Account.Authority >= AuthorityType.User
@@ -683,85 +683,27 @@ namespace GloomyTale.GameObject
                                         || methodReference.Authorities.Any(a => a.Equals(AuthorityType.GA)) && Account.Authority >= AuthorityType.GA
                                         || methodReference.Authorities.Any(a => a.Equals(AuthorityType.TM)) && Account.Authority >= AuthorityType.TM
                                         || methodReference.Authorities.Any(a => a.Equals(AuthorityType.CM)) && Account.Authority >= AuthorityType.CM
-                                        || Account.Authority == AuthorityType.BitchNiggerFaggot && methodReference.Authorities.Any(a => a.Equals(AuthorityType.User))
-                                        || ignoreAuthority)
-                                    {
-                                        PacketDefinition deserializedPacket = PacketFactory.Deserialize(packet, methodReference.PacketDefinitionParameterType, IsAuthenticated);
-                                        if (deserializedPacket != null || methodReference.PassNonParseablePacket)
-                                        {
-                                            /*if (ServerManager.Instance.Configuration != null && ServerManager.Instance.Configuration.UseLogService && Character != null)
-                                            {
-                                                try
-                                                {
-                                                    string message = "";
-                                                    string[] valuesplit = deserializedPacket.OriginalContent?.Split(' ');
-                                                    if (valuesplit == null)
-                                                    {
-                                                        return;
-                                                    }
-
-                                                    if (valuesplit[1] != null && valuesplit[1] != "walk" && valuesplit[1] != "ncif" && valuesplit[1] != "say" && valuesplit[1] != "preq")
-                                                    {
-                                                        for (int i = 0; i < valuesplit.Length; i++)
-                                                        {
-                                                            if (i > 0)
-                                                            {
-                                                                message += valuesplit[i] + " ";
-                                                            }
-                                                        }
-                                                        message = message.Substring(0, message.Length - 1); // Remove the last " "
-                                                        try
-                                                        {
-                                                            LogServiceClient.Instance.LogPacket(new PacketLogEntry()
-                                                            {
-                                                                Sender = Character.Name,
-                                                                SenderId = Character.CharacterId,
-                                                                PacketType = LogType.Packet,
-                                                                Packet = message
-                                                            });
-                                                        }
-                                                        catch (Exception ex)
-                                                        {
-                                                            Logger.Log.Error("PacketLog Error. SessionId: " + SessionId, ex);
-                                                        }
-                                                    }
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    Logger.Log.Error("PacketLog Error. SessionId: " + SessionId, ex);
-                                                }
-                                            }*/
-                                            methodReference.HandlerMethod(methodReference.ParentHandler, deserializedPacket);
-                                        }
-                                        else
-                                        {
-                                            Logger.Log.Warn(string.Format(Language.Instance.GetMessageFromKey("CORRUPT_PACKET"), packetHeader, packet));
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    methodReference.HandlerMethod(methodReference.ParentHandler, packet);
-                                }
-                            }
-                        }
-                        catch (DivideByZeroException ex)
-                        {
-                            // disconnect if something unexpected happens
-                            Logger.Log.Error("Handler Error SessionId: " + SessionId, ex);
-                            Disconnect();
-                        }
-                    }
-                    else { }
-                }
-                else
+                                        || Account.Authority == AuthorityType.BitchNiggerFaggot && methodReference.Authorities.Any(a => a.Equals(AuthorityType.User)))
                 {
-                    Logger.Log.Warn($"{ string.Format(Language.Instance.GetMessageFromKey("HANDLER_NOT_FOUND"), packetHeader)} From IP: {_client.IpAddress}");
+
+                    object deserializedPacket = PacketFactory.Deserialize(packet,
+                        methodReference.PacketDefinitionParameterType, IsAuthenticated);
+
+                    if (deserializedPacket == null && !methodReference.PassNonParseablePacket)
+                    {
+                        Logger.Log.WarnFormat(Language.Instance.GetMessageFromKey("CORRUPT_PACKET"), packetHeader,
+                            packet);
+                        return;
+                    }
+
+                    methodReference.HandlerMethod(methodReference.ParentHandler, deserializedPacket);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Logger.Log.Warn(string.Format(Language.Instance.GetMessageFromKey("CLIENTSESSION_DISPOSING"), packetHeader));
+                // disconnect if something unexpected happens
+                Logger.Log.Error("Handler Error SessionId: " + SessionId, ex);
+                Disconnect();
             }
         }
 

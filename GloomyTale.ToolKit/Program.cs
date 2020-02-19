@@ -118,12 +118,12 @@ namespace GloomyTale.ToolKit
                     if (key.KeyChar != 'n')
                     {
                         mapImporter.Import();
-                        /*factory.LoadMaps();
-                        ImportFactory.ImportRespawnMapType();
-                        ImportFactory.ImportMapType();
-                        ImportFactory.ImportMapTypeMap();
-                        ImportFactory.ImportAccounts();
-                        factory.ImportPortals();
+                        factory.LoadMaps();
+                        factory.ImportRespawnMapType();
+                        factory.ImportMapType();
+                        factory.ImportMapTypeMap();
+                        //factory.ImportAccounts();
+                        /*factory.ImportPortals();
                         factory.ImportScriptedInstances();
                         factory.InsertI18NCard();
                         factory.InsertI18NItem();
@@ -153,17 +153,18 @@ namespace GloomyTale.ToolKit
                         {
                             factory.ImportMaps();
                             factory.LoadMaps();
-                        }
+                        }*/
 
                         Console.WriteLine($"{Language.Instance.GetMessageFromKey("PARSE_MAPTYPES")} [Y/n]");
                         key = Console.ReadKey(true);
                         if (key.KeyChar != 'n')
                         {
-                            ImportFactory.ImportMapType();
-                            ImportFactory.ImportMapTypeMap();
+                            factory.ImportMapType();
+                            factory.ImportMapTypeMap();
+                            factory.ImportRespawnMapType();
                         }
 
-                        Console.WriteLine($"{Language.Instance.GetMessageFromKey("PARSE_ACCOUNTS")} [Y/n]");
+                        /*Console.WriteLine($"{Language.Instance.GetMessageFromKey("PARSE_ACCOUNTS")} [Y/n]");
                         key = Console.ReadKey(true);
                         if (key.KeyChar != 'n')
                         {

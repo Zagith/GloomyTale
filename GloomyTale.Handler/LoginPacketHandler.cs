@@ -150,41 +150,30 @@ namespace GloomyTale.Handler
                                 break;
 
                             default:
-                            {
-                                if (loadedAccount.Authority < AuthorityType.SMOD)
                                 {
-                                    MaintenanceLogDTO maintenanceLog = DAOFactory.Instance.MaintenanceLogDAO.LoadFirst();
-                                    if (maintenanceLog != null && maintenanceLog.DateStart < DateTime.Now)
-                                        {
-                                            _session.SendPacket($"failc {(byte)LoginFailType.Maintenance}");
-                                            return;
-                                    }
-                                }
+                                    int newSessionId = SessionFactory.Instance.GenerateSessionId();
+                                    Logger.Log.Debug(string.Format(Language.Instance.GetMessageFromKey("CONNECTION"), user.Name, newSessionId));
 
-                                int newSessionId = SessionFactory.Instance.GenerateSessionId();
-                                Logger.Log.Debug(string.Format(Language.Instance.GetMessageFromKey("CONNECTION"), user.Name,
-                                    newSessionId));
-                                try
-                                {
-                                    ipAddress = ipAddress.Substring(6, ipAddress.LastIndexOf(':') - 6);
-                                    CommunicationServiceClient.Instance.RegisterAccountLogin(loadedAccount.AccountId,
-                                        newSessionId, loadedAccount.Name, ipAddress);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Logger.Log.Error("General Error SessionId: " + newSessionId, ex);
-                                }
-
-                                    string[] clientData = loginPacket.ClientData.Split('.');
-
-                                    if (clientData.Length < 2)
+                                    if (CommunicationServiceClient.Instance.GetMaintenanceState() && loadedAccount.Authority < AuthorityType.SMOD)
                                     {
-                                        clientData = loginPacket.ClientDataOld.Split('.');
+                                        _session.SendPacket($"failc {(byte)LoginFailType.Maintenance}");
+                                        return;
+                                    }
+
+                                    try
+                                    {
+                                        CommunicationServiceClient.Instance.RegisterAccountLogin(loadedAccount.AccountId, newSessionId, loadedAccount.Name, _session.IpAddress);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Logger.Log.Error("General Error SessionId: " + newSessionId, ex);
+                                        _session.SendPacket($"failc {(byte)LoginFailType.CantConnect}");
+                                        return;
                                     }
 
                                     SendServerListPacket(newSessionId, loadedAccount.Name);
                                 }
-                                break;
+                                    break;
                         }
                     }
                 }

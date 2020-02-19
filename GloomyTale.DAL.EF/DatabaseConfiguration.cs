@@ -8,8 +8,8 @@ namespace GloomyTale.DAL.EF
     {
         public DatabaseConfiguration()
         {
-            Ip = Environment.GetEnvironmentVariable("DATABASE_IP") ?? "82.165.19.227";
-            Username = Environment.GetEnvironmentVariable("DATABASE_USER") ?? "GloomytaleSa";
+            Ip = Environment.GetEnvironmentVariable("DATABASE_IP") ?? "localhost";
+            Username = Environment.GetEnvironmentVariable("DATABASE_USER") ?? "sa";
             Password = Environment.GetEnvironmentVariable("DATABASE_PASSWORD") ?? "strong_pass2018";
             Database = Environment.GetEnvironmentVariable("DATABASE_NAME") ?? "gloomytaleNewSource";
             if (!ushort.TryParse(Environment.GetEnvironmentVariable("DATABASE_PORT") ?? "1433", out ushort port))

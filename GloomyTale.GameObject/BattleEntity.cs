@@ -2219,7 +2219,8 @@ namespace GloomyTale.GameObject
                                                 return true;
                                             }
                                         }
-                                        else if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (short)MapTypeEnum.PVPMap) || MapInstance.IsPVP
+#warning TODO: PVPMap type
+                                        else if (/*MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (short)MapTypeEnum.PVPMap) ||*/ MapInstance.IsPVP
                                               || HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP) && receiver.HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP))
                                         {
                                             if (MapInstance == ServerManager.Instance.FamilyArenaInstance

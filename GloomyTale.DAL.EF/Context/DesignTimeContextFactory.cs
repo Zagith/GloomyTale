@@ -9,7 +9,7 @@ namespace GloomyTale.DAL.EF.Context
         {
             DbContextOptionsBuilder<OpenNosContext> optionsBuilder = new DbContextOptionsBuilder<OpenNosContext>();
 
-            optionsBuilder.UseSqlServer("Server=82.165.19.227;Database=gloomytaleNewSource;User ID=GloomytaleSa;Password=strong_pass2018;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=gloomytaleNewSource;User ID=sa;Password=strong_pass2018;");
             return new OpenNosContext(optionsBuilder.Options);
         }
     }
