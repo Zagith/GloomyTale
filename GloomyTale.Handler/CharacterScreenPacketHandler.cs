@@ -309,8 +309,20 @@ namespace GloomyTale.Handler
                         if (account.Password.Equals(loginPacketParts[6].ToSha512(), StringComparison.OrdinalIgnoreCase)
                             || isCrossServerLogin)
                         {
-                            Session.InitializeAccount(new Account(account), isCrossServerLogin);
-                            ServerManager.Instance.CharacterScreenSessions[Session.Account.AccountId] = Session;
+                            var accountobject = new Account
+                            {
+                                AccountId = account.AccountId,
+                                Name = account.Name,
+                                Password = account.Password.ToLower(),
+                                Authority = account.Authority,
+                                Language = account.Language,
+                                Email = account.Email,
+                                ReferrerId = account.ReferrerId,
+                                RegistrationIP = account.RegistrationIP,
+                                VerificationToken = account.VerificationToken
+                            };
+
+                            Session.InitializeAccount(accountobject, isCrossServerLogin);
                         }
                         else
                         {

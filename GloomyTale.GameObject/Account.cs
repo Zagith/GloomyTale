@@ -22,19 +22,6 @@ namespace GloomyTale.GameObject
 {
     public class Account : AccountDTO
     {
-        public Account(AccountDTO input)
-        {
-            AccountId = input.AccountId;
-            Authority = input.Authority;
-            Email = input.Email;
-            Name = input.Name;
-            Password = input.Password;
-            ReferrerId = input.ReferrerId;
-            RegistrationIP = input.RegistrationIP;
-            VerificationToken = input.VerificationToken;
-            Language = input.Language;
-        }
-
         #region Properties
 
         public bool IsLimited => Authority >= AuthorityType.TMOD && Authority != AuthorityType.Administrator && Authority != AuthorityType.DEV;//permited by Pavvx
