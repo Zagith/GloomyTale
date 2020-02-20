@@ -26,6 +26,8 @@ namespace GloomyTale.DAL.Interface
 
         SaveResult InsertOrUpdate(ref RespawnMapTypeDTO respawnMapType);
 
+        IEnumerable<RespawnMapTypeDTO> LoadAll();
+
         RespawnMapTypeDTO LoadById(long respawnMapTypeId);
 
         RespawnMapTypeDTO LoadByMapId(short mapId);

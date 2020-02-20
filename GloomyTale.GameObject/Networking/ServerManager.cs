@@ -62,9 +62,9 @@ namespace GloomyTale.GameObject.Networking
 
         public bool ShutdownStop;
 
-        private static readonly ConcurrentBag<Card> _cards = new ConcurrentBag<Card>();
+        private static readonly List<Card> _cards = new List<Card>();
 
-        private static readonly ConcurrentBag<Item> _items = new ConcurrentBag<Item>();
+        private static readonly List<Item> Items = new List<Item>();
 
         private static readonly ConcurrentDictionary<Guid, MapInstance> _mapinstances = new ConcurrentDictionary<Guid, MapInstance>();
 
@@ -74,7 +74,7 @@ namespace GloomyTale.GameObject.Networking
 
         private static readonly CryptoRandom _random = new CryptoRandom();
 
-        private static readonly ConcurrentBag<Skill> _skills = new ConcurrentBag<Skill>();
+        private static readonly List<Skill> Skills = new List<Skill>();
 
         private static ServerManager _instance;
 
@@ -86,9 +86,9 @@ namespace GloomyTale.GameObject.Networking
 
         private ThreadSafeSortedList<short, List<MapNpc>> _mapNpcs;
 
-        private ThreadSafeSortedList<short, List<DropDTO>> _monsterDrops;
+        private Dictionary<short, List<DropDTO>> _monsterDrops;
 
-        private ThreadSafeSortedList<short, List<NpcMonsterSkill>> _monsterSkills;
+        private Dictionary<short, List<NpcMonsterSkill>> _monsterSkills;
 
         private ThreadSafeSortedList<int, RecipeListDTO> _recipeLists;
 
@@ -1049,7 +1049,7 @@ namespace GloomyTale.GameObject.Networking
 
         public List<Recipe> GetAllRecipes() => _recipes.GetAllItems();
 
-        public static IEnumerable<Skill> GetAllSkill() => _skills;
+        public static IEnumerable<Skill> GetAllSkill() => Skills;
 
         public static Guid GetBaseMapInstanceIdByMapId(short mapId) => _mapinstances.FirstOrDefault(s => s.Value?.Map.MapId == mapId && s.Value.MapInstanceType == MapInstanceType.BaseMapInstance).Key;
 
@@ -1065,7 +1065,10 @@ namespace GloomyTale.GameObject.Networking
 
         public Group GetGroupByCharacterId(long characterId) => Groups?.SingleOrDefault(g => g.IsMemberOfGroup(characterId));
 
-        public static Item GetItem(short vnum) => _items.FirstOrDefault(m => m.VNum.Equals(vnum));
+        public static Item GetItem(short vnum)
+        {
+            return Items.Find(m => m.VNum.Equals(vnum));
+        }
 
         public static MapInstance GetMapInstance(Guid id) => _mapinstances.ContainsKey(id) ? _mapinstances[id] : null;
 
@@ -1129,7 +1132,10 @@ namespace GloomyTale.GameObject.Networking
 
         public ClientSession GetSessionBySessionId(int sessionId) => Sessions.SingleOrDefault(s => s.SessionId == sessionId);
 
-        public static Skill GetSkill(short skillVNum) => _skills.FirstOrDefault(m => m.SkillVNum.Equals(skillVNum));
+        public static Skill GetSkill(short skillVNum)
+        {
+            return Skills.Find(m => m.SkillVNum.Equals(skillVNum));
+        }
 
         public Quest GetQuest(long questId) => Quests.FirstOrDefault(m => m.QuestId.Equals(questId));
 
@@ -1747,112 +1753,65 @@ namespace GloomyTale.GameObject.Networking
 
         public void LoadItems()
         {
-            Stopwatch sw = Stopwatch.StartNew();
-            IEnumerable<ItemDTO> items = DAOFactory.Instance.ItemDAO.LoadAll();
-            Dictionary<short?, BCardDTO[]> bcards = DAOFactory.Instance.BCardDAO.LoadAll().Where(s => s.ItemVNum.HasValue).GroupBy(s => s.ItemVNum).ToDictionary(s => s.Key, s => s.ToArray());
-            Dictionary<short, RollGeneratedItemDTO[]> rollItems = DAOFactory.Instance.RollGeneratedItemDAO.LoadAll().GroupBy(s => s.OriginalItemVNum).ToDictionary(s => s.Key, s => s.ToArray());
-            Dictionary<short, Item> item = new Dictionary<short, Item>();
-            foreach (ItemDTO itemDto in items)
+            var items = DAOFactory.Instance.ItemDAO.LoadAll();
+            OrderablePartitioner<ItemDTO> itemPartitioner = Partitioner.Create(items, EnumerablePartitionerOptions.NoBuffering);
+            Parallel.ForEach(itemPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 4 }, itemDto =>
             {
-                Item newItem;
                 switch (itemDto.ItemType)
                 {
-                    case ItemType.Ammo:
-                        newItem = new NoFunctionItem(itemDto);
-                        break;
-
                     case ItemType.Armor:
-                        newItem = new WearableItem(itemDto);
+                    case ItemType.Jewelery:
+                    case ItemType.Fashion:
+                    case ItemType.Specialist:
+                    case ItemType.Weapon:
+                        Items.Add(new WearableItem(itemDto));
                         break;
 
                     case ItemType.Box:
-                        newItem = new BoxItem(itemDto);
+                        Items.Add(new BoxItem(itemDto));
                         break;
 
+                    case ItemType.Shell:
+                    case ItemType.Magical:
                     case ItemType.Event:
-                        newItem = new MagicalItem(itemDto);
-                        break;
-
-                    case ItemType.Fashion:
-                        newItem = new WearableItem(itemDto);
+                        Items.Add(new MagicalItem(itemDto));
                         break;
 
                     case ItemType.Food:
-                        newItem = new FoodItem(itemDto);
+                        Items.Add(new FoodItem(itemDto));
                         break;
-
-                    case ItemType.Jewelery:
-                        newItem = new WearableItem(itemDto);
-                        break;
-
-                    case ItemType.Magical:
-                        newItem = new MagicalItem(itemDto);
-                        break;
-
 
                     case ItemType.Potion:
-                        newItem = new PotionItem(itemDto);
+                        Items.Add(new PotionItem(itemDto));
                         break;
 
                     case ItemType.Production:
-                        newItem = new ProduceItem(itemDto);
-                        break;
-
-
-                    case ItemType.Shell:
-                        newItem = new MagicalItem(itemDto);
+                        Items.Add(new ProduceItem(itemDto));
                         break;
 
                     case ItemType.Snack:
-                        newItem = new SnackItem(itemDto);
+                        Items.Add(new SnackItem(itemDto));
                         break;
 
                     case ItemType.Special:
-                        newItem = new SpecialItem(itemDto);
-                        break;
-
-                    case ItemType.Specialist:
-                        newItem = new WearableItem(itemDto);
+                        Items.Add(new SpecialItem(itemDto));
                         break;
 
                     case ItemType.Teacher:
-                        newItem = new TeacherItem(itemDto);
+                        Items.Add(new TeacherItem(itemDto));
                         break;
 
                     case ItemType.Upgrade:
-                        newItem = new UpgradeItem(itemDto);
+                        Items.Add(new UpgradeItem(itemDto));
                         break;
 
-                    case ItemType.Weapon:
-                        newItem = new WearableItem(itemDto);
-                        break;
-
-                    case ItemType.Main:
-                    case ItemType.Map:
-                    case ItemType.Part:
-                    case ItemType.Quest1:
-                    case ItemType.Quest2:
-                    case ItemType.Sell:
                     default:
-                        newItem = new NoFunctionItem(itemDto);
+                        Items.Add(new NoFunctionItem(itemDto));
                         break;
                 }
-
-                if (bcards.TryGetValue(newItem.VNum, out BCardDTO[] bcardDtos))
-                {
-                    newItem.BCards.AddRange(bcardDtos.Cast<BCard>());
-                }
-                if (rollItems.TryGetValue(newItem.VNum, out RollGeneratedItemDTO[] rolls))
-                {
-                    newItem.RollGeneratedItems.AddRange(rolls);
-                }
-
-                item[itemDto.VNum] = newItem;
-            }
-
-            //Items.AddRange(item.Values);
-            //Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("ITEMS_LOADED"), Items.Count));
-        }
+            });
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("ITEMS_LOADED"), Items.Count));
+        }        
 
         private static void LoadMapsAndContent()
         {
@@ -1863,10 +1822,10 @@ namespace GloomyTale.GameObject.Networking
 
                 var monsters = DAOFactory.Instance.MapMonsterDAO.LoadAll().GroupBy(s => s.MapId).ToDictionary(s => s.Key, s => s.ToArray());
                 var npcs = DAOFactory.Instance.MapNpcDAO.LoadAll().GroupBy(s => s.MapId).ToDictionary(s => s.Key, s => s.ToArray());
-                //var portals = DAOFactory.Instance.PortalDAO.LoadAll().GroupBy(s => s.SourceMapId).ToDictionary(s => s.Key, s => s.ToArray());
+                var portals = DAOFactory.Instance.PortalDAO.LoadAll().GroupBy(s => s.SourceMapId).ToDictionary(s => s.Key, s => s.ToArray());
                 MapTypeMapDTO[] mapTypes = DAOFactory.Instance.MapTypeMapDAO.LoadAll().ToArray();
                 MapTypeDTO[] mapTypeMap = DAOFactory.Instance.MapTypeDAO.LoadAll().ToArray();
-                //IEnumerable<RespawnMapTypeDTO> respawns = DAOFactory.Instance.RespawnMapTypeDAO.LoadAll();
+                IEnumerable<RespawnMapTypeDTO> respawns = DAOFactory.Instance.RespawnMapTypeDAO.LoadAll();
 
                 foreach (MapDTO map in DAOFactory.Instance.MapDAO.LoadAll().ToArray())
                 {
@@ -1927,6 +1886,93 @@ namespace GloomyTale.GameObject.Networking
             }
         }
 
+        private void LoadMonsterDrops()
+        {
+            // intialize monsterdrops
+            _monsterDrops = new Dictionary<short, List<DropDTO>>();
+            foreach (IGrouping<short?, DropDTO> monsterDropGrouping in DAOFactory.Instance.DropDAO.LoadAll().ToArray().GroupBy(d => d.MonsterVNum))
+            {
+                if (monsterDropGrouping.Key.HasValue)
+                {
+                    _monsterDrops[monsterDropGrouping.Key.Value] =
+                        monsterDropGrouping.OrderBy(d => d.DropChance).ToList();
+                }
+                else
+                {
+                    _generalDrops = monsterDropGrouping.ToList();
+                }
+            }
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("DROPS_LOADED"),
+                _monsterDrops.Sum(i => i.Value.Count)));
+        }
+
+        private void LoadMonsterSkills()
+        {
+            // initialize monsterskills
+            _monsterSkills = new Dictionary<short, List<NpcMonsterSkill>>();
+            foreach (IGrouping<short, NpcMonsterSkillDTO> monsterSkillGrouping in DAOFactory.Instance.NpcMonsterSkillDAO.LoadAll().ToArray().GroupBy(n => n.NpcMonsterVNum))
+            {
+                _monsterSkills[monsterSkillGrouping.Key] =
+                    monsterSkillGrouping.Select(n => n as NpcMonsterSkill).ToList();
+            }
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MONSTERSKILLS_LOADED"),
+                _monsterSkills.Sum(i => i.Value.Count)));
+        }
+
+        private static void LoadSkills()
+        {
+            IEnumerable<ComboDTO> combos = DAOFactory.Instance.ComboDAO.LoadAll().ToArray()
+                ;
+            IEnumerable<BCardDTO> bcards = DAOFactory.Instance.BCardDAO.LoadAll().ToArray().Where(s => s.SkillVNum.HasValue);
+            foreach (SkillDTO skillItem in DAOFactory.Instance.SkillDAO.LoadAll().ToArray())
+            {
+                if (!(skillItem is Skill skillObj))
+                {
+                    return;
+                }
+
+                skillObj.Combos.AddRange(combos.Where(s => s.SkillVNum == skillObj.SkillVNum).ToList());
+                skillObj.BCards = new List<BCard>();
+
+                foreach (BCardDTO o in bcards.Where(s => s.SkillVNum == skillObj.SkillVNum))
+                {
+                    skillObj.BCards.Add((BCard)o);
+                }
+
+                Skills.Add(skillObj);
+            }
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SKILLS_LOADED"), Skills.Count));
+        }
+
+        private void LoadQuests()
+        {
+            // initialize quests
+            Quests = new List<Quest>();
+            foreach (QuestDTO questdto in DAOFactory.Instance.QuestDAO.LoadAll())
+            {
+                Quest quest = new Quest(questdto);
+                quest.QuestRewards = DAOFactory.Instance.QuestRewardDAO.LoadByQuestId(quest.QuestId).ToList();
+                quest.QuestObjectives = DAOFactory.Instance.QuestObjectiveDAO.LoadByQuestId(quest.QuestId).ToList();
+                Quests.Add(quest);
+            }
+            FlowerQuestId = Quests.FirstOrDefault(q => q.QuestType == (byte)QuestType.FlowerQuest)?.QuestId;
+
+#warning TODO: Event system
+            //if (Easter)
+            //{
+            //CalvinQuest = Quests.Find(q => q.QuestId == 5950)?.QuestId;
+            //MimiQuest = Quests.Find(q => q.QuestId == 5946)?.QuestId;
+            //SluggQuest = Quests.Find(q => q.QuestId == 5948)?.QuestId;
+            //EvaQuest = Quests.Find(q => q.QuestId == 5953)?.QuestId;
+            //MalcolmQuest = Quests.Find(q => q.QuestId == 5945)?.QuestId;
+            //}
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("QUESTS_LOADED"), Quests.Count));
+        }
+
         public void Initialize(GameRateConfiguration rateConf, GameMinMaxConfiguration levelConf, GameTrueFalseConfiguration eventsConf)//, GameScheduledEventsConfiguration gameScheduledConf)
         {
             //RateConfiguration = rateConf;
@@ -1940,9 +1986,9 @@ namespace GloomyTale.GameObject.Networking
             //CharacterHomes = DaoFactory.Instance.CharacterHomeDao.LoadAll();
 
             //CommunicationServiceClient.Instance.SetMaintenanceState(Maintenance);
-            //LoadItems();
-            //LoadMonsterDrops();
-            //LoadMonsterSkills();
+            LoadItems();
+            LoadMonsterDrops();
+            LoadMonsterSkills();
             //LoadBazaar();
             //LoadNpcMonsters();
             //LoadRecipes();
@@ -1950,9 +1996,9 @@ namespace GloomyTale.GameObject.Networking
             //LoadShopSkills();
             //LoadShops();
             //LoadTeleporters();
-            //LoadSkills();
+            LoadSkills();
             //LoadCards();
-            //LoadQuests();
+            LoadQuests();
             //LoadMapNpcs();
             LoadMapsAndContent();
             LoadFamilies();
@@ -2361,9 +2407,7 @@ namespace GloomyTale.GameObject.Networking
         {
             if (disposing)
             {
-                _monsterDrops.Dispose();
                 ThreadSafeGroupList.Dispose();
-                _monsterSkills.Dispose();
                 _shopSkills.Dispose();
                 _shopItems.Dispose();
                 _shops.Dispose();

@@ -80,6 +80,14 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
+        public IEnumerable<PortalDTO> LoadAll()
+        {
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                return context.Portal.ToArray().Select(_mapper.Map<PortalDTO>);
+            }
+        }
+
         public IEnumerable<PortalDTO> LoadByMap(short mapId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())

@@ -104,6 +104,14 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
+        public IEnumerable<RespawnMapTypeDTO> LoadAll()
+        {
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                return context.RespawnMapType.ToArray().Select(_mapper.Map<RespawnMapTypeDTO>);
+            }
+        }
+
         public RespawnMapTypeDTO LoadByMapId(short mapId)
         {
             try
