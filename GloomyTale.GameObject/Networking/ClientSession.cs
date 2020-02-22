@@ -394,9 +394,7 @@ namespace GloomyTale.GameObject
             _communicationServiceEvents.CharacterDisconnectedEvent += OnOtherCharacterDisconnected;
 
             // register for servermanager
-            ServerManager.Instance.RegisterSession(this);
-            ServerManager.Instance.CharacterScreenSessions.Remove(character.AccountId);
-            Character.SetSession(this);
+            ServerManager.Instance.RegisterSession(this);Character.SetSession(this);
         }
 
         private void GenerateHandlerReferences(Type type, bool isWorldServer)

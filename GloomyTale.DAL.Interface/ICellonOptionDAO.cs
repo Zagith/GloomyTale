@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace GloomyTale.DAL.Interface
 {
-    public interface ICellonOptionDAO : IMappingBaseDAO
+    public interface ICellonOptionDAO : ISynchronizableBaseDAO<CellonOptionDTO>
     {
         #region Methods
 
@@ -28,8 +28,6 @@ namespace GloomyTale.DAL.Interface
         IEnumerable<CellonOptionDTO> GetOptionsByWearableInstanceId(Guid wearableInstanceId);
 
         void InsertOrUpdateFromList(List<CellonOptionDTO> cellonOption, Guid equipmentSerialId);
-
-        CellonOptionDTO InsertOrUpdate(CellonOptionDTO cellonOption);
 
         #endregion
     }

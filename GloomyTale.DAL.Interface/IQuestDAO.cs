@@ -10,8 +10,6 @@ namespace GloomyTale.DAL.Interface
 
         DeleteResult DeleteById(long id);
 
-        QuestDTO InsertOrUpdate(QuestDTO quest);
-
         void Insert(List<QuestDTO> questList);
 
         QuestDTO LoadById(long id);

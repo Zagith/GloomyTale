@@ -37,14 +37,12 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
-                    foreach (ScriptedInstanceDTO scriptedInstance in scriptedInstances)
+                    foreach (ScriptedInstanceDTO Item in scriptedInstances)
                     {
-                        ScriptedInstance entity = new ScriptedInstance();
-                        Mapper.Mappers.ScriptedInstanceMapper.ToScriptedInstance(scriptedInstance, entity);
+                        var entity = _mapper.Map<ScriptedInstance>(Item);
                         context.ScriptedInstance.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -60,16 +58,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    ScriptedInstance entity = new ScriptedInstance();
-                    Mapper.Mappers.ScriptedInstanceMapper.ToScriptedInstance(scriptedInstance, entity);
+                    var entity = _mapper.Map<ScriptedInstance>(scriptedInstance);
                     context.ScriptedInstance.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.ScriptedInstanceMapper.ToScriptedInstanceDTO(entity, scriptedInstance))
-                    {
-                        return scriptedInstance;
-                    }
-
-                    return null;
+                    return _mapper.Map<ScriptedInstanceDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -83,14 +75,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ScriptedInstanceDTO> result = new List<ScriptedInstanceDTO>();
                 foreach (ScriptedInstance timespaceObject in context.ScriptedInstance.Where(c => c.MapId.Equals(mapId)))
                 {
-                    ScriptedInstanceDTO dto = new ScriptedInstanceDTO();
-                    Mapper.Mappers.ScriptedInstanceMapper.ToScriptedInstanceDTO(timespaceObject, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ScriptedInstanceDTO>(timespaceObject);
                 }
-                return result;
             }
         }
 

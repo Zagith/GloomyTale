@@ -23,16 +23,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    LogPutItem entity = new LogPutItem();
-                    Mapper.Mappers.LogPutItemMapper.ToLogPutItem(generalLog, entity);
+                    var entity = _mapper.Map<LogPutItem>(generalLog);
                     context.LogPutItem.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.LogPutItemMapper.ToLogPutItemDTO(entity, generalLog))
-                    {
-                        return generalLog;
-                    }
-
-                    return null;
+                    return _mapper.Map<LogPutItemDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -40,22 +34,6 @@ namespace GloomyTale.DAL.DAO
                 Logger.Log.Error(e);
                 return null;
             }
-        }
-
-        public LogPutItemDTO Update(LogPutItem old, LogPutItemDTO replace, OpenNosContext context)
-        {
-            if (old != null)
-            {
-                Mapper.Mappers.LogPutItemMapper.ToLogPutItem(replace, old);
-                context.Entry(old).State = EntityState.Modified;
-                context.SaveChanges();
-            }
-            if (Mapper.Mappers.LogPutItemMapper.ToLogPutItemDTO(old, replace))
-            {
-                return replace;
-            }
-
-            return null;
         }
 
         public LogPutItemDTO LoadById(long id)
@@ -64,34 +42,28 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    LogPutItemDTO dto = new LogPutItemDTO();
-                    if (Mapper.Mappers.LogPutItemMapper.ToLogPutItemDTO(context.LogPutItem.FirstOrDefault(i => i.LogId.Equals(id)), dto))
+                    LogPutItem log = context.LogPutItem.FirstOrDefault(a => a.LogId.Equals(id));
+                    if (log != null)
                     {
-                        return dto;
+                        return _mapper.Map<LogPutItemDTO>(log);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return null;
             }
+            return null;
         }
 
         public IEnumerable<LogPutItemDTO> LoadByCharacterId(long characterId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<LogPutItemDTO> result = new List<LogPutItemDTO>();
-                foreach (LogPutItem questLog in context.LogPutItem.Where(s => s.CharacterId == characterId))
+                foreach (LogPutItem id in context.LogPutItem.Where(c => c.CharacterId == characterId))
                 {
-                    LogPutItemDTO dto = new LogPutItemDTO();
-                    Mapper.Mappers.LogPutItemMapper.ToLogPutItemDTO(questLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<LogPutItemDTO>(id);
                 }
-                return result;
             }
         }
     }

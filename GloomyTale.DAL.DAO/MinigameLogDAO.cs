@@ -60,31 +60,13 @@ namespace GloomyTale.DAL.DAO
 
         public IEnumerable<MinigameLogDTO> LoadByCharacterId(long characterId)
         {
-            try
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                foreach (MinigameLog obj in context.MinigameLog.Where(s => s.CharacterId == characterId))
                 {
-                    IEnumerable<MinigameLog> minigameLog = context.MinigameLog.Where(a => a.CharacterId.Equals(characterId)).ToList();
-                    if (minigameLog != null)
-                    {
-                        List<MinigameLogDTO> result = new List<MinigameLogDTO>();
-                        foreach (MinigameLog input in minigameLog)
-                        {
-                            MinigameLogDTO dto = new MinigameLogDTO();
-                            if (Mapper.Mappers.MinigameLogMapper.ToMinigameLogDTO(input, dto))
-                            {
-                                result.Add(dto);
-                            }
-                        }
-                        return result;
-                    }
+                    yield return _mapper.Map<MinigameLogDTO>(obj);
                 }
             }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-            }
-            return null;
         }
 
         public MinigameLogDTO LoadById(long minigameLogId)
@@ -93,15 +75,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MinigameLog minigameLog = context.MinigameLog.FirstOrDefault(a => a.MinigameLogId.Equals(minigameLogId));
-                    if (minigameLog != null)
-                    {
-                        MinigameLogDTO minigameLogDTO = new MinigameLogDTO();
-                        if (Mapper.Mappers.MinigameLogMapper.ToMinigameLogDTO(minigameLog, minigameLogDTO))
-                        {
-                            return minigameLogDTO;
-                        }
-                    }
+                    return _mapper.Map<MinigameLogDTO>(context.MinigameLog.FirstOrDefault(s => s.MinigameLogId.Equals(minigameLogId)));
                 }
             }
             catch (Exception e)
@@ -111,30 +85,23 @@ namespace GloomyTale.DAL.DAO
             return null;
         }
 
-        private static MinigameLogDTO insert(MinigameLogDTO account, OpenNosContext context)
+        private MinigameLogDTO insert(MinigameLogDTO account, OpenNosContext context)
         {
-            MinigameLog entity = new MinigameLog();
-            Mapper.Mappers.MinigameLogMapper.ToMinigameLog(account, entity);
+            var entity = _mapper.Map<MinigameLog>(account);
             context.MinigameLog.Add(entity);
             context.SaveChanges();
-            Mapper.Mappers.MinigameLogMapper.ToMinigameLogDTO(entity, account);
-            return account;
+            return _mapper.Map<MinigameLogDTO>(entity);
         }
 
-        private static MinigameLogDTO update(MinigameLog entity, MinigameLogDTO account, OpenNosContext context)
+        private MinigameLogDTO update(MinigameLog entity, MinigameLogDTO account, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.MinigameLogMapper.ToMinigameLog(account, entity);
-                context.Entry(entity).State = EntityState.Modified;
+                _mapper.Map(account, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.MinigameLogMapper.ToMinigameLogDTO(entity, account))
-            {
-                return account;
-            }
 
-            return null;
+            return _mapper.Map<MinigameLogDTO>(entity);
         }
 
         #endregion

@@ -25,7 +25,7 @@ using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class CellonOptionDAO : MappingBaseDao<CellonOption, CellonOptionDTO>, ICellonOptionDAO
+    public class CellonOptionDAO : SynchronizableBaseDAO<CellonOption, CellonOptionDTO>, ICellonOptionDAO
     {
         public CellonOptionDAO(IMapper mapper) : base(mapper)
         { }
@@ -59,37 +59,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CellonOptionDTO> result = new List<CellonOptionDTO>();
-                foreach (CellonOption entity in context.CellonOption.Where(c => c.EquipmentSerialId == wearableInstanceId))
+                foreach (CellonOption cellonOptionobject in context.CellonOption.Where(i => i.EquipmentSerialId.Equals(wearableInstanceId)))
                 {
-                    CellonOptionDTO dto = new CellonOptionDTO();
-                    Mapper.Mappers.CellonOptionMapper.ToCellonOptionDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<CellonOptionDTO>(cellonOptionobject);
                 }
-                return result;
-            }
-        }
-
-        public CellonOptionDTO InsertOrUpdate(CellonOptionDTO cellonOption)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    long cellonOptionId = cellonOption.CellonOptionId;
-                    CellonOption entity = context.CellonOption.FirstOrDefault(c => c.CellonOptionId.Equals(cellonOptionId));
-
-                    if (entity == null)
-                    {
-                        return insert(cellonOption, context);
-                    }
-                    return update(entity, cellonOption, context);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("INSERT_ERROR"), cellonOption, e.Message), e);
-                return cellonOption;
             }
         }
 
@@ -99,35 +72,34 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    void insert(CellonOptionDTO cellonoption)
+                    void insert(CellonOptionDTO cellonOption)
                     {
-                        CellonOption _entity = new CellonOption();
-                        Mapper.Mappers.CellonOptionMapper.ToCellonOption(cellonoption, _entity);
-                        context.CellonOption.Add(_entity);
+                        var entity = _mapper.Map<CellonOption>(cellonOption);
+                        context.CellonOption.Add(entity);
                         context.SaveChanges();
-                        cellonoption.CellonOptionId = _entity.CellonOptionId;
+                        cellonOption.EquipmentSerialId = entity.EquipmentSerialId;
                     }
 
-                    void update(CellonOption _entity, CellonOptionDTO cellonoption)
+                    void update(CellonOption _entity, CellonOptionDTO cellonOption)
                     {
                         if (_entity != null)
                         {
-                            Mapper.Mappers.CellonOptionMapper.ToCellonOption(cellonoption, _entity);
+                            _mapper.Map(cellonOption, _entity);
                         }
                     }
 
                     foreach (CellonOptionDTO item in cellonOption)
                     {
                         item.EquipmentSerialId = equipmentSerialId;
-                        CellonOption entity = context.CellonOption.FirstOrDefault(c => c.CellonOptionId == item.CellonOptionId);
+                        CellonOption entity = context.CellonOption.FirstOrDefault(c => c.EquipmentSerialId == item.EquipmentSerialId);
 
                         if (entity == null)
                         {
-                            insert(item);
+                            Insert(item, context);
                         }
                         else
                         {
-                            update(entity, item);
+                            Update(entity, item, context);
                         }
                     }
 
@@ -138,36 +110,6 @@ namespace GloomyTale.DAL.DAO
             {
                 Logger.Log.Error(e);
             }
-        }
-
-        private static CellonOptionDTO insert(CellonOptionDTO cellonOption, OpenNosContext context)
-        {
-            CellonOption entity = new CellonOption();
-            Mapper.Mappers.CellonOptionMapper.ToCellonOption(cellonOption, entity);
-            context.CellonOption.Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.CellonOptionMapper.ToCellonOptionDTO(entity, cellonOption))
-            {
-                return cellonOption;
-            }
-
-            return null;
-        }
-
-        private static CellonOptionDTO update(CellonOption entity, CellonOptionDTO cellonOption, OpenNosContext context)
-        {
-            if (entity != null)
-            {
-                Mapper.Mappers.CellonOptionMapper.ToCellonOption(cellonOption, entity);
-                context.SaveChanges();
-            }
-
-            if (Mapper.Mappers.CellonOptionMapper.ToCellonOptionDTO(entity, cellonOption))
-            {
-                return cellonOption;
-            }
-
-            return null;
         }
 
         #endregion

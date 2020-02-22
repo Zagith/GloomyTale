@@ -87,14 +87,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MailDTO> result = new List<MailDTO>();
                 foreach (Mail mail in context.Mail)
                 {
-                    MailDTO dto = new MailDTO();
-                    Mapper.Mappers.MailMapper.ToMailDTO(mail, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MailDTO>(mail);
                 }
-                return result;
             }
         }
 
@@ -104,13 +100,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MailDTO dto = new MailDTO();
-                    if (Mapper.Mappers.MailMapper.ToMailDTO(context.Mail.FirstOrDefault(i => i.MailId.Equals(mailId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<MailDTO>(context.Mail.FirstOrDefault(i => i.MailId.Equals(mailId)));
                 }
             }
             catch (Exception e)
@@ -122,50 +112,34 @@ namespace GloomyTale.DAL.DAO
 
         public IEnumerable<MailDTO> LoadSentByCharacter(long characterId)
         {
-            //Where(s => s.SenderId == CharacterId && s.IsSenderCopy && MailList.All(m => m.Value.MailId != s.MailId))
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MailDTO> result = new List<MailDTO>();
                 foreach (Mail mail in context.Mail.Where(s => s.SenderId == characterId && s.IsSenderCopy).Take(40))
                 {
-                    MailDTO dto = new MailDTO();
-                    Mapper.Mappers.MailMapper.ToMailDTO(mail, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MailDTO>(mail);
                 }
-                return result;
             }
         }
 
         public IEnumerable<MailDTO> LoadSentToCharacter(long characterId)
         {
-            //s => s.ReceiverId == CharacterId && !s.IsSenderCopy && MailList.All(m => m.Value.MailId != s.MailId)).Take(50)
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MailDTO> result = new List<MailDTO>();
                 foreach (Mail mail in context.Mail.Where(s => s.ReceiverId == characterId && !s.IsSenderCopy).Take(40))
                 {
-                    MailDTO dto = new MailDTO();
-                    Mapper.Mappers.MailMapper.ToMailDTO(mail, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MailDTO>(mail);
                 }
-                return result;
             }
         }
 
-        private static MailDTO insert(MailDTO mail, OpenNosContext context)
+        private MailDTO insert(MailDTO mail, OpenNosContext context)
         {
             try
             {
-                Mail entity = new Mail();
-                Mapper.Mappers.MailMapper.ToMail(mail, entity);
+                var entity = _mapper.Map<Mail>(mail);
                 context.Mail.Add(entity);
                 context.SaveChanges();
-                if (Mapper.Mappers.MailMapper.ToMailDTO(entity, mail))
-                {
-                    return mail;
-                }
-
-                return null;
+                return _mapper.Map<MailDTO>(entity);
             }
             catch (Exception dbEx)
             {
@@ -174,19 +148,15 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static MailDTO update(Mail entity, MailDTO respawn, OpenNosContext context)
+        private MailDTO update(Mail entity, MailDTO respawn, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.MailMapper.ToMail(respawn, entity);
+                _mapper.Map(respawn, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.MailMapper.ToMailDTO(entity, respawn))
-            {
-                return respawn;
-            }
 
-            return null;
+            return _mapper.Map<MailDTO>(entity);
         }
 
         #endregion

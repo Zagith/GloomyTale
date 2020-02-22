@@ -32,13 +32,6 @@ namespace GloomyTale.DAL.Interface
         IEnumerable<NpcMonsterDTO> FindByName(string name);
 
         /// <summary>
-        /// Used for inserting single object into entity
-        /// </summary>
-        /// <param name="npc"></param>
-        /// <returns></returns>
-        NpcMonsterDTO Insert(NpcMonsterDTO npc);
-
-        /// <summary>
         /// Used for inserting list of data to entity
         /// </summary>
         /// <param name="npcMonsters"></param>

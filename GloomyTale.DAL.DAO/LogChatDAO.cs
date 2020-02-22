@@ -23,16 +23,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    LogChat entity = new LogChat();
-                    Mapper.Mappers.LogChatMapper.ToLogChat(generalLog, entity);
+                    var entity = _mapper.Map<LogChat>(generalLog);
                     context.LogChat.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.LogChatMapper.ToLogChatDTO(entity, generalLog))
-                    {
-                        return generalLog;
-                    }
-
-                    return null;
+                    return _mapper.Map<LogChatDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -40,58 +34,36 @@ namespace GloomyTale.DAL.DAO
                 Logger.Log.Error(e);
                 return null;
             }
-        }
-
-        public LogChatDTO Update(LogChat old, LogChatDTO replace, OpenNosContext context)
-        {
-            if (old != null)
-            {
-                Mapper.Mappers.LogChatMapper.ToLogChat(replace, old);
-                context.Entry(old).State = EntityState.Modified;
-                context.SaveChanges();
-            }
-            if (Mapper.Mappers.LogChatMapper.ToLogChatDTO(old, replace))
-            {
-                return replace;
-            }
-
-            return null;
         }
 
         public LogChatDTO LoadById(long id)
         {
             try
-            {
+            { 
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    LogChatDTO dto = new LogChatDTO();
-                    if (Mapper.Mappers.LogChatMapper.ToLogChatDTO(context.LogChat.FirstOrDefault(i => i.LogId.Equals(id)), dto))
+                    LogChat log = context.LogChat.FirstOrDefault(a => a.LogId.Equals(id));
+                    if (log != null)
                     {
-                        return dto;
+                        return _mapper.Map<LogChatDTO>(log);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return null;
             }
+            return null;
         }
 
         public IEnumerable<LogChatDTO> LoadByCharacterId(long characterId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<LogChatDTO> result = new List<LogChatDTO>();
-                foreach (LogChat questLog in context.LogChat.Where(s => s.CharacterId == characterId))
+                foreach (LogChat id in context.LogChat.Where(c => c.CharacterId == characterId))
                 {
-                    LogChatDTO dto = new LogChatDTO();
-                    Mapper.Mappers.LogChatMapper.ToLogChatDTO(questLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<LogChatDTO>(id);
                 }
-                return result;
             }
         }
     }

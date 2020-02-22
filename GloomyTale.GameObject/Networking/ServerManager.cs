@@ -1444,7 +1444,7 @@ namespace GloomyTale.GameObject.Networking
             var dicNpcMonster = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
                     {
                         {
-                            typeof(II18NNpcMonsterDto),
+                            typeof(I18NNpcMonsterDto),
                             DAOFactory.Instance.I18NNpcMonsterDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
@@ -1523,7 +1523,7 @@ namespace GloomyTale.GameObject.Networking
             var dicSkill = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
                     {
                         {
-                            typeof(II18NSkillDto),
+                            typeof(I18NSkillDto),
                             DAOFactory.Instance.I18NSkillDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
@@ -1548,7 +1548,7 @@ namespace GloomyTale.GameObject.Networking
             var dicCard = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
                     {
                         {
-                            typeof(II18NCardDto),
+                            typeof(I18NCardDto),
                             DAOFactory.Instance.I18NCardDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
@@ -1597,7 +1597,7 @@ namespace GloomyTale.GameObject.Networking
                 var dicMap = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
                     {
                         {
-                            typeof(II18NMapDto),
+                            typeof(I18NMapPointDataDto),
                             DAOFactory.Instance.I18NMapDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
                                 x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
                         }
@@ -3504,7 +3504,10 @@ namespace GloomyTale.GameObject.Networking
                 long? accId = kickedSession.Item1;
                 long? sessId = kickedSession.Item2;
 
-                ClientSession targetSession = CharacterScreenSessions.FirstOrDefault(s => s.SessionId == sessId || s.Account.AccountId == accId);
+                ClientSession targetSession = Sessions.FirstOrDefault(s =>
+                (!kickedSession.Item1.HasValue || s.SessionId == kickedSession.Item1.Value)
+                && (!kickedSession.Item1.HasValue || s.Account.AccountId == kickedSession.Item2));
+
                 targetSession?.Disconnect();
                 targetSession = Sessions.FirstOrDefault(s => s.SessionId == sessId || s.Account.AccountId == accId);
                 targetSession?.Disconnect();

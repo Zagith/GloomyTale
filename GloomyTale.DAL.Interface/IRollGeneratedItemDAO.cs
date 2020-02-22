@@ -20,12 +20,8 @@ namespace GloomyTale.DAL.Interface
     public interface IRollGeneratedItemDAO : IMappingBaseDAO
     {
         #region Methods
-
-        RollGeneratedItemDTO Insert(RollGeneratedItemDTO item);
-
+        
         IEnumerable<RollGeneratedItemDTO> LoadAll();
-
-        RollGeneratedItemDTO LoadById(short id);
 
         IEnumerable<RollGeneratedItemDTO> LoadByItemVNum(short vnum);
 

@@ -23,16 +23,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    LogDrop entity = new LogDrop();
-                    Mapper.Mappers.LogDropMapper.ToLogDrop(generalLog, entity);
+                    var entity = _mapper.Map<LogDrop>(generalLog);
                     context.LogDrop.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.LogDropMapper.ToLogDropDTO(entity, generalLog))
-                    {
-                        return generalLog;
-                    }
-
-                    return null;
+                    return _mapper.Map<LogDropDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -40,22 +34,6 @@ namespace GloomyTale.DAL.DAO
                 Logger.Log.Error(e);
                 return null;
             }
-        }        
-
-        public LogDropDTO Update(LogDrop old, LogDropDTO replace, OpenNosContext context)
-        {
-            if (old != null)
-            {
-                Mapper.Mappers.LogDropMapper.ToLogDrop(replace, old);
-                context.Entry(old).State = EntityState.Modified;
-                context.SaveChanges();
-            }
-            if (Mapper.Mappers.LogDropMapper.ToLogDropDTO(old, replace))
-            {
-                return replace;
-            }
-
-            return null;
         }
 
         public LogDropDTO LoadById(long id)
@@ -64,34 +42,28 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    LogDropDTO dto = new LogDropDTO();
-                    if (Mapper.Mappers.LogDropMapper.ToLogDropDTO(context.LogDrop.FirstOrDefault(i => i.LogId.Equals(id)), dto))
+                    LogDrop log = context.LogDrop.FirstOrDefault(a => a.LogId.Equals(id));
+                    if (log != null)
                     {
-                        return dto;
+                        return _mapper.Map<LogDropDTO>(log);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return null;
             }
+            return null;
         }
 
         public IEnumerable<LogDropDTO> LoadByCharacterId(long characterId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<LogDropDTO> result = new List<LogDropDTO>();
-                foreach (LogDrop questLog in context.LogDrop.Where(s => s.CharacterId == characterId))
+                foreach (LogDrop id in context.LogDrop.Where(c => c.CharacterId == characterId))
                 {
-                    LogDropDTO dto = new LogDropDTO();
-                    Mapper.Mappers.LogDropMapper.ToLogDropDTO(questLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<LogDropDTO>(id);
                 }
-                return result;
             }
         }
     }

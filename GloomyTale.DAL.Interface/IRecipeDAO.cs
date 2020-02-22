@@ -27,7 +27,7 @@ namespace GloomyTale.DAL.Interface
 
         RecipeDTO LoadById(short recipeId);
 
-        RecipeDTO LoadByItemVNum(short itemVNum);
+        IEnumerable<RecipeDTO> LoadByItemVNum(short itemVNum);
 
         void Update(RecipeDTO recipe);
 

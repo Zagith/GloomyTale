@@ -38,7 +38,7 @@ namespace GloomyTale.Data
 
         public byte Level { get; set; }
 
-        [I18NFrom(typeof(II18NCardDto))]
+        [I18NFrom(typeof(I18NCardDto))]
         public I18NString Name { get; set; } = new I18NString();
         [AdaptMember("Name")]
         public string NameI18NKey { get; set; }

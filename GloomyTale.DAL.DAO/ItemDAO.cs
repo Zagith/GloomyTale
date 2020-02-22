@@ -36,14 +36,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ItemDTO> result = new List<ItemDTO>();
                 foreach (Item item in context.Item.Where(s => string.IsNullOrEmpty(name) ? s.Name.Equals("") : s.Name.Contains(name)))
                 {
-                    ItemDTO dto = new ItemDTO();
-                    Mapper.Mappers.ItemMapper.ToItemDTO(item, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ItemDTO>(item);
                 }
-                return result;
             }
         }
 
@@ -55,8 +51,7 @@ namespace GloomyTale.DAL.DAO
                 {
                     foreach (ItemDTO Item in items)
                     {
-                        Item entity = new Item();
-                        Mapper.Mappers.ItemMapper.ToItem(Item, entity);
+                        var entity = _mapper.Map<Item>(Item);
                         context.Item.Add(entity);
                     }
                     context.SaveChanges();
@@ -74,16 +69,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    Item entity = new Item();
-                    Mapper.Mappers.ItemMapper.ToItem(item, entity);
+                    var entity = _mapper.Map<Item>(item);
                     context.Item.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.ItemMapper.ToItemDTO(entity, item))
-                    {
-                        return item;
-                    }
-
-                    return null;
+                    return _mapper.Map<ItemDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -97,14 +86,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ItemDTO> result = new List<ItemDTO>();
                 foreach (Item item in context.Item)
                 {
-                    ItemDTO dto = new ItemDTO();
-                    Mapper.Mappers.ItemMapper.ToItemDTO(item, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ItemDTO>(item);
                 }
-                return result;
             }
         }
 
@@ -114,13 +99,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    ItemDTO dto = new ItemDTO();
-                    if (Mapper.Mappers.ItemMapper.ToItemDTO(context.Item.FirstOrDefault(i => i.Name.Equals(vNum)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<ItemDTO>(context.Item.FirstOrDefault(i => i.Name.Equals(vNum)));
                 }
             }
             catch (Exception e)
@@ -130,19 +109,13 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public ItemDTO LoadById(short vNum)
+        public ItemDTO LoadById(short ItemVnum)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    ItemDTO dto = new ItemDTO();
-                    if (Mapper.Mappers.ItemMapper.ToItemDTO(context.Item.FirstOrDefault(i => i.VNum.Equals(vNum)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<ItemDTO>(context.Item.FirstOrDefault(i => i.VNum.Equals(ItemVnum)));
                 }
             }
             catch (Exception e)

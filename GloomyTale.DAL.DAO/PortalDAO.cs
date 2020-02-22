@@ -38,11 +38,9 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
                     foreach (PortalDTO Item in portals)
                     {
-                        Portal entity = new Portal();
-                        Mapper.Mappers.PortalMapper.ToPortal(Item, entity);
+                        var entity = _mapper.Map<Portal>(Item);
                         context.Portal.Add(entity);
                     }
                     
@@ -61,16 +59,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    Portal entity = new Portal();
-                    Mapper.Mappers.PortalMapper.ToPortal(portal, entity);
+                    var entity = _mapper.Map<Portal>(portal);
                     context.Portal.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.PortalMapper.ToPortalDTO(entity, portal))
-                    {
-                        return portal;
-                    }
-
-                    return null;
+                    return _mapper.Map<PortalDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -92,14 +84,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<PortalDTO> result = new List<PortalDTO>();
-                foreach (Portal Portalobject in context.Portal.Where(c => c.SourceMapId.Equals(mapId)))
+                foreach (Portal portal in context.Portal.Where(c => c.SourceMapId.Equals(mapId)))
                 {
-                    PortalDTO dto = new PortalDTO();
-                    Mapper.Mappers.PortalMapper.ToPortalDTO(Portalobject, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<PortalDTO>(portal);
                 }
-                return result;
             }
         }
 

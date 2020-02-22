@@ -31,43 +31,14 @@ namespace GloomyTale.DAL.DAO
 
         #region Methods
 
-        public RecipeListDTO Insert(RecipeListDTO recipeList)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    RecipeList entity = new RecipeList();
-                    Mapper.Mappers.RecipeListMapper.ToRecipeList(recipeList, entity);
-                    context.RecipeList.Add(entity);
-                    context.SaveChanges();
-                    if (Mapper.Mappers.RecipeListMapper.ToRecipeListDTO(entity, recipeList))
-                    {
-                        return recipeList;
-                    }
-
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return null;
-            }
-        }
-
         public IEnumerable<RecipeListDTO> LoadAll()
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<RecipeListDTO> result = new List<RecipeListDTO>();
                 foreach (RecipeList recipeList in context.RecipeList)
                 {
-                    RecipeListDTO dto = new RecipeListDTO();
-                    Mapper.Mappers.RecipeListMapper.ToRecipeListDTO(recipeList, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<RecipeListDTO>(recipeList);
                 }
-                return result;
             }
         }
 
@@ -77,13 +48,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    RecipeListDTO dto = new RecipeListDTO();
-                    if (Mapper.Mappers.RecipeListMapper.ToRecipeListDTO(context.RecipeList.SingleOrDefault(s => s.RecipeListId.Equals(recipeListId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<RecipeListDTO>(context.RecipeList.FirstOrDefault(s => s.RecipeListId.Equals(recipeListId)));
                 }
             }
             catch (Exception e)
@@ -97,14 +62,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<RecipeListDTO> result = new List<RecipeListDTO>();
-                foreach (RecipeList recipeList in context.RecipeList.Where(r => r.ItemVNum == itemVNum))
+                foreach (RecipeList recipeList in context.RecipeList.Where(s => s.ItemVNum.Equals(itemVNum)))
                 {
-                    RecipeListDTO dto = new RecipeListDTO();
-                    Mapper.Mappers.RecipeListMapper.ToRecipeListDTO(recipeList, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<RecipeListDTO>(recipeList);
                 }
-                return result;
             }
         }
 
@@ -112,14 +73,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<RecipeListDTO> result = new List<RecipeListDTO>();
-                foreach (RecipeList recipeList in context.RecipeList.Where(r => r.MapNpcId == mapNpcId))
+                foreach (RecipeList recipeList in context.RecipeList.Where(s => s.MapNpcId.Equals(mapNpcId)))
                 {
-                    RecipeListDTO dto = new RecipeListDTO();
-                    Mapper.Mappers.RecipeListMapper.ToRecipeListDTO(recipeList, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<RecipeListDTO>(recipeList);
                 }
-                return result;
             }
         }
 
@@ -127,34 +84,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<RecipeListDTO> result = new List<RecipeListDTO>();
-                foreach (RecipeList recipeList in context.RecipeList.Where(r => r.RecipeId.Equals(recipeId)))
+                foreach (RecipeItem recipeItem in context.RecipeItem.Where(s => s.RecipeId.Equals(recipeId)))
                 {
-                    RecipeListDTO dto = new RecipeListDTO();
-                    Mapper.Mappers.RecipeListMapper.ToRecipeListDTO(recipeList, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<RecipeListDTO>(recipeItem);
                 }
-                return result;
-            }
-        }
-
-        public void Update(RecipeListDTO recipe)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    RecipeList result = context.RecipeList.FirstOrDefault(r => r.RecipeListId.Equals(recipe.RecipeListId));
-                    if (result != null)
-                    {
-                        Mapper.Mappers.RecipeListMapper.ToRecipeList(recipe, result);
-                        context.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
             }
         }
 

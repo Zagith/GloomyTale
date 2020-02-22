@@ -12,21 +12,21 @@ using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class I18NMapDAO : MappingBaseDao<I18NMapPointData, II18NMapDto>, II18NMapDAO
+    public class I18NMapDAO : MappingBaseDao<I18NMapPointData, I18NMapPointDataDto>, II18NMapDAO
     {
         public I18NMapDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods
 
-        public void Insert(List<II18NMapDto> skills)
+        public void Insert(List<I18NMapPointDataDto> skills)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
                     
-                    foreach (II18NMapDto skill in skills)
+                    foreach (I18NMapPointDataDto skill in skills)
                     {
                         InsertOrUpdate(skill);
                     }
@@ -40,7 +40,7 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public SaveResult InsertOrUpdate(II18NMapDto skill)
+        public SaveResult InsertOrUpdate(I18NMapPointDataDto skill)
         {
             try
             {
@@ -66,21 +66,16 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public II18NMapDto Insert(II18NMapDto I18NMap)
+        public I18NMapPointDataDto Insert(I18NMapPointDataDto I18NMapPointData)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    I18NMapPointData entity = new I18NMapPointData();
-                    Mapper.Mappers.I18NMapMapper.ToI18NMap(I18NMap, entity); context.I18NMapPointData.Add(entity);
+                    var entity = _mapper.Map<I18NMapPointData>(I18NMapPointData);
+                    context.I18NMapPointData.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.I18NMapMapper.ToI18NMapDTO(entity, I18NMap))
-                    {
-                        return I18NMap;
-                    }
-
-                    return null;
+                    return _mapper.Map<I18NMapPointDataDto>(I18NMapPointData);
                 }
             }
             catch (Exception e)
@@ -90,71 +85,55 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public IEnumerable<II18NMapDto> LoadAll()
+        public IEnumerable<I18NMapPointDataDto> LoadAll()
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<II18NMapDto> result = new List<II18NMapDto>();
-                foreach (I18NMapPointData I18NMap in context.I18NMapPointData)
+                foreach (I18NMapPointData i18NMapPointData in context.I18NMapPointData)
                 {
-                    II18NMapDto dto = new II18NMapDto();
-                    Mapper.Mappers.I18NMapMapper.ToI18NMapDTO(I18NMap, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<I18NMapPointDataDto>(i18NMapPointData);
                 }
-                return result;
             }
         }
 
-        public II18NMapDto LoadById(short I18NMapId)
+        public I18NMapPointDataDto LoadById(short I18NMapPointDataId)
         {
+
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    II18NMapDto dto = new II18NMapDto();
-                    if (Mapper.Mappers.I18NMapMapper.ToI18NMapDTO(context.I18NMapPointData.FirstOrDefault(s => s.I18NMapPointDataId.Equals(I18NMapId)), dto))
+                    I18NMapPointData i18NMapPointData = context.I18NMapPointData.FirstOrDefault(a => a.I18NMapPointDataId.Equals(I18NMapPointDataId));
+                    if (i18NMapPointData != null)
                     {
-                        return dto;
+                        return _mapper.Map<I18NMapPointDataDto>(i18NMapPointData);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return null;
             }
-        }
-
-        private static II18NMapDto insert(II18NMapDto I18NMap, OpenNosContext context)
-        {
-            I18NMapPointData entity = new I18NMapPointData();
-            Mapper.Mappers.I18NMapMapper.ToI18NMap(I18NMap, entity);
-            context.I18NMapPointData.Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.I18NMapMapper.ToI18NMapDTO(entity, I18NMap))
-            {
-                return I18NMap;
-            }
-
             return null;
         }
 
-        private static II18NMapDto update(I18NMapPointData entity, II18NMapDto skill, OpenNosContext context)
+        private I18NMapPointDataDto insert(I18NMapPointDataDto I18NMapPointData, OpenNosContext context)
+        {
+            var entity = _mapper.Map<I18NMapPointData>(I18NMapPointData);
+            context.I18NMapPointData.Add(entity);
+            context.SaveChanges();
+            return _mapper.Map<I18NMapPointDataDto>(entity);
+        }
+
+        private I18NMapPointDataDto update(I18NMapPointData entity, I18NMapPointDataDto i18NMapPointData, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.I18NMapMapper.ToI18NMap(skill, entity);
+                _mapper.Map(i18NMapPointData, entity);
                 context.SaveChanges();
             }
 
-            if (Mapper.Mappers.I18NMapMapper.ToI18NMapDTO(entity, skill))
-            {
-                return skill;
-            }
-
-            return null;
+            return _mapper.Map<I18NMapPointDataDto>(entity);
         }
 
         #endregion

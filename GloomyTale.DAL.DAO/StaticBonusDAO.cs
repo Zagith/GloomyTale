@@ -85,30 +85,20 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<StaticBonusDTO> result = new List<StaticBonusDTO>();
                 foreach (StaticBonus entity in context.StaticBonus.Where(i => i.CharacterId == characterId && i.DateEnd > DateTime.Now))
                 {
-                    StaticBonusDTO dto = new StaticBonusDTO();
-                    Mapper.Mappers.StaticBonusMapper.ToStaticBonusDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<StaticBonusDTO>(entity);
                 }
-                return result;
             }
         }
 
-        public static StaticBonusDTO LoadById(long sbId)
+        public StaticBonusDTO LoadById(long sbId)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    StaticBonusDTO dto = new StaticBonusDTO();
-                    if (Mapper.Mappers.StaticBonusMapper.ToStaticBonusDTO(context.StaticBonus.FirstOrDefault(s => s.StaticBonusId.Equals(sbId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<StaticBonusDTO>(context.RespawnMapType.FirstOrDefault(s => s.RespawnMapTypeId.Equals(sbId)));
                 }
             }
             catch (Exception e)
@@ -134,20 +124,14 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static StaticBonusDTO insert(StaticBonusDTO sb, OpenNosContext context)
+        private StaticBonusDTO insert(StaticBonusDTO sb, OpenNosContext context)
         {
             try
             {
-                StaticBonus entity = new StaticBonus();
-                Mapper.Mappers.StaticBonusMapper.ToStaticBonus(sb, entity);
+                var entity = _mapper.Map<StaticBonus>(sb);
                 context.StaticBonus.Add(entity);
                 context.SaveChanges();
-                if (Mapper.Mappers.StaticBonusMapper.ToStaticBonusDTO(entity, sb))
-                {
-                    return sb;
-                }
-
-                return null;
+                return _mapper.Map<StaticBonusDTO>(entity);
             }
             catch (Exception e)
             {
@@ -156,19 +140,15 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static StaticBonusDTO update(StaticBonus entity, StaticBonusDTO sb, OpenNosContext context)
+        private StaticBonusDTO update(StaticBonus entity, StaticBonusDTO sb, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.StaticBonusMapper.ToStaticBonus(sb, entity);
+                _mapper.Map(sb, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.StaticBonusMapper.ToStaticBonusDTO(entity, sb))
-            {
-                return sb;
-            }
 
-            return null;
+            return _mapper.Map<StaticBonusDTO>(entity);
         }
 
         #endregion

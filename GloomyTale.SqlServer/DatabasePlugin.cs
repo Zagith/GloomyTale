@@ -38,6 +38,8 @@ namespace GloomyTale.SqlServer
             builder.RegisterType<DatabaseConfiguration>().AsImplementedInterfaces().AsSelf();
             _log.Info("Registering DAL objects");
             builder.RegisterType(typeof(DAOFactory)).AsSelf();
+            _log.Info("Registering Mapping objects");
+            //builder.Register(_ => new GloomyItemInstanceMappingType()).As<ItemInstanceDAO.IItemInstanceMappingTypes>();
             _log.Info("Registering DAL.EF.DAO objects");
             builder.RegisterTypes(typeof(OpenNosContext).Assembly.GetTypes()).AsSelf().AsImplementedInterfaces().SingleInstance();
         }

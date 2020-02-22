@@ -18,15 +18,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<FortuneWheelDTO> result = new List<FortuneWheelDTO>();
-
-                foreach (FortuneWheel FortuneWheel in context.FortuneWheel.Where(s => s.ShopId == shopId))
+                foreach (FortuneWheel ShopItem in context.FortuneWheel.Where(i => i.ShopId.Equals(shopId)))
                 {
-                    FortuneWheelDTO dto = new FortuneWheelDTO();
-                    Mapper.Mappers.FortuneWheelMapper.ToFortuneWheelDTO(FortuneWheel, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<FortuneWheelDTO>(ShopItem);
                 }
-                return result;
             }
         }
     }

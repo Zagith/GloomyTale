@@ -6,9 +6,7 @@ namespace GloomyTale.DAL.Interface
     public interface IRecipeListDAO : IMappingBaseDAO
     {
         #region Methods
-
-        RecipeListDTO Insert(RecipeListDTO recipeList);
-
+        
         IEnumerable<RecipeListDTO> LoadAll();
 
         RecipeListDTO LoadById(int recipeListId);
@@ -18,8 +16,6 @@ namespace GloomyTale.DAL.Interface
         IEnumerable<RecipeListDTO> LoadByMapNpcId(int mapNpcId);
 
         IEnumerable<RecipeListDTO> LoadByRecipeId(short recipeId);
-
-        void Update(RecipeListDTO recipe);
 
         #endregion
     }

@@ -86,14 +86,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<FamilyDTO> result = new List<FamilyDTO>();
                 foreach (Family entity in context.Family)
                 {
-                    FamilyDTO dto = new FamilyDTO();
-                    Mapper.Mappers.FamilyMapper.ToFamilyDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<FamilyDTO>(entity);
                 }
-                return result;
             }
         }
 
@@ -109,13 +105,7 @@ namespace GloomyTale.DAL.DAO
                         Family family = context.Family.FirstOrDefault(a => a.FamilyId.Equals(familyCharacter.FamilyId));
                         if (family != null)
                         {
-                            FamilyDTO dto = new FamilyDTO();
-                            if (Mapper.Mappers.FamilyMapper.ToFamilyDTO(family, dto))
-                            {
-                                return dto;
-                            }
-
-                            return null;
+                            return _mapper.Map<FamilyDTO>(family);
                         }
                     }
                 }
@@ -136,13 +126,7 @@ namespace GloomyTale.DAL.DAO
                     Family family = context.Family.FirstOrDefault(a => a.FamilyId.Equals(familyId));
                     if (family != null)
                     {
-                        FamilyDTO dto = new FamilyDTO();
-                        if (Mapper.Mappers.FamilyMapper.ToFamilyDTO(family, dto))
-                        {
-                            return dto;
-                        }
-
-                        return null;
+                        return _mapper.Map<FamilyDTO>(family);
                     }
                 }
             }
@@ -162,13 +146,7 @@ namespace GloomyTale.DAL.DAO
                     Family family = context.Family.FirstOrDefault(a => a.Name.Equals(name));
                     if (family != null)
                     {
-                        FamilyDTO dto = new FamilyDTO();
-                        if (Mapper.Mappers.FamilyMapper.ToFamilyDTO(family, dto))
-                        {
-                            return dto;
-                        }
-
-                        return null;
+                        return _mapper.Map<FamilyDTO>(family);
                     }
                 }
             }
@@ -179,33 +157,23 @@ namespace GloomyTale.DAL.DAO
             return null;
         }
 
-        private static FamilyDTO insert(FamilyDTO family, OpenNosContext context)
+        private FamilyDTO insert(FamilyDTO family, OpenNosContext context)
         {
-            Family entity = new Family();
-            Mapper.Mappers.FamilyMapper.ToFamily(family, entity);
+            var entity = _mapper.Map<Family>(family);
             context.Family.Add(entity);
             context.SaveChanges();
-            if (Mapper.Mappers.FamilyMapper.ToFamilyDTO(entity, family))
-            {
-                return family;
-            }
-
-            return null;
+            return _mapper.Map<FamilyDTO>(entity);
         }
 
-        private static FamilyDTO update(Family entity, FamilyDTO family, OpenNosContext context)
+        private FamilyDTO update(Family entity, FamilyDTO family, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.FamilyMapper.ToFamily(family, entity);
+                _mapper.Map(family, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.FamilyMapper.ToFamilyDTO(entity, family))
-            {
-                return family;
-            }
 
-            return null;
+            return _mapper.Map<FamilyDTO>(entity);
         }
 
         #endregion

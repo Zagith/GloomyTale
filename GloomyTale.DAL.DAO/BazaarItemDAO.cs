@@ -87,14 +87,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<BazaarItemDTO> result = new List<BazaarItemDTO>();
                 foreach (BazaarItem bazaarItem in context.BazaarItem)
                 {
-                    BazaarItemDTO dto = new BazaarItemDTO();
-                    Mapper.Mappers.BazaarItemMapper.ToBazaarItemDTO(bazaarItem, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<BazaarItemDTO>(bazaarItem);
                 }
-                return result;
             }
         }
 
@@ -104,13 +100,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    BazaarItemDTO dto = new BazaarItemDTO();
-                    if (Mapper.Mappers.BazaarItemMapper.ToBazaarItemDTO(context.BazaarItem.FirstOrDefault(i => i.BazaarItemId.Equals(bazaarItemId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<BazaarItemDTO>(context.BazaarItem.FirstOrDefault(i => i.BazaarItemId.Equals(bazaarItemId)));
                 }
             }
             catch (Exception e)
@@ -130,7 +120,6 @@ namespace GloomyTale.DAL.DAO
                     {
                         context.BazaarItem.Remove(entity);
                     }
-                    context.SaveChanges();
                 }
             }
             catch (Exception e)
@@ -139,33 +128,23 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static BazaarItemDTO insert(BazaarItemDTO bazaarItem, OpenNosContext context)
+        private BazaarItemDTO insert(BazaarItemDTO bazaarItem, OpenNosContext context)
         {
-            BazaarItem entity = new BazaarItem();
-            Mapper.Mappers.BazaarItemMapper.ToBazaarItem(bazaarItem, entity);
+            var entity = _mapper.Map<BazaarItem>(bazaarItem);
             context.BazaarItem.Add(entity);
             context.SaveChanges();
-            if (Mapper.Mappers.BazaarItemMapper.ToBazaarItemDTO(entity, bazaarItem))
-            {
-                return bazaarItem;
-            }
-
-            return null;
+            return _mapper.Map<BazaarItemDTO>(entity);
         }
 
-        private static BazaarItemDTO update(BazaarItem entity, BazaarItemDTO bazaarItem, OpenNosContext context)
+        private BazaarItemDTO update(BazaarItem entity, BazaarItemDTO bazaarItem, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.BazaarItemMapper.ToBazaarItem(bazaarItem, entity);
+                _mapper.Map(bazaarItem, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.BazaarItemMapper.ToBazaarItemDTO(entity, bazaarItem))
-            {
-                return bazaarItem;
-            }
 
-            return null;
+            return _mapper.Map<BazaarItemDTO>(entity);
         }
 
         #endregion

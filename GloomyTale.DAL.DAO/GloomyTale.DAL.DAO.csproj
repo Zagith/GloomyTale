@@ -14,7 +14,6 @@
     <ProjectReference Include="..\GloomyTale.DAL.Interface\GloomyTale.DAL.Interface.csproj" />
     <ProjectReference Include="..\GloomyTale.Data\GloomyTale.Data.csproj" />
     <ProjectReference Include="..\GloomyTale.Domain\GloomyTale.Domain.csproj" />
-    <ProjectReference Include="..\GloomyTale.Mapping\GloomyTale.Mapper.csproj" />
   </ItemGroup>
 
 </Project>

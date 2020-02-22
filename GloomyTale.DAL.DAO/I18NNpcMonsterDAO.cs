@@ -12,35 +12,31 @@ using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class I18NNpcMonsterDAO : MappingBaseDao<I18NNpcMonster, II18NNpcMonsterDto>, II18NNpcMonsterDAO
+    public class I18NNpcMonsterDAO : MappingBaseDao<I18NNpcMonster, I18NNpcMonsterDto>, II18NNpcMonsterDAO
     {
         public I18NNpcMonsterDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods
 
-        public IEnumerable<II18NNpcMonsterDto> FindByName(string name)
+        public IEnumerable<I18NNpcMonsterDto> FindByName(string name)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<II18NNpcMonsterDto> result = new List<II18NNpcMonsterDto>();
-                foreach (I18NNpcMonster item in context.I18NNpcMonster.Where(s => string.IsNullOrEmpty(name) ? s.Text.Equals("") : s.Text.Contains(name)))
+                foreach (I18NNpcMonster i18NNpcMonster in context.I18NNpcMonster.Where(s => s.Key.Contains(name)))
                 {
-                    II18NNpcMonsterDto dto = new II18NNpcMonsterDto();
-                    Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonsterDTO(item, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<I18NNpcMonsterDto>(i18NNpcMonster);
                 }
-                return result;
             }
         }
-        public void Insert(List<II18NNpcMonsterDto> skills)
+        public void Insert(List<I18NNpcMonsterDto> skills)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
                     
-                    foreach (II18NNpcMonsterDto skill in skills)
+                    foreach (I18NNpcMonsterDto skill in skills)
                     {
                         InsertOrUpdate(skill);
                     }
@@ -54,7 +50,7 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public SaveResult InsertOrUpdate(II18NNpcMonsterDto skill)
+        public SaveResult InsertOrUpdate(I18NNpcMonsterDto skill)
         {
             try
             {
@@ -80,21 +76,16 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public II18NNpcMonsterDto Insert(II18NNpcMonsterDto I18NNpcMonster)
+        public I18NNpcMonsterDto Insert(I18NNpcMonsterDto I18NNpcMonster)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    I18NNpcMonster entity = new I18NNpcMonster();
-                    Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonster(I18NNpcMonster, entity); context.I18NNpcMonster.Add(entity);
+                    var entity = _mapper.Map<I18NNpcMonster>(I18NNpcMonster);
+                    context.I18NNpcMonster.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonsterDTO(entity, I18NNpcMonster))
-                    {
-                        return I18NNpcMonster;
-                    }
-
-                    return null;
+                    return _mapper.Map<I18NNpcMonsterDto>(I18NNpcMonster);
                 }
             }
             catch (Exception e)
@@ -104,71 +95,55 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public IEnumerable<II18NNpcMonsterDto> LoadAll()
+        public IEnumerable<I18NNpcMonsterDto> LoadAll()
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<II18NNpcMonsterDto> result = new List<II18NNpcMonsterDto>();
-                foreach (I18NNpcMonster I18NNpcMonster in context.I18NNpcMonster)
+                foreach (I18NNpcMonster i18NNpcMonster in context.I18NNpcMonster)
                 {
-                    II18NNpcMonsterDto dto = new II18NNpcMonsterDto();
-                    Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonsterDTO(I18NNpcMonster, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<I18NNpcMonsterDto>(i18NNpcMonster);
                 }
-                return result;
             }
         }
 
-        public II18NNpcMonsterDto LoadById(short I18NNpcMonsterId)
+        public I18NNpcMonsterDto LoadById(short I18NNpcMonsterId)
         {
+
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    II18NNpcMonsterDto dto = new II18NNpcMonsterDto();
-                    if (Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonsterDTO(context.I18NNpcMonster.FirstOrDefault(s => s.I18NNpcMonsterId.Equals(I18NNpcMonsterId)), dto))
+                    I18NNpcMonster i18NNpcMonster = context.I18NNpcMonster.FirstOrDefault(a => a.I18NNpcMonsterId.Equals(I18NNpcMonsterId));
+                    if (i18NNpcMonster != null)
                     {
-                        return dto;
+                        return _mapper.Map<I18NNpcMonsterDto>(i18NNpcMonster);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return null;
             }
-        }
-
-        private static II18NNpcMonsterDto insert(II18NNpcMonsterDto I18NNpcMonster, OpenNosContext context)
-        {
-            I18NNpcMonster entity = new I18NNpcMonster();
-            Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonster(I18NNpcMonster, entity);
-            context.I18NNpcMonster.Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonsterDTO(entity, I18NNpcMonster))
-            {
-                return I18NNpcMonster;
-            }
-
             return null;
         }
 
-        private static II18NNpcMonsterDto update(I18NNpcMonster entity, II18NNpcMonsterDto skill, OpenNosContext context)
+        private I18NNpcMonsterDto insert(I18NNpcMonsterDto I18NNpcMonster, OpenNosContext context)
+        {
+            var entity = _mapper.Map<I18NNpcMonster>(I18NNpcMonster);
+            context.I18NNpcMonster.Add(entity);
+            context.SaveChanges();
+            return _mapper.Map<I18NNpcMonsterDto>(entity);
+        }
+
+        private I18NNpcMonsterDto update(I18NNpcMonster entity, I18NNpcMonsterDto i18NNpcMonster, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonster(skill, entity);
+                _mapper.Map(i18NNpcMonster, entity);
                 context.SaveChanges();
             }
 
-            if (Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonsterDTO(entity, skill))
-            {
-                return skill;
-            }
-
-            return null;
+            return _mapper.Map<I18NNpcMonsterDto>(entity);
         }
 
         #endregion

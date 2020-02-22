@@ -15,7 +15,6 @@
     <ProjectReference Include="..\GloomyTale.Data\GloomyTale.Data.csproj" />
     <ProjectReference Include="..\GloomyTale.Domain\GloomyTale.Domain.csproj" />
     <ProjectReference Include="..\GloomyTale.GameObject\GloomyTale.GameObject.csproj" />
-    <ProjectReference Include="..\GloomyTale.Mapping\GloomyTale.Mapper.csproj" />
     <ProjectReference Include="..\GloomyTale.Master.Library\GloomyTale.Communication.csproj" />
     <ProjectReference Include="..\GloomyTale.PathFinder\GloomyTale.PathFinder.csproj" />
     <ProjectReference Include="..\GloomyTale.XMLModel\GloomyTale.XMLModel.csproj" />

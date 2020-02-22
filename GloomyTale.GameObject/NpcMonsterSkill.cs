@@ -32,14 +32,6 @@ namespace GloomyTale.GameObject
         {
         }
 
-        public NpcMonsterSkill(NpcMonsterSkillDTO input)
-        {
-            NpcMonsterSkillId = input.NpcMonsterSkillId;
-            NpcMonsterVNum = input.NpcMonsterVNum;
-            Rate = input.Rate;
-            SkillVNum = input.SkillVNum;
-        }
-
         #endregion
 
         #region Properties

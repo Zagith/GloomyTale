@@ -38,14 +38,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MapMonsterDTO> result = new List<MapMonsterDTO>();
-                foreach (MapMonster MapMonster in context.MapMonster)
-                {
-                    MapMonsterDTO dto = new MapMonsterDTO();
-                    Mapper.Mappers.MapMonsterMapper.ToMapMonsterDTO(MapMonster, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.MapMonster.ToArray().Select(_mapper.Map<MapMonsterDTO>);
             }
         }
 
@@ -87,14 +80,13 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
+
                     foreach (MapMonsterDTO monster in mapMonsters)
                     {
-                        MapMonster entity = new MapMonster();
-                        Mapper.Mappers.MapMonsterMapper.ToMapMonster(monster, entity);
+                        var entity = _mapper.Map<MapMonster>(monster);
                         context.MapMonster.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -110,16 +102,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MapMonster entity = new MapMonster();
-                    Mapper.Mappers.MapMonsterMapper.ToMapMonster(mapMonster, entity);
+                    var entity = _mapper.Map<MapMonster>(mapMonster);
                     context.MapMonster.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.MapMonsterMapper.ToMapMonsterDTO(entity, mapMonster))
-                    {
-                        return mapMonster;
-                    }
-
-                    return null;
+                    return _mapper.Map<MapMonsterDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -149,18 +135,15 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static MapMonsterDTO update(MapMonster entity, MapMonsterDTO mapMonster, OpenNosContext context)
+        private MapMonsterDTO update(MapMonster entity, MapMonsterDTO mapMonster, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.MapMonsterMapper.ToMapMonster(mapMonster, entity);
-                context.Entry(entity).State = EntityState.Modified;
+                _mapper.Map(mapMonster, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.MapMonsterMapper.ToMapMonsterDTO(entity, mapMonster))
-            {
-                return mapMonster;
-            }
+
+            return _mapper.Map<MapMonsterDTO>(entity);
 
             return null;
         }
@@ -171,13 +154,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MapMonsterDTO dto = new MapMonsterDTO();
-                    if (Mapper.Mappers.MapMonsterMapper.ToMapMonsterDTO(context.MapMonster.FirstOrDefault(i => i.MapMonsterId.Equals(mapMonsterId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<MapMonsterDTO>(context.MapMonster.FirstOrDefault(i => i.MapMonsterId.Equals(mapMonsterId)));
                 }
             }
             catch (Exception e)
@@ -191,14 +168,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MapMonsterDTO> result = new List<MapMonsterDTO>();
-                foreach (MapMonster MapMonsterobject in context.MapMonster.Where(c => c.MapId.Equals(mapId)))
-                {
-                    MapMonsterDTO dto = new MapMonsterDTO();
-                    Mapper.Mappers.MapMonsterMapper.ToMapMonsterDTO(MapMonsterobject, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.MapMonster.Where(c => c.MapId.Equals(mapId)).ToArray().Select(_mapper.Map<MapMonsterDTO>);
             }
         }
 

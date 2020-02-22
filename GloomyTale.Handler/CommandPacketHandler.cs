@@ -3071,7 +3071,7 @@ namespace GloomyTale.Handler
                         ? ""
                         : packetsplit.Skip(withPage ? 1 : 0).Aggregate((a, b) => a + ' ' + b);
                 }
-                foreach (II18NNpcMonsterDto i18nItemName in DAOFactory.Instance.I18NNpcMonsterDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
+                foreach (I18NNpcMonsterDto i18nItemName in DAOFactory.Instance.I18NNpcMonsterDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
                 {
                     NpcMonsterDTO npcMonsters = DAOFactory.Instance.NpcMonsterDAO.LoadByKey(i18nItemName.Key);
                     if (npcMonsters != null)

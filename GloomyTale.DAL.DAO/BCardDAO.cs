@@ -28,131 +28,23 @@ namespace GloomyTale.DAL.DAO
 {
     public class BCardDAO : MappingBaseDao<BCard, BCardDTO>, IBCardDAO
     {
+        private readonly Dictionary<short, BCardDTO[]> _bcardsByCardId;
+        private readonly Dictionary<short, BCardDTO[]> _bcardsByItemVnum;
+        private readonly Dictionary<short, BCardDTO[]> _bcardsByNpcMonsterVnum;
+        private readonly Dictionary<short, BCardDTO[]> _bcardsBySkillVnum;
+
         public BCardDAO(IMapper mapper) : base(mapper)
-        { }
+        {
+            IEnumerable<BCardDTO> bcards = LoadAll();
+
+
+            _bcardsByItemVnum = bcards.Where(s => s.ItemVNum != null).GroupBy(s => s.ItemVNum.Value).ToDictionary(s => s.Key, s => s.ToArray());
+            _bcardsByCardId = bcards.Where(s => s.CardId != null).GroupBy(s => s.CardId.Value).ToDictionary(s => s.Key, s => s.ToArray());
+            _bcardsByNpcMonsterVnum = bcards.Where(s => s.NpcMonsterVNum != null).GroupBy(s => s.NpcMonsterVNum.Value).ToDictionary(s => s.Key, s => s.ToArray());
+            _bcardsBySkillVnum = bcards.Where(s => s.SkillVNum != null).GroupBy(s => s.SkillVNum.Value).ToDictionary(s => s.Key, s => s.ToArray());
+        }
 
         #region Methods
-
-        public DeleteResult DeleteByItemVNum(short itemVNum)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    IEnumerable<BCard> bCards = context.BCard.Where(s => s.ItemVNum == itemVNum);
-
-                    foreach (BCard bcard in bCards)
-                    {
-                        context.BCard.Remove(bcard);
-                    }
-                    context.SaveChanges();
-
-                    return DeleteResult.Deleted;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return DeleteResult.Error;
-            }
-        }
-
-        public DeleteResult DeleteBySkillVNum(short skillVNum)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    IEnumerable<BCard> bCards = context.BCard.Where(s => s.SkillVNum == skillVNum);
-
-                    foreach (BCard bcard in bCards)
-                    {
-                        context.BCard.Remove(bcard);
-                    }
-                    context.SaveChanges();
-
-                    return DeleteResult.Deleted;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return DeleteResult.Error;
-            }
-        }
-
-        public DeleteResult DeleteByMonsterVNum(short monsterVNum)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    IEnumerable<BCard> bCards = context.BCard.Where(s => s.NpcMonsterVNum == monsterVNum);
-
-                    foreach (BCard bcard in bCards)
-                    {
-                        context.BCard.Remove(bcard);
-                    }
-                    context.SaveChanges();
-
-                    return DeleteResult.Deleted;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return DeleteResult.Error;
-            }
-        }
-
-        public DeleteResult DeleteByCardId(short cardId)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    IEnumerable<BCard> bCards = context.BCard.Where(s => s.CardId == cardId);
-
-                    foreach (BCard bcard in bCards)
-                    {
-                        context.BCard.Remove(bcard);
-                    }
-                    context.SaveChanges();
-
-                    return DeleteResult.Deleted;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return DeleteResult.Error;
-            }
-        }
-
-        public BCardDTO Insert(ref BCardDTO cardObject)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    BCard entity = new BCard();
-                    Mapper.Mappers.BCardMapper.ToBCard(cardObject, entity);
-                    context.BCard.Add(entity);
-                    context.SaveChanges();
-                    if (Mapper.Mappers.BCardMapper.ToBCardDTO(entity, cardObject))
-                    {
-                        return cardObject;
-                    }
-
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return null;
-            }
-        }
 
         public void Insert(List<BCardDTO> cards)
         {
@@ -160,14 +52,12 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
                     foreach (BCardDTO card in cards)
                     {
-                        BCard entity = new BCard();
-                        Mapper.Mappers.BCardMapper.ToBCard(card, entity);
+                        var entity = _mapper.Map<BCard>(card);
                         context.BCard.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -181,14 +71,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<BCardDTO> result = new List<BCardDTO>();
-                foreach (BCard card in context.BCard)
-                {
-                    BCardDTO dto = new BCardDTO();
-                    Mapper.Mappers.BCardMapper.ToBCardDTO(card, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.BCard.ToArray().Select(_mapper.Map<BCardDTO>);
             }
         }
 
@@ -196,82 +79,43 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<BCardDTO> result = new List<BCardDTO>();
-                foreach (BCard card in context.BCard.Where(s => s.CardId == cardId))
+                if (!_bcardsByCardId.TryGetValue(cardId, out BCardDTO[] bcards))
                 {
-                    BCardDTO dto = new BCardDTO();
-                    Mapper.Mappers.BCardMapper.ToBCardDTO(card, dto);
-                    result.Add(dto);
-                }
-                return result;
-            }
-        }
-
-        public BCardDTO LoadById(short cardId)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    BCardDTO dto = new BCardDTO();
-                    if (Mapper.Mappers.BCardMapper.ToBCardDTO(context.BCard.FirstOrDefault(s => s.BCardId.Equals(cardId)), dto))
-                    {
-                        return dto;
-                    }
-
                     return null;
                 }
+
+                return bcards;
             }
-            catch (Exception e)
+        }
+
+        public IEnumerable<BCardDTO> LoadByItemVNum(short Vnum)
+        {
+            if (!_bcardsByItemVnum.TryGetValue(Vnum, out BCardDTO[] bcards))
             {
-                Logger.Log.Error(e);
                 return null;
             }
+
+            return bcards;
         }
 
-        public IEnumerable<BCardDTO> LoadByItemVNum(short vNum)
+        public IEnumerable<BCardDTO> LoadByNpcMonsterVNum(short Vnum)
         {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            if (!_bcardsByNpcMonsterVnum.TryGetValue(Vnum, out BCardDTO[] bcards))
             {
-                List<BCardDTO> result = new List<BCardDTO>();
-                foreach (BCard card in context.BCard.Where(s => s.ItemVNum == vNum))
-                {
-                    BCardDTO dto = new BCardDTO();
-                    Mapper.Mappers.BCardMapper.ToBCardDTO(card, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return null;
             }
+
+            return bcards;
         }
 
-        public IEnumerable<BCardDTO> LoadByNpcMonsterVNum(short vNum)
+        public IEnumerable<BCardDTO> LoadBySkillVNum(short Vnum)
         {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            if (!_bcardsBySkillVnum.TryGetValue(Vnum, out BCardDTO[] bcards))
             {
-                List<BCardDTO> result = new List<BCardDTO>();
-                foreach (BCard card in context.BCard.Where(s => s.NpcMonsterVNum == vNum))
-                {
-                    BCardDTO dto = new BCardDTO();
-                    Mapper.Mappers.BCardMapper.ToBCardDTO(card, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return null;
             }
-        }
 
-        public IEnumerable<BCardDTO> LoadBySkillVNum(short vNum)
-        {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
-            {
-                List<BCardDTO> result = new List<BCardDTO>();
-                foreach (BCard card in context.BCard.Where(s => s.SkillVNum == vNum))
-                {
-                    BCardDTO dto = new BCardDTO();
-                    Mapper.Mappers.BCardMapper.ToBCardDTO(card, dto);
-                    result.Add(dto);
-                }
-                return result;
-            }
+            return bcards;
         }
 
         #endregion

@@ -27,85 +27,33 @@ namespace GloomyTale.DAL.DAO
     public class RollGeneratedItemDAO : MappingBaseDao<RollGeneratedItem, RollGeneratedItemDTO>, IRollGeneratedItemDAO
     {
         public RollGeneratedItemDAO(IMapper mapper) : base(mapper)
-        { }
+        {
+            IEnumerable<RollGeneratedItemDTO> bcards = LoadAll();
+
+
+            _rollItems = bcards.GroupBy(s => s.OriginalItemVNum).ToDictionary(s => s.Key, s => s.ToArray());
+        }
 
         #region Methods
 
-        public RollGeneratedItemDTO Insert(RollGeneratedItemDTO item)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    RollGeneratedItem entity = new RollGeneratedItem();
-                    Mapper.Mappers.RollGeneratedItemMapper.ToRollGeneratedItem(item, entity);
-                    context.RollGeneratedItem.Add(entity);
-                    context.SaveChanges();
-                    if (Mapper.Mappers.RollGeneratedItemMapper.ToRollGeneratedItemDTO(entity, item))
-                    {
-                        return item;
-                    }
-
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return null;
-            }
-        }
+        private readonly Dictionary<short, RollGeneratedItemDTO[]> _rollItems;
 
         public IEnumerable<RollGeneratedItemDTO> LoadAll()
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<RollGeneratedItemDTO> result = new List<RollGeneratedItemDTO>();
-                foreach (RollGeneratedItem item in context.RollGeneratedItem)
-                {
-                    RollGeneratedItemDTO dto = new RollGeneratedItemDTO();
-                    Mapper.Mappers.RollGeneratedItemMapper.ToRollGeneratedItemDTO(item, dto);
-                    result.Add(dto);
-                }
-                return result;
-            }
-        }
-
-        public RollGeneratedItemDTO LoadById(short id)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    RollGeneratedItemDTO dto = new RollGeneratedItemDTO();
-                    if (Mapper.Mappers.RollGeneratedItemMapper.ToRollGeneratedItemDTO(context.RollGeneratedItem.FirstOrDefault(i => i.RollGeneratedItemId.Equals(id)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return null;
+                return context.RollGeneratedItem.ToArray().Select(_mapper.Map<RollGeneratedItemDTO>);
             }
         }
 
         public IEnumerable<RollGeneratedItemDTO> LoadByItemVNum(short vnum)
         {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            if (!_rollItems.TryGetValue(vnum, out RollGeneratedItemDTO[] rollItems))
             {
-                List<RollGeneratedItemDTO> result = new List<RollGeneratedItemDTO>();
-                foreach (RollGeneratedItem item in context.RollGeneratedItem.Where(s => s.OriginalItemVNum == vnum))
-                {
-                    RollGeneratedItemDTO dto = new RollGeneratedItemDTO();
-                    Mapper.Mappers.RollGeneratedItemMapper.ToRollGeneratedItemDTO(item, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return null;
             }
+
+            return rollItems.Select(_mapper.Map<RollGeneratedItemDTO>);
         }
 
         #endregion

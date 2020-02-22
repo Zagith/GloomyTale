@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GloomyTale.DAL.EF.Migrations
 {
     [DbContext(typeof(OpenNosContext))]
-    [Migration("20200219111528_Antares02")]
-    partial class Antares02
+    [Migration("20200221211108_Start_Migration")]
+    partial class Start_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -535,14 +535,11 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.Property<short>("SkillVNum")
                         .HasColumnType("smallint");
 
-                    b.Property<short?>("SkillVNum1")
-                        .HasColumnType("smallint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CharacterId");
 
-                    b.HasIndex("SkillVNum1");
+                    b.HasIndex("SkillVNum");
 
                     b.ToTable("CharacterSkill");
                 });
@@ -592,12 +589,9 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.Property<short>("SkillVNum")
                         .HasColumnType("smallint");
 
-                    b.Property<short?>("SkillVNum1")
-                        .HasColumnType("smallint");
-
                     b.HasKey("ComboId");
 
-                    b.HasIndex("SkillVNum1");
+                    b.HasIndex("SkillVNum");
 
                     b.ToTable("Combo");
                 });
@@ -2226,23 +2220,17 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.Property<short>("NpcMonsterVNum")
                         .HasColumnType("smallint");
 
-                    b.Property<short?>("NpcMonsterVNum1")
-                        .HasColumnType("smallint");
-
                     b.Property<short>("Rate")
                         .HasColumnType("smallint");
 
                     b.Property<short>("SkillVNum")
                         .HasColumnType("smallint");
 
-                    b.Property<short?>("SkillVNum1")
-                        .HasColumnType("smallint");
-
                     b.HasKey("NpcMonsterSkillId");
 
-                    b.HasIndex("NpcMonsterVNum1");
+                    b.HasIndex("NpcMonsterVNum");
 
-                    b.HasIndex("SkillVNum1");
+                    b.HasIndex("SkillVNum");
 
                     b.ToTable("NpcMonsterSkill");
                 });
@@ -2844,9 +2832,6 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.Property<short>("SkillVNum")
                         .HasColumnType("smallint");
 
-                    b.Property<short?>("SkillVNum1")
-                        .HasColumnType("smallint");
-
                     b.Property<byte>("Slot")
                         .HasColumnType("tinyint");
 
@@ -2857,7 +2842,7 @@ namespace GloomyTale.DAL.EF.Migrations
 
                     b.HasIndex("ShopId");
 
-                    b.HasIndex("SkillVNum1");
+                    b.HasIndex("SkillVNum");
 
                     b.ToTable("ShopSkill");
                 });
@@ -3129,7 +3114,7 @@ namespace GloomyTale.DAL.EF.Migrations
 
                     b.HasOne("GloomyTale.DAL.EF.Skill", "Skill")
                         .WithMany("CharacterSkill")
-                        .HasForeignKey("SkillVNum1")
+                        .HasForeignKey("SkillVNum")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -3146,7 +3131,7 @@ namespace GloomyTale.DAL.EF.Migrations
                 {
                     b.HasOne("GloomyTale.DAL.EF.Skill", "Skill")
                         .WithMany("Combo")
-                        .HasForeignKey("SkillVNum1")
+                        .HasForeignKey("SkillVNum")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -3378,12 +3363,12 @@ namespace GloomyTale.DAL.EF.Migrations
                 {
                     b.HasOne("GloomyTale.DAL.EF.NpcMonster", "NpcMonster")
                         .WithMany("NpcMonsterSkill")
-                        .HasForeignKey("NpcMonsterVNum1")
+                        .HasForeignKey("NpcMonsterVNum")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GloomyTale.DAL.EF.Skill", "Skill")
                         .WithMany("NpcMonsterSkill")
-                        .HasForeignKey("SkillVNum1")
+                        .HasForeignKey("SkillVNum")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -3549,7 +3534,7 @@ namespace GloomyTale.DAL.EF.Migrations
 
                     b.HasOne("GloomyTale.DAL.EF.Skill", "Skill")
                         .WithMany("ShopSkill")
-                        .HasForeignKey("SkillVNum1")
+                        .HasForeignKey("SkillVNum")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

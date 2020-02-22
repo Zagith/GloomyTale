@@ -38,16 +38,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    Recipe entity = new Recipe();
-                    Mapper.Mappers.RecipeMapper.ToRecipe(recipe, entity);
+                    var entity = _mapper.Map<Recipe>(recipe);
                     context.Recipe.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.RecipeMapper.ToRecipeDTO(entity, recipe))
-                    {
-                        return recipe;
-                    }
-
-                    return null;
+                    return _mapper.Map<RecipeDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -61,14 +55,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<RecipeDTO> result = new List<RecipeDTO>();
                 foreach (Recipe Recipe in context.Recipe)
                 {
-                    RecipeDTO dto = new RecipeDTO();
-                    Mapper.Mappers.RecipeMapper.ToRecipeDTO(Recipe, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<RecipeDTO>(Recipe);
                 }
-                return result;
             }
         }
 
@@ -78,13 +68,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    RecipeDTO dto = new RecipeDTO();
-                    if (Mapper.Mappers.RecipeMapper.ToRecipeDTO(context.Recipe.SingleOrDefault(s => s.RecipeId.Equals(recipeId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<RecipeDTO>(context.Recipe.FirstOrDefault(s => s.RecipeId.Equals(recipeId)));
                 }
             }
             catch (Exception e)
@@ -94,25 +78,14 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public RecipeDTO LoadByItemVNum(short itemVNum)
+        public IEnumerable<RecipeDTO> LoadByItemVNum(short itemVNum)
         {
-            try
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                foreach (Recipe Recipe in context.Recipe.Where(s => s.ItemVNum.Equals(itemVNum)))
                 {
-                    RecipeDTO dto = new RecipeDTO();
-                    if (Mapper.Mappers.RecipeMapper.ToRecipeDTO(context.Recipe.SingleOrDefault(s => s.ItemVNum.Equals(itemVNum)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    yield return _mapper.Map<RecipeDTO>(Recipe);
                 }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return null;
             }
         }
 
@@ -126,7 +99,7 @@ namespace GloomyTale.DAL.DAO
                     if (result != null)
                     {
                         recipe.RecipeId = result.RecipeId;
-                        Mapper.Mappers.RecipeMapper.ToRecipe(recipe, result);
+                        _mapper.Map(recipe, result);
                         context.SaveChanges();
                     }
                 }

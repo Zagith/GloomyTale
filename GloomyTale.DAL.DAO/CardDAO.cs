@@ -32,43 +32,18 @@ namespace GloomyTale.DAL.DAO
 
         #region Methods
 
-        public CardDTO Insert(ref CardDTO card)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    Card entity = new Card();
-                    Mapper.Mappers.CardMapper.ToCard(card, entity);
-                    context.Card.Add(entity);
-                    context.SaveChanges();
-                    if (Mapper.Mappers.CardMapper.ToCardDTO(entity, card))
-                    {
-                        return card;
-                    }
-
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return null;
-            }
-        }
-
         public void Insert(List<CardDTO> cards)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
                     foreach (CardDTO card in cards)
                     {
-                        InsertOrUpdate(card);
+                        var entity = _mapper.Map<Card>(card);
+                        context.Card.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -82,14 +57,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CardDTO> result = new List<CardDTO>();
                 foreach (Card card in context.Card)
                 {
-                    CardDTO dto = new CardDTO();
-                    Mapper.Mappers.CardMapper.ToCardDTO(card, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<CardDTO>(card);
                 }
-                return result;
             }
         }
 
@@ -99,13 +70,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    CardDTO dto = new CardDTO();
-                    if (Mapper.Mappers.CardMapper.ToCardDTO(context.Card.FirstOrDefault(s => s.CardId.Equals(cardId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<CardDTO>(context.Card.FirstOrDefault(s => s.CardId.Equals(cardId)));
                 }
             }
             catch (Exception e)
@@ -113,63 +78,7 @@ namespace GloomyTale.DAL.DAO
                 Logger.Log.Error(e);
                 return null;
             }
-        }
-
-        public SaveResult InsertOrUpdate(CardDTO card)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    long CardId = card.CardId;
-                    Card entity = context.Card.FirstOrDefault(c => c.CardId == CardId);
-
-                    if (entity == null)
-                    {
-                        card = insert(card, context);
-                        return SaveResult.Inserted;
-                    }
-
-                    card = update(entity, card, context);
-                    return SaveResult.Updated;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("UPDATE_CARD_ERROR"), card.CardId, e.Message), e);
-                return SaveResult.Error;
-            }
-        }
-
-        private static CardDTO insert(CardDTO card, OpenNosContext context)
-        {
-            Card entity = new Card();
-            Mapper.Mappers.CardMapper.ToCard(card, entity);
-            context.Card.Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.CardMapper.ToCardDTO(entity, card))
-            {
-                return card;
-            }
-
-            return null;
-        }
-
-        private static CardDTO update(Card entity, CardDTO card, OpenNosContext context)
-        {
-            if (entity != null)
-            {
-                Mapper.Mappers.CardMapper.ToCard(card, entity);
-                context.SaveChanges();
-            }
-
-            if (Mapper.Mappers.CardMapper.ToCardDTO(entity, card))
-            {
-                return card;
-            }
-
-            return null;
-        }
+        }       
 
         #endregion
     }

@@ -87,31 +87,21 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MinilandObjectDTO> result = new List<MinilandObjectDTO>();
                 foreach (MinilandObject obj in context.MinilandObject.Where(s => s.CharacterId == characterId))
                 {
-                    MinilandObjectDTO dto = new MinilandObjectDTO();
-                    Mapper.Mappers.MinilandObjectMapper.ToMinilandObjectDTO(obj, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MinilandObjectDTO>(obj);
                 }
-                return result;
             }
         }
 
-        private static MinilandObjectDTO insert(MinilandObjectDTO obj, OpenNosContext context)
+        private MinilandObjectDTO insert(MinilandObjectDTO obj, OpenNosContext context)
         {
             try
             {
-                MinilandObject entity = new MinilandObject();
-                Mapper.Mappers.MinilandObjectMapper.ToMinilandObject(obj, entity);
+                var entity = _mapper.Map<MinilandObject>(obj);
                 context.MinilandObject.Add(entity);
                 context.SaveChanges();
-                if (Mapper.Mappers.MinilandObjectMapper.ToMinilandObjectDTO(entity, obj))
-                {
-                    return obj;
-                }
-
-                return null;
+                return _mapper.Map<MinilandObjectDTO>(entity);
             }
             catch (Exception e)
             {
@@ -120,19 +110,15 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static MinilandObjectDTO update(MinilandObject entity, MinilandObjectDTO respawn, OpenNosContext context)
+        private MinilandObjectDTO update(MinilandObject entity, MinilandObjectDTO respawn, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.MinilandObjectMapper.ToMinilandObject(respawn, entity);
+                _mapper.Map(respawn, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.MinilandObjectMapper.ToMinilandObjectDTO(entity, respawn))
-            {
-                return respawn;
-            }
 
-            return null;
+            return _mapper.Map<MinilandObjectDTO>(entity);
         }
 
         #endregion

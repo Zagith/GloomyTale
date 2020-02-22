@@ -29,8 +29,6 @@ namespace GloomyTale.DAL.Interface
         IEnumerable<SkillDTO> LoadAll();
 
         SkillDTO LoadById(short skillId);
-
-        SaveResult InsertOrUpdate(SkillDTO skill);
         
         #endregion
     }

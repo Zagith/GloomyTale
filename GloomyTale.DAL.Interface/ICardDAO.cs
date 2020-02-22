@@ -21,16 +21,12 @@ namespace GloomyTale.DAL.Interface
     public interface ICardDAO : IMappingBaseDAO
     {
         #region Methods
-
-        CardDTO Insert(ref CardDTO card);
-
+        
         void Insert(List<CardDTO> cards);
 
         IEnumerable<CardDTO> LoadAll();
 
         CardDTO LoadById(short cardId);
-
-        SaveResult InsertOrUpdate(CardDTO card);
 
         #endregion
     }

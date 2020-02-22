@@ -38,14 +38,13 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
+
                     foreach (MapTypeMapDTO mapTypeMap in mapTypeMaps)
                     {
-                        MapTypeMap entity = new MapTypeMap();
-                        Mapper.Mappers.MapTypeMapMapper.ToMapTypeMap(mapTypeMap, entity);
+                        var entity = _mapper.Map<MapTypeMap>(mapTypeMap);
                         context.MapTypeMap.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -59,14 +58,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MapTypeMapDTO> result = new List<MapTypeMapDTO>();
                 foreach (MapTypeMap MapTypeMap in context.MapTypeMap)
                 {
-                    MapTypeMapDTO dto = new MapTypeMapDTO();
-                    Mapper.Mappers.MapTypeMapMapper.ToMapTypeMapDTO(MapTypeMap, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MapTypeMapDTO>(MapTypeMap);
                 }
-                return result;
             }
         }
 
@@ -76,13 +71,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MapTypeMapDTO dto = new MapTypeMapDTO();
-                    if (Mapper.Mappers.MapTypeMapMapper.ToMapTypeMapDTO(context.MapTypeMap.FirstOrDefault(i => i.MapId.Equals(mapId) && i.MapTypeId.Equals(maptypeId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<MapTypeMapDTO>(context.MapTypeMap.FirstOrDefault(i => i.MapId.Equals(mapId) && i.MapTypeId.Equals(maptypeId)));
                 }
             }
             catch (Exception e)
@@ -96,14 +85,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MapTypeMapDTO> result = new List<MapTypeMapDTO>();
                 foreach (MapTypeMap MapTypeMap in context.MapTypeMap.Where(c => c.MapId.Equals(mapId)))
                 {
-                    MapTypeMapDTO dto = new MapTypeMapDTO();
-                    Mapper.Mappers.MapTypeMapMapper.ToMapTypeMapDTO(MapTypeMap, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MapTypeMapDTO>(MapTypeMap);
                 }
-                return result;
             }
         }
 
@@ -111,14 +96,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MapTypeMapDTO> result = new List<MapTypeMapDTO>();
                 foreach (MapTypeMap MapTypeMap in context.MapTypeMap.Where(c => c.MapTypeId.Equals(maptypeId)))
                 {
-                    MapTypeMapDTO dto = new MapTypeMapDTO();
-                    Mapper.Mappers.MapTypeMapMapper.ToMapTypeMapDTO(MapTypeMap, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MapTypeMapDTO>(MapTypeMap);
                 }
-                return result;
             }
         }
 

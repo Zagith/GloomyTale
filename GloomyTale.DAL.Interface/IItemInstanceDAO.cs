@@ -26,8 +26,6 @@ namespace GloomyTale.DAL.Interface
 
         DeleteResult DeleteGuidList(IEnumerable<Guid> guids);
 
-        SaveResult InsertOrUpdateFromList(IEnumerable<ItemInstanceDTO> items);
-
         DeleteResult DeleteFromSlotAndType(long characterId, short slot, InventoryType type);
 
         IEnumerable<ItemInstanceDTO> LoadByCharacterId(long characterId);

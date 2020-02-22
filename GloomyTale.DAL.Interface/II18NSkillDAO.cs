@@ -12,15 +12,15 @@ namespace GloomyTale.DAL.Interface
     {
         #region Methods
 
-        II18NSkillDto Insert(II18NSkillDto teleporter);
+        I18NSkillDto Insert(I18NSkillDto teleporter);
 
-        void Insert(List<II18NSkillDto> skills);
+        void Insert(List<I18NSkillDto> skills);
 
-        SaveResult InsertOrUpdate(II18NSkillDto teleporter);
+        SaveResult InsertOrUpdate(I18NSkillDto teleporter);
 
-        IEnumerable<II18NSkillDto> LoadAll();
+        IEnumerable<I18NSkillDto> LoadAll();
 
-        II18NSkillDto LoadById(short teleporterId);
+        I18NSkillDto LoadById(short teleporterId);
 
         #endregion
     }

@@ -109,14 +109,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterSkillDTO> result = new List<CharacterSkillDTO>();
-                foreach (CharacterSkill entity in context.CharacterSkill.Where(i => i.CharacterId == characterId))
-                {
-                    CharacterSkillDTO output = new CharacterSkillDTO();
-                    Mapper.Mappers.CharacterSkillMapper.ToCharacterSkillDTO(entity, output);
-                    result.Add(output);
-                }
-                return result;
+                return context.CharacterSkill.Where(s => s.CharacterId == characterId).ToArray().Select(_mapper.Map<CharacterSkillDTO>);
             }
         }
 
@@ -124,13 +117,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                CharacterSkillDTO characterSkillDTO = new CharacterSkillDTO();
-                if (Mapper.Mappers.CharacterSkillMapper.ToCharacterSkillDTO(context.CharacterSkill.FirstOrDefault(i => i.Id.Equals(id)), characterSkillDTO))
-                {
-                    return characterSkillDTO;
-                }
-
-                return null;
+                return _mapper.Map<CharacterSkillDTO>(context.CharacterSkill.FirstOrDefault(s => s.Id.Equals(id)));
             }
         }
 
@@ -148,50 +135,7 @@ namespace GloomyTale.DAL.DAO
                 Logger.Log.Error(e);
                 return null;
             }
-        }
-
-        protected static CharacterSkillDTO Insert(CharacterSkillDTO dto, OpenNosContext context)
-        {
-            CharacterSkill entity = new CharacterSkill();
-            Mapper.Mappers.CharacterSkillMapper.ToCharacterSkill(dto, entity);
-            context.Set<CharacterSkill>().Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.CharacterSkillMapper.ToCharacterSkillDTO(entity, dto))
-            {
-                return dto;
-            }
-
-            return null;
-        }
-
-        protected static CharacterSkillDTO InsertOrUpdate(OpenNosContext context, CharacterSkillDTO dto)
-        {
-            Guid primaryKey = dto.Id;
-            CharacterSkill entity = context.Set<CharacterSkill>().FirstOrDefault(c => c.Id == primaryKey);
-            if (entity == null)
-            {
-                return Insert(dto, context);
-            }
-            else
-            {
-                return Update(entity, dto, context);
-            }
-        }
-
-        protected static CharacterSkillDTO Update(CharacterSkill entity, CharacterSkillDTO inventory, OpenNosContext context)
-        {
-            if (entity != null)
-            {
-                Mapper.Mappers.CharacterSkillMapper.ToCharacterSkill(inventory, entity);
-                context.SaveChanges();
-            }
-            if (Mapper.Mappers.CharacterSkillMapper.ToCharacterSkillDTO(entity, inventory))
-            {
-                return inventory;
-            }
-
-            return null;
-        }
+        }       
 
         #endregion
     }

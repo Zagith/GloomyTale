@@ -7,7 +7,7 @@ namespace GloomyTale.DAL.Interface
     {
         #region Methods
 
-        List<BoxItemDTO> LoadAll();
+        IEnumerable<BoxItemDTO> LoadAll();
 
         #endregion
     }

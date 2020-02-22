@@ -49,14 +49,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterTitleDTO> result = new List<CharacterTitleDTO>();
-                foreach (CharacterTitle entity in context.CharacterTitle)
+                foreach (CharacterTitle title in context.CharacterTitle)
                 {
-                    CharacterTitleDTO dto = new CharacterTitleDTO();
-                    Mapper.Mappers.CharacterTitleMapper.ToCharacterTitleDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<CharacterTitleDTO>(title);
                 }
-                return result;
             }
         }
 
@@ -64,14 +60,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterTitleDTO> result = new List<CharacterTitleDTO>();
-                foreach (CharacterTitle entity in context.CharacterTitle.Where(i => i.CharacterId == characterId))
-                {
-                    CharacterTitleDTO dto = new CharacterTitleDTO();
-                    Mapper.Mappers.CharacterTitleMapper.ToCharacterTitleDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.CharacterTitle.Where(s => s.CharacterId == characterId).ToArray().Select(_mapper.Map<CharacterTitleDTO>);
             }
         }
 
@@ -81,50 +70,37 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    CharacterTitleDTO dto = new CharacterTitleDTO();
-                    if (Mapper.Mappers.CharacterTitleMapper.ToCharacterTitleDTO(context.CharacterTitle.FirstOrDefault(s => s.CharacterTitleId.Equals(characterId)), dto))
+                    CharacterTitle character = context.CharacterTitle.FirstOrDefault(a => a.CharacterId.Equals(characterId));
+                    if (character != null)
                     {
-                        return dto;
+                        return _mapper.Map<CharacterTitleDTO>(character);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
-                Logger.Log.Error(e);
-                return null;
+                Logger.Log.Error(e);                
             }
-        }
-
-        private static CharacterTitleDTO insert(CharacterTitleDTO relation, OpenNosContext context)
-        {
-            CharacterTitle entity = new CharacterTitle();
-            Mapper.Mappers.CharacterTitleMapper.ToCharacterTitle(relation, entity);
-            context.CharacterTitle.Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.CharacterTitleMapper.ToCharacterTitleDTO(entity, relation))
-            {
-                return relation;
-            }
-
             return null;
         }
 
-        private static CharacterTitleDTO update(CharacterTitle entity, CharacterTitleDTO relation, OpenNosContext context)
+        private CharacterTitleDTO insert(CharacterTitleDTO title, OpenNosContext context)
+        {
+            var entity = _mapper.Map<CharacterTitle>(title);
+            context.CharacterTitle.Add(entity);
+            context.SaveChanges();
+            return _mapper.Map<CharacterTitleDTO>(entity);
+        }
+
+        private CharacterTitleDTO update(CharacterTitle entity, CharacterTitleDTO title, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.CharacterTitleMapper.ToCharacterTitle(relation, entity);
+                _mapper.Map(title, entity);
                 context.SaveChanges();
             }
 
-            if (Mapper.Mappers.CharacterTitleMapper.ToCharacterTitleDTO(entity, relation))
-            {
-                return relation;
-            }
-
-            return null;
+            return _mapper.Map<CharacterTitleDTO>(entity);
         }
 
         #endregion

@@ -64,14 +64,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<RespawnDTO> result = new List<RespawnDTO>();
                 foreach (Respawn Respawnobject in context.Respawn.Where(i => i.CharacterId.Equals(characterId)))
                 {
-                    RespawnDTO dto = new RespawnDTO();
-                    Mapper.Mappers.RespawnMapper.ToRespawnDTO(Respawnobject, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<RespawnDTO>(Respawnobject);
                 }
-                return result;
             }
         }
 
@@ -81,13 +77,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    RespawnDTO dto = new RespawnDTO();
-                    if (Mapper.Mappers.RespawnMapper.ToRespawnDTO(context.Respawn.FirstOrDefault(s => s.RespawnId.Equals(respawnId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<RespawnDTO>(context.Respawn.FirstOrDefault(s => s.RespawnId.Equals(respawnId)));
                 }
             }
             catch (Exception e)
@@ -97,20 +87,14 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static RespawnDTO insert(RespawnDTO respawn, OpenNosContext context)
+        private RespawnDTO insert(RespawnDTO respawn, OpenNosContext context)
         {
             try
             {
-                Respawn entity = new Respawn();
-                Mapper.Mappers.RespawnMapper.ToRespawn(respawn, entity);
+                var entity = _mapper.Map<Respawn>(respawn);
                 context.Respawn.Add(entity);
                 context.SaveChanges();
-                if (Mapper.Mappers.RespawnMapper.ToRespawnDTO(entity, respawn))
-                {
-                    return respawn;
-                }
-
-                return null;
+                return _mapper.Map<RespawnDTO>(entity);
             }
             catch (Exception e)
             {
@@ -119,19 +103,15 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static RespawnDTO update(Respawn entity, RespawnDTO respawn, OpenNosContext context)
+        private RespawnDTO update(Respawn entity, RespawnDTO respawn, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.RespawnMapper.ToRespawn(respawn, entity);
+                _mapper.Map(respawn, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.RespawnMapper.ToRespawnDTO(entity, respawn))
-            {
-                return respawn;
-            }
 
-            return null;
+            return _mapper.Map<RespawnDTO>(entity);
         }
 
         #endregion

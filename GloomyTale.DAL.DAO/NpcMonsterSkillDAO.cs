@@ -38,16 +38,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    NpcMonsterSkill entity = new NpcMonsterSkill();
-                    Mapper.Mappers.NpcMonsterSkillMapper.ToNpcMonsterSkill(npcMonsterSkill, entity);
+                    var entity = _mapper.Map<NpcMonsterSkill>(npcMonsterSkill);
                     context.NpcMonsterSkill.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.NpcMonsterSkillMapper.ToNpcMonsterSkillDTO(entity, npcMonsterSkill))
-                    {
-                        return npcMonsterSkill;
-                    }
-
-                    return null;
+                    return _mapper.Map<NpcMonsterSkillDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -63,14 +57,13 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
                     foreach (NpcMonsterSkillDTO Skill in skills)
                     {
-                        NpcMonsterSkill entity = new NpcMonsterSkill();
-                        Mapper.Mappers.NpcMonsterSkillMapper.ToNpcMonsterSkill(Skill, entity);
+                        var entity = _mapper.Map<NpcMonsterSkill>(Skill);
                         context.NpcMonsterSkill.Add(entity);
                     }
-                    
+
+
                     context.SaveChanges();
                 }
             }
@@ -84,14 +77,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<NpcMonsterSkillDTO> result = new List<NpcMonsterSkillDTO>();
-                foreach (NpcMonsterSkill NpcMonsterSkillobject in context.NpcMonsterSkill)
-                {
-                    NpcMonsterSkillDTO dto = new NpcMonsterSkillDTO();
-                    Mapper.Mappers.NpcMonsterSkillMapper.ToNpcMonsterSkillDTO(NpcMonsterSkillobject, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.NpcMonsterSkill.ToList().Select(n => _mapper.Map<NpcMonsterSkillDTO>(n)).ToList();
             }
         }
 
@@ -99,14 +85,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<NpcMonsterSkillDTO> result = new List<NpcMonsterSkillDTO>();
                 foreach (NpcMonsterSkill NpcMonsterSkillobject in context.NpcMonsterSkill.Where(i => i.NpcMonsterVNum == npcId))
                 {
-                    NpcMonsterSkillDTO dto = new NpcMonsterSkillDTO();
-                    Mapper.Mappers.NpcMonsterSkillMapper.ToNpcMonsterSkillDTO(NpcMonsterSkillobject, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<NpcMonsterSkillDTO>(NpcMonsterSkillobject);
                 }
-                return result;
             }
         }
 

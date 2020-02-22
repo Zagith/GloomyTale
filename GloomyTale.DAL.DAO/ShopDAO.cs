@@ -73,14 +73,13 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
+
                     foreach (ShopDTO Item in shops)
                     {
-                        Shop entity = new Shop();
-                        Mapper.Mappers.ShopMapper.ToShop(Item, entity);
+                        var entity = _mapper.Map<Shop>(Item);
                         context.Shop.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -98,17 +97,12 @@ namespace GloomyTale.DAL.DAO
                 {
                     if (context.Shop.FirstOrDefault(c => c.MapNpcId.Equals(shop.MapNpcId)) == null)
                     {
-                        Shop entity = new Shop();
-                        Mapper.Mappers.ShopMapper.ToShop(shop, entity);
+                        var entity = _mapper.Map<Shop>(shop);
                         context.Shop.Add(entity);
                         context.SaveChanges();
-                        if (Mapper.Mappers.ShopMapper.ToShopDTO(entity, shop))
-                        {
-                            return shop;
-                        }
-
-                        return null;
+                        return _mapper.Map<ShopDTO>(entity);
                     }
+
                     return new ShopDTO();
                 }
             }
@@ -119,30 +113,31 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static ShopDTO insert(ShopDTO account, OpenNosContext context)
+        private ShopDTO insert(ShopDTO shop, OpenNosContext context)
         {
-            Shop entity = new Shop();
-            Mapper.Mappers.ShopMapper.ToShop(account, entity);
-            context.Shop.Add(entity);
-            context.SaveChanges();
-            Mapper.Mappers.ShopMapper.ToShopDTO(entity, account);
-            return account;
+            try
+            {
+                var entity = _mapper.Map<Shop>(shop);
+                context.Shop.Add(entity);
+                context.SaveChanges();
+                return _mapper.Map<ShopDTO>(entity);
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(e);
+                return null;
+            }
         }
 
-        private static ShopDTO update(Shop entity, ShopDTO shop, OpenNosContext context)
+        private ShopDTO update(Shop entity, ShopDTO shop, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.ShopMapper.ToShop(shop, entity);
-                context.Entry(entity).State = EntityState.Modified;
+                _mapper.Map(shop, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.ShopMapper.ToShopDTO(entity, shop))
-            {
-                return shop;
-            }
 
-            return null;
+            return _mapper.Map<ShopDTO>(entity);
         }
 
         public SaveResult Update(ref ShopDTO shop)
@@ -169,14 +164,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ShopDTO> result = new List<ShopDTO>();
-                foreach (Shop entity in context.Shop)
+                foreach (Shop entity in context.Shop.ToArray())
                 {
-                    ShopDTO dto = new ShopDTO();
-                    Mapper.Mappers.ShopMapper.ToShopDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ShopDTO>(entity);
                 }
-                return result;
             }
         }
 
@@ -186,13 +177,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    ShopDTO dto = new ShopDTO();
-                    if (Mapper.Mappers.ShopMapper.ToShopDTO(context.Shop.FirstOrDefault(s => s.ShopId.Equals(shopId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<ShopDTO>(context.Shop.FirstOrDefault(s => s.ShopId.Equals(shopId)));
                 }
             }
             catch (Exception e)
@@ -208,13 +193,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    ShopDTO dto = new ShopDTO();
-                    if (Mapper.Mappers.ShopMapper.ToShopDTO(context.Shop.FirstOrDefault(s => s.MapNpcId.Equals(mapNpcId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<ShopDTO>(context.Shop.FirstOrDefault(s => s.MapNpcId.Equals(mapNpcId)));
                 }
             }
             catch (Exception e)

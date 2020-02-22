@@ -32,19 +32,13 @@ namespace GloomyTale.DAL.DAO
 
         #region Methods
 
-        public NpcMonsterDTO LoadByKey(string vNum)
+        public NpcMonsterDTO LoadByKey(string vnum)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    NpcMonsterDTO dto = new NpcMonsterDTO();
-                    if (Mapper.Mappers.NpcMonsterMapper.ToNpcMonsterDTO(context.NpcMonster.FirstOrDefault(i => i.Name.Equals(vNum)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<NpcMonsterDTO>(context.NpcMonster.FirstOrDefault(i => i.Name.Equals(vnum)));
                 }
             }
             catch (Exception e)
@@ -58,14 +52,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<NpcMonsterDTO> result = new List<NpcMonsterDTO>();
-                foreach (NpcMonster npcMonster in context.NpcMonster.Where(s => string.IsNullOrEmpty(name) ? s.Name.Equals("") : s.Name.Contains(name)))
+                foreach (NpcMonster npcMonster in context.NpcMonster.Where(s => s.Name.Contains(name)))
                 {
-                    NpcMonsterDTO dto = new NpcMonsterDTO();
-                    Mapper.Mappers.NpcMonsterMapper.ToNpcMonsterDTO(npcMonster, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<NpcMonsterDTO>(npcMonster);
                 }
-                return result;
             }
         }
 
@@ -75,45 +65,19 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
-                    foreach (NpcMonsterDTO Item in npcMonsters)
+
+                    foreach (NpcMonsterDTO npc in npcMonsters)
                     {
-                        NpcMonster entity = new NpcMonster();
-                        Mapper.Mappers.NpcMonsterMapper.ToNpcMonster(Item, entity);
+                        var entity = _mapper.Map<NpcMonster>(npc);
                         context.NpcMonster.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-            }
-        }
-
-        public NpcMonsterDTO Insert(NpcMonsterDTO npc)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    NpcMonster entity = new NpcMonster();
-                    Mapper.Mappers.NpcMonsterMapper.ToNpcMonster(npc, entity);
-                    context.NpcMonster.Add(entity);
-                    context.SaveChanges();
-                    if (Mapper.Mappers.NpcMonsterMapper.ToNpcMonsterDTO(entity, npc))
-                    {
-                        return npc;
-                    }
-
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return null;
             }
         }
 
@@ -147,14 +111,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<NpcMonsterDTO> result = new List<NpcMonsterDTO>();
                 foreach (NpcMonster NpcMonster in context.NpcMonster)
                 {
-                    NpcMonsterDTO dto = new NpcMonsterDTO();
-                    Mapper.Mappers.NpcMonsterMapper.ToNpcMonsterDTO(NpcMonster, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<NpcMonsterDTO>(NpcMonster);
                 }
-                return result;
             }
         }
 
@@ -164,13 +124,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    NpcMonsterDTO dto = new NpcMonsterDTO();
-                    if (Mapper.Mappers.NpcMonsterMapper.ToNpcMonsterDTO(context.NpcMonster.FirstOrDefault(i => i.NpcMonsterVNum.Equals(npcMonsterVNum)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<NpcMonsterDTO>(context.NpcMonster.FirstOrDefault(i => i.NpcMonsterVNum.Equals(npcMonsterVNum)));
                 }
             }
             catch (Exception e)
@@ -180,33 +134,23 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static NpcMonsterDTO insert(NpcMonsterDTO npcMonster, OpenNosContext context)
+        private NpcMonsterDTO insert(NpcMonsterDTO npcMonster, OpenNosContext context)
         {
-            NpcMonster entity = new NpcMonster();
-            Mapper.Mappers.NpcMonsterMapper.ToNpcMonster(npcMonster, entity);
+            var entity = _mapper.Map<NpcMonster>(npcMonster);
             context.NpcMonster.Add(entity);
             context.SaveChanges();
-            if (Mapper.Mappers.NpcMonsterMapper.ToNpcMonsterDTO(entity, npcMonster))
-            {
-                return npcMonster;
-            }
-
-            return null;
+            return _mapper.Map<NpcMonsterDTO>(entity);
         }
 
-        private static NpcMonsterDTO update(NpcMonster entity, NpcMonsterDTO npcMonster, OpenNosContext context)
+        private NpcMonsterDTO update(NpcMonster entity, NpcMonsterDTO npcMonster, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.NpcMonsterMapper.ToNpcMonster(npcMonster, entity);
+                _mapper.Map(npcMonster, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.NpcMonsterMapper.ToNpcMonsterDTO(entity, npcMonster))
-            {
-                return npcMonster;
-            }
 
-            return null;
+            return _mapper.Map<NpcMonsterDTO>(entity);
         }
 
         #endregion

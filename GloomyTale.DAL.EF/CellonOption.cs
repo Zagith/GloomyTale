@@ -17,7 +17,7 @@ using System;
 
 namespace GloomyTale.DAL.EF
 {
-    public class CellonOption
+    public class CellonOption : SynchronizableBaseEntity
     {
         #region Properties
 

@@ -70,14 +70,13 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
+
                     foreach (MapNpcDTO Item in npcs)
                     {
-                        MapNpc entity = new MapNpc();
-                        Mapper.Mappers.MapNpcMapper.ToMapNpc(Item, entity);
+                        var entity = _mapper.Map<MapNpc>(Item);
                         context.MapNpc.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -93,16 +92,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MapNpc entity = new MapNpc();
-                    Mapper.Mappers.MapNpcMapper.ToMapNpc(npc, entity);
+                    var entity = _mapper.Map<MapNpc>(npc);
                     context.MapNpc.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.MapNpcMapper.ToMapNpcDTO(entity, npc))
-                    {
-                        return npc;
-                    }
-
-                    return null;
+                    return _mapper.Map<MapNpcDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -132,34 +125,22 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static MapNpcDTO update(MapNpc entity, MapNpcDTO mapNpc, OpenNosContext context)
+        private MapNpcDTO update(MapNpc entity, MapNpcDTO mapNpc, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.MapNpcMapper.ToMapNpc(mapNpc, entity);
-                context.Entry(entity).State = EntityState.Modified;
+                _mapper.Map(mapNpc, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.MapNpcMapper.ToMapNpcDTO(entity, mapNpc))
-            {
-                return mapNpc;
-            }
 
-            return null;
+            return _mapper.Map<MapNpcDTO>(entity);
         }
 
         public IEnumerable<MapNpcDTO> LoadAll()
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MapNpcDTO> result = new List<MapNpcDTO>();
-                foreach (MapNpc entity in context.MapNpc)
-                {
-                    MapNpcDTO dto = new MapNpcDTO();
-                    Mapper.Mappers.MapNpcMapper.ToMapNpcDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.MapNpc.ToArray().Select(_mapper.Map<MapNpcDTO>);
             }
         }
 
@@ -169,13 +150,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MapNpcDTO dto = new MapNpcDTO();
-                    if (Mapper.Mappers.MapNpcMapper.ToMapNpcDTO(context.MapNpc.FirstOrDefault(i => i.MapNpcId.Equals(mapNpcId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<MapNpcDTO>(context.MapNpc.FirstOrDefault(i => i.MapNpcId.Equals(mapNpcId)));
                 }
             }
             catch (Exception e)
@@ -189,14 +164,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MapNpcDTO> result = new List<MapNpcDTO>();
-                foreach (MapNpc npcobject in context.MapNpc.Where(c => c.MapId.Equals(mapId)))
-                {
-                    MapNpcDTO dto = new MapNpcDTO();
-                    Mapper.Mappers.MapNpcMapper.ToMapNpcDTO(npcobject, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.MapNpc.Where(s => s.MapId == mapId).ToArray().Select(_mapper.Map<MapNpcDTO>);
             }
         }
 

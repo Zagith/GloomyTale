@@ -38,14 +38,12 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
                     foreach (MapDTO Item in maps)
                     {
-                        Map entity = new Map();
-                        Mapper.Mappers.MapMapper.ToMap(Item, entity);
+                        var entity = _mapper.Map<Map>(Item);
                         context.Map.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -63,17 +61,12 @@ namespace GloomyTale.DAL.DAO
                 {
                     if (context.Map.FirstOrDefault(c => c.MapId.Equals(map.MapId)) == null)
                     {
-                        Map entity = new Map();
-                        Mapper.Mappers.MapMapper.ToMap(map, entity);
+                        var entity = _mapper.Map<Map>(map);
                         context.Map.Add(entity);
                         context.SaveChanges();
-                        if (Mapper.Mappers.MapMapper.ToMapDTO(entity, map))
-                        {
-                            return map;
-                        }
-
-                        return null;
+                        return _mapper.Map<MapDTO>(entity);
                     }
+
                     return new MapDTO();
                 }
             }
@@ -88,14 +81,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MapDTO> result = new List<MapDTO>();
                 foreach (Map Map in context.Map)
                 {
-                    MapDTO dto = new MapDTO();
-                    Mapper.Mappers.MapMapper.ToMapDTO(Map, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MapDTO>(Map);
                 }
-                return result;
             }
         }
 
@@ -105,13 +94,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MapDTO dto = new MapDTO();
-                    if (Mapper.Mappers.MapMapper.ToMapDTO(context.Map.FirstOrDefault(c => c.MapId.Equals(mapId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<MapDTO>(context.Map.FirstOrDefault(c => c.MapId.Equals(mapId)));
                 }
             }
             catch (Exception e)

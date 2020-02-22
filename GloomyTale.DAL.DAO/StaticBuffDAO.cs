@@ -84,30 +84,20 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<StaticBuffDTO> result = new List<StaticBuffDTO>();
                 foreach (StaticBuff entity in context.StaticBuff.Where(i => i.CharacterId == characterId))
                 {
-                    StaticBuffDTO dto = new StaticBuffDTO();
-                    Mapper.Mappers.StaticBuffMapper.ToStaticBuffDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<StaticBuffDTO>(entity);
                 }
-                return result;
             }
         }
 
-        public static StaticBuffDTO LoadById(long sbId)
+        public StaticBuffDTO LoadById(long sbId)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    StaticBuffDTO dto = new StaticBuffDTO();
-                    if (Mapper.Mappers.StaticBuffMapper.ToStaticBuffDTO(context.StaticBuff.FirstOrDefault(s => s.StaticBuffId.Equals(sbId)), dto)) //who the fuck was so retarded and set it to respawn ?!?
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<StaticBuffDTO>(context.RespawnMapType.FirstOrDefault(s => s.RespawnMapTypeId.Equals(sbId)));
                 }
             }
             catch (Exception e)
@@ -133,20 +123,14 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static StaticBuffDTO insert(StaticBuffDTO sb, OpenNosContext context)
+        private StaticBuffDTO insert(StaticBuffDTO sb, OpenNosContext context)
         {
             try
             {
-                StaticBuff entity = new StaticBuff();
-                Mapper.Mappers.StaticBuffMapper.ToStaticBuff(sb, entity);
+                var entity = _mapper.Map<StaticBuff>(sb);
                 context.StaticBuff.Add(entity);
                 context.SaveChanges();
-                if (Mapper.Mappers.StaticBuffMapper.ToStaticBuffDTO(entity, sb))
-                {
-                    return sb;
-                }
-
-                return null;
+                return _mapper.Map<StaticBuffDTO>(entity);
             }
             catch (Exception e)
             {
@@ -155,19 +139,15 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static StaticBuffDTO update(StaticBuff entity, StaticBuffDTO sb, OpenNosContext context)
+        private StaticBuffDTO update(StaticBuff entity, StaticBuffDTO sb, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.StaticBuffMapper.ToStaticBuff(sb, entity);
+                _mapper.Map(sb, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.StaticBuffMapper.ToStaticBuffDTO(entity, sb))
-            {
-                return sb;
-            }
 
-            return null;
+            return _mapper.Map<StaticBuffDTO>(entity);
         }
 
         #endregion

@@ -86,18 +86,17 @@ namespace GloomyTale.DAL.DAO
                 {
                     void insert(ShellEffectDTO shelleffect)
                     {
-                        ShellEffect _entity = new ShellEffect();
-                        Mapper.Mappers.ShellEffectMapper.ToShellEffect(shelleffect, _entity);
-                        context.ShellEffect.Add(_entity);
+                        var entity = _mapper.Map<ShellEffect>(shelleffect);
+                        context.ShellEffect.Add(entity);
                         context.SaveChanges();
-                        shelleffect.ShellEffectId = _entity.ShellEffectId;
+                        shelleffect.ShellEffectId = entity.ShellEffectId;
                     }
 
                     void update(ShellEffect _entity, ShellEffectDTO shelleffect)
                     {
                         if (_entity != null)
                         {
-                            Mapper.Mappers.ShellEffectMapper.ToShellEffect(shelleffect, _entity);
+                            _mapper.Map(shelleffect, _entity);
                         }
                     }
 
@@ -129,45 +128,30 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ShellEffectDTO> result = new List<ShellEffectDTO>();
-                foreach (ShellEffect entity in context.ShellEffect.Where(c => c.EquipmentSerialId == id))
+                foreach (ShellEffect cellonOptionobject in context.ShellEffect.Where(i => i.EquipmentSerialId.Equals(id)))
                 {
-                    ShellEffectDTO dto = new ShellEffectDTO();
-                    Mapper.Mappers.ShellEffectMapper.ToShellEffectDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ShellEffectDTO>(cellonOptionobject);
                 }
-                return result;
             }
         }
 
-        private static ShellEffectDTO insert(ShellEffectDTO shelleffect, OpenNosContext context)
+        private ShellEffectDTO insert(ShellEffectDTO shelleffect, OpenNosContext context)
         {
-            ShellEffect entity = new ShellEffect();
-            Mapper.Mappers.ShellEffectMapper.ToShellEffect(shelleffect, entity);
+            var entity = _mapper.Map<ShellEffect>(shelleffect);
             context.ShellEffect.Add(entity);
             context.SaveChanges();
-            if (Mapper.Mappers.ShellEffectMapper.ToShellEffectDTO(entity, shelleffect))
-            {
-                return shelleffect;
-            }
-
-            return null;
+            return _mapper.Map<ShellEffectDTO>(entity);
         }
 
-        private static ShellEffectDTO update(ShellEffect entity, ShellEffectDTO shelleffect, OpenNosContext context)
+        private ShellEffectDTO update(ShellEffect entity, ShellEffectDTO shelleffect, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.ShellEffectMapper.ToShellEffect(shelleffect, entity);
+                _mapper.Map(shelleffect, entity);
                 context.SaveChanges();
             }
 
-            if (Mapper.Mappers.ShellEffectMapper.ToShellEffectDTO(entity, shelleffect))
-            {
-                return shelleffect;
-            }
-
-            return null;
+            return _mapper.Map<ShellEffectDTO>(entity);
         }
 
         #endregion

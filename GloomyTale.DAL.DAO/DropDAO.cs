@@ -37,14 +37,12 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
                     foreach (DropDTO Drop in drops)
                     {
-                        Drop entity = new Drop();
-                        Mapper.Mappers.DropMapper.ToDrop(Drop, entity);
+                        var entity = _mapper.Map<Drop>(Drop);
                         context.Drop.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -60,15 +58,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    Drop entity = new Drop();
+                    var entity = _mapper.Map<Drop>(drop);
                     context.Drop.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.DropMapper.ToDropDTO(entity, drop))
-                    {
-                        return drop;
-                    }
-
-                    return null;
+                    return _mapper.Map<DropDTO>(drop);
                 }
             }
             catch (Exception e)
@@ -82,14 +75,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<DropDTO> result = new List<DropDTO>();
-                foreach (Drop entity in context.Drop)
-                {
-                    DropDTO dto = new DropDTO();
-                    Mapper.Mappers.DropMapper.ToDropDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.Drop.ToList().Select(d => _mapper.Map<DropDTO>(d)).ToList();
             }
         }
 
@@ -97,15 +83,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<DropDTO> result = new List<DropDTO>();
-
                 foreach (Drop Drop in context.Drop.Where(s => s.MonsterVNum == monsterVNum || s.MonsterVNum == null))
                 {
-                    DropDTO dto = new DropDTO();
-                    Mapper.Mappers.DropMapper.ToDropDTO(Drop, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<DropDTO>(Drop);
                 }
-                return result;
             }
         }
 

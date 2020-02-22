@@ -38,16 +38,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MaintenanceLog entity = new MaintenanceLog();
-                    Mapper.Mappers.MaintenanceLogMapper.ToMaintenanceLog(maintenanceLog, entity);
+                    var entity = _mapper.Map<MaintenanceLog>(maintenanceLog);
                     context.MaintenanceLog.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.MaintenanceLogMapper.ToMaintenanceLogDTO(entity, maintenanceLog))
-                    {
-                        return maintenanceLog;
-                    }
-
-                    return null;
+                    return _mapper.Map<MaintenanceLogDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -61,14 +55,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MaintenanceLogDTO> result = new List<MaintenanceLogDTO>();
                 foreach (MaintenanceLog maintenanceLog in context.MaintenanceLog)
                 {
-                    MaintenanceLogDTO dto = new MaintenanceLogDTO();
-                    Mapper.Mappers.MaintenanceLogMapper.ToMaintenanceLogDTO(maintenanceLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MaintenanceLogDTO>(maintenanceLog);
                 }
-                return result;
             }
         }
 
@@ -78,20 +68,18 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MaintenanceLogDTO dto = new MaintenanceLogDTO();
-                    if (Mapper.Mappers.MaintenanceLogMapper.ToMaintenanceLogDTO(context.MaintenanceLog.FirstOrDefault(m => m.DateEnd > DateTime.Now), dto))
+                    MaintenanceLog log = context.MaintenanceLog.FirstOrDefault(m => m.DateEnd > DateTime.Now);
+                    if (log != null)
                     {
-                        return dto;
+                        return _mapper.Map<MaintenanceLogDTO>(log);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
-                Logger.Log.Error(e);
-                return null;
+                Logger.Log.Error(e);                
             }
+            return null;
         }
 
         #endregion

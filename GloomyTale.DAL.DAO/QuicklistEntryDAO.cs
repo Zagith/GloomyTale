@@ -31,84 +31,15 @@ namespace GloomyTale.DAL.DAO
         { }
 
         #region Methods
-
-        public DeleteResult Delete(Guid id)
-        {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
-            {
-                QuicklistEntry entity = context.Set<QuicklistEntry>().FirstOrDefault(i => i.Id == id);
-                if (entity != null)
-                {
-                    context.Set<QuicklistEntry>().Remove(entity);
-                    context.SaveChanges();
-                }
-                return DeleteResult.Deleted;
-            }
-        }
-
-        public IEnumerable<QuicklistEntryDTO> InsertOrUpdate(IEnumerable<QuicklistEntryDTO> dtos)
-        {
-            try
-            {
-                IList<QuicklistEntryDTO> results = new List<QuicklistEntryDTO>();
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    foreach (QuicklistEntryDTO dto in dtos)
-                    {
-                        results.Add(InsertOrUpdate(context, dto));
-                    }
-                }
-                return results;
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error($"Message: {e.Message}", e);
-                return Enumerable.Empty<QuicklistEntryDTO>();
-            }
-        }
-
-        public QuicklistEntryDTO InsertOrUpdate(QuicklistEntryDTO dto)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    return InsertOrUpdate(context, dto);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error($"Message: {e.Message}", e);
-                return null;
-            }
-        }
-
+        
         public IEnumerable<QuicklistEntryDTO> LoadByCharacterId(long characterId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<QuicklistEntryDTO> result = new List<QuicklistEntryDTO>();
                 foreach (QuicklistEntry QuicklistEntryobject in context.QuicklistEntry.Where(i => i.CharacterId == characterId))
                 {
-                    QuicklistEntryDTO quicklistEntryDTO = new QuicklistEntryDTO();
-                    Mapper.Mappers.QuicklistEntryMapper.ToQuicklistEntryDTO(QuicklistEntryobject, quicklistEntryDTO);
-                    result.Add(quicklistEntryDTO);
+                    yield return _mapper.Map<QuicklistEntryDTO>(QuicklistEntryobject);
                 }
-                return result;
-            }
-        }
-
-        public QuicklistEntryDTO LoadById(Guid id)
-        {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
-            {
-                QuicklistEntryDTO quicklistEntryDTO = new QuicklistEntryDTO();
-                if (Mapper.Mappers.QuicklistEntryMapper.ToQuicklistEntryDTO(context.QuicklistEntry.FirstOrDefault(i => i.Id.Equals(id)), quicklistEntryDTO))
-                {
-                    return quicklistEntryDTO;
-                }
-
-                return null;
             }
         }
 
@@ -126,49 +57,6 @@ namespace GloomyTale.DAL.DAO
                 Logger.Log.Error(e);
                 return null;
             }
-        }
-
-        protected static QuicklistEntryDTO Insert(QuicklistEntryDTO dto, OpenNosContext context)
-        {
-            QuicklistEntry entity = new QuicklistEntry();
-            Mapper.Mappers.QuicklistEntryMapper.ToQuicklistEntry(dto, entity);
-            context.Set<QuicklistEntry>().Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.QuicklistEntryMapper.ToQuicklistEntryDTO(entity, dto))
-            {
-                return dto;
-            }
-
-            return null;
-        }
-
-        protected static QuicklistEntryDTO InsertOrUpdate(OpenNosContext context, QuicklistEntryDTO dto)
-        {
-            Guid primaryKey = dto.Id;
-            QuicklistEntry entity = context.Set<QuicklistEntry>().FirstOrDefault(c => c.Id == primaryKey);
-            if (entity == null)
-            {
-                return Insert(dto, context);
-            }
-            else
-            {
-                return Update(entity, dto, context);
-            }
-        }
-
-        protected static QuicklistEntryDTO Update(QuicklistEntry entity, QuicklistEntryDTO inventory, OpenNosContext context)
-        {
-            if (entity != null)
-            {
-                Mapper.Mappers.QuicklistEntryMapper.ToQuicklistEntry(inventory, entity);
-                context.SaveChanges();
-            }
-            if (Mapper.Mappers.QuicklistEntryMapper.ToQuicklistEntryDTO(entity, inventory))
-            {
-                return inventory;
-            }
-
-            return null;
         }
 
         #endregion

@@ -55,16 +55,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    GeneralLog entity = new GeneralLog();
-                    Mapper.Mappers.GeneralLogMapper.ToGeneralLog(generalLog, entity);
+                    var entity = _mapper.Map<GeneralLog>(generalLog);
                     context.GeneralLog.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(entity, generalLog))
-                    {
-                        return generalLog;
-                    }
-
-                    return null;
+                    return _mapper.Map<GeneralLogDTO>(generalLog);
                 }
             }
             catch (Exception e)
@@ -99,60 +93,33 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static GeneralLogDTO insert(GeneralLogDTO GeneralLog, OpenNosContext context)
+        private GeneralLogDTO insert(GeneralLogDTO GeneralLog, OpenNosContext context)
         {
-            GeneralLog entity = new GeneralLog();
-            Mapper.Mappers.GeneralLogMapper.ToGeneralLog(GeneralLog, entity);
+            var entity = _mapper.Map<GeneralLog>(GeneralLog);
             context.GeneralLog.Add(entity);
             context.SaveChanges();
-            Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(entity, GeneralLog);
-            return GeneralLog;
+            return _mapper.Map<GeneralLogDTO>(entity);
         }
 
-        private static GeneralLogDTO update(GeneralLog entity, GeneralLogDTO GeneralLog, OpenNosContext context)
+        private GeneralLogDTO update(GeneralLog entity, GeneralLogDTO GeneralLog, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.GeneralLogMapper.ToGeneralLog(GeneralLog, entity);
-                context.Entry(entity).State = EntityState.Modified;
-                context.SaveChanges();
-            }
-            if (Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(entity, GeneralLog))
-            {
-                return GeneralLog;
-            }
-
-            return null;
-        }
-
-        private GeneralLogDTO Update(GeneralLog entity, GeneralLogDTO generalLog, OpenNosContext context)
-        {
-            if (entity != null)
-            {
-                Mapper.Mappers.GeneralLogMapper.ToGeneralLog(generalLog, entity);
+                _mapper.Map(GeneralLog, entity);
                 context.SaveChanges();
             }
 
-            if (Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(entity, generalLog))
-            {
-                return generalLog;
-            }
-
-            return null;
+            return _mapper.Map<GeneralLogDTO>(entity);
         }
-
+        
         public IEnumerable<GeneralLogDTO> LoadAll()
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<GeneralLogDTO> result = new List<GeneralLogDTO>();
                 foreach (GeneralLog generalLog in context.GeneralLog)
                 {
-                    GeneralLogDTO dto = new GeneralLogDTO();
-                    Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(generalLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<GeneralLogDTO>(generalLog);
                 }
-                return result;
             }
         }
 
@@ -162,14 +129,10 @@ namespace GloomyTale.DAL.DAO
             {
                 string cleanIp = ip.Replace("tcp://", "");
                 cleanIp = cleanIp.Substring(0, cleanIp.LastIndexOf(":") > 0 ? cleanIp.LastIndexOf(":") : cleanIp.Length);
-                List<GeneralLogDTO> result = new List<GeneralLogDTO>();
-                foreach (GeneralLog GeneralLog in context.GeneralLog.Where(s => s.IpAddress.Contains(cleanIp)))
+                foreach (GeneralLog log in context.GeneralLog.Where(s => s.IpAddress.Contains(cleanIp)))
                 {
-                    GeneralLogDTO dto = new GeneralLogDTO();
-                    Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(GeneralLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<GeneralLogDTO>(log);
                 }
-                return result;
             }
         }
 
@@ -177,14 +140,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<GeneralLogDTO> result = new List<GeneralLogDTO>();
-                foreach (GeneralLog GeneralLog in context.GeneralLog.Where(s => s.AccountId == accountId))
+                foreach (GeneralLog generalLog in context.GeneralLog.Where(s => s.AccountId == accountId))
                 {
-                    GeneralLogDTO dto = new GeneralLogDTO();
-                    Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(GeneralLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<GeneralLogDTO>(generalLog);
                 }
-                return result;
             }
         }
 
@@ -192,29 +151,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<GeneralLogDTO> result = new List<GeneralLogDTO>();
                 foreach (GeneralLog log in context.GeneralLog.Where(c => c.LogType.Equals(logType) && c.CharacterId == characterId))
                 {
-                    GeneralLogDTO dto = new GeneralLogDTO();
-                    Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(log, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<GeneralLogDTO>(log);
                 }
-                return result;
-            }
-        }
-
-        public IEnumerable<GeneralLogDTO> LoadByLogTypeAndAccountId(string logType, long? LogId)
-        {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
-            {
-                List<GeneralLogDTO> result = new List<GeneralLogDTO>();
-                foreach (GeneralLog log in context.GeneralLog.Where(c => c.LogType.Equals(logType) && c.LogId == LogId))
-                {
-                    GeneralLogDTO dto = new GeneralLogDTO();
-                    Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(log, dto);
-                    result.Add(dto);
-                }
-                return result;
             }
         }
 

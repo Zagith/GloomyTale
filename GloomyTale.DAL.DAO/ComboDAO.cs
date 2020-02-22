@@ -37,14 +37,12 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
                     foreach (ComboDTO combo in combos)
                     {
-                        Combo entity = new Combo();
-                        Mapper.Mappers.ComboMapper.ToCombo(combo, entity);
+                        var entity = _mapper.Map<Combo>(combo);
                         context.Combo.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -60,16 +58,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    Combo entity = new Combo();
-                    Mapper.Mappers.ComboMapper.ToCombo(combo, entity);
+                    var entity = _mapper.Map<Combo>(combo);
                     context.Combo.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.ComboMapper.ToComboDTO(entity, combo))
-                    {
-                        return combo;
-                    }
-
-                    return null;
+                    return _mapper.Map<ComboDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -83,14 +75,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ComboDTO> result = new List<ComboDTO>();
                 foreach (Combo combo in context.Combo)
                 {
-                    ComboDTO dto = new ComboDTO();
-                    Mapper.Mappers.ComboMapper.ToComboDTO(combo, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ComboDTO>(combo);
                 }
-                return result;
             }
         }
 
@@ -100,13 +88,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    ComboDTO dto = new ComboDTO();
-                    if (Mapper.Mappers.ComboMapper.ToComboDTO(context.Combo.FirstOrDefault(s => s.SkillVNum.Equals(comboId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<ComboDTO>(context.Combo.FirstOrDefault(s => s.SkillVNum.Equals(comboId)));
                 }
             }
             catch (Exception e)
@@ -120,14 +102,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ComboDTO> result = new List<ComboDTO>();
                 foreach (Combo combo in context.Combo.Where(c => c.SkillVNum == skillVNum))
                 {
-                    ComboDTO dto = new ComboDTO();
-                    Mapper.Mappers.ComboMapper.ToComboDTO(combo, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ComboDTO>(combo);
                 }
-                return result;
             }
         }
 
@@ -135,14 +113,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ComboDTO> result = new List<ComboDTO>();
                 foreach (Combo combo in context.Combo.Where(s => s.SkillVNum == skillVNum && s.Hit == hit && s.Effect == effect))
                 {
-                    ComboDTO dto = new ComboDTO();
-                    Mapper.Mappers.ComboMapper.ToComboDTO(combo, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ComboDTO>(combo);
                 }
-                return result;
             }
         }
 

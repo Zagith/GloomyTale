@@ -37,16 +37,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    ShopSkill entity = new ShopSkill();
-                    Mapper.Mappers.ShopSkillMapper.ToShopSkill(shopSkill, entity);
+                    var entity = _mapper.Map<ShopSkill>(shopSkill);
                     context.ShopSkill.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.ShopSkillMapper.ToShopSkillDTO(entity, shopSkill))
-                    {
-                        return shopSkill;
-                    }
-
-                    return null;
+                    return _mapper.Map<ShopSkillDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -64,8 +58,7 @@ namespace GloomyTale.DAL.DAO
                 {
                     foreach (ShopSkillDTO Skill in skills)
                     {
-                        ShopSkill entity = new ShopSkill();
-                        Mapper.Mappers.ShopSkillMapper.ToShopSkill(Skill, entity);
+                        var entity = _mapper.Map<ShopSkill>(Skill);
                         context.ShopSkill.Add(entity);
                     }
                     context.SaveChanges();
@@ -81,14 +74,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ShopSkillDTO> result = new List<ShopSkillDTO>();
                 foreach (ShopSkill entity in context.ShopSkill)
                 {
-                    ShopSkillDTO dto = new ShopSkillDTO();
-                    Mapper.Mappers.ShopSkillMapper.ToShopSkillDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ShopSkillDTO>(entity);
                 }
-                return result;
             }
         }
 
@@ -96,14 +85,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ShopSkillDTO> result = new List<ShopSkillDTO>();
                 foreach (ShopSkill ShopSkill in context.ShopSkill.Where(s => s.ShopId.Equals(shopId)))
                 {
-                    ShopSkillDTO dto = new ShopSkillDTO();
-                    Mapper.Mappers.ShopSkillMapper.ToShopSkillDTO(ShopSkill, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<ShopSkillDTO>(ShopSkill);
                 }
-                return result;
             }
         }
 

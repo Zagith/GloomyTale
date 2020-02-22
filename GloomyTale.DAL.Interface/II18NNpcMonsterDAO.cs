@@ -12,17 +12,17 @@ namespace GloomyTale.DAL.Interface
     {
         #region Methods
 
-        IEnumerable<II18NNpcMonsterDto> FindByName(string name);
+        IEnumerable<I18NNpcMonsterDto> FindByName(string name);
 
-        II18NNpcMonsterDto Insert(II18NNpcMonsterDto teleporter);
+        I18NNpcMonsterDto Insert(I18NNpcMonsterDto teleporter);
 
-        void Insert(List<II18NNpcMonsterDto> skills);
+        void Insert(List<I18NNpcMonsterDto> skills);
 
-        SaveResult InsertOrUpdate(II18NNpcMonsterDto teleporter);
+        SaveResult InsertOrUpdate(I18NNpcMonsterDto teleporter);
 
-        IEnumerable<II18NNpcMonsterDto> LoadAll();
+        IEnumerable<I18NNpcMonsterDto> LoadAll();
 
-        II18NNpcMonsterDto LoadById(short teleporterId);
+        I18NNpcMonsterDto LoadById(short teleporterId);
 
         #endregion
     }

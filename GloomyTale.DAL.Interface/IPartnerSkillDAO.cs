@@ -9,7 +9,7 @@ namespace GloomyTale.DAL.Interface
     {
         PartnerSkillDTO Insert(PartnerSkillDTO partnerSkillDTO);
 
-        List<PartnerSkillDTO> LoadByEquipmentSerialId(Guid equipmentSerialId);
+        IEnumerable<PartnerSkillDTO> LoadByEquipmentSerialId(Guid equipmentSerialId);
 
         DeleteResult Remove(long partnerSkillId);
     }

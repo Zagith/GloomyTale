@@ -23,14 +23,13 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    
+
                     foreach (QuestRewardDTO rewards in questRewards)
                     {
-                        QuestReward entity = new QuestReward();
-                        Mapper.Mappers.QuestRewardMapper.ToQuestReward(rewards, entity);
+                        var entity = _mapper.Map<QuestReward>(rewards);
                         context.QuestReward.Add(entity);
                     }
-                    
+
                     context.SaveChanges();
                 }
             }
@@ -46,16 +45,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    QuestReward entity = new QuestReward();
-                    Mapper.Mappers.QuestRewardMapper.ToQuestReward(questReward, entity);
+                    var entity = _mapper.Map<QuestReward>(questReward);
                     context.QuestReward.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.QuestRewardMapper.ToQuestRewardDTO(entity, questReward))
-                    {
-                        return questReward;
-                    }
-
-                    return null;
+                    return _mapper.Map<QuestRewardDTO>(questReward);
                 }
             }
             catch (Exception e)
@@ -69,14 +62,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<QuestRewardDTO> result = new List<QuestRewardDTO>();
-                foreach (QuestReward entity in context.QuestReward)
-                {
-                    QuestRewardDTO dto = new QuestRewardDTO();
-                    Mapper.Mappers.QuestRewardMapper.ToQuestRewardDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.QuestReward.ToList().Select(d => _mapper.Map<QuestRewardDTO>(d)).ToList();
             }
         }
 
@@ -84,14 +70,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<QuestRewardDTO> result = new List<QuestRewardDTO>();
                 foreach (QuestReward reward in context.QuestReward.Where(s => s.QuestId == questId))
                 {
-                    QuestRewardDTO dto = new QuestRewardDTO();
-                    Mapper.Mappers.QuestRewardMapper.ToQuestRewardDTO(reward, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<QuestRewardDTO>(reward);
                 }
-                return result;
             }
         }
 

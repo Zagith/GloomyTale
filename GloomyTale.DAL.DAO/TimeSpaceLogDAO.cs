@@ -22,16 +22,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    TimeSpacesLog entity = new TimeSpacesLog();
-                    Mapper.Mappers.TimeSpacesLogMapper.ToTimeSpacesLog(generalLog, entity);
+                    var entity = _mapper.Map<TimeSpacesLog>(generalLog);
                     context.TimeSpacesLog.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.TimeSpacesLogMapper.ToTimeSpacesLogDTO(entity, generalLog))
-                    {
-                        return generalLog;
-                    }
-
-                    return null;
+                    return _mapper.Map<TimeSpacesLogDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -45,14 +39,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<TimeSpacesLogDTO> result = new List<TimeSpacesLogDTO>();
-                foreach (TimeSpacesLog questLog in context.TimeSpacesLog.Where(s => s.CharacterId == characterId))
+                foreach (TimeSpacesLog home in context.TimeSpacesLog.Where(s => s.CharacterId == characterId))
                 {
-                    TimeSpacesLogDTO dto = new TimeSpacesLogDTO();
-                    Mapper.Mappers.TimeSpacesLogMapper.ToTimeSpacesLogDTO(questLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<TimeSpacesLogDTO>(home);
                 }
-                return result;
             }
         }
     }

@@ -12,21 +12,21 @@ using AutoMapper;
 
 namespace GloomyTale.DAL.DAO
 {
-    public class I18NCardDAO : MappingBaseDao<I18NCard, II18NCardDto>, II18NCardDAO
+    public class I18NCardDAO : MappingBaseDao<I18NCard, I18NCardDto>, II18NCardDAO
     {
         public I18NCardDAO(IMapper mapper) : base(mapper)
         { }
 
         #region Methods
 
-        public void Insert(List<II18NCardDto> skills)
+        public void Insert(List<I18NCardDto> skills)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
                     
-                    foreach (II18NCardDto skill in skills)
+                    foreach (I18NCardDto skill in skills)
                     {
                         InsertOrUpdate(skill);
                     }
@@ -40,7 +40,7 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public SaveResult InsertOrUpdate(II18NCardDto skill)
+        public SaveResult InsertOrUpdate(I18NCardDto skill)
         {
             try
             {
@@ -66,21 +66,16 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public II18NCardDto Insert(II18NCardDto I18NCard)
+        public I18NCardDto Insert(I18NCardDto I18NCard)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    I18NCard entity = new I18NCard();
-                    Mapper.Mappers.I18NCardMapper.ToI18NCard(I18NCard, entity); context.I18NCard.Add(entity);
+                    var entity = _mapper.Map<I18NCard>(I18NCard);
+                    context.I18NCard.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.I18NCardMapper.ToI18NCardDTO(entity, I18NCard))
-                    {
-                        return I18NCard;
-                    }
-
-                    return null;
+                    return _mapper.Map<I18NCardDto>(I18NCard);
                 }
             }
             catch (Exception e)
@@ -90,71 +85,55 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public IEnumerable<II18NCardDto> LoadAll()
+        public IEnumerable<I18NCardDto> LoadAll()
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<II18NCardDto> result = new List<II18NCardDto>();
-                foreach (I18NCard I18NCard in context.I18NCard)
+                foreach (I18NCard i18NCard in context.I18NCard)
                 {
-                    II18NCardDto dto = new II18NCardDto();
-                    Mapper.Mappers.I18NCardMapper.ToI18NCardDTO(I18NCard, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<I18NCardDto>(i18NCard);
                 }
-                return result;
             }
         }
 
-        public II18NCardDto LoadById(short I18NCardId)
+        public I18NCardDto LoadById(short I18NCardId)
         {
+
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    II18NCardDto dto = new II18NCardDto();
-                    if (Mapper.Mappers.I18NCardMapper.ToI18NCardDTO(context.I18NCard.FirstOrDefault(s => s.I18NCardId.Equals(I18NCardId)), dto))
+                    I18NCard i18NCard = context.I18NCard.FirstOrDefault(a => a.I18NCardId.Equals(I18NCardId));
+                    if (i18NCard != null)
                     {
-                        return dto;
+                        return _mapper.Map<I18NCardDto>(i18NCard);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return null;
             }
-        }
-
-        private static II18NCardDto insert(II18NCardDto I18NCard, OpenNosContext context)
-        {
-            I18NCard entity = new I18NCard();
-            Mapper.Mappers.I18NCardMapper.ToI18NCard(I18NCard, entity);
-            context.I18NCard.Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.I18NCardMapper.ToI18NCardDTO(entity, I18NCard))
-            {
-                return I18NCard;
-            }
-
             return null;
         }
 
-        private static II18NCardDto update(I18NCard entity, II18NCardDto skill, OpenNosContext context)
+        private I18NCardDto insert(I18NCardDto I18NCard, OpenNosContext context)
+        {
+            var entity = _mapper.Map<I18NCard>(I18NCard);
+            context.I18NCard.Add(entity);
+            context.SaveChanges();
+            return _mapper.Map<I18NCardDto>(entity);
+        }
+
+        private I18NCardDto update(I18NCard entity, I18NCardDto i18NCard, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.I18NCardMapper.ToI18NCard(skill, entity);
+                _mapper.Map(i18NCard, entity);
                 context.SaveChanges();
             }
 
-            if (Mapper.Mappers.I18NCardMapper.ToI18NCardDTO(entity, skill))
-            {
-                return skill;
-            }
-
-            return null;
+            return _mapper.Map<I18NCardDto>(entity);
         }
 
         #endregion

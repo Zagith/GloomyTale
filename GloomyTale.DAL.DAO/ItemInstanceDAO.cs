@@ -28,24 +28,14 @@ namespace GloomyTale.DAL.DAO
 {
     public class ItemInstanceDAO : SynchronizableBaseDAO<ItemInstance, ItemInstanceDTO>, IItemInstanceDAO
     {
-        public ItemInstanceDAO(IMapper mapper) : base(mapper)
-        { }
+        private readonly IItemInstanceMappingTypes _mappingTypes;
+
+        public ItemInstanceDAO(IMapper mapper /*,IItemInstanceMappingTypes mappingTypes*/) : base(mapper)
+        {
+            //_mappingTypes = mappingTypes;
+        }
 
         #region Methods
-
-        public virtual DeleteResult Delete(Guid id)
-        {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
-            {
-                ItemInstance entity = context.Set<ItemInstance>().FirstOrDefault(i => i.Id == id);
-                if (entity != null)
-                {
-                    context.Set<ItemInstance>().Remove(entity);
-                    context.SaveChanges();
-                }
-                return DeleteResult.Deleted;
-            }
-        }
 
         public DeleteResult DeleteFromSlotAndType(long characterId, short slot, InventoryType type)
         {
@@ -105,88 +95,25 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public IEnumerable<ItemInstanceDTO> InsertOrUpdate(IEnumerable<ItemInstanceDTO> dtos)
+        public interface IItemInstanceMappingTypes
         {
-            try
-            {
-                IList<ItemInstanceDTO> results = new List<ItemInstanceDTO>();
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    foreach (ItemInstanceDTO dto in dtos)
-                    {
-                        results.Add(InsertOrUpdate(context, dto));
-                    }
-                }
-                return results;
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error($"Message: {e.Message}", e);
-                return Enumerable.Empty<ItemInstanceDTO>();
-            }
+            List<(Type, Type)> Types { get; }
         }
 
-        public ItemInstanceDTO InsertOrUpdate(ItemInstanceDTO dto)
+        protected override ItemInstanceDTO InsertOrUpdate(OpenNosContext context, ItemInstanceDTO itemInstance)
         {
             try
             {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    return InsertOrUpdate(context, dto);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error($"Message: {e.Message}", e);
-                return null;
-            }
-        }
+                ItemInstance entity = context.ItemInstance.FirstOrDefault(c => c.Id == itemInstance.Id);
 
-        public SaveResult InsertOrUpdateFromList(IEnumerable<ItemInstanceDTO> items)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    void insert(ItemInstanceDTO iteminstance)
-                    {
-                        ItemInstance _entity = new ItemInstance();
-                        map(iteminstance, _entity);
-                        context.ItemInstance.Add(_entity);
-                        context.SaveChanges();
-                        iteminstance.Id = _entity.Id;
-                    }
-
-                    void update(ItemInstance _entity, ItemInstanceDTO iteminstance)
-                    {
-                        if (_entity != null)
-                        {
-                            map(iteminstance, _entity);
-                        }
-                    }
-
-                    foreach (ItemInstanceDTO item in items)
-                    {
-                        ItemInstance entity = context.ItemInstance.FirstOrDefault(c => c.Id == item.Id);
-
-                        if (entity == null)
-                        {
-                            insert(item);
-                        }
-                        else
-                        {
-                            update(entity, item);
-                        }
-                    }
-
-                    context.SaveChanges();
-                    return SaveResult.Updated;
-                }
+                itemInstance = entity == null ? Insert(itemInstance, context) : Update(entity, itemInstance, context);
+                context.SaveChanges();
+                return itemInstance;
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return SaveResult.Error;
+                return null;
             }
         }
 
@@ -194,28 +121,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ItemInstanceDTO> result = new List<ItemInstanceDTO>();
                 foreach (ItemInstance itemInstance in context.ItemInstance.Where(i => i.CharacterId.Equals(characterId)))
                 {
-                    ItemInstanceDTO output = new ItemInstanceDTO();
-                    map(itemInstance, output);
-                    result.Add(output);
+                    yield return _mapper.Map<ItemInstanceDTO>(itemInstance);
                 }
-                return result;
-            }
-        }
-
-        public ItemInstanceDTO LoadById(Guid id)
-        {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
-            {
-                ItemInstanceDTO ItemInstanceDTO = new ItemInstanceDTO();
-                if (map(context.ItemInstance.FirstOrDefault(i => i.Id.Equals(id)), ItemInstanceDTO))
-                {
-                    return ItemInstanceDTO;
-                }
-
-                return null;
             }
         }
 
@@ -225,14 +134,9 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    ItemInstance entity = context.ItemInstance.FirstOrDefault(i => i.CharacterId == characterId && i.Slot == slot && i.Type == type);
-                    ItemInstanceDTO output = new ItemInstanceDTO();
-                    if (map(entity, output))
-                    {
-                        return output;
-                    }
-
-                    return null;
+                    byte equipmentType = (byte)slot;
+                    ItemInstance entity = context.ItemInstance.FirstOrDefault(i => i.CharacterId == characterId && i.Slot == equipmentType && i.Type == type);
+                    return _mapper.Map<ItemInstanceDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -246,14 +150,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<ItemInstanceDTO> result = new List<ItemInstanceDTO>();
                 foreach (ItemInstance itemInstance in context.ItemInstance.Where(i => i.CharacterId == characterId && i.Type == type))
                 {
-                    ItemInstanceDTO output = new ItemInstanceDTO();
-                    map(itemInstance, output);
-                    result.Add(output);
+                    yield return _mapper.Map<ItemInstanceDTO>(itemInstance);
                 }
-                return result;
             }
         }
 
@@ -273,77 +173,25 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        protected static ItemInstanceDTO Insert(ItemInstanceDTO dto, OpenNosContext context)
-        {
-            ItemInstance entity = new ItemInstance();
-            map(dto, entity);
-            context.Set<ItemInstance>().Add(entity);
-            context.SaveChanges();
-            if (map(entity, dto))
-            {
-                return dto;
-            }
 
-            return null;
-        }
-
-        protected static ItemInstanceDTO InsertOrUpdate(OpenNosContext context, ItemInstanceDTO dto)
+        protected override ItemInstance MapEntity(ItemInstanceDTO dto)
         {
             try
             {
-                ItemInstance entity = context.ItemInstance.FirstOrDefault(c => c.Id == dto.Id);
-                return entity == null ? Insert(dto, context) : Update(entity, dto, context);
+                var entity = _mapper.Map<ItemInstance>(dto);
+                (Type key, Type value) = _mappingTypes.Types.FirstOrDefault(k => k.Item1 == dto.GetType());
+                if (key != null)
+                {
+                    entity = _mapper.Map(dto, key, value) as ItemInstance;
+                }
+
+                return entity;
             }
             catch (Exception e)
             {
-                Logger.Log.Error(e);
+                Logger.Error(e);
                 return null;
             }
-        }
-
-        protected static ItemInstanceDTO Update(ItemInstance entity, ItemInstanceDTO inventory, OpenNosContext context)
-        {
-            if (entity != null)
-            {
-                map(inventory, entity);
-                context.SaveChanges();
-            }
-            if (map(entity, inventory))
-            {
-                return inventory;
-            }
-            return null;
-        }
-
-        // TODO: Implement Exists
-        private static bool map(ItemInstance input, ItemInstanceDTO output)
-        {
-            if (input == null)
-            {
-                output = null;
-                return false;
-            }
-            Mapper.Mappers.ItemInstanceMapper.ToItemInstanceDTO(input, output);
-            if (output.EquipmentSerialId == Guid.Empty)
-            {
-                output.EquipmentSerialId = Guid.NewGuid();
-            }
-            return true;
-        }
-
-        private static bool map(ItemInstanceDTO input, ItemInstance output)
-        {
-            if (input == null)
-            {
-                output = null;
-                return false;
-            }
-            Mapper.Mappers.ItemInstanceMapper.ToItemInstance(input, output);
-            if (output.EquipmentSerialId == Guid.Empty)
-            {
-                output.EquipmentSerialId = Guid.NewGuid();
-            }
-            return true;
         }
 
         #endregion

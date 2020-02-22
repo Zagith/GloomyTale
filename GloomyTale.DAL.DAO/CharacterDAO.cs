@@ -67,14 +67,8 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterDTO> result = new List<CharacterDTO>();
-                foreach (Character entity in context.Character.Where(c => c.State == (byte)CharacterState.Active && c.Account.Authority == AuthorityType.User && !c.Account.PenaltyLog.Any(l => l.Penalty == PenaltyType.Banned && l.DateEnd > DateTime.Now)).OrderByDescending(c => c.Compliment).Take(30))
-                {
-                    CharacterDTO dto = new CharacterDTO();
-                    Mapper.Mappers.CharacterMapper.ToCharacterDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.Character.Where(c => c.State == (byte)CharacterState.Active && c.Account.Authority == AuthorityType.User && !c.Account.PenaltyLog.Any(l => l.Penalty == PenaltyType.Banned && l.DateEnd > DateTime.Now)).OrderByDescending(c => c.Compliment).Take(30).ToList().Select(c => _mapper.Map<CharacterDTO>(c))
+                    .ToList();
             }
         }
 
@@ -86,14 +80,8 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterDTO> result = new List<CharacterDTO>();
-                foreach (Character entity in context.Character.Where(c => c.State == (byte)CharacterState.Active && c.Account.Authority == AuthorityType.User && !c.Account.PenaltyLog.Any(l => l.Penalty == PenaltyType.Banned && l.DateEnd > DateTime.Now)).OrderByDescending(c => c.Act4Points).Take(30))
-                {
-                    CharacterDTO dto = new CharacterDTO();
-                    Mapper.Mappers.CharacterMapper.ToCharacterDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.Character.Where(c => c.State == (byte)CharacterState.Active && c.Account.Authority == AuthorityType.User && !c.Account.PenaltyLog.Any(l => l.Penalty == PenaltyType.Banned && l.DateEnd > DateTime.Now)).OrderByDescending(c => c.Act4Points).Take(30).ToList().Select(c => _mapper.Map<CharacterDTO>(c))
+                    .ToList();
             }
         }
 
@@ -102,17 +90,11 @@ namespace GloomyTale.DAL.DAO
         /// </summary>
         /// <returns></returns>
         public List<CharacterDTO> GetTopReputation()
-        {
+        {            
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterDTO> result = new List<CharacterDTO>();
-                foreach (Character entity in context.Character.Where(c => c.State == (byte)CharacterState.Active && c.Account.Authority == AuthorityType.User && !c.Account.PenaltyLog.Any(l => l.Penalty == PenaltyType.Banned && l.DateEnd > DateTime.Now)).OrderByDescending(c => c.Reputation).Take(43))
-                {
-                    CharacterDTO dto = new CharacterDTO();
-                    Mapper.Mappers.CharacterMapper.ToCharacterDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.Character.Where(c => c.State == (byte)CharacterState.Active && c.Account.Authority == AuthorityType.User && !c.Account.PenaltyLog.Any(l => l.Penalty == PenaltyType.Banned && l.DateEnd > DateTime.Now)).OrderByDescending(c => c.Reputation).Take(43).ToList().Select(c => _mapper.Map<CharacterDTO>(c))
+                    .ToList();
             }
         }
 
@@ -144,14 +126,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterDTO> result = new List<CharacterDTO>();
                 foreach (Character chara in context.Character)
                 {
-                    CharacterDTO dto = new CharacterDTO();
-                    Mapper.Mappers.CharacterMapper.ToCharacterDTO(chara, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<CharacterDTO>(chara);
                 }
-                return result;
             }
         }
 
@@ -159,14 +137,8 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterDTO> result = new List<CharacterDTO>();
-                foreach (Character entity in context.Character.Where(c => c.AccountId.Equals(accountId)).OrderByDescending(c => c.Slot))
-                {
-                    CharacterDTO dto = new CharacterDTO();
-                    Mapper.Mappers.CharacterMapper.ToCharacterDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.Character.Where(c => c.AccountId.Equals(accountId) && c.State.Equals((byte)CharacterState.Active)).OrderByDescending(c => c.Slot).ToList()
+                    .Select(c => _mapper.Map<CharacterDTO>(c)).ToList();
             }
         }
 
@@ -174,14 +146,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterDTO> result = new List<CharacterDTO>();
-                foreach (Character entity in context.Character.Where(c => c.AccountId.Equals(accountId) && c.State.Equals((byte)CharacterState.Active)).OrderByDescending(c => c.Slot))
-                {
-                    CharacterDTO dto = new CharacterDTO();
-                    Mapper.Mappers.CharacterMapper.ToCharacterDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.Character.Where(c => c.AccountId.Equals(accountId)).OrderByDescending(c => c.Slot).ToList().Select(c => _mapper.Map<CharacterDTO>(c)).ToList();
             }
         }
 
@@ -191,13 +156,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    CharacterDTO dto = new CharacterDTO();
-                    if (Mapper.Mappers.CharacterMapper.ToCharacterDTO(context.Character.FirstOrDefault(c => c.CharacterId.Equals(characterId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<CharacterDTO>(context.Character.FirstOrDefault(c => c.CharacterId.Equals(characterId)));
                 }
             }
             catch (Exception e)
@@ -213,13 +172,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    CharacterDTO dto = new CharacterDTO();
-                    if (Mapper.Mappers.CharacterMapper.ToCharacterDTO(context.Character.SingleOrDefault(c => c.Name.Equals(name)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<CharacterDTO>(context.Character.SingleOrDefault(c => c.Name.Equals(name) && c.State.Equals((byte)CharacterState.Active)));
                 }
             }
             catch (Exception e)
@@ -235,13 +188,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    CharacterDTO dto = new CharacterDTO();
-                    if (Mapper.Mappers.CharacterMapper.ToCharacterDTO(context.Character.SingleOrDefault(c => c.AccountId.Equals(accountId) && c.Slot.Equals(slot) && c.State.Equals((byte)CharacterState.Active)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<CharacterDTO>(context.Character.SingleOrDefault(c => c.AccountId.Equals(accountId) && c.Slot.Equals(slot) && c.State.Equals((byte)CharacterState.Active)));
                 }
             }
             catch (Exception e)
@@ -251,37 +198,25 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static CharacterDTO insert(CharacterDTO character, OpenNosContext context)
+        private CharacterDTO insert(CharacterDTO character, OpenNosContext context)
         {
-            Character entity = new Character();
-            Mapper.Mappers.CharacterMapper.ToCharacter(character, entity);
+            var entity = _mapper.Map<Character>(character);
             context.Character.Add(entity);
             context.SaveChanges();
-            if (Mapper.Mappers.CharacterMapper.ToCharacterDTO(entity, character))
-            {
-                return character;
-            }
-            return null;
+            return _mapper.Map<CharacterDTO>(entity);
         }
 
-        private static CharacterDTO update(Character entity, CharacterDTO character, OpenNosContext context)
+        private CharacterDTO update(Character entity, CharacterDTO character, OpenNosContext context)
         {
-            if (entity != null)
+            if (entity == null)
             {
-                // State Updates should only occur upon deleting character, so outside of this method.
-                byte state = entity.State;
-                Mapper.Mappers.CharacterMapper.ToCharacter(character, entity);
-                entity.State = state;
-
-                context.SaveChanges();
+                return null;
             }
 
-            if (Mapper.Mappers.CharacterMapper.ToCharacterDTO(entity, character))
-            {
-                return character;
-            }
+            _mapper.Map(character, entity);
+            context.SaveChanges();
 
-            return null;
+            return _mapper.Map<CharacterDTO>(entity);
         }
 
         #endregion

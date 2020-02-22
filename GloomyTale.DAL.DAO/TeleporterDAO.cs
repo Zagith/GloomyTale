@@ -37,16 +37,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    Teleporter entity = new Teleporter();
-                    Mapper.Mappers.TeleporterMapper.ToTeleporter(teleporter, entity);
+                    var entity = _mapper.Map<Teleporter>(teleporter);
                     context.Teleporter.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.TeleporterMapper.ToTeleporterDTO(entity, teleporter))
-                    {
-                        return teleporter;
-                    }
-
-                    return null;
+                    return _mapper.Map<TeleporterDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -60,14 +54,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<TeleporterDTO> result = new List<TeleporterDTO>();
                 foreach (Teleporter entity in context.Teleporter)
                 {
-                    TeleporterDTO dto = new TeleporterDTO();
-                    Mapper.Mappers.TeleporterMapper.ToTeleporterDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<TeleporterDTO>(entity);
                 }
-                return result;
             }
         }
 
@@ -77,13 +67,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    TeleporterDTO dto = new TeleporterDTO();
-                    if (Mapper.Mappers.TeleporterMapper.ToTeleporterDTO(context.Teleporter.FirstOrDefault(i => i.TeleporterId.Equals(teleporterId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<TeleporterDTO>(context.Teleporter.FirstOrDefault(i => i.TeleporterId.Equals(teleporterId)));
                 }
             }
             catch (Exception e)
@@ -97,14 +81,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<TeleporterDTO> result = new List<TeleporterDTO>();
                 foreach (Teleporter entity in context.Teleporter.Where(c => c.MapNpcId.Equals(npcId)))
                 {
-                    TeleporterDTO dto = new TeleporterDTO();
-                    Mapper.Mappers.TeleporterMapper.ToTeleporterDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<TeleporterDTO>(entity);
                 }
-                return result;
             }
         }
 

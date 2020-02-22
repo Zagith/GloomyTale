@@ -91,13 +91,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    FamilyCharacterDTO dto = new FamilyCharacterDTO();
-                    if (Mapper.Mappers.FamilyCharacterMapper.ToFamilyCharacterDTO(context.FamilyCharacter.FirstOrDefault(c => c.CharacterId == characterId), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<FamilyCharacterDTO>(context.FamilyCharacter.FirstOrDefault(c => c.CharacterId == characterId));
                 }
             }
             catch (Exception e)
@@ -111,14 +105,7 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<FamilyCharacterDTO> result = new List<FamilyCharacterDTO>();
-                foreach (FamilyCharacter entity in context.FamilyCharacter.Where(fc => fc.FamilyId.Equals(familyId)))
-                {
-                    FamilyCharacterDTO dto = new FamilyCharacterDTO();
-                    Mapper.Mappers.FamilyCharacterMapper.ToFamilyCharacterDTO(entity, dto);
-                    result.Add(dto);
-                }
-                return result;
+                return context.FamilyCharacter.Where(fc => fc.FamilyId.Equals(familyId)).ToList().Select(c => _mapper.Map<FamilyCharacterDTO>(c)).ToList();
             }
         }
 
@@ -128,13 +115,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    FamilyCharacterDTO dto = new FamilyCharacterDTO();
-                    if (Mapper.Mappers.FamilyCharacterMapper.ToFamilyCharacterDTO(context.FamilyCharacter.FirstOrDefault(c => c.FamilyCharacterId.Equals(familyCharacterId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<FamilyCharacterDTO>(context.FamilyCharacter.FirstOrDefault(c => c.FamilyCharacterId.Equals(familyCharacterId)));
                 }
             }
             catch (Exception e)
@@ -144,33 +125,23 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        private static FamilyCharacterDTO insert(FamilyCharacterDTO character, OpenNosContext context)
+        private FamilyCharacterDTO insert(FamilyCharacterDTO character, OpenNosContext context)
         {
-            FamilyCharacter entity = new FamilyCharacter();
-            Mapper.Mappers.FamilyCharacterMapper.ToFamilyCharacter(character, entity);
+            var entity = _mapper.Map<FamilyCharacter>(character);
             context.FamilyCharacter.Add(entity);
             context.SaveChanges();
-            if (Mapper.Mappers.FamilyCharacterMapper.ToFamilyCharacterDTO(entity, character))
-            {
-                return character;
-            }
-
-            return null;
+            return _mapper.Map<FamilyCharacterDTO>(entity);
         }
 
-        private static FamilyCharacterDTO update(FamilyCharacter entity, FamilyCharacterDTO character, OpenNosContext context)
+        private FamilyCharacterDTO update(FamilyCharacter entity, FamilyCharacterDTO character, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.FamilyCharacterMapper.ToFamilyCharacter(character, entity);
+                _mapper.Map(character, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.FamilyCharacterMapper.ToFamilyCharacterDTO(entity, character))
-            {
-                return character;
-            }
 
-            return null;
+            return _mapper.Map<FamilyCharacterDTO>(entity);
         }
 
         #endregion

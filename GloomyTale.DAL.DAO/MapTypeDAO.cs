@@ -38,16 +38,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MapType entity = new MapType();
-                    Mapper.Mappers.MapTypeMapper.ToMapType(mapType, entity);
+                    var entity = _mapper.Map<MapType>(mapType);
                     context.MapType.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.MapTypeMapper.ToMapTypeDTO(entity, mapType))
-                    {
-                        return mapType;
-                    }
-
-                    return null;
+                    return _mapper.Map<MapTypeDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -61,14 +55,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MapTypeDTO> result = new List<MapTypeDTO>();
                 foreach (MapType MapType in context.MapType)
                 {
-                    MapTypeDTO dto = new MapTypeDTO();
-                    Mapper.Mappers.MapTypeMapper.ToMapTypeDTO(MapType, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MapTypeDTO>(MapType);
                 }
-                return result;
             }
         }
 
@@ -78,13 +68,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    MapTypeDTO dto = new MapTypeDTO();
-                    if (Mapper.Mappers.MapTypeMapper.ToMapTypeDTO(context.MapType.FirstOrDefault(s => s.MapTypeId.Equals(maptypeId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<MapTypeDTO>(context.MapType.FirstOrDefault(s => s.MapTypeId.Equals(maptypeId)));
                 }
             }
             catch (Exception e)

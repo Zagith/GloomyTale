@@ -4639,7 +4639,30 @@ namespace GloomyTale.GameObject
 
         public string GenerateSki()
         {
-            string ski = "ski";
+            List<CharacterSkill> characterSkills;
+            if (UseSp)
+            {
+                characterSkills = SkillsSp.GetAllItems().OrderBy(s => s.Skill.CastId).ToList();
+            }
+            else
+            {
+                characterSkills = Skills.GetAllItems().OrderBy(s => s.Skill.CastId).ToList();
+            }
+
+            string skibase = string.Empty;
+            string generatedSkills = string.Empty;
+            if (!UseSp)
+            {
+                skibase = $"{200 + 20 * (byte)Class} {201 + 20 * (byte)Class}";
+            }
+            else if (characterSkills.Count > 0)
+            {
+                skibase = $"{characterSkills.ElementAt(0).SkillVNum} {characterSkills.ElementAt(0).SkillVNum}";
+                generatedSkills = characterSkills?.Aggregate(string.Empty, (current, ski) => current + $" {ski.SkillVNum}");
+            }
+
+            return $"ski {skibase}{generatedSkills}";
+            /*string ski = "ski";
 
             List<CharacterSkill> skills = GetSkills().OrderBy(s => s.Skill.CastId).OrderBy(s => s.SkillVNum < 200).ToList();
 
@@ -4657,7 +4680,7 @@ namespace GloomyTale.GameObject
                 ski = skills.Aggregate(ski, (packet, characterSKill) => $"{packet} {characterSKill.SkillVNum}");
             }
 
-            return ski;
+            return ski;*/
         }
 
         public string GenerateSpk(object message, int type) => $"spk 1 {CharacterId} {type} {Name} {message}";
@@ -5990,7 +6013,7 @@ namespace GloomyTale.GameObject
             {
                 if (!Skills.ContainsKey(characterskill.SkillVNum))
                 {
-                    Skills[characterskill.SkillVNum] = new CharacterSkill(characterskill);
+                    Skills[characterskill.SkillVNum] = characterskill as CharacterSkill;
                 }
             }
         }
@@ -6244,10 +6267,9 @@ namespace GloomyTale.GameObject
                         // create or update all which are new or do still exist
                         List<ItemInstance> saveInventory = inventories.Where(s => s.Type != InventoryType.Bazaar && s.Type != InventoryType.FamilyWareHouse).ToList();
 
-                        DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdateFromList(saveInventory);
-
                         foreach (ItemInstance itemInstance in saveInventory)
                         {
+                            DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(itemInstance);
                             if (!(itemInstance is ItemInstance instance))
                             {
                                 continue;
@@ -7045,7 +7067,7 @@ namespace GloomyTale.GameObject
             int naturalRecovery = 1;
             if (Skills != null)
             {
-                naturalRecovery += Skills.Where(s => s.Skill.SkillType == 0 && s.Skill.CastId == 10).Sum(s => s.Skill.UpgradeSkill);
+                naturalRecovery += Skills.Where(s => s?.Skill.SkillType == 0 && s.Skill.CastId == 10).Sum(s => s.Skill.UpgradeSkill);
             }
             if (IsSitting)
             {

@@ -22,23 +22,11 @@ namespace GloomyTale.DAL.Interface
     {
         #region Methods
 
-        DeleteResult DeleteByItemVNum(short itemVNum);
-
-        DeleteResult DeleteBySkillVNum(short skillVNum);
-
-        DeleteResult DeleteByMonsterVNum(short monsterVNum);
-
-        DeleteResult DeleteByCardId(short cardId);
-
-        BCardDTO Insert(ref BCardDTO cardObject);
-
         void Insert(List<BCardDTO> cards);
 
         IEnumerable<BCardDTO> LoadAll();
 
         IEnumerable<BCardDTO> LoadByCardId(short cardId);
-
-        BCardDTO LoadById(short cardId);
 
         IEnumerable<BCardDTO> LoadByItemVNum(short vNum);
 

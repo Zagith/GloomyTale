@@ -31,7 +31,7 @@ namespace GloomyTale.DAL.Interface
 
         ItemDTO LoadByKey(string vNum);
 
-        ItemDTO LoadById(short vNum);
+        ItemDTO LoadById(short ItemVnum);
 
         #endregion
     }

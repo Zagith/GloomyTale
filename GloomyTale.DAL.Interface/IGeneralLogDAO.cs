@@ -36,8 +36,6 @@ namespace GloomyTale.DAL.Interface
 
         IEnumerable<GeneralLogDTO> LoadByLogType(string logType, long? characterId);
 
-        IEnumerable<GeneralLogDTO> LoadByLogTypeAndAccountId(string logType, long? accountId);
-
         void SetCharIdNull(long? characterId);
 
         void WriteGeneralLog(long accountId, string ipAddress, long? characterId, string logType, string logData);

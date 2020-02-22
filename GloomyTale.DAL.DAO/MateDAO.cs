@@ -86,45 +86,30 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<MateDTO> result = new List<MateDTO>();
                 foreach (Mate mate in context.Mate.Where(s => s.CharacterId == characterId))
                 {
-                    MateDTO dto = new MateDTO();
-                    Mapper.Mappers.MateMapper.ToMateDTO(mate, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<MateDTO>(mate);
                 }
-                return result;
             }
         }
 
-        private static MateDTO insert(MateDTO mate, OpenNosContext context)
+        private MateDTO insert(MateDTO mate, OpenNosContext context)
         {
-            Mate entity = new Mate();
-            Mapper.Mappers.MateMapper.ToMate(mate, entity);
+            var entity = _mapper.Map<Mate>(mate);
             context.Mate.Add(entity);
             context.SaveChanges();
-            if (Mapper.Mappers.MateMapper.ToMateDTO(entity, mate))
-            {
-                return mate;
-            }
-
-            return null;
+            return _mapper.Map<MateDTO>(entity);
         }
 
-        private static MateDTO update(Mate entity, MateDTO character, OpenNosContext context)
+        private MateDTO update(Mate entity, MateDTO character, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.MateMapper.ToMate(character, entity);
+                _mapper.Map(character, entity);
                 context.SaveChanges();
             }
 
-            if (Mapper.Mappers.MateMapper.ToMateDTO(entity, character))
-            {
-                return character;
-            }
-
-            return null;
+            return _mapper.Map<MateDTO>(entity);
         }
 
         #endregion

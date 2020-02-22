@@ -40,78 +40,14 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public CharacterQuestDTO InsertOrUpdate(CharacterQuestDTO charQuest)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    return InsertOrUpdate(context, charQuest);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error($"Message: {e.Message}", e);
-                return null;
-            }
-        }
-        
-        protected static CharacterQuestDTO InsertOrUpdate(OpenNosContext context, CharacterQuestDTO dto)
-        {
-            Guid primaryKey = dto.Id;
-            CharacterQuest entity = context.Set<CharacterQuest>().FirstOrDefault(c => c.Id == primaryKey);
-            if (entity == null)
-            {
-                return Insert(dto, context);
-            }
-            else
-            {
-                return Update(entity, dto, context);
-            }
-        }
-        
-        private static CharacterQuestDTO Insert(CharacterQuestDTO charQuest, OpenNosContext context)
-        {
-            CharacterQuest entity = new CharacterQuest();
-            Mapper.Mappers.CharacterQuestMapper.ToCharacterQuest(charQuest, entity);
-            context.CharacterQuest.Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.CharacterQuestMapper.ToCharacterQuestDTO(entity, charQuest))
-            {
-                return charQuest;
-            }
-
-            return null;
-        }
-
-        private static CharacterQuestDTO Update(CharacterQuest entity, CharacterQuestDTO charQuest, OpenNosContext context)
-        {
-            if (entity != null)
-            {
-                Mapper.Mappers.CharacterQuestMapper.ToCharacterQuest(charQuest, entity);
-                context.SaveChanges();
-            }
-
-            if (Mapper.Mappers.CharacterQuestMapper.ToCharacterQuestDTO(entity, charQuest))
-            {
-                return charQuest;
-            }
-
-            return null;
-        }
-
         public IEnumerable<CharacterQuestDTO> LoadByCharacterId(long characterId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<CharacterQuestDTO> result = new List<CharacterQuestDTO>();
-                foreach (CharacterQuest charQuest in context.CharacterQuest.Where(s => s.CharacterId == characterId))
+                foreach (CharacterQuest entity in context.CharacterQuest.Where(i => i.CharacterId == characterId))
                 {
-                    CharacterQuestDTO dto = new CharacterQuestDTO();
-                    Mapper.Mappers.CharacterQuestMapper.ToCharacterQuestDTO(charQuest, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<CharacterQuestDTO>(entity);
                 }
-                return result;
             }
         }
 

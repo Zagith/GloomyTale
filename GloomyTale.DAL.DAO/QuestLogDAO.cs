@@ -49,16 +49,10 @@ namespace GloomyTale.DAL.DAO
         {
             try
             {
-                QuestLog entity = new QuestLog();
-                Mapper.Mappers.QuestLogMapper.ToQuestLog(questLog, entity);
+                var entity = _mapper.Map<QuestLog>(questLog);
                 context.QuestLog.Add(entity);
                 context.SaveChanges();
-                if (Mapper.Mappers.QuestLogMapper.ToQuestLogDTO(entity, questLog))
-                {
-                    return questLog;
-                }
-
-                return null;
+                return _mapper.Map<QuestLogDTO>(entity);
             }
             catch (Exception e)
             {
@@ -71,16 +65,11 @@ namespace GloomyTale.DAL.DAO
         {
             if (old != null)
             {
-                Mapper.Mappers.QuestLogMapper.ToQuestLog(replace, old);
-                context.Entry(old).State = EntityState.Modified;
+                _mapper.Map(old, replace);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.QuestLogMapper.ToQuestLogDTO(old, replace))
-            {
-                return replace;
-            }
 
-            return null;
+            return _mapper.Map<QuestLogDTO>(old);
         }
 
         public QuestLogDTO LoadById(long id)
@@ -89,13 +78,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    QuestLogDTO dto = new QuestLogDTO();
-                    if (Mapper.Mappers.QuestLogMapper.ToQuestLogDTO(context.QuestLog.FirstOrDefault(i => i.Id.Equals(id)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<QuestLogDTO>(context.QuestLog.FirstOrDefault(i => i.QuestId == id));
                 }
             }
             catch (Exception e)
@@ -109,14 +92,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<QuestLogDTO> result = new List<QuestLogDTO>();
-                foreach (QuestLog questLog in context.QuestLog.Where(s => s.CharacterId == characterId))
+                foreach (QuestLog id in context.QuestLog.Where(c => c.CharacterId == characterId))
                 {
-                    QuestLogDTO dto = new QuestLogDTO();
-                    Mapper.Mappers.QuestLogMapper.ToQuestLogDTO(questLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<QuestLogDTO>(id);
                 }
-                return result;
             }
         }
     }

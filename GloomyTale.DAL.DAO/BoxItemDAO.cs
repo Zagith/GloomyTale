@@ -14,23 +14,16 @@ namespace GloomyTale.DAL.DAO
 
         #region Methods
 
-        public List<BoxItemDTO> LoadAll()
+        public IEnumerable<BoxItemDTO> LoadAll()
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<BoxItemDTO> result = new List<BoxItemDTO>();
-
-                foreach (BoxItem boxItem in context.BoxItem)
+                foreach (BoxItem entity in context.BoxItem)
                 {
-                    BoxItemDTO dto = new BoxItemDTO();
-                    Mapper.Mappers.BoxItemMapper.ToBoxItemDTO(boxItem, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<BoxItemDTO>(entity);
                 }
-
-                return result;
             }
         }
-
         #endregion
     }
 }

@@ -86,14 +86,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<PenaltyLogDTO> result = new List<PenaltyLogDTO>();
                 foreach (PenaltyLog entity in context.PenaltyLog)
                 {
-                    PenaltyLogDTO dto = new PenaltyLogDTO();
-                    Mapper.Mappers.PenaltyLogMapper.ToPenaltyLogDTO(entity, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<PenaltyLogDTO>(entity);
                 }
-                return result;
             }
         }
 
@@ -101,14 +97,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<PenaltyLogDTO> result = new List<PenaltyLogDTO>();
                 foreach (PenaltyLog PenaltyLog in context.PenaltyLog.Where(s => s.AccountId.Equals(accountId)))
                 {
-                    PenaltyLogDTO dto = new PenaltyLogDTO();
-                    Mapper.Mappers.PenaltyLogMapper.ToPenaltyLogDTO(PenaltyLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<PenaltyLogDTO>(PenaltyLog);
                 }
-                return result;
             }
         }
 
@@ -118,13 +110,7 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    PenaltyLogDTO dto = new PenaltyLogDTO();
-                    if (Mapper.Mappers.PenaltyLogMapper.ToPenaltyLogDTO(context.PenaltyLog.FirstOrDefault(s => s.PenaltyLogId.Equals(penaltyLogId)), dto))
-                    {
-                        return dto;
-                    }
-
-                    return null;
+                    return _mapper.Map<PenaltyLogDTO>(context.PenaltyLog.FirstOrDefault(s => s.PenaltyLogId.Equals(penaltyLogId)));
                 }
             }
             catch (Exception e)
@@ -138,46 +124,30 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                string cleanIp = ip.Replace("tcp://", "");
-                cleanIp = cleanIp.Substring(0, cleanIp.LastIndexOf(":") > 0 ? cleanIp.LastIndexOf(":") : cleanIp.Length);
-                List<PenaltyLogDTO> result = new List<PenaltyLogDTO>();
-                foreach (PenaltyLog PenaltyLog in context.PenaltyLog.Where(s => s.IP.Contains(cleanIp)))
+                foreach (PenaltyLog PenaltyLog in context.PenaltyLog.Where(s => s.IP.Equals(ip)))
                 {
-                    PenaltyLogDTO dto = new PenaltyLogDTO();
-                    Mapper.Mappers.PenaltyLogMapper.ToPenaltyLogDTO(PenaltyLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<PenaltyLogDTO>(PenaltyLog);
                 }
-                return result;
             }
         }
 
-        private static PenaltyLogDTO insert(PenaltyLogDTO penaltylog, OpenNosContext context)
+        private PenaltyLogDTO insert(PenaltyLogDTO penaltylog, OpenNosContext context)
         {
-            PenaltyLog entity = new PenaltyLog();
-            Mapper.Mappers.PenaltyLogMapper.ToPenaltyLog(penaltylog, entity);
+            var entity = _mapper.Map<PenaltyLog>(penaltylog);
             context.PenaltyLog.Add(entity);
             context.SaveChanges();
-            if (Mapper.Mappers.PenaltyLogMapper.ToPenaltyLogDTO(entity, penaltylog))
-            {
-                return penaltylog;
-            }
-
-            return null;
+            return _mapper.Map<PenaltyLogDTO>(entity);
         }
 
-        private static PenaltyLogDTO update(PenaltyLog entity, PenaltyLogDTO penaltylog, OpenNosContext context)
+        private PenaltyLogDTO update(PenaltyLog entity, PenaltyLogDTO penaltylog, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.PenaltyLogMapper.ToPenaltyLog(penaltylog, entity);
+                _mapper.Map(penaltylog, entity);
                 context.SaveChanges();
             }
-            if (Mapper.Mappers.PenaltyLogMapper.ToPenaltyLogDTO(entity, penaltylog))
-            {
-                return penaltylog;
-            }
 
-            return null;
+            return _mapper.Map<PenaltyLogDTO>(entity);
         }
 
         #endregion

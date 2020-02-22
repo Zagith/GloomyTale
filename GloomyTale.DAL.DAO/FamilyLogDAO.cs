@@ -86,45 +86,30 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<FamilyLogDTO> result = new List<FamilyLogDTO>();
                 foreach (FamilyLog familylog in context.FamilyLog.Where(fc => fc.FamilyId.Equals(familyId)))
                 {
-                    FamilyLogDTO dto = new FamilyLogDTO();
-                    Mapper.Mappers.FamilyLogMapper.ToFamilyLogDTO(familylog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<FamilyLogDTO>(familylog);
                 }
-                return result;
             }
         }
 
-        private static FamilyLogDTO insert(FamilyLogDTO famlog, OpenNosContext context)
+        private FamilyLogDTO insert(FamilyLogDTO famlog, OpenNosContext context)
         {
-            FamilyLog entity = new FamilyLog();
-            Mapper.Mappers.FamilyLogMapper.ToFamilyLog(famlog, entity);
+            var entity = _mapper.Map<FamilyLog>(famlog);
             context.FamilyLog.Add(entity);
             context.SaveChanges();
-            if (Mapper.Mappers.FamilyLogMapper.ToFamilyLogDTO(entity, famlog))
-            {
-                return famlog;
-            }
-
-            return null;
+            return _mapper.Map<FamilyLogDTO>(entity);
         }
 
-        private static FamilyLogDTO update(FamilyLog entity, FamilyLogDTO famlog, OpenNosContext context)
+        private FamilyLogDTO update(FamilyLog entity, FamilyLogDTO famlog, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.FamilyLogMapper.ToFamilyLog(famlog, entity);
+                _mapper.Map(famlog, entity);
                 context.SaveChanges();
             }
 
-            if (Mapper.Mappers.FamilyLogMapper.ToFamilyLogDTO(entity, famlog))
-            {
-                return famlog;
-            }
-
-            return null;
+            return _mapper.Map<FamilyLogDTO>(entity);
         }
 
         #endregion

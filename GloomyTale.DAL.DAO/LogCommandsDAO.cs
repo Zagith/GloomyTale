@@ -23,16 +23,10 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    LogCommands entity = new LogCommands();
-                    Mapper.Mappers.LogCommandsMapper.ToLogCommands(generalLog, entity);
+                    var entity = _mapper.Map<LogCommands>(generalLog);
                     context.LogCommands.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(entity, generalLog))
-                    {
-                        return generalLog;
-                    }
-
-                    return null;
+                    return _mapper.Map<LogCommandsDTO>(entity);
                 }
             }
             catch (Exception e)
@@ -40,22 +34,6 @@ namespace GloomyTale.DAL.DAO
                 Logger.Log.Error(e);
                 return null;
             }
-        }
-
-        public LogCommandsDTO Update(LogCommands old, LogCommandsDTO replace, OpenNosContext context)
-        {
-            if (old != null)
-            {
-                Mapper.Mappers.LogCommandsMapper.ToLogCommands(replace, old);
-                context.Entry(old).State = EntityState.Modified;
-                context.SaveChanges();
-            }
-            if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(old, replace))
-            {
-                return replace;
-            }
-
-            return null;
         }
 
         public LogCommandsDTO LoadById(long id)
@@ -64,34 +42,28 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    LogCommandsDTO dto = new LogCommandsDTO();
-                    if (Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(context.LogCommands.FirstOrDefault(i => i.CommandId.Equals(id)), dto))
+                    LogCommands log = context.LogCommands.FirstOrDefault(a => a.CommandId.Equals(id));
+                    if (log != null)
                     {
-                        return dto;
+                        return _mapper.Map<LogCommandsDTO>(log);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return null;
             }
+            return null;
         }
 
         public IEnumerable<LogCommandsDTO> LoadByCharacterId(long characterId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<LogCommandsDTO> result = new List<LogCommandsDTO>();
-                foreach (LogCommands questLog in context.LogCommands.Where(s => s.CharacterId == characterId))
+                foreach (LogCommands id in context.LogCommands.Where(c => c.CharacterId == characterId))
                 {
-                    LogCommandsDTO dto = new LogCommandsDTO();
-                    Mapper.Mappers.LogCommandsMapper.ToLogCommandsDTO(questLog, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<LogCommandsDTO>(id);
                 }
-                return result;
             }
         }
     }

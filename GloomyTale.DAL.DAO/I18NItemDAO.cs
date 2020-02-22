@@ -23,14 +23,10 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<I18NItemDto> result = new List<I18NItemDto>();
-                foreach (I18NItem item in context.I18NItem.Where(s => string.IsNullOrEmpty(name) ? s.Text.Equals("") : s.Text.Contains(name)))
+                foreach (I18NItem i18NItem in context.I18NItem.Where(s => s.Key.Contains(name)))
                 {
-                    I18NItemDto dto = new I18NItemDto();
-                    Mapper.Mappers.I18NItemMapper.ToI18NItemDTO(item, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<I18NItemDto>(i18NItem);
                 }
-                return result;
             }
         }
 
@@ -81,21 +77,16 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public I18NItemDto Insert(I18NItemDto i18NItem)
+        public I18NItemDto Insert(I18NItemDto I18NItem)
         {
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    I18NItem entity = new I18NItem();
-                    Mapper.Mappers.I18NItemMapper.ToI18NItem(i18NItem, entity); context.I18NItem.Add(entity);
+                    var entity = _mapper.Map<I18NItem>(I18NItem);
+                    context.I18NItem.Add(entity);
                     context.SaveChanges();
-                    if (Mapper.Mappers.I18NItemMapper.ToI18NItemDTO(entity, i18NItem))
-                    {
-                        return i18NItem;
-                    }
-
-                    return null;
+                    return _mapper.Map<I18NItemDto>(I18NItem);
                 }
             }
             catch (Exception e)
@@ -109,67 +100,51 @@ namespace GloomyTale.DAL.DAO
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
-                List<I18NItemDto> result = new List<I18NItemDto>();
-                foreach (I18NItem I18NItem in context.I18NItem)
+                foreach (I18NItem i18NItem in context.I18NItem)
                 {
-                    I18NItemDto dto = new I18NItemDto();
-                    Mapper.Mappers.I18NItemMapper.ToI18NItemDTO(I18NItem, dto);
-                    result.Add(dto);
+                    yield return _mapper.Map<I18NItemDto>(i18NItem);
                 }
-                return result;
             }
         }
 
-        public I18NItemDto LoadById(short i18NItemId)
+        public I18NItemDto LoadById(short I18NItemId)
         {
+
             try
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    I18NItemDto dto = new I18NItemDto();
-                    if (Mapper.Mappers.I18NItemMapper.ToI18NItemDTO(context.I18NItem.FirstOrDefault(s => s.I18NItemId.Equals(i18NItemId)), dto))
+                    I18NItem i18NItem = context.I18NItem.FirstOrDefault(a => a.I18NItemId.Equals(I18NItemId));
+                    if (i18NItem != null)
                     {
-                        return dto;
+                        return _mapper.Map<I18NItemDto>(i18NItem);
                     }
-
-                    return null;
                 }
             }
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return null;
             }
-        }
-
-        private static I18NItemDto insert(I18NItemDto i18NItem, OpenNosContext context)
-        {
-            I18NItem entity = new I18NItem();
-            Mapper.Mappers.I18NItemMapper.ToI18NItem(i18NItem, entity);
-            context.I18NItem.Add(entity);
-            context.SaveChanges();
-            if (Mapper.Mappers.I18NItemMapper.ToI18NItemDTO(entity, i18NItem))
-            {
-                return i18NItem;
-            }
-
             return null;
         }
 
-        private static I18NItemDto update(I18NItem entity, I18NItemDto skill, OpenNosContext context)
+        private I18NItemDto insert(I18NItemDto I18NItem, OpenNosContext context)
+        {
+            var entity = _mapper.Map<I18NItem>(I18NItem);
+            context.I18NItem.Add(entity);
+            context.SaveChanges();
+            return _mapper.Map<I18NItemDto>(entity);
+        }
+
+        private I18NItemDto update(I18NItem entity, I18NItemDto i18NItem, OpenNosContext context)
         {
             if (entity != null)
             {
-                Mapper.Mappers.I18NItemMapper.ToI18NItem(skill, entity);
+                _mapper.Map(i18NItem, entity);
                 context.SaveChanges();
             }
 
-            if (Mapper.Mappers.I18NItemMapper.ToI18NItemDTO(entity, skill))
-            {
-                return skill;
-            }
-
-            return null;
+            return _mapper.Map<I18NItemDto>(entity);
         }
 
         #endregion
