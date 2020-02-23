@@ -18,6 +18,11 @@ namespace GloomyTale.GameObject
     {
         #region Instantiation
 
+        public Gift()
+        {
+            // do nothing
+        }
+
         public Gift(short vnum, short amount, short design = 0, bool isRareRandom = false)
         {
             VNum = vnum;

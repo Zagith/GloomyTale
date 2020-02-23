@@ -40,7 +40,7 @@ namespace GloomyTale.DAL
             IScriptedInstanceDAO _scriptedInstanceDAO, IShellEffectDAO _shellEffectDAO,IShopDAO _shopDAO,IShopItemDAO _shopItemDAO,
             IShopSkillDAO _shopSkillDAO,ISkillDAO _skillDAO,IStaticBonusDAO _staticBonusDAO,IStaticBuffDAO _staticBuffDAO,
             ITeleporterDAO _teleporterDAO,II18NItemDAO _i18NItemDAO, II18NCardDAO _i18NCardDAO,II18NNpcMonsterDAO _i18NNpcMonsterDAO,
-            II18NSkillDAO _i18NSkillDAO, II18NMapDAO _i18NMapDAO, IFortuneWheelDAO _fortuneWheelDAO,II18NShopNameDAO _i18nShopDAO,ITimeSpaceLogDAO _timespacelogDAO)
+            II18NSkillDAO _i18NSkillDAO, II18NMapDAO _i18NMapDAO, IFortuneWheelDAO _fortuneWheelDAO,ITimeSpaceLogDAO _timespacelogDAO)
         {
             AccountDAO = _accountDAO;
             BazaarItemDAO = _bazaarItemDAO;
@@ -105,7 +105,6 @@ namespace GloomyTale.DAL
             I18NNpcMonsterDAO = _i18NNpcMonsterDAO;
             I18NSkillDAO = _i18NSkillDAO;
             I18NMapDAO = _i18NMapDAO;
-            I18NShopNameDAO = _i18nShopDAO;
             FortuneWheelDAO = _fortuneWheelDAO;
             TimeSpaceLogDAO = _timespacelogDAO;
         }
@@ -236,8 +235,6 @@ namespace GloomyTale.DAL
         public II18NSkillDAO I18NSkillDAO { get; }
 
         public II18NMapDAO I18NMapDAO { get; }
-
-        public II18NShopNameDAO I18NShopNameDAO { get; }
 
         public IFortuneWheelDAO FortuneWheelDAO { get; }
 

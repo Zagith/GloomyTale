@@ -17,16 +17,8 @@ namespace GloomyTale.GameObject
 
         #region Instantiation
 
-        public CharacterQuest(CharacterQuestDTO characterQuest)
+        public CharacterQuest()
         {
-            CharacterId = characterQuest.CharacterId;
-            QuestId = characterQuest.QuestId;
-            FirstObjective = characterQuest.FirstObjective;
-            SecondObjective = characterQuest.SecondObjective;
-            ThirdObjective = characterQuest.ThirdObjective;
-            FourthObjective = characterQuest.FourthObjective;
-            FifthObjective = characterQuest.FifthObjective;
-            IsMainQuest = characterQuest.IsMainQuest;
         }
 
         public CharacterQuest(long questId, long characterId)

@@ -11,26 +11,7 @@ namespace GloomyTale.GameObject
     public class Quest : QuestDTO
     {
         #region Instantiation
-
-        public Quest(QuestDTO input)
-        {
-            QuestId = input.QuestId;
-            QuestType = input.QuestType;
-            LevelMin = input.LevelMin;
-            LevelMax = input.LevelMax;
-            StartDialogId = input.StartDialogId;
-            EndDialogId = input.EndDialogId;
-            DialogNpcVNum = input.DialogNpcVNum;
-            DialogNpcId = input.DialogNpcId;
-            TargetMap = input.TargetMap;
-            TargetX = input.TargetX;
-            TargetY = input.TargetY;
-            InfoId = input.InfoId;
-            NextQuestId = input.NextQuestId;
-            IsDaily = input.IsDaily;
-            LoadSqstPosition();
-        }
-
+        
         #endregion
 
         #region Properties

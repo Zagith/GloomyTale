@@ -68,7 +68,7 @@ namespace GloomyTale.Handler
                     if (DAOFactory.Instance.CharacterDAO.LoadById(bz.SellerId) != null)
                     {
                         bzcree.Owner = DAOFactory.Instance.CharacterDAO.LoadById(bz.SellerId)?.Name;
-                        bzcree.Item = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bz.ItemInstanceId));
+                        bzcree.Item = (ItemInstance)DAOFactory.Instance.ItemInstanceDAO.LoadById(bz.ItemInstanceId);
                     }
                     else
                     {
@@ -179,7 +179,7 @@ namespace GloomyTale.Handler
                     return;
                 }
 
-                ItemInstance itemInstance = new ItemInstance(itemInstanceDTO);
+                var itemInstance = (ItemInstance)itemInstanceDTO;
 
                 if (itemInstance == null)
                 {
@@ -472,7 +472,7 @@ namespace GloomyTale.Handler
                     return;
                 }
 
-                ItemInstance itemInstance = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bz.ItemInstanceId));
+                var itemInstance = (ItemInstance)DAOFactory.Instance.ItemInstanceDAO.LoadById(bz.ItemInstanceId);
                 if (itemInstance == null || bz.Amount != itemInstance.Amount)
                 {
                     return;

@@ -56,7 +56,7 @@ namespace GloomyTale.GameObject
 
         #region Instantiation
 
-        public Character()
+        public override void Initialize()
         {
             GroupSentRequestCharacterIds = new ThreadSafeGenericList<long>();
             FamilyInviteCharacters = new ThreadSafeGenericList<long>();
@@ -77,73 +77,21 @@ namespace GloomyTale.GameObject
             ShellEffectMain = new ConcurrentBag<ShellEffectDTO>();
             ShellEffectSecondary = new ConcurrentBag<ShellEffectDTO>();
             Quests = new ConcurrentBag<CharacterQuest>();
-        }
-
-        public Character(CharacterDTO input) : this()
-        {
-            AccountId = input.AccountId;
-            Act4Dead = input.Act4Dead;
-            Act4Kill = input.Act4Kill;
-            Act4Points = input.Act4Points;
-            ArenaWinner = input.ArenaWinner;
-            Biography = input.Biography;
-            BuffBlocked = input.BuffBlocked;
-            CharacterId = input.CharacterId;
-            Class = input.Class;
-            Compliment = input.Compliment;
-            Dignity = input.Dignity;
-            EmoticonsBlocked = input.EmoticonsBlocked;
-            ExchangeBlocked = input.ExchangeBlocked;
-            Faction = input.Faction;
-            FamilyRequestBlocked = input.FamilyRequestBlocked;
-            FriendRequestBlocked = input.FriendRequestBlocked;
-            Gender = input.Gender;
-            Gold = input.Gold;
-            GoldBank = input.GoldBank;
-            GroupRequestBlocked = input.GroupRequestBlocked;
-            HairColor = input.HairColor;
-            HairStyle = input.HairStyle;
-            HeroChatBlocked = input.HeroChatBlocked;
-            HeroLevel = input.HeroLevel;
-            HeroXp = input.HeroXp;
-            Hp = input.Hp;
-            HpBlocked = input.HpBlocked;
-            IsPetAutoRelive = input.IsPetAutoRelive;
-            IsPartnerAutoRelive = input.IsPartnerAutoRelive;
-            IsSeal = input.IsSeal;
-            JobLevel = input.JobLevel;
-            JobLevelXp = input.JobLevelXp;
-            LastFamilyLeave = input.LastFamilyLeave;
-            Level = input.Level;
-            LevelXp = input.LevelXp;
-            MapId = input.MapId;
-            MapX = input.MapX;
-            MapY = input.MapY;
-            MasterPoints = input.MasterPoints;
-            MasterTicket = input.MasterTicket;
-            MaxMateCount = input.MaxMateCount;
-            MaxPartnerCount = input.MaxPartnerCount;
-            MinilandInviteBlocked = input.MinilandInviteBlocked;
-            MinilandMessage = input.MinilandMessage;
-            MinilandPoint = input.MinilandPoint;
-            MinilandState = input.MinilandState;
-            MouseAimLock = input.MouseAimLock;
-            Mp = input.Mp;
-            Name = input.Name;
-            QuickGetUp = input.QuickGetUp;
-            RagePoint = input.RagePoint;
-            Reputation = input.Reputation;
-            Slot = input.Slot;
-            SpAdditionPoint = input.SpAdditionPoint;
-            SpPoint = input.SpPoint;
-            State = input.State;
-            TalentLose = input.TalentLose;
-            TalentSurrender = input.TalentSurrender;
-            TalentWin = input.TalentWin;
-            WhisperBlocked = input.WhisperBlocked;
-            SecondPassword = input.SecondPassword;
-            Contributi = input.Contributi;
-        }
+            _random = new Random();
+            ExchangeInfo = null;
+            SpCooldown = 30;
+            SaveX = 0;
+            SaveY = 0;
+            LastDefence = DateTime.Now.AddSeconds(-21);
+            LastDelay = DateTime.Now.AddSeconds(-5);
+            LastHealth = DateTime.Now;
+            LastEffect = DateTime.Now;
+            Session = null;
+            MailList = new Dictionary<int, MailDTO>();
+            BattleEntity = new BattleEntity(this, null);
+            Group = null;
+            GmPvtBlock = false;
+        }       
 
         #endregion
 
@@ -3807,7 +3755,7 @@ namespace GloomyTale.GameObject
                 Miniland = ServerManager.GenerateMapInstance(20001, MapInstanceType.NormalInstance, new InstanceBag(), true);
                 foreach (MinilandObjectDTO obj in DAOFactory.Instance.MinilandObjectDAO.LoadByCharacterId(CharacterId))
                 {
-                    MinilandObject mapobj = new MinilandObject(obj);
+                    var mapobj = (MinilandObject)obj;
                     if (mapobj.ItemInstanceId != null)
                     {
                         ItemInstance item = Inventory.GetItemInstanceById((Guid)mapobj.ItemInstanceId);
@@ -5690,24 +5638,6 @@ namespace GloomyTale.GameObject
             Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("MALL_CURRENCY_RECEIVE"), amount), 10));
         }
 
-        public void Initialize()
-        {
-            _random = new Random();
-            ExchangeInfo = null;
-            SpCooldown = 30;
-            SaveX = 0;
-            SaveY = 0;
-            LastDefence = DateTime.Now.AddSeconds(-21);
-            LastDelay = DateTime.Now.AddSeconds(-5);
-            LastHealth = DateTime.Now;
-            LastEffect = DateTime.Now;
-            Session = null;
-            MailList = new Dictionary<int, MailDTO>();
-            BattleEntity = new BattleEntity(this, null);
-            Group = null;
-            GmPvtBlock = false;
-        }
-
         public static void InsertOrUpdatePenalty(PenaltyLogDTO log)
         {
             DAOFactory.Instance.PenaltyLogDAO.InsertOrUpdate(ref log);
@@ -5961,7 +5891,7 @@ namespace GloomyTale.GameObject
             foreach (ItemInstanceDTO inventory in inventories)
             {
                 inventory.CharacterId = CharacterId;
-                Inventory[inventory.Id] = new ItemInstance(inventory);
+                Inventory[inventory.Id] = (ItemInstance)inventory;
                 ItemInstance iteminstance = inventory as ItemInstance;
                 iteminstance?.ShellEffects.Clear();
                 iteminstance?.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(iteminstance.EquipmentSerialId));

@@ -44,11 +44,14 @@ namespace GloomyTale.GameObject
             ComboCount = 0;
         }
 
-        public CharacterSkill(CharacterSkillDTO input) : this()
+        public CharacterSkill(CharacterSkillDTO characterSkill)
         {
-            CharacterId = input.CharacterId;
-            Id = input.Id;
-            SkillVNum = input.SkillVNum;
+            CharacterId = characterSkill.CharacterId;
+            Id = characterSkill.Id;
+            SkillVNum = characterSkill.SkillVNum;
+            LastUse = DateTime.Now.AddHours(-1);
+            Hit = 0;
+            ComboCount = 0;
         }
 
         #endregion

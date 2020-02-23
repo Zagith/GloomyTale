@@ -23,29 +23,6 @@ namespace GloomyTale.GameObject
 
         #endregion
 
-        #region Instantiation
-
-        public MinilandObject()
-        {
-
-        }
-
-        public MinilandObject(MinilandObjectDTO input)
-        {
-            CharacterId = input.CharacterId;
-            ItemInstanceId = input.ItemInstanceId;
-            Level1BoxAmount = input.Level1BoxAmount;
-            Level2BoxAmount = input.Level2BoxAmount;
-            Level3BoxAmount = input.Level3BoxAmount;
-            Level4BoxAmount = input.Level4BoxAmount;
-            Level5BoxAmount = input.Level5BoxAmount;
-            MapX = input.MapX;
-            MapY = input.MapY;
-            MinilandObjectId = input.MinilandObjectId;
-        }
-
-        #endregion
-
         #region Methods
 
         public string GenerateMinilandEffect(bool removed) => $"eff_g {ItemInstance.Item.EffectValue} {MapX.ToString("00")}{MapY.ToString("00")} {MapX} {MapY} {(removed ? 1 : 0)}";

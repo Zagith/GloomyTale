@@ -32,8 +32,9 @@ namespace GloomyTale.SqlServer.Mapping
             // character
             AddMapping<Character, CharacterDTO, GameObject.Character>(cfg);
             AddMapping<CharacterRelation, CharacterRelationDTO>(cfg);
-            //AddMapping<CharacterSkill, CharacterSkillDTO, GameObject.CharacterSkill>(cfg);
-            //AddMapping<CharacterQuest, CharacterQuestDTO, GameObject.CharacterQuest>(cfg);
+            AddMapping<CharacterSkill, CharacterSkillDTO, GameObject.CharacterSkill>(cfg);
+            AddMapping<CharacterQuest, CharacterQuestDTO, GameObject.CharacterQuest>(cfg);
+            AddMapping<CharacterTitle, CharacterTitleDTO>(cfg);
 
             // combo
             AddMapping<Combo, ComboDTO>(cfg);
@@ -77,7 +78,7 @@ namespace GloomyTale.SqlServer.Mapping
             AddMapping<QuestObjective, QuestObjectiveDTO>(cfg);
 
             // quicklist
-            //AddMapping<QuicklistEntry, QuicklistEntryDTO>(cfg);
+            AddMapping<QuicklistEntry, QuicklistEntryDTO>(cfg);
 
             // recipes
             AddMapping<Recipe, RecipeDTO, GameObject.Recipe>(cfg);

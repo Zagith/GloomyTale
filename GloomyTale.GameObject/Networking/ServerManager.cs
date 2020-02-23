@@ -1753,9 +1753,8 @@ namespace GloomyTale.GameObject.Networking
 
         public void LoadItems()
         {
-            var items = DAOFactory.Instance.ItemDAO.LoadAll();
-            OrderablePartitioner<ItemDTO> itemPartitioner = Partitioner.Create(items, EnumerablePartitionerOptions.NoBuffering);
-            Parallel.ForEach(itemPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 4 }, itemDto =>
+            IEnumerable<ItemDTO> items = DAOFactory.Instance.ItemDAO.LoadAll();
+            foreach (ItemDTO itemDto in items)
             {
                 switch (itemDto.ItemType)
                 {
@@ -1809,7 +1808,7 @@ namespace GloomyTale.GameObject.Networking
                         Items.Add(new NoFunctionItem(itemDto));
                         break;
                 }
-            });
+            }
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("ITEMS_LOADED"), Items.Count));
         }        
 
@@ -1953,7 +1952,7 @@ namespace GloomyTale.GameObject.Networking
             Quests = new List<Quest>();
             foreach (QuestDTO questdto in DAOFactory.Instance.QuestDAO.LoadAll())
             {
-                Quest quest = new Quest(questdto);
+                var quest = (Quest)questdto;
                 quest.QuestRewards = DAOFactory.Instance.QuestRewardDAO.LoadByQuestId(quest.QuestId).ToList();
                 quest.QuestObjectives = DAOFactory.Instance.QuestObjectiveDAO.LoadByQuestId(quest.QuestId).ToList();
                 Quests.Add(quest);
@@ -3001,16 +3000,16 @@ namespace GloomyTale.GameObject.Networking
                 };
                 foreach (FamilyCharacterDTO famchar in DAOFactory.Instance.FamilyCharacterDAO.LoadByFamilyId(family.FamilyId).ToList())
                 {
-                    family.FamilyCharacters.Add(new FamilyCharacter(famchar));
+                    family.FamilyCharacters.Add((FamilyCharacter)famchar);
                 }
                 FamilyCharacter familyCharacter = family.FamilyCharacters.Find(s => s.Authority == FamilyAuthority.Head);
                 if (familyCharacter != null)
                 {
-                    family.Warehouse = new Inventory(new Character(familyCharacter.Character));
+                    family.Warehouse = new Inventory((Character)familyCharacter.Character);
                     foreach (ItemInstanceDTO inventory in DAOFactory.Instance.ItemInstanceDAO.LoadByCharacterId(familyCharacter.CharacterId).Where(s => s.Type == InventoryType.FamilyWareHouse).ToList())
                     {
                         inventory.CharacterId = familyCharacter.CharacterId;
-                        family.Warehouse[inventory.Id] = new ItemInstance(inventory);
+                        family.Warehouse[inventory.Id] = (ItemInstance)inventory;
                     }
                 }
                 family.FamilyLogs = DAOFactory.Instance.FamilyLogDAO.LoadByFamilyId(family.FamilyId).ToList();
@@ -3233,7 +3232,7 @@ namespace GloomyTale.GameObject.Networking
                         BazaarList.Remove(bzlink);
                         bzlink.BazaarItem = bzdto;
                         bzlink.Owner = chara.Name;
-                        bzlink.Item = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bzdto.ItemInstanceId));
+                        bzlink.Item = (ItemInstance)DAOFactory.Instance.ItemInstanceDAO.LoadById(bzdto.ItemInstanceId);
                         BazaarList.Add(bzlink);
                     }
                     else
@@ -3245,7 +3244,7 @@ namespace GloomyTale.GameObject.Networking
                         if (chara != null)
                         {
                             item.Owner = chara.Name;
-                            item.Item = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bzdto.ItemInstanceId));
+                            item.Item = (ItemInstance)DAOFactory.Instance.ItemInstanceDAO.LoadById(bzdto.ItemInstanceId);
                         }
                         BazaarList.Add(item);
                     }
@@ -3279,16 +3278,16 @@ namespace GloomyTale.GameObject.Networking
                     newFam.FamilyCharacters = new List<FamilyCharacter>();
                     foreach (FamilyCharacterDTO famchar in DAOFactory.Instance.FamilyCharacterDAO.LoadByFamilyId(famdto.FamilyId).ToList())
                     {
-                        newFam.FamilyCharacters.Add(new FamilyCharacter(famchar));
+                        newFam.FamilyCharacters.Add((FamilyCharacter)famchar);
                     }
                     FamilyCharacter familyHead = newFam.FamilyCharacters.Find(s => s.Authority == FamilyAuthority.Head);
                     if (familyHead != null)
                     {
-                        newFam.Warehouse = new Inventory(new Character(familyHead.Character));
+                        newFam.Warehouse = new Inventory((Character)familyHead.Character);
                         foreach (ItemInstanceDTO inventory in DAOFactory.Instance.ItemInstanceDAO.LoadByCharacterId(familyHead.CharacterId).Where(s => s.Type == InventoryType.FamilyWareHouse).ToList())
                         {
                             inventory.CharacterId = familyHead.CharacterId;
-                            newFam.Warehouse[inventory.Id] = new ItemInstance(inventory);
+                            newFam.Warehouse[inventory.Id] = (ItemInstance)inventory;
                         }
                     }
                     newFam.FamilyLogs = DAOFactory.Instance.FamilyLogDAO.LoadByFamilyId(famdto.FamilyId).ToList();

@@ -26,14 +26,6 @@ namespace GloomyTale.GameObject
 
         #endregion
 
-        #region Instantiation
-
-        public NpcMonsterSkill()
-        {
-        }
-
-        #endregion
-
         #region Properties
 
         public short Hit { get; set; }

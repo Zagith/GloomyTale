@@ -42,7 +42,7 @@ namespace GloomyTale.GameObject
 
         #region Instantiation
 
-        public Mate(MateDTO input)
+        /*public Mate(MateDTO input)
         {
             PVELockObject = new object();
             Attack = input.Attack;
@@ -94,7 +94,7 @@ namespace GloomyTale.GameObject
                     Logger.Log.Warn("MissingMateStats.txt was in use, but i was able to catch this exception", null, "MissingMateStats");
                 }
             }
-        }
+        }*/
 
         public Mate(Character owner, NpcMonster npcMonster, byte level, MateType matetype, bool temporal = false, bool tsReward = false, bool tsProtected = false)
         {

@@ -18,7 +18,6 @@ using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 using GloomyTale.GameObject.Networking;
-using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
 
 namespace GloomyTale.GameObject

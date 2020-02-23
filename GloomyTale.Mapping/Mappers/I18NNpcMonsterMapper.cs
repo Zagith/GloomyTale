@@ -7,7 +7,7 @@ namespace GloomyTale.Mapper.Mappers
     {
         #region Methods
 
-        public static bool ToI18NNpcMonster(II18NNpcMonsterDto input, I18NNpcMonster output)
+        /*public static bool ToI18NNpcMonster(II18NNpcMonsterDto input, I18NNpcMonster output)
         {
             if (input == null)
             {
@@ -33,7 +33,7 @@ namespace GloomyTale.Mapper.Mappers
             output.Text = input.Text;
 
             return true;
-        }
+        }*/
 
         #endregion
     }

@@ -127,7 +127,7 @@ namespace GloomyTale.GameObject
             Width = input.Width;
             SideReputation = input.SideReputation;
             BCards = new List<BCard>();
-            RollGeneratedItems = DAOFactory.Instance.RollGeneratedItemDAO.LoadByItemVNum(input.VNum).ToList();
+            RollGeneratedItems = new List<RollGeneratedItemDTO>();
             LoadVehicleStats();
         }
 

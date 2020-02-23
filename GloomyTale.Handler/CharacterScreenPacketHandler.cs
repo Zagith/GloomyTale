@@ -161,7 +161,7 @@ namespace GloomyTale.Handler
                     DAOFactory.Instance.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 201 });
                     DAOFactory.Instance.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 209 });
 
-                    using (Inventory inventory = new Inventory(new Character(characterDTO)))
+                    using (Inventory inventory = new Inventory((Character)characterDTO))
                     {
                         inventory.AddNewToInventory(15299, 1, InventoryType.Main);
                         inventory.ForEach(i => DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(i));
@@ -181,7 +181,7 @@ namespace GloomyTale.Handler
 
                     DAOFactory.Instance.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 1565 });
 
-                    using (Inventory inventory = new Inventory(new Character(characterDTO)))
+                    using (Inventory inventory = new Inventory((Character)characterDTO))
                     {
                         inventory.AddNewToInventory(5832, 1, InventoryType.Main, 5);
                         inventory.ForEach(i => DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(i));
@@ -374,7 +374,7 @@ namespace GloomyTale.Handler
                     foreach (ItemInstanceDTO equipmentEntry in inventory)
                     {
                         // explicit load of iteminstance
-                        ItemInstance currentInstance = new ItemInstance(equipmentEntry);
+                        var currentInstance = (ItemInstance)equipmentEntry;
 
                         if (currentInstance != null)
                         {
@@ -427,7 +427,7 @@ namespace GloomyTale.Handler
                     return;
                 }
 
-                Character character = new Character(characterDTO);
+                var character = (Character)characterDTO;
 
                 #endregion
 
@@ -498,7 +498,7 @@ namespace GloomyTale.Handler
                 //}
 
                 DAOFactory.Instance.CharacterQuestDAO.LoadByCharacterId(Session.Character.CharacterId).ToList()
-                    .ForEach(qst => Session.Character.Quests.Add(new CharacterQuest(qst)));
+                    .ForEach(qst => Session.Character.Quests.Add((CharacterQuest)qst));
 
                 #endregion
 
@@ -515,11 +515,8 @@ namespace GloomyTale.Handler
 
                 DAOFactory.Instance.MateDAO.LoadByCharacterId(Session.Character.CharacterId).ToList().ForEach(s =>
                 {
-                    Mate mate = new Mate(s)
-                    {
-                        Owner = Session.Character
-                    };
-
+                    var mate = (Mate)s;
+                    mate.Owner = Session.Character;
                     mate.GenerateMateTransportId();
                     mate.Monster = ServerManager.GetNpcMonster(s.NpcMonsterVNum);
 
