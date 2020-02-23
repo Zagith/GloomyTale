@@ -522,6 +522,7 @@ namespace GloomyTale.DAL.EF
             modelBuilder.Entity<NpcMonster>()
                 .HasMany(e => e.NpcMonsterSkill)
                 .WithOne(e => e.NpcMonster)
+                .HasForeignKey(e => e.NpcMonsterVNum)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Recipe>()
@@ -547,21 +548,25 @@ namespace GloomyTale.DAL.EF
             modelBuilder.Entity<Skill>()
                 .HasMany(e => e.CharacterSkill)
                 .WithOne(e => e.Skill)
+                .HasForeignKey(e => e.SkillVNum)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Skill>()
                 .HasMany(e => e.Combo)
                 .WithOne(e => e.Skill)
+                .HasForeignKey(e => e.SkillVNum)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Skill>()
                 .HasMany(e => e.NpcMonsterSkill)
                 .WithOne(e => e.Skill)
+                .HasForeignKey(e => e.SkillVNum)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Skill>()
                 .HasMany(e => e.ShopSkill)
                 .WithOne(e => e.Skill)
+                .HasForeignKey(e => e.SkillVNum)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 

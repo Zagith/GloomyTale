@@ -995,7 +995,7 @@ namespace GloomyTale.GameObject.Networking
                 Map mapinfo = new Map(baseMapInstance.Map.MapId, baseMapInstance.Map.GridMapId, baseMapInstance.Map.Data)
                 {
                     Music = baseMapInstance.Map.Music,
-                    NameI18NKey = baseMapInstance.Map.NameI18NKey,
+                    Name = baseMapInstance.Map.Name,
                     ShopAllowed = baseMapInstance.Map.ShopAllowed,
                     XpRate = baseMapInstance.Map.XpRate,
                     MeteoriteLevel = baseMapInstance.MeteoriteLevel,
@@ -1834,7 +1834,7 @@ namespace GloomyTale.GameObject.Networking
                         //mapTypeMap.Where(s => mapType.Any(p => p.MapTypeId == s.MapTypeId)), respawns)
                     {
                         Music = map.Music,
-                        NameI18NKey = map.NameI18NKey,
+                        Name = map.Name,
                         ShopAllowed = map.ShopAllowed,
                         XpRate = map.XpRate,
                         MeteoriteLevel = map.MeteoriteLevel,

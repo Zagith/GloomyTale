@@ -15,7 +15,7 @@ namespace GloomyTale.DAL.EF.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -236,10 +236,11 @@ namespace GloomyTale.DAL.EF.Migrations
 
             modelBuilder.Entity("GloomyTale.DAL.EF.CellonOption", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<long>("CellonOptionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("EquipmentSerialId")
                         .HasColumnType("uniqueidentifier");
@@ -253,7 +254,7 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.Property<int>("Value")
                         .HasColumnType("int");
 
-                    b.HasKey("CellonOptionId");
+                    b.HasKey("Id");
 
                     b.ToTable("CellonOption");
                 });
@@ -3113,7 +3114,8 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.HasOne("GloomyTale.DAL.EF.Skill", "Skill")
                         .WithMany("CharacterSkill")
                         .HasForeignKey("SkillVNum")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GloomyTale.DAL.EF.CharacterTitle", b =>
@@ -3130,7 +3132,8 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.HasOne("GloomyTale.DAL.EF.Skill", "Skill")
                         .WithMany("Combo")
                         .HasForeignKey("SkillVNum")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GloomyTale.DAL.EF.Drop", b =>
@@ -3362,12 +3365,14 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.HasOne("GloomyTale.DAL.EF.NpcMonster", "NpcMonster")
                         .WithMany("NpcMonsterSkill")
                         .HasForeignKey("NpcMonsterVNum")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("GloomyTale.DAL.EF.Skill", "Skill")
                         .WithMany("NpcMonsterSkill")
                         .HasForeignKey("SkillVNum")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GloomyTale.DAL.EF.PenaltyLog", b =>
@@ -3533,7 +3538,8 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.HasOne("GloomyTale.DAL.EF.Skill", "Skill")
                         .WithMany("ShopSkill")
                         .HasForeignKey("SkillVNum")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GloomyTale.DAL.EF.StaticBonus", b =>
