@@ -28,7 +28,7 @@ namespace GloomyTale.Data
 
         int Music { get; set; }
 
-        string NameI18NKey { get; set; }
+        string Name { get; set; }
 
         bool ShopAllowed { get; set; }
 

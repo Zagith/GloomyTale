@@ -21,7 +21,7 @@ using System;
 namespace GloomyTale.Data
 {
     [Serializable]
-    public class ShopDTO : MappingBaseDTO, IStaticDto
+    public class ShopDTO : MappingBaseDTO
     {
         #region Properties
 
@@ -29,10 +29,7 @@ namespace GloomyTale.Data
 
         public byte MenuType { get; set; }
 
-        [I18NFrom(typeof(I18NShopNameDto))]
-        public I18NString Name { get; set; } = new I18NString();
-        [AdaptMember("Name")]
-        public string NameI18NKey { get; set; }
+        public string Name { get; set; }
 
         public int ShopId { get; set; }
 

@@ -1815,7 +1815,7 @@ namespace GloomyTale.GameObject
             }
 
             Session.SendPacket($"vb {bf.Card.CardId} 1 {(bf.RemainingTime <= 0 ? -1 : bf.RemainingTime * 10)}");
-            Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("UNDER_EFFECT"), bf.Card.Name[Session.Account.Language]), 12));
+            Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("UNDER_EFFECT"), bf.Card.Name), 12));
 
             // Visual Effects (eff packet)
             if (bf.Card.CardId == 319)
@@ -3266,7 +3266,7 @@ namespace GloomyTale.GameObject
                                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("MAX_GOLD"), 0));
                             }
 
-                            Session.SendPacket(GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {ServerManager.GetItem(drop.ItemVNum).Name[Session.Account.Language]} x {drop.Amount}{(multiplier > 1 ? $" + {(int)(drop.Amount * multiplier) - drop.Amount}" : "")}", 12));
+                            Session.SendPacket(GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {ServerManager.GetItem(drop.ItemVNum).Name} x {drop.Amount}{(multiplier > 1 ? $" + {(int)(drop.Amount * multiplier) - drop.Amount}" : "")}", 12));
                             Session.SendPacket(GenerateGold());
                         }
                         else
@@ -3569,12 +3569,12 @@ namespace GloomyTale.GameObject
                                                     dropOwner = group.GetNextOrderedCharacterId(this);
                                                     if (dropOwner.HasValue)
                                                     {
-                                                        group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ITEM_BOUND_TO"), ServerManager.GetItem(drop.ItemVNum).Name[Session.Account.Language], group.Sessions.Single(c => c.Character.CharacterId == (long)dropOwner).Character.Name, drop.Amount), 10)));
+                                                        group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ITEM_BOUND_TO"), ServerManager.GetItem(drop.ItemVNum).Name, group.Sessions.Single(c => c.Character.CharacterId == (long)dropOwner).Character.Name, drop.Amount), 10)));
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("DROPPED_ITEM"), ServerManager.GetItem(drop.ItemVNum).Name[Session.Account.Language], drop.Amount), 10)));
+                                                    group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("DROPPED_ITEM"), ServerManager.GetItem(drop.ItemVNum).Name, drop.Amount), 10)));
                                                 }
                                             }
 
@@ -3641,7 +3641,7 @@ namespace GloomyTale.GameObject
                                                     session.Character.Gold = maxGold;
                                                     session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("MAX_GOLD"), 0));
                                                 }
-                                                session.SendPacket(session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {ServerManager.GetItem(drop2.ItemVNum).Name[Session.Account.Language]} x {drop2.Amount}{(multiplier > 1 ? $" + {(int)(drop2.Amount * multiplier) - drop2.Amount}" : "")}", 10));
+                                                session.SendPacket(session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {ServerManager.GetItem(drop2.ItemVNum).Name} x {drop2.Amount}{(multiplier > 1 ? $" + {(int)(drop2.Amount * multiplier) - drop2.Amount}" : "")}", 10));
                                                 session.SendPacket(session.Character.GenerateGold());
                                             }
                                             alreadyGifted.Add(damager.MapEntityId);
@@ -3658,12 +3658,12 @@ namespace GloomyTale.GameObject
 
                                             if (dropOwner.HasValue)
                                             {
-                                                group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ITEM_BOUND_TO"), ServerManager.GetItem(drop2.ItemVNum).Name[Session.Account.Language], group.Sessions.Single(c => c.Character.CharacterId == (long)dropOwner).Character.Name, drop2.Amount), 10)));
+                                                group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ITEM_BOUND_TO"), ServerManager.GetItem(drop2.ItemVNum).Name, group.Sessions.Single(c => c.Character.CharacterId == (long)dropOwner).Character.Name, drop2.Amount), 10)));
                                             }
                                         }
                                         else
                                         {
-                                            group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("DROPPED_ITEM"), ServerManager.GetItem(drop2.ItemVNum).Name[Session.Account.Language], drop2.Amount), 10)));
+                                            group.Sessions.ForEach(s => s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("DROPPED_ITEM"), ServerManager.GetItem(drop2.ItemVNum).Name, drop2.Amount), 10)));
                                         }
                                     }
 
@@ -4513,13 +4513,13 @@ namespace GloomyTale.GameObject
             bool isPvpSecondary = false;
             bool isPvpArmor = false;
 
-            if (weapon?.Item.Name[Session.Account.Language].Contains(": ") == true)
+            if (weapon?.Item.Name.Contains(": ") == true)
             {
                 isPvpPrimary = true;
             }
 
-            isPvpSecondary |= weapon2?.Item.Name[Session.Account.Language].Contains(": ") == true;
-            isPvpArmor |= armor?.Item.Name[Session.Account.Language].Contains(": ") == true;
+            isPvpSecondary |= weapon2?.Item.Name.Contains(": ") == true;
+            isPvpArmor |= armor?.Item.Name.Contains(": ") == true;
 
             return $"tc_info {Level} {Name} {fairy?.Item.Element ?? 0} {ElementRate} {(byte)Class} {(byte)Gender} {(Family != null ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {GetReputationIco()} {GetDignityIco()} {(weapon != null ? 1 : 0)} {weapon?.Rare ?? 0} {weapon?.Upgrade ?? 0} {(weapon2 != null ? 1 : 0)} {weapon2?.Rare ?? 0} {weapon2?.Upgrade ?? 0} {(armor != null ? 1 : 0)} {armor?.Rare ?? 0} {armor?.Upgrade ?? 0} {Act4Kill} {Act4Dead} {Reputation} 0 0 0 {(UseSp ? Morph : 0)} {TalentWin} {TalentLose} {TalentSurrender} 0 {MasterPoints} {Compliment} {Act4Points} {(isPvpPrimary ? 1 : 0)} {(isPvpSecondary ? 1 : 0)} {(isPvpArmor ? 1 : 0)} {HeroLevel} {(string.IsNullOrEmpty(Biography) ? Language.Instance.GetMessageFromKey("NO_PREZ_MESSAGE") : Biography)}";
         }
@@ -5324,8 +5324,8 @@ namespace GloomyTale.GameObject
             }
 
             Session.SendPacket(isQuest
-                 ? GenerateSay($"Quest reward: [ {ServerManager.GetItem(1046).Name[Session.Account.Language]} x {val} ]", 10)
-                 : Session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {ServerManager.GetItem(1046).Name[Session.Account.Language]} x {val}", 10));
+                 ? GenerateSay($"Quest reward: [ {ServerManager.GetItem(1046).Name} x {val} ]", 10)
+                 : Session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {ServerManager.GetItem(1046).Name} x {val}", 10));
             Session.SendPacket(Session.Character.GenerateGold());
         }
         public string GetMinilandObjectList()
@@ -5605,12 +5605,12 @@ namespace GloomyTale.GameObject
                         List<ItemInstance> newInv = Inventory.AddToInventory(newItem);
                         if (newInv.Count > 0)
                         {
-                            Session.SendPacket(GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {newItem.Item.Name[Session.Account.Language]} x {amount}", 10));
+                            Session.SendPacket(GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {newItem.Item.Name} x {amount}", 10));
                         }
                         else if (MailList.Count(s => s.Value.AttachmentVNum != null) < 40)
                         {
                             SendGift(CharacterId, itemVNum, amount, newItem.Rare, newItem.Upgrade, newItem.Design, false);
-                            Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("PACKET_ARRIVED"), $"{newItem.Item.Name[Session.Account.Language]} x {amount}"), 0));
+                            Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("PACKET_ARRIVED"), $"{newItem.Item.Name} x {amount}"), 0));
                         }
                     }
                 }
@@ -6838,11 +6838,11 @@ namespace GloomyTale.GameObject
                         {
                             fairy.XP = 0;
 
-                            Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("FAIRYMAX"), fairy.Item.Name[Session.Account.Language]), 10));
+                            Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("FAIRYMAX"), fairy.Item.Name), 10));
                         }
                         else
                         {
-                            Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("FAIRY_LEVELUP"), fairy.Item.Name[Session.Account.Language]), 10));
+                            Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("FAIRY_LEVELUP"), fairy.Item.Name), 10));
                         }
 
                         Session.SendPacket(GeneratePairy());
@@ -7174,7 +7174,7 @@ namespace GloomyTale.GameObject
                     {
                         Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                             string.Format(Language.Instance.GetMessageFromKey("NO_ITEM_REQUIRED"),
-                                ServerManager.GetItem(requiredItem.VNum).Name[Session.Account.Language]), 0));
+                                ServerManager.GetItem(requiredItem.VNum).Name), 0));
                         return;
                     }
 

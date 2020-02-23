@@ -48,7 +48,7 @@ namespace GloomyTale.DAL.EF
         public byte Level { get; set; }
 
         [MaxLength(255)]
-        [I18NString(typeof(I18NCard))]
+        //[I18NString(typeof(I18NCard))]
         public string Name { get; set; }
 
         public byte Propability { get; set; }

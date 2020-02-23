@@ -97,7 +97,7 @@ namespace GloomyTale.ToolKit.Importers
 
                 var map = new MapDTO
                 {
-                    NameI18NKey = name,
+                    Name = name,
                     Music = music,
                     MapId = short.Parse(file.Name),
                     Data = File.ReadAllBytes(file.FullName),

@@ -276,7 +276,7 @@ namespace GloomyTale.Handler
                                 if (ServerManager.GetItem(mapobject.VNumRequired) is Item requiredItem)
                                     Session.SendPacket(
                                         UserInterfaceHelper.GenerateMsg(
-                                            string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), mapobject.AmountRequired, requiredItem.Name[Session.Account.Language]), 0));
+                                            string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), mapobject.AmountRequired, requiredItem.Name), 0));
                                 return;
                             }
 
@@ -298,8 +298,8 @@ namespace GloomyTale.Handler
                                     if (newInv != null)
                                     {
                                         Session.Character.IncrementQuests(QuestType.Collect1, firstDrop.ItemVNum);
-                                        Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("RECEIVED_ITEM"), $"{newInv.Item.Name[Session.Account.Language]} x {firstDrop.Amount}"), 0));
-                                        Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("RECEIVED_ITEM"), $"{newInv.Item.Name[Session.Account.Language]} x {firstDrop.Amount}"), 11));
+                                        Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("RECEIVED_ITEM"), $"{newInv.Item.Name} x {firstDrop.Amount}"), 0));
+                                        Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("RECEIVED_ITEM"), $"{newInv.Item.Name} x {firstDrop.Amount}"), 11));
                                     }
                                     else
                                     {
@@ -328,11 +328,11 @@ namespace GloomyTale.Handler
                                                 {
                                                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                                                         string.Format(Language.Instance.GetMessageFromKey("RECEIVED_ITEM"),
-                                                            $"{newInv.Item.Name[Session.Account.Language]} x {amount}"), 0));
+                                                            $"{newInv.Item.Name} x {amount}"), 0));
                                                 }
                                                 Session.SendPacket(Session.Character.GenerateSay(
                                                     string.Format(Language.Instance.GetMessageFromKey("RECEIVED_ITEM"),
-                                                        $"{newInv.Item.Name[Session.Account.Language]} x {amount}"), 11));
+                                                        $"{newInv.Item.Name} x {amount}"), 11));
                                                 Session.Character.IncrementQuests(QuestType.Collect1, vnum);
                                             }
                                             else

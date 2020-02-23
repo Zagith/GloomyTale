@@ -33,10 +33,10 @@ namespace GloomyTale.Data
 
         public int Music { get; set; }
 
-        [I18NFrom(typeof(I18NMapPointDataDto))]
+        /*[I18NFrom(typeof(I18NMapPointDataDto))]
         public I18NString Name { get; set; } = new I18NString();
-        [AdaptMember("Name")]
-        public string NameI18NKey { get; set; }
+        [AdaptMember("Name")]*/
+        public string Name { get; set; }
 
         public bool ShopAllowed { get; set; }
 

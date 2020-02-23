@@ -90,10 +90,10 @@ namespace GloomyTale.Data
 
         public MonsterType MonsterType { get; set; }
 
-        [I18NFrom(typeof(I18NNpcMonsterDto))]
+        /*[I18NFrom(typeof(I18NNpcMonsterDto))]
         public I18NString Name { get; set; } = new I18NString();
-        [AdaptMember("Name")]
-        public string NameI18NKey { get; set; }
+        [AdaptMember("Name")]*/
+        public string Name { get; set; }
 
         public bool NoAggresiveIcon { get; set; }
 

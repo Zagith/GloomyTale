@@ -413,7 +413,7 @@ namespace GloomyTale.Handler
                                 {
                                     Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1,
                                         string.Format(Language.Instance.GetMessageFromKey("BUY_ITEM_VALID"),
-                                            iteminfo.Name[Session.Account.Language], amount)));
+                                            iteminfo.Name, amount)));
                                     Session.Character.Gold -= (long) (price * percent);
                                     Session.SendPacket(Session.Character.GenerateGold());
                                 }
@@ -421,7 +421,7 @@ namespace GloomyTale.Handler
                                 {
                                     Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1,
                                         string.Format(Language.Instance.GetMessageFromKey("BUY_ITEM_VALID"),
-                                            iteminfo.Name[Session.Account.Language], amount)));
+                                            iteminfo.Name, amount)));
                                     Session.Character.Reputation -= reputprice;
                                     Session.SendPacket(Session.Character.GenerateFd());
                                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
@@ -864,7 +864,7 @@ namespace GloomyTale.Handler
                     Session.SendPacket($"pdti 11 {inv.ItemVNum} {recipe.Amount} 29 {inv.Upgrade} {inv.Rare}");
                     Session.SendPacket(UserInterfaceHelper.GenerateGuri(19, 1, Session.Character.CharacterId, 1324));
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                        string.Format(Language.Instance.GetMessageFromKey("CRAFTED_OBJECT"), inv.Item.Name[Session.Account.Language],
+                        string.Format(Language.Instance.GetMessageFromKey("CRAFTED_OBJECT"), inv.Item.Name,
                             recipe.Amount), 0));
                     Session.Character.IncrementQuests(QuestType.Product, inv.ItemVNum, recipe.Amount);
                 }
@@ -1045,7 +1045,7 @@ namespace GloomyTale.Handler
                 }
 
                 Session.Character.Gold += price * amount;
-                Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1, string.Format(Language.Instance.GetMessageFromKey("SELL_ITEM_VALID"), inv.Item.Name[Session.Account.Language], amount)));
+                Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1, string.Format(Language.Instance.GetMessageFromKey("SELL_ITEM_VALID"), inv.Item.Name, amount)));
 
                 Session.Character.Inventory.RemoveItemFromInventory(inv.Id, amount);
                 Session.SendPacket(Session.Character.GenerateGold());
@@ -1317,7 +1317,7 @@ namespace GloomyTale.Handler
                         List<ItemInstance> newInv = Session.Character.Inventory.AddToInventory(newItem);
                         if (newInv.Count > 0)
                         {
-                            Session.Character.Session.SendPacket(Session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {newItem.Item.Name[Session.Account.Language]}", 10));
+                            Session.Character.Session.SendPacket(Session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {newItem.Item.Name}", 10));
                         }
                         else
                         {
@@ -1356,7 +1356,7 @@ namespace GloomyTale.Handler
                         if (ServerManager.GetItem(npc.Npc.VNumRequired) is Item requiredItem)
                             Session.SendPacket(
                                 UserInterfaceHelper.GenerateMsg(
-                                    string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), npc.Npc.AmountRequired, requiredItem.Name[Session.Account.Language]), 0));
+                                    string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), npc.Npc.AmountRequired, requiredItem.Name), 0));
                         return;
                     }
                     Session.SendPacket(UserInterfaceHelper.GenerateDelay(5000, 4, $"#guri^400^{npc.MapNpcId}"));
@@ -1369,7 +1369,7 @@ namespace GloomyTale.Handler
                         if (ServerManager.GetItem(npc.Npc.VNumRequired) is Item requiredItem)
                             Session.SendPacket(
                                 UserInterfaceHelper.GenerateMsg(
-                                    string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), npc.Npc.AmountRequired, requiredItem.Name[Session.Account.Language]), 0));
+                                    string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), npc.Npc.AmountRequired, requiredItem.Name), 0));
                         return;
                     }
                     Session.SendPacket(UserInterfaceHelper.GenerateDelay(6000, 4, $"#guri^400^{npc.MapNpcId}"));
@@ -1391,7 +1391,7 @@ namespace GloomyTale.Handler
                 else if (npc.Shop?.ShopId == 5)
                 {
                     ItemDTO item = DAOFactory.Instance.ItemDAO.LoadById(15297);
-                    Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10, item.Name[Session.Account.Language])}");
+                    Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10, item.Name)}");
                 }
                 else if (!string.IsNullOrEmpty(npc.GetNpcDialog()))
                 {
@@ -1447,7 +1447,7 @@ namespace GloomyTale.Handler
             shopOwnerSession.SendPacket(shopOwnerSession.Character.GenerateGold());
             shopOwnerSession.SendPacket(UserInterfaceHelper.GenerateShopMemo(1,
                 string.Format(Language.Instance.GetMessageFromKey("BUY_ITEM"), Session.Character.Name,
-                    shopitem.ItemInstance.Item.Name[Session.Account.Language], amount)));
+                    shopitem.ItemInstance.Item.Name, amount)));
             clientSession.CurrentMapInstance.UserShops[shop.Key].Sell += shopitem.Price * amount;
 
             if (shopitem.ItemInstance.Type != InventoryType.Equipment)

@@ -1066,7 +1066,7 @@ namespace GloomyTale.GameObject
 
                     if (!noMessage || !Buffs.Any(s => s.Card.CardId == indicator.Card.CardId))
                     {
-                        Character.Session.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("UNDER_EFFECT"), indicator.Card.Name[Character.Session.Account.Language]), 20));
+                        Character.Session.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("UNDER_EFFECT"), indicator.Card.Name), 20));
                     }
 
                     Character.Session.SendPacket(Character.GenerateStat());
@@ -1229,12 +1229,12 @@ namespace GloomyTale.GameObject
                         if (indicator.StaticBuff)
                         {
                             Character.Session?.SendPacket($"vb {indicator.Card.CardId} 0 {indicator.Card.Duration}");
-                            Character.Session?.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_TERMINATED"), indicator.Card.Name[Character.Session.Account.Language]), 11));
+                            Character.Session?.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_TERMINATED"), indicator.Card.Name), 11));
                         }
                         else
                         {
                             Character.Session?.SendPacket($"bf 1 {Character.CharacterId} 0.{indicator.Card.CardId}.0 {Level}");
-                            Character.Session?.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_TERMINATED"), indicator.Card.Name[Character.Session.Account.Language]), 20));
+                            Character.Session?.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_TERMINATED"), indicator.Card.Name), 20));
                         }
 
                         if (Buffs[indicator.Card.CardId] != null)

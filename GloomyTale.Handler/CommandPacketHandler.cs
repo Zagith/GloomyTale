@@ -931,7 +931,7 @@ namespace GloomyTale.Handler
                     fairy.ElementRate = fairylevel;
                     fairy.XP = 0;
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                        string.Format(Language.Instance.GetMessageFromKey("FAIRY_LEVEL_CHANGED"), fairy.Item.Name[Session.Account.Language]),
+                        string.Format(Language.Instance.GetMessageFromKey("FAIRY_LEVEL_CHANGED"), fairy.Item.Name),
                         10));
                     Session.SendPacket(Session.Character.GeneratePairy());
                 }
@@ -1555,7 +1555,7 @@ namespace GloomyTale.Handler
                         }
 
                         Session.SendPacket(Session.Character.GenerateSay(
-                            $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {iteminfo.Name[Session.Account.Language]} x {amount}", 12));
+                            $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {iteminfo.Name} x {amount}", 12));
                     }
                     else
                     {
@@ -2829,7 +2829,7 @@ namespace GloomyTale.Handler
                             monster.MapMonsterId));
                         Session.SendPacket(Session.Character.GenerateSay(
                             string.Format(Language.Instance.GetMessageFromKey("MONSTER_REMOVED"), monster.MapMonsterId,
-                                monster.Monster.Name[Session.Account.Language], monster.MapId, monster.MapX, monster.MapY), 12));
+                                monster.Monster.Name, monster.MapId, monster.MapX, monster.MapY), 12));
                         Session.CurrentMapInstance.RemoveMonster(monster);
                         Session.CurrentMapInstance.RemovedMobNpcList.Add(monster);
                         if (DAOFactory.Instance.MapMonsterDAO.LoadById(monster.MapMonsterId) != null)
@@ -2867,7 +2867,7 @@ namespace GloomyTale.Handler
                         Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(UserType.Npc, npc.MapNpcId));
                         Session.SendPacket(Session.Character.GenerateSay(
                             string.Format(Language.Instance.GetMessageFromKey("NPCMONSTER_REMOVED"), npc.MapNpcId,
-                                npc.Npc.Name[Session.Account.Language], npc.MapId, npc.MapX, npc.MapY), 12));
+                                npc.Npc.Name, npc.MapId, npc.MapX, npc.MapY), 12));
                         Session.CurrentMapInstance.RemoveNpc(npc);
                         Session.CurrentMapInstance.RemovedMobNpcList.Add(npc);
                         if (DAOFactory.Instance.ShopDAO.LoadByNpc(npc.MapNpcId) != null)
@@ -3032,7 +3032,7 @@ namespace GloomyTale.Handler
                         if (vnum != null)
                         {
                             Session.SendPacket(Session.Character.GenerateSay(
-                                    $"[SearchItem:{page}]Item: {(string.IsNullOrEmpty(vnum.Name[Session.Account.Language]) ? "none" : vnum.Name[Session.Account.Language])} VNum: {vnum.VNum}",
+                                    $"[SearchItem:{page}]Item: {(string.IsNullOrEmpty(vnum.Name) ? "none" : vnum.Name)} VNum: {vnum.VNum}",
                                     12));
                         }
                         else
@@ -3080,7 +3080,7 @@ namespace GloomyTale.Handler
                         if (npcMonster != null)
                         {
                             Session.SendPacket(Session.Character.GenerateSay(
-                            $"[SearchMonster:{page}]Monster: {(string.IsNullOrEmpty(npcMonster.Name[Session.Account.Language]) ? "none" : npcMonster.Name[Session.Account.Language])} VNum: {npcMonster.NpcMonsterVNum}",
+                            $"[SearchMonster:{page}]Monster: {(string.IsNullOrEmpty(npcMonster.Name) ? "none" : npcMonster.Name)} VNum: {npcMonster.NpcMonsterVNum}",
                             12));
                         }
                         else
@@ -4004,7 +4004,7 @@ namespace GloomyTale.Handler
                     Session.SendPacket(Session.Character.GenerateSay(
                         $"MapId: {map.MapId}\n" +
                         $"MapMusic: {map.Music}\n" +
-                        $"MapName: {map.Name[Session.Account.Language]}\n" +
+                        $"MapName: {map.Name}\n" +
                         $"MapShopAllowed: {map.ShopAllowed}", 10));
                     Session.SendPacket(Session.Character.GenerateSay("---------------------------------", 10));
                     Session.SendPacket(Session.Character.GenerateSay("---------MapInstanceData---------", 10));
@@ -4436,8 +4436,8 @@ namespace GloomyTale.Handler
                             LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                             if (DAOFactory.Instance.ShopDAO.LoadById(shop.ShopId) is ShopDTO shopDTO)
                             {
-                                shop.NameI18NKey = packet.Name;
-                                shopDTO.NameI18NKey = packet.Name;
+                                shop.Name = packet.Name;
+                                shopDTO.Name = packet.Name;
                                 DAOFactory.Instance.ShopDAO.Update(ref shopDTO);
 
                                 Session.CurrentMapInstance.Broadcast($"shop 2 {npc.MapNpcId} {npc.Shop.ShopId} {npc.Shop.MenuType} {npc.Shop.ShopType} {npc.Shop.Name}");

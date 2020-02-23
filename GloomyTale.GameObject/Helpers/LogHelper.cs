@@ -61,7 +61,7 @@ namespace GloomyTale.GameObject.Helpers
             {
                 CharacterId = character.Character.CharacterId,
                 ItemVNum = inv.ItemVNum,
-                ItemName = inv.Item.Name[character.Account.Language],
+                ItemName = inv.Item.Name,
                 Amount = amount,
                 Map = character.Character.MapId,
                 X = character.Character.MapX,

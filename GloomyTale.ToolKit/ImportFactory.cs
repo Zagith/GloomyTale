@@ -91,7 +91,7 @@ namespace GloomyTale.ToolKit
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "NAME")
                     {
-                        skill.NameI18NKey = dictionaryIdLang.TryGetValue(currentLine[2], out string name) ? name : string.Empty;
+                        skill.Name = dictionaryIdLang.TryGetValue(currentLine[2], out string name) ? name : string.Empty;
                     }
                     else if (currentLine.Length > 2 && currentLine[1] == "TYPE")
                     {

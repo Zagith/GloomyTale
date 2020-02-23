@@ -584,7 +584,7 @@ namespace GloomyTale.Handler
                                 $"IIId: {newInv.Id} ItemVNum: {newInv.ItemVNum} Amount: {mail.AttachmentAmount} Sender: {mail.SenderId}");
 
                             Session.SendPacket(Session.Character.GenerateSay(
-                                string.Format(Language.Instance.GetMessageFromKey("ITEM_GIFTED"), newInv.Item.Name[Session.Account.Language],
+                                string.Format(Language.Instance.GetMessageFromKey("ITEM_GIFTED"), newInv.Item.Name,
                                     mail.AttachmentAmount), 12));
 
                             DAOFactory.Instance.MailDAO.DeleteById(mail.MailId);

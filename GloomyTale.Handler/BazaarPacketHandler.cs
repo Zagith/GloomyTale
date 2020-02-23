@@ -117,14 +117,14 @@ namespace GloomyTale.Handler
                                     $"rc_buy 1 {bzcree.Item.Item.VNum} {bzcree.Owner} {cBuyPacket.Amount} {cBuyPacket.Price} 0 0 0");
 
                                 Session.SendPacket(Session.Character.GenerateSay(
-                                    $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {bzcree.Item.Item.Name[Session.Account.Language]} x {cBuyPacket.Amount}",
+                                    $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {bzcree.Item.Item.Name} x {cBuyPacket.Amount}",
                                     10));
 
                                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                                 {
                                     DestinationCharacterId = bz.SellerId,
                                     SourceWorldId = ServerManager.Instance.WorldId,
-                                    Message = StaticPacketHelper.Say(1, bz.SellerId, 12, string.Format(Language.Instance.GetMessageFromKey("BAZAAR_ITEM_SOLD"), cBuyPacket.Amount, bzcree.Item.Item.Name[Session.Account.Language])),
+                                    Message = StaticPacketHelper.Say(1, bz.SellerId, 12, string.Format(Language.Instance.GetMessageFromKey("BAZAAR_ITEM_SOLD"), cBuyPacket.Amount, bzcree.Item.Item.Name)),
                                     Type = MessageType.Other
                                 });
                                 
@@ -200,7 +200,7 @@ namespace GloomyTale.Handler
                 long taxes = bazaarItemDTO.MedalUsed ? 0 : (long)(bazaarItemDTO.Price * 0.10 * soldAmount);
                 long price = (bazaarItemDTO.Price * soldAmount) - taxes;
 
-                string name = itemInstance.Item?.Name[Session.Account.Language] ?? "None";
+                string name = itemInstance.Item?.Name ?? "None";
 
                 if (itemInstance.Amount == 0 || Session.Character.Inventory.CanAddItem(itemInstance.ItemVNum))
                 {

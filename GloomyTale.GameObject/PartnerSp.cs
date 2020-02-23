@@ -1745,7 +1745,7 @@ namespace GloomyTale.GameObject
                 case 4825: return "Little^Pri﻿ncess^Venus";
             }
 
-            return Instance.Item.Name[sess.Account.Language].Replace(' ', '^');
+            return Instance.Item.Name.Replace(' ', '^');
         }
 
         private Skill GetNewSkill(byte castId) => ServerManager.GetAllSkill().FirstOrDefault(s => s.CastId == castId && (s.Class == 28 || s.Class == 29)

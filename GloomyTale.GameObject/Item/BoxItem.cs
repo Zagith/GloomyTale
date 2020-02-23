@@ -274,7 +274,7 @@ namespace GloomyTale.GameObject
                                     {
                                         if (specialist != null)
                                         {
-                                            session.SendPacket(session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {specialist.Item.Name[session.Account.Language]} + {specialist.Upgrade}", 12));
+                                            session.SendPacket(session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {specialist.Item.Name} + {specialist.Upgrade}", 12));
                                             newInv.ForEach(s => session.SendPacket(specialist.GenerateInventoryAdd()));
                                         }
                                         session.Character.Inventory.RemoveItemFromInventory(box.Id);
@@ -312,7 +312,7 @@ namespace GloomyTale.GameObject
                                     {
                                         if (fairy != null)
                                         {
-                                            session.SendPacket(session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {fairy.Item.Name[session.Account.Language]} ({fairy.ElementRate}%)", 12));
+                                            session.SendPacket(session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {fairy.Item.Name} ({fairy.ElementRate}%)", 12));
                                             newInv.ForEach(s => session.SendPacket(fairy.GenerateInventoryAdd()));
                                         }
                                         session.Character.Inventory.RemoveItemFromInventory(box.Id);
@@ -342,7 +342,7 @@ namespace GloomyTale.GameObject
                                     short Slot = inv.Slot;
                                     if (Slot != -1)
                                     {
-                                        session.SendPacket(session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {newInv[0].Item.Name[session.Account.Language]} x 1)", 12));
+                                        session.SendPacket(session.Character.GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {newInv[0].Item.Name} x 1)", 12));
                                         newInv.ForEach(s => session.SendPacket(s.GenerateInventoryAdd()));
                                         session.Character.Inventory.RemoveItemFromInventory(box.Id);
                                     }

@@ -94,7 +94,7 @@ namespace GloomyTale.GameObject
 
         public int Music { get; set; }
 
-        public string NameI18NKey { get; set; }
+        public string Name { get; set; }
 
         public bool ShopAllowed { get; set; }
 

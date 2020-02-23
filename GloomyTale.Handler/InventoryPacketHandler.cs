@@ -911,13 +911,13 @@ namespace GloomyTale.Handler
                                             }
 
                                             Session.SendPacket(Session.Character.GenerateSay(
-                                                $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {inv.Item.Name[Session.Account.Language]} x {amount}",
+                                                $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {inv.Item.Name} x {amount}",
                                                 12));
                                             if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.LodInstance)
                                             {
                                                 Session.CurrentMapInstance?.Broadcast(
                                                     Session.Character.GenerateSay(
-                                                        $"{string.Format(Language.Instance.GetMessageFromKey("ITEM_ACQUIRED_LOD"), Session.Character.Name)}: {inv.Item.Name[Session.Account.Language]} x {mapItem.Amount}",
+                                                        $"{string.Format(Language.Instance.GetMessageFromKey("ITEM_ACQUIRED_LOD"), Session.Character.Name)}: {inv.Item.Name} x {mapItem.Amount}",
                                                         10));
                                             }
 
@@ -954,7 +954,7 @@ namespace GloomyTale.Handler
                                     Logger.Log.LogUserEvent("CHARACTER_ITEM_GET", Session.GenerateIdentity(), $"[GetItem]Gold: {(int)(droppedGold.GoldAmount * multiplier)})");
 
                                     Session.SendPacket(Session.Character.GenerateSay(
-                                        $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {mapItem.GetItemInstance().Item.Name[Session.Account.Language]} x {droppedGold.GoldAmount}{(multiplier > 1 ? $" + {(int)(droppedGold.GoldAmount * multiplier) - droppedGold.GoldAmount}" : "")}",
+                                        $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {mapItem.GetItemInstance().Item.Name} x {droppedGold.GoldAmount}{(multiplier > 1 ? $" + {(int)(droppedGold.GoldAmount * multiplier) - droppedGold.GoldAmount}" : "")}",
                                         12));
                                 }
                                 else
@@ -2329,7 +2329,7 @@ namespace GloomyTale.Handler
                             if (specialist.Upgrade > 9)
                             {
                                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                                    string.Format(Language.Instance.GetMessageFromKey("MUST_USE_ITEM"), ServerManager.GetItem(1364).Name[Session.Account.Language]), 0));
+                                    string.Format(Language.Instance.GetMessageFromKey("MUST_USE_ITEM"), ServerManager.GetItem(1364).Name), 0));
                                 return;
                             }
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
@@ -2354,7 +2354,7 @@ namespace GloomyTale.Handler
                             if (specialist.Upgrade <= 9)
                             {
                                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(
-                                    string.Format(Language.Instance.GetMessageFromKey("MUST_USE_ITEM"), ServerManager.GetItem(1363).Name[Session.Account.Language]), 0));
+                                    string.Format(Language.Instance.GetMessageFromKey("MUST_USE_ITEM"), ServerManager.GetItem(1363).Name), 0));
                                 return;
                             }
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)

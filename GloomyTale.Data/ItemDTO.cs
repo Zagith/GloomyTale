@@ -132,10 +132,10 @@ namespace GloomyTale.Data
 
         public short MpRegeneration { get; set; }
 
-        [I18NFrom(typeof(I18NItemDto))]
+        /*[I18NFrom(typeof(I18NItemDto))]
         public I18NString Name { get; set; } = new I18NString();
-        [AdaptMember("Name")]
-        public string NameI18NKey { get; set; }
+        [AdaptMember("Name")]*/
+        public string Name { get; set; }
 
         public long Price { get; set; }
 

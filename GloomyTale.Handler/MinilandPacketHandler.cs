@@ -304,7 +304,7 @@ namespace GloomyTale.Handler
                                 if (inv.Count > 0)
                                 {
                                     Session.SendPacket(Session.Character.GenerateSay(
-                                        $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {ServerManager.GetItem(itemVNum).Name[Session.Account.Language]} x {itemAmount}",
+                                        $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {ServerManager.GetItem(itemVNum).Name} x {itemAmount}",
                                         12));
                                 }
                                 else

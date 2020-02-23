@@ -65,10 +65,10 @@ namespace GloomyTale.Data
 
         public short MpCost { get; set; }
 
-        [I18NFrom(typeof(I18NSkillDto))]
+        /*[I18NFrom(typeof(I18NSkillDto))]
         public I18NString Name { get; set; } = new I18NString();
-        [AdaptMember("Name")]
-        public string NameI18NKey { get; set; }
+        [AdaptMember("Name")]*/
+        public string Name { get; set; }
 
         public int Price { get; set; }
 

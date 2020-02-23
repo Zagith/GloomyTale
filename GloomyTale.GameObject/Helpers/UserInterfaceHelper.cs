@@ -323,23 +323,23 @@ namespace GloomyTale.GameObject.Helpers
                 switch (packet.OrderFilter)
                 {
                     case 0:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ThenBy(s => s.BazaarItem.Price).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ThenBy(s => s.BazaarItem.Price).ToList();
                         break;
 
                     case 1:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ThenByDescending(s => s.BazaarItem.Price).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ThenByDescending(s => s.BazaarItem.Price).ToList();
                         break;
 
                     case 2:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ThenBy(s => s.BazaarItem.Amount).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ThenBy(s => s.BazaarItem.Amount).ToList();
                         break;
 
                     case 3:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ThenByDescending(s => s.BazaarItem.Amount).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ThenByDescending(s => s.BazaarItem.Amount).ToList();
                         break;
 
                     default:
-                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name[language]).ToList();
+                        definitivelist = definitivelist.OrderBy(s => s.Item.Item.Name).ToList();
                         break;
                 }
                 foreach (BazaarItemLink bzlink in definitivelist.Where(s => (s.BazaarItem.DateStart.AddHours(s.BazaarItem.Duration) - DateTime.Now).TotalMinutes > 0 && s.Item.Amount > 0).Skip(packet.Index * 50).Take(50))

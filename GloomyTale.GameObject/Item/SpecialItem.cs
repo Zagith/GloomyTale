@@ -436,7 +436,7 @@ namespace GloomyTale.GameObject
                     {
                         session.Character.AddStaticBuff(new StaticBuffDTO { CardId = 131 });
                         session.CurrentMapInstance?.Broadcast(session.Character.GeneratePairy());
-                        session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), inv.Item.Name[session.Account.Language]), 0));
+                        session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), inv.Item.Name), 0));
                         session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 3014), session.Character.PositionX, session.Character.PositionY);
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }
@@ -1002,7 +1002,7 @@ namespace GloomyTale.GameObject
                             StaticBonusType = StaticBonusType.BazaarMedalGold
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
                     }
                     break;
 
@@ -1017,7 +1017,7 @@ namespace GloomyTale.GameObject
                             StaticBonusType = StaticBonusType.BazaarMedalSilver
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
                     }
                     break;
 
@@ -1048,7 +1048,7 @@ namespace GloomyTale.GameObject
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
                     }
                     break;
 
@@ -1064,7 +1064,7 @@ namespace GloomyTale.GameObject
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
                     }
                     break;
 
@@ -1081,7 +1081,7 @@ namespace GloomyTale.GameObject
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
                         session.SendPacket("ib 1278 1");
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
                     }
                     break;
 
@@ -1098,7 +1098,7 @@ namespace GloomyTale.GameObject
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
                         session.SendPacket("ib 1278 1");
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
                     }
                     break;
 
@@ -1114,7 +1114,7 @@ namespace GloomyTale.GameObject
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
                     }
                     break;
 
@@ -1130,7 +1130,7 @@ namespace GloomyTale.GameObject
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
                     }
                     break;
 
@@ -1345,7 +1345,7 @@ namespace GloomyTale.GameObject
                         });
                         session.Character.Compliment += 500;
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name), 12));
                         ServerManager.Instance.ChangeMap(session.Character.CharacterId);
                     }
                     else
@@ -1596,7 +1596,7 @@ namespace GloomyTale.GameObject
                                 case 5370:
                                     if (session.Character.Buff.Any(s => s.Card.CardId == 393))
                                     {
-                                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ALREADY_GOT_BUFF"), session.Character.Buff.FirstOrDefault(s => s.Card.CardId == 393)?.Card.Name[session.Account.Language]), 10));
+                                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("ALREADY_GOT_BUFF"), session.Character.Buff.FirstOrDefault(s => s.Card.CardId == 393)?.Card.Name), 10));
                                         return;
                                     }
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
