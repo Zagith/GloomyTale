@@ -22,10 +22,12 @@ using System.Collections.Generic;
 using System.Linq;
 using GloomyTale.GameObject.Networking;
 using System.Reactive.Linq;
+using GloomyTale.GameObject.Items.Instance;
+using System.Collections.Concurrent;
 
 namespace GloomyTale.GameObject
 {
-    public class Inventory : ThreadSafeSortedList<Guid, ItemInstance>
+    public class Inventory : ConcurrentDictionary<Guid, ItemInstance>
     {
         #region Members
 
@@ -98,17 +100,16 @@ namespace GloomyTale.GameObject
                         break;
 
                     case InventoryType.Equipment:
-                        newItem = newItem.Item.ItemType == ItemType.Specialist ? new ItemInstance
-                        {
-                            ItemVNum = vnum,
-                            SpLevel = 1,
-                            Amount = 1
-                        } : new ItemInstance
-                        {
-                            ItemVNum = vnum,
-                            Amount = 1,
-                            DurabilityPoint = newItem.Item.Effect != 790 && (newItem.Item.EffectValue < 863 || newItem.Item.EffectValue > 872) && !new int[] { 3951, 3952, 3953, 3954, 3955, 7427 }.Contains(newItem.Item.EffectValue) ? newItem.Item.EffectValue : 0
-                        };
+                        newItem = newItem.Item.ItemType == ItemType.Specialist
+                           ? new SpecialistInstance { ItemVNum = vnum, SpLevel = 1, Amount = 1 }
+                           : newItem.Item.ItemType == ItemType.Box
+                               ? new BoxInstance { ItemVNum = vnum, Amount = 1 }
+                               : new WearableInstance
+                               {
+                                   ItemVNum = vnum,
+                                   Amount = 1,
+                                   DurabilityPoint = newItem.Item.Effect != 790 && (newItem.Item.EffectValue < 863 || newItem.Item.EffectValue > 872) && !new int[] { 3951, 3952, 3953, 3954, 3955, 7427 }.Contains(newItem.Item.EffectValue) ? newItem.Item.EffectValue : 0
+                               };
                         break;
                 }
             }
@@ -221,8 +222,15 @@ namespace GloomyTale.GameObject
                 // check if item can be stapled
                 if (newItem.Type != InventoryType.Bazaar && (newItem.Item.Type == InventoryType.Etc || newItem.Item.Type == InventoryType.Main))
                 {
-                    List<ItemInstance> slotNotFull = Where(i => i.Type != InventoryType.Bazaar && i.Type != InventoryType.PetWarehouse && i.Type != InventoryType.Warehouse && i.Type != InventoryType.FamilyWareHouse && i.ItemVNum.Equals(newItem.ItemVNum) && i.Amount < MAX_ITEM_AMOUNT);
-                    int freeslot = GetMaxSlot(newItem.Type) - CountLinq(s => s.Type == newItem.Type);
+                    IEnumerable<ItemInstance> slotNotFull = this.ToList().Select(s => s.Value).Where(i =>
+                    i.Type != InventoryType.Bazaar && 
+                    i.Type != InventoryType.PetWarehouse && 
+                    i.Type != InventoryType.Warehouse && 
+                    i.Type != InventoryType.FamilyWareHouse && 
+                    i.ItemVNum.Equals(newItem.ItemVNum) && 
+                    i.Amount < MAX_ITEM_AMOUNT);
+
+                    int freeslot = GetMaxSlot(newItem.Type) - this.Count(s => s.Value.Type == newItem.Type);
                     if (freeslot < 0) freeslot = 0;
                     if (newItem.Amount <= (freeslot * MAX_ITEM_AMOUNT) + slotNotFull.Sum(s => MAX_ITEM_AMOUNT - s.Amount))
                     {
@@ -286,7 +294,7 @@ namespace GloomyTale.GameObject
                     Owner.Session?.SendPacket(inventoryPacket);
                 }
 
-                if (Any(s => s.Slot == slot && s.Type == type))
+                if (this.Any(s => s.Value.Slot == slot && s.Value.Type == type))
                 {
                     return null;
                 }
@@ -300,14 +308,19 @@ namespace GloomyTale.GameObject
 
         public bool CanAddItem(short itemVnum) => canAddItem(ServerManager.GetItem(itemVnum).Type);
 
-        public int CountItem(int itemVNum) => Where(s => s.ItemVNum == itemVNum && s.Type != InventoryType.Wear && s.Type != InventoryType.FamilyWareHouse && s.Type != InventoryType.Bazaar && s.Type != InventoryType.Warehouse && s.Type != InventoryType.PetWarehouse).Sum(i => i.Amount);
+        public int CountItem(int itemVNum) => this.Select(s => s.Value).Where(s => 
+        s.ItemVNum == itemVNum && s.Type != InventoryType.Wear && 
+        s.Type != InventoryType.FamilyWareHouse && s.Type != InventoryType.Bazaar && 
+        s.Type != InventoryType.Warehouse && 
+        s.Type != InventoryType.PetWarehouse).Sum(i => i.Amount);
 
-        public int CountItemInAnInventory(InventoryType inv) => CountLinq(s => s.Type == inv);
+        public int CountItemInAnInventory(InventoryType inv) => this.Count(s => s.Value.Type == inv);
 
         public int CountBazaarItems()
         {
             List<BazaarItemLink> BazaarList = ServerManager.Instance.BazaarList.GetAllItems();
-            return CountLinq(s => s.Type == InventoryType.Bazaar && BazaarList.FirstOrDefault(b => b.BazaarItem.ItemInstanceId == s.Id) is BazaarItemLink bz && (bz.BazaarItem.DateStart.AddHours(bz.BazaarItem.Duration).AddDays(bz.BazaarItem.MedalUsed ? 30 : 7) - DateTime.Now).TotalMinutes > 0);
+            return this.Count(s => s.Value.Type == InventoryType.Bazaar && BazaarList.FirstOrDefault(b => b.BazaarItem.ItemInstanceId == s.Value.Id) is 
+                BazaarItemLink bz && (bz.BazaarItem.DateStart.AddHours(bz.BazaarItem.Duration).AddDays(bz.BazaarItem.MedalUsed ? 30 : 7) - DateTime.Now).TotalMinutes > 0);
         }
 
         public Tuple<short, InventoryType> DeleteById(Guid id)
@@ -320,7 +333,7 @@ namespace GloomyTale.GameObject
                 if (inv != null)
                 {
                     removedPlace = new Tuple<short, InventoryType>(inv.Slot, inv.Type);
-                    Remove(inv.Id);
+                    TryRemove(inv.Id, out ItemInstance value);
                 }
                 else
                 {
@@ -337,7 +350,8 @@ namespace GloomyTale.GameObject
         {
             if (Owner != null)
             {
-                ItemInstance inv = FirstOrDefault(i => i.Slot.Equals(slot) && i.Type.Equals(type));
+                ItemInstance inv = this.Select(s => s.Value).
+                    FirstOrDefault(i => i.Slot.Equals(slot) && i.Type.Equals(type));
 
                 if (inv != null)
                 {
@@ -346,7 +360,7 @@ namespace GloomyTale.GameObject
                         return;
                     }
 
-                    Remove(inv.Id);
+                    TryRemove(inv.Id, out ItemInstance value);
                 }
                 else
                 {
@@ -376,7 +390,7 @@ namespace GloomyTale.GameObject
             {
                 if (itemgroup.FirstOrDefault()?.Type is InventoryType type)
                 {
-                    List<ItemInstance> listitem = Where(i => i.Type == type);
+                    List<ItemInstance> listitem = this.Select(s => s.Value).Where(i => i.Type == type).ToList();
                     if (!place.ContainsKey(type))
                     {
                         place.Add(type, (type != InventoryType.Miniland ? GetMaxSlot(type) : 50) - listitem.Count);
@@ -424,6 +438,8 @@ namespace GloomyTale.GameObject
 
         public ItemInstance GetItemInstanceById(Guid id) => this[id];
 
+        public T LoadByItemInstance<T>(Guid id) where T : ItemInstance => (T)this[id];
+
         public ItemInstance LoadBySlotAndType(short slot, InventoryType type)
         {
             ItemInstance retItem = null;
@@ -432,7 +448,8 @@ namespace GloomyTale.GameObject
             {
                 lock (_lockObject)
                 {
-                    retItem = SingleOrDefault(i => i.Slot.Equals(slot) && i.Type.Equals(type));
+                    retItem = this.Select(s => s.Value)
+                    .SingleOrDefault(i => i != null && i.Slot.Equals(slot) && i.Type.Equals(type));
                 }
             }
             catch (InvalidOperationException ioEx)
@@ -441,7 +458,8 @@ namespace GloomyTale.GameObject
 
                 bool isFirstItem = true;
 
-                foreach (ItemInstance item in Where(i => i.Slot.Equals(slot) && i.Type.Equals(type)))
+                foreach (ItemInstance item in this.Select(s => s.Value)
+                    .Where(i => i != null && i.Slot.Equals(slot) && i.Type.Equals(type)))
                 {
                     if (isFirstItem)
                     {
@@ -450,7 +468,8 @@ namespace GloomyTale.GameObject
                         continue;
                     }
 
-                    ItemInstance itemInstance = FirstOrDefault(i => i.Slot.Equals(slot) && i.Type.Equals(type));
+                    ItemInstance itemInstance = this.Select(s => s.Value).FirstOrDefault(i =>
+                        i != null && i.Slot == slot && i.Type == type);
 
                     if (itemInstance != null)
                     {
@@ -462,7 +481,9 @@ namespace GloomyTale.GameObject
                         }
                         else
                         {
-                            Remove(itemInstance.Id);
+                            TryRemove(
+                                this.Select(s => s.Value).First(i => i != null && i.Slot.Equals(slot) && i.Type.Equals(type))
+                                    .Id, out ItemInstance value);
                         }
                     }
                 }
@@ -470,7 +491,54 @@ namespace GloomyTale.GameObject
             return retItem;
         }
 
-        public T LoadByVNum<T>(short vNum) where T : ItemInstance => (T)FirstOrDefault(i => i.ItemVNum.Equals(vNum));
+        public T LoadBySlotAndType<T>(short slot, InventoryType type) where T : ItemInstance
+        {
+            T retItem = null;
+
+            try
+            {
+                lock (_lockObject)
+                {
+                    retItem = (T)this.Select(s => s.Value).SingleOrDefault(i =>
+                     i != null && i.GetType() == typeof(T) && i.Slot == slot && i.Type == type);
+                }
+            }
+            catch (InvalidOperationException ioEx)
+            {
+                Logger.Log.LogUserEventError(nameof(LoadBySlotAndType), Owner?.Session?.GenerateIdentity(), "Multiple items in slot, Splitting...", ioEx);
+
+                bool isFirstItem = true;
+
+                foreach (ItemInstance item in this.Select(s => s.Value).Where(i =>
+                    i != null && i.GetType() == typeof(T) && i.Slot == slot && i.Type == type))
+                {
+                    if (isFirstItem)
+                    {
+                        retItem = (T)item;
+                        isFirstItem = false;
+                        continue;
+                    }
+
+                    ItemInstance itemInstance = this.Select(s => s.Value).FirstOrDefault(i =>
+                        i != null && i.GetType() == typeof(T) && i.Slot == slot && i.Type == type);
+
+                    if (itemInstance != null)
+                    {
+                        short? freeSlot = getFreeSlot(type);
+
+                        if (freeSlot.HasValue)
+                        {
+                            itemInstance.Slot = freeSlot.Value;
+                        }
+                        else
+                        {
+                            TryRemove(itemInstance.Id, out ItemInstance value);
+                        }
+                    }
+                }
+            }
+            return retItem;
+        }
 
         /// <summary>
         /// Moves one item from one <see cref="Inventory"/> to another. Example: Equipment &lt;-&gt; Wear,
@@ -668,7 +736,11 @@ namespace GloomyTale.GameObject
             {
                 int remainingAmount = amount;
 
-                foreach (ItemInstance inventory in Where(s => s.ItemVNum == vnum && s.Type != InventoryType.Wear && s.Type != InventoryType.Bazaar && s.Type != InventoryType.Warehouse && s.Type != InventoryType.PetWarehouse && s.Type != InventoryType.FamilyWareHouse).OrderBy(i => i.Slot))
+                foreach (ItemInstance inventory in this.Select(s => s.Value).Where(s => 
+                        s.ItemVNum == vnum && s.Type != InventoryType.Wear && s.Type != InventoryType.Bazaar && 
+                        s.Type != InventoryType.Warehouse && s.Type != InventoryType.PetWarehouse && 
+                        s.Type != InventoryType.FamilyWareHouse)
+                    .OrderBy(i => i.Slot))
                 {
                     if (remainingAmount > 0)
                     {
@@ -700,14 +772,14 @@ namespace GloomyTale.GameObject
         {
             if (Owner != null)
             {
-                ItemInstance inv = FirstOrDefault(i => i.Id.Equals(id));
+                ItemInstance inv = this.Select(s => s.Value).FirstOrDefault(i => i.Id.Equals(id));
                 if (inv != null)
                 {
                     inv.Amount -= amount;
                     if (inv.Amount <= 0)
                     {
                         Owner.Session.SendPacket(UserInterfaceHelper.Instance.GenerateInventoryRemove(inv.Type, inv.Slot));
-                        Remove(inv.Id);
+                        TryRemove(inv.Id, out ItemInstance _);
                         return;
                     }
                     Owner.Session.SendPacket(inv.GenerateInventoryAdd());
@@ -726,15 +798,18 @@ namespace GloomyTale.GameObject
             switch (inventoryType)
             {
                 case InventoryType.Costume:
-                    itemsByInventoryType = Where(s => s.Type == InventoryType.Costume).OrderBy(s => s.ItemVNum).ToList();
+                    itemsByInventoryType = this.Select(s => s.Value).Where(s => 
+                        s.Type == InventoryType.Costume).OrderBy(s => s.ItemVNum).ToList();
                     break;
 
                 case InventoryType.Specialist:
-                    itemsByInventoryType = Where(s => s.Type == InventoryType.Specialist).OrderBy(s => s.Item.LevelJobMinimum).ToList();
+                    itemsByInventoryType = this.Select(s => s.Value).Where(s => 
+                        s.Type == InventoryType.Specialist).OrderBy(s => s.Item.LevelJobMinimum).ToList();
                     break;
 
                 default:
-                    itemsByInventoryType = Where(s => s.Type == inventoryType).OrderBy(s => s.Item.Price).ToList();
+                    itemsByInventoryType = this.Select(s => s.Value).Where(s => 
+                        s.Type == inventoryType).OrderBy(s => s.Item.Price).ToList();
                     break;
             }
             generateClearInventory(inventoryType);
@@ -770,7 +845,8 @@ namespace GloomyTale.GameObject
         /// <returns>short?; based on given inventory type</returns>
         private short? getFreeSlot(InventoryType type)
         {
-            IEnumerable<int> itemInstanceSlotsByType = Where(i => i.Type == type).OrderBy(i => i.Slot).Select(i => (int)i.Slot);
+            IEnumerable<int> itemInstanceSlotsByType = this.Select(s => s.Value).Where(i => 
+                i.Type == type).OrderBy(i => i.Slot).Select(i => (int)i.Slot);
             IEnumerable<int> instanceSlotsByType = itemInstanceSlotsByType as int[] ?? itemInstanceSlotsByType.ToArray();
             int backpackSize = GetMaxSlot(type);
             int maxRange = (type != InventoryType.Miniland ? backpackSize : 50) + 1;
@@ -792,10 +868,11 @@ namespace GloomyTale.GameObject
         /// <returns></returns>
         private ItemInstance takeItem(short slot, InventoryType type)
         {
-            ItemInstance itemInstance = SingleOrDefault(i => i.Slot == slot && i.Type == type);
+            ItemInstance itemInstance = this.Select(s => s.Value).SingleOrDefault(i => 
+                i.Slot == slot && i.Type == type);
             if (itemInstance != null)
             {
-                Remove(itemInstance.Id);
+                TryRemove(itemInstance.Id, out ItemInstance _);
                 return itemInstance;
             }
             return null;

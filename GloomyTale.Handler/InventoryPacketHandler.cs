@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using GloomyTale.GameObject.Networking;
 using static GloomyTale.Domain.BCardType;
 using System.IO;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.Handler
 {
@@ -141,12 +142,12 @@ namespace GloomyTale.Handler
             if (equipmentInfoPacket != null)
             {
                 bool isNpcShopItem = false;
-                ItemInstance inventory = null;
+                WearableInstance inventory = null;
                 switch (equipmentInfoPacket.Type)
                 {
                     case 0:
-                        inventory = Session.Character.Inventory.LoadBySlotAndType(equipmentInfoPacket.Slot,
-                            InventoryType.Wear);
+                        inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(equipmentInfoPacket.Slot, InventoryType.Wear) ??
+                        Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>(equipmentInfoPacket.Slot, InventoryType.Wear);
                         break;
 
                     case 1:
@@ -156,11 +157,12 @@ namespace GloomyTale.Handler
 
                     case 2:
                         isNpcShopItem = true;
-                        if (ServerManager.GetItem(equipmentInfoPacket.Slot) != null)
+                        if (ServerManager.GetItem(equipmentInfoPacket.Slot) == null)
                         {
-                            inventory = new ItemInstance(equipmentInfoPacket.Slot, 1);
-                            break;
+                            return;
                         }
+
+                        inventory = new WearableInstance(equipmentInfoPacket.Slot, 1);
 
                         return;
 

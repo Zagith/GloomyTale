@@ -30,9 +30,9 @@ namespace GloomyTale.DAL.DAO
     {
         private readonly IItemInstanceMappingTypes _mappingTypes;
 
-        public ItemInstanceDAO(IMapper mapper /*,IItemInstanceMappingTypes mappingTypes*/) : base(mapper)
+        public ItemInstanceDAO(IMapper mapper, IItemInstanceMappingTypes mappingTypes) : base(mapper)
         {
-            //_mappingTypes = mappingTypes;
+            _mappingTypes = mappingTypes;
         }
 
         #region Methods
