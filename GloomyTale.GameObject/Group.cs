@@ -188,7 +188,7 @@ namespace GloomyTale.GameObject
                     foreach (Gift requiredItem in Raid.RequiredItems)
                     {
                         if (ServerManager.GetItem(requiredItem.VNum).Type == InventoryType.Equipment
-                        && !session.Character.Inventory.Any(s => s.ItemVNum == requiredItem.VNum && s.Type == InventoryType.Wear))
+                        && !session.Character.Inventory.Any(s => s.Value.ItemVNum == requiredItem.VNum && s.Value.Type == InventoryType.Wear))
                         {
                             session.SendPacket(UserInterfaceHelper.GenerateMsg(
                                 string.Format(Language.Instance.GetMessageFromKey("ITEM_NOT_EQUIPPED"),

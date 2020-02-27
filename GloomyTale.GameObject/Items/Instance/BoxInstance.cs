@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GloomyTale.Data.Interfaces;
+using GloomyTale.Domain;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

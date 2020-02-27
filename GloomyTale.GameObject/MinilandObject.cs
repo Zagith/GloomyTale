@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 using GloomyTale.Data;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {

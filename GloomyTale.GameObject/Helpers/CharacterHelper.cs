@@ -14,6 +14,7 @@
 
 using GloomyTale.Core;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.Items.Instance;
 using System;
 
 namespace GloomyTale.GameObject.Helpers

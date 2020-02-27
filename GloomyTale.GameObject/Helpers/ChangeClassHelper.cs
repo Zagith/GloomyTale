@@ -1,6 +1,7 @@
 ﻿using GloomyTale.Core;
 using GloomyTale.Data;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace GloomyTale.GameObject.Helpers
 
             if (session.Character.LastSkillUse.AddSeconds(20) < DateTime.Now || session.Character.LastDefence.AddSeconds(20) < DateTime.Now)
             {
-                if (session.Character.Inventory.All(i => i.Type != InventoryType.Wear))
+                if (session.Character.Inventory.All(i => i.Value.Type != InventoryType.Wear))
                 {
                     switch (inv.Item.EffectValue)
                     {
@@ -98,7 +99,7 @@ namespace GloomyTale.GameObject.Helpers
 
             if (session.Character.LastSkillUse.AddSeconds(20) < DateTime.Now || session.Character.LastDefence.AddSeconds(20) < DateTime.Now)
             {
-                if (session.Character.Inventory.All(i => i.Type != InventoryType.Wear))
+                if (session.Character.Inventory.All(i => i.Value.Type != InventoryType.Wear))
                 {
                     var i = 0;
                     switch (session.Character.Class)

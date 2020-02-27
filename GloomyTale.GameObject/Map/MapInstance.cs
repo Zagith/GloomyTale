@@ -25,6 +25,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using GloomyTale.GameObject.Networking;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {

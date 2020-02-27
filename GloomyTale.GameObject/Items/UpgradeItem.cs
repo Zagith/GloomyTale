@@ -16,6 +16,7 @@ using GloomyTale.Core;
 using GloomyTale.Data;
 using GloomyTale.Domain;
 using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {
@@ -71,7 +72,7 @@ namespace GloomyTale.GameObject
                             {
                                 case 1219:
                                 case 9130:
-                                    ItemInstance equip = session.Character.Inventory.LoadBySlotAndType(SlotEquip, (InventoryType)TypeEquip);
+                                    var equip = session.Character.Inventory.LoadBySlotAndType<WearableInstance>(SlotEquip, (InventoryType)TypeEquip);
                                     if (equip?.IsFixed == true)
                                     {
                                         equip.IsFixed = false;

@@ -27,6 +27,7 @@ using static GloomyTale.Domain.BCardType;
 using GloomyTale.GameObject.Battle;
 using System.IO;
 using System.Threading.Tasks;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {
@@ -384,10 +385,10 @@ namespace GloomyTale.GameObject
             $"{RangeDefense + (ArmorInstance?.Item.DistanceDefence ?? 0) + (GlovesInstance?.Item.DistanceDefence ?? 0) + (BootsInstance?.Item.DistanceDefence ?? 0)} " +
             $"{RangeDefenseDodge + (ArmorInstance?.Item.DistanceDefenceDodge ?? 0) + (GlovesInstance?.Item.DistanceDefenceDodge ?? 0) + (BootsInstance?.Item.DistanceDefenceDodge ?? 0)} " +
             $"{MagicalDefense + (ArmorInstance?.Item.MagicDefence ?? 0) + (GlovesInstance?.Item.MagicDefence ?? 0) + (BootsInstance?.Item.MagicDefence ?? 0)} " +
-            $"{EquipmentFireResistance + Monster.FireResistance + (GlovesInstance?.FireResistance ?? 0) + (GlovesInstance?.Item.FireResistance ?? 0) + (BootsInstance?.FireResistance ?? 0) + (BootsInstance?.Item.FireResistance ?? 0)} " +
-            $"{EquipmentWaterResistance + Monster.WaterResistance + (GlovesInstance?.WaterResistance ?? 0) + (GlovesInstance?.Item.WaterResistance ?? 0) + (BootsInstance?.WaterResistance ?? 0) + (BootsInstance?.Item.WaterResistance ?? 0)} " +
-            $"{EquipmentLightResistance + Monster.LightResistance + (GlovesInstance?.LightResistance ?? 0) + (GlovesInstance?.Item.LightResistance ?? 0) + (BootsInstance?.LightResistance ?? 0) + (BootsInstance?.Item.LightResistance ?? 0)} " +
-            $"{EquipmentDarkResistance + Monster.DarkResistance + (GlovesInstance?.DarkResistance ?? 0) + (GlovesInstance?.Item.DarkResistance ?? 0) + (BootsInstance?.DarkResistance ?? 0) + (BootsInstance?.Item.DarkResistance ?? 0)} " +
+            $"{EquipmentFireResistance + Monster.FireResistance + (((WearableInstance)GlovesInstance)?.FireResistance ?? 0) + (GlovesInstance?.Item.FireResistance ?? 0) + (((WearableInstance)BootsInstance)?.FireResistance ?? 0) + (BootsInstance?.Item.FireResistance ?? 0)} " +
+            $"{EquipmentWaterResistance + Monster.WaterResistance + (((WearableInstance)GlovesInstance)?.WaterResistance ?? 0) + (GlovesInstance?.Item.WaterResistance ?? 0) + (((WearableInstance)BootsInstance)?.WaterResistance ?? 0) + (BootsInstance?.Item.WaterResistance ?? 0)} " +
+            $"{EquipmentLightResistance + Monster.LightResistance + (((WearableInstance)GlovesInstance)?.LightResistance ?? 0) + (GlovesInstance?.Item.LightResistance ?? 0) + (((WearableInstance)BootsInstance)?.LightResistance ?? 0) + (BootsInstance?.Item.LightResistance ?? 0)} " +
+            $"{EquipmentDarkResistance + Monster.DarkResistance + (((WearableInstance)GlovesInstance)?.DarkResistance ?? 0) + (GlovesInstance?.Item.DarkResistance ?? 0) + (((WearableInstance)BootsInstance)?.DarkResistance ?? 0) + (BootsInstance?.Item.DarkResistance ?? 0)} " +
             $"{MaxHp} " +
             $"{MaxMp} " +
             $"-1 {Name.Replace(' ', '^')}";
@@ -511,10 +512,10 @@ namespace GloomyTale.GameObject
                         $"{RangeDefenseDodge + (ArmorInstance?.Item.DistanceDefenceDodge ?? 0) + (GlovesInstance?.Item.DistanceDefenceDodge ?? 0) + (BootsInstance?.Item.DistanceDefenceDodge ?? 0)} " +
                         $"{MagicalDefense + (ArmorInstance?.Item.MagicDefence ?? 0) + (GlovesInstance?.Item.MagicDefence ?? 0) + (BootsInstance?.Item.MagicDefence ?? 0)} " +
                         $"{(IsUsingSp ? Sp.Instance.Item.Element : 0)} " +
-                        $"{EquipmentFireResistance + Monster.FireResistance + (GlovesInstance?.FireResistance ?? 0) + (GlovesInstance?.Item.FireResistance ?? 0) + (BootsInstance?.FireResistance ?? 0) + (BootsInstance?.Item.FireResistance ?? 0)} " +
-                        $"{EquipmentWaterResistance + Monster.WaterResistance + (GlovesInstance?.WaterResistance ?? 0) + (GlovesInstance?.Item.WaterResistance ?? 0) + (BootsInstance?.WaterResistance ?? 0) + (BootsInstance?.Item.WaterResistance ?? 0)} " +
-                        $"{EquipmentLightResistance + Monster.LightResistance + (GlovesInstance?.LightResistance ?? 0) + (GlovesInstance?.Item.LightResistance ?? 0) + (BootsInstance?.LightResistance ?? 0) + (BootsInstance?.Item.LightResistance ?? 0)} " +
-                        $"{EquipmentDarkResistance + Monster.DarkResistance + (GlovesInstance?.DarkResistance ?? 0) + (GlovesInstance?.Item.DarkResistance ?? 0) + (BootsInstance?.DarkResistance ?? 0) + (BootsInstance?.Item.DarkResistance ?? 0)} " +
+                        $"{EquipmentFireResistance + Monster.FireResistance + (((WearableInstance)GlovesInstance)?.FireResistance ?? 0) + (GlovesInstance?.Item.FireResistance ?? 0) + (((WearableInstance)BootsInstance)?.FireResistance ?? 0) + (BootsInstance?.Item.FireResistance ?? 0)} " +
+                        $"{EquipmentWaterResistance + Monster.WaterResistance + (((WearableInstance)GlovesInstance)?.WaterResistance ?? 0) + (GlovesInstance?.Item.WaterResistance ?? 0) + (((WearableInstance)BootsInstance)?.WaterResistance ?? 0) + (BootsInstance?.Item.WaterResistance ?? 0)} " +
+                        $"{EquipmentLightResistance + Monster.LightResistance + (((WearableInstance)GlovesInstance)?.LightResistance ?? 0) + (GlovesInstance?.Item.LightResistance ?? 0) + (((WearableInstance)BootsInstance)?.LightResistance ?? 0) + (BootsInstance?.Item.LightResistance ?? 0)} " +
+                        $"{EquipmentDarkResistance + Monster.DarkResistance + (((WearableInstance)GlovesInstance)?.DarkResistance ?? 0) + (GlovesInstance?.Item.DarkResistance ?? 0) + (((WearableInstance)BootsInstance)?.DarkResistance ?? 0) + (BootsInstance?.Item.DarkResistance ?? 0)} " +
                         $"{Hp} " +
                         $"{MaxHp} " +
                         $"{Mp} " +
@@ -597,7 +598,26 @@ namespace GloomyTale.GameObject
 
         public List<ItemInstance> GetInventory()
         {
-            return MateType == MateType.Pet ? new List<ItemInstance>() : Owner.Inventory.Where(s => s.Type == (InventoryType)(13 + PetId));
+            List<ItemInstance> items = new List<ItemInstance>();
+            switch (PetId)
+            {
+                case 0:
+                    items = Owner.Inventory.Select(s => s.Value)
+                        .Where(s => s.Type == InventoryType.FirstPartnerInventory).ToList();
+                    break;
+
+                case 1:
+                    items = Owner.Inventory.Select(s => s.Value)
+                        .Where(s => s.Type == InventoryType.SecondPartnerInventory).ToList();
+                    break;
+
+                case 2:
+                    items = Owner.Inventory.Select(s => s.Value)
+                        .Where(s => s.Type == InventoryType.ThirdPartnerInventory).ToList();
+                    break;
+            }
+
+            return items;
         }
 
         #region Stats Load
@@ -756,7 +776,7 @@ namespace GloomyTale.GameObject
             GlovesInstance = inv.Find(s => s.Item.EquipmentSlot == EquipmentType.Gloves);
             BootsInstance = inv.Find(s => s.Item.EquipmentSlot == EquipmentType.Boots);
 
-            ItemInstance partnerSpInstance = inv.Find(s => s.Item.EquipmentSlot == EquipmentType.Sp);
+            SpecialistInstance partnerSpInstance = (SpecialistInstance)inv.Find(s => s.Item.EquipmentSlot == EquipmentType.Sp);
 
             if (partnerSpInstance != null)
             {

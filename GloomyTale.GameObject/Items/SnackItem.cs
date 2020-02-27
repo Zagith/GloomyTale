@@ -15,6 +15,7 @@
 using GloomyTale.Core;
 using GloomyTale.Data;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.Networking;
 using System;
 using System.Linq;
@@ -43,11 +44,11 @@ namespace GloomyTale.GameObject
 
         public override void Use(ClientSession session, ref ItemInstance inv, byte Option = 0, string[] packetsplit = null)
         {
-            /*if (session.Character.IsVehicled)
+            if (session.Character.IsVehicled)
             {
                 session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("CANT_DO_VEHICLED"), 10));
                 return;
-            }*/
+            }
 
             if (session.CurrentMapInstance?.MapInstanceType != MapInstanceType.TalentArenaMapInstance && VNum == 2802)
             {

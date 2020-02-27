@@ -16,6 +16,7 @@ using GloomyTale.Core;
 using GloomyTale.DAL;
 using GloomyTale.Data;
 using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.Networking;
 
 namespace GloomyTale.GameObject

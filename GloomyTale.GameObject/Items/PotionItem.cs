@@ -17,6 +17,7 @@ using System;
 using System.Linq;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {

@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GloomyTale.GameObject.Networking;
 using System;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {
@@ -55,7 +56,7 @@ namespace GloomyTale.GameObject
                     {
                         if (packetsplit?.Length == 9)
                         {
-                            ItemInstance box = session.Character.Inventory.LoadBySlotAndType(inv.Slot, InventoryType.Equipment);
+                            var box = session.Character.Inventory.LoadBySlotAndType<BoxInstance>(inv.Slot, InventoryType.Equipment);
                             if (box != null)
                             {
                                 if (box.Item.ItemSubType == 3)
@@ -76,7 +77,7 @@ namespace GloomyTale.GameObject
                     else
                     {
                         //u_i 2 2000000 0 21 0 0
-                        ItemInstance box = session.Character.Inventory.LoadBySlotAndType(inv.Slot, InventoryType.Equipment);
+                        var box = session.Character.Inventory.LoadBySlotAndType<BoxInstance>(inv.Slot, InventoryType.Equipment);
                         if (box != null)
                         {
                             if (box.Item.ItemSubType == 3)
@@ -235,7 +236,7 @@ namespace GloomyTale.GameObject
                 case 69:
                     if (EffectValue == 1 || EffectValue == 2)
                     {
-                        ItemInstance box = session.Character.Inventory.LoadBySlotAndType(inv.Slot, InventoryType.Equipment);
+                        var box = session.Character.Inventory.LoadBySlotAndType<BoxInstance>(inv.Slot, InventoryType.Equipment);
                         if (box != null)
                         {
                             if (box.HoldingVNum == 0)
@@ -248,7 +249,7 @@ namespace GloomyTale.GameObject
                                 if (newInv.Count > 0)
                                 {
                                     ItemInstance itemInstance = newInv[0];
-                                    ItemInstance specialist = session.Character.Inventory.LoadBySlotAndType(itemInstance.Slot, itemInstance.Type);
+                                    var specialist = session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>(itemInstance.Slot, itemInstance.Type);
                                     if (specialist != null)
                                     {
                                         specialist.SlDamage = box.SlDamage;
@@ -289,7 +290,7 @@ namespace GloomyTale.GameObject
                     }
                     if (EffectValue == 3)
                     {
-                        ItemInstance box = session.Character.Inventory.LoadBySlotAndType(inv.Slot, InventoryType.Equipment);
+                        var box = session.Character.Inventory.LoadBySlotAndType<BoxInstance>(inv.Slot, InventoryType.Equipment);
                         if (box != null)
                         {
                             if (box.HoldingVNum == 0)
@@ -302,7 +303,7 @@ namespace GloomyTale.GameObject
                                 if (newInv.Count > 0)
                                 {
                                     ItemInstance itemInstance = newInv[0];
-                                    ItemInstance fairy = session.Character.Inventory.LoadBySlotAndType(itemInstance.Slot, itemInstance.Type);
+                                    var fairy = session.Character.Inventory.LoadBySlotAndType<WearableInstance>(itemInstance.Slot, itemInstance.Type);
                                     if (fairy != null)
                                     {
                                         fairy.ElementRate = box.ElementRate;
@@ -327,7 +328,7 @@ namespace GloomyTale.GameObject
                     }
                     if (EffectValue == 4)
                     {
-                        ItemInstance box = session.Character.Inventory.LoadBySlotAndType(inv.Slot, InventoryType.Equipment);
+                        var box = session.Character.Inventory.LoadBySlotAndType<BoxInstance>(inv.Slot, InventoryType.Equipment);
                         if (box != null)
                         {
                             if (box.HoldingVNum == 0)

@@ -23,6 +23,7 @@ using System.Linq;
 using GloomyTale.GameObject.Networking;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {
@@ -40,29 +41,6 @@ namespace GloomyTale.GameObject
 
         public override void Use(ClientSession session, ref ItemInstance inv, byte Option = 0, string[] packetsplit = null)
         {
-            short itemDesign = inv.Design;
-
-            #region BoxItem
-
-            List<BoxItemDTO> boxItemDTOs = ServerManager.Instance.BoxItems.Where(boxItem => boxItem.OriginalItemVNum == VNum && boxItem.OriginalItemDesign == itemDesign).ToList();
-
-            if (boxItemDTOs.Any())
-            {
-                session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-
-                foreach (BoxItemDTO boxItemDTO in boxItemDTOs)
-                {
-                    if (ServerManager.RandomNumber() < boxItemDTO.Probability)
-                    {
-                        session.Character.GiftAdd(boxItemDTO.ItemGeneratedVNum, boxItemDTO.ItemGeneratedAmount, boxItemDTO.ItemGeneratedRare, boxItemDTO.ItemGeneratedUpgrade, boxItemDTO.ItemGeneratedDesign);
-                    }
-                }
-
-                return;
-            }
-
-            #endregion
-
             if (session.Character.IsVehicled && Effect != 1000)
             {
                 if (VNum == 5119 || VNum == 9071) // Speed Booster
@@ -450,7 +428,7 @@ namespace GloomyTale.GameObject
                 case 666:
                     if (EffectValue == 1 && byte.TryParse(packetsplit[9], out byte islot))
                     {
-                        ItemInstance wearInstance = session.Character.Inventory.LoadBySlotAndType(islot, InventoryType.Equipment);
+                        var wearInstance = session.Character.Inventory.LoadBySlotAndType<WearableInstance>(islot, InventoryType.Equipment);
 
                         if (wearInstance != null && (wearInstance.Item.ItemType == ItemType.Weapon || wearInstance.Item.ItemType == ItemType.Armor) && wearInstance.ShellEffects.Count != 0 && !wearInstance.Item.IsHeroic)
                         {
@@ -734,7 +712,7 @@ namespace GloomyTale.GameObject
 
                 // Magic Lamp
                 case 651:
-                    if (session.Character.Inventory.All(i => i.Type != InventoryType.Wear))
+                    if (session.Character.Inventory.All(i => i.Value.Type != InventoryType.Wear))
                     {
                         if (Option == 0)
                         {
@@ -1355,7 +1333,7 @@ namespace GloomyTale.GameObject
                 //Max Perfections
                 case 30001:
                     {
-                        ItemInstance SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                        var SP = session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
                         if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade <= 99)
                         {
                             if (Option == 0)
@@ -1373,7 +1351,7 @@ namespace GloomyTale.GameObject
                 // Reset perfection
                 case 30002:
                     {
-                        ItemInstance SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                        var SP = session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
                         if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade > 0)
                         {
                             if (Option == 0)

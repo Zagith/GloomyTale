@@ -7,6 +7,9 @@ using AutoMapper.Configuration;
 using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Entities;
 using GloomyTale.Data;
+using BoxInstance = GloomyTale.GameObject.Items.Instance.BoxInstance;
+using SpecialistInstance = GloomyTale.GameObject.Items.Instance.SpecialistInstance;
+using WearableInstance = GloomyTale.GameObject.Items.Instance.WearableInstance;
 
 namespace GloomyTale.SqlServer.Mapping
 {
@@ -19,14 +22,18 @@ namespace GloomyTale.SqlServer.Mapping
 
 
             cfg.CreateMap<ItemInstance, ItemInstanceDTO>()
-                .As<GameObject.ItemInstance>();
+                .As<GameObject.Items.Instance.ItemInstance>();
             // GameObject to EF
-            cfg.CreateMap<GameObject.ItemInstance, ItemInstance>()
+            cfg.CreateMap<GameObject.Items.Instance.ItemInstance, ItemInstance>()
                 .ForMember(s => s.Item, opts => opts.Ignore());
 
             // EF to GameObject
-            cfg.CreateMap<ItemInstance, GameObject.ItemInstance>()
+            cfg.CreateMap<ItemInstance, GameObject.Items.Instance.ItemInstance>()
                 .ForMember(s => s.Item, opts => opts.Ignore());
+
+            MapItemInstance<BoxInstance>(cfg);
+            MapItemInstance<SpecialistInstance>(cfg);
+            MapItemInstance<WearableInstance>(cfg);
 
             AddMapping<Account, AccountDTO>(cfg);
             // character
@@ -150,16 +157,16 @@ namespace GloomyTale.SqlServer.Mapping
                 .As<TGameObject>();
         }
 
-        private static void MapItemInstance<TGameObject>(IProfileExpression cfg) where TGameObject : GameObject.ItemInstance
+        private static void MapItemInstance<TGameObject>(IProfileExpression cfg) where TGameObject : GameObject.Items.Instance.ItemInstance
         {
             // GameObject -> Entity
             cfg.CreateMap<TGameObject, ItemInstance>()
                 .ForMember(s => s.Item, opts => opts.Ignore())
-                .IncludeBase<GameObject.ItemInstance, ItemInstance>();
+                .IncludeBase<GameObject.Items.Instance.ItemInstance, ItemInstance>();
 
             // Entity -> GameObject
             cfg.CreateMap<ItemInstance, TGameObject>()
-                .IncludeBase<ItemInstance, GameObject.ItemInstance>()
+                .IncludeBase<ItemInstance, GameObject.Items.Instance.ItemInstance >()
                 .As<TGameObject>();
 
             // Entity -> GameObject

@@ -13,6 +13,7 @@
  */
 
 using GloomyTale.Domain;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {

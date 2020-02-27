@@ -28,6 +28,7 @@ using static GloomyTale.Domain.BCardType;
 using System.Collections.Concurrent;
 using GloomyTale.DAL;
 using GloomyTale.GameObject.Event.TIMESPACES;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.Handler
 {
@@ -1461,7 +1462,7 @@ namespace GloomyTale.Handler
             else
             {
                 // remove equipment
-                shopOwnerSession.Character.Inventory.Remove(shopitem.ItemInstance.Id);
+                shopOwnerSession.Character.Inventory.TryRemove(shopitem.ItemInstance.Id, out ItemInstance value);
 
                 // send empty slot to owners inventory
                 shopOwnerSession.SendPacket(

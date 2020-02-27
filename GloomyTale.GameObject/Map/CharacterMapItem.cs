@@ -12,6 +12,8 @@
  * GNU General Public License for more details.
  */
 
+using GloomyTale.GameObject.Items.Instance;
+
 namespace GloomyTale.GameObject
 {
     public class CharacterMapItem : MapItem

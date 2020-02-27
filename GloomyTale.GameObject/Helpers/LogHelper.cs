@@ -5,6 +5,7 @@ using GloomyTale.DAL;
 using GloomyTale.GameObject.Networking;
 using System.Collections.Generic;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject.Helpers
 {

@@ -15,6 +15,7 @@
 using GloomyTale.DAL;
 using GloomyTale.Data;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.Items.Instance;
 using System.Collections.Generic;
 using System.Linq;
 

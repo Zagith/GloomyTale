@@ -1590,7 +1590,7 @@ namespace GloomyTale.GameObject
             {
                 m.GetInventory().ForEach(s =>
                 {
-                    Inventory.Remove(s.Id);
+                    Inventory.TryRemove(s.Id, out ItemInstance value);
                 });
                 Mates.Remove(m);
                 byte i = 0;
@@ -4476,12 +4476,15 @@ namespace GloomyTale.GameObject
                     {
                         minutesLeft = (long)(bz.BazaarItem.DateStart.AddHours(bz.BazaarItem.Duration).AddDays(isNosbazar ? 30 : 7) - DateTime.Now).TotalMinutes;
                     }
-                    string info = "";
+                    string info = string.Empty;
                     if (bz.Item.Item.Type == InventoryType.Equipment)
                     {
-                        bz.Item.ShellEffects.Clear();
-                        bz.Item.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(bz.Item.EquipmentSerialId));
-                        info = bz.Item?.GenerateEInfo().Replace(' ', '^').Replace("e_info^", "");
+                        if (bz.Item is WearableInstance item)
+                        {
+                            item.ShellEffects.Clear();
+                            item.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(bz.Item.EquipmentSerialId));
+                            info = item.GenerateEInfo().Replace(' ', '^').Replace("e_info^", "");
+                        }
                     }
                     if (packet.Filter == 0 || packet.Filter == Status)
                     {
@@ -4539,7 +4542,7 @@ namespace GloomyTale.GameObject
 
         public string GenerateSayItem(string message, int type, byte itemInventory, short itemSlot, bool ignoreNickname = false)
         {
-            if (Inventory.LoadBySlotAndType(itemSlot, (InventoryType)itemInventory) is WearableInstance item)
+            if (Inventory.LoadBySlotAndType(itemSlot, (InventoryType)itemInventory) is SpecialistInstance item)
             {
                 return $"sayitem {(ignoreNickname ? 2 : 1)} {CharacterId} {type} {message.Replace(' ', '^')} {(item.Item.EquipmentSlot == EquipmentType.Sp ? item.GenerateSlInfo() : item.GenerateEInfo())}";
             }
@@ -4759,175 +4762,173 @@ namespace GloomyTale.GameObject
             if (UseSp)
             {
                 // handle specialist
-                if (Inventory == null)
+                if (Inventory != null)
                 {
-                    return;
-                }
+                    SpecialistInstance specialist = Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+                    if (specialist != null)
+                    {
+                        MinHit += specialist.DamageMinimum + (specialist.SpDamage * 10);
+                        MaxHit += specialist.DamageMaximum + (specialist.SpDamage * 10);
+                        SecondWeaponMinHit += specialist.DamageMinimum + (specialist.SpDamage * 10);
+                        SecondWeaponMaxHit += specialist.DamageMaximum + (specialist.SpDamage * 10);
+                        HitCriticalChance += specialist.CriticalLuckRate;
+                        HitCriticalRate += specialist.CriticalRate;
+                        SecondWeaponCriticalChance += specialist.CriticalLuckRate;
+                        SecondWeaponCriticalRate += specialist.CriticalRate;
+                        HitRate += specialist.HitRate;
+                        SecondWeaponHitRate += specialist.HitRate;
+                        DefenceRate += specialist.DefenceDodge;
+                        DistanceDefenceRate += specialist.DistanceDefenceDodge;
+                        FireResistance += specialist.Item.FireResistance + specialist.SpFire;
+                        WaterResistance += specialist.Item.WaterResistance + specialist.SpWater;
+                        LightResistance += specialist.Item.LightResistance + specialist.SpLight;
+                        DarkResistance += specialist.Item.DarkResistance + specialist.SpDark;
+                        ElementRateSP += specialist.ElementRate + specialist.SpElement;
+                        Defence += specialist.CloseDefence + (specialist.SpDefence * 10);
+                        DistanceDefence += specialist.DistanceDefence + (specialist.SpDefence * 10);
+                        MagicalDefence += specialist.MagicDefence + (specialist.SpDefence * 10);
 
-                SpecialistInstance specialist = Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
-                if (specialist != null)
-                {
-                    MinHit += specialist.DamageMinimum + (specialist.SpDamage * 10);
-                    MaxHit += specialist.DamageMaximum + (specialist.SpDamage * 10);
-                    SecondWeaponMinHit += specialist.DamageMinimum + (specialist.SpDamage * 10);
-                    SecondWeaponMaxHit += specialist.DamageMaximum + (specialist.SpDamage * 10);
-                    HitCriticalChance += specialist.CriticalLuckRate;
-                    HitCriticalRate += specialist.CriticalRate;
-                    SecondWeaponCriticalChance += specialist.CriticalLuckRate;
-                    SecondWeaponCriticalRate += specialist.CriticalRate;
-                    HitRate += specialist.HitRate;
-                    SecondWeaponHitRate += specialist.HitRate;
-                    DefenceRate += specialist.DefenceDodge;
-                    DistanceDefenceRate += specialist.DistanceDefenceDodge;
-                    FireResistance += specialist.Item.FireResistance + specialist.SpFire;
-                    WaterResistance += specialist.Item.WaterResistance + specialist.SpWater;
-                    LightResistance += specialist.Item.LightResistance + specialist.SpLight;
-                    DarkResistance += specialist.Item.DarkResistance + specialist.SpDark;
-                    ElementRateSP += specialist.ElementRate + specialist.SpElement;
-                    Defence += specialist.CloseDefence + (specialist.SpDefence * 10);
-                    DistanceDefence += specialist.DistanceDefence + (specialist.SpDefence * 10);
-                    MagicalDefence += specialist.MagicDefence + (specialist.SpDefence * 10);
+                        WearableInstance mainWeapon = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                        WearableInstance secondaryWeapon = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                        List<ShellEffectDTO> effects = new List<ShellEffectDTO>();
+                        if (mainWeapon?.ShellEffects != null)
+                        {
+                            effects.AddRange(mainWeapon.ShellEffects);
+                        }
+                        if (secondaryWeapon?.ShellEffects != null)
+                        {
+                            effects.AddRange(secondaryWeapon.ShellEffects);
+                        }
 
-                    ItemInstance mainWeapon = Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
-                    ItemInstance secondaryWeapon = Inventory.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
-                    List<ShellEffectDTO> effects = new List<ShellEffectDTO>();
-                    if (mainWeapon?.ShellEffects != null)
-                    {
-                        effects.AddRange(mainWeapon.ShellEffects);
-                    }
-                    if (secondaryWeapon?.ShellEffects != null)
-                    {
-                        effects.AddRange(secondaryWeapon.ShellEffects);
-                    }
+                        int GetShellWeaponEffectValue(ShellWeaponEffectType effectType)
+                        {
+                            return effects?.Where(s => s.Effect == (byte)effectType)?.OrderByDescending(s => s.Value)?.FirstOrDefault()?.Value ?? 0;
+                        }
 
-                    int GetShellWeaponEffectValue(ShellWeaponEffectType effectType)
-                    {
-                        return effects?.Where(s => s.Effect == (byte)effectType)?.OrderByDescending(s => s.Value)?.FirstOrDefault()?.Value ?? 0;
-                    }
+                        int point = CharacterHelper.SlPoint(specialist.SlDamage, 0) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLDamage) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLGlobal);
+                        if (point > 100) { point = 100; };
 
-                    int point = CharacterHelper.SlPoint(specialist.SlDamage, 0) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLDamage) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLGlobal);
-                    if (point > 100) { point = 100; };
+                        int p = 0;
+                        if (point <= 10)
+                        {
+                            p = point * 5;
+                        }
+                        else if (point <= 20)
+                        {
+                            p = 50 + ((point - 10) * 6);
+                        }
+                        else if (point <= 30)
+                        {
+                            p = 110 + ((point - 20) * 7);
+                        }
+                        else if (point <= 40)
+                        {
+                            p = 180 + ((point - 30) * 8);
+                        }
+                        else if (point <= 50)
+                        {
+                            p = 260 + ((point - 40) * 9);
+                        }
+                        else if (point <= 60)
+                        {
+                            p = 350 + ((point - 50) * 10);
+                        }
+                        else if (point <= 70)
+                        {
+                            p = 450 + ((point - 60) * 11);
+                        }
+                        else if (point <= 80)
+                        {
+                            p = 560 + ((point - 70) * 13);
+                        }
+                        else if (point <= 90)
+                        {
+                            p = 690 + ((point - 80) * 14);
+                        }
+                        else if (point <= 94)
+                        {
+                            p = 830 + ((point - 90) * 15);
+                        }
+                        else if (point <= 95)
+                        {
+                            p = 890 + 16;
+                        }
+                        else if (point <= 97)
+                        {
+                            p = 906 + ((point - 95) * 17);
+                        }
+                        else if (point > 97)
+                        {
+                            p = 940 + ((point - 97) * 20);
+                        }
 
-                    int p = 0;
-                    if (point <= 10)
-                    {
-                        p = point * 5;
-                    }
-                    else if (point <= 20)
-                    {
-                        p = 50 + ((point - 10) * 6);
-                    }
-                    else if (point <= 30)
-                    {
-                        p = 110 + ((point - 20) * 7);
-                    }
-                    else if (point <= 40)
-                    {
-                        p = 180 + ((point - 30) * 8);
-                    }
-                    else if (point <= 50)
-                    {
-                        p = 260 + ((point - 40) * 9);
-                    }
-                    else if (point <= 60)
-                    {
-                        p = 350 + ((point - 50) * 10);
-                    }
-                    else if (point <= 70)
-                    {
-                        p = 450 + ((point - 60) * 11);
-                    }
-                    else if (point <= 80)
-                    {
-                        p = 560 + ((point - 70) * 13);
-                    }
-                    else if (point <= 90)
-                    {
-                        p = 690 + ((point - 80) * 14);
-                    }
-                    else if (point <= 94)
-                    {
-                        p = 830 + ((point - 90) * 15);
-                    }
-                    else if (point <= 95)
-                    {
-                        p = 890 + 16;
-                    }
-                    else if (point <= 97)
-                    {
-                        p = 906 + ((point - 95) * 17);
-                    }
-                    else if (point > 97)
-                    {
-                        p = 940 + ((point - 97) * 20);
-                    }
+                        MaxHit += p;
+                        MinHit += p;
+                        SecondWeaponMaxHit += p;
+                        SecondWeaponMinHit += p;
 
-                    MaxHit += p;
-                    MinHit += p;
-                    SecondWeaponMaxHit += p;
-                    SecondWeaponMinHit += p;
+                        point = CharacterHelper.SlPoint(specialist.SlDefence, 1) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLDefence) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLGlobal);
+                        if (point > 100) { point = 100; };
 
-                    point = CharacterHelper.SlPoint(specialist.SlDefence, 1) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLDefence) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLGlobal);
-                    if (point > 100) { point = 100; };
+                        p = 0;
+                        if (point <= 10)
+                        {
+                            p = point;
+                        }
+                        else if (point <= 20)
+                        {
+                            p = 10 + ((point - 10) * 2);
+                        }
+                        else if (point <= 30)
+                        {
+                            p = 30 + ((point - 20) * 3);
+                        }
+                        else if (point <= 40)
+                        {
+                            p = 60 + ((point - 30) * 4);
+                        }
+                        else if (point <= 50)
+                        {
+                            p = 100 + ((point - 40) * 5);
+                        }
+                        else if (point <= 60)
+                        {
+                            p = 150 + ((point - 50) * 6);
+                        }
+                        else if (point <= 70)
+                        {
+                            p = 210 + ((point - 60) * 7);
+                        }
+                        else if (point <= 80)
+                        {
+                            p = 280 + ((point - 70) * 8);
+                        }
+                        else if (point <= 90)
+                        {
+                            p = 360 + ((point - 80) * 9);
+                        }
+                        else if (point > 90)
+                        {
+                            p = 450 + ((point - 90) * 10);
+                        }
 
-                    p = 0;
-                    if (point <= 10)
-                    {
-                        p = point;
-                    }
-                    else if (point <= 20)
-                    {
-                        p = 10 + ((point - 10) * 2);
-                    }
-                    else if (point <= 30)
-                    {
-                        p = 30 + ((point - 20) * 3);
-                    }
-                    else if (point <= 40)
-                    {
-                        p = 60 + ((point - 30) * 4);
-                    }
-                    else if (point <= 50)
-                    {
-                        p = 100 + ((point - 40) * 5);
-                    }
-                    else if (point <= 60)
-                    {
-                        p = 150 + ((point - 50) * 6);
-                    }
-                    else if (point <= 70)
-                    {
-                        p = 210 + ((point - 60) * 7);
-                    }
-                    else if (point <= 80)
-                    {
-                        p = 280 + ((point - 70) * 8);
-                    }
-                    else if (point <= 90)
-                    {
-                        p = 360 + ((point - 80) * 9);
-                    }
-                    else if (point > 90)
-                    {
-                        p = 450 + ((point - 90) * 10);
-                    }
+                        Defence += p;
+                        MagicalDefence += p;
+                        DistanceDefence += p;
 
-                    Defence += p;
-                    MagicalDefence += p;
-                    DistanceDefence += p;
+                        point = CharacterHelper.SlPoint(specialist.SlElement, 2) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLElement) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLGlobal);
+                        if (point > 100) { point = 100; };
 
-                    point = CharacterHelper.SlPoint(specialist.SlElement, 2) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLElement) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLGlobal);
-                    if (point > 100) { point = 100; };
+                        p = point <= 50 ? point : 50 + ((point - 50) * 2);
+                        ElementRateSP += p;
 
-                    p = point <= 50 ? point : 50 + ((point - 50) * 2);
-                    ElementRateSP += p;
-
-                    slhpbonus = GetShellWeaponEffectValue(ShellWeaponEffectType.SLHP) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLGlobal);
+                        slhpbonus = GetShellWeaponEffectValue(ShellWeaponEffectType.SLHP) + GetShellWeaponEffectValue(ShellWeaponEffectType.SLGlobal);
+                    }
                 }
             }
 
             // TODO: add base stats
-            ItemInstance weapon = Inventory?.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+            WearableInstance weapon = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
             if (weapon != null)
             {
                 weaponUpgrade = weapon.Upgrade;
@@ -4940,7 +4941,7 @@ namespace GloomyTale.GameObject
                 // maxhp-mp
             }
 
-            ItemInstance weapon2 = Inventory?.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+            WearableInstance weapon2 = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
             if (weapon2 != null)
             {
                 secondaryUpgrade = weapon2.Upgrade;
@@ -4953,7 +4954,7 @@ namespace GloomyTale.GameObject
                 // maxhp-mp
             }
 
-            ItemInstance armor = Inventory?.LoadBySlotAndType((byte)EquipmentType.Armor, InventoryType.Wear);
+            WearableInstance armor = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Armor, InventoryType.Wear);
             if (armor != null)
             {
                 armorUpgrade = armor.Upgrade;
@@ -4964,7 +4965,7 @@ namespace GloomyTale.GameObject
                 DistanceDefenceRate += armor.DistanceDefenceDodge + armor.Item.DistanceDefenceDodge;
             }
 
-            ItemInstance fairy = Inventory?.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
+            WearableInstance fairy = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Fairy, InventoryType.Wear);
             if (fairy != null)
             {
                 ElementRate += fairy.ElementRate + fairy.Item.ElementRate + (IsUsingFairyBooster ? 30 : 0)
@@ -4973,7 +4974,7 @@ namespace GloomyTale.GameObject
 
             for (short i = 1; i < 14; i++)
             {
-                ItemInstance item = Inventory?.LoadBySlotAndType(i, InventoryType.Wear);
+                WearableInstance item = Inventory?.LoadBySlotAndType<WearableInstance>(i, InventoryType.Wear);
                 if (item != null && item.Item.EquipmentSlot != EquipmentType.MainWeapon
                         && item.Item.EquipmentSlot != EquipmentType.SecondaryWeapon
                         && item.Item.EquipmentSlot != EquipmentType.Armor
@@ -5344,7 +5345,7 @@ namespace GloomyTale.GameObject
         public string GetMinilandObjectList()
         {
             string mlobjstring = "mlobjlst";
-            foreach (ItemInstance item in Inventory.Where(s => s.Type == InventoryType.Miniland).OrderBy(s => s.Slot))
+            foreach (ItemInstance item in Inventory.Where(s => s.Value.Type == InventoryType.Miniland).OrderBy(s => s.Value.Slot).Select(s => s.Value))
             {
                 MinilandObject mp = MinilandObjects.Find(s => s.ItemInstanceId == item.Id);
                 bool used = mp != null;
@@ -5357,7 +5358,7 @@ namespace GloomyTale.GameObject
         public string GetTitles()
         {
             string mlobjstring = "title";
-            foreach (ItemInstance item in Inventory.Where(s => s.Type == InventoryType.Miniland).OrderBy(s => s.Slot))
+            foreach (ItemInstance item in Inventory.Where(s => s.Value.Type == InventoryType.Miniland).OrderBy(s => s.Value.Slot).Select(s => s.Value))
             {
                 MinilandObject mp = MinilandObjects.Find(s => s.ItemInstanceId == item.Id);
                 bool used = mp != null;
@@ -5517,11 +5518,6 @@ namespace GloomyTale.GameObject
         public void GetJobExp(long val, bool applyRate = true)
         {
             val *= (applyRate ? 1 /*ServerManager.Instance.Configuration.RateXP*/ : 1);
-            ItemInstance SpInstance = null;
-            if (Inventory != null)
-            {
-                SpInstance = Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-            }
             if (UseSp && SpInstance != null)
             {
                 if (SpInstance.SpLevel >=99) // ServerManager.Instance.Configuration.MaxSPLevel)
@@ -5562,7 +5558,7 @@ namespace GloomyTale.GameObject
                             {
                                 try
                                 {
-                                    newItem.RarifyItem(Session, RarifyMode.Drop, RarifyProtection.None, forceRare: rare);
+                                    ((WearableInstance)newItem).RarifyItem(Session, RarifyMode.Drop, RarifyProtection.None, forceRare: rare);
                                     newItem.Upgrade = (byte)(newItem.Item.BasicUpgrade + upgrade);
                                     if (newItem.Upgrade > 10)
                                     {
@@ -5580,7 +5576,7 @@ namespace GloomyTale.GameObject
                                 {
                                     try
                                     {
-                                        newItem.RarifyItem(Session, RarifyMode.Drop, RarifyProtection.None);
+                                        ((WearableInstance)newItem).RarifyItem(Session, RarifyMode.Drop, RarifyProtection.None);
                                         newItem.Upgrade = newItem.Item.BasicUpgrade;
                                         if (newItem.Rare >= minRare)
                                         {
@@ -5598,7 +5594,7 @@ namespace GloomyTale.GameObject
                         if (newItem.Item.Type.Equals(InventoryType.Equipment) && rare != 0 && !forceRandom)
                         {
                             newItem.Rare = (sbyte)rare;
-                            newItem.SetRarityPoint();
+                            ((WearableInstance)newItem).SetRarityPoint();
                         }
 
                         if (newItem.Item.ItemType == ItemType.Shell)
@@ -5609,10 +5605,10 @@ namespace GloomyTale.GameObject
                         if (newItem.Item.EquipmentSlot == EquipmentType.Gloves || newItem.Item.EquipmentSlot == EquipmentType.Boots)
                         {
                             newItem.Upgrade = upgrade;
-                            newItem.DarkResistance = (short)(newItem.Item.DarkResistance * upgrade);
-                            newItem.LightResistance = (short)(newItem.Item.LightResistance * upgrade);
-                            newItem.WaterResistance = (short)(newItem.Item.WaterResistance * upgrade);
-                            newItem.FireResistance = (short)(newItem.Item.FireResistance * upgrade);
+                            ((WearableInstance)newItem).DarkResistance = (short)(newItem.Item.DarkResistance * upgrade);
+                            ((WearableInstance)newItem).LightResistance = (short)(newItem.Item.LightResistance * upgrade);
+                            ((WearableInstance)newItem).WaterResistance = (short)(newItem.Item.WaterResistance * upgrade);
+                            ((WearableInstance)newItem).FireResistance = (short)(newItem.Item.FireResistance * upgrade);
                         }
 
                         List<ItemInstance> newInv = Inventory.AddToInventory(newItem);
@@ -5764,20 +5760,13 @@ namespace GloomyTale.GameObject
 
         public void LearnSPSkill()
         {
-            ItemInstance specialist = null;
-
-            if (Inventory != null)
-            {
-                specialist = Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-            }
-
             byte SkillSpCount = (byte)SkillsSp.Count;
 
             SkillsSp = new ThreadSafeSortedList<int, CharacterSkill>();
 
             foreach (Skill ski in ServerManager.GetAllSkill())
             {
-                if (specialist != null && ski.Class == Morph + 31 && specialist.SpLevel >= ski.LevelMinimum)
+                if (SpInstance != null && ski.Class == Morph + 31 && SpInstance.SpLevel >= ski.LevelMinimum)
                 {
                     SkillsSp[ski.SkillVNum] = new CharacterSkill { SkillVNum = ski.SkillVNum, CharacterId = CharacterId };
                 }
@@ -5905,14 +5894,14 @@ namespace GloomyTale.GameObject
             {
                 inventory.CharacterId = CharacterId;
                 Inventory[inventory.Id] = (ItemInstance)inventory;
-                ItemInstance iteminstance = inventory as ItemInstance;
+                WearableInstance iteminstance = inventory as WearableInstance;
                 iteminstance?.ShellEffects.Clear();
                 iteminstance?.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(iteminstance.EquipmentSerialId));
             }
 
-            ItemInstance ring = Inventory.LoadBySlotAndType((byte)EquipmentType.Ring, InventoryType.Wear);
-            ItemInstance bracelet = Inventory.LoadBySlotAndType((byte)EquipmentType.Bracelet, InventoryType.Wear);
-            ItemInstance necklace = Inventory.LoadBySlotAndType((byte)EquipmentType.Necklace, InventoryType.Wear);
+            WearableInstance ring = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Ring, InventoryType.Wear);
+            WearableInstance bracelet = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Bracelet, InventoryType.Wear);
+            WearableInstance necklace = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Necklace, InventoryType.Wear);
             CellonOptions.Clear();
             if (ring != null)
             {
@@ -6191,7 +6180,7 @@ namespace GloomyTale.GameObject
                     lock (Inventory)
                     {
                         // load and concat inventory with equipment
-                        List<ItemInstance> inventories = Inventory.GetAllItems();
+                        IEnumerable<ItemInstance> inventories = Inventory.Select(s => s.Value);
                         IEnumerable<Guid> currentlySavedInventoryIds = DAOFactory.Instance.ItemInstanceDAO.LoadSlotAndTypeByCharacterId(CharacterId);
                         IEnumerable<CharacterDTO> characters = DAOFactory.Instance.CharacterDAO.LoadByAccount(Session.Account.AccountId);
                         foreach (CharacterDTO characteraccount in characters.Where(s => s.CharacterId != CharacterId))
@@ -6213,7 +6202,7 @@ namespace GloomyTale.GameObject
                         foreach (ItemInstance itemInstance in saveInventory)
                         {
                             DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(itemInstance);
-                            if (!(itemInstance is ItemInstance instance))
+                            if (!(itemInstance is WearableInstance instance))
                             {
                                 continue;
                             }
@@ -6222,8 +6211,8 @@ namespace GloomyTale.GameObject
                                 continue;
                             }
                             DAOFactory.Instance.ShellEffectDAO.DeleteByEquipmentSerialId(itemInstance.EquipmentSerialId);
-                            DAOFactory.Instance.ShellEffectDAO.InsertOrUpdateFromList(itemInstance.ShellEffects, itemInstance.EquipmentSerialId);
-                            DAOFactory.Instance.CellonOptionDAO.InsertOrUpdateFromList(itemInstance.CellonOptions, itemInstance.EquipmentSerialId);
+                            DAOFactory.Instance.ShellEffectDAO.InsertOrUpdateFromList(((WearableInstance)itemInstance).ShellEffects, itemInstance.EquipmentSerialId);
+                            DAOFactory.Instance.CellonOptionDAO.InsertOrUpdateFromList(((WearableInstance)itemInstance).CellonOptions, itemInstance.EquipmentSerialId);
                             instance.ShellEffects.ForEach(s =>
                             {
                                 s.EquipmentSerialId = instance.EquipmentSerialId;
@@ -6512,7 +6501,7 @@ namespace GloomyTale.GameObject
                     case ClassType.Adventurer:
                         if (ski.Skill.Type == 1 && Inventory != null)
                         {
-                            ItemInstance wearable = Inventory.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                            WearableInstance wearable = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
                             if (wearable != null)
                             {
                                 if (wearable.Ammo > 0)
@@ -6538,7 +6527,7 @@ namespace GloomyTale.GameObject
                     case ClassType.Swordsman:
                         if (ski.Skill.Type == 1 && Inventory != null)
                         {
-                            ItemInstance inv = Inventory.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                            WearableInstance inv = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
                             if (inv != null)
                             {
                                 if (inv.Ammo > 0)
@@ -6565,7 +6554,7 @@ namespace GloomyTale.GameObject
                     case ClassType.Archer:
                         if (ski.Skill.Type == 1 && Inventory != null)
                         {
-                            ItemInstance inv = Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                            WearableInstance inv = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
                             if (inv != null)
                             {
                                 if (inv.Ammo > 0)
@@ -6771,13 +6760,6 @@ namespace GloomyTale.GameObject
                     Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 5));
                 }
 
-                ItemInstance specialist = null;
-
-                if (Inventory != null)
-                {
-                    specialist = Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-                }
-
                 int xp = (int)(GetXP(monster, grp) * expDamageRate * (isMonsterOwner ? 1 : 0.8f) * (1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)) * (1 + (GetBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.IncreaseBattleAndJobExperience)[0] / 100)));
 
                 if (monster.Monster.MaxLevelXP > 0 && monster.Monster.MinLevelXP > 0)
@@ -6808,7 +6790,7 @@ namespace GloomyTale.GameObject
 
                 if ((Class == 0 && JobLevel < 20) || (Class != 0 && JobLevel < 80)) //ServerManager.Instance.Configuration.MaxJobLevel))
                 {
-                    if (specialist != null && UseSp && specialist.SpLevel < 99 /* ServerManager.Instance.Configuration.MaxSPLevel*/ && specialist.SpLevel > 19)
+                    if (SpInstance != null && UseSp && SpInstance.SpLevel < 99 /* ServerManager.Instance.Configuration.MaxSPLevel*/ && SpInstance.SpLevel > 19)
                     {
                         JobLevelXp += (int)(GetJXP(monster, grp) * expDamageRate * (isMonsterOwner ? 1 : 0.8f) / 2D * (1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)) * (1 + (GetBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.IncreaseBattleAndJobExperience)[0] / 100)));
                     }
@@ -6818,11 +6800,11 @@ namespace GloomyTale.GameObject
                     }
                 }
 
-                if (specialist != null && UseSp && specialist.SpLevel < 99) //ServerManager.Instance.Configuration.MaxSPLevel)
+                if (SpInstance != null && UseSp && SpInstance.SpLevel < 99) //ServerManager.Instance.Configuration.MaxSPLevel)
                 {
-                    int multiplier = specialist.SpLevel < 10 ? 10 : specialist.SpLevel < 19 ? 5 : 1;
+                    int multiplier = SpInstance.SpLevel < 10 ? 10 : SpInstance.SpLevel < 19 ? 5 : 1;
 
-                    specialist.XP += (int)(GetJXP(monster, grp) * expDamageRate * (multiplier + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseSPXP)[0] / 100D))));
+                    SpInstance.XP += (int)(GetJXP(monster, grp) * expDamageRate * (multiplier + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseSPXP)[0] / 100D))));
                 }
 
                 if (HeroLevel > 0 && HeroLevel < 50) //ServerManager.Instance.Configuration.MaxHeroLevel)
@@ -6830,7 +6812,7 @@ namespace GloomyTale.GameObject
                     HeroXp += (int)((GetHXP(monster, grp) * expDamageRate / 50) * (isMonsterOwner ? 1 : 0.8f) * (1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)));
                 }
 
-                ItemInstance fairy = Inventory?.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
+                WearableInstance fairy = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Fairy, InventoryType.Wear);
 
                 if (fairy != null)
                 {
@@ -6865,9 +6847,9 @@ namespace GloomyTale.GameObject
                 GenerateLevelXpLevelUp();
                 GenerateJobXpLevelUp();
 
-                if (specialist != null)
+                if (SpInstance != null)
                 {
-                    GenerateSpXpLevelUp(specialist);
+                    GenerateSpXpLevelUp(SpInstance);
                 }
 
                 GenerateHeroXpLevelUp();
@@ -6931,11 +6913,9 @@ namespace GloomyTale.GameObject
                     return s.Character.JobLevel < (s.Character.Class == 0 ? 20 : 80);// ServerManager.Instance.Configuration.MaxJobLevel);
                 }
 
-                ItemInstance sp = s.Character.Inventory?.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-
-                if (sp != null)
+                if (SpInstance != null)
                 {
-                    return sp.SpLevel < 99; // ServerManager.Instance.Configuration.MaxSPLevel;
+                    return SpInstance.SpLevel < 99; // ServerManager.Instance.Configuration.MaxSPLevel;
                 }
 
                 return false;
@@ -7041,12 +7021,7 @@ namespace GloomyTale.GameObject
 
         private double SpXpLoad()
         {
-            ItemInstance specialist = null;
-            if (Inventory != null)
-            {
-                specialist = Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-            }
-            return specialist != null ? CharacterHelper.SPXPData[specialist.SpLevel == 0 ? 0 : specialist.SpLevel - 1] : 0;
+            return SpInstance != null ? CharacterHelper.SPXPData[SpInstance.SpLevel == 0 ? 0 : SpInstance.SpLevel - 1] : 0;
         }
 
         private double XpLoad() => CharacterHelper.XPData[Level - 1];

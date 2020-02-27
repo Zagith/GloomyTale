@@ -3,6 +3,7 @@ using GloomyTale.DAL;
 using GloomyTale.Data;
 using GloomyTale.Data.Enums;
 using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace GloomyTale.GameObject
     {
         #region Istantiation
 
-        public PartnerSp(ItemInstance instance)
+        public PartnerSp(SpecialistInstance instance)
         {
             Instance = instance;
 
@@ -25,7 +26,7 @@ namespace GloomyTale.GameObject
 
         #region Properties
 
-        public ItemInstance Instance { get; }
+        public SpecialistInstance Instance { get; }
 
         private long XpMax => 1;// ServerManager.Instance.Configuration.PartnerSpXp;
 
