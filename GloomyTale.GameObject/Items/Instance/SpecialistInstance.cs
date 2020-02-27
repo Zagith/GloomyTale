@@ -25,6 +25,13 @@ namespace GloomyTale.GameObject.Items.Instance
 
         public SpecialistInstance() => _random = new Random();
 
+        public SpecialistInstance(short vNum, short amount)
+        {
+            ItemVNum = vNum;
+            Amount = amount;
+            _random = new Random();
+        }
+
         public SpecialistInstance(Guid id)
         {
             Id = id;
@@ -48,30 +55,11 @@ namespace GloomyTale.GameObject.Items.Instance
             SlElement = specialistInstance.SlElement;
             SlDamage = specialistInstance.SlDamage;
             SlHP = specialistInstance.SlHP;
-            PartnerSkill1 = specialistInstance.PartnerSkill1;
-            PartnerSkill2 = specialistInstance.PartnerSkill2;
-            PartnerSkill3 = specialistInstance.PartnerSkill3;
-            SkillRank1 = specialistInstance.SkillRank1;
-            SkillRank2 = specialistInstance.SkillRank2;
-            SkillRank3 = specialistInstance.SkillRank3;
         }
 
         #endregion
 
         #region Properties
-
-        public short PartnerSkill1 { get; set; }
-
-        public short PartnerSkill2 { get; set; }
-
-        public short PartnerSkill3 { get; set; }
-
-        public byte SkillRank1 { get; set; }
-
-        public byte SkillRank2 { get; set; }
-
-        public byte SkillRank3 { get; set; }
-
 
         public short SlDamage { get; set; }
 

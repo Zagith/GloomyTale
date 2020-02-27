@@ -16,6 +16,7 @@ using GloomyTale.Core;
 using GloomyTale.Data;
 using GloomyTale.Domain;
 using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.PathFinder;
 using System;
@@ -1740,7 +1741,7 @@ namespace GloomyTale.GameObject
                             {
                                 if (SubType.Equals((byte)AdditionalTypes.MeditationSkill.Sacrifice / 10))
                                 {
-                                    session.AddBuff(new Buff((short)SecondData, senderLevel), sender);
+                                    session.AddBuff(new Buff((short)SecondData, senderLevel, false), sender);
                                 }
                                 else if (character.LastSkillComboUse < DateTime.Now)
                                 {

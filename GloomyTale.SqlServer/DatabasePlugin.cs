@@ -8,6 +8,7 @@ using GloomyTale.DAL;
 using GloomyTale.DAL.DAO;
 using GloomyTale.Data;
 using GloomyTale.DAL.Interface;
+using GloomyTale.SqlServer.Mapping;
 
 namespace GloomyTale.SqlServer
 {
@@ -39,7 +40,7 @@ namespace GloomyTale.SqlServer
             _log.Info("Registering DAL objects");
             builder.RegisterType(typeof(DAOFactory)).AsSelf();
             _log.Info("Registering Mapping objects");
-            //builder.Register(_ => new GloomyItemInstanceMappingType()).As<ItemInstanceDAO.IItemInstanceMappingTypes>();
+            builder.Register(_ => new GloomyItemInstanceMappingType()).As<ItemInstanceDAO.IItemInstanceMappingTypes>();
             _log.Info("Registering DAL.EF.DAO objects");
             builder.RegisterTypes(typeof(OpenNosContext).Assembly.GetTypes()).AsSelf().AsImplementedInterfaces().SingleInstance();
         }

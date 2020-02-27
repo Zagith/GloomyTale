@@ -29,6 +29,7 @@ using GloomyTale.GameObject.Event.RainbowBattle;
 using GloomyTale.GameObject.Event.BANDICOOTRUN;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject.Helpers
 {
@@ -470,7 +471,7 @@ namespace GloomyTale.GameObject.Helpers
 
                                         if (evt.MapInstance.InstanceBag.EndState == 5)
                                         {
-                                            if (client.Character.Inventory.GetAllItems().FirstOrDefault(s => s.Item.ItemType == ItemType.Special && s.Item.Effect == 140 && s.Item.EffectValue == si.Id) is ItemInstance tsStone)
+                                            if (client.Character.Inventory.Select(s => s.Value).FirstOrDefault(s => s.Item.ItemType == ItemType.Special && s.Item.Effect == 140 && s.Item.EffectValue == si.Id) is ItemInstance tsStone)
                                             {
                                                 client.Character.Inventory.RemoveItemFromInventory(tsStone.Id);
                                             }

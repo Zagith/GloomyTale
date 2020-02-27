@@ -382,7 +382,7 @@ namespace GloomyTale.Handler
 
                             if (newItems.Count > 0)
                             {
-                                foreach (ItemInstance itemInst in newItems)
+                                foreach (WearableInstance itemInst in newItems)
                                 {
                                     switch (itemInst.Item.EquipmentSlot)
                                     {
@@ -844,15 +844,17 @@ namespace GloomyTale.Handler
                     .FirstOrDefault();
                 if (inv != null)
                 {
-                    if (inv.Item.EquipmentSlot == EquipmentType.Armor
-                        || inv.Item.EquipmentSlot == EquipmentType.MainWeapon
-                        || inv.Item.EquipmentSlot == EquipmentType.SecondaryWeapon)
+                    if (inv.GetType() == typeof(WearableInstance))
                     {
-                        inv.SetRarityPoint();
-                        if (inv.Item.IsHeroic)
+                        if (inv is WearableInstance items && (items.Item.EquipmentSlot == EquipmentType.Armor || items.Item.EquipmentSlot == EquipmentType.MainWeapon ||
+                            items.Item.EquipmentSlot == EquipmentType.SecondaryWeapon))
                         {
-                            inv.GenerateHeroicShell(RarifyProtection.None, true);
-                            inv.BoundCharacterId = Session.Character.CharacterId;
+                            items.SetRarityPoint();
+                            if (inv.Item.IsHeroic)
+                            {
+                                items.GenerateHeroicShell(RarifyProtection.None, true);
+                                items.BoundCharacterId = Session.Character.CharacterId;
+                            }
                         }
                     }
 
@@ -1307,7 +1309,7 @@ namespace GloomyTale.Handler
                     }
                     if (spVNum != 0)
                     {
-                        ItemInstance newItem = new ItemInstance(spVNum, 1);
+                        SpecialistInstance newItem = new SpecialistInstance(spVNum, 1);
                         newItem.SpLevel = 80;
                         newItem.Upgrade = 10;
                         newItem.SlDamage = 152;

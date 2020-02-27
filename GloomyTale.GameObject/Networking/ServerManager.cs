@@ -43,6 +43,7 @@ using FastMember;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
 using GloomyTale.Cofiguration;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject.Networking
 {

@@ -33,6 +33,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.Handler
 {
@@ -567,19 +568,21 @@ namespace GloomyTale.Handler
                             .FirstOrDefault();
                         if (newInv != null)
                         {
-                            if (newInv.Rare != 0)
+                            if (newInv is WearableInstance wear)
                             {
-                                newInv.SetRarityPoint();
-                            }
+                                if (newInv.Rare != 0)
+                                {
+                                    wear.SetRarityPoint();
+                                }
 
-                            if (newInv.Item.EquipmentSlot == EquipmentType.Gloves || newInv.Item.EquipmentSlot == EquipmentType.Boots)
-                            {
-                                newInv.DarkResistance = (short)(newInv.Item.DarkResistance * newInv.Upgrade);
-                                newInv.LightResistance = (short)(newInv.Item.LightResistance * newInv.Upgrade);
-                                newInv.WaterResistance = (short)(newInv.Item.WaterResistance * newInv.Upgrade);
-                                newInv.FireResistance = (short)(newInv.Item.FireResistance * newInv.Upgrade);
+                                if (newInv.Item.EquipmentSlot == EquipmentType.Gloves || newInv.Item.EquipmentSlot == EquipmentType.Boots)
+                                {
+                                    wear.DarkResistance = (short)(newInv.Item.DarkResistance * newInv.Upgrade);
+                                    wear.LightResistance = (short)(newInv.Item.LightResistance * newInv.Upgrade);
+                                    wear.WaterResistance = (short)(newInv.Item.WaterResistance * newInv.Upgrade);
+                                    wear.FireResistance = (short)(newInv.Item.FireResistance * newInv.Upgrade);
+                                }
                             }
-
                             Logger.Log.LogUserEvent("PARCEL_GET", Session.GenerateIdentity(),
                                 $"IIId: {newInv.Id} ItemVNum: {newInv.ItemVNum} Amount: {mail.AttachmentAmount} Sender: {mail.SenderId}");
 

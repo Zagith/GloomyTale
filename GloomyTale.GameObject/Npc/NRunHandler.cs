@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {
@@ -66,7 +67,7 @@ namespace GloomyTale.GameObject
                     {
                         return;
                     }
-                    if (Session.Character.Inventory.All(i => i.Type != InventoryType.Wear))
+                    if (Session.Character.Inventory.All(i => i.Value.Type != InventoryType.Wear))
                     {
                         Session.Character.Inventory.AddNewToInventory((short)(4 + (packet.Type * 14)), 1, InventoryType.Wear);
                         Session.Character.Inventory.AddNewToInventory((short)(81 + (packet.Type * 13)), 1, InventoryType.Wear);
@@ -1968,7 +1969,7 @@ namespace GloomyTale.GameObject
 
                         const long price = 10000000;
 
-                        ItemInstance itemInstance = Session?.Character?.Inventory?.LoadBySlotAndType(0, InventoryType.Equipment);
+                        var itemInstance = Session?.Character?.Inventory?.LoadBySlotAndType<WearableInstance>(0, InventoryType.Equipment);
 
                         if (itemInstance?.Item != null && ((itemInstance.ItemVNum >= 4949 && itemInstance.ItemVNum <= 4966) || (itemInstance.ItemVNum >= 4978 && itemInstance.ItemVNum <= 4986)) && itemInstance.Rare == 8)
                         {
@@ -1981,7 +1982,7 @@ namespace GloomyTale.GameObject
                             Session.Character.Gold -= price;
                             Session.SendPacket(Session.Character.GenerateGold());
 
-                            itemInstance.RarifyItem(Session, RarifyMode.HeroEquipmentDowngrade, RarifyProtection.None);
+                            itemInstance.RarifyItem(RarifyMode.HeroEquipmentDowngrade, RarifyProtection.None);
 
                             Session.SendPacket(itemInstance.GenerateInventoryAdd());
                         }

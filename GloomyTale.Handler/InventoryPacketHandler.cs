@@ -151,7 +151,7 @@ namespace GloomyTale.Handler
                         break;
 
                     case 1:
-                        inventory = Session.Character.Inventory.LoadBySlotAndType(equipmentInfoPacket.Slot,
+                        inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(equipmentInfoPacket.Slot,
                             InventoryType.Equipment);
                         break;
 
@@ -177,7 +177,7 @@ namespace GloomyTale.Handler
                             {
                                 Guid id = sess.Character.ExchangeInfo.ExchangeList[equipmentInfoPacket.Slot].Id;
 
-                                inventory = sess.Character.Inventory.GetItemInstanceById(id);
+                                inventory = (WearableInstance)sess.Character.Inventory.GetItemInstanceById(id);
                             }
                         }
 
@@ -193,24 +193,24 @@ namespace GloomyTale.Handler
                                 shop.Value?.Items.Find(i => i.ShopSlot.Equals(equipmentInfoPacket.Slot));
                             if (item != null)
                             {
-                                inventory = item.ItemInstance;
+                                inventory = (WearableInstance)item.ItemInstance;
                             }
                         }
 
                         break;
 
                     case 7:
-                        inventory = Session.Character.Inventory.LoadBySlotAndType(equipmentInfoPacket.MateSlot,
+                        inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(equipmentInfoPacket.MateSlot,
                             (InventoryType)(12 + equipmentInfoPacket.Slot));
                         break;
 
                     case 10:
-                        inventory = Session.Character.Inventory.LoadBySlotAndType(equipmentInfoPacket.Slot,
+                        inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(equipmentInfoPacket.Slot,
                             InventoryType.Specialist);
                         break;
 
                     case 11:
-                        inventory = Session.Character.Inventory.LoadBySlotAndType(equipmentInfoPacket.Slot,
+                        inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(equipmentInfoPacket.Slot,
                             InventoryType.Costume);
                         break;
                 }
@@ -224,8 +224,8 @@ namespace GloomyTale.Handler
                     }
 
                     Session.SendPacket(inventory.Item.EquipmentSlot != EquipmentType.Sp ? inventory.GenerateEInfo() :
-                        inventory.Item.SpType == 0 && inventory.Item.ItemSubType == 4 ? inventory.GeneratePslInfo() :
-                        inventory.GenerateSlInfo(Session));
+                        inventory.Item.SpType == 0 && inventory.Item.ItemSubType == 4 ? (inventory as SpecialistInstance)?.GeneratePslInfo() :
+                        (inventory as SpecialistInstance)?.GenerateSlInfo());
                 }
             }
         }
@@ -833,7 +833,7 @@ namespace GloomyTale.Handler
                                 }
 
                                 // initialize and rarify
-                                item.Rarify(null);
+                                item.Rarify();
                             }
 
                             if (mapItem.ItemVNum != 1046)
@@ -1318,12 +1318,12 @@ namespace GloomyTale.Handler
                                     }
                                     break;
                             }
-                            mate.BattleEntity.BCards.RemoveAll(o => o.ItemVNum == inventory.HoldingVNum);
+                            mate.BattleEntity.BCards.RemoveAll(o => o.ItemVNum == (inventory as BoxInstance)?.HoldingVNum);
                             Session.SendPacket(mate.GenerateScPacket());
                         }
-                        ItemInstance ring = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Ring, InventoryType.Wear);
-                        ItemInstance bracelet = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Bracelet, InventoryType.Wear);
-                        ItemInstance necklace = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Necklace, InventoryType.Wear);
+                        var ring = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Ring, InventoryType.Wear);
+                        var bracelet = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Bracelet, InventoryType.Wear);
+                        var necklace = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Necklace, InventoryType.Wear);
                         Session.Character.CellonOptions.Clear();
                         if (ring != null)
                         {
@@ -1449,10 +1449,10 @@ namespace GloomyTale.Handler
         {
             if (specialistHolderPacket != null)
             {
-                ItemInstance specialist =
-                    Session.Character.Inventory.LoadBySlotAndType(specialistHolderPacket.Slot, InventoryType.Equipment);
+                var specialist =
+                    Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>(specialistHolderPacket.Slot, InventoryType.Equipment);
 
-                ItemInstance holder = Session.Character.Inventory.LoadBySlotAndType(specialistHolderPacket.HolderSlot,
+                var holder = Session.Character.Inventory.LoadBySlotAndType<BoxInstance>(specialistHolderPacket.HolderSlot,
                     InventoryType.Equipment);
 
                 if (specialist?.Item == null || holder?.Item == null)
@@ -1518,8 +1518,8 @@ namespace GloomyTale.Handler
         {
             if (spTransformPacket != null && !Session.Character.IsSeal && !Session.Character.IsMorphed)
             {
-                ItemInstance specialistInstance =
-                    Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                var specialistInstance =
+                    Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
 
                 if (spTransformPacket.Type == 10)
                 {
@@ -1555,11 +1555,11 @@ namespace GloomyTale.Handler
                     specialistInstance.SlElement += specialistElement;
                     specialistInstance.SlHP += specialistHealpoints;
 
-                    ItemInstance mainWeapon =
-                        Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon,
+                    var mainWeapon =
+                        Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon,
                             InventoryType.Wear);
-                    ItemInstance secondaryWeapon =
-                        Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon,
+                    var secondaryWeapon =
+                        Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon,
                             InventoryType.Wear);
                     List<ShellEffectDTO> effects = new List<ShellEffectDTO>();
                     if (mainWeapon?.ShellEffects != null)
@@ -2055,7 +2055,7 @@ namespace GloomyTale.Handler
 
                     Session.SendPackets(Session.Character.GenerateStatChar());
                     Session.SendPacket(Session.Character.GenerateStat());
-                    Session.SendPacket(specialistInstance.GenerateSlInfo(Session));
+                    Session.SendPacket(specialistInstance.GenerateSlInfo());
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("POINTS_SET"), 0));
                 }
@@ -2163,11 +2163,11 @@ namespace GloomyTale.Handler
             InventoryType inventoryType = upgradePacket.InventoryType;
             byte uptype = upgradePacket.UpgradeType, slot = upgradePacket.Slot;
             Session.Character.LastDelay = DateTime.Now;
-            ItemInstance inventory;
+            WearableInstance inventory;
             switch (uptype)
             {
                 case 0:
-                    inventory = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(slot, inventoryType);
                     if (inventory != null)
                     {
                         if ((inventory.Item.EquipmentSlot == EquipmentType.Armor
@@ -2175,13 +2175,13 @@ namespace GloomyTale.Handler
                              || inventory.Item.EquipmentSlot == EquipmentType.SecondaryWeapon)
                             && inventory.Item.ItemType != ItemType.Shell && inventory.Item.Type == InventoryType.Equipment)
                         {
-                            inventory.ConvertToPartnerEquipment(Session);
+                            inventory.ConvertToPartnerEquipment();
                         }
                     }
                     break;
 
                 case 1:
-                    inventory = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(slot, inventoryType);
                     if (inventory != null)
                     {
                         if ((inventory.Item.EquipmentSlot == EquipmentType.Armor
@@ -2189,7 +2189,7 @@ namespace GloomyTale.Handler
                              || inventory.Item.EquipmentSlot == EquipmentType.SecondaryWeapon)
                             && inventory.Item.ItemType != ItemType.Shell && inventory.Item.Type == InventoryType.Equipment)
                         {
-                            inventory.UpgradeItem(Session, UpgradeMode.Normal, UpgradeProtection.None);
+                            inventory.UpgradeItem(UpgradeMode.Normal, UpgradeProtection.None);
                         }
                     }
                     break;
@@ -2202,7 +2202,7 @@ namespace GloomyTale.Handler
                         && byte.TryParse(originalSplit[5], out byte firstSlot)
                         && byte.TryParse(originalSplit[8], out byte secondSlot))
                     {
-                        inventory = Session.Character.Inventory.LoadBySlotAndType(firstSlot, InventoryType.Equipment);
+                        inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(firstSlot, InventoryType.Equipment);
                         if (inventory != null
                             && (inventory.Item.EquipmentSlot == EquipmentType.Necklace
                              || inventory.Item.EquipmentSlot == EquipmentType.Bracelet
@@ -2214,14 +2214,14 @@ namespace GloomyTale.Handler
                                     InventoryType.Main);
                             if (cellon?.ItemVNum > 1016 && cellon.ItemVNum < 1027)
                             {
-                                inventory.OptionItem(Session, cellon.ItemVNum);
+                                inventory.OptionItem(cellon.ItemVNum);
                             }
                         }
                     }
                     break;
 
                 case 7:
-                    inventory = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(slot, inventoryType);
                     if (inventory != null)
                     {
                         if (inventory.Item.EquipmentSlot == EquipmentType.Armor || inventory.Item.EquipmentSlot == EquipmentType.MainWeapon || inventory.Item.EquipmentSlot == EquipmentType.SecondaryWeapon)
@@ -2253,7 +2253,7 @@ namespace GloomyTale.Handler
                                         break;
                                 }
                             }
-                            inventory.RarifyItem(Session, mode, protection);
+                            inventory.RarifyItem(mode, protection);
                         }
 
                         Session.SendPacket("shop_end 1");
@@ -2261,29 +2261,29 @@ namespace GloomyTale.Handler
                     break;
 
                 case 8:
-                    inventory = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(slot, inventoryType);
                     if (upgradePacket.InventoryType2 != null && upgradePacket.Slot2 != null)
                     {
-                        ItemInstance inventory2 =
-                            Session.Character.Inventory.LoadBySlotAndType((byte)upgradePacket.Slot2,
+                        var inventory2 =
+                            Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)upgradePacket.Slot2,
                                 (InventoryType)upgradePacket.InventoryType2);
 
                         if (inventory != null && inventory2 != null && !Equals(inventory, inventory2))
                         {
-                            inventory.Sum(Session, inventory2);
+                            inventory.Sum(inventory2);
                         }
                     }
                     break;
 
                 case 9:
-                    ItemInstance specialist = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    var specialist = Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>(slot, inventoryType);
                     if (specialist != null)
                     {
                         if (specialist.Rare != -2)
                         {
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                specialist.UpgradeSp(Session, UpgradeProtection.None);
+                                specialist.UpgradeSp(UpgradeProtection.None);
                             }
                         }
                         else
@@ -2295,7 +2295,7 @@ namespace GloomyTale.Handler
                     break;
 
                 case 20:
-                    inventory = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(slot, inventoryType);
                     if (inventory != null)
                     {
                         if ((inventory.Item.EquipmentSlot == EquipmentType.Armor
@@ -2303,13 +2303,13 @@ namespace GloomyTale.Handler
                              || inventory.Item.EquipmentSlot == EquipmentType.SecondaryWeapon)
                             && inventory.Item.ItemType != ItemType.Shell && inventory.Item.Type == InventoryType.Equipment)
                         {
-                            inventory.UpgradeItem(Session, UpgradeMode.Normal, UpgradeProtection.Protected);
+                            inventory.UpgradeItem(UpgradeMode.Normal, UpgradeProtection.Protected);
                         }
                     }
                     break;
 
                 case 21:
-                    inventory = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(slot, inventoryType);
                     if (inventory != null)
                     {
                         if ((inventory.Item.EquipmentSlot == EquipmentType.Armor
@@ -2317,13 +2317,13 @@ namespace GloomyTale.Handler
                              || inventory.Item.EquipmentSlot == EquipmentType.SecondaryWeapon)
                             && inventory.Item.ItemType != ItemType.Shell && inventory.Item.Type == InventoryType.Equipment)
                         {
-                            inventory.RarifyItem(Session, RarifyMode.Normal, RarifyProtection.Scroll);
+                            inventory.RarifyItem(RarifyMode.Normal, RarifyProtection.Scroll);
                         }
                     }
                     break;
 
                 case 25:
-                    specialist = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    specialist = Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>(slot, inventoryType);
                     if (specialist != null)
                     {
                         if (specialist.Rare != -2)
@@ -2336,7 +2336,7 @@ namespace GloomyTale.Handler
                             }
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                specialist.UpgradeSp(Session, UpgradeProtection.Protected);
+                                specialist.UpgradeSp(UpgradeProtection.Protected);
                             }
                         }
                         else
@@ -2348,7 +2348,7 @@ namespace GloomyTale.Handler
                     break;
 
                 case 26:
-                    specialist = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    specialist = Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>(slot, inventoryType);
                     if (specialist != null)
                     {
                         if (specialist.Rare != -2)
@@ -2361,7 +2361,7 @@ namespace GloomyTale.Handler
                             }
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                specialist.UpgradeSp(Session, UpgradeProtection.Protected);
+                                specialist.UpgradeSp(UpgradeProtection.Protected);
                             }
                         }
                         else
@@ -2373,14 +2373,14 @@ namespace GloomyTale.Handler
                     break;
 
                 case 38:
-                    specialist = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    specialist = Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>(slot, inventoryType);
                     if (specialist != null)
                     {
                         if (specialist.Rare != -2)
                         {
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                specialist.UpgradeSp(Session, UpgradeProtection.Event);
+                                specialist.UpgradeSp(UpgradeProtection.Event);
 
                             }
                         }
@@ -2393,14 +2393,14 @@ namespace GloomyTale.Handler
                     break;
 
                 case 41:
-                    specialist = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    specialist = Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>(slot, inventoryType);
                     if (specialist != null)
                     {
                         if (specialist.Rare != -2)
                         {
                             if (specialist.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                specialist.PerfectSP(Session);
+                                specialist.PerfectSp();
                             }
                         }
                         else
@@ -2412,7 +2412,7 @@ namespace GloomyTale.Handler
                     break;
 
                 case 43:
-                    inventory = Session.Character.Inventory.LoadBySlotAndType(slot, inventoryType);
+                    inventory = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(slot, inventoryType);
                     if (inventory != null)
                     {
                         if ((inventory.Item.EquipmentSlot == EquipmentType.Armor
@@ -2420,7 +2420,7 @@ namespace GloomyTale.Handler
                              || inventory.Item.EquipmentSlot == EquipmentType.SecondaryWeapon)
                             && inventory.Item.ItemType != ItemType.Shell && inventory.Item.Type == InventoryType.Equipment)
                         {
-                            inventory.UpgradeItem(Session, UpgradeMode.Reduced, UpgradeProtection.Protected);
+                            inventory.UpgradeItem(UpgradeMode.Reduced, UpgradeProtection.Protected);
                         }
                     }
                     break;
@@ -2473,9 +2473,9 @@ namespace GloomyTale.Handler
                     Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId,
                         123));
 
-                    ItemInstance ring = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Ring, InventoryType.Wear);
-                    ItemInstance bracelet = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Bracelet, InventoryType.Wear);
-                    ItemInstance necklace = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Necklace, InventoryType.Wear);
+                    var ring = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Ring, InventoryType.Wear);
+                    var bracelet = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Bracelet, InventoryType.Wear);
+                    var necklace = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Necklace, InventoryType.Wear);
                     Session.Character.CellonOptions.Clear();
                     if (ring != null)
                     {
@@ -2538,10 +2538,10 @@ namespace GloomyTale.Handler
         /// </summary>
         private void ChangeSp()
         {
-            ItemInstance sp =
-                Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-            ItemInstance fairy =
-                Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
+            var sp =
+                Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+            var fairy =
+                Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Fairy, InventoryType.Wear);
             if (sp != null)
             {
                 if (fairy != null && sp.Item.Element != 0 && fairy.Item.Element != sp.Item.Element

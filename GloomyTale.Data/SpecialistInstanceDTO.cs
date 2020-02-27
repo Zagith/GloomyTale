@@ -7,20 +7,7 @@ namespace GloomyTale.Data
 {
     public class SpecialistInstanceDTO : WearableInstanceDTO, ISpecialistInstance
     {
-        #region Properties
-
-        public short PartnerSkill1 { get; set; }
-
-        public short PartnerSkill2 { get; set; }
-
-        public short PartnerSkill3 { get; set; }
-
-        public byte SkillRank1 { get; set; }
-
-        public byte SkillRank2 { get; set; }
-
-        public byte SkillRank3 { get; set; }
-        
+        #region Properties        
 
         public short SlDamage { get; set; }
 

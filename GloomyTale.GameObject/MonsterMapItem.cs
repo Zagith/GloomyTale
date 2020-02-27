@@ -58,12 +58,12 @@ namespace GloomyTale.GameObject
             return _itemInstance;
         }
 
-        public void Rarify(ClientSession session)
+        public void Rarify()
         {
-            ItemInstance instance = GetItemInstance();
+            WearableInstance instance = (WearableInstance)GetItemInstance();
             if (instance?.Item?.Type == InventoryType.Equipment && (instance?.Item?.ItemType == ItemType.Weapon || instance?.Item?.ItemType == ItemType.Armor))
             {
-                instance?.RarifyItem(session, RarifyMode.Drop, RarifyProtection.None);
+                instance?.RarifyItem(RarifyMode.Drop, RarifyProtection.None);
             }
         }
 

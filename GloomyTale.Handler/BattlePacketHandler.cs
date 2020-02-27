@@ -29,6 +29,7 @@ using GloomyTale.GameObject.Event;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using GloomyTale.GameObject.Packets.ClientPackets;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.Handler
 {

@@ -28,6 +28,7 @@ using GloomyTale.GameObject.Networking;
 using static GloomyTale.Domain.BCardType;
 using System.Threading.Tasks;
 using System.Threading;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject
 {

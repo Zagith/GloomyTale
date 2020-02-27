@@ -10,6 +10,7 @@ using System.Reactive.Linq;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.GameObject.Event.ARENA
 {
@@ -663,10 +664,10 @@ namespace GloomyTale.GameObject.Event.ARENA
 
         private static void SendRewards(ArenaTeamMember member, bool win)
         {
-            ItemInstance SpInstance = null;
+            SpecialistInstance SpInstance = null;
             if (member.Session.Character.Inventory != null && member.Session.Character.UseSp)
             {
-                SpInstance = (member.Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear));
+                SpInstance = (member.Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear));
             }
             if (win)
             {

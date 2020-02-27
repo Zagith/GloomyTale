@@ -28,6 +28,7 @@ using System.Collections.Concurrent;
 using GloomyTale.Core.Interfaces.Packets.ClientPackets;
 using GloomyTale.GameObject.Helpers;
 using GloomyTale.Core.Extensions;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.Handler
 {
@@ -161,12 +162,10 @@ namespace GloomyTale.Handler
                     DAOFactory.Instance.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 201 });
                     DAOFactory.Instance.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 209 });
 
-                    using (Inventory inventory = new Inventory((Character)characterDTO))
-                    {
-                        inventory.AddNewToInventory(15299, 1, InventoryType.Main);
-                        inventory.ForEach(i => DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(i));
-                        LoadCharacters(characterCreatePacket.OriginalContent);
-                    }
+                    var inventory = new Inventory((Character)characterDTO);
+                    inventory.AddNewToInventory(15299, 1, InventoryType.Main);
+                    inventory.ToList().ForEach(i => DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(i.Value));
+                    LoadCharacters(characterCreatePacket.OriginalContent);
                 }
                 else
                 {
@@ -181,12 +180,10 @@ namespace GloomyTale.Handler
 
                     DAOFactory.Instance.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO { CharacterId = characterDTO.CharacterId, SkillVNum = 1565 });
 
-                    using (Inventory inventory = new Inventory((Character)characterDTO))
-                    {
-                        inventory.AddNewToInventory(5832, 1, InventoryType.Main, 5);
-                        inventory.ForEach(i => DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(i));
-                        LoadCharacters(characterCreatePacket.OriginalContent);
-                    }
+                    var inventory = new Inventory((Character)characterDTO);
+                    inventory.AddNewToInventory(5832, 1, InventoryType.Main, 5);
+                    inventory.ToList().ForEach(i => DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(i.Value));
+                    LoadCharacters(characterCreatePacket.OriginalContent);
                 }
             }
         }

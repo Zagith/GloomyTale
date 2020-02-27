@@ -8,18 +8,6 @@ namespace GloomyTale.Data.Interfaces
     {
         #region Properties
 
-        short PartnerSkill1 { get; set; }
-
-        short PartnerSkill2 { get; set; }
-
-        short PartnerSkill3 { get; set; }
-
-        byte SkillRank1 { get; set; }
-
-        byte SkillRank2 { get; set; }
-
-        byte SkillRank3 { get; set; }
-
         short SlDamage { get; set; }
 
         short SlDefence { get; set; }

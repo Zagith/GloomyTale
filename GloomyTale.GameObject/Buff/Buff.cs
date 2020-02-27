@@ -29,7 +29,7 @@ namespace GloomyTale.GameObject
 
         #region Instantiation
 
-        public Buff(short id, int level, bool isPermaBuff = false)
+        public Buff(short id, int level = 0, bool isPermaBuff = false)
         {
             Card = ServerManager.GetCard(id);
             Level = level;

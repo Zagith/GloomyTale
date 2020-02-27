@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Core.Extensions;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.Handler
 {
@@ -326,7 +327,7 @@ namespace GloomyTale.Handler
 
                     //coupon
                     case 9:
-                        List<ItemInstance> items = Session.Character.Inventory
+                        List<ItemInstance> items = Session.Character.Inventory.Select(s => s.Value)
                             .Where(s => s.ItemVNum == 1269 || s.ItemVNum == 1271).OrderBy(s => s.Slot).ToList();
                         if (items.Count > 0)
                         {

@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.Handler
 {
@@ -599,10 +600,10 @@ namespace GloomyTale.Handler
                     famChar.Authority = FamilyAuthority.Head;
                     DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
 
-                    Session.Character.Family.Warehouse.ForEach(s =>
+                    Session.Character.Family.Warehouse.ToList().ForEach(s =>
                     {
-                        s.CharacterId = famChar.CharacterId;
-                        DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(s);
+                        s.Value.CharacterId = famChar.CharacterId;
+                        DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(s.Value);
                     });
                     Session.Character.FamilyCharacter.Authority = FamilyAuthority.Familydeputy;
                     FamilyCharacterDTO chara2 = Session.Character.FamilyCharacter;

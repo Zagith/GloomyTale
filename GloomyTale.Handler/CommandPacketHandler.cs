@@ -32,6 +32,7 @@ using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using GloomyTale.Core.Extensions;
+using GloomyTale.GameObject.Items.Instance;
 
 namespace GloomyTale.Handler
 {
@@ -420,8 +421,8 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 try
                 {
-                    ItemInstance instance =
-                        Session.Character.Inventory.LoadBySlotAndType(packet.Slot,
+                    var instance =
+                        Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(packet.Slot,
                             InventoryType.Equipment);
                     if (instance != null)
                     {
@@ -917,8 +918,8 @@ namespace GloomyTale.Handler
         /// <param name="packet"></param>
         public void ChangeFairyLevel(ChangeFairyLevelPacket packet)
         {
-            ItemInstance fairy =
-                Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
+            var fairy =
+                Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Fairy, InventoryType.Wear);
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
@@ -1137,8 +1138,8 @@ namespace GloomyTale.Handler
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[SPLvl]SpecialistLevel: {packet.SpecialistLevel}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
-                ItemInstance sp =
-                    Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                var sp =
+                    Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
                 if (sp != null && Session.Character.UseSp)
                 {
                     if (packet.SpecialistLevel <= 255
@@ -1316,7 +1317,7 @@ namespace GloomyTale.Handler
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Clear]InventoryType: {packet.InventoryType}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
-                Parallel.ForEach(Session.Character.Inventory.Where(s => s.Type == packet.InventoryType),
+                Parallel.ForEach(Session.Character.Inventory.Select(s => s.Value).Where(s => s.Type == packet.InventoryType),
                     inv =>
                     {
                         Session.Character.Inventory.DeleteById(inv.Id);
@@ -1533,7 +1534,7 @@ namespace GloomyTale.Handler
                         .AddNewToInventory(vnum, amount, Rare: rare, Upgrade: upgrade, Design: design).FirstOrDefault();
                     if (inv != null)
                     {
-                        ItemInstance wearable = Session.Character.Inventory.LoadBySlotAndType(inv.Slot, inv.Type);
+                        var wearable = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(inv.Slot, inv.Type);
                         if (wearable != null)
                         {
                             switch (wearable.Item.EquipmentSlot)
@@ -2781,8 +2782,8 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Slot >= 0)
                 {
-                    ItemInstance wearableInstance = Session.Character.Inventory.LoadBySlotAndType(packet.Slot, 0);
-                    wearableInstance?.RarifyItem(Session, packet.Mode, packet.Protection);
+                    var wearableInstance = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(packet.Slot, 0);
+                    wearableInstance?.RarifyItem(packet.Mode, packet.Protection);
                 }
             }
             else
@@ -3110,8 +3111,8 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Slot >= 0)
                 {
-                    ItemInstance specialistInstance =
-                        Session.Character.Inventory.LoadBySlotAndType(packet.Slot, 0);
+                    var specialistInstance =
+                        Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>(packet.Slot, 0);
 
                     if (specialistInstance != null)
                     {
@@ -3977,9 +3978,9 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Slot >= 0)
                 {
-                    ItemInstance wearableInstance =
-                        Session.Character.Inventory.LoadBySlotAndType(packet.Slot, 0);
-                    wearableInstance?.UpgradeItem(Session, packet.Mode, packet.Protection, true);
+                    var wearableInstance =
+                        Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(packet.Slot, 0);
+                    wearableInstance?.UpgradeItem(packet.Mode, packet.Protection, true);
                 }
             }
             else

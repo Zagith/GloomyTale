@@ -1,18 +1,19 @@
 ﻿using GloomyTale.DAL.DAO;
+using GloomyTale.DAL.EF;
+using GloomyTale.DAL.EF.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GloomyTale.SqlServer.Mapping
 {
-    public class GloomyItemInstanceMappingType // : ItemInstanceDAO.IItemInstanceMappingTypes
+    public class GloomyItemInstanceMappingType : ItemInstanceDAO.IItemInstanceMappingTypes
     {
         public List<(Type, Type)> Types { get; } = new List<(Type, Type)>
         {
-            (typeof(GameObject.Item.Instance.BoxInstance), typeof(BoxInstance)),
-            (typeof(GameObject.Item.Instance.ItemInstance), typeof(ItemInstance)),
-            (typeof(GameObject.Item.Instance.SpecialistInstance), typeof(SpecialistInstance)),
-            (typeof(GameObject.Item.Instance.WearableInstance), typeof(WearableInstance)),
+            (typeof(GameObject.Items.Instance.BoxInstance), typeof(BoxInstance)),
+            (typeof(GameObject.Items.Instance.ItemInstance), typeof(ItemInstance)),
+            (typeof(GameObject.Items.Instance.SpecialistInstance), typeof(SpecialistInstance)),
+            (typeof(GameObject.Items.Instance.WearableInstance), typeof(WearableInstance)),
         };
     }
 }

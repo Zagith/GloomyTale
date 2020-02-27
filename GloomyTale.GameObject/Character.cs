@@ -5558,7 +5558,7 @@ namespace GloomyTale.GameObject
                             {
                                 try
                                 {
-                                    ((WearableInstance)newItem).RarifyItem(Session, RarifyMode.Drop, RarifyProtection.None, forceRare: rare);
+                                    ((WearableInstance)newItem).RarifyItem(RarifyMode.Drop, RarifyProtection.None, forceRare: rare);
                                     newItem.Upgrade = (byte)(newItem.Item.BasicUpgrade + upgrade);
                                     if (newItem.Upgrade > 10)
                                     {
@@ -5576,7 +5576,7 @@ namespace GloomyTale.GameObject
                                 {
                                     try
                                     {
-                                        ((WearableInstance)newItem).RarifyItem(Session, RarifyMode.Drop, RarifyProtection.None);
+                                        ((WearableInstance)newItem).RarifyItem(RarifyMode.Drop, RarifyProtection.None);
                                         newItem.Upgrade = newItem.Item.BasicUpgrade;
                                         if (newItem.Rare >= minRare)
                                         {

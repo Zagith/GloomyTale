@@ -18,6 +18,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using GloomyTale.Data;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.Networking;
 using static GloomyTale.Domain.BCardType;
 

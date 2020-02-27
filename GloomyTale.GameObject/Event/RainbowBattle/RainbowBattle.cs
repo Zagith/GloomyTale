@@ -1,6 +1,7 @@
 ﻿using GloomyTale.Core;
 using GloomyTale.Domain;
 using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Generic;
@@ -113,7 +114,7 @@ namespace GloomyTale.GameObject.Event.RainbowBattle
                     if (session.Character.UseSp)
                     {
                         session.Character.LastSp = (DateTime.Now - Process.GetCurrentProcess().StartTime.AddSeconds(-50)).TotalSeconds;
-                        ItemInstance specialist = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                        var specialist = session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
                         if (specialist != null)
                         {
                             removeSP(session, specialist.ItemVNum);

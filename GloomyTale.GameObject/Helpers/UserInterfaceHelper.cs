@@ -346,23 +346,61 @@ namespace GloomyTale.GameObject.Helpers
                             break;
 
                         case BazaarListType.Pet:
-                            if (bz.Item.Item.Type == InventoryType.Equipment && bz.Item.Item.ItemType == ItemType.Box && bz.Item.Item.ItemSubType == 0 && (packet.LevelFilter == 0 || (bz.Item.SpLevel < (packet.LevelFilter * 10) + 1 && bz.Item.SpLevel >= (packet.LevelFilter * 10) - 9)) && (packet.SubTypeFilter == 0 || (packet.SubTypeFilter == 1 && bz.Item.HoldingVNum == 0) || (packet.SubTypeFilter == 2 && bz.Item.HoldingVNum != 0)))
+                            if (bz.Item.Item.Type == InventoryType.Equipment && bz.Item.Item.ItemType == ItemType.Box && bz.Item.Item.ItemSubType == 0)
                             {
-                                bzlist.Add(bz);
+                                if (bz.Item is BoxInstance boxinstanced &&
+                                    (packet.LevelFilter == 0 || boxinstanced.SpLevel < packet.LevelFilter * 10 + 1 &&
+                                        boxinstanced.SpLevel >= packet.LevelFilter * 10 - 9))
+                                {
+                                    if (packet.SubTypeFilter == 0 ||
+                                        packet.SubTypeFilter == 1 && ((BoxInstance)bz.Item).HoldingVNum == 0 ||
+                                        packet.SubTypeFilter == 2 && ((BoxInstance)bz.Item).HoldingVNum != 0)
+                                    {
+                                        bzlist.Add(bz);
+                                    }
+                                }
                             }
                             break;
 
                         case BazaarListType.Npc:
-                            if (bz.Item.Item.Type == InventoryType.Equipment && bz.Item.Item.ItemType == ItemType.Box && bz.Item.Item.ItemSubType == 1 && (packet.LevelFilter == 0 || (bz.Item.SpLevel < (packet.LevelFilter * 10) + 1 && bz.Item.SpLevel >= (packet.LevelFilter * 10) - 9)) && (packet.SubTypeFilter == 0 || (packet.SubTypeFilter == 1 && bz.Item.HoldingVNum == 0) || (packet.SubTypeFilter == 2 && bz.Item.HoldingVNum != 0)))
+                            if (bz.Item.Item.Type == InventoryType.Equipment)
                             {
-                                bzlist.Add(bz);
+                                if (bz.Item.Item.ItemType == ItemType.Box && bz.Item.Item.ItemSubType == 1)
+                                {
+                                    if (bz.Item is BoxInstance box &&
+                                        (packet.LevelFilter == 0 || box.SpLevel < packet.LevelFilter * 10 + 1 &&
+                                            box.SpLevel >= packet.LevelFilter * 10 - 9))
+                                    {
+                                        if (packet.SubTypeFilter == 0 ||
+                                            packet.SubTypeFilter == 1 && ((BoxInstance)bz.Item).HoldingVNum == 0 ||
+                                            packet.SubTypeFilter == 2 && ((BoxInstance)bz.Item).HoldingVNum != 0)
+                                        {
+                                            bzlist.Add(bz);
+                                        }
+                                    }
+                                }
                             }
                             break;
 
                         case BazaarListType.Shell:
-                            if (bz.Item.Item.Type == InventoryType.Equipment && bz.Item.Item.ItemType == ItemType.Shell && (packet.SubTypeFilter == 0 || bz.Item.Item.ItemSubType == bz.Item.Item.ItemSubType + 1) && ((packet.RareFilter == 0 || packet.RareFilter == bz.Item.Rare + 1) && (packet.LevelFilter == 0 || (bz.Item.SpLevel < (packet.LevelFilter * 10) + 1 && bz.Item.SpLevel >= (packet.LevelFilter * 10) - 9))))
+                            if (bz.Item.Item.Type == InventoryType.Equipment)
                             {
-                                bzlist.Add(bz);
+                                if (bz.Item.Item.ItemType == ItemType.Shell)
+                                {
+                                    if (packet.SubTypeFilter == 0 ||
+                                        bz.Item.Item.ItemSubType == (bz.Item.Item.ItemSubType + 1))
+                                    {
+                                        if (packet.RareFilter == 0 || packet.RareFilter == (bz.Item.Rare + 1))
+                                        {
+                                            if (bz.Item is BoxInstance box &&
+                                                (packet.LevelFilter == 0 || box.SpLevel < packet.LevelFilter * 10 + 1 &&
+                                                    box.SpLevel >= packet.LevelFilter * 10 - 9))
+                                            {
+                                                bzlist.Add(bz);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                             break;
 
@@ -381,16 +419,24 @@ namespace GloomyTale.GameObject.Helpers
                             break;
 
                         case BazaarListType.Other:
-                            if (bz.Item.Item.Type == InventoryType.Equipment && bz.Item.Item.ItemType == ItemType.Box && !bz.Item.Item.IsHolder)
+                            if (bz.Item.Item.Type == InventoryType.Equipment)
                             {
-                                bzlist.Add(bz);
+                                if (bz.Item.Item.ItemType == ItemType.Box && !bz.Item.Item.IsHolder)
+                                {
+                                    bzlist.Add(bz);
+                                }
                             }
                             break;
 
                         case BazaarListType.Vehicle:
-                            if (bz.Item.Item.ItemType == ItemType.Box && bz.Item.Item.ItemSubType == 4 && (packet.SubTypeFilter == 0 || (packet.SubTypeFilter == 1 && bz.Item.HoldingVNum == 0) || (packet.SubTypeFilter == 2 && bz.Item.HoldingVNum != 0)))
+                            if (bz.Item.Item.ItemType == ItemType.Box && bz.Item.Item.ItemSubType == 4)
                             {
-                                bzlist.Add(bz);
+                                if (bz.Item is BoxInstance box &&
+                                    (packet.SubTypeFilter == 0 || packet.SubTypeFilter == 1 && box.HoldingVNum == 0 ||
+                                        packet.SubTypeFilter == 2 && box.HoldingVNum != 0))
+                                {
+                                    bzlist.Add(bz);
+                                }
                             }
                             break;
 
@@ -431,14 +477,15 @@ namespace GloomyTale.GameObject.Helpers
                     string info = "";
                     if (bzlink.Item.Item.Type == InventoryType.Equipment)
                     {
-                        if (bzlink.Item is ItemInstance wear)
+                        if (bzlink.Item is WearableInstance wear)
                         {
                             wear.ShellEffects.Clear();
                             wear.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(wear.EquipmentSerialId));
                         }
                         info = (bzlink.Item.Item.EquipmentSlot != EquipmentType.Sp ?
-                            bzlink.Item?.GenerateEInfo() : bzlink.Item.Item.SpType == 0 && bzlink.Item.Item.ItemSubType == 4 ?
-                            bzlink.Item?.GeneratePslInfo() : bzlink.Item?.GenerateSlInfo()).Replace(' ', '^').Replace("slinfo^", "").Replace("e_info^", "");
+                            (bzlink.Item as WearableInstance)?.GenerateEInfo() : bzlink.Item.Item.SpType == 0 && bzlink.Item.Item.ItemSubType == 4 ?
+                            (bzlink.Item as SpecialistInstance)?.GeneratePslInfo() : (bzlink.Item as SpecialistInstance)?.GenerateSlInfo())
+                            .Replace(' ', '^').Replace("slinfo^", "").Replace("e_info^", "");
                     }
                     itembazar += $"{bzlink.BazaarItem.BazaarItemId}|{bzlink.BazaarItem.SellerId}|{bzlink.Owner}|{bzlink.Item.Item.VNum}|{bzlink.Item.Amount}|{(bzlink.BazaarItem.IsPackage ? 1 : 0)}|{bzlink.BazaarItem.Price}|{time}|2|0|{bzlink.Item.Rare}|{bzlink.Item.Upgrade}|{info} ";
                 }

@@ -6,6 +6,7 @@ using GloomyTale.Domain;
 using GloomyTale.GameObject;
 using GloomyTale.GameObject.Event;
 using GloomyTale.GameObject.Helpers;
+using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.Networking;
 using System;
 using System.Collections.Concurrent;
@@ -63,8 +64,8 @@ namespace GloomyTale.Handler
                 {
                     if (guriPacket.Argument == 0 && short.TryParse(guriPacket.User.ToString(), out short slot))
                     {
-                        ItemInstance shell =
-                            Session.Character.Inventory.LoadBySlotAndType(slot, InventoryType.Equipment);
+                        WearableInstance shell =
+                            Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(slot, InventoryType.Equipment);
                         if (shell?.ShellEffects.Count == 0 && shell.Upgrade > 0 && shell.Rare > 0
                             && Session.Character.Inventory.CountItem(1429) >= ((shell.Upgrade / 10) + shell.Rare))
                         {
@@ -973,7 +974,7 @@ namespace GloomyTale.Handler
                         && short.TryParse(guriPacket.User.ToString(), out short pearlSlot))
                     {
                         ItemInstance mount = Session.Character.Inventory.LoadBySlotAndType(mountSlot, InventoryType.Main);
-                        ItemInstance pearl = Session.Character.Inventory.LoadBySlotAndType(pearlSlot, InventoryType.Equipment);
+                        var pearl = Session.Character.Inventory.LoadBySlotAndType<BoxInstance>(pearlSlot, InventoryType.Equipment);
 
                         if (mount?.Item == null || pearl?.Item == null)
                         {
@@ -1015,8 +1016,8 @@ namespace GloomyTale.Handler
                     if (short.TryParse(guriPacket.Value, out short fairySlot)
                         && short.TryParse(guriPacket.User.ToString(), out short pearlSlot))
                     {
-                        ItemInstance fairy = Session.Character.Inventory.LoadBySlotAndType(fairySlot, InventoryType.Equipment);
-                        ItemInstance pearl = Session.Character.Inventory.LoadBySlotAndType(pearlSlot, InventoryType.Equipment);
+                        var fairy = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(fairySlot, InventoryType.Equipment);
+                        var pearl = Session.Character.Inventory.LoadBySlotAndType<BoxInstance>(pearlSlot, InventoryType.Equipment);
 
                         if (fairy?.Item == null || pearl?.Item == null)
                         {
@@ -1067,8 +1068,8 @@ namespace GloomyTale.Handler
                     {
                         if (Session.Character.UseSp)
                         {
-                            ItemInstance specialistInstance =
-                                Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp,
+                            var specialistInstance =
+                                Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp,
                                     InventoryType.Wear);
                             if (specialistInstance != null)
                             {
@@ -1102,7 +1103,7 @@ namespace GloomyTale.Handler
                                 Session.Character.Inventory.AddToInventoryWithSlotAndType(specialistInstance,
                                     InventoryType.Wear, (byte)EquipmentType.Sp);
                                 Session.SendPacket(Session.Character.GenerateCond());
-                                Session.SendPacket(specialistInstance.GenerateSlInfo(Session));
+                                Session.SendPacket(specialistInstance.GenerateSlInfo());
                                 Session.SendPacket(Session.Character.GenerateLev());
                                 Session.SendPackets(Session.Character.GenerateStatChar());
                                 Session.SendPacket(
@@ -1201,7 +1202,7 @@ namespace GloomyTale.Handler
                 {
                     if (Session.Character.Inventory.CountItem(1216) >= 1)
                     {
-                        ItemInstance specialistInstance = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                        var specialistInstance = Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
                         if (specialistInstance != null)
                         {
                             CustomHelper.Instance.SpeedPerfection(Session, specialistInstance);
