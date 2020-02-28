@@ -1398,6 +1398,10 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.Property<short>("Design")
                         .HasColumnType("smallint");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("DurabilityPoint")
                         .HasColumnType("int");
 
@@ -1431,6 +1435,8 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.HasIndex("ItemVNum");
 
                     b.ToTable("ItemInstance");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ItemInstance");
                 });
 
             modelBuilder.Entity("GloomyTale.DAL.EF.LogChat", b =>
@@ -2886,6 +2892,170 @@ namespace GloomyTale.DAL.EF.Migrations
                     b.HasIndex("MapNpcId");
 
                     b.ToTable("Teleporter");
+                });
+
+            modelBuilder.Entity("GloomyTale.DAL.EF.Entities.UsableInstance", b =>
+                {
+                    b.HasBaseType("GloomyTale.DAL.EF.ItemInstance");
+
+                    b.Property<short?>("HP")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("MP")
+                        .HasColumnType("smallint");
+
+                    b.HasDiscriminator().HasValue("UsableInstance");
+                });
+
+            modelBuilder.Entity("GloomyTale.DAL.EF.Entities.WearableInstance", b =>
+                {
+                    b.HasBaseType("GloomyTale.DAL.EF.ItemInstance");
+
+                    b.Property<byte?>("Ammo")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("Cellon")
+                        .HasColumnType("tinyint");
+
+                    b.Property<short?>("CloseDefence")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("Concentrate")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("CriticalDodge")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte?>("CriticalLuckRate")
+                        .HasColumnType("tinyint");
+
+                    b.Property<short?>("CriticalRate")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("DamageMaximum")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("DamageMinimum")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte?>("DarkElement")
+                        .HasColumnType("tinyint");
+
+                    b.Property<short?>("DarkResistance")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("DefenceDodge")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("DistanceDefence")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("DistanceDefenceDodge")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("ElementRate")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte?>("FireElement")
+                        .HasColumnType("tinyint");
+
+                    b.Property<short?>("FireResistance")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("HP")
+                        .HasColumnName("WearableInstance_HP")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("HitRate")
+                        .HasColumnType("smallint");
+
+                    b.Property<bool?>("IsEmpty")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsFixed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsPartnerEquipment")
+                        .HasColumnType("bit");
+
+                    b.Property<byte?>("LightElement")
+                        .HasColumnType("tinyint");
+
+                    b.Property<short?>("LightResistance")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("MP")
+                        .HasColumnName("WearableInstance_MP")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("MagicDefence")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("MaxElementRate")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("ShellRarity")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte?>("WaterElement")
+                        .HasColumnType("tinyint");
+
+                    b.Property<short?>("WaterResistance")
+                        .HasColumnType("smallint");
+
+                    b.Property<long?>("XP")
+                        .HasColumnType("bigint");
+
+                    b.HasDiscriminator().HasValue("WearableInstance");
+                });
+
+            modelBuilder.Entity("GloomyTale.DAL.EF.Entities.SpecialistInstance", b =>
+                {
+                    b.HasBaseType("GloomyTale.DAL.EF.Entities.WearableInstance");
+
+                    b.Property<short?>("SlDamage")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("SlDefence")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("SlElement")
+                        .HasColumnType("smallint");
+
+                    b.Property<short?>("SlHP")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte?>("SpDamage")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("SpDark")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("SpDefence")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("SpElement")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("SpFire")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("SpHP")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("SpLevel")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("SpLight")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("SpStoneUpgrade")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("SpWater")
+                        .HasColumnType("tinyint");
+
+                    b.HasDiscriminator().HasValue("SpecialistInstance");
                 });
 
             modelBuilder.Entity("GloomyTale.DAL.EF.BCard", b =>

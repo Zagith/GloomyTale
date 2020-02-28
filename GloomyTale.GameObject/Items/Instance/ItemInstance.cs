@@ -54,7 +54,7 @@ namespace GloomyTale.GameObject.Items.Instance
 
         public bool IsBound => BoundCharacterId.HasValue && Item.ItemType != ItemType.Armor && Item.ItemType != ItemType.Weapon;
 
-        public Item Item => _item ?? (_item = (this as SpecialistInstance).IsPartnerEquipment && (this as BoxInstance).HoldingVNum != 0 ? ServerManager.GetItem((this as BoxInstance).HoldingVNum) : ServerManager.GetItem(ItemVNum));
+        public Item Item => ServerManager.GetItem(ItemVNum); // _item ?? (_item = (this as SpecialistInstance).IsPartnerEquipment.HasValue.Equals(true) && ((this as BoxInstance)?.HoldingVNum != 0 && (this as BoxInstance)?.HoldingVNum != null) ? ServerManager.GetItem((this as BoxInstance).HoldingVNum) : ServerManager.GetItem(ItemVNum));
 
         public ClientSession CharacterSession => ServerManager.Instance.GetSessionByCharacterId(CharacterId);
         #endregion

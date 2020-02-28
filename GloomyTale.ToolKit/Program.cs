@@ -147,22 +147,22 @@ namespace GloomyTale.ToolKit
                     }
                     else
                     {
-                        /*Console.WriteLine($"{Language.Instance.GetMessageFromKey("PARSE_MAPS")} [Y/n]");
+                        Console.WriteLine($"{Language.Instance.GetMessageFromKey("PARSE_MAPS")} [Y/n]");
                         key = Console.ReadKey(true);
                         if (key.KeyChar != 'n')
                         {
-                            factory.ImportMaps();
+                            mapImporter.Import();
                             factory.LoadMaps();
-                        }*/
+                        }
 
-                        Console.WriteLine($"{Language.Instance.GetMessageFromKey("PARSE_MAPTYPES")} [Y/n]");
+                        /*Console.WriteLine($"{Language.Instance.GetMessageFromKey("PARSE_MAPTYPES")} [Y/n]");
                         key = Console.ReadKey(true);
                         if (key.KeyChar != 'n')
                         {
                             factory.ImportMapType();
                             factory.ImportMapTypeMap();
                             factory.ImportRespawnMapType();
-                        }
+                        }*/
 
                         /*Console.WriteLine($"{Language.Instance.GetMessageFromKey("PARSE_ACCOUNTS")} [Y/n]");
                         key = Console.ReadKey(true);

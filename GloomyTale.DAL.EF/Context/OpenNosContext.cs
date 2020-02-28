@@ -178,6 +178,15 @@ namespace GloomyTale.DAL.EF
         {
             // remove automatic pluralization
 
+            modelBuilder.Entity<WearableInstance>()
+                .HasBaseType<ItemInstance>();
+
+            modelBuilder.Entity<SpecialistInstance>()
+                .HasBaseType<WearableInstance>();
+
+            modelBuilder.Entity<UsableInstance>()
+                .HasBaseType<ItemInstance>();
+
             modelBuilder.Entity<Account>()
                 .Property(e => e.Password)
                 .IsUnicode(false);

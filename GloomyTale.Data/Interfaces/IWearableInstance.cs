@@ -67,6 +67,7 @@ namespace GloomyTale.Data.Interfaces
         long XP { get; set; }
 
         bool IsPartnerEquipment { get; set; }
+
         #endregion
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GloomyTale.DAL.EF.Migrations
 {
-    public partial class GloomyTale01 : Migration
+    public partial class GloomyTale1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -1270,22 +1270,10 @@ namespace GloomyTale.DAL.EF.Migrations
                     Slot = table.Column<short>(nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     Upgrade = table.Column<byte>(nullable: false),
-                    HoldingVNum = table.Column<short>(nullable: true),
-                    ShellRarity = table.Column<short>(nullable: true),
-                    SlDamage = table.Column<short>(nullable: true),
-                    SlDefence = table.Column<short>(nullable: true),
-                    SlElement = table.Column<short>(nullable: true),
-                    SlHP = table.Column<short>(nullable: true),
-                    SpDamage = table.Column<byte>(nullable: true),
-                    SpDark = table.Column<byte>(nullable: true),
-                    SpDefence = table.Column<byte>(nullable: true),
-                    SpElement = table.Column<byte>(nullable: true),
-                    SpFire = table.Column<byte>(nullable: true),
-                    SpHP = table.Column<byte>(nullable: true),
-                    SpLevel = table.Column<byte>(nullable: true),
-                    SpLight = table.Column<byte>(nullable: true),
-                    SpStoneUpgrade = table.Column<byte>(nullable: true),
-                    SpWater = table.Column<byte>(nullable: true),
+                    EquipmentSerialId = table.Column<Guid>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    HP = table.Column<short>(nullable: true),
+                    MP = table.Column<short>(nullable: true),
                     Ammo = table.Column<byte>(nullable: true),
                     Cellon = table.Column<byte>(nullable: true),
                     CloseDefence = table.Column<short>(nullable: true),
@@ -1301,22 +1289,36 @@ namespace GloomyTale.DAL.EF.Migrations
                     DistanceDefence = table.Column<short>(nullable: true),
                     DistanceDefenceDodge = table.Column<short>(nullable: true),
                     ElementRate = table.Column<short>(nullable: true),
-                    EquipmentSerialId = table.Column<Guid>(nullable: true),
                     FireElement = table.Column<byte>(nullable: true),
                     FireResistance = table.Column<short>(nullable: true),
                     HitRate = table.Column<short>(nullable: true),
-                    HP = table.Column<short>(nullable: true),
+                    WearableInstance_HP = table.Column<short>(nullable: true),
                     IsEmpty = table.Column<bool>(nullable: true),
                     IsFixed = table.Column<bool>(nullable: true),
-                    IsPartnerEquipment = table.Column<bool>(nullable: true),
                     LightElement = table.Column<byte>(nullable: true),
                     LightResistance = table.Column<short>(nullable: true),
                     MagicDefence = table.Column<short>(nullable: true),
                     MaxElementRate = table.Column<short>(nullable: true),
-                    MP = table.Column<short>(nullable: true),
+                    WearableInstance_MP = table.Column<short>(nullable: true),
+                    ShellRarity = table.Column<short>(nullable: true),
                     WaterElement = table.Column<byte>(nullable: true),
                     WaterResistance = table.Column<short>(nullable: true),
-                    XP = table.Column<long>(nullable: true)
+                    XP = table.Column<long>(nullable: true),
+                    IsPartnerEquipment = table.Column<bool>(nullable: true),
+                    SlDamage = table.Column<short>(nullable: true),
+                    SlDefence = table.Column<short>(nullable: true),
+                    SlElement = table.Column<short>(nullable: true),
+                    SlHP = table.Column<short>(nullable: true),
+                    SpDamage = table.Column<byte>(nullable: true),
+                    SpDark = table.Column<byte>(nullable: true),
+                    SpDefence = table.Column<byte>(nullable: true),
+                    SpElement = table.Column<byte>(nullable: true),
+                    SpFire = table.Column<byte>(nullable: true),
+                    SpHP = table.Column<byte>(nullable: true),
+                    SpLevel = table.Column<byte>(nullable: true),
+                    SpLight = table.Column<byte>(nullable: true),
+                    SpStoneUpgrade = table.Column<byte>(nullable: true),
+                    SpWater = table.Column<byte>(nullable: true)
                 },
                 constraints: table =>
                 {
