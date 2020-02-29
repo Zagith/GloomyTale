@@ -2963,9 +2963,9 @@ namespace GloomyTale.GameObject
             return new ExtsPacket
             {
 #warning TODO URGENT
-                EquipmentExtension = 0,//(byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                MainExtension = 0,//(byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                EtcExtension = 0//(byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12))
+                EquipmentExtension = 12,//(byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
+                MainExtension = 12,//(byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
+                EtcExtension = 12//(byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12))
             };
         }
 
