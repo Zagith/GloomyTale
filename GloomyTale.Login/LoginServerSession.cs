@@ -1,4 +1,5 @@
 ﻿using GloomyTale.Core;
+using GloomyTale.GameObject;
 using GloomyTale.NetworkManager.Cryptography;
 using NetCoreServer;
 using System;
@@ -15,11 +16,12 @@ namespace GloomyTale.Login
         private readonly IDecrypter _decrypter;
         private readonly IEncrypter _encrypter;
         private IPEndPoint _ip;
-
-        public LoginServerSession(TcpServer server, IEncrypter encrypter, IDecrypter decrypter) : base(server)
+        private SessionManager _session;
+        public LoginServerSession(TcpServer server, IEncrypter encrypter, IDecrypter decrypter, SessionManager session) : base(server)
         {
             _encrypter = encrypter;
             _decrypter = decrypter;
+            _session = session;
         }
 
         public event EventHandler<string> PacketReceived;
@@ -60,6 +62,7 @@ namespace GloomyTale.Login
 
         public void DisconnectClient()
         {
+            _session.RemoveSession(this);
             Disconnect();
         }
 

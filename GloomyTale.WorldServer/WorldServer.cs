@@ -23,12 +23,10 @@ namespace GloomyTale.World
         protected override TcpSession CreateSession()
         {
             var infos = new NetworkInformations();
-            var tmp = new WorldServerSession(this, new WorldEncrypter(infos), new WorldDecrypter(infos), infos);
+            var tmp = new WorldServerSession(this, new WorldEncrypter(infos), new WorldDecrypter(infos), infos, _sessionManager);
             _sessionManager.AddSession(tmp);
             return tmp;
         }
-
-
 
         protected override void OnConnected(TcpSession session)
         {
@@ -46,6 +44,10 @@ namespace GloomyTale.World
             Console.WriteLine($"TCP server caught an error with code {error}");
             ServerManager.Instance.Shutdown();
             Stop();
+        }
+
+        protected override void OnDisconnected(TcpSession session)
+        {
         }
     }
 }

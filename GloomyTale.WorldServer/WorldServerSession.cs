@@ -1,4 +1,5 @@
 ﻿using GloomyTale.Core;
+using GloomyTale.GameObject;
 using GloomyTale.NetworkManager.Cryptography;
 using NetCoreServer;
 using System;
@@ -22,12 +23,13 @@ namespace GloomyTale.World
         private readonly IEncrypter _encrypter;
         private readonly NetworkInformations _networkClient;
         private IPEndPoint _ip;
-
-        public WorldServerSession(TcpServer server, IEncrypter encrypter, IDecrypter decrypter, NetworkInformations networkClient) : base(server)
+        private SessionManager _session;
+        public WorldServerSession(TcpServer server, IEncrypter encrypter, IDecrypter decrypter, NetworkInformations networkClient, SessionManager session) : base(server)
         {
             _encrypter = encrypter;
             _decrypter = decrypter;
             _networkClient = networkClient;
+            _session = session;
         }
 
         public Encoding Encoding => Encoding.Default;
@@ -69,6 +71,7 @@ namespace GloomyTale.World
 
         public void DisconnectClient()
         {
+            _session.RemoveSession(this);
             Disconnect();
         }
 
@@ -88,6 +91,7 @@ namespace GloomyTale.World
 
         protected override void OnDisconnected()
         {
+            _session.RemoveSession(this);
         }
 
         protected override void OnReceived(byte[] buffer, long offset, long size)

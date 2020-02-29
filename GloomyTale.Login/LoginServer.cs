@@ -39,7 +39,7 @@ namespace GloomyTale.Login
 
         protected override TcpSession CreateSession()
         {
-            var tmp = new LoginServerSession(this, new NostaleLoginEncrypter(Encoding.Default), new NostaleLoginDecrypter());
+            var tmp = new LoginServerSession(this, new NostaleLoginEncrypter(Encoding.Default), new NostaleLoginDecrypter(), _sessionManager);
             _sessionManager.AddSession(tmp);
             return tmp;
         }
