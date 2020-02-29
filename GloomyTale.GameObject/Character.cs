@@ -3894,7 +3894,7 @@ namespace GloomyTale.GameObject
                 Session.SendPacket(GenerateLevelUp());
                 if (specialist.SpLevel >= ServerManager.Instance.MaxSpLevel)
                 {
-                    specialist.SpLevel = ServerManager.Instance.MaxSpLevel;
+                    specialist.SpLevel = (byte)ServerManager.Instance.MaxSpLevel;
                     specialist.XP = 0;
                 }
                 LearnSPSkill();
