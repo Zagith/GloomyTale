@@ -104,17 +104,9 @@ namespace GloomyTale.World
             return coreBuilder.Build();
         }
 
-        /*private static void CustomisationRegistration()
+        private static void CustomisationRegistration()
         {
             const string configPath = "./config/";
-            DependencyContainer.Instance.Register(ConfigurationHelper.Load<BaseCharacter>(configPath + nameof(BaseCharacter) + ".json", true));
-            Logger.Log.Info("[CUSTOMIZER] BaseCharacter Loaded !");
-            DependencyContainer.Instance.Register(ConfigurationHelper.Load<BaseQuicklist>(configPath + nameof(BaseQuicklist) + ".json", true));
-            Logger.Log.Info("[CUSTOMIZER] BaseQuicklist Loaded !");
-            DependencyContainer.Instance.Register(ConfigurationHelper.Load<BaseInventory>(configPath + nameof(BaseInventory) + ".json", true));
-            Logger.Log.Info("[CUSTOMIZER] BaseInventory Loaded !");
-            DependencyContainer.Instance.Register(ConfigurationHelper.Load<BaseSkill>(configPath + nameof(BaseSkill) + ".json", true));
-            Logger.Log.Info("[CUSTOMIZER] BaseSkill Loaded !");
 
             DependencyContainer.Instance.Register(ConfigurationHelper.Load<GameRateConfiguration>(configPath + "game.json", true));
             Logger.Log.Info("[CUSTOMIZER] Game Rate            Configuration Loaded !");
@@ -122,9 +114,9 @@ namespace GloomyTale.World
             Logger.Log.Info("[CUSTOMIZER] Game MinMax          Configuration Loaded !");
             DependencyContainer.Instance.Register(ConfigurationHelper.Load<GameTrueFalseConfiguration>(configPath + "events.json", true));
             Logger.Log.Info("[CUSTOMIZER] Game TrueFalse       Configuration Loaded !");
-            DependencyContainer.Instance.Register(ConfigurationHelper.Load<GameScheduledEventsConfiguration>(configPath + "scheduled_events.json", true));
-            Logger.Log.Info("[CUSTOMIZER] Game ScheduledEvents Configuration Loaded !");
-        }*/
+            /*DependencyContainer.Instance.Register(ConfigurationHelper.Load<GameScheduledEventsConfiguration>(configPath + "scheduled_events.json", true));
+            Logger.Log.Info("[CUSTOMIZER] Game ScheduledEvents Configuration Loaded !");*/
+        }
 
         public static void Main(string[] args)
         {
@@ -183,7 +175,7 @@ namespace GloomyTale.World
                 }
 
                 // initialize Loggers
-                //CustomisationRegistration();
+                CustomisationRegistration();
 
                 int gRpcPort = Convert.ToInt32(Environment.GetEnvironmentVariable("GRPC_PORT") ?? "17500");
                 string gRpcIp = Environment.GetEnvironmentVariable("GRPC_IP") ?? "localhost";

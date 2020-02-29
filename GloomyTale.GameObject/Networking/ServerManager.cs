@@ -16,14 +16,10 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using GloomyTale.Core;
 using GloomyTale.Data;
 using GloomyTale.DAL;
@@ -31,16 +27,7 @@ using GloomyTale.Domain;
 using GloomyTale.GameObject.Helpers;
 using GloomyTale.XMLModel.Models.Quest;
 using GloomyTale.GameObject.Event;
-using System.Net.Sockets;
-using GloomyTale.Domain.I18N;
-using GloomyTale.Data.I18N;
-using GloomyTale.Data.Base;
-using System.Reflection;
-using GloomyTale.Data.Interfaces;
-using Mapster;
 using GloomyTale.GameObject.Event.ACT4;
-using FastMember;
-using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
 using GloomyTale.Cofiguration;
 using GloomyTale.GameObject.Items.Instance;
@@ -50,10 +37,10 @@ namespace GloomyTale.GameObject.Networking
     public class ServerManager : BroadcastableBase
     {
         #region Members
-        /*public GameRateConfiguration RateConfiguration;
+        public GameRateConfiguration RateConfiguration;
         public GameMinMaxConfiguration GameMinMaxConfiguration;
         public GameTrueFalseConfiguration GameTrueFalseConfiguration;
-        public GameScheduledEventsConfiguration GameScheduledEventsConfiguration;*/
+        //public GameScheduledEventsConfiguration GameScheduledEventsConfiguration;
 
         public ThreadSafeSortedList<long, Group> ThreadSafeGroupList;
 
@@ -114,6 +101,65 @@ namespace GloomyTale.GameObject.Networking
         #endregion
 
         #region Properties
+
+        /* Configurations */
+
+            // Rates
+        public int XpRate { get; set; }
+
+        public int JobXpRate { get; set; }
+
+        public int MateXpRate { get; set; }
+
+        public int HeroXpRate { get; set; }
+
+        public int FairyXpRate { get; set; }
+
+        public int GoldDropRate { get; set; }
+
+        public int GoldRate { get; set; }
+
+        public int DropRate { get; set; }
+
+        public int FamilyExpRate { get; set; }
+
+        public int ReputRate { get; set; }
+
+        public int CylloanPercentRate { get; set; }
+
+        public int GlacernonPercentRatePvp { get; set; }
+
+        public int GlacernonPercentRatePvm { get; set; }
+
+        public int QuestDropRate { get; set; }
+
+        public bool ReputOnMonsters { get; set; }
+
+        public bool RaidPortalFromAnywhere { get; set; }
+
+        public bool LodTimes { get; set; }
+
+        public bool AutoLoot { get; set; }
+
+        public short MinLodLevel { get; set; }        
+
+        public int HeroicStartLevel { get; set; }        
+
+        public long MaxGold { get; set; }
+
+        public long MaxBankGold { get; set; }
+
+        public short MaxHeroLevel { get; set; }
+
+        public short MaxJobLevel { get; set; }
+
+        public short MaxLevel { get; set; }
+
+        public short MaxSpLevel { get; set; }        
+
+        public short MaxMateLevel { get; set; }
+        
+        /* End Configurations */
 
         public static ServerManager Instance => _instance ?? (_instance = new ServerManager());
 
@@ -1242,7 +1288,7 @@ namespace GloomyTale.GameObject.Networking
 
         private void InitializeConfigurations()
         {
-            /*XpRate = RateConfiguration.XpRate;
+            XpRate = RateConfiguration.XpRate;
             JobXpRate = RateConfiguration.JobXpRate;
             HeroXpRate = RateConfiguration.HeroXpRate;
             FairyXpRate = RateConfiguration.FairyXpRate;
@@ -1262,15 +1308,13 @@ namespace GloomyTale.GameObject.Networking
             /*
              * Min Max Configurations
              */
-            /*MaxLevel = GameMinMaxConfiguration.MaxLevel;
+            MaxLevel = GameMinMaxConfiguration.MaxLevel;
             MaxMateLevel = GameMinMaxConfiguration.MaxMateLevel;
             MaxJobLevel = GameMinMaxConfiguration.MaxJobLevel;
             MaxSpLevel = GameMinMaxConfiguration.MaxSpLevel;
             MaxHeroLevel = GameMinMaxConfiguration.MaxHeroLevel;
             HeroicStartLevel = GameMinMaxConfiguration.HeroMinLevel;
-            LobbySpeed = GameMinMaxConfiguration.LobbySpeed;
             MinLodLevel = GameMinMaxConfiguration.MinLodLevel;
-            MaximumHomes = GameMinMaxConfiguration.MaximumHomes;
 
             /*
              * Events
@@ -1975,15 +2019,15 @@ namespace GloomyTale.GameObject.Networking
 
         public void Initialize(GameRateConfiguration rateConf, GameMinMaxConfiguration levelConf, GameTrueFalseConfiguration eventsConf)//, GameScheduledEventsConfiguration gameScheduledConf)
         {
-            //RateConfiguration = rateConf;
-            //GameMinMaxConfiguration = levelConf;
-            //GameTrueFalseConfiguration = eventsConf;
+            RateConfiguration = rateConf;
+            GameMinMaxConfiguration = levelConf;
+            GameTrueFalseConfiguration = eventsConf;
             //GameScheduledEventsConfiguration = gameScheduledConf;
+
             /*
              * Rates
              */
             InitializeConfigurations();
-            //CharacterHomes = DaoFactory.Instance.CharacterHomeDao.LoadAll();
 
             //CommunicationServiceClient.Instance.SetMaintenanceState(Maintenance);
             LoadItems();
