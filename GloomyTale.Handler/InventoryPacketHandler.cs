@@ -540,7 +540,7 @@ namespace GloomyTale.Handler
 
                                         long gold = targetSession.Character.Gold;
                                         long goldBank = targetSession.Character.GoldBank;
-                                        long maxGold = 1000000000; //ServerManager.Instance.Configuration.MaxGold;
+                                        long maxGold = ServerManager.Instance.MaxGold;
 
                                         if (targetExchange == null || Session.Character.ExchangeInfo == null)
                                         {
@@ -938,7 +938,7 @@ namespace GloomyTale.Handler
                             else
                             {
                                 // handle gold drop
-                                long maxGold = 1000000000; //ServerManager.Instance.Configuration.MaxGold;
+                                long maxGold = ServerManager.Instance.MaxGold;
 
                                 double multiplier = 1 + (Session.Character.GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseEarnedGold)[0] / 100D);
                                 multiplier += (Session.Character.ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreGold)?.Value ?? 0) / 100D;
@@ -1000,7 +1000,7 @@ namespace GloomyTale.Handler
                         return;
                     }
 
-                    if (mvePacket.DestinationSlot > 120 /*ServerManager.Instance.Configuration.BackpackSize*/ + ((Session.Character.HaveBackpack() ? 1 : 0) * 12))
+                    if (mvePacket.DestinationSlot > ServerManager.Instance.BackpackSize + ((Session.Character.HaveBackpack() ? 1 : 0) * 12))
                     {
                         return;
                     }
@@ -1059,7 +1059,7 @@ namespace GloomyTale.Handler
                 lock (Session.Character.Inventory)
                 {
                     // check if the destination slot is out of range
-                    if (mviPacket.DestinationSlot > 120 /*ServerManager.Instance.Configuration.BackpackSize*/ + ((Session.Character.HaveBackpack() ? 1 : 0) * 12))
+                    if (mviPacket.DestinationSlot > ServerManager.Instance.BackpackSize + ((Session.Character.HaveBackpack() ? 1 : 0) * 12))
                     {
                         return;
                     }

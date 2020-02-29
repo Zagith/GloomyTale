@@ -89,7 +89,7 @@ namespace GloomyTale.Handler
 
                     if ((item.Price * amount)
                         + sess.Character.Gold
-                        > 1000000000) //ServerManager.Instance.Configuration.MaxGold)
+                        > ServerManager.Instance.MaxGold)
                     {
                         Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(3,
                             Language.Instance.GetMessageFromKey("MAX_GOLD")));
@@ -1041,7 +1041,7 @@ namespace GloomyTale.Handler
                     price = 1;
                 }
 
-                if (Session.Character.Gold + (price * amount) > 1000000000) //ServerManager.Instance.Configuration.MaxGold)
+                if (Session.Character.Gold + (price * amount) > ServerManager.Instance.MaxGold)
                 {
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("MAX_GOLD"), 0));
                     return;

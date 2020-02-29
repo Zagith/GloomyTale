@@ -103,7 +103,7 @@ namespace GloomyTale.GameObject.Event
                         }
 
                         x.Character.Gold += GoldRewards[currentBracket];
-                        x.Character.Gold = x.Character.Gold > 10000000 /*ServerManager.Instance.Configuration.MaxGold*/ ? 10000000 /*ServerManager.Instance.Configuration.MaxGold*/ : x.Character.Gold;
+                        x.Character.Gold = x.Character.Gold > ServerManager.Instance.MaxGold ? ServerManager.Instance.MaxGold : x.Character.Gold;
                         x.SendPacket(x.Character.GenerateFd());
                         x.CurrentMapInstance?.Broadcast(x, x.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                         x.CurrentMapInstance?.Broadcast(x, x.Character.GenerateGidx(), ReceiverType.AllExceptMe);
@@ -161,7 +161,7 @@ namespace GloomyTale.GameObject.Event
 
                                 x.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("ICEBREAKER_WIN"), 0));
                                 x.Character.Gold += GoldRewards[currentBracket];
-                                x.Character.Gold = x.Character.Gold > 10000000 /*ServerManager.Instance.Configuration.MaxGold */? 10000000/* ServerManager.Instance.Configuration.MaxGold*/ : x.Character.Gold;
+                                x.Character.Gold = x.Character.Gold > ServerManager.Instance.MaxGold ? ServerManager.Instance.MaxGold : x.Character.Gold;
                                 x.SendPacket(x.Character.GenerateFd());
                                 x.CurrentMapInstance?.Broadcast(x, x.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                                 x.CurrentMapInstance?.Broadcast(x, x.Character.GenerateGidx(), ReceiverType.AllExceptMe);

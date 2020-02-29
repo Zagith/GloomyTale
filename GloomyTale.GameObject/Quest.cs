@@ -80,7 +80,7 @@ namespace GloomyTale.GameObject
                             break;
 
                         case QuestRewardType.Exp: // Experience
-                            if (character.Level < 100)// ServerManager.Instance.Configuration.MaxLevel)
+                            if (character.Level < ServerManager.Instance.MaxLevel)
                             {
                                 character.GetXp((long)(CharacterHelper.XPData[reward.Data > 255 ? 255 : reward.Data] * reward.Amount / 100D));
                             }
@@ -88,7 +88,7 @@ namespace GloomyTale.GameObject
                             break;
 
                         case QuestRewardType.SecondExp: // % Experience
-                            if (character.Level < 100) //ServerManager.Instance.Configuration.MaxLevel)
+                            if (character.Level < ServerManager.Instance.MaxLevel)
                             {
                                 character.GetXp((long)(CharacterHelper.XPData[character.Level] * reward.Amount / 100D));
                             }

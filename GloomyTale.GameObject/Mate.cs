@@ -573,7 +573,7 @@ namespace GloomyTale.GameObject
 
         public void GenerateXp(int xp)
         {
-            if (Level < 100) // ServerManager.Instance.Configuration.MaxLevel)
+            if (Level < ServerManager.Instance.MaxLevel)
             {
                 Experience += (int)(xp * (1 + (Owner.Buff.ContainsKey(122) ? 0.5 : 0)));
                 if (Experience >= XpLoad())

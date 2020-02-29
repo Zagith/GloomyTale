@@ -60,7 +60,7 @@ namespace GloomyTale.GameObject
                 InventoryType.Specialist => 45 + Expensions[pocket],
                 InventoryType.Costume => 60 + Expensions[pocket],
                 InventoryType.Wear => 17,
-                _ => 120 /*ServerManager.Instance.Configuration.BackpackSize*/ + Expensions[pocket]
+                _ => ServerManager.Instance.BackpackSize + Expensions[pocket]
             });
         }
 
@@ -828,7 +828,7 @@ namespace GloomyTale.GameObject
         {
             if (Owner != null)
             {
-                for (short i = 0; i < 120 /*ServerManager.Instance.Configuration.BackpackSize*/; i++)
+                for (short i = 0; i < ServerManager.Instance.BackpackSize; i++)
                 {
                     if (LoadBySlotAndType(i, type) != null)
                     {

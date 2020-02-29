@@ -1117,9 +1117,9 @@ namespace GloomyTale.GameObject.Helpers
             {
                 attacker.AttackUpgrade = -10;
             }
-            else if (attacker.AttackUpgrade > 15)//ServerManager.Instance.Configuration.MaxUpgrade)
+            else if (attacker.AttackUpgrade > ServerManager.Instance.MaxUpgrade)
             {
-                attacker.AttackUpgrade = 15;// ServerManager.Instance.Configuration.MaxUpgrade;
+                attacker.AttackUpgrade = ServerManager.Instance.MaxUpgrade;
             }
 
             if (attacker.Mate?.MateType == MateType.Pet)

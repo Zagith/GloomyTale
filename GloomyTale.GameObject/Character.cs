@@ -1097,7 +1097,7 @@ namespace GloomyTale.GameObject
                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("TOO_LOW_LVL"), 0));
                 return;
             }
-            if (/*ServerManager.Instance.Configuration.MaxLevel == 99 &&*/ characterQuest.Quest.LevelMax < Level)
+            if (ServerManager.Instance.MaxLevel == 100 && characterQuest.Quest.LevelMax < Level)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("TOO_HIGH_LVL"), 0));
                 return;
@@ -2963,9 +2963,9 @@ namespace GloomyTale.GameObject
             return new ExtsPacket
             {
 #warning TODO URGENT
-                EquipmentExtension = 12,//(byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                MainExtension = 12,//(byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                EtcExtension = 12//(byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12))
+                EquipmentExtension = (byte)(ServerManager.Instance.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
+                MainExtension = (byte)(ServerManager.Instance.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
+                EtcExtension = (byte)(ServerManager.Instance.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12))
             };
         }
 
@@ -3437,7 +3437,7 @@ namespace GloomyTale.GameObject
                                     ItemVNum = (short)d.Data,
                                     Amount = 1,
                                     MonsterVNum = monsterToAttack.MonsterVNum,
-                                    DropChance = (int)((d.DropRate ?? 100) * 100 * 1 /*ServerManager.Instance.Configuration.QuestDropRate*/) // Approx
+                                    DropChance = ((d.DropRate ?? 100) * 100 * ServerManager.Instance.QuestDropRate) // Approx
                                 });
                             }
                         });
@@ -3494,7 +3494,7 @@ namespace GloomyTale.GameObject
                     {
                         #region item drop
 
-                        int dropRate = (1 /*ServerManager.Instance.Configuration.RateDrop*/ + MapInstance.DropRate);
+                        int dropRate = (ServerManager.Instance.DropRate + MapInstance.DropRate);
                         int x = 0;
                         double rndamount = ServerManager.RandomNumber() * random.NextDouble();
                         foreach (DropDTO drop in droplist.OrderBy(s => random.Next()))
@@ -3597,12 +3597,12 @@ namespace GloomyTale.GameObject
 
                         // gold calculation
                         int gold = GetGold(monsterToAttack);
-                        gold *= (1 /*ServerManager.Instance.Configuration.RateGold*/ + Session.CurrentMapInstance.Map.GoldMapRate);
-                        long maxGold = 100000 /*ServerManager.Instance.Configuration.MaxGold*/;
+                        gold *= (ServerManager.Instance.DropRate + Session.CurrentMapInstance.Map.GoldMapRate);
+                        long maxGold = ServerManager.Instance.MaxGold;
                         gold = gold > maxGold ? (int)maxGold : gold;
                         double randChance = ServerManager.RandomNumber() * random.NextDouble();
 
-                        if (Session.CurrentMapInstance.MapInstanceType != MapInstanceType.LodInstance && gold > 0 && randChance <= (int)(1 /*ServerManager.Instance.Configuration.RateGoldDrop*/ * 10 *
+                        if (Session.CurrentMapInstance.MapInstanceType != MapInstanceType.LodInstance && gold > 0 && randChance <= (int)(ServerManager.Instance.GoldDropRate * 10 *
                             (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4) ? 1 : CharacterHelper.GoldPenalty(Level, monsterToAttack.Monster.Level))))
                         {
                             DropDTO drop2 = new DropDTO
@@ -3685,10 +3685,10 @@ namespace GloomyTale.GameObject
                         switch (Faction)
                         {
                             case FactionType.Angel:
-                                ServerManager.Instance.Act4AngelStat.Percentage += 10000 / (1 /*ServerManager.Instance.Configuration.GlacernonPercentRatePvm*/ * 100);
+                                ServerManager.Instance.Act4AngelStat.Percentage += 10000 / (ServerManager.Instance.GlacernonPercentRatePvm * 100);
                                 break;
                             case FactionType.Demon:
-                                ServerManager.Instance.Act4DemonStat.Percentage += 10000 / (1 /*ServerManager.Instance.Configuration.GlacernonPercentRatePvm */ * 100);
+                                ServerManager.Instance.Act4DemonStat.Percentage += 10000 / (ServerManager.Instance.GlacernonPercentRatePvm * 100);
                                 break;
                         }
 
@@ -3703,7 +3703,7 @@ namespace GloomyTale.GameObject
                 if (Hp > 0 && !monsterToAttack.BattleEntity.IsMateTrainer(monsterToAttack.MonsterVNum))
                 {
                     // If the Halloween event is running then the EXP is disabled in NosVille. -- Is this official-like or VSalu bullshit?
-                    if (/*!ServerManager.Instance.Configuration.HalloweenEvent ||*/ MapInstance.Map.MapId != 1)
+                    if (MapInstance.Map.MapId != 1)
                     {
                         GenerateXp(monsterToAttack);
                     }
@@ -3865,9 +3865,9 @@ namespace GloomyTale.GameObject
                     JobLevel = 20;
                     JobLevelXp = 0;
                 }
-                else if (JobLevel >= 80 /*ServerManager.Instance.Configuration.MaxJobLevel*/)
+                else if (JobLevel >= ServerManager.Instance.MaxJobLevel)
                 {
-                    JobLevel = 80 /*ServerManager.Instance.Configuration.MaxJobLevel*/;
+                    JobLevel = (byte)ServerManager.Instance.MaxJobLevel;
                     JobLevelXp = 0;
                 }
 
@@ -3892,9 +3892,9 @@ namespace GloomyTale.GameObject
                 t = SpXpLoad();
                 Session.SendPacket(GenerateStat());
                 Session.SendPacket(GenerateLevelUp());
-                if (specialist.SpLevel >= 99) //ServerManager.Instance.Configuration.MaxSPLevel)
+                if (specialist.SpLevel >= ServerManager.Instance.MaxSpLevel)
                 {
-                    specialist.SpLevel = 99; // ServerManager.Instance.Configuration.MaxSPLevel;
+                    specialist.SpLevel = ServerManager.Instance.MaxSpLevel;
                     specialist.XP = 0;
                 }
                 LearnSPSkill();
@@ -3915,9 +3915,9 @@ namespace GloomyTale.GameObject
                 HeroXp -= (long)t;
                 HeroLevel++;
                 t = HeroXPLoad();
-                if (HeroLevel >= 50) //ServerManager.Instance.Configuration.MaxHeroLevel)
+                if (HeroLevel >= ServerManager.Instance.MaxHeroLevel)
                 {
-                    HeroLevel = 50; // ServerManager.Instance.Configuration.MaxHeroLevel;
+                    HeroLevel = (byte)ServerManager.Instance.MaxHeroLevel;
                     HeroXp = 0;
                 }
                 Hp = (int)HPLoad();
@@ -3938,13 +3938,13 @@ namespace GloomyTale.GameObject
                 Level++;
              
                 t = XpLoad();
-                if (Level >= 100) //ServerManager.Instance.Configuration.MaxLevel)
+                if (Level >= ServerManager.Instance.MaxLevel)
                 {
-                    Level = 100; //ServerManager.Instance.Configuration.MaxLevel;
+                    Level = (byte)ServerManager.Instance.MaxLevel;
                     LevelXp = 0;
                 }
 
-                if (Level == 101/*ServerManager.Instance.Configuration.HeroicStartLevel*/ && HeroLevel == 0)
+                if (Level == ServerManager.Instance.HeroicStartLevel && HeroLevel == 0)
                 {
                     HeroLevel = 1;
                     HeroXp = 0;
@@ -5331,9 +5331,9 @@ namespace GloomyTale.GameObject
         public void GetGold(long val, bool isQuest = false)
         {
             Session.Character.Gold += val;
-            if (Session.Character.Gold > 10000000) //ServerManager.Instance.Configuration.MaxGold)
+            if (Session.Character.Gold > ServerManager.Instance.MaxGold)
             {
-                Session.Character.Gold = 10000000;// ServerManager.Instance.Configuration.MaxGold;
+                Session.Character.Gold = ServerManager.Instance.MaxGold;
                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("MAX_GOLD"), 0));
             }
 
@@ -5505,22 +5505,22 @@ namespace GloomyTale.GameObject
 
         public void GetXp(long val, bool applyRate = true)
         {
-            if (Level >= 100)//ServerManager.Instance.Configuration.MaxLevel)
+            if (Level >= ServerManager.Instance.MaxLevel)
             {
                 return;
             }
 
-            LevelXp += val * (applyRate ? 1 /*ServerManager.Instance.Configuration.RateXP*/ : 1) * (int)(1 + GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D);
+            LevelXp += val * (applyRate ? ServerManager.Instance.XpRate : 1) * (int)(1 + GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D);
             GenerateLevelXpLevelUp();
             Session.SendPacket(GenerateLev());
         }
 
         public void GetJobExp(long val, bool applyRate = true)
         {
-            val *= (applyRate ? 1 /*ServerManager.Instance.Configuration.RateXP*/ : 1);
+            val *= (applyRate ? ServerManager.Instance.XpRate : 1);
             if (UseSp && SpInstance != null)
             {
-                if (SpInstance.SpLevel >=99) // ServerManager.Instance.Configuration.MaxSPLevel)
+                if (SpInstance.SpLevel >= ServerManager.Instance.MaxSpLevel)
                 {
                     return;
                 }
@@ -5529,7 +5529,7 @@ namespace GloomyTale.GameObject
                 GenerateSpXpLevelUp(SpInstance);
                 return;
             }
-            if (JobLevel >=80)//ServerManager.Instance.Configuration.MaxJobLevel)
+            if (JobLevel >= ServerManager.Instance.MaxJobLevel)
             {
                 return;
             }
@@ -6407,7 +6407,7 @@ namespace GloomyTale.GameObject
 
         public void GetReputation(int amount, bool applyRate = true)
         {
-            amount = amount * (amount > 0 && applyRate ? 1 /*ServerManager.Instance.Configuration.RateReputation*/ : 1);
+            amount = amount * (amount > 0 && applyRate ? ServerManager.Instance.ReputRate : 1);
             int beforeReputIco = GetReputationIco();
             Reputation += amount;
             Session.SendPacket(GenerateFd());
@@ -6764,14 +6764,14 @@ namespace GloomyTale.GameObject
 
                 if (monster.Monster.MaxLevelXP > 0 && monster.Monster.MinLevelXP > 0)
                 {
-                    if (Level < 100 /**ServerManager.Instance.Configuration.MaxLevel*/ && Level < monster.Monster.MaxLevelXP && Level > monster.Monster.MinLevelXP)
+                    if (Level < ServerManager.Instance.MaxLevel && Level < monster.Monster.MaxLevelXP && Level > monster.Monster.MinLevelXP)
                     {
                         LevelXp += xp;
                     }
                 }
                 else
                 {
-                    if (Level < 100) //ServerManager.Instance.Configuration.MaxLevel)
+                    if (Level < ServerManager.Instance.MaxLevel)
                     {
                         LevelXp += xp;
                     }
@@ -6788,9 +6788,9 @@ namespace GloomyTale.GameObject
                     }
                 }
 
-                if ((Class == 0 && JobLevel < 20) || (Class != 0 && JobLevel < 80)) //ServerManager.Instance.Configuration.MaxJobLevel))
+                if ((Class == 0 && JobLevel < 20) || (Class != 0 && JobLevel < ServerManager.Instance.MaxJobLevel))
                 {
-                    if (SpInstance != null && UseSp && SpInstance.SpLevel < 99 /* ServerManager.Instance.Configuration.MaxSPLevel*/ && SpInstance.SpLevel > 19)
+                    if (SpInstance != null && UseSp && SpInstance.SpLevel < ServerManager.Instance.MaxSpLevel && SpInstance.SpLevel > 19)
                     {
                         JobLevelXp += (int)(GetJXP(monster, grp) * expDamageRate * (isMonsterOwner ? 1 : 0.8f) / 2D * (1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)) * (1 + (GetBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.IncreaseBattleAndJobExperience)[0] / 100)));
                     }
@@ -6800,14 +6800,14 @@ namespace GloomyTale.GameObject
                     }
                 }
 
-                if (SpInstance != null && UseSp && SpInstance.SpLevel < 99) //ServerManager.Instance.Configuration.MaxSPLevel)
+                if (SpInstance != null && UseSp && SpInstance.SpLevel < ServerManager.Instance.MaxSpLevel)
                 {
                     int multiplier = SpInstance.SpLevel < 10 ? 10 : SpInstance.SpLevel < 19 ? 5 : 1;
 
                     SpInstance.XP += (int)(GetJXP(monster, grp) * expDamageRate * (multiplier + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseSPXP)[0] / 100D))));
                 }
 
-                if (HeroLevel > 0 && HeroLevel < 50) //ServerManager.Instance.Configuration.MaxHeroLevel)
+                if (HeroLevel > 0 && HeroLevel < ServerManager.Instance.MaxHeroLevel)
                 {
                     HeroXp += (int)((GetHXP(monster, grp) * expDamageRate / 50) * (isMonsterOwner ? 1 : 0.8f) * (1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)));
                 }
@@ -6819,7 +6819,7 @@ namespace GloomyTale.GameObject
                     if (fairy.ElementRate + fairy.Item.ElementRate < fairy.Item.MaxElementRate
                         && Level <= monsterInfo.Level + 15 && Level >= monsterInfo.Level - 15)
                     {
-                        fairy.XP += 35; // ServerManager.Instance.Configuration.RateFairyXP;
+                        fairy.XP += ServerManager.Instance.FairyXpRate;
                     }
 
                     double experience = CharacterHelper.LoadFairyXPData(fairy.ElementRate + fairy.Item.ElementRate);
@@ -6875,14 +6875,14 @@ namespace GloomyTale.GameObject
 
         private int GetHXP(MapMonster mapMonster, Group group)
         {
-            if (HeroLevel >= 50) //ServerManager.Instance.Configuration.MaxHeroLevel)
+            if (HeroLevel >= ServerManager.Instance.MaxHeroLevel)
             {
                 return 0;
             }
 
             NpcMonster npcMonster = mapMonster.Monster;
 
-            int partySize = group?.GroupType == GroupType.Group ? group.Sessions.ToList().Count(s => s?.Character != null && s.Character.MapInstance == mapMonster.MapInstance && s.Character.HeroLevel > 0 && s.Character.HeroLevel < 50 /*ServerManager.Instance.Configuration.MaxHeroLevel*/) : 1;
+            int partySize = group?.GroupType == GroupType.Group ? group.Sessions.ToList().Count(s => s?.Character != null && s.Character.MapInstance == mapMonster.MapInstance && s.Character.HeroLevel > 0 && s.Character.HeroLevel < ServerManager.Instance.MaxHeroLevel) : 1;
 
             if (partySize < 1)
             {
@@ -6891,7 +6891,7 @@ namespace GloomyTale.GameObject
 
             double sharedHXp = npcMonster.HeroXp / partySize;
 
-            double memberHXp = sharedHXp * CharacterHelper.ExperiencePenalty(Level, npcMonster.Level) * 2; // ServerManager.Instance.Configuration.RateHeroicXP;
+            double memberHXp = sharedHXp * CharacterHelper.ExperiencePenalty(Level, npcMonster.Level) * ServerManager.Instance.HeroXpRate;
 
             return (int)memberHXp;
         }
@@ -6910,12 +6910,12 @@ namespace GloomyTale.GameObject
 
                 if (!s.Character.UseSp)
                 {
-                    return s.Character.JobLevel < (s.Character.Class == 0 ? 20 : 80);// ServerManager.Instance.Configuration.MaxJobLevel);
+                    return s.Character.JobLevel < (s.Character.Class == 0 ? 20 : ServerManager.Instance.MaxJobLevel);
                 }
 
                 if (SpInstance != null)
                 {
-                    return SpInstance.SpLevel < 99; // ServerManager.Instance.Configuration.MaxSPLevel;
+                    return SpInstance.SpLevel < ServerManager.Instance.MaxSpLevel;
                 }
 
                 return false;
@@ -6928,7 +6928,7 @@ namespace GloomyTale.GameObject
 
             double sharedJXp = (double)npcMonster.JobXP / partySize;
 
-            double memberJxp = sharedJXp * CharacterHelper.ExperiencePenalty(Level, npcMonster.Level) * (1/*ServerManager.Instance.Configuration.RateXP*/ + MapInstance.XpRate);
+            double memberJxp = sharedJXp * CharacterHelper.ExperiencePenalty(Level, npcMonster.Level) * (ServerManager.Instance.XpRate + MapInstance.XpRate);
 
             return (int)memberJxp;
         }
@@ -6937,7 +6937,7 @@ namespace GloomyTale.GameObject
         {
             NpcMonster npcMonster = mapMonster.Monster;
 
-            int partySize = group?.GroupType == GroupType.Group ? group.Sessions.ToList().Count(s => s?.Character != null && s.Character.MapInstance == mapMonster.MapInstance && s.Character.Level < 100) : 1;//ServerManager.Instance.Configuration.MaxLevel) : 1;
+            int partySize = group?.GroupType == GroupType.Group ? group.Sessions.ToList().Count(s => s?.Character != null && s.Character.MapInstance == mapMonster.MapInstance && s.Character.Level < ServerManager.Instance.MaxLevel) : 1;
 
             if (partySize < 1)
             {
@@ -6957,7 +6957,7 @@ namespace GloomyTale.GameObject
 
             int lvlDifference = Level - npcMonster.Level;
 
-            double memberXp = (lvlDifference < 5 ? sharedXp : (sharedXp / 3 * 2)) * CharacterHelper.ExperiencePenalty(Level, npcMonster.Level) * (1/*ServerManager.Instance.Configuration.RateXP*/ + MapInstance.XpRate);
+            double memberXp = (lvlDifference < 5 ? sharedXp : (sharedXp / 3 * 2)) * CharacterHelper.ExperiencePenalty(Level, npcMonster.Level) * (ServerManager.Instance.XpRate + MapInstance.XpRate);
 
             if (Level <= 5 && lvlDifference < -4)
             {

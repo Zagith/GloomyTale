@@ -578,7 +578,7 @@ namespace GloomyTale.Handler
                         {
                             if (packet.Param1 != null && long.TryParse(packet.Param1, out long amount)
                                 && amount <= Session.Character.GoldBank && Session.Character.GoldBank > 0
-                                && (Session.Character.Gold + amount) <= 1000000000 /*ServerManager.Instance.Configuration.MaxGold*/)
+                                && (Session.Character.Gold + amount) <= ServerManager.Instance.MaxGold)
                             {
                                 if (amount < 1)
                                 {
@@ -1691,7 +1691,7 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
-                    //ServerManager.Instance.Configuration.RateDrop = packet.Value;
+                    ServerManager.Instance.DropRate = packet.Value;
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("DROP_RATE_CHANGED"), 0));
                 }
@@ -1837,7 +1837,7 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
-                    //ServerManager.Instance.Configuration.RateFairyXP = packet.Value;
+                    ServerManager.Instance.FairyXpRate = packet.Value;
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("FAIRYXP_RATE_CHANGED"),
                             0));
@@ -1946,7 +1946,7 @@ namespace GloomyTale.Handler
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Gold]Amount: {packet.Amount}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 long gold = packet.Amount;
-                long maxGold = 1000000000; // ServerManager.Instance.Configuration.MaxGold;
+                long maxGold = ServerManager.Instance.MaxGold;
                 gold = gold > maxGold ? maxGold : gold;
                 if (gold >= 0)
                 {
@@ -1980,7 +1980,7 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
-                    //ServerManager.Instance.Configuration.RateGoldDrop = packet.Value;
+                    ServerManager.Instance.GoldDropRate = packet.Value;
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("GOLD_DROP_RATE_CHANGED"),
                             0));
@@ -2010,7 +2010,7 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
-                    //ServerManager.Instance.Configuration.RateGold = packet.Value;
+                    ServerManager.Instance.GoldRate = packet.Value;
 
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("GOLD_RATE_CHANGED"), 0));
@@ -2040,7 +2040,7 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
-                    //ServerManager.Instance.Configuration.RateReputation = packet.Value;
+                    ServerManager.Instance.ReputRate = packet.Value;
 
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("REPUTATION_RATE_CHANGED"), 0));
@@ -2175,7 +2175,7 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
-                   // ServerManager.Instance.Configuration.RateHeroicXP = packet.Value;
+                    ServerManager.Instance.HeroXpRate = packet.Value;
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("HEROXP_RATE_CHANGED"), 0));
                 }
@@ -3381,32 +3381,32 @@ namespace GloomyTale.Handler
         {
             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Stat]");
 
-            /*Session.SendPacket(Session.Character.GenerateSay(
-                $"{Language.Instance.GetMessageFromKey("XP_RATE_NOW")}: {ServerManager.Instance.Configuration.RateXP} ",
+            Session.SendPacket(Session.Character.GenerateSay(
+                $"{Language.Instance.GetMessageFromKey("XP_RATE_NOW")}: {ServerManager.Instance.XpRate} ",
                 13));
             Session.SendPacket(Session.Character.GenerateSay(
-                $"{Language.Instance.GetMessageFromKey("DROP_RATE_NOW")}: {ServerManager.Instance.Configuration.RateDrop} ",
+                $"{Language.Instance.GetMessageFromKey("DROP_RATE_NOW")}: {ServerManager.Instance.DropRate} ",
                 13));
             Session.SendPacket(Session.Character.GenerateSay(
-                $"{Language.Instance.GetMessageFromKey("GOLD_RATE_NOW")}: {ServerManager.Instance.Configuration.RateGold} ",
+                $"{Language.Instance.GetMessageFromKey("GOLD_RATE_NOW")}: {ServerManager.Instance.GoldRate} ",
                 13));
             Session.SendPacket(Session.Character.GenerateSay(
-                $"{Language.Instance.GetMessageFromKey("GOLD_DROPRATE_NOW")}: {ServerManager.Instance.Configuration.RateGoldDrop} ",
+                $"{Language.Instance.GetMessageFromKey("GOLD_DROPRATE_NOW")}: {ServerManager.Instance.GoldDropRate} ",
                 13));
             Session.SendPacket(Session.Character.GenerateSay(
-                $"{Language.Instance.GetMessageFromKey("HERO_XPRATE_NOW")}: {ServerManager.Instance.Configuration.RateHeroicXP} ",
+                $"{Language.Instance.GetMessageFromKey("HERO_XPRATE_NOW")}: {ServerManager.Instance.HeroXpRate} ",
                 13));
             Session.SendPacket(Session.Character.GenerateSay(
-                $"{Language.Instance.GetMessageFromKey("FAIRYXP_RATE_NOW")}: {ServerManager.Instance.Configuration.RateFairyXP} ",
+                $"{Language.Instance.GetMessageFromKey("FAIRYXP_RATE_NOW")}: {ServerManager.Instance.FairyXpRate} ",
                 13));
             Session.SendPacket(Session.Character.GenerateSay(
-                $"{Language.Instance.GetMessageFromKey("REPUTATION_RATE_NOW")}: {ServerManager.Instance.Configuration.RateReputation} ",
+                $"{Language.Instance.GetMessageFromKey("REPUTATION_RATE_NOW")}: {ServerManager.Instance.ReputRate} ",
                 13));
             Session.SendPacket(Session.Character.GenerateSay(
                 $"{Language.Instance.GetMessageFromKey("SERVER_WORKING_TIME")}: {(Process.GetCurrentProcess().StartTime - DateTime.Now).ToString(@"d\ hh\:mm\:ss")} ",
                 13));
 
-            foreach (string message in CommunicationServiceClient.Instance.RetrieveServerStatistics().ToString())
+            /*foreach (string message in CommunicationServiceClient.Instance.RetrieveServerStatistics().ToString())
             {
                 Session.SendPacket(Session.Character.GenerateSay(message, 13));
             }*/
@@ -4171,7 +4171,7 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
-                    //ServerManager.Instance.Configuration.RateXP = packet.Value;
+                    ServerManager.Instance.XpRate = packet.Value;
 
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("XP_RATE_CHANGED"), 0));

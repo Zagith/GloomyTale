@@ -260,7 +260,7 @@ namespace GloomyTale.Handler
                     {
                         NpcMonster mapobject = ServerManager.GetNpcMonster(npc.NpcVNum);
 
-                        int rateDrop = 3; //ServerManager.Instance.Configuration.RateDrop;
+                        int rateDrop = ServerManager.Instance.DropRate;
                         int delay = (int)Math.Round(
                             (3 + (mapobject.RespawnTime / 1000d)) * Session.Character.TimesUsed);
                         delay = delay > 11 ? 8 : delay;

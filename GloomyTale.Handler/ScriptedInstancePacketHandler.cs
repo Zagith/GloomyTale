@@ -254,8 +254,8 @@ namespace GloomyTale.Handler
 
                         Session.Character.Gold =
                             Session.Character.Gold + Session.Character.Timespace.Gold
-                            > 1000000000 //ServerManager.Instance.Configuration.MaxGold
-                                ? 1000000000 //ServerManager.Instance.Configuration.MaxGold
+                            > ServerManager.Instance.MaxGold
+                                ? ServerManager.Instance.MaxGold
                                 : Session.Character.Gold + Session.Character.Timespace.Gold;
                         Session.SendPacket(Session.Character.GenerateGold());
                         Session.SendPacket(Session.Character.GenerateSay(

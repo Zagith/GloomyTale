@@ -159,6 +159,10 @@ namespace GloomyTale.GameObject.Networking
 
         public short MaxMateLevel { get; set; }
         
+        public byte BackpackSize { get; set; }
+
+        public byte MaxUpgrade { get; set; }
+
         /* End Configurations */
 
         public static ServerManager Instance => _instance ?? (_instance = new ServerManager());
@@ -1315,6 +1319,8 @@ namespace GloomyTale.GameObject.Networking
             MaxHeroLevel = GameMinMaxConfiguration.MaxHeroLevel;
             HeroicStartLevel = GameMinMaxConfiguration.HeroMinLevel;
             MinLodLevel = GameMinMaxConfiguration.MinLodLevel;
+            BackpackSize = GameMinMaxConfiguration.BackpackSize;
+            MaxUpgrade = GameMinMaxConfiguration.MaxUpgrade;
 
             /*
              * Events

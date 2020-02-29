@@ -101,7 +101,7 @@ namespace GloomyTale.GameObject.Event
 
             public static void Run(Tuple<MapInstance, byte> mapinstance)
             {
-                long maxGold = 10000000; // ServerManager.Instance.Configuration.MaxGold;
+                long maxGold = ServerManager.Instance.MaxGold;
                 Thread.Sleep(10 * 1000);
                 /*if (!mapinstance.Item1.Sessions.Skip(3 - 1).Any())
                 {
@@ -274,7 +274,7 @@ namespace GloomyTale.GameObject.Event
 
                             case 3:
                                 dropParameters.AddRange(GenerateDrop(map, 1046,
-                                    3000 * 1 /*ServerManager.Instance.Configuration.RateGold*/ / 4));
+                                    3000 * ServerManager.Instance.GoldRate / 4));
                                 dropParameters.AddRange(GenerateDrop(map, 1218, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 5369, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 1363, 1));

@@ -64,7 +64,7 @@ namespace GloomyTale.GameObject.Event.TIMESPACES
 
             public static void Run(Tuple<MapInstance, byte> mapinstance)
             {
-                long maxGold = 10000000;// ServerManager.Instance.Configuration.MaxGold;
+                long maxGold = ServerManager.Instance.MaxGold;
                 Thread.Sleep(10 * 1000);
                 Observable.Timer(TimeSpan.FromMinutes(2.6)).Subscribe(X =>
                 {

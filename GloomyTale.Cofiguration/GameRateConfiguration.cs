@@ -84,6 +84,9 @@ namespace GloomyTale.Cofiguration
         public short MinLodLevel { get; set; } = 50;
 
         [DataMember(EmitDefaultValue = true, IsRequired = true)]
+        public byte BackpackSize { get; set; } = 100;
+
+        [DataMember(EmitDefaultValue = true, IsRequired = true)]
         public int MaximumHomes { get; set; } = 5;
 
         [DataMember(EmitDefaultValue = true, IsRequired = true)]
@@ -91,6 +94,9 @@ namespace GloomyTale.Cofiguration
 
         [DataMember(EmitDefaultValue = true, IsRequired = true)]
         public byte MaxBotCodeAttempts { get; set; } = 3;
+
+        [DataMember(EmitDefaultValue = true, IsRequired = true)]
+        public byte MaxUpgrade { get; set; } = 15;
     }
 
     [DataContract]
