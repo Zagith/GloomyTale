@@ -131,7 +131,7 @@ namespace GloomyTale.GameObject
                                 return;
                             }
 
-                            Buff buff = new Buff(cardId, senderLevel)
+                            Buff buff = new Buff(cardId, senderLevel, false)
                             {
                                 SkillVNum = SkillVNum
                             };
@@ -274,7 +274,7 @@ namespace GloomyTale.GameObject
                                     y = randomCell.Y;
                                 }
                             }
-                            summonParameters.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, move, aliveTime: aliveTime, owner: sender));
+                            summonParameters.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, move, false, false, false, false, sender, aliveTime, 0, 0, 0, 0, 0));
                         }
                         if (ServerManager.RandomNumber() <= Math.Abs(ThirdData) || ThirdData == 0 || ThirdData < 0)
                         {
@@ -301,7 +301,7 @@ namespace GloomyTale.GameObject
                                                    {
                                                        x = (short)(ServerManager.RandomNumber(-1, 1) + sender.PositionX);
                                                        y = (short)(ServerManager.RandomNumber(-1, 1) + sender.PositionY);
-                                                       summonParameters.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, move, aliveTime: aliveTime, owner: sender));
+                                                       summonParameters.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, move, false, false, false, false, sender, aliveTime, 0, 0, 0, 0, 0));
                                                    }
                                                    if (sender.MapMonster.Target != null && sender.MapInstance.GetCharactersInRange(sender.PositionX, sender.PositionY, 5).Any(c => c.BattleEntity.MapEntityId == sender.MapMonster.Target.MapEntityId))
                                                    {
@@ -323,7 +323,7 @@ namespace GloomyTale.GameObject
                                     {
                                         x = (short)(ServerManager.RandomNumber(-1, 1) + sender.PositionX);
                                         y = (short)(ServerManager.RandomNumber(-1, 1) + sender.PositionY);
-                                        summonParameters.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, move, aliveTimeMp: aliveTime, owner: sender));
+                                        summonParameters.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, move, false, false, false, false, sender, 0, aliveTime, 0, 0, 0, 0));
                                     }
 
                                     EventHelper.Instance.RunEvent(new EventContainer(sender.MapInstance, EventActionType.SPAWNMONSTERS, summonParameters));
@@ -355,7 +355,7 @@ namespace GloomyTale.GameObject
                                     List<CharacterSkill> skills = session.Character.GetSkills();
 
                                     session.Character.ChargeValue = skills.Where(s => s.SkillVNum == skill.SkillVNum).Sum(s => s.GetSkillBCards().Sum(b => b.FirstData));
-                                    session.AddBuff(new Buff(0, session.Level), session);
+                                    session.AddBuff(new Buff(0, session.Level, false), session);
                                 }
                             }
                         }
@@ -368,7 +368,7 @@ namespace GloomyTale.GameObject
                                     List<CharacterSkill> skills = session.Character.GetSkills();
 
                                     session.Character.ChargeValue = skills.Where(s => s.SkillVNum == skill.SkillVNum).Sum(s => s.GetSkillBCards().Sum(b => b.FirstData));
-                                    session.AddBuff(new Buff(0, session.Level), session);
+                                    session.AddBuff(new Buff(0, session.Level, false), session);
                                 }
                             }
                         }
@@ -381,7 +381,7 @@ namespace GloomyTale.GameObject
                                     List<CharacterSkill> skills = session.Character.GetSkills();
 
                                     session.Character.ChargeValue = skills.Where(s => s.SkillVNum == skill.SkillVNum).Sum(s => s.GetSkillBCards().Sum(b => b.FirstData));
-                                    session.AddBuff(new Buff(0, session.Level), session);
+                                    session.AddBuff(new Buff(0, session.Level, false), session);
                                 }
                             }
                         }
@@ -394,7 +394,7 @@ namespace GloomyTale.GameObject
                                     List<CharacterSkill> skills = session.Character.GetSkills();
 
                                     session.Character.ChargeValue = skills.Where(s => s.SkillVNum == skill.SkillVNum).Sum(s => s.GetSkillBCards().Sum(b => b.FirstData));
-                                    session.AddBuff(new Buff(0, session.Level), session);
+                                    session.AddBuff(new Buff(0, session.Level, false), session);
                                 }
                             }
                         }
@@ -1025,7 +1025,7 @@ namespace GloomyTale.GameObject
                                                     else
                                                     {
                                                         senderSession.Character.IncrementQuests(QuestType.Capture2, mapMonster.MonsterVNum);
-                                                        Mate mate = new Mate(senderSession.Character, mateNpc, mapMonster.Monster.Level, MateType.Pet);
+                                                        Mate mate = new Mate(senderSession.Character, mateNpc, mapMonster.Monster.Level, MateType.Pet, false, false, false);
                                                         if (senderSession.Character.CanAddMate(mate))
                                                         {
                                                             mate.RefreshStats();
@@ -1385,7 +1385,7 @@ namespace GloomyTale.GameObject
 
                                 session.MapInstance.GetBattleEntitiesInRange(new MapCell { X = session.PositionX, Y = session.PositionY }, (byte)FirstData)
                                     .Where(s => s.EntityType != EntityType.Npc && (s.EntityType != session.EntityType || s.MapEntityId != session.MapEntityId) && !session.CanAttackEntity(s)).ToList()
-                                    .ForEach(s => s.AddBuff(new Buff((short)SecondData, senderLevel), sender));
+                                    .ForEach(s => s.AddBuff(new Buff((short)SecondData, senderLevel, false), sender));
                             }
 
                             if (ThirdData > 0)
@@ -1423,7 +1423,7 @@ namespace GloomyTale.GameObject
                                     x = session.PositionX;
                                     y = session.PositionY;
                                 }
-                                summonParameters2.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, true, isHostile: SecondData != 945, owner: session, aliveTime: aliveTime));
+                                summonParameters2.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, true, false, false, SecondData != 945, false, sender, aliveTime, 0, 0, 0, 0, 0));
                             }
                             if (ServerManager.RandomNumber() <= Math.Abs(ThirdData) || ThirdData == 0 || ThirdData < 0)
                             {
@@ -1592,15 +1592,15 @@ namespace GloomyTale.GameObject
                             double hpPercentage = session.Hp / session.HPLoad() * 100;
                             if (hpPercentage < 35)
                             {
-                                session.AddBuff(new Buff(274, senderLevel), sender);
+                                session.AddBuff(new Buff(274, senderLevel, false), sender);
                             }
                             else if (hpPercentage < 67)
                             {
-                                session.AddBuff(new Buff(273, senderLevel), sender);
+                                session.AddBuff(new Buff(273, senderLevel, false), sender);
                             }
                             else
                             {
-                                session.AddBuff(new Buff(272, senderLevel), sender);
+                                session.AddBuff(new Buff(272, senderLevel, false), sender);
                             }
                         }
                         break;
@@ -1664,7 +1664,7 @@ namespace GloomyTale.GameObject
                                         }
                                     }
 
-                                    monstersToSummon.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, canMove, aliveTimeMp: aliveTime, owner: sender));
+                                    monstersToSummon.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, canMove, false, false, false, false, sender, 0, aliveTime, 0, 0, 0, 0));
                                 }
                                 EventHelper.Instance.RunEvent(new EventContainer(sender.MapInstance, EventActionType.SPAWNMONSTERS, monstersToSummon));
                             }
@@ -1687,14 +1687,14 @@ namespace GloomyTale.GameObject
                             {
                                 if (session.Buffs.Any(s => s.Card.CardId == 500) && ServerManager.RandomNumber() < FirstData)
                                 {
-                                    session.AddBuff(new Buff((short)SecondData, senderLevel), sender);
+                                    session.AddBuff(new Buff((short)SecondData, senderLevel, false), sender);
                                 }
                             }
                             else
                             {
                                 if (!session.Buffs.Any(s => s.Card.CardId == 500) && ServerManager.RandomNumber() < -FirstData)
                                 {
-                                    session.AddBuff(new Buff((short)SecondData, senderLevel), sender);
+                                    session.AddBuff(new Buff((short)SecondData, senderLevel, false), sender);
                                 }
                             }
                         }
@@ -1943,7 +1943,7 @@ namespace GloomyTale.GameObject
                             {
                                 if ((FirstData == 1 && sender.Character.SkillComboCount == 3) || (FirstData == 2 && sender.Character.SkillComboCount == 5))
                                 {
-                                    sender.AddBuff(new Buff((short)SecondData, senderLevel), sender);
+                                    sender.AddBuff(new Buff((short)SecondData, senderLevel, false), sender);
                                 }
                             }
                         }
@@ -1967,7 +1967,7 @@ namespace GloomyTale.GameObject
                             {
                                 if (ServerManager.RandomNumber() < firstData)
                                 {
-                                    sender.AddBuff(new Buff((short)SecondData, senderLevel), sender);
+                                    sender.AddBuff(new Buff((short)SecondData, senderLevel, false), sender);
                                 }
                             }
                         }
@@ -1982,7 +1982,7 @@ namespace GloomyTale.GameObject
                         {
                             if (ServerManager.RandomNumber() < firstData)
                             {
-                                Buff ChanceCausingBuff = new Buff((short)SecondData, senderLevel);
+                                Buff ChanceCausingBuff = new Buff((short)SecondData, senderLevel, false);
                                 if (ChanceCausingBuff.Card.BuffType == BuffType.Good || ChanceCausingBuff.Card.BuffType == BuffType.Neutral)
                                 {
                                     sender.AddBuff(ChanceCausingBuff, sender);
@@ -1999,7 +1999,7 @@ namespace GloomyTale.GameObject
                             {
                                 if (ServerManager.RandomNumber() < firstData)
                                 {
-                                    Buff ProduceChanceBuff = new Buff((short)SecondData, senderLevel);
+                                    Buff ProduceChanceBuff = new Buff((short)SecondData, senderLevel, false);
                                     if (ProduceChanceBuff.Card.BuffType == BuffType.Good || ProduceChanceBuff.Card.BuffType == BuffType.Neutral)
                                     {
                                         sender.AddBuff(ProduceChanceBuff, sender);
@@ -2027,14 +2027,15 @@ namespace GloomyTale.GameObject
 
                                     for (short effectSafeZone = 4280; effectSafeZone <= 4282; effectSafeZone++)
                                     {
-                                        
-                                        
-                                        EventHelper.Instance.RunEvent(new EventContainer(mapInstance, EventActionType.SPAWNMONSTER, new MonsterToSummon(2628, new MapCell { X = 0, Y = 0 }, null, false, isHostile: false, isTarget: false)
+                                        Tuple<short, int> newTuple = new Tuple<short, int>(effectSafeZone, 0);
+
+
+                                        EventHelper.Instance.RunEvent(new EventContainer(mapInstance, EventActionType.SPAWNMONSTER, new MonsterToSummon(2628, new MapCell { X = 0, Y = 0 }, null, false, false, false, false, false, null, 0, 0, 0, 0, 0, 0)
                                         {
 
                                             AfterSpawnEvents = new List<EventContainer>()
                                             {
-                                                new EventContainer(mapInstance, EventActionType.EFFECT, new Tuple<short, int>(effectSafeZone, 0)),
+                                                new EventContainer(mapInstance, EventActionType.EFFECT, newTuple),
                                                 new EventContainer(mapInstance, EventActionType.REMOVEAFTER, 15)
                                             }
                                         }));
@@ -2061,7 +2062,7 @@ namespace GloomyTale.GameObject
 
                                             if (!safeZoneList.Any())
                                             {
-                                                character.AddBuff(new Buff(569, sender.Level), sender);
+                                                character.AddBuff(new Buff(569, sender.Level, false), sender);
 
                                                 if (!mapInstance.Sessions.Any(s => s.Character != null
                                                     && !s.Character.HasBuff(BCardType.CardType.FrozenDebuff, (byte)AdditionalTypes.FrozenDebuff.EternalIce)))
@@ -2111,7 +2112,7 @@ namespace GloomyTale.GameObject
                                 case 1:
                                     if (sender.GetOwnedMonsters().Where(s => s.MonsterVNum == SecondData).Count() == 0)
                                     {
-                                        summonParameters3.Add(new MonsterToSummon((short)SecondData, new MapCell { X = sender.PositionX, Y = sender.PositionY }, null, true, aliveTime: aliveTime, owner: sender));
+                                        summonParameters3.Add(new MonsterToSummon((short)SecondData, new MapCell { X = sender.PositionX, Y = sender.PositionY }, null, true, false, false, false, false, sender, aliveTime, 0, 0, 0, 0, 0));
                                         EventHelper.Instance.RunEvent(new EventContainer(sender.MapInstance, EventActionType.SPAWNMONSTERS, summonParameters3));
                                     }
                                     break;
@@ -2125,7 +2126,7 @@ namespace GloomyTale.GameObject
                                             {
                                                 x = (short)(ServerManager.RandomNumber(-1, 1) + sender.PositionX);
                                                 y = (short)(ServerManager.RandomNumber(-1, 1) + sender.PositionY);
-                                                summonParameters3.Add(new MonsterToSummon(sender.MapMonster.MonsterVNum, new MapCell { X = x, Y = y }, null, true, aliveTime: aliveTime, owner: sender.MapMonster.Owner));
+                                                summonParameters3.Add(new MonsterToSummon(sender.MapMonster.MonsterVNum, new MapCell { X = x, Y = y }, null, true, false, false, false, false, sender.MapMonster.Owner, aliveTime, 0, 0, 0, 0, 0));
                                             }
                                             EventHelper.Instance.RunEvent(new EventContainer(sender.MapInstance, EventActionType.SPAWNMONSTERS, summonParameters3));
                                         }
@@ -2183,7 +2184,7 @@ namespace GloomyTale.GameObject
                                 {
                                     if (hasSpiritAbsorption)
                                     {
-                                        session.AddBuff(new Buff((short)SecondData, session.Level), session);
+                                        session.AddBuff(new Buff((short)SecondData, session.Level, false), session);
                                         session.RemoveBuff(596);
                                     }
                                 }
@@ -2191,7 +2192,7 @@ namespace GloomyTale.GameObject
                                 {
                                     if (!hasSpiritAbsorption && !session.HasBuff(599))
                                     {
-                                        session.AddBuff(new Buff((short)SecondData, session.Level), session);
+                                        session.AddBuff(new Buff((short)SecondData, session.Level, false), session);
                                     }
                                 }
                             }
@@ -2213,7 +2214,7 @@ namespace GloomyTale.GameObject
 
                                     for (int i = 0; i < 73; i++)
                                     {
-                                        monstersToSummon.Add(new MonsterToSummon(2328, new MapCell { X = 0, Y = 0 }, null, false, hasDelay: (short)ServerManager.RandomNumber(0, 5)));
+                                        monstersToSummon.Add(new MonsterToSummon(2328, new MapCell { X = 0, Y = 0 }, null, false, false, false, false, false, null, 0, 0, 0, (short)ServerManager.RandomNumber(0, 5), 0, 0 ));
                                     }
 
                                     EventHelper.Instance.RunEvent(new EventContainer(mapInstance, EventActionType.SPAWNMONSTERS, monstersToSummon));
@@ -2268,7 +2269,7 @@ namespace GloomyTale.GameObject
                                             Y = (short)(session.PositionY + ServerManager.RandomNumber(-range, range + 1)),
                                         };
 
-                                        monstersToSummon.Add(new MonsterToSummon((short)ServerManager.RandomNumber(2352, 2353 + 1), mapCell, null, false, owner: session, hasDelay: ServerManager.RandomNumber<short>(0, 10 + 1))
+                                        monstersToSummon.Add(new MonsterToSummon((short)ServerManager.RandomNumber(2352, 2353 + 1), mapCell, null, false, false, false, false, false, sender, 0, 0, 0, ServerManager.RandomNumber<short>(0, 10 + 1), 0, 0 )
                                         {
                                             IsMeteorite = true,
                                         });

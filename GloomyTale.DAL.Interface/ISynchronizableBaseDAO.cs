@@ -21,6 +21,7 @@ namespace GloomyTale.DAL.Interface
 
         TDTO LoadById(Guid id);
 
+        void Save(IEnumerable<TDTO> objs);
         #endregion
     }
 }

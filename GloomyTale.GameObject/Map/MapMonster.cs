@@ -371,7 +371,7 @@ namespace GloomyTale.GameObject
             {
                 MaxHp = 500000;
                 CurrentHp = MaxHp;
-                BattleEntity.BCards.AddRange(new Buff(196, 99).Card.BCards);
+                BattleEntity.BCards.AddRange(new Buff(196, 99, false).Card.BCards);
             }
 
             Monster.BCards.Where(s => s.Type !=  25).ToList().ForEach(s => s.ApplyBCards(BattleEntity, BattleEntity));
@@ -975,7 +975,7 @@ namespace GloomyTale.GameObject
                         if (itemInUse != null && itemInUse.Item.VNum == 4981 && ServerManager.RandomNumber() <= 3)
                         {
                             attackerBattleEntity.Character.ConvertedDamageToHP = (int)(damage * 8 / 100D);
-                            attackerBattleEntity.Character.AddBuff(new Buff(413, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            attackerBattleEntity.Character.AddBuff(new Buff(413, attackerBattleEntity.Character.Level, false), attackerBattleEntity.Character.BattleEntity);
                             attackerBattleEntity.Character.RemoveBuff(413);
                         }
 
@@ -983,7 +983,7 @@ namespace GloomyTale.GameObject
                         if (itemInUse != null && itemInUse.Item.VNum == 4982 && ServerManager.RandomNumber() <= 4)
                         {
                             attackerBattleEntity.Character.ConvertedDamageToHP = (int)(damage * 15 / 100D);
-                            attackerBattleEntity.Character.AddBuff(new Buff(416, attackerBattleEntity.Character.Level), attackerBattleEntity.Character.BattleEntity);
+                            attackerBattleEntity.Character.AddBuff(new Buff(416, attackerBattleEntity.Character.Level, false), attackerBattleEntity.Character.BattleEntity);
                             attackerBattleEntity.Character.RemoveBuff(416);
                         }
 

@@ -54,70 +54,11 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public DeleteResult Delete(Guid id)
-        {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
-            {
-                CharacterSkill entity = context.Set<CharacterSkill>().FirstOrDefault(i => i.Id == id);
-                if (entity != null)
-                {
-                    context.Set<CharacterSkill>().Remove(entity);
-                    context.SaveChanges();
-                }
-                return DeleteResult.Deleted;
-            }
-        }
-
-        public IEnumerable<CharacterSkillDTO> InsertOrUpdate(IEnumerable<CharacterSkillDTO> dtos)
-        {
-            try
-            {
-                IList<CharacterSkillDTO> results = new List<CharacterSkillDTO>();
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    foreach (CharacterSkillDTO dto in dtos)
-                    {
-                        results.Add(InsertOrUpdate(context, dto));
-                    }
-                }
-                return results;
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error($"Message: {e.Message}", e);
-                return Enumerable.Empty<CharacterSkillDTO>();
-            }
-        }
-
-        public CharacterSkillDTO InsertOrUpdate(CharacterSkillDTO dto)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    return InsertOrUpdate(context, dto);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error($"Message: {e.Message}", e);
-                return null;
-            }
-        }
-
         public IEnumerable<CharacterSkillDTO> LoadByCharacterId(long characterId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
                 return context.CharacterSkill.Where(s => s.CharacterId == characterId).ToArray().Select(_mapper.Map<CharacterSkillDTO>);
-            }
-        }
-
-        public CharacterSkillDTO LoadById(Guid id)
-        {
-            using (OpenNosContext context = DataAccessHelper.CreateContext())
-            {
-                return _mapper.Map<CharacterSkillDTO>(context.CharacterSkill.FirstOrDefault(s => s.Id.Equals(id)));
             }
         }
 

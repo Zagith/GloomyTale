@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using EFCore.BulkExtensions;
 using GloomyTale.Core;
 using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Helpers;
 using GloomyTale.DAL.Interface;
 using GloomyTale.Data;
 using GloomyTale.Data.Enums;
+using Microsoft.EntityFrameworkCore.Storage;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -132,6 +135,36 @@ namespace GloomyTale.DAL.DAO
             return _mapper.Map<TDTO>(entity);
         }
 
+        public virtual void Save(IEnumerable<TDTO> objs)
+        {
+            try
+            {
+                IEnumerable<TDTO> enumerable = objs as TDTO[] ?? objs.ToArray();
+                if (enumerable.All(s => s == null))
+                {
+                    return;
+                }
+
+
+                List<TEntity> tmp = enumerable.Where(s => s != null).Select(_mapper.Map<TEntity>).ToList();
+                using (OpenNosContext Context = DataAccessHelper.CreateContext())
+                {
+                    using (IDbContextTransaction transaction = Context.Database.BeginTransaction())
+                    {
+                        Context.BulkInsertOrUpdate(tmp, new BulkConfig
+                        {
+                            PreserveInsertOrder = true
+                        });
+                        transaction.Commit();
+                        Context.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error("[SAVE]", e);
+            }
+        }
         #endregion
     }
 }

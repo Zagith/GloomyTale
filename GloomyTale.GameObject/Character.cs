@@ -6183,10 +6183,11 @@ namespace GloomyTale.GameObject
                         IEnumerable<ItemInstance> inventories = Inventory.Select(s => s.Value);
                         IEnumerable<Guid> currentlySavedInventoryIds = DAOFactory.Instance.ItemInstanceDAO.LoadSlotAndTypeByCharacterId(CharacterId);
                         IEnumerable<CharacterDTO> characters = DAOFactory.Instance.CharacterDAO.LoadByAccount(Session.Account.AccountId);
-                        foreach (CharacterDTO characteraccount in characters.Where(s => s.CharacterId != CharacterId))
-                        {
-                            currentlySavedInventoryIds = currentlySavedInventoryIds.Concat(DAOFactory.Instance.ItemInstanceDAO.LoadByCharacterId(characteraccount.CharacterId).Where(s => s.Type == InventoryType.Warehouse).Select(i => i.Id).ToList());
-                        }
+                        currentlySavedInventoryIds = characters.Where(s => s.CharacterId != CharacterId)
+                            .Aggregate(currentlySavedInventoryIds,
+                                (current, characteraccount) => current.Concat(DAOFactory.Instance.ItemInstanceDAO.LoadByCharacterId(characteraccount.CharacterId)
+                                    .Where(s => s.Type == InventoryType.Warehouse)
+                                    .Select(i => i.Id).ToList()));
 
                         IEnumerable<MinilandObjectDTO> currentlySavedMinilandObjectEntries = DAOFactory.Instance.MinilandObjectDAO.LoadByCharacterId(CharacterId).ToList();
                         foreach (MinilandObjectDTO mobjToDelete in currentlySavedMinilandObjectEntries.Except(MinilandObjects))
@@ -6197,11 +6198,17 @@ namespace GloomyTale.GameObject
                         DAOFactory.Instance.ItemInstanceDAO.DeleteGuidList(currentlySavedInventoryIds.Except(inventories.Select(i => i.Id)));
 
                         // create or update all which are new or do still exist
-                        List<ItemInstance> saveInventory = inventories.Where(s => s.Type != InventoryType.Bazaar && s.Type != InventoryType.FamilyWareHouse).ToList();
+                        IEnumerable<ItemInstance> saveInventory = inventories as IList<ItemInstance> ?? inventories.ToList();
 
-                        foreach (ItemInstance itemInstance in saveInventory)
+                        DAOFactory.Instance.ItemInstanceDAO.Delete(currentlySavedInventoryIds.Except(saveInventory.Select(i => i.Id)));
+
+                        IEnumerable<ItemInstance> InventorySave = saveInventory.Where(s =>
+                            s.Type != InventoryType.Bazaar && s.Type != InventoryType.FamilyWareHouse);
+                        DAOFactory.Instance.ItemInstanceDAO.Save(InventorySave);
+
+                        foreach (ItemInstance itemInstance in InventorySave)
                         {
-                            DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(itemInstance);
+                            
                             if (!(itemInstance is WearableInstance instance))
                             {
                                 continue;
