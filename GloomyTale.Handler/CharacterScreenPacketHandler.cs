@@ -164,7 +164,7 @@ namespace GloomyTale.Handler
 
                     var inventory = new Inventory((Character)characterDTO);
                     inventory.AddNewToInventory(15299, 1, InventoryType.Main);
-                    inventory.ToList().ForEach(i => DAOFactory.Instance.ItemInstanceDAO.Save(i.Value));
+                    DAOFactory.Instance.ItemInstanceDAO.Save(inventory.Values);
                     LoadCharacters(characterCreatePacket.OriginalContent);
                 }
                 else
