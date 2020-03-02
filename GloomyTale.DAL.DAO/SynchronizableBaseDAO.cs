@@ -135,6 +135,39 @@ namespace GloomyTale.DAL.DAO
             return _mapper.Map<TDTO>(entity);
         }
 
+        public virtual TDTO Save(TDTO obj)
+        {
+            try
+            {
+                
+                using (OpenNosContext Context = DataAccessHelper.CreateContext())
+                {
+                    TEntity model = Context.Set<TEntity>().Find(obj.Id);
+                    if (model == null)
+                    {
+                        if (obj.Id == Guid.Empty)
+                        {
+                            obj.Id = Guid.NewGuid();
+                        }
+
+                        model = Context.Set<TEntity>().Add(_mapper.Map<TEntity>(obj)).Entity;
+                    }
+                    else
+                    {
+                        Context.Entry(model).CurrentValues.SetValues(obj);
+                    }
+
+                    Context.SaveChanges();
+                    return _mapper.Map<TDTO>(model);
+                }                
+            }
+            catch (Exception e)
+            {
+                Log.Error("[SAVE]", e);
+                return null;
+            }
+        }
+
         public virtual void Save(IEnumerable<TDTO> objs)
         {
             try

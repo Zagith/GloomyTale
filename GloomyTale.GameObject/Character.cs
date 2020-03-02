@@ -6225,10 +6225,10 @@ namespace GloomyTale.GameObject
                                 s.EquipmentSerialId = instance.EquipmentSerialId;
                                 DAOFactory.Instance.ShellEffectDAO.InsertOrUpdate(s);
                             });
+                            DAOFactory.Instance.CellonOptionDAO.Save(instance.CellonOptions);
                             instance.CellonOptions.ForEach(s =>
                             {
-                                s.EquipmentSerialId = instance.EquipmentSerialId;
-                                DAOFactory.Instance.CellonOptionDAO.InsertOrUpdate(s);
+                                s.EquipmentSerialId = instance.EquipmentSerialId;                                
                             });
                         }
                     }
@@ -6242,11 +6242,7 @@ namespace GloomyTale.GameObject
                     {
                         DAOFactory.Instance.CharacterSkillDAO.Delete(characterSkillToDeleteId);
                     }
-
-                    foreach (CharacterSkill characterSkill in Skills.GetAllItems())
-                    {
-                        DAOFactory.Instance.CharacterSkillDAO.InsertOrUpdate(characterSkill);
-                    }
+                    DAOFactory.Instance.CharacterSkillDAO.Save(Skills.GetAllItems());
                 }
 
                 IEnumerable<long> currentlySavedMates = DAOFactory.Instance.MateDAO.LoadByCharacterId(CharacterId).Select(s => s.MateId);
@@ -6269,10 +6265,7 @@ namespace GloomyTale.GameObject
                 {
                     DAOFactory.Instance.QuicklistEntryDAO.Delete(quicklistEntryToDelete);
                 }
-                foreach (QuicklistEntryDTO quicklistEntry in quickListEntriesToInsertOrUpdate)
-                {
-                    DAOFactory.Instance.QuicklistEntryDAO.InsertOrUpdate(quicklistEntry);
-                }
+                DAOFactory.Instance.QuicklistEntryDAO.Save(quickListEntriesToInsertOrUpdate);
 
                 foreach (MinilandObjectDTO mobjEntry in (IEnumerable<MinilandObjectDTO>)MinilandObjects.ToList())
                 {
@@ -6304,21 +6297,7 @@ namespace GloomyTale.GameObject
                 {
                     DAOFactory.Instance.CharacterQuestDAO.Delete(CharacterId, q.QuestId);
                 }
-                foreach (CharacterQuest qst in Quests.ToList())
-                {
-                    CharacterQuestDTO qstDTO = new CharacterQuestDTO
-                    {
-                        CharacterId = qst.CharacterId,
-                        QuestId = qst.QuestId,
-                        FirstObjective = qst.FirstObjective,
-                        SecondObjective = qst.SecondObjective,
-                        ThirdObjective = qst.ThirdObjective,
-                        FourthObjective = qst.FourthObjective,
-                        FifthObjective = qst.FifthObjective,
-                        IsMainQuest = qst.IsMainQuest
-                    };
-                    DAOFactory.Instance.CharacterQuestDAO.InsertOrUpdate(qstDTO);
-                }
+                DAOFactory.Instance.CharacterQuestDAO.Save(Quests.ToList());
 
                 foreach (StaticBonusDTO bonus in StaticBonusList.ToArray())
                 {

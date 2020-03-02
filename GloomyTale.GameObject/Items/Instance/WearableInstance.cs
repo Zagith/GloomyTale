@@ -1100,11 +1100,11 @@ namespace GloomyTale.GameObject.Items.Instance
                     CharacterSession.SendPacket(CharacterSession.Character.GenerateGold());
                 }
             }
-
+            DAOFactory.Instance.CellonOptionDAO.Save(CellonOptions);
             foreach (CellonOptionDTO effect in CellonOptions)
             {
                 effect.EquipmentSerialId = EquipmentSerialId;
-                effect.CellonOptionId = DAOFactory.Instance.CellonOptionDAO.InsertOrUpdate(effect).CellonOptionId;
+                effect.CellonOptionId = effect.CellonOptionId;
             }
         }
         #endregion

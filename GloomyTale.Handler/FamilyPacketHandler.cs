@@ -599,11 +599,10 @@ namespace GloomyTale.Handler
 
                     famChar.Authority = FamilyAuthority.Head;
                     DAOFactory.Instance.FamilyCharacterDAO.InsertOrUpdate(ref famChar);
-
+                    DAOFactory.Instance.ItemInstanceDAO.Save(Session.Character.Family.Warehouse.Values);
                     Session.Character.Family.Warehouse.ToList().ForEach(s =>
                     {
-                        s.Value.CharacterId = famChar.CharacterId;
-                        DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(s.Value);
+                        s.Value.CharacterId = famChar.CharacterId;                        
                     });
                     Session.Character.FamilyCharacter.Authority = FamilyAuthority.Familydeputy;
                     FamilyCharacterDTO chara2 = Session.Character.FamilyCharacter;
@@ -867,12 +866,12 @@ namespace GloomyTale.Handler
 
             if (sourceInventory?.Amount > 0)
             {
-                DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(sourceInventory);
+                DAOFactory.Instance.ItemInstanceDAO.Save(sourceInventory);
             }
 
             if (destinationInventory?.Amount > 0)
             {
-                DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(destinationInventory);
+                DAOFactory.Instance.ItemInstanceDAO.Save(destinationInventory);
             }
 
             Session.Character.Family.SendPacket((destinationInventory != null)
@@ -933,7 +932,7 @@ namespace GloomyTale.Handler
             Session.Character.Family.SendPacket(UserInterfaceHelper.Instance.GenerateFStashRemove(fWithdrawPacket.Slot));
             if (previousInventory != null)
             {
-                DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(previousInventory);
+                DAOFactory.Instance.ItemInstanceDAO.Save(previousInventory);
             }
             else
             {

@@ -15,11 +15,9 @@ namespace GloomyTale.DAL.Interface
 
         DeleteResult Delete(IEnumerable<Guid> ids);
 
-        TDTO InsertOrUpdate(TDTO dto);
-
-        IEnumerable<TDTO> InsertOrUpdate(IEnumerable<TDTO> dtos);
-
         TDTO LoadById(Guid id);
+
+        TDTO Save(TDTO obj);
 
         void Save(IEnumerable<TDTO> objs);
         #endregion

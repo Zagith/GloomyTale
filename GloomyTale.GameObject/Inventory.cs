@@ -425,7 +425,7 @@ namespace GloomyTale.GameObject
                 }
                 MoveItem(inventory, InventoryType.FamilyWareHouse, slot, amount, newSlot, out item, out itemdest);
                 itemdest.CharacterId = fhead.CharacterId;
-                DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(itemdest);
+                DAOFactory.Instance.ItemInstanceDAO.Save(itemdest);
                 Owner.Family.SendPacket(item != null ? item.GenerateInventoryAdd() : UserInterfaceHelper.Instance.GenerateInventoryRemove(inventory, slot));
                 if (itemdest != null)
                 {

@@ -112,7 +112,7 @@ namespace GloomyTale.Handler
                                 bzitemdto.Amount -= cBuyPacket.Amount;
                                 Session.Character.Gold -= price;
                                 Session.SendPacket(Session.Character.GenerateGold());
-                                DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(bzitemdto);
+                                DAOFactory.Instance.ItemInstanceDAO.Save(bzitemdto);
                                 ServerManager.Instance.BazaarRefresh(bzcree.BazaarItem.BazaarItemId);
                                 Session.SendPacket(
                                     $"rc_buy 1 {bzcree.Item.Item.VNum} {bzcree.Owner} {cBuyPacket.Amount} {cBuyPacket.Price} 0 0 0");
@@ -412,7 +412,7 @@ namespace GloomyTale.Handler
                     return;
             }
 
-            DAOFactory.Instance.ItemInstanceDAO.InsertOrUpdate(bazaar);
+            DAOFactory.Instance.ItemInstanceDAO.Save(bazaar);
 
             BazaarItemDTO bazaarItem = new BazaarItemDTO
             {
