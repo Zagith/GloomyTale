@@ -209,8 +209,6 @@ namespace GloomyTale.GameObject.Networking
 
         public List<CharacterRelationDTO> CharacterRelations { get; set; }
 
-        //public ConfigurationObject Configuration { get; set; }
-
         public bool EventInWaiting { get; set; }
 
         public bool IsInstantBattle { get; set; }

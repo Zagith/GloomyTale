@@ -79,18 +79,6 @@ namespace GloomyTale.GameObject
             ServerManager.StopServer();
         }
 
-        public virtual void Disconnect()
-        {
-            
-        }
-
-        /*protected virtual ClientSession IntializeNewSession(INetworkClient client)
-        {
-            ClientSession session = new ClientSession(client);
-            client.SetClientSession(session);
-            return session;
-        }*/
-
         public void RemoveSession(INetworkSession client)
         {
             _sessions.TryRemove(client.ClientId, out ClientSession session);

@@ -39,21 +39,9 @@ namespace GloomyTale.GameObject
         private int? _waitForPacketsAmount;
 
         public bool HealthStop;
-
-        //private readonly Random _random;
         private readonly CommunicationServiceEvents _communicationServiceEvents = new CommunicationServiceEvents();
 
         private readonly char[] PACKET_SPLITTER = { (char)0xFF };
-
-        //private IDictionary<string[], HandlerMethodReference> _handlerMethods;
-
-        //private int _lastPacketId;
-
-        // private byte countPacketReceived;
-
-        //private long _lastPacketReceive;
-
-        //private int? _waitForPacketsAmount;
 
         #endregion
 
