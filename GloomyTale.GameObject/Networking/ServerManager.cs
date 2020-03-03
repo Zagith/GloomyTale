@@ -1350,460 +1350,6 @@ namespace GloomyTale.GameObject.Networking
             LoadBossEntities();
         }
 
-        /*public void Initialize()
-        {
-            Act4RaidStart = DateTime.Now;
-            Act4AngelStat = new Act4Stat();
-            Act4DemonStat = new Act4Stat();
-            LastFCSent = DateTime.Now;
-            LoadBossEntities();
-
-            CharacterScreenSessions = new ThreadSafeSortedList<long, ClientSession>();
-
-            // Load Configuration
-
-            //Schedules = ConfigurationManager.GetSection("eventScheduler") as List<Schedule>;
-            TypeAdapterConfig.GlobalSettings
-                .ForDestinationType<I18NString>()
-                .BeforeMapping(s => s.Clear());
-            TypeAdapterConfig.GlobalSettings
-                .When(s => !s.SourceType.IsAssignableFrom(s.DestinationType) && typeof(IStaticDto).IsAssignableFrom(s.DestinationType))
-                .IgnoreMember((member, side) => typeof(I18NString).IsAssignableFrom(member.Type));
-            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
-            var dic = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
-                    {
-                        {
-                            typeof(I18NItemDto),
-                            DAOFactory.Instance.I18NItemDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
-                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
-                        }
-                    };
-            var items = DAOFactory.Instance.ItemDAO.LoadAll();
-            var props = StaticDtoExtension.GetI18NProperties(typeof(ItemDTO));
-
-            var regions = Enum.GetValues(typeof(RegionType));
-            var accessors = TypeAccessor.Create(typeof(ItemDTO));
-            OrderablePartitioner<ItemDTO> itemPartitioner = Partitioner.Create(items, EnumerablePartitionerOptions.NoBuffering);
-            Parallel.ForEach(itemPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 4 }, itemDto =>
-            {
-                itemDto.InjectI18N(props, dic, regions, accessors);
-                switch (itemDto.ItemType)
-                {
-                    case ItemType.Armor:
-                    case ItemType.Jewelery:
-                    case ItemType.Fashion:
-                    case ItemType.Specialist:
-                    case ItemType.Weapon:
-                        _items.Add(new WearableItem(itemDto));
-                        break;
-
-                    case ItemType.Box:
-                        _items.Add(new BoxItem(itemDto));
-                        break;
-
-                    case ItemType.Shell:
-                    case ItemType.Magical:
-                    case ItemType.Event:
-                        _items.Add(new MagicalItem(itemDto));
-                        break;
-
-                    case ItemType.Food:
-                        _items.Add(new FoodItem(itemDto));
-                        break;
-
-                    case ItemType.Potion:
-                        _items.Add(new PotionItem(itemDto));
-                        break;
-
-                    case ItemType.Production:
-                        _items.Add(new ProduceItem(itemDto));
-                        break;
-
-                    case ItemType.Snack:
-                        _items.Add(new SnackItem(itemDto));
-                        break;
-
-                    case ItemType.Special:
-                        _items.Add(new SpecialItem(itemDto));
-                        break;
-
-                    case ItemType.Teacher:
-                        _items.Add(new TeacherItem(itemDto));
-                        break;
-
-                    case ItemType.Upgrade:
-                        _items.Add(new UpgradeItem(itemDto));
-                        break;
-
-                    default:
-                        _items.Add(new NoFunctionItem(itemDto));
-                        break;
-                }
-            });
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("ITEMS_LOADED"), _items.Count));
-
-
-
-
-
-            #region BoxItem
-
-            BoxItems = DAOFactory.Instance.BoxItemDAO.LoadAll();
-
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("BOX_ITEMS_LOADED"), BoxItems.Count));
-
-            #endregion
-
-            // intialize monsterdrops
-            _monsterDrops = new ThreadSafeSortedList<short, List<DropDTO>>();
-            Parallel.ForEach(DAOFactory.Instance.DropDAO.LoadAll().GroupBy(d => d.MonsterVNum), monsterDropGrouping =>
-            {
-                if (monsterDropGrouping.Key.HasValue)
-                {
-                    _monsterDrops[monsterDropGrouping.Key.Value] = monsterDropGrouping.OrderBy(d => d.DropChance).ToList();
-                }
-                else
-                {
-                    _generalDrops = monsterDropGrouping.ToList();
-                }
-            });
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("DROPS_LOADED"), _monsterDrops.Sum(i => i.Count)));
-
-            // initialize monsterskills
-            _monsterSkills = new ThreadSafeSortedList<short, List<NpcMonsterSkill>>();
-            Parallel.ForEach(DAOFactory.Instance.NpcMonsterSkillDAO.LoadAll().GroupBy(n => n.NpcMonsterVNum), monsterSkillGrouping => _monsterSkills[monsterSkillGrouping.Key] = monsterSkillGrouping.Select(n => new NpcMonsterSkill(n)).ToList());
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MONSTERSKILLS_LOADED"), _monsterSkills.Sum(i => i.Count)));
-
-            // initialize bazaar
-            BazaarList = new ThreadSafeGenericList<BazaarItemLink>();
-            OrderablePartitioner<BazaarItemDTO> bazaarPartitioner = Partitioner.Create(DAOFactory.Instance.BazaarItemDAO.LoadAll(), EnumerablePartitionerOptions.NoBuffering);
-            Parallel.ForEach(bazaarPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 8 }, bazaarItem =>
-            {
-                BazaarItemLink item = new BazaarItemLink
-                {
-                    BazaarItem = bazaarItem
-                };
-                CharacterDTO chara = DAOFactory.Instance.CharacterDAO.LoadById(bazaarItem.SellerId);
-                if (chara != null)
-                {
-                    item.Owner = chara.Name;
-                    item.Item = new ItemInstance(DAOFactory.Instance.ItemInstanceDAO.LoadById(bazaarItem.ItemInstanceId));
-                }
-                BazaarList.Add(item);
-            });
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("BAZAAR_LOADED"), BazaarList.Count));
-
-            // initialize npcmonsters
-            var dicNpcMonster = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
-                    {
-                        {
-                            typeof(I18NNpcMonsterDto),
-                            DAOFactory.Instance.I18NNpcMonsterDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
-                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
-                        }
-                    };
-            var npcMonsters = DAOFactory.Instance.NpcMonsterDAO.LoadAll();
-            var propsNpcMonsters = StaticDtoExtension.GetI18NProperties(typeof(NpcMonsterDTO));
-
-            var regionsNpcMonster = Enum.GetValues(typeof(RegionType));
-            var accessorsNpcMonster = TypeAccessor.Create(typeof(NpcMonsterDTO));
-            Parallel.ForEach(npcMonsters, npcMonster =>
-            {
-                npcMonster.InjectI18N(propsNpcMonsters, dicNpcMonster, regionsNpcMonster, accessorsNpcMonster);
-                NpcMonster npcMonsterObj = new NpcMonster(npcMonster);
-                npcMonsterObj.Initialize();
-                npcMonsterObj.BCards = new List<BCard>();
-                DAOFactory.Instance.BCardDAO.LoadByNpcMonsterVNum(npcMonster.OriginalNpcMonsterVNum > 0 ? npcMonster.OriginalNpcMonsterVNum : npcMonster.NpcMonsterVNum).ToList().ForEach(s => npcMonsterObj.BCards.Add(new BCard(s)));
-                _npcmonsters.Add(npcMonsterObj);
-            });
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("NPCMONSTERS_LOADED"), _npcmonsters.Count));
-
-            // intialize recipes
-            _recipes = new ThreadSafeSortedList<short, Recipe>();
-            Parallel.ForEach(DAOFactory.Instance.RecipeDAO.LoadAll(), recipeGrouping =>
-            {
-                Recipe recipe = new Recipe(recipeGrouping);
-                _recipes[recipeGrouping.RecipeId] = recipe;
-                recipe.Initialize();
-            });
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPES_LOADED"), _recipes.Count));
-
-            // initialize recipelist
-            _recipeLists = new ThreadSafeSortedList<int, RecipeListDTO>();
-            Parallel.ForEach(DAOFactory.Instance.RecipeListDAO.LoadAll(), recipeListGrouping => _recipeLists[recipeListGrouping.RecipeListId] = recipeListGrouping);
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPELISTS_LOADED"), _recipeLists.Count));
-
-            // initialize shopitems
-            _shopItems = new ThreadSafeSortedList<int, List<ShopItemDTO>>();
-            Parallel.ForEach(DAOFactory.Instance.ShopItemDAO.LoadAll().GroupBy(s => s.ShopId), shopItemGrouping => _shopItems[shopItemGrouping.Key] = shopItemGrouping.ToList());
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPITEMS_LOADED"), _shopItems.Sum(i => i.Count)));
-
-            // initialize shopskills
-            _shopSkills = new ThreadSafeSortedList<int, List<ShopSkillDTO>>();
-            Parallel.ForEach(DAOFactory.Instance.ShopSkillDAO.LoadAll().GroupBy(s => s.ShopId), shopSkillGrouping => _shopSkills[shopSkillGrouping.Key] = shopSkillGrouping.ToList());
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPSKILLS_LOADED"), _shopSkills.Sum(i => i.Count)));
-
-            // initialize shops
-            var dicShop = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
-                    {
-                        {
-                            typeof(I18NShopNameDto),
-                            DAOFactory.Instance.I18NShopNameDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
-                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
-                        }
-                    };
-            var shops = DAOFactory.Instance.ShopDAO.LoadAll();
-            var propsShop = StaticDtoExtension.GetI18NProperties(typeof(ShopDTO));
-
-            var regionsShop = Enum.GetValues(typeof(RegionType));
-            var accessorsShop = TypeAccessor.Create(typeof(ShopDTO));
-            _shops = new ThreadSafeSortedList<int, Shop>();
-            Parallel.ForEach(shops, shopGrouping =>
-            {
-                shopGrouping.InjectI18N(propsShop, dicShop, regionsShop, accessorsShop);
-                Shop shop = new Shop(shopGrouping);
-                _shops[shopGrouping.MapNpcId] = shop;
-                shop.Initialize();
-            });
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPS_LOADED"), _shops.Count));
-
-            // initialize teleporters
-            _teleporters = new ThreadSafeSortedList<int, List<TeleporterDTO>>();
-            Parallel.ForEach(DAOFactory.Instance.TeleporterDAO.LoadAll().GroupBy(t => t.MapNpcId), teleporterGrouping => _teleporters[teleporterGrouping.Key] = teleporterGrouping.Select(t => t).ToList());
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("TELEPORTERS_LOADED"), _teleporters.Sum(i => i.Count)));
-
-            // initialize skills
-            var dicSkill = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
-                    {
-                        {
-                            typeof(I18NSkillDto),
-                            DAOFactory.Instance.I18NSkillDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
-                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
-                        }
-                    };
-            var skills = DAOFactory.Instance.SkillDAO.LoadAll();
-            var propsSkill = StaticDtoExtension.GetI18NProperties(typeof(SkillDTO));
-
-            var regionsSkill = Enum.GetValues(typeof(RegionType));
-            var accessorsSkill = TypeAccessor.Create(typeof(SkillDTO));
-            Parallel.ForEach(skills, skill =>
-            {
-                skill.InjectI18N(propsSkill, dicSkill, regionsSkill, accessorsSkill);
-                Skill skillObj = new Skill(skill);
-                skillObj.Combos.AddRange(DAOFactory.Instance.ComboDAO.LoadBySkillVnum(skillObj.SkillVNum).ToList());
-                skillObj.BCards = new List<BCard>();
-                DAOFactory.Instance.BCardDAO.LoadBySkillVNum(skillObj.SkillVNum).ToList().ForEach(o => skillObj.BCards.Add(new BCard(o)));
-                _skills.Add(skillObj);
-            });
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SKILLS_LOADED"), _skills.Count));
-
-            // initialize cards
-            var dicCard = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
-                    {
-                        {
-                            typeof(I18NCardDto),
-                            DAOFactory.Instance.I18NCardDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
-                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
-                        }
-                    };
-            var cards = DAOFactory.Instance.CardDAO.LoadAll();
-            var propsCard = StaticDtoExtension.GetI18NProperties(typeof(CardDTO));
-
-            var regionsCard = Enum.GetValues(typeof(RegionType));
-            var accessorsCard = TypeAccessor.Create(typeof(CardDTO));
-
-            Parallel.ForEach(cards, card =>
-            {
-                card.InjectI18N(propsCard, dicCard, regionsCard, accessorsCard);
-                Card cardObj = new Card(card)
-                {
-                    BCards = new List<BCard>()
-                };
-
-                DAOFactory.Instance.BCardDAO.LoadByCardId(cardObj.CardId).ToList().ForEach(o => cardObj.BCards.Add(new BCard(o)));
-                _cards.Add(cardObj);
-            });
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("CARDS_LOADED"), _cards.Count));
-
-            // initialize quests
-            Quests = new List<Quest>();
-            foreach (QuestDTO questdto in DAOFactory.Instance.QuestDAO.LoadAll())
-            {
-                Quest quest = new Quest(questdto);
-                quest.QuestRewards = DAOFactory.Instance.QuestRewardDAO.LoadByQuestId(quest.QuestId).ToList();
-                quest.QuestObjectives = DAOFactory.Instance.QuestObjectiveDAO.LoadByQuestId(quest.QuestId).ToList();
-                Quests.Add(quest);
-            }
-            FlowerQuestId = Quests.FirstOrDefault(q => q.QuestType == (byte)QuestType.FlowerQuest)?.QuestId;
-
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("QUESTS_LOADED"), Quests.Count));
-
-            // intialize mapnpcs
-            _mapNpcs = new ThreadSafeSortedList<short, List<MapNpc>>();
-            Parallel.ForEach(DAOFactory.Instance.MapNpcDAO.LoadAll().GroupBy(t => t.MapId), mapNpcGrouping => _mapNpcs[mapNpcGrouping.Key] = mapNpcGrouping.Select(t => t as MapNpc).ToList());
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPNPCS_LOADED"), _mapNpcs.Sum(i => i.Count)));
-
-            try
-            {
-                int i = 0;
-                int monstercount = 0;
-                var dicMap = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
-                    {
-                        {
-                            typeof(I18NMapPointDataDto),
-                            DAOFactory.Instance.I18NMapDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
-                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
-                        }
-                    };
-                var maps = DAOFactory.Instance.MapDAO.LoadAll();
-                var propsMap = StaticDtoExtension.GetI18NProperties(typeof(MapDTO));
-
-                var regionsMap = Enum.GetValues(typeof(RegionType));
-                var accessorsMap = TypeAccessor.Create(typeof(MapDTO));
-                OrderablePartitioner<MapDTO> mapPartitioner = Partitioner.Create(maps, EnumerablePartitionerOptions.NoBuffering);
-                Parallel.ForEach(mapPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 8 }, map =>
-                {
-                    map.InjectI18N(propsMap, dicMap, regionsMap, accessorsMap);
-                    Guid guid = Guid.NewGuid();
-                    Map mapinfo = new Map(map.MapId, map.GridMapId, map.Data)
-                    {
-                        Music = map.Music,
-                        NameI18NKey = map.NameI18NKey,
-                        ShopAllowed = map.ShopAllowed,
-                        XpRate = map.XpRate,
-                        MeteoriteLevel = map.MeteoriteLevel,
-                        GoldMapRate = map.GoldMapRate
-                    };
-                    _maps.Add(mapinfo);
-                    MapInstance newMap = new MapInstance(mapinfo, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, map.Side, map.GoldMapRate, true);
-                    _mapinstances.TryAdd(guid, newMap);
-
-                    Task.Run((Action)newMap.LoadPortals);
-                    newMap.LoadNpcs();
-                    newMap.LoadMonsters();
-
-                    Parallel.ForEach(newMap.Npcs, mapNpc =>
-                    {
-                        mapNpc.MapInstance = newMap;
-                        newMap.AddNPC(mapNpc);
-                    });
-                    Parallel.ForEach(newMap.Monsters, mapMonster =>
-                    {
-                        mapMonster.MapInstance = newMap;
-                        newMap.AddMonster(mapMonster);
-                    });
-                    monstercount += newMap.Monsters.Count;
-                    i++;
-                });
-                if (i != 0)
-                {
-                    Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPS_LOADED"), i));
-                }
-                else
-                {
-                    Logger.Log.Error(Language.Instance.GetMessageFromKey("NO_MAP"));
-                }
-
-                Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPMONSTERS_LOADED"), monstercount));
-                StartedEvents = new List<EventType>();
-
-                LoadFamilies();
-                LaunchEvents();
-                RefreshRanking();
-
-                CharacterRelations = DAOFactory.Instance.CharacterRelationDAO.LoadAll().ToList();
-                PenaltyLogs = DAOFactory.Instance.PenaltyLogDAO.LoadAll().ToList();
-
-                #region Normal Arena
-
-                if (DAOFactory.Instance.MapDAO.LoadById(2006) != null)
-                {
-                    ArenaInstance = GenerateMapInstance(2006, MapInstanceType.NormalInstance, new InstanceBag());
-                    ArenaInstance.IsPVP = true;
-
-                    Portal portal = new Portal
-                    {
-                        SourceMapId = 2006,
-                        SourceX = 37,
-                        SourceY = 15,
-                        DestinationMapId = 1,
-                        DestinationX = 0,
-                        DestinationY = 0,
-                        Type = -1
-                    };
-
-                    ArenaInstance.CreatePortal(portal);
-                }
-
-                #endregion
-
-                #region Family Arena
-
-                if (DAOFactory.Instance.MapDAO.LoadById(2106) != null)
-                {
-                    FamilyArenaInstance = GenerateMapInstance(2106, MapInstanceType.NormalInstance, new InstanceBag());
-                    FamilyArenaInstance.IsPVP = true;
-
-                    Portal portal = new Portal
-                    {
-                        SourceMapId = 2106,
-                        SourceX = 38,
-                        SourceY = 3,
-                        DestinationMapId = 1,
-                        DestinationX = 0,
-                        DestinationY = 0,
-                        Type = -1
-                    };
-
-                    FamilyArenaInstance.CreatePortal(portal);
-                }
-
-                #endregion
-
-                #region Specialist Gem Map
-
-                if (DAOFactory.Instance.MapDAO.LoadById(2107) != null)
-                {
-                    Portal portal = new Portal
-                    {
-                        SourceMapId = 2107,
-                        SourceX = 10,
-                        SourceY = 5,
-                        DestinationMapId = 1,
-                        DestinationX = 0,
-                        DestinationY = 0,
-                        Type = -1
-                    };
-
-                    void loadSpecialistGemMap(short npcVNum)
-                    {
-                        MapInstance specialistGemMapInstance;
-                        specialistGemMapInstance = GenerateMapInstance(2107, MapInstanceType.NormalInstance, new InstanceBag());
-                        specialistGemMapInstance.Npcs.Where(s => s.NpcVNum != npcVNum).ToList().ForEach(s => specialistGemMapInstance.RemoveNpc(s));
-                        specialistGemMapInstance.CreatePortal(portal);
-                        SpecialistGemMapInstances.Add(specialistGemMapInstance);
-                    }
-
-                    loadSpecialistGemMap(932); // Pajama
-                    loadSpecialistGemMap(933); // SP 1
-                    loadSpecialistGemMap(934); // SP 2
-                    loadSpecialistGemMap(948); // SP 3
-                    loadSpecialistGemMap(954); // SP 4
-                }
-
-                #endregion
-
-                LoadScriptedInstances();
-                LoadBannedCharacters();
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.Error("General Error", ex);
-            }
-
-            WorldId = Guid.NewGuid();
-        }*/
-
         public void LoadItems()
         {
             IEnumerable<ItemDTO> items = DAOFactory.Instance.ItemDAO.LoadAll();
@@ -1863,7 +1409,30 @@ namespace GloomyTale.GameObject.Networking
                 }
             }
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("ITEMS_LOADED"), Items.Count));
-        }        
+        }
+
+        private void LoadCards()
+        {
+            IEnumerable<BCardDTO> bcards = DAOFactory.Instance.BCardDAO.LoadAll().ToArray().Where(s => s.CardId.HasValue);
+            IEnumerable<Card> cards = DAOFactory.Instance.CardDAO.LoadAll().Cast<Card>();
+            foreach (Card card in cards)
+            {
+                card.BCards = new List<BCard>();
+
+
+                card.BCards.AddRange(bcards.Where(s => s.CardId == card.CardId).Cast<BCard>());
+                _cards.Add(card);
+            }
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("CARDS_LOADED"), _cards.Count));
+        }
+
+        private void LoadTeleporters()
+        {
+            _teleporters = new ThreadSafeSortedList<int, List<TeleporterDTO>>();
+            Parallel.ForEach(DAOFactory.Instance.TeleporterDAO.LoadAll().GroupBy(t => t.MapNpcId), teleporterGrouping => _teleporters[teleporterGrouping.Key] = teleporterGrouping.Select(t => t).ToList());
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("TELEPORTERS_LOADED"), _teleporters.Sum(i => i.Count)));
+        }
 
         private static void LoadMapsAndContent()
         {
@@ -2139,6 +1708,60 @@ namespace GloomyTale.GameObject.Networking
             }
         }
 
+        private void LoadBazaar()
+        {
+            BazaarList = new ThreadSafeGenericList<BazaarItemLink>();
+            foreach (BazaarItemDTO bz in DAOFactory.Instance.BazaarItemDAO.LoadAll().ToArray())
+            {
+                var item = new BazaarItemLink
+                {
+                    BazaarItem = bz
+                };
+                CharacterDTO chara = DAOFactory.Instance.CharacterDAO.LoadById(bz.SellerId);
+                if (chara != null)
+                {
+                    item.Owner = chara.Name;
+                    item.Item = (ItemInstance)DAOFactory.Instance.ItemInstanceDAO.LoadById(bz.ItemInstanceId);
+                }
+
+                BazaarList.Add(item);
+            }
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("BAZAR_LOADED"), BazaarList.Count));
+        }
+
+        private void LoadGemsMap()
+        {
+            if (DAOFactory.Instance.MapDAO.LoadById(2107) != null)
+            {
+                Portal portal = new Portal
+                {
+                    SourceMapId = 2107,
+                    SourceX = 10,
+                    SourceY = 5,
+                    DestinationMapId = 1,
+                    DestinationX = 0,
+                    DestinationY = 0,
+                    Type = -1
+                };
+
+                void loadSpecialistGemMap(short npcVNum)
+                {
+                    MapInstance specialistGemMapInstance;
+                    specialistGemMapInstance = GenerateMapInstance(2107, MapInstanceType.NormalInstance, new InstanceBag());
+                    specialistGemMapInstance.Npcs.Where(s => s.NpcVNum != npcVNum).ToList().ForEach(s => specialistGemMapInstance.RemoveNpc(s));
+                    specialistGemMapInstance.CreatePortal(portal);
+                    SpecialistGemMapInstances.Add(specialistGemMapInstance);
+                }
+
+                loadSpecialistGemMap(932); // Pajama
+                loadSpecialistGemMap(933); // SP 1
+                loadSpecialistGemMap(934); // SP 2
+                loadSpecialistGemMap(948); // SP 3
+                loadSpecialistGemMap(954); // SP 4
+            }
+        }
+
         public void Initialize(GameRateConfiguration rateConf, GameMinMaxConfiguration levelConf, GameTrueFalseConfiguration eventsConf)//, GameScheduledEventsConfiguration gameScheduledConf)
         {
             RateConfiguration = rateConf;
@@ -2155,29 +1778,28 @@ namespace GloomyTale.GameObject.Networking
             LoadItems();
             LoadMonsterDrops();
             LoadMonsterSkills();
-            //LoadBazaar();
+            LoadBazaar();
             LoadNpcMonsters();
             LoadRecipes();
             LoadShopItems();
             LoadShopSkills();
             LoadShops();
-            //LoadTeleporters();
+            LoadTeleporters();
             LoadSkills();
-            //LoadCards();
+            LoadCards();
             LoadQuests();
             LoadMapNpcs();
             LoadMapsAndContent();
             LoadFamilies();
             LaunchEvents();
-            //LoadAct4ShipMaps();
             RefreshRanking();
             CharacterRelations = DAOFactory.Instance.CharacterRelationDAO.LoadAll().ToList();
             PenaltyLogs = DAOFactory.Instance.PenaltyLogDAO.LoadAll().ToList();
 
             LoadArenaMap();
-            //LoadAct4Maps();
-            //LoadAct4();
+            LoadGemsMap();
             LoadScriptedInstances();
+            LoadBannedCharacters();
 
             //Register the new created TCPIP server to the api
             WorldId = Guid.NewGuid();
@@ -2848,13 +2470,6 @@ namespace GloomyTale.GameObject.Networking
                 monster.BattleEntity.OnDeathEvents.Add(new EventContainer(map, EventActionType.DROPMETEORITE, new Tuple<int>(map.MeteoriteLevel)));
                 map.AddMonster(monster);
                 map.Broadcast(monster.GenerateIn());
-                /*CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
-                {
-                    DestinationCharacterId = null,
-                    SourceWorldId = Instance.WorldId,
-                    Message = string.Format(Language.Instance.GetMessageFromKey("METEORITE_SPAWN"), map.MeteoriteLevel, channelid, map.Map.NameI18NKey[0]),
-                    Type = MessageType.Shout
-                });*/
             }
         }
 

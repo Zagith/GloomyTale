@@ -15,15 +15,11 @@
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Core;
 using GloomyTale.Core.Handling;
-using GloomyTale.DAL;
 using GloomyTale.Data;
 using GloomyTale.Domain;
 using GloomyTale.GameObject.Helpers;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
@@ -585,25 +581,6 @@ namespace GloomyTale.GameObject
                 }
             }
         }
-
-        /// <summary>
-        /// This will be triggered when the underlying NetworkClient receives a packet.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /*private void OnNetworkClientMessageReceived(object sender, MessageEventArgs e)
-        {
-            ScsRawDataMessage message = e.Message as ScsRawDataMessage;
-            if (message == null)
-            {
-                return;
-            }
-            if (message.MessageData.Length > 0 && message.MessageData.Length > 2)
-            {
-                _receiveQueue.Enqueue(message.MessageData);
-            }
-            _lastPacketReceive = e.ReceivedTimestamp.Ticks;
-        }*/
 
         private void OnOtherCharacterConnected(object sender, EventArgs e)
         {
