@@ -29,6 +29,7 @@ using System.Collections.Concurrent;
 using GloomyTale.DAL;
 using GloomyTale.GameObject.Event.TIMESPACES;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.Handler
 {
@@ -913,7 +914,7 @@ namespace GloomyTale.Handler
                                 mate.MapX = positionX;
                                 mate.MapY = positionY;
                             }
-                            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Move(UserType.Npc, petId, positionX,
+                            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Move(VisualType.Npc, petId, positionX,
                                 positionY, mate.Monster.Speed));
                             if (mate.LastMonsterAggro.AddSeconds(5) > DateTime.Now)
                             {
@@ -983,7 +984,7 @@ namespace GloomyTale.Handler
                 else
                 {
 
-                    Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Say((byte)UserType.Npc, mate.MateTransportId,
+                    Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Say((byte)VisualType.Npc, mate.MateTransportId,
                     2, message));
                 }
             }

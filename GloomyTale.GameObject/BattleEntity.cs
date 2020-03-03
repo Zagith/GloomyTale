@@ -46,7 +46,7 @@ namespace GloomyTale.GameObject
             }
 
             EntityType = EntityType.Player;
-            UserType = UserType.Player;
+            UserType = VisualType.Player;
 
             DamageMinimum = character.MinHit;
             DamageMaximum = character.MaxHit;
@@ -234,7 +234,7 @@ namespace GloomyTale.GameObject
             WearableInstance gloves = (WearableInstance)mate.GlovesInstance;
             WearableInstance boots = (WearableInstance)mate.BootsInstance;
             EntityType = EntityType.Mate;
-            UserType = UserType.Npc;
+            UserType = VisualType.Npc;
             DamageMinimum = mate.DamageMinimum;
             DamageMaximum = mate.DamageMaximum;
             WeaponDamageMinimum = (mate.WeaponInstance?.Item.DamageMinimum ?? 0);
@@ -287,7 +287,7 @@ namespace GloomyTale.GameObject
             BCards = new ThreadSafeGenericLockedList<BCard>(monster.Monster.BCards);
 
             EntityType = EntityType.Monster;
-            UserType = UserType.Monster;
+            UserType = VisualType.Monster;
             if (monster.Owner?.Mate != null)
             {
                 DamageMinimum = monster.Owner.Mate.DamageMinimum;
@@ -348,7 +348,7 @@ namespace GloomyTale.GameObject
 
             //npc.Buff.CopyTo(Buffs);
             EntityType = EntityType.Npc;
-            UserType = UserType.Npc;
+            UserType = VisualType.Npc;
             DamageMinimum = 0;
             DamageMaximum = 0;
             WeaponDamageMinimum = npc.Npc.DamageMinimum;
@@ -654,7 +654,7 @@ namespace GloomyTale.GameObject
 
         public List<ShellEffectDTO> ShellWeaponEffects { get; }
 
-        public UserType UserType { get; }
+        public VisualType UserType { get; }
 
         public int WaterResistance { get; set; }
 
@@ -1566,14 +1566,14 @@ namespace GloomyTale.GameObject
                 {
                     if (ownedMonsters.LastOrDefault() is MapMonster first)
                     {
-                        first.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, first.MapMonsterId));
+                        first.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, first.MapMonsterId));
                         first.MapInstance.RemoveMonster(first);
                     }
                 }
                 else
                 {
                     ownedMonsters.ToList().ForEach(m => {
-                        m.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, m.MapMonsterId));
+                        m.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, m.MapMonsterId));
                         m.MapInstance.RemoveMonster(m);
                     });
                 }
@@ -1595,14 +1595,14 @@ namespace GloomyTale.GameObject
                 {
                     if (ownedNpcs.LastOrDefault() is MapNpc first)
                     {
-                        first.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Npc, first.MapNpcId));
+                        first.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Npc, first.MapNpcId));
                         first.MapInstance.RemoveNpc(first);
                     }
                 }
                 else
                 {
                     ownedNpcs.ToList().ForEach(m => {
-                        m.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Npc, m.MapNpcId));
+                        m.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Npc, m.MapNpcId));
                         m.MapInstance.RemoveNpc(m);
                     });
                 }

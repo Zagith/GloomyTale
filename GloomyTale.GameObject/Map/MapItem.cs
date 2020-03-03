@@ -82,7 +82,7 @@ namespace GloomyTale.GameObject
 
         #region Methods
 
-        public string GenerateIn() => StaticPacketHelper.In(Domain.UserType.Object, ItemVNum, TransportId, PositionX, PositionY, this is MonsterMapItem monsterMapItem && monsterMapItem.GoldAmount > 1 ? monsterMapItem.GoldAmount : Amount, 0, 0, 0, 0, false, "-", false);
+        public string GenerateIn() => StaticPacketHelper.In(Domain.VisualType.Object, ItemVNum, TransportId, PositionX, PositionY, this is MonsterMapItem monsterMapItem && monsterMapItem.GoldAmount > 1 ? monsterMapItem.GoldAmount : Amount, 0, 0, 0, 0, false, "-", false);
 
         public abstract ItemInstance GetItemInstance();
 

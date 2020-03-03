@@ -159,7 +159,7 @@ namespace GloomyTale.GameObject.Items.Instance
 
                     session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey(isHeroEquipmentDowngrade ? "RARIFY_DOWNGRADE_SUCCESS" : "RARIFY_SUCCESS"), Rare), 12));
                     session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey(isHeroEquipmentDowngrade ? "RARIFY_DOWNGRADE_SUCCESS" : "RARIFY_SUCCESS"), Rare), 0));
-                    session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 3005), session.Character.PositionX, session.Character.PositionY);
+                    session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 3005), session.Character.PositionX, session.Character.PositionY);
                     session.SendPacket("shop_end 1");
                 }
             }

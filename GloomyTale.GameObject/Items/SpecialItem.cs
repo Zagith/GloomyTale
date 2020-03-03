@@ -395,7 +395,7 @@ namespace GloomyTale.GameObject
                                 if (ServerManager.RandomNumber() < 30)
                                 {
                                     kenko.SetDeathStatement();
-                                    session.Character.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, kenko.MapMonsterId));
+                                    session.Character.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, kenko.MapMonsterId));
                                     session.Character.Inventory.AddNewToInventory(1174); // Kenko Bead
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                     session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("KENKO_CATCHED"), 0));
@@ -415,7 +415,7 @@ namespace GloomyTale.GameObject
                         session.Character.AddStaticBuff(new StaticBuffDTO { CardId = 131 });
                         session.CurrentMapInstance?.Broadcast(session.Character.GeneratePairy());
                         session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), inv.Item.Name), 0));
-                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 3014), session.Character.PositionX, session.Character.PositionY);
+                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 3014), session.Character.PositionX, session.Character.PositionY);
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }
                     else
@@ -812,7 +812,7 @@ namespace GloomyTale.GameObject
                                             session.Character.Morph = Morph + (byte)session.Character.Gender;
                                             break;
                                     }
-                                    session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 196), session.Character.PositionX, session.Character.PositionY);
+                                    session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 196), session.Character.PositionX, session.Character.PositionY);
                                     session.CurrentMapInstance?.Broadcast(session.Character.GenerateCMode());
                                     session.SendPacket(session.Character.GenerateCond());
                                     session.Character.LastSpeedChange = DateTime.Now;

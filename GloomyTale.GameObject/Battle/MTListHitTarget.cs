@@ -20,7 +20,7 @@ namespace GloomyTale.GameObject.Battle
     {
         #region Instantiation
 
-        public MTListHitTarget(UserType entityType, long targetId, TargetHitType targetHitType)
+        public MTListHitTarget(VisualType entityType, long targetId, TargetHitType targetHitType)
         {
             EntityType = entityType;
             TargetId = targetId;
@@ -31,7 +31,7 @@ namespace GloomyTale.GameObject.Battle
 
         #region Properties
 
-        public UserType EntityType { get; set; }
+        public VisualType EntityType { get; set; }
 
         public long TargetId { get; set; }
 

@@ -12,7 +12,7 @@ namespace GloomyTale.GameObject.Packets.ClientPackets
         public long TransportId { get; set; }
 
         [PacketIndex(1)]
-        public UserType TargetType { get; set; }
+        public VisualType TargetType { get; set; }
 
         [PacketIndex(2)]
         public long TargetId { get; set; }

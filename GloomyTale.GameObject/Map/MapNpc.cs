@@ -179,7 +179,7 @@ namespace GloomyTale.GameObject
                 return "";
             }
             IsOut = false;
-            return StaticPacketHelper.In(UserType.Npc, Npc.OriginalNpcMonsterVNum > 0 ? Npc.OriginalNpcMonsterVNum : NpcVNum, MapNpcId, MapX, MapY, Position, 100, 100, Dialog, respawnType, IsSitting, string.IsNullOrEmpty(Name) ? "-" : Name, Invisible);
+            return StaticPacketHelper.In(VisualType.Npc, Npc.OriginalNpcMonsterVNum > 0 ? Npc.OriginalNpcMonsterVNum : NpcVNum, MapNpcId, MapX, MapY, Position, 100, 100, Dialog, respawnType, IsSitting, string.IsNullOrEmpty(Name) ? "-" : Name, Invisible);
         }
 
         public string GenerateOut()
@@ -298,7 +298,7 @@ namespace GloomyTale.GameObject
                 }
                 Thread.Sleep(1000);
             }
-            MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Npc, MapNpcId));
+            MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Npc, MapNpcId));
             MapInstance.RemoveNpc(this);
         }
 
@@ -456,7 +456,7 @@ namespace GloomyTale.GameObject
                 LastProtectedEffect = DateTime.Now;
                 if (IsMate || IsProtected)
                 {
-                    MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, MapNpcId, 825), MapX, MapY);
+                    MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, MapNpcId, 825), MapX, MapY);
                 }
             }
 
@@ -468,7 +468,7 @@ namespace GloomyTale.GameObject
                 {
                     if (Effect > 0 && EffectActivated)
                     {
-                        MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, MapNpcId, Effect), MapX, MapY);
+                        MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, MapNpcId, Effect), MapX, MapY);
                     }
 
                     LastEffect = DateTime.Now;
@@ -508,7 +508,7 @@ namespace GloomyTale.GameObject
                     //short mapX = Path[maxindex - 1].X;
                     //short mapY = Path[maxindex - 1].Y;
                     double waitingtime = Map.GetDistance(new MapCell { X = mapX, Y = mapY }, new MapCell { X = MapX, Y = MapY }) / (double)Npc.Speed;
-                    MapInstance.Broadcast(new BroadcastPacket(null, PacketFactory.Serialize(StaticPacketHelper.Move(UserType.Npc, MapNpcId, mapX, mapY, Npc.Speed)), ReceiverType.All, xCoordinate: mapX, yCoordinate: mapY));
+                    MapInstance.Broadcast(new BroadcastPacket(null, PacketFactory.Serialize(StaticPacketHelper.Move(VisualType.Npc, MapNpcId, mapX, mapY, Npc.Speed)), ReceiverType.All, xCoordinate: mapX, yCoordinate: mapY));
                     LastMove = DateTime.Now.AddSeconds(waitingtime > 1 ? 1 : waitingtime);
 
                     Observable.Timer(TimeSpan.FromMilliseconds((int)((waitingtime > 1 ? 1 : waitingtime) * 1000))).Subscribe(x =>
@@ -575,12 +575,12 @@ namespace GloomyTale.GameObject
                         if (npcMonsterSkill != null)
                         {
                             npcMonsterSkill.LastSkillUse = DateTime.Now;
-                            MapInstance.Broadcast(StaticPacketHelper.CastOnTarget(UserType.Npc, MapNpcId, UserType.Monster, Target, npcMonsterSkill.Skill.CastAnimation, npcMonsterSkill.Skill.CastEffect, npcMonsterSkill.Skill.SkillVNum));
+                            MapInstance.Broadcast(StaticPacketHelper.CastOnTarget(VisualType.Npc, MapNpcId, VisualType.Monster, Target, npcMonsterSkill.Skill.CastAnimation, npcMonsterSkill.Skill.CastEffect, npcMonsterSkill.Skill.SkillVNum));
                         }
 
                         if (npcMonsterSkill != null && npcMonsterSkill.Skill.CastEffect != 0)
                         {
-                            MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, MapNpcId, Effect));
+                            MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, MapNpcId, Effect));
                         }
                         monster.BattleEntity.GetDamage(damage, BattleEntity);
                         lock (monster.DamageList)
@@ -591,8 +591,8 @@ namespace GloomyTale.GameObject
                             }
                         }
                         MapInstance.Broadcast(npcMonsterSkill != null
-                            ? StaticPacketHelper.SkillUsed(UserType.Npc, MapNpcId, 3, Target, npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown, npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, 0, 0, monster.CurrentHp > 0, (int)((float)monster.CurrentHp / (float)monster.MaxHp * 100), damage, hitmode, 0)
-                            : StaticPacketHelper.SkillUsed(UserType.Npc, MapNpcId, 3, Target, 0, Npc.BasicCooldown, 11, Npc.BasicSkill, 0, 0, monster.CurrentHp > 0, (int)((float)monster.CurrentHp / (float)monster.MaxHp * 100), damage, hitmode, 0));
+                            ? StaticPacketHelper.SkillUsed(VisualType.Npc, MapNpcId, 3, Target, npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown, npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, 0, 0, monster.CurrentHp > 0, (int)((float)monster.CurrentHp / (float)monster.MaxHp * 100), damage, hitmode, 0)
+                            : StaticPacketHelper.SkillUsed(VisualType.Npc, MapNpcId, 3, Target, 0, Npc.BasicCooldown, 11, Npc.BasicSkill, 0, 0, monster.CurrentHp > 0, (int)((float)monster.CurrentHp / (float)monster.MaxHp * 100), damage, hitmode, 0));
                         LastSkill = DateTime.Now;
 
                         if (npcMonsterSkill?.Skill.TargetType == 1 && npcMonsterSkill?.Skill.HitType == 2)
@@ -671,7 +671,7 @@ namespace GloomyTale.GameObject
                             short mapX = Path[maxindex - 1].X;
                             short mapY = Path[maxindex - 1].Y;
                             double waitingtime = Map.GetDistance(new MapCell { X = mapX, Y = mapY }, new MapCell { X = MapX, Y = MapY }) / (double)Npc.Speed;
-                            MapInstance.Broadcast(new BroadcastPacket(null, PacketFactory.Serialize(StaticPacketHelper.Move(UserType.Npc, MapNpcId, mapX, mapY, Npc.Speed)), ReceiverType.All, xCoordinate: mapX, yCoordinate: mapY));
+                            MapInstance.Broadcast(new BroadcastPacket(null, PacketFactory.Serialize(StaticPacketHelper.Move(VisualType.Npc, MapNpcId, mapX, mapY, Npc.Speed)), ReceiverType.All, xCoordinate: mapX, yCoordinate: mapY));
                             LastMove = DateTime.Now.AddSeconds(waitingtime > 1 ? 1 : waitingtime);
 
                             Observable.Timer(TimeSpan.FromMilliseconds((int)((waitingtime > 1 ? 1 : waitingtime) * 1000))).Subscribe(x =>

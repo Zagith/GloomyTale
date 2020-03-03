@@ -154,7 +154,7 @@ namespace GloomyTale.GameObject
 
                     if (ItemType == ItemType.Event)
                     {
-                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, EffectValue));
+                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, EffectValue));
                         if (MappingHelper.GuriItemEffects.ContainsKey(EffectValue))
                         {
                             session.CurrentMapInstance?.Broadcast(UserInterfaceHelper.GenerateGuri(19, 1, session.Character.CharacterId, MappingHelper.GuriItemEffects[EffectValue]), session.Character.PositionX, session.Character.PositionY);
@@ -501,7 +501,7 @@ namespace GloomyTale.GameObject
                                     s.Mate?.Owner.Session.SendPacket(s.Mate.GenerateStatInfo());
                                 });
                             session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                            session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 48));
+                            session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 48));
                         }
                     }
                     break;
@@ -516,7 +516,7 @@ namespace GloomyTale.GameObject
                             session.Character.Dignity = 100;
                         }
                         session.SendPacket(session.Character.GenerateFd());
-                        session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 49 - (byte)session.Character.Faction));
+                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 49 - (byte)session.Character.Faction));
                         session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                         session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
@@ -525,7 +525,7 @@ namespace GloomyTale.GameObject
                     {
                         session.Character.Dignity = 100;
                         session.SendPacket(session.Character.GenerateFd());
-                        session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 49 - (byte)session.Character.Faction));
+                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 49 - (byte)session.Character.Faction));
                         session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                         session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);

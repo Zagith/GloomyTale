@@ -373,7 +373,7 @@ namespace GloomyTale.GameObject
 
                         if (EquipmentSlot == EquipmentType.Amulet)
                         {
-                            session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 39));
+                            session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 39));
                             inv.BoundCharacterId = session.Character.CharacterId;
                             if (inv.ItemDeleteTime > DateTime.Now || inv.DurabilityPoint > 0)
                             {

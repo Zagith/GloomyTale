@@ -1020,7 +1020,7 @@ namespace GloomyTale.GameObject
                                                     {
                                                         senderSession.Character.IncrementQuests(QuestType.Capture1, mapMonster.MonsterVNum);
                                                         mapMonster.SetDeathStatement();
-                                                        senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.Out(UserType.Monster, mapMonster.MapMonsterId));
+                                                        senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.Out(VisualType.Monster, mapMonster.MapMonsterId));
                                                     }
                                                     else
                                                     {
@@ -1031,10 +1031,10 @@ namespace GloomyTale.GameObject
                                                             mate.RefreshStats();
                                                             senderSession.Character.AddPetWithSkill(mate);
                                                             senderSession.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("CATCH_SUCCESS"), 0));
-                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, senderSession.Character.CharacterId, 197));
-                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player, senderSession.Character.CharacterId, 3, mapMonster.MapMonsterId, -1, 0, 15, -1, -1, -1, true, (int)((float)mapMonster.CurrentHp / (float)mapMonster.MaxHp * 100), 0, -1, 0));
+                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, senderSession.Character.CharacterId, 197));
+                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player, senderSession.Character.CharacterId, 3, mapMonster.MapMonsterId, -1, 0, 15, -1, -1, -1, true, (int)((float)mapMonster.CurrentHp / (float)mapMonster.MaxHp * 100), 0, -1, 0));
                                                             mapMonster.SetDeathStatement();
-                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.Out(UserType.Monster, mapMonster.MapMonsterId));
+                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.Out(VisualType.Monster, mapMonster.MapMonsterId));
                                                         }
                                                         else { senderSession.SendPacket(senderSession.Character.GenerateSay(Language.Instance.GetMessageFromKey("PET_SLOT_FULL"), 10)); }
                                                     }
@@ -1048,7 +1048,7 @@ namespace GloomyTale.GameObject
                                     else { senderSession.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("MONSTER_CANT_BE_CAPTURED"), 0)); }
                                 }
                             }
-                            //senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player, senderSession.Character.CharacterId, 3, session.MapEntityId, -1, 0, 15, -1, -1, -1, true, (int)((float)session.Hp / (float)session.HpMax * 100), 0, -1, 0));
+                            //senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualTypeUserType.Player, senderSession.Character.CharacterId, 3, session.MapEntityId, -1, 0, 15, -1, -1, -1, true, (int)((float)session.Hp / (float)session.HpMax * 100), 0, -1, 0));
                             senderSession.SendPacket(StaticPacketHelper.Cancel(2, session.MapEntityId));
                         }
                         break;
@@ -1442,7 +1442,7 @@ namespace GloomyTale.GameObject
                                                 short NewCooldown = 300;
                                                 Observable.Timer(TimeSpan.FromMilliseconds(skill.Cooldown * 100 + 50)).Subscribe(s =>
                                                 {
-                                                    session.Character.Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player,
+                                                    session.Character.Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
                                                         session.Character.CharacterId, 1, session.Character.CharacterId, skill.SkillVNum,
                                                         NewCooldown, 2, skill.Effect,
                                                         session.Character.PositionX, session.Character.PositionY, true,
@@ -1893,7 +1893,7 @@ namespace GloomyTale.GameObject
                                         monster.Target = monster.BattleEntity;
                                         monster.StartLife();
                                         NpcMonsterSkill npcMonsterSkill = monster.Skills.FirstOrDefault();
-                                        session.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Monster, monster.MapMonsterId, (byte)UserType.Monster, monster.MapMonsterId,
+                                        session.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Monster, monster.MapMonsterId, (byte)VisualType.Monster, monster.MapMonsterId,
                                                 npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                                                 npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, monster.MapX, monster.MapY,
                                                 monster.CurrentHp > 0,
@@ -2047,7 +2047,7 @@ namespace GloomyTale.GameObject
                                         {
                                             // Wind
 
-                                            character.Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, character.CharacterId, 4293));
+                                            character.Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, character.CharacterId, 4293));
 
                                             // Freeze
 

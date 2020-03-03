@@ -145,21 +145,21 @@ namespace GloomyTale.Handler
 
             switch (usePartnerSkillPacket.TargetType)
             {
-                case UserType.Player:
+                case VisualType.Player:
                     {
                         Character target = Session.Character.MapInstance?.GetCharacterById(usePartnerSkillPacket.TargetId);
                         battleEntityDefender = target?.BattleEntity;
                     }
                     break;
 
-                case UserType.Npc:
+                case VisualType.Npc:
                     {
                         Mate target = Session.Character.MapInstance?.GetMate(usePartnerSkillPacket.TargetId);
                         battleEntityDefender = target?.BattleEntity;
                     }
                     break;
 
-                case UserType.Monster:
+                case VisualType.Monster:
                     {
                         MapMonster target = Session.Character.MapInstance?.GetMonsterById(usePartnerSkillPacket.TargetId);
                         battleEntityDefender = target?.BattleEntity;
@@ -232,7 +232,7 @@ namespace GloomyTale.Handler
 
             switch (upetPacket.TargetType)
             {
-                case UserType.Monster:
+                case VisualType.Monster:
                     if (attacker.Hp > 0)
                     {
                         MapMonster target = Session?.CurrentMapInstance?.GetMonsterById(upetPacket.TargetId);
@@ -241,10 +241,10 @@ namespace GloomyTale.Handler
 
                     return;
 
-                case UserType.Npc:
+                case VisualType.Npc:
                     return;
 
-                case UserType.Player:
+                case VisualType.Player:
                     if (attacker.Hp > 0)
                     {
                         Character target = Session?.CurrentMapInstance?.GetSessionByCharacterId(upetPacket.TargetId).Character;
@@ -252,7 +252,7 @@ namespace GloomyTale.Handler
                     }
                     return;
 
-                case UserType.Object:
+                case VisualType.Object:
                     return;
 
                 default:
@@ -271,7 +271,7 @@ namespace GloomyTale.Handler
                 return;
             }
             
-            if (suctlPacket.TargetType != UserType.Npc
+            if (suctlPacket.TargetType != VisualType.Npc
                 && Session.Account.IsLimited)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT"), 0));
@@ -328,7 +328,7 @@ namespace GloomyTale.Handler
                     
                     switch (suctlPacket.TargetType)
                     {
-                        case UserType.Monster:
+                        case VisualType.Monster:
                             if (attacker.Hp > 0)
                             {
                                 MapMonster target = Session.CurrentMapInstance?.GetMonsterById(suctlPacket.TargetId);
@@ -343,7 +343,7 @@ namespace GloomyTale.Handler
 
                             return;
 
-                        case UserType.Npc:
+                        case VisualType.Npc:
                             if (attacker.Hp > 0)
                             {
                                 Mate target = Session.CurrentMapInstance?.GetMate(suctlPacket.TargetId);
@@ -361,7 +361,7 @@ namespace GloomyTale.Handler
                             }
                             return;
 
-                        case UserType.Player:
+                        case VisualType.Player:
                             if (attacker.Hp > 0)
                             {
                                 Character target = Session.CurrentMapInstance?.GetSessionByCharacterId(suctlPacket.TargetId) ?.Character;
@@ -380,7 +380,7 @@ namespace GloomyTale.Handler
 
                             return;
 
-                        case UserType.Object:
+                        case VisualType.Object:
                             return;
                     }
                 }
@@ -452,7 +452,7 @@ namespace GloomyTale.Handler
                 });
 
                 Session.SendPacket(Session.Character.GeneratePinit());
-                Session.Character.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 196));
+                Session.Character.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, mate.MateTransportId, 196));
             }
         }
 

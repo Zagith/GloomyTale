@@ -33,6 +33,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using GloomyTale.Core.Extensions;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.Handler
 {
@@ -983,10 +984,10 @@ namespace GloomyTale.Handler
                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(),
                         ReceiverType.AllExceptMe);
                     Session.CurrentMapInstance?.Broadcast(
-                        StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 6),
+                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 6),
                         Session.Character.PositionX, Session.Character.PositionY);
                     Session.CurrentMapInstance?.Broadcast(
-                        StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 198),
+                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 198),
                         Session.Character.PositionX, Session.Character.PositionY);
                 }
                 else
@@ -1022,7 +1023,7 @@ namespace GloomyTale.Handler
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("JOBLEVEL_CHANGED"), 0));
                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(), ReceiverType.AllExceptMe);
                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
-                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 8), Session.Character.PositionX, Session.Character.PositionY);
+                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 8), Session.Character.PositionX, Session.Character.PositionY);
                 }
                 else
                 {
@@ -1063,10 +1064,10 @@ namespace GloomyTale.Handler
                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(),
                         ReceiverType.AllExceptMe);
                     Session.CurrentMapInstance?.Broadcast(
-                        StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 6),
+                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 6),
                         Session.Character.PositionX, Session.Character.PositionY);
                     Session.CurrentMapInstance?.Broadcast(
-                        StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 198),
+                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 198),
                         Session.Character.PositionX, Session.Character.PositionY);
                     ServerManager.Instance.UpdateGroup(Session.Character.CharacterId);
                     if (Session.Character.Family != null)
@@ -1159,7 +1160,7 @@ namespace GloomyTale.Handler
                         Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(),
                             ReceiverType.AllExceptMe);
                         Session.CurrentMapInstance?.Broadcast(
-                            StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 8),
+                            StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 8),
                             Session.Character.PositionX, Session.Character.PositionY);
                     }
                     else
@@ -1344,14 +1345,14 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Parallel.ForEach(Session.CurrentMapInstance.Monsters.Where(s => s.ShouldRespawn != true), monster =>
                 {
-                    Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster,
+                    Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster,
                         monster.MapMonsterId));
                     monster.SetDeathStatement();
                     Session.CurrentMapInstance.RemoveMonster(monster);
                 });
                 Parallel.ForEach(Session.CurrentMapInstance.DroppedList.GetAllItems(), drop =>
                 {
-                    Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(UserType.Object, drop.TransportId));
+                    Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Object, drop.TransportId));
                     Session.CurrentMapInstance.DroppedList.Remove(drop.TransportId);
                 });
                 Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
@@ -1719,7 +1720,7 @@ namespace GloomyTale.Handler
                     $"[Effect]EffectId: {packet.EffectId}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 Session.CurrentMapInstance?.Broadcast(
-                    StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId,
+                    StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId,
                         packet.EffectId), Session.Character.PositionX, Session.Character.PositionY);
             }
             else
@@ -1768,7 +1769,7 @@ namespace GloomyTale.Handler
                         UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey($"GET_PROTECTION_POWER_1"),
                             0));
                 }
-                Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player,
+                Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player,
                     Session.Character.CharacterId, 4799 + (byte)Session.Character.Faction));
                 Session.SendPacket(Session.Character.GenerateFaction());
                 if (ServerManager.Instance.ChannelId == 51)
@@ -2210,7 +2211,7 @@ namespace GloomyTale.Handler
                 Session.Character.Mates.Where(s => s.IsTeamMember).ToList()
                     .ForEach(s => Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
                 Session.CurrentMapInstance?.Broadcast(Session,
-                    StaticPacketHelper.Out(UserType.Player, Session.Character.CharacterId), ReceiverType.AllExceptMe);
+                    StaticPacketHelper.Out(VisualType.Player, Session.Character.CharacterId), ReceiverType.AllExceptMe);
             }
             else
             {
@@ -2352,7 +2353,7 @@ namespace GloomyTale.Handler
 
                     sess.Character.Hp = 0;
                     sess.Character.LastDefence = DateTime.Now;
-                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player,
+                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
                         Session.Character.CharacterId, 1, sess.Character.CharacterId, 1114, 4, 11, 4260, 0, 0, false, 0, 60000, 3, 0));
                     sess.SendPacket(sess.Character.GenerateStat());
                     if (sess.Character.IsVehicled)
@@ -2826,7 +2827,7 @@ namespace GloomyTale.Handler
 
                     if (monster.IsAlive)
                     {
-                        Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster,
+                        Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster,
                             monster.MapMonsterId));
                         Session.SendPacket(Session.Character.GenerateSay(
                             string.Format(Language.Instance.GetMessageFromKey("MONSTER_REMOVED"), monster.MapMonsterId,
@@ -2865,7 +2866,7 @@ namespace GloomyTale.Handler
 
                     if (!npc.IsMate && !npc.IsDisabled && !npc.IsProtected)
                     {
-                        Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(UserType.Npc, npc.MapNpcId));
+                        Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Npc, npc.MapNpcId));
                         Session.SendPacket(Session.Character.GenerateSay(
                             string.Format(Language.Instance.GetMessageFromKey("NPCMONSTER_REMOVED"), npc.MapNpcId,
                                 npc.Npc.Name, npc.MapId, npc.MapX, npc.MapY), 12));

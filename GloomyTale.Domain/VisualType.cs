@@ -14,8 +14,9 @@
 
 namespace GloomyTale.Domain
 {
-    public enum UserType : byte
+    public enum VisualType : byte
     {
+        Map = 0,
         Player = 1,
         Npc = 2,
         Monster = 3,

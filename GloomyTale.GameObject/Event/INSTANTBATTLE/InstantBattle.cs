@@ -21,6 +21,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using GloomyTale.GameObject.Networking;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.GameObject.Event
 {

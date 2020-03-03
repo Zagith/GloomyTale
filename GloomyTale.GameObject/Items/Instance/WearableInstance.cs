@@ -3,6 +3,7 @@ using GloomyTale.DAL;
 using GloomyTale.Data;
 using GloomyTale.Data.Interfaces;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 using GloomyTale.GameObject.Helpers;
 using GloomyTale.GameObject.Networking;
 using System;
@@ -383,7 +384,7 @@ namespace GloomyTale.GameObject.Items.Instance
 
                     CharacterSession.SendPacket(CharacterSession.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey(isHeroEquipmentDowngrade ? "RARIFY_DOWNGRADE_SUCCESS" : "RARIFY_SUCCESS"), Rare), 12));
                     CharacterSession.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey(isHeroEquipmentDowngrade ? "RARIFY_DOWNGRADE_SUCCESS" : "RARIFY_SUCCESS"), Rare), 0));
-                    CharacterSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 3005), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
+                    CharacterSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 3005), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
                     CharacterSession.SendPacket("shop_end 1");
                 }
                 SetRarityPoint();
@@ -813,7 +814,7 @@ namespace GloomyTale.GameObject.Items.Instance
                         }
                         else
                         {
-                            CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterSession.Character.CharacterId, 3004), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
+                            CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterSession.Character.CharacterId, 3004), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
                             CharacterSession.SendPacket(CharacterSession.Character.GenerateSay(Language.Instance.GetMessageFromKey("SCROLL_PROTECT_USED"), 11));
                             CharacterSession.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("UPGRADE_FAILED_ITEM_SAVED"), 0));
                         }
@@ -822,7 +823,7 @@ namespace GloomyTale.GameObject.Items.Instance
                     {
                         Logger.Log.LogUserEvent("UPGRADE_ITEM", CharacterSession.GenerateIdentity(), $"[UpgradeItem]ItemType: {wearable.Item.ItemType} Protection: {protection.ToString()} IIId: {Id} Upgrade: {wearable.Upgrade} Result: Fixed");
 
-                        CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterSession.Character.CharacterId, 3004), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
+                        CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterSession.Character.CharacterId, 3004), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
                         wearable.IsFixed = true;
                         CharacterSession.SendPacket(CharacterSession.Character.GenerateSay(Language.Instance.GetMessageFromKey("UPGRADE_FIXED"), 11));
                         CharacterSession.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("UPGRADE_FIXED"), 0));
@@ -831,7 +832,7 @@ namespace GloomyTale.GameObject.Items.Instance
                     {
                         Logger.Log.LogUserEvent("UPGRADE_ITEM", CharacterSession.GenerateIdentity(), $"[UpgradeItem]ItemType: {wearable.Item.ItemType} Protection: {protection.ToString()} IIId: {Id} Upgrade: {wearable.Upgrade} Result: Success");
 
-                        CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterSession.Character.CharacterId, 3005), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
+                        CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterSession.Character.CharacterId, 3005), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
                         CharacterSession.SendPacket(CharacterSession.Character.GenerateSay(Language.Instance.GetMessageFromKey("UPGRADE_SUCCESS"), 12));
                         CharacterSession.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("UPGRADE_SUCCESS"), 0));
                         wearable.Upgrade++;
@@ -848,7 +849,7 @@ namespace GloomyTale.GameObject.Items.Instance
                     {
                         Logger.Log.LogUserEvent("UPGRADE_ITEM", CharacterSession.GenerateIdentity(), $"[UpgradeItem]ItemType: {wearable.Item.ItemType} Protection: {protection.ToString()} IIId: {Id} Upgrade: {wearable.Upgrade} Result: Fixed");
 
-                        CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterSession.Character.CharacterId, 3004), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
+                        CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterSession.Character.CharacterId, 3004), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
                         wearable.IsFixed = true;
                         CharacterSession.SendPacket(CharacterSession.Character.GenerateSay(Language.Instance.GetMessageFromKey("UPGRADE_FIXED"), 11));
                         CharacterSession.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("UPGRADE_FIXED"), 0));
@@ -865,7 +866,7 @@ namespace GloomyTale.GameObject.Items.Instance
                         }
                         else
                         {
-                            CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterSession.Character.CharacterId, 3004), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
+                            CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterSession.Character.CharacterId, 3004), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
                             CharacterSession.SendPacket(CharacterSession.Character.GenerateSay(Language.Instance.GetMessageFromKey("SCROLL_PROTECT_USED"), 11));
                             CharacterSession.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("UPGRADE_FAILED_ITEM_SAVED"), 0));
                         }
@@ -874,7 +875,7 @@ namespace GloomyTale.GameObject.Items.Instance
                     {
                         Logger.Log.LogUserEvent("UPGRADE_ITEM", CharacterSession.GenerateIdentity(), $"[UpgradeItem]ItemType: {wearable.Item.ItemType} Protection: {protection.ToString()} IIId: {Id} Upgrade: {wearable.Upgrade} Result: Success");
 
-                        CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterSession.Character.CharacterId, 3005), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
+                        CharacterSession.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterSession.Character.CharacterId, 3005), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
                         CharacterSession.SendPacket(CharacterSession.Character.GenerateSay(Language.Instance.GetMessageFromKey("UPGRADE_SUCCESS"), 12));
                         CharacterSession.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("UPGRADE_SUCCESS"), 0));
                         wearable.Upgrade++;
@@ -1086,7 +1087,7 @@ namespace GloomyTale.GameObject.Items.Instance
 
                         CharacterSession.SendPacket(CharacterSession.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("OPTION_SUCCESS"), Rare), 12));
                         CharacterSession.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("OPTION_SUCCESS"), Rare), 0));
-                        CharacterSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 3005), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
+                        CharacterSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 3005), CharacterSession.Character.PositionX, CharacterSession.Character.PositionY);
                         CharacterSession.SendPacket("shop_end 1");
                     }
                     else

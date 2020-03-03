@@ -26,6 +26,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.GameObject
 {
@@ -261,14 +262,14 @@ namespace GloomyTale.GameObject
             Parallel.ForEach(_monsters.Where(s => s.MonsterVNum == monsterVnum), monster =>
             {
                 monster.SetDeathStatement();
-                Broadcast(StaticPacketHelper.Out(UserType.Monster, monster.MapMonsterId));
+                Broadcast(StaticPacketHelper.Out(VisualType.Monster, monster.MapMonsterId));
             });
         }
 
         public void DespawnMonster(MapMonster monster)
         {
             monster.SetDeathStatement();
-            Broadcast(StaticPacketHelper.Out(UserType.Monster, monster.MapMonsterId));
+            Broadcast(StaticPacketHelper.Out(VisualType.Monster, monster.MapMonsterId));
         }
 
         public void DropItemByMonster(long? owner, DropDTO drop, short mapX, short mapY, bool isQuest = false)
@@ -408,7 +409,7 @@ namespace GloomyTale.GameObject
                 {
                     if (npc.Effect > 0 && npc.EffectActivated)
                     {
-                        packets.Add($"eff {(byte)UserType.Npc} {npc.MapNpcId} {npc.Effect}");
+                        packets.Add($"eff {(byte)VisualType.Npc} {npc.MapNpcId} {npc.Effect}");
                     }
                 }
             });
@@ -560,7 +561,7 @@ namespace GloomyTale.GameObject
                 List<MapItem> dropsToRemove = DroppedList.Where(dl => dl.CreatedDate.AddMinutes(3) < DateTime.Now);
                 Parallel.ForEach(dropsToRemove, drop =>
                 {
-                    Broadcast(StaticPacketHelper.Out(UserType.Object, drop.TransportId));
+                    Broadcast(StaticPacketHelper.Out(VisualType.Object, drop.TransportId));
                     DroppedList.Remove(drop.TransportId);
                 });
             }
@@ -787,12 +788,12 @@ namespace GloomyTale.GameObject
                 return;
             }
 
-            Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, mapMonster.MapMonsterId, ski.Skill.CastEffect));
+            Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, mapMonster.MapMonsterId, ski.Skill.CastEffect));
 
             Observable.Timer(TimeSpan.FromSeconds(2))
                 .Subscribe(a =>
                 {
-                    Broadcast(StaticPacketHelper.SkillUsed(UserType.Monster, mapMonster.MapMonsterId, 3, mapMonster.MapMonsterId,
+                    Broadcast(StaticPacketHelper.SkillUsed(VisualType.Monster, mapMonster.MapMonsterId, 3, mapMonster.MapMonsterId,
                         ski.SkillVNum, ski.Skill.Cooldown, ski.Skill.AttackAnimation, ski.Skill.Effect, mapMonster.MapX, mapMonster.MapY,
                         true, 0, 0, 0, ski.Skill.SkillType));
 
@@ -845,7 +846,7 @@ namespace GloomyTale.GameObject
                         });
 
                     RemoveMonster(mapMonster);
-                    Broadcast(StaticPacketHelper.Out(UserType.Monster, mapMonster.MapMonsterId));
+                    Broadcast(StaticPacketHelper.Out(VisualType.Monster, mapMonster.MapMonsterId));
                 });
         }
 

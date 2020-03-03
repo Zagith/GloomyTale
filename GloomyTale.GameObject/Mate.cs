@@ -584,9 +584,9 @@ namespace GloomyTale.GameObject
                         Level++;
                         Hp = MaxHp;
                         Mp = MaxMp;
-                        Owner.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, MateTransportId, 6),
+                        Owner.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, MateTransportId, 6),
                             PositionX, PositionY);
-                        Owner.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, MateTransportId, 198),
+                        Owner.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, MateTransportId, 198),
                             PositionX, PositionY);
                         RefreshStats();
                     }
@@ -828,7 +828,7 @@ namespace GloomyTale.GameObject
             Owner.Session.SendPackets(Owner.GeneratePst());
             if (Loyalty <= 100)
             {
-                Owner.Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Npc, MateTransportId, 5003));
+                Owner.Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Npc, MateTransportId, 5003));
             }
         }
 
@@ -1103,11 +1103,11 @@ namespace GloomyTale.GameObject
                     var damage1 = damage;
                     Observable.Timer(TimeSpan.FromMilliseconds(350)).Subscribe(o =>
                     {
-                        BattleEntity.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Monster, onyxId, (byte)BattleEntity.UserType,
+                        BattleEntity.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Monster, onyxId, (byte)BattleEntity.UserType,
                             BattleEntity.MapEntityId, -1, 0, -1, request.Skill?.Effect ?? 0, -1, -1, IsAlive, (int)(Hp / MaxHp * 100), damage1 / 2, 0,
                             0));
                         BattleEntity.MapInstance.RemoveMonster(onyx);
-                        BattleEntity.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, onyx.MapMonsterId));
+                        BattleEntity.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, onyx.MapMonsterId));
                     });
                 }
 
@@ -1498,7 +1498,7 @@ namespace GloomyTale.GameObject
                     LastBasicSkillUse = DateTime.Now;
                 }
 
-                Owner.Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Npc, MateTransportId, 5005));
+                Owner.Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Npc, MateTransportId, 5005));
 
                 LastSkillUse = DateTime.Now;
 
@@ -1864,13 +1864,13 @@ namespace GloomyTale.GameObject
                                 "", characterInRange.CharacterId);
 
                             BattleEntity.MapInstance.Broadcast(npcMonsterSkill != null
-                                ? StaticPacketHelper.SkillUsed(BattleEntity.UserType, BattleEntity.MapEntityId, (byte)UserType.Player, characterInRange.CharacterId,
+                                ? StaticPacketHelper.SkillUsed(BattleEntity.UserType, BattleEntity.MapEntityId, (byte)VisualType.Player, characterInRange.CharacterId,
                                     npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                                     npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, MapX, MapY,
                                     characterInRange.Hp > 0,
                                     (int)(characterInRange.Hp / characterInRange.HPLoad() * 100), dmg,
                                     hitmode, 0)
-                                : StaticPacketHelper.SkillUsed(BattleEntity.UserType, BattleEntity.MapEntityId, (byte)UserType.Player, characterInRange.CharacterId, 0,
+                                : StaticPacketHelper.SkillUsed(BattleEntity.UserType, BattleEntity.MapEntityId, (byte)VisualType.Player, characterInRange.CharacterId, 0,
                                     Monster.BasicCooldown, 11, Monster.BasicSkill, 0, 0, characterInRange.Hp > 0,
                                     (int)(characterInRange.Hp / characterInRange.HPLoad() * 100), dmg,
                                     hitmode, 0));

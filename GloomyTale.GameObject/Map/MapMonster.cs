@@ -257,7 +257,7 @@ namespace GloomyTale.GameObject
         {
             if (IsAlive && !IsDisabled && !IsJumping)
             {
-                return StaticPacketHelper.In(UserType.Monster, Monster.OriginalNpcMonsterVNum > 0 ? Monster.OriginalNpcMonsterVNum : MonsterVNum, MapMonsterId, MapX, MapY, Position,
+                return StaticPacketHelper.In(VisualType.Monster, Monster.OriginalNpcMonsterVNum > 0 ? Monster.OriginalNpcMonsterVNum : MonsterVNum, MapMonsterId, MapX, MapY, Position,
                     (int) (CurrentHp / MaxHp * 100), (int) (CurrentMp / MaxMp * 100), 0,
                     NoAggresiveIcon ? InRespawnType.NoEffect : InRespawnType.TeleportationEffect, false, string.IsNullOrEmpty(Name) ? "-" : Name, Invisible);
             }
@@ -441,7 +441,7 @@ namespace GloomyTale.GameObject
                 Thread.Sleep(1000);
             }
             RunDeathEvent();
-            MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, MapMonsterId));
+            MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, MapMonsterId));
             MapInstance.RemoveMonster(this);
         }
 
@@ -462,7 +462,7 @@ namespace GloomyTale.GameObject
                 Thread.Sleep(1000);
             }
             RunDeathEvent();
-            MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, MapMonsterId));
+            MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, MapMonsterId));
             MapInstance.RemoveMonster(this);
         }
 
@@ -486,7 +486,7 @@ namespace GloomyTale.GameObject
                 Thread.Sleep(1000);
             }
             RunDeathEvent();
-            MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, MapMonsterId));
+            MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, MapMonsterId));
             MapInstance.RemoveMonster(this);
         }
 
@@ -504,7 +504,7 @@ namespace GloomyTale.GameObject
             {
                 MapInstance.SummonMonster(new MonsterToSummon(383, new MapCell() { X = MapX, Y = MapY }, null, true));
             }
-            MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, MapMonsterId));
+            MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, MapMonsterId));
             MapInstance.RemoveMonster(this);
         }
 
@@ -727,7 +727,7 @@ namespace GloomyTale.GameObject
             AddToAggroList(target);
             if (!Monster.NoAggresiveIcon && target.Character != null)
             {
-                Target.Character.Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Monster, MapMonsterId, 5000));
+                Target.Character.Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Monster, MapMonsterId, 5000));
             }
         }
 
@@ -779,7 +779,7 @@ namespace GloomyTale.GameObject
                             MoveEvent?.Events.ForEach(e => EventHelper.Instance.RunEvent(e, monster: this));
                         });
 
-                    MapInstance.Broadcast(StaticPacketHelper.Move(UserType.Monster, MapMonsterId, tempX, tempY, Monster.Speed));
+                    MapInstance.Broadcast(StaticPacketHelper.Move(VisualType.Monster, MapMonsterId, tempX, tempY, Monster.Speed));
                     MapInstance.Broadcast(StaticPacketHelper.Say(3, MapMonsterId, 0, "!!!!"));
                 }
             }
@@ -910,11 +910,11 @@ namespace GloomyTale.GameObject
                     var damage1 = damage;
                     Observable.Timer(TimeSpan.FromMilliseconds(350)).Subscribe(o =>
                     {
-                        MapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Monster, onyxId, 3,
+                        MapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Monster, onyxId, 3,
                             MapMonsterId, -1, 0, -1, request.Skill?.Effect ?? 0, -1, -1, IsAlive, (int)(CurrentHp / MaxHp * 100), damage1 / 2, 0,
                             0));
                         MapInstance.RemoveMonster(onyx);
-                        MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, onyx.MapMonsterId));
+                        MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, onyx.MapMonsterId));
                     });
                 }
 
@@ -1546,12 +1546,12 @@ namespace GloomyTale.GameObject
                     LastEffect = DateTime.Now;
                     if (IsTarget)
                     {
-                        MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, MapMonsterId, 824));
+                        MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, MapMonsterId, 824));
                     }
 
                     if (IsBonus)
                     {
-                        MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, MapMonsterId, 826));
+                        MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, MapMonsterId, 826));
                     }
                 }
 
@@ -1611,7 +1611,7 @@ namespace GloomyTale.GameObject
                             {
                                 RunDeathEvent();
                                 MapInstance?.RemoveMonster(this);
-                                MapInstance?.Broadcast(StaticPacketHelper.Die(UserType.Monster, MapMonsterId, UserType.Monster, MapMonsterId));
+                                MapInstance?.Broadcast(StaticPacketHelper.Die(VisualType.Monster, MapMonsterId, VisualType.Monster, MapMonsterId));
                             });
                     }
                 }
@@ -2055,13 +2055,13 @@ namespace GloomyTale.GameObject
 
                     npcMonsterSkill.LastSkillUse = DateTime.Now;
                     DecreaseMp(npcMonsterSkill.Skill.MpCost);
-                    MapInstance.Broadcast(StaticPacketHelper.CastOnTarget(UserType.Monster, MapMonsterId, target.UserType, target.MapEntityId,
+                    MapInstance.Broadcast(StaticPacketHelper.CastOnTarget(VisualType.Monster, MapMonsterId, target.UserType, target.MapEntityId,
                         npcMonsterSkill.Skill.CastAnimation, npcMonsterSkill.Skill.CastEffect,
                         npcMonsterSkill.Skill.SkillVNum));
                     if (npcMonsterSkill.Skill.CastEffect != 0)
                     {
                         MapInstance.Broadcast(
-                            StaticPacketHelper.GenerateEff(UserType.Monster, MapMonsterId,
+                            StaticPacketHelper.GenerateEff(VisualType.Monster, MapMonsterId,
                                 npcMonsterSkill.Skill.CastEffect), MapX, MapY);
                         castTime = npcMonsterSkill.Skill.CastTime * 100;
                     }
@@ -2069,11 +2069,11 @@ namespace GloomyTale.GameObject
                     {
                         List<BattleEntity> possibleTargets = MapInstance.BattleEntities
                            .OrderBy(e => Map.GetDistance(GetPos(), e.GetPos()))
-                           .Where(e => e.UserType == UserType.Player && e.Character != null && BattleEntity.CanAttackEntity(e) && !e.Character.InvisibleGm && (!e.Character.Invisible || CanSeeHiddenThings) && Map.GetDistance(GetPos(), e.GetPos()) < npcMonsterSkill.Skill.Range)
+                           .Where(e => e.UserType == VisualType.Player && e.Character != null && BattleEntity.CanAttackEntity(e) && !e.Character.InvisibleGm && (!e.Character.Invisible || CanSeeHiddenThings) && Map.GetDistance(GetPos(), e.GetPos()) < npcMonsterSkill.Skill.Range)
                            .ToList();
                         Observable.Timer(TimeSpan.FromMilliseconds(castTime > 200 ? 200 : 0)).Subscribe(obs =>
                         {
-                            MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, MapMonsterId));
+                            MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, MapMonsterId));
                         });
                         IsJumping = true;
                         if (possibleTargets?.Count > 0)
@@ -2094,11 +2094,11 @@ namespace GloomyTale.GameObject
                     {
                         List<BattleEntity> possibleTargets = MapInstance.BattleEntities
                            .OrderBy(e => Map.GetDistance(GetPos(), e.GetPos()))
-                           .Where(e => e.UserType == UserType.Player && e.Character != null && BattleEntity.CanAttackEntity(e) && !e.Character.InvisibleGm && (!e.Character.Invisible || CanSeeHiddenThings) && Map.GetDistance(GetPos(), e.GetPos()) < npcMonsterSkill.Skill.Range)
+                           .Where(e => e.UserType == VisualType.Player && e.Character != null && BattleEntity.CanAttackEntity(e) && !e.Character.InvisibleGm && (!e.Character.Invisible || CanSeeHiddenThings) && Map.GetDistance(GetPos(), e.GetPos()) < npcMonsterSkill.Skill.Range)
                            .ToList();
                         Observable.Timer(TimeSpan.FromMilliseconds(castTime > 200 ? 200 : 0)).Subscribe(obs =>
                         {
-                            MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, MapMonsterId));
+                            MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, MapMonsterId));
                         });
                         IsJumping = true;
                         if (possibleTargets?.Count > 0)
@@ -2221,7 +2221,7 @@ namespace GloomyTale.GameObject
                         {
                             RunDeathEvent();
                             MapInstance.RemoveMonster(this);
-                            MapInstance.Broadcast(StaticPacketHelper.Die(UserType.Monster, MapMonsterId, UserType.Monster, MapMonsterId));
+                            MapInstance.Broadcast(StaticPacketHelper.Die(VisualType.Monster, MapMonsterId, VisualType.Monster, MapMonsterId));
                         });
                     }
                 });
@@ -2273,7 +2273,7 @@ namespace GloomyTale.GameObject
                 }
                 if (npcMonsterSkill.Skill.TargetType == 1 && npcMonsterSkill.Skill.HitType == 2) // Area Buff
                 {
-                    MapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)BattleEntity.UserType, MapMonsterId,
+                    MapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)BattleEntity.UserType, MapMonsterId,
                             npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                             npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, MapX, MapY,
                             CurrentHp > 0,
@@ -2295,7 +2295,7 @@ namespace GloomyTale.GameObject
                             recoverHp += s.Hp;
                             s.MapMonster.RunDeathEvent();
                             MapInstance.RemoveMonster(s.MapMonster);
-                            MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, s.MapMonster.MapMonsterId));
+                            MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, s.MapMonster.MapMonsterId));
                         });
                     if (CurrentHp + recoverHp > MaxHp)
                     {
@@ -2400,13 +2400,13 @@ namespace GloomyTale.GameObject
                         }
                     }
                     MapInstance.Broadcast(npcMonsterSkill != null
-                        ? StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)target.UserType, target.MapEntityId,
+                        ? StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)target.UserType, target.MapEntityId,
                             npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                             npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, MapX, MapY,
                             target.Hp > 0,
                             (int)(target.Hp / target.HPLoad() * 100), damage,
                             hitmode, 0)
-                        : StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)target.UserType, target.MapEntityId, 0,
+                        : StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)target.UserType, target.MapEntityId, 0,
                             Monster.BasicCooldown, 11, Monster.BasicSkill, 0, 0, target.Hp > 0,
                             (int)(target.Hp / target.HPLoad() * 100), damage,
                             hitmode, 0));
@@ -2537,7 +2537,7 @@ namespace GloomyTale.GameObject
                 {
                     if (npcMonsterSkill != null && (npcMonsterSkill.Skill.TargetType == 1 && npcMonsterSkill.Skill.HitType == 1))
                     {
-                        MapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
+                        MapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
                             npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                             npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, MapX, MapY,
                             BattleEntity.Hp > 0,
@@ -2709,13 +2709,13 @@ namespace GloomyTale.GameObject
                             }
 
                             MapInstance.Broadcast(npcMonsterSkill != null
-                                ? StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)UserType.Player, characterInRange.CharacterId,
+                                ? StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Player, characterInRange.CharacterId,
                                     npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                                     npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, MapX, MapY,
                                     characterInRange.Hp > 0,
                                     (int)(characterInRange.Hp / characterInRange.HPLoad() * 100), dmg,
                                     hitmode, 0)
-                                : StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)UserType.Player, characterInRange.CharacterId, 0,
+                                : StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Player, characterInRange.CharacterId, 0,
                                     Monster.BasicCooldown, 11, Monster.BasicSkill, 0, 0, characterInRange.Hp > 0,
                                     (int)(characterInRange.Hp / characterInRange.HPLoad() * 100), dmg,
                                     hitmode, 0));
@@ -2940,13 +2940,13 @@ namespace GloomyTale.GameObject
                             }
 
                             MapInstance.Broadcast(npcMonsterSkill != null
-                                ? StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)UserType.Monster, monsterInRange.MapMonsterId,
+                                ? StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Monster, monsterInRange.MapMonsterId,
                                     npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                                     npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, MapX, MapY,
                                     monsterInRange.CurrentHp > 0,
                                     (int)(monsterInRange.CurrentHp / monsterInRange.MaxHp * 100), dmg,
                                     hitmode, 0)
-                                : StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)UserType.Monster, monsterInRange.MapMonsterId, 0,
+                                : StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Monster, monsterInRange.MapMonsterId, 0,
                                     Monster.BasicCooldown, 11, Monster.BasicSkill, 0, 0, monsterInRange.CurrentHp > 0,
                                     (int)(monsterInRange.CurrentHp / monsterInRange.MaxHp * 100), dmg,
                                     hitmode, 0));
@@ -3099,13 +3099,13 @@ namespace GloomyTale.GameObject
                             }
 
                             MapInstance.Broadcast(npcMonsterSkill != null
-                                ? StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)UserType.Npc, npcInRange.MapNpcId,
+                                ? StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Npc, npcInRange.MapNpcId,
                                     npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                                     npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, MapX, MapY,
                                     npcInRange.CurrentHp > 0,
                                     (int)(npcInRange.CurrentHp / npcInRange.MaxHp * 100), dmg,
                                     hitmode, 0)
-                                : StaticPacketHelper.SkillUsed(UserType.Monster, MapMonsterId, (byte)UserType.Npc, npcInRange.MapNpcId, 0,
+                                : StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Npc, npcInRange.MapNpcId, 0,
                                     Monster.BasicCooldown, 11, Monster.BasicSkill, 0, 0, npcInRange.CurrentHp > 0,
                                     (int)(npcInRange.CurrentHp / npcInRange.MaxHp * 100), dmg,
                                     hitmode, 0));

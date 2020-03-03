@@ -76,7 +76,7 @@ namespace GloomyTale.GameObject
                                     if (equip?.IsFixed == true)
                                     {
                                         equip.IsFixed = false;
-                                        session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 3003));
+                                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 3003));
                                         session.SendPacket(UserInterfaceHelper.GenerateGuri(17, 1, session.Character.CharacterId, SlotEquip));
                                         session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("ITEM_UNFIXED"), 12));
                                         isUsed = true;

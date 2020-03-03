@@ -23,9 +23,9 @@ namespace GloomyTale.GameObject.Helpers
 
         public static string Cancel(byte type = 0, long callerId = 0) => $"cancel {type} {callerId}";
 
-        public static string CastOnTarget(UserType attackerType, long attackerId, UserType defenderType, long defenderId, short castAnimation, short castEffect, short skillVNum) => $"ct {(byte)attackerType} {attackerId} {(byte)defenderType} {defenderId} {castAnimation} {castEffect} {skillVNum}";
+        public static string CastOnTarget(VisualType attackerType, long attackerId, VisualType defenderType, long defenderId, short castAnimation, short castEffect, short skillVNum) => $"ct {(byte)attackerType} {attackerId} {(byte)defenderType} {defenderId} {castAnimation} {castEffect} {skillVNum}";
 
-        public static EffectPacket GenerateEff(UserType effectType, long callerId, int effectId)
+        public static EffectPacket GenerateEff(VisualType effectType, long callerId, int effectId)
         {
             return new EffectPacket
             {
@@ -35,15 +35,15 @@ namespace GloomyTale.GameObject.Helpers
             };
         }
 
-        public static string In(UserType type, short callerVNum, long callerId, short mapX, short mapY, int direction, int currentHp, int currentMp, short dialog, InRespawnType respawnType, bool isSitting, string Name, bool invisible)
+        public static string In(VisualType type, short callerVNum, long callerId, short mapX, short mapY, int direction, int currentHp, int currentMp, short dialog, InRespawnType respawnType, bool isSitting, string Name, bool invisible)
         {
             switch (type)
             {
-                case UserType.Npc:
-                case UserType.Monster:
+                case VisualType.Npc:
+                case VisualType.Monster:
                     return $"in {(byte)type} {callerVNum} {callerId} {mapX} {mapY} {direction} {currentHp} {currentMp} {dialog} 0 0 -1 {(byte)respawnType} {(isSitting ? 1 : 0)} -1 {Name} 0 -1 0 0 0 0 0 0 0 {(invisible ? 1 : 0)}";
 
-                case UserType.Object:
+                case VisualType.Object:
                     return $"in 9 {callerVNum} {callerId} {mapX} {mapY} {direction} 0 0 -1";
 
                 default:
@@ -51,7 +51,7 @@ namespace GloomyTale.GameObject.Helpers
             }
         }
 
-        public static MovePacket Move(UserType type, long callerId, short positionX, short positionY, byte speed)
+        public static MovePacket Move(VisualType type, long callerId, short positionX, short positionY, byte speed)
         {
             return new MovePacket
             {
@@ -63,7 +63,7 @@ namespace GloomyTale.GameObject.Helpers
             };
         }
 
-        public static string Out(UserType type, long callerId) => $"out {(byte)type} {callerId}";
+        public static string Out(VisualType type, long callerId) => $"out {(byte)type} {callerId}";
 
         public static string Say(byte type, long callerId, byte secondaryType, string message) => $"say {type} {callerId} {secondaryType} {message}";
 
@@ -71,11 +71,11 @@ namespace GloomyTale.GameObject.Helpers
 
         public static string SkillResetWithCoolDown(int castId, int cooldown) => $"sr -10 {castId} {cooldown}";
 
-        public static string SkillUsed(UserType type, long callerId, byte secondaryType, long targetId, short skillVNum, short cooldown, short attackAnimation, short skillEffect, short x, short y, bool isAlive, int health, int damage, int hitmode, byte skillType) => $"su {(byte)type} {callerId} {secondaryType} {targetId} {skillVNum} {cooldown} {attackAnimation} {skillEffect} {x} {y} {(isAlive ? 1 : 0)} {health} {damage} {hitmode} {skillType}";
+        public static string SkillUsed(VisualType type, long callerId, byte secondaryType, long targetId, short skillVNum, short cooldown, short attackAnimation, short skillEffect, short x, short y, bool isAlive, int health, int damage, int hitmode, byte skillType) => $"su {(byte)type} {callerId} {secondaryType} {targetId} {skillVNum} {cooldown} {attackAnimation} {skillEffect} {x} {y} {(isAlive ? 1 : 0)} {health} {damage} {hitmode} {skillType}";
 
-        public static string SkillUsed(UserType attackerType, long attackerId, UserType defenderType, long defenderId, short skillVNum, short cooldown, short attackAnimation, short skillEffect, short x, short y, bool isAlive, int hpPercent, int damage, int hitMode, byte skillType) => SkillUsed(attackerType, attackerId, (byte)defenderType, defenderId, skillVNum, cooldown, attackAnimation, skillEffect, x, y, isAlive, hpPercent, damage, hitMode, skillType);
+        public static string SkillUsed(VisualType attackerType, long attackerId, VisualType defenderType, long defenderId, short skillVNum, short cooldown, short attackAnimation, short skillEffect, short x, short y, bool isAlive, int hpPercent, int damage, int hitMode, byte skillType) => SkillUsed(attackerType, attackerId, (byte)defenderType, defenderId, skillVNum, cooldown, attackAnimation, skillEffect, x, y, isAlive, hpPercent, damage, hitMode, skillType);
 
-        public static string Die(UserType callerType, long callerId, UserType targetType, long targetId) => $"die {(byte)callerType} {callerId} {(byte)targetType} {targetId}";
+        public static string Die(VisualType callerType, long callerId, VisualType targetType, long targetId) => $"die {(byte)callerType} {callerId} {(byte)targetType} {targetId}";
 
         public static string GenerateGet(byte pickerType, long pickerId, long itemId) => $"get {pickerType} {pickerId} {itemId} 0";
 

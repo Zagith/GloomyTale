@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.GameObject
 {

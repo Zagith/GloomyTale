@@ -24,7 +24,7 @@ namespace GloomyTale.GameObject
     public class MultiTargetListSubPacket : PacketDefinition
     {
         [PacketIndex(0)]
-        public UserType TargetType { get; set; }
+        public VisualType TargetType { get; set; }
 
         [PacketIndex(1)]
         public int TargetId { get; set; }

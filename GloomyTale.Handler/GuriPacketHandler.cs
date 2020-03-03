@@ -4,6 +4,7 @@ using GloomyTale.DAL;
 using GloomyTale.Data;
 using GloomyTale.Domain;
 using GloomyTale.GameObject;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 using GloomyTale.GameObject.Event;
 using GloomyTale.GameObject.Helpers;
 using GloomyTale.GameObject.Items.Instance;
@@ -46,7 +47,7 @@ namespace GloomyTale.Handler
                     if (guriPacket.User == Session.Character.CharacterId)
                     {
                         Session.CurrentMapInstance?.Broadcast(Session,
-                            StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId,
+                            StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId,
                                 guriPacket.Data.Value + 4099), ReceiverType.AllNoEmoBlocked);
                     }
                     else if (int.TryParse(guriPacket.User.ToString(), out int mateTransportId))
@@ -55,7 +56,7 @@ namespace GloomyTale.Handler
                         if (mate != null)
                         {
                             Session.CurrentMapInstance?.Broadcast(Session,
-                                StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId,
+                                StaticPacketHelper.GenerateEff(VisualType.Npc, mate.MateTransportId,
                                     guriPacket.Data.Value + 4099), ReceiverType.AllNoEmoBlocked);
                         }
                     }
@@ -119,7 +120,7 @@ namespace GloomyTale.Handler
                             DAOFactory.Instance.ShellEffectDAO.InsertOrUpdateFromList(shell.ShellEffects, shell.EquipmentSerialId);
 
                             Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("OPTION_IDENTIFIED"), 0));
-                            Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 3006));
+                            Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 3006));
                             Session.Character.Inventory.RemoveItemAmount(1429, (shell.Upgrade / 10) + shell.Rare);
                         }
                     }

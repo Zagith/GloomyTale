@@ -11,7 +11,7 @@ namespace GloomyTale.GameObject
         #region Properties
 
         [PacketIndex(0)]
-        public UserType EffectType { get; set; }
+        public VisualType EffectType { get; set; }
 
         [PacketIndex(1)]
         public long CallerId { get; set; }

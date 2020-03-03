@@ -11,7 +11,7 @@ namespace GloomyTale.GameObject.Packets.ServerPackets
         #region Properties
 
         [PacketIndex(0)]
-        public UserType MoveType { get; set; }
+        public VisualType MoveType { get; set; }
 
         [PacketIndex(1)]
         public long CallerId { get; set; }

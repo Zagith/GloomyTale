@@ -896,7 +896,7 @@ namespace GloomyTale.GameObject.Networking
 
                             if (session.Character.GetBuff(BCardType.CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.ShadowAppears) is int[] EffectData && EffectData[0] != 0 && EffectData[1] != 0)
                             {
-                                s.CurrentMapInstance.Broadcast($"guri 0 {(short)UserType.Player} {session.Character.CharacterId} {EffectData[0]} {EffectData[1]}");
+                                s.CurrentMapInstance.Broadcast($"guri 0 {(short)VisualType.Player} {session.Character.CharacterId} {EffectData[0]} {EffectData[1]}");
                             }
 
                             session.Character.Mates.Where(m => m.IsTeamMember || m.IsTemporalMate).ToList()
@@ -910,7 +910,7 @@ namespace GloomyTale.GameObject.Networking
 
                                     if (m.GetBuff(BCardType.CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.ShadowAppears) is int[] MateEffectData && MateEffectData[0] != 0 && MateEffectData[1] != 0)
                                     {
-                                        s.CurrentMapInstance.Broadcast($"guri 0 {(short)UserType.Monster} {m.MateTransportId} {MateEffectData[0]} {MateEffectData[1]}");
+                                        s.CurrentMapInstance.Broadcast($"guri 0 {(short)VisualType.Monster} {m.MateTransportId} {MateEffectData[0]} {MateEffectData[1]}");
                                     }
                                 });
                         });
@@ -1865,8 +1865,8 @@ namespace GloomyTale.GameObject.Networking
             session.SendPacket(UserInterfaceHelper.GenerateMapOut());
             if (!session.Character.InvisibleGm)
             {
-                session.Character.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => session.CurrentMapInstance?.Broadcast(session, StaticPacketHelper.Out(UserType.Npc, s.MateTransportId), ReceiverType.AllExceptMe));
-                session.CurrentMapInstance?.Broadcast(session, StaticPacketHelper.Out(UserType.Player, session.Character.CharacterId), ReceiverType.AllExceptMe);
+                session.Character.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => session.CurrentMapInstance?.Broadcast(session, StaticPacketHelper.Out(VisualType.Npc, s.MateTransportId), ReceiverType.AllExceptMe));
+                session.CurrentMapInstance?.Broadcast(session, StaticPacketHelper.Out(VisualType.Player, session.Character.CharacterId), ReceiverType.AllExceptMe);
             }
         }
 

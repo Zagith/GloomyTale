@@ -29,6 +29,7 @@ using GloomyTale.GameObject.Networking;
 using static GloomyTale.Domain.BCardType;
 using System.IO;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.Handler
 {
@@ -885,7 +886,7 @@ namespace GloomyTale.Handler
 
                                     if (getPacket.PickerType == 2)
                                     {
-                                        Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, getPacket.PickerId, 5004));
+                                        Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, getPacket.PickerId, 5004));
                                     }
                                 }
                                 else
@@ -908,7 +909,7 @@ namespace GloomyTale.Handler
 
                                             if (getPacket.PickerType == 2)
                                             {
-                                                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, getPacket.PickerId, 5004));
+                                                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, getPacket.PickerId, 5004));
                                                 Session.SendPacket(Session.Character.GenerateIcon(1, 1, inv.ItemVNum));
                                             }
 
@@ -975,7 +976,7 @@ namespace GloomyTale.Handler
 
                                 if (getPacket.PickerType == 2)
                                 {
-                                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, getPacket.PickerId, 5004));
+                                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, getPacket.PickerId, 5004));
                                 }
                             }
                         }
@@ -2470,7 +2471,7 @@ namespace GloomyTale.Handler
                 {
                     inv.Item.Use(Session, ref inv, wearPacket.Type);
                     Session.Character.LoadSpeed();
-                    Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId,
+                    Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId,
                         123));
 
                     var ring = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Ring, InventoryType.Wear);
@@ -2581,7 +2582,7 @@ namespace GloomyTale.Handler
                 Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateCMode());
                 Session.SendPacket(Session.Character.GenerateLev());
                 Session.CurrentMapInstance?.Broadcast(
-                    StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 196),
+                    StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 196),
                     Session.Character.PositionX, Session.Character.PositionY);
                 Session.CurrentMapInstance?.Broadcast(
                     UserInterfaceHelper.GenerateGuri(6, 1, Session.Character.CharacterId), Session.Character.PositionX,

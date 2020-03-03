@@ -24,6 +24,7 @@ using System.Linq;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Core.Extensions;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.Handler
 {

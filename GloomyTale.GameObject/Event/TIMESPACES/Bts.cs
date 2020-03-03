@@ -1,5 +1,6 @@
 ﻿using GloomyTale.Core;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 using GloomyTale.GameObject.Helpers;
 using GloomyTale.GameObject.Networking;
 using System;

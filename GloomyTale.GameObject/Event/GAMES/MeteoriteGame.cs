@@ -184,12 +184,12 @@ namespace GloomyTale.GameObject.Event.GAMES
                     circle.NoAggresiveIcon = true;
                     _map.AddMonster(circle);
                     _map.Broadcast(circle.GenerateIn());
-                    _map.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, circleId, 4660));
+                    _map.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, circleId, 4660));
                     Observable.Timer(TimeSpan.FromSeconds(3)).Subscribe(observer =>
                     {
                         if (_map != null)
                         {
-                            _map.Broadcast(StaticPacketHelper.SkillUsed(UserType.Monster, circleId, 3, circleId, 1220, 220, 0, 4983, cell.X, cell.Y, true, 0, 65535, 0, 0));
+                            _map.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Monster, circleId, 3, circleId, 1220, 220, 0, 4983, cell.X, cell.Y, true, 0, 65535, 0, 0));
                             foreach (Character character in _map.GetCharactersInRange(cell.X, cell.Y, 2))
                             {
                                 if (!_map.Sessions.Skip(3).Any())
@@ -202,7 +202,7 @@ namespace GloomyTale.GameObject.Event.GAMES
                                 Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o => ServerManager.Instance.AskRevive(character.CharacterId));
                             }
                             _map.RemoveMonster(circle);
-                            _map.Broadcast(StaticPacketHelper.Out(UserType.Monster, circle.MapMonsterId));
+                            _map.Broadcast(StaticPacketHelper.Out(VisualType.Monster, circle.MapMonsterId));
                         }
                     });
                 }

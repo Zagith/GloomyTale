@@ -305,12 +305,12 @@ namespace GloomyTale.GameObject.Helpers
                                     if (monster != null)
                                     {
                                         monster.LastEffect = DateTime.Now;
-                                        evt.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, monster.MapMonsterId, effectId));
+                                        evt.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, monster.MapMonsterId, effectId));
                                     }
                                     else
                                     {
                                         evt.MapInstance.Sessions.Where(s => s?.Character != null).ToList()
-                                            .ForEach(s => s.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, s.Character.CharacterId, effectId)));
+                                            .ForEach(s => s.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, s.Character.CharacterId, effectId)));
                                     }
                                 });
                             }
@@ -569,7 +569,7 @@ namespace GloomyTale.GameObject.Helpers
                                                 if (mapMonster != null)
                                                 {
                                                     mapMonster.SetDeathStatement();
-                                                    evt.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, mapMonster.MapMonsterId));
+                                                    evt.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, mapMonster.MapMonsterId));
                                                     evt.MapInstance.RemoveMonster(mapMonster);
                                                 }
                                             }
@@ -866,7 +866,7 @@ namespace GloomyTale.GameObject.Helpers
                         case EventActionType.CLEARMAPMONSTERS:
                             Parallel.ForEach(evt.MapInstance.Monsters.ToList().Where(s => s.Owner?.Character == null && s.Owner?.Mate == null), mapMonster =>
                             {
-                                evt.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, mapMonster.MapMonsterId));
+                                evt.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, mapMonster.MapMonsterId));
                                 mapMonster.SetDeathStatement();
                                 evt.MapInstance.RemoveMonster(mapMonster);
                             });
@@ -944,7 +944,7 @@ namespace GloomyTale.GameObject.Helpers
                                         {
                                             monster.SetDeathStatement();
                                             evt.MapInstance.RemoveMonster(monster);
-                                            evt.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, monster.MapMonsterId));
+                                            evt.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, monster.MapMonsterId));
                                         }
                                     });
                             }
@@ -1061,12 +1061,12 @@ namespace GloomyTale.GameObject.Helpers
                                         circle.NoAggresiveIcon = true;
                                         evt.MapInstance.AddMonster(circle);
                                         evt.MapInstance.Broadcast(circle.GenerateIn());
-                                        evt.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, circleId, 4495));
+                                        evt.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, circleId, 4495));
                                         Observable.Timer(TimeSpan.FromSeconds(3)).Subscribe(observer =>
                                         {
                                             if (evt.MapInstance != null)
                                             {
-                                                evt.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Monster, circleId, 3, circleId, 1220, 220, 0, 4496, c.Character.PositionX, c.Character.PositionY, true, 0, 5000, 0, 0));
+                                                evt.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Monster, circleId, 3, circleId, 1220, 220, 0, 4496, c.Character.PositionX, c.Character.PositionY, true, 0, 5000, 0, 0));
                                                 MapMonster mapmonster = evt.MapInstance.Monsters.Where(s => s.MonsterVNum == 1046).FirstOrDefault();
 
                                                 foreach (Character character in evt.MapInstance.GetCharactersInRange(c.Character.PositionX, c.Character.PositionY, 2))
@@ -1077,7 +1077,7 @@ namespace GloomyTale.GameObject.Helpers
 
                                                 }
                                                 evt.MapInstance.RemoveMonster(circle);
-                                                evt.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, circle.MapMonsterId));
+                                                evt.MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, circle.MapMonsterId));
                                             }
                                         });
                                     }

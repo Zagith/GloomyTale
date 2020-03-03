@@ -115,7 +115,7 @@ namespace GloomyTale.GameObject
                         if (mate.Loyalty > 1000) mate.Loyalty = 1000;
                         mate.GenerateXp(EffectValue);
                         session.SendPacket(mate.GenerateCond());
-                        session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 5002));
+                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Npc, mate.MateTransportId, 5002));
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }
                     break;
@@ -129,8 +129,8 @@ namespace GloomyTale.GameObject
                             return;
                         }
                         mate.Level++;
-                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 8), mate.PositionX, mate.PositionY);
-                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 198), mate.PositionX, mate.PositionY);
+                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, mate.MateTransportId, 8), mate.PositionX, mate.PositionY);
+                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, mate.MateTransportId, 198), mate.PositionX, mate.PositionY);
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }
                     break;
@@ -144,8 +144,8 @@ namespace GloomyTale.GameObject
                             return;
                         }
                         mate.Level++;
-                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 8), mate.PositionX, mate.PositionY);
-                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 198), mate.PositionX, mate.PositionY);
+                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, mate.MateTransportId, 8), mate.PositionX, mate.PositionY);
+                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, mate.MateTransportId, 198), mate.PositionX, mate.PositionY);
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }
                     break;
@@ -172,8 +172,8 @@ namespace GloomyTale.GameObject
                             Mate mate = session.Character.Mates.Find(s => s.MateTransportId == mateTransportId && s.MateType == MateType.Pet);
                             if (mate?.CanPickUp == false)
                             {
-                                session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 5));
-                                session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 5002));
+                                session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, mate.MateTransportId, 5));
+                                session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, mate.MateTransportId, 5002));
                                 mate.CanPickUp = true;
                                 session.SendPackets(session.Character.GenerateScP());
                                 session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("PET_CAN_PICK_UP"), 10));

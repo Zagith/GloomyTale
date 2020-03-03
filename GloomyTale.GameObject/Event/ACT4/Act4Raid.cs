@@ -304,7 +304,7 @@ namespace GloomyTale.GameObject.Event
 
             foreach(MapMonster monster in Act4Raid.Guardians)
             {
-                bitoren.Broadcast(StaticPacketHelper.Out(UserType.Monster, monster.MapMonsterId));
+                bitoren.Broadcast(StaticPacketHelper.Out(VisualType.Monster, monster.MapMonsterId));
                 bitoren.RemoveMonster(monster);
             }
 

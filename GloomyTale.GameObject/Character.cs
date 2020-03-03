@@ -34,10 +34,12 @@ using System.Threading.Tasks;
 using GloomyTale.Core.Extensions;
 using GloomyTale.Communication;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Interfaces;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.GameObject
 {
-    public class Character : CharacterDTO
+    public class Character : CharacterDTO, ICharacterEntity
     {
         #region Members
 
@@ -92,12 +94,12 @@ namespace GloomyTale.GameObject
             BattleEntity = new BattleEntity(this, null);
             Group = null;
             GmPvtBlock = false;
-        }       
+        }
 
         #endregion
 
         #region Properties
-
+        public VisualType VisualType => VisualType.Player;
         public int InstantBattleScore { get; set; }
 
         public bool IsDisposed { get; private set; }
@@ -932,7 +934,7 @@ namespace GloomyTale.GameObject
             }
         }
 
-        public List<long> GetMTListTargetQueue_QuickFix(CharacterSkill ski, UserType entityType)
+        public List<long> GetMTListTargetQueue_QuickFix(CharacterSkill ski, VisualType entityType)
         {
             List<long> result = new List<long>();
 
@@ -945,7 +947,7 @@ namespace GloomyTale.GameObject
                 {
                     switch (entityType)
                     {
-                        case UserType.Player:
+                        case VisualType.Player:
                             {
                                 Character targetCharacter = MapInstance.GetCharacterById(targetId);
 
@@ -960,7 +962,7 @@ namespace GloomyTale.GameObject
                             }
                             break;
 
-                        case UserType.Monster:
+                        case VisualType.Monster:
                             {
                                 MapMonster targetMonster = MapInstance.GetMonsterById(targetId);
 
@@ -1501,7 +1503,7 @@ namespace GloomyTale.GameObject
                             if (Session.Character.Gold >= q.Objective)
                             {
                                 Gold -= (long)q.Objective;
-                                Session.SendPacket(GenerateGold());
+                                Session.SendPacket(this.GenerateGold());
                                 quest.Quest.QuestObjectives.Where(o => o.Data == firstData).ToList().ForEach(d => IncrementObjective(quest, d.ObjectiveIndex, isOver: true));
                                 return;
                             }
@@ -1879,9 +1881,9 @@ namespace GloomyTale.GameObject
             Session.SendPacket(GenerateTit());
             Session.SendPacket(GenerateStat());
             Session.CurrentMapInstance?.Broadcast(Session, GenerateEq());
-            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 8), PositionX, PositionY);
+            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 8), PositionX, PositionY);
             Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("CLASS_CHANGED"), 0));
-            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 196), PositionX, PositionY);
+            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 196), PositionX, PositionY);
             if (noItem == true)
             {
                 ChangeFaction(Session.Character.Family == null ? (FactionType)ServerManager.RandomNumber(1, 2) : (FactionType)Session.Character.Family.FamilyFaction);
@@ -1895,8 +1897,8 @@ namespace GloomyTale.GameObject
             Session.CurrentMapInstance?.Broadcast(Session, GenerateCMode());
             Session.CurrentMapInstance?.Broadcast(Session, GenerateIn(), ReceiverType.AllExceptMe);
             Session.CurrentMapInstance?.Broadcast(Session, GenerateGidx(), ReceiverType.AllExceptMe);
-            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 6), PositionX, PositionY);
-            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 198), PositionX, PositionY);
+            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 6), PositionX, PositionY);
+            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 198), PositionX, PositionY);
             Session.Character.ResetSkills();
 
             foreach (QuicklistEntryDTO quicklists in DAOFactory.Instance.QuicklistEntryDAO.LoadByCharacterId(CharacterId).Where(quicklists => QuicklistEntries.Any(qle => qle.Id == quicklists.Id)))
@@ -1997,7 +1999,7 @@ namespace GloomyTale.GameObject
             Session.CurrentMapInstance?.Broadcast(Session, GenerateIn(), ReceiverType.AllExceptMe);
             Session.CurrentMapInstance?.Broadcast(Session, GenerateGidx(), ReceiverType.AllExceptMe);
             Session.CurrentMapInstance?.Broadcast(GenerateCMode());
-            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 196), PositionX, PositionY);
+            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 196), PositionX, PositionY);
         }
 
         public void CharacterLife()
@@ -2036,7 +2038,7 @@ namespace GloomyTale.GameObject
 
                 if (CurrentMinigame != 0 && LastEffect.AddSeconds(3) <= DateTime.Now)
                 {
-                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, CurrentMinigame));
+                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, CurrentMinigame));
                     LastEffect = DateTime.Now;
                 }
                 if (LastEffect.AddMilliseconds(400) <= DateTime.Now && MessageCounter > 0)
@@ -2095,28 +2097,28 @@ namespace GloomyTale.GameObject
                         {
                             if (amulet.ItemVNum == 4503 || amulet.ItemVNum == 4504)
                             {
-                                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, amulet.Item.EffectValue + (Class == ClassType.Adventurer ? 0 : (byte)Class - 1)), PositionX, PositionY);
+                                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, amulet.Item.EffectValue + (Class == ClassType.Adventurer ? 0 : (byte)Class - 1)), PositionX, PositionY);
                             }
                             else
                             {
-                                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, amulet.Item.EffectValue), PositionX, PositionY);
+                                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, amulet.Item.EffectValue), PositionX, PositionY);
                             }
                         }
                         if (Group != null && (Group.GroupType == GroupType.Team || Group.GroupType == GroupType.BigTeam || Group.GroupType == GroupType.GiantTeam))
                         {
                             try
                             {
-                                Session.CurrentMapInstance?.Broadcast(Session, StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 828 + (Group.IsLeader(Session) ? 1 : 0)), ReceiverType.AllExceptGroup);
-                                Session.CurrentMapInstance?.Broadcast(Session, StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 830 + (Group.IsLeader(Session) ? 1 : 0)), ReceiverType.Group);
+                                Session.CurrentMapInstance?.Broadcast(Session, StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 828 + (Group.IsLeader(Session) ? 1 : 0)), ReceiverType.AllExceptGroup);
+                                Session.CurrentMapInstance?.Broadcast(Session, StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 830 + (Group.IsLeader(Session) ? 1 : 0)), ReceiverType.Group);
                             }
                             catch (Exception ex)
                             {
                                 Logger.Log.Error(ex);
                             }
                         }
-                        Mates.Where(s => s.CanPickUp).ToList().ForEach(s => Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, s.MateTransportId, 3007)));
-                        Mates.Where(s => s.IsTsProtected).ToList().ForEach(s => Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, s.MateTransportId, 825)));
-                        Mates.Where(s => s.MateType == MateType.Pet && s.Loyalty <= 0).ToList().ForEach(s => Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Npc, s.MateTransportId, 5003)));
+                        Mates.Where(s => s.CanPickUp).ToList().ForEach(s => Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, s.MateTransportId, 3007)));
+                        Mates.Where(s => s.IsTsProtected).ToList().ForEach(s => Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, s.MateTransportId, 825)));
+                        Mates.Where(s => s.MateType == MateType.Pet && s.Loyalty <= 0).ToList().ForEach(s => Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Npc, s.MateTransportId, 5003)));
                     }
 
                     LastEffect = DateTime.Now;
@@ -2189,7 +2191,7 @@ namespace GloomyTale.GameObject
                 {
                     if (MeditationDictionary.ContainsKey(534) && MeditationDictionary[534] < DateTime.Now)
                     {
-                        Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 4344));
+                        Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 4344));
                         AddBuff(new Buff(534, Level), BattleEntity);
                         if (BuffObservables.ContainsKey(533))
                         {
@@ -2200,7 +2202,7 @@ namespace GloomyTale.GameObject
                     }
                     else if (MeditationDictionary.ContainsKey(533) && MeditationDictionary[533] < DateTime.Now)
                     {
-                        Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 4343));
+                        Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 4343));
                         AddBuff(new Buff(533, Level), BattleEntity);
                         if (BuffObservables.ContainsKey(532))
                         {
@@ -2211,7 +2213,7 @@ namespace GloomyTale.GameObject
                     }
                     else if (MeditationDictionary.ContainsKey(532) && MeditationDictionary[532] < DateTime.Now)
                     {
-                        Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 4343));
+                        Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 4343));
                         AddBuff(new Buff(532, Level), BattleEntity);
                         if (BuffObservables.ContainsKey(534))
                         {
@@ -2602,7 +2604,7 @@ namespace GloomyTale.GameObject
                 MarryRequestCharacters.Clear();
 
                 Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => { Session.CurrentMapInstance?.Broadcast(Session, s.GenerateOut(), ReceiverType.AllExceptMe); s.ReviveDisposable?.Dispose(); });
-                Session.CurrentMapInstance?.Broadcast(Session, StaticPacketHelper.Out(UserType.Player, CharacterId), ReceiverType.AllExceptMe);
+                Session.CurrentMapInstance?.Broadcast(Session, StaticPacketHelper.Out(VisualType.Player, CharacterId), ReceiverType.AllExceptMe);
 
                 if (Hp < 1)
                 {
@@ -2835,7 +2837,7 @@ namespace GloomyTale.GameObject
         {
             return new EffectPacket
             {
-                EffectType = UserType.Player,
+                EffectType = VisualType.Player,
                 CallerId = CharacterId,
                 EffectId = effectid
             };
@@ -3194,8 +3196,6 @@ namespace GloomyTale.GameObject
             return "";
         }
 
-        public string GenerateGold() => $"gold {Gold} 0";
-
         public string GenerateIcon(int type, int value, short itemVNum) => $"icon {type} {CharacterId} {value} {itemVNum}";
 
         public string GenerateIdentity() => $"Character: {Name}";
@@ -3265,7 +3265,7 @@ namespace GloomyTale.GameObject
                             }
 
                             Session.SendPacket(GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {ServerManager.GetItem(drop.ItemVNum).Name} x {drop.Amount}{(multiplier > 1 ? $" + {(int)(drop.Amount * multiplier) - drop.Amount}" : "")}", 12));
-                            Session.SendPacket(GenerateGold());
+                            Session.SendPacket(this.GenerateGold());
                         }
                         else
                         {
@@ -3903,8 +3903,8 @@ namespace GloomyTale.GameObject
                 Session.SendPackets(GenerateQuicklist());
 
                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SP_LEVELUP"), 0));
-                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 8), PositionX, PositionY);
-                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 198), PositionX, PositionY);
+                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 8), PositionX, PositionY);
+                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 198), PositionX, PositionY);
             }
         }
         private void GenerateHeroXpLevelUp()
@@ -3925,8 +3925,8 @@ namespace GloomyTale.GameObject
                 Session.SendPacket(GenerateStat());
                 Session.SendPacket(GenerateLevelUp());
                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("HERO_LEVELUP"), 0));
-                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 8), PositionX, PositionY);
-                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 198), PositionX, PositionY);
+                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 8), PositionX, PositionY);
+                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 198), PositionX, PositionY);
             }
         }
         private void GenerateLevelXpLevelUp()
@@ -6743,7 +6743,7 @@ namespace GloomyTale.GameObject
                     Hp = (int)HPLoad();
                     Mp = (int)MPLoad();
                     Session.SendPacket(GenerateStat());
-                    Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 5));
+                    Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, CharacterId, 5));
                 }
 
                 int xp = (int)(GetXP(monster, grp) * expDamageRate * (isMonsterOwner ? 1 : 0.8f) * (1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)) * (1 + (GetBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.IncreaseBattleAndJobExperience)[0] / 100)));

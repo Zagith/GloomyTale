@@ -14,7 +14,7 @@ namespace GloomyTale.GameObject
         public int CastId { get; set; }
 
         [PacketIndex(1)]
-        public UserType UserType { get; set; }
+        public VisualType UserType { get; set; }
 
         [PacketIndex(2)]
         public int MapMonsterId { get; set; }

@@ -34,6 +34,7 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.Handler
 {
@@ -2805,7 +2806,7 @@ namespace GloomyTale.Handler
                     Session.Character.PyjamaDead = false;
                     if (!Session.Character.InvisibleGm)
                     {
-                        Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Move(UserType.Player,
+                        Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Move(VisualType.Player,
                             Session.Character.CharacterId, walkPacket.XCoordinate, walkPacket.YCoordinate,
                             Session.Character.Speed));
                     }

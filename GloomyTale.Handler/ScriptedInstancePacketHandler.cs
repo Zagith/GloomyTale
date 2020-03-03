@@ -13,6 +13,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using GloomyTale.Data;
 using GloomyTale.DAL;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.Handler
 {
@@ -475,7 +476,7 @@ namespace GloomyTale.Handler
                     return;
                 }
 
-                Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(UserType.Object, button.MapButtonId));
+                Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Object, button.MapButtonId));
                 button.RunAction();
                 Session.CurrentMapInstance.Broadcast(button.GenerateIn());
             }

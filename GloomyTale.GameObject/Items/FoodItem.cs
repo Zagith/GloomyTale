@@ -77,7 +77,7 @@ namespace GloomyTale.GameObject
                             session.Character.Rest();
                         }
 
-                        session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 6000));
+                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 6000));
 
                         session.Character.SpPoint += 1500;
 
@@ -111,7 +111,7 @@ namespace GloomyTale.GameObject
                             if (AdditionalHp > 0 && AdditionalHp <= AdditionalHpBCard.FirstData)
                             {
                                 session.Character.FoodAmount++;
-                                session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 6000));
+                                session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 6000));
                                 session.Character.BattleEntity.AdditionalHp += AdditionalHp;
                                 session.SendPacket(session.Character.GenerateAdditionalHpMp());
                                 session.SendPacket(session.Character.GenerateStat());
@@ -135,7 +135,7 @@ namespace GloomyTale.GameObject
                             if (AdditionalMp > 0 && AdditionalMp <= -AdditionalMpBCard.FirstData)
                             {
                                 session.Character.FoodAmount++;
-                                session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 6000));
+                                session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 6000));
                                 session.Character.BattleEntity.AdditionalMp += AdditionalMp;
                                 session.SendPacket(session.Character.GenerateAdditionalHpMp());
                                 session.SendPacket(session.Character.GenerateStat());
@@ -183,7 +183,7 @@ namespace GloomyTale.GameObject
 
         private static void Regenerate(ClientSession session, Item item)
         {
-            session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 6000));
+            session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 6000));
             session.Character.FoodAmount++;
             session.Character.MaxFood = 0;
             session.Character.FoodHp += item.Hp / 5;
