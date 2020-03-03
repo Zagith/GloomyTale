@@ -169,7 +169,7 @@ namespace GloomyTale.GameObject.Event
                                     {
                                         x = 15;
                                     }
-                                    ServerManager.Instance.ChangeMapInstance(sess.Character.CharacterId, mapInstance.MapInstanceId, x, 39);
+                                    ServerManager.Instance.ChangeMapInstance(sess.Character.VisualId, mapInstance.MapInstanceId, x, 39);
                                     sess.SendPacketAfter(UserInterfaceHelper.GenerateTeamArenaMenu(3, 0, 0, 60, 0), 5000);
                                 }
 

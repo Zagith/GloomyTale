@@ -109,13 +109,13 @@ namespace GloomyTale.GameObject.Event.ARENA
                                     .ToArray();
                                 for (int i = 0; i < 6; i++)
                                 {
-                                    ItemInstance item = Inventory.InstantiateItemInstance((short)(4433 + (i > 2 ? 5 - i : i)), member.Session.Character.CharacterId);
+                                    ItemInstance item = Inventory.InstantiateItemInstance((short)(4433 + (i > 2 ? 5 - i : i)), member.Session.Character.VisualId);
                                     item.Design = (short)(4433 + (i > 2 ? 5 - i : i));
                                     map.MapDesignObjects.Add(new MapDesignObject
                                     {
                                         ItemInstance = item,
                                         ItemInstanceId = item.Id,
-                                        CharacterId = member.Session.Character.CharacterId,
+                                        CharacterId = member.Session.Character.VisualId,
                                         MapX = (short)(i > 2 ? 120 : 19),
                                         MapY = (short)(i > 2 ? 35 + i % 3 * 4 : 36 + i % 3 * 4)
                                     });
@@ -166,7 +166,7 @@ namespace GloomyTale.GameObject.Event.ARENA
                                             o.Session.Character.GeneralLogs.Add(new GeneralLogDTO
                                             {
                                                 AccountId = o.Session.Account.AccountId,
-                                                CharacterId = o.Session.Character.CharacterId,
+                                                CharacterId = o.Session.Character.VisualId,
                                                 IpAddress = o.Session.IpAddress,
                                                 LogData = "Entry",
                                                 LogType = "TalentArena",
@@ -177,7 +177,7 @@ namespace GloomyTale.GameObject.Event.ARENA
                                             int i = Array.IndexOf(arenamembers, o) + 1;
                                             o.Session.Character.Hp = (int)o.Session.Character.HPLoad();
                                             o.Session.Character.Mp = (int)o.Session.Character.MPLoad();
-                                            ServerManager.Instance.ChangeMapInstance(o.Session.Character.CharacterId, map.MapInstanceId, o.GroupId == member.GroupId ? 125 : 14,
+                                            ServerManager.Instance.ChangeMapInstance(o.Session.Character.VisualId, map.MapInstanceId, o.GroupId == member.GroupId ? 125 : 14,
                                                 (o.GroupId == member.GroupId ? 37 : 38) + i % 3 * 2);
                                             o.Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SELECT_ORDER_ARENA_TIME"), 0));
                                             o.Session.SendPacket(o.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("SELECT_ORDER_ARENA_TIME"), 10));

@@ -247,7 +247,7 @@ namespace GloomyTale.GameObject
             {
                 Logger.Log.LogUserEvent("CHARACTER_LOGOUT", GenerateIdentity(), "");
 
-                long characterId = Character.CharacterId;
+                long characterId = Character.VisualId;
 
                 Character.Dispose();
 
@@ -579,7 +579,7 @@ namespace GloomyTale.GameObject
 
             Tuple<long, string> loggedInCharacter = (Tuple<long, string>)sender;
 
-            if (Character.IsFriendOfCharacter(loggedInCharacter.Item1) && Character != null && Character.CharacterId != loggedInCharacter.Item1)
+            if (Character.IsFriendOfCharacter(loggedInCharacter.Item1) && Character != null && Character.VisualId != loggedInCharacter.Item1)
             {
                 _client.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("CHARACTER_LOGGED_IN"), loggedInCharacter.Item2), 10));
                 _client.SendPacket(Character.GenerateFinfo(loggedInCharacter.Item1, true));
@@ -587,7 +587,7 @@ namespace GloomyTale.GameObject
 
             FamilyCharacter chara = Character.Family?.FamilyCharacters.Find(s => s.CharacterId == loggedInCharacter.Item1);
 
-            if (chara != null && loggedInCharacter.Item1 != Character?.CharacterId)
+            if (chara != null && loggedInCharacter.Item1 != Character?.VisualId)
             {
                 _client.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("CHARACTER_FAMILY_LOGGED_IN"), loggedInCharacter.Item2, Language.Instance.GetMessageFromKey(chara.Authority.ToString().ToUpper())), 10));
             }
@@ -602,7 +602,7 @@ namespace GloomyTale.GameObject
 
             Tuple<long, string> loggedOutCharacter = (Tuple<long, string>)sender;
 
-            if (Character.IsFriendOfCharacter(loggedOutCharacter.Item1) && Character != null && Character.CharacterId != loggedOutCharacter.Item1)
+            if (Character.IsFriendOfCharacter(loggedOutCharacter.Item1) && Character != null && Character.VisualId != loggedOutCharacter.Item1)
             {
                 _client.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("CHARACTER_LOGGED_OUT"), loggedOutCharacter.Item2), 10));
                 _client.SendPacket(Character.GenerateFinfo(loggedOutCharacter.Item1, false));

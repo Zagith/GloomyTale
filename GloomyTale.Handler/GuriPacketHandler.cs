@@ -44,10 +44,10 @@ namespace GloomyTale.Handler
                 if (guriPacket.Data.HasValue && guriPacket.Type == 10 && guriPacket.Data.Value >= 973
                     && guriPacket.Data.Value <= 999 && !Session.Character.EmoticonsBlocked)
                 {
-                    if (guriPacket.User == Session.Character.CharacterId)
+                    if (guriPacket.User == Session.Character.VisualId)
                     {
                         Session.CurrentMapInstance?.Broadcast(Session,
-                            StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId,
+                            StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId,
                                 guriPacket.Data.Value + 4099), ReceiverType.AllNoEmoBlocked);
                     }
                     else if (int.TryParse(guriPacket.User.ToString(), out int mateTransportId))
@@ -120,7 +120,7 @@ namespace GloomyTale.Handler
                             DAOFactory.Instance.ShellEffectDAO.InsertOrUpdateFromList(shell.ShellEffects, shell.EquipmentSerialId);
 
                             Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("OPTION_IDENTIFIED"), 0));
-                            Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 3006));
+                            Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId, 3006));
                             Session.Character.Inventory.RemoveItemAmount(1429, (shell.Upgrade / 10) + shell.Rare);
                         }
                     }
@@ -135,7 +135,7 @@ namespace GloomyTale.Handler
 
                         ItemInstance equipmentInstance = Session.Character.Inventory.LoadBySlotAndType(slot, perfumeInventoryType);
 
-                        if (equipmentInstance?.BoundCharacterId == null || equipmentInstance.BoundCharacterId == Session.Character.CharacterId || (equipmentInstance.Item.ItemType != ItemType.Weapon && equipmentInstance.Item.ItemType != ItemType.Armor))
+                        if (equipmentInstance?.BoundCharacterId == null || equipmentInstance.BoundCharacterId == Session.Character.VisualId || (equipmentInstance.Item.ItemType != ItemType.Weapon && equipmentInstance.Item.ItemType != ItemType.Armor))
                         {
                             return;
                         }
@@ -149,7 +149,7 @@ namespace GloomyTale.Handler
 
                         Session.Character.Inventory.RemoveItemAmount(perfumeVnum, perfumesNeeded);
 
-                        equipmentInstance.BoundCharacterId = Session.Character.CharacterId;
+                        equipmentInstance.BoundCharacterId = Session.Character.VisualId;
 
                         Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("BOUND_TO_YOU"), 0));
                     }
@@ -220,7 +220,7 @@ namespace GloomyTale.Handler
                                     short mapx = session.Character.PositionX;
                                     short mapId = session.Character.MapInstance.Map.MapId;
 
-                                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, mapId, mapx, mapy);
+                                    ServerManager.Instance.ChangeMap(Session.Character.VisualId, mapId, mapx, mapy);
                                     if (!isCouple)
                                     {
                                         Session.Character.Inventory.RemoveItemAmount(vnumToUse);
@@ -625,7 +625,7 @@ namespace GloomyTale.Handler
                     {
                         return;
                     }
-                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, tp.MapId, tp.MapX, tp.MapY);
+                    ServerManager.Instance.ChangeMap(Session.Character.VisualId, tp.MapId, tp.MapX, tp.MapY);
                 }
                 else if (guriPacket.Type == 750)
                 {
@@ -700,7 +700,7 @@ namespace GloomyTale.Handler
                 else if (guriPacket.Type == 2)
                 {
                     Session.CurrentMapInstance?.Broadcast(
-                        UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.CharacterId),
+                        UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.VisualId),
                         Session.Character.PositionX, Session.Character.PositionY);
                 }
                 else if (guriPacket.Type == 4)
@@ -840,7 +840,7 @@ namespace GloomyTale.Handler
                         {
                             Session.Character.Inventory.RemoveItemAmount(speakerVNum);
                         }
-                        LogHelper.Instance.InsertChatLog(ChatType.Speaker, Session.Character.CharacterId, message, Session.IpAddress);
+                        LogHelper.Instance.InsertChatLog(ChatType.Speaker, Session.Character.VisualId, message, Session.IpAddress);
                         if (ServerManager.Instance.ChannelId == 51)
                         {
                             ServerManager.Instance.Broadcast(Session, sayPacket, ReceiverType.AllExceptMeAct4);
@@ -879,7 +879,7 @@ namespace GloomyTale.Handler
                             {
                                 message = message.Substring(0, 60);
                             }
-                            LogHelper.Instance.InsertChatLog(ChatType.Speaker, Session.Character.CharacterId, message, Session.IpAddress);
+                            LogHelper.Instance.InsertChatLog(ChatType.Speaker, Session.Character.VisualId, message, Session.IpAddress);
                             Session.Character.BubbleMessage = message;
                             Session.Character.BubbleMessageEnd = DateTime.Now.AddMinutes(30);
                             Session.SendPacket($"csp_r {Session.Character.BubbleMessage}");

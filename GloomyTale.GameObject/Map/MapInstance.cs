@@ -804,7 +804,7 @@ namespace GloomyTale.GameObject
                                 x =>
                                 {
                                     if (x.Mate != null || x.MapNpc != null || x.MapMonster?.IsBoss == true
-                                        || (x.Character != null && x.Character.CharacterId == mapMonster.Owner?.MapEntityId) 
+                                        || (x.Character != null && x.Character.VisualId == mapMonster.Owner?.MapEntityId) 
                                         || (x.MapMonster != null && monsterToSummon.Owner == null))
                                     {
                                         return;
@@ -839,7 +839,7 @@ namespace GloomyTale.GameObject
 
                                         if (x.Character != null)
                                         {
-                                            Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(c => ServerManager.Instance.AskRevive(x.Character.CharacterId));
+                                            Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(c => ServerManager.Instance.AskRevive(x.Character.VisualId));
                                         }
                                     }
                                 });
@@ -902,7 +902,7 @@ namespace GloomyTale.GameObject
                 DroppedList.Dispose();
                 foreach (ClientSession session in ServerManager.Instance.Sessions.Where(s => s.Character != null && s.Character.MapInstanceId == MapInstanceId))
                 {
-                    ServerManager.Instance.ChangeMap(session.Character.CharacterId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
+                    ServerManager.Instance.ChangeMap(session.Character.VisualId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
                 }
             }
         }

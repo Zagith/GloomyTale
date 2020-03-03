@@ -310,7 +310,7 @@ namespace GloomyTale.GameObject.Helpers
                                     else
                                     {
                                         evt.MapInstance.Sessions.Where(s => s?.Character != null).ToList()
-                                            .ForEach(s => s.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, s.Character.CharacterId, effectId)));
+                                            .ForEach(s => s.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, s.Character.VisualId, effectId)));
                                     }
                                 });
                             }
@@ -511,7 +511,7 @@ namespace GloomyTale.GameObject.Helpers
                                     {
                                         evt.MapInstance.InstanceBag.EndState = (byte)evt.Parameter;
 
-                                        Character owner = evt.MapInstance.Sessions.FirstOrDefault(s => s.Character.Group?.Raid?.InstanceBag.CreatorId == s.Character.CharacterId)?.Character;
+                                        Character owner = evt.MapInstance.Sessions.FirstOrDefault(s => s.Character.Group?.Raid?.InstanceBag.CreatorId == s.Character.VisualId)?.Character;
                                         if (owner == null) owner = evt.MapInstance.Sessions.FirstOrDefault(s => s.Character.Group?.Raid != null)?.Character;
 
                                         Group group = owner?.Group;
@@ -585,7 +585,7 @@ namespace GloomyTale.GameObject.Helpers
                                                     s.Character.GeneralLogs?.Add(new GeneralLogDTO
                                                     {
                                                         AccountId = s.Account.AccountId,
-                                                        CharacterId = s.Character.CharacterId,
+                                                        CharacterId = s.Character.VisualId,
                                                         IpAddress = s.IpAddress,
                                                         LogData = $"{s.Character.Group.Raid.Id}",
                                                         LogType = "InstanceEntry",
@@ -684,7 +684,7 @@ namespace GloomyTale.GameObject.Helpers
                                             CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                                             {
                                                 DestinationCharacterId = fam.FamilyId,
-                                                SourceCharacterId = client.Character.CharacterId,
+                                                SourceCharacterId = client.Character.VisualId,
                                                 SourceWorldId = ServerManager.Instance.WorldId,
                                                 Message = UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("FAMILYRAID_SUCCESS"), 0),
                                                 Type = MessageType.Family
@@ -703,7 +703,7 @@ namespace GloomyTale.GameObject.Helpers
                                                             targetSession.Character.Mp = 1;
                                                         }
 
-                                                        ServerManager.Instance.ChangeMapInstance(targetSession.Character.CharacterId, fam.Act4Raid.MapInstanceId, destX, destY);
+                                                        ServerManager.Instance.ChangeMapInstance(targetSession.Character.VisualId, fam.Act4Raid.MapInstanceId, destX, destY);
 
                                                         targetSession.SendPacket("dance");
                                                     }

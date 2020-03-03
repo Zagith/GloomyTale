@@ -283,7 +283,7 @@ namespace GloomyTale.Handler
                                 Session.Character.Skills[buyPacket.Slot] = new CharacterSkill
                                 {
                                     SkillVNum = buyPacket.Slot,
-                                    CharacterId = Session.Character.CharacterId
+                                    CharacterId = Session.Character.VisualId
                                 };
 
                                 Session.Character.Gold -= skillinfo.Price;
@@ -393,7 +393,7 @@ namespace GloomyTale.Handler
                                             itemInst.SetRarityPoint();
                                             if (iteminfo.ReputPrice > 0)
                                             {
-                                                itemInst.BoundCharacterId = Session.Character.CharacterId;
+                                                itemInst.BoundCharacterId = Session.Character.VisualId;
                                             }
                                             break;
 
@@ -508,7 +508,7 @@ namespace GloomyTale.Handler
 
                     case 0:
                         if (Session.CurrentMapInstance.UserShops.Any(s =>
-                            s.Value.OwnerId == Session.Character.CharacterId))
+                            s.Value.OwnerId == Session.Character.VisualId))
                         {
                             return;
                         }
@@ -588,7 +588,7 @@ namespace GloomyTale.Handler
 
                                 // truncate the string to a max-length of 20
                                 shopname = shopname.Truncate(20);
-                                myShop.OwnerId = Session.Character.CharacterId;
+                                myShop.OwnerId = Session.Character.VisualId;
                                 myShop.Name = shopname;
                                 Session.CurrentMapInstance.UserShops.Add(Session.CurrentMapInstance.LastUserShopId++,
                                     myShop);
@@ -854,7 +854,7 @@ namespace GloomyTale.Handler
                             if (inv.Item.IsHeroic)
                             {
                                 items.GenerateHeroicShell(RarifyProtection.None, true);
-                                items.BoundCharacterId = Session.Character.CharacterId;
+                                items.BoundCharacterId = Session.Character.VisualId;
                             }
                         }
                     }
@@ -866,7 +866,7 @@ namespace GloomyTale.Handler
 
                     // pdti {WindowType} {inv.ItemVNum} {recipe.Amount} {Unknown} {inv.Upgrade} {inv.Rare}
                     Session.SendPacket($"pdti 11 {inv.ItemVNum} {recipe.Amount} 29 {inv.Upgrade} {inv.Rare}");
-                    Session.SendPacket(UserInterfaceHelper.GenerateGuri(19, 1, Session.Character.CharacterId, 1324));
+                    Session.SendPacket(UserInterfaceHelper.GenerateGuri(19, 1, Session.Character.VisualId, 1324));
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                         string.Format(Language.Instance.GetMessageFromKey("CRAFTED_OBJECT"), inv.Item.Name,
                             recipe.Amount), 0));

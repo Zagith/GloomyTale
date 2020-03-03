@@ -70,7 +70,7 @@ namespace GloomyTale.GameObject.Event.RainbowBattle
                                     int w = 0;
                                     foreach (ClientSession sess in at.Session)
                                     {
-                                        ServerManager.Instance.ChangeMapInstance(s.Session.Character.CharacterId, map.MapInstanceId, (short)(at.Color == RainbowBattleTeamType.RED ? 1 : 118), (short)(26 + (w * 3)));
+                                        ServerManager.Instance.ChangeMapInstance(s.Session.Character.VisualId, map.MapInstanceId, (short)(at.Color == RainbowBattleTeamType.RED ? 1 : 118), (short)(26 + (w * 3)));
                                         w++;
                                         sess.Character.NoMove = true;
                                     }
@@ -178,7 +178,7 @@ namespace GloomyTale.GameObject.Event.RainbowBattle
                     session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("STAY_TIME"), session.Character.SpCooldown), 11));
                     session.SendPacket($"sd {session.Character.SpCooldown}");
                     session.CurrentMapInstance?.Broadcast(session.Character.GenerateCMode());
-                    session.CurrentMapInstance?.Broadcast(UserInterfaceHelper.GenerateGuri(6, 1, session.Character.CharacterId), session.Character.PositionX, session.Character.PositionY);
+                    session.CurrentMapInstance?.Broadcast(UserInterfaceHelper.GenerateGuri(6, 1, session.Character.VisualId), session.Character.PositionX, session.Character.PositionY);
 
                     // ms_c
                     session.SendPacket(session.Character.GenerateSki());
@@ -257,7 +257,7 @@ namespace GloomyTale.GameObject.Event.RainbowBattle
                                 }
                                 character.IsCustomSpeed = false;
                                 character.RemoveVehicle();
-                                Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o => ServerManager.Instance.AskRevive(character.CharacterId));
+                                Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o => ServerManager.Instance.AskRevive(character.VisualId));
                             }
                             _map.RemoveMonster(circle);
                             _map.Broadcast(StaticPacketHelper.Out(VisualType.Monster, circle.MapMonsterId));

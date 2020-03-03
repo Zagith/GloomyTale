@@ -319,7 +319,7 @@ namespace GloomyTale.GameObject
                         {
                             Session.Character.Gold -= 1000 * packet.Type;
                             Session.SendPacket(Session.Character.GenerateGold());
-                            ServerManager.Instance.ChangeMap(Session.Character.CharacterId, tp.MapId, tp.MapX, tp.MapY);
+                            ServerManager.Instance.ChangeMap(Session.Character.VisualId, tp.MapId, tp.MapX, tp.MapY);
                         }
                         else
                         {
@@ -352,7 +352,7 @@ namespace GloomyTale.GameObject
                             Session.Character.Gold -= 500 * (1 + packet.Type);
                             Session.SendPacket(Session.Character.GenerateGold());
                             MapCell pos = packet.Type == 0 ? ServerManager.Instance.ArenaInstance.Map.GetRandomPosition() : ServerManager.Instance.FamilyArenaInstance.Map.GetRandomPosition();
-                            ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, packet.Type == 0 ? ServerManager.Instance.ArenaInstance.MapInstanceId : ServerManager.Instance.FamilyArenaInstance.MapInstanceId, pos.X, pos.Y);
+                            ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId, packet.Type == 0 ? ServerManager.Instance.ArenaInstance.MapInstanceId : ServerManager.Instance.FamilyArenaInstance.MapInstanceId, pos.X, pos.Y);
                         }
                         else
                         {
@@ -376,7 +376,7 @@ namespace GloomyTale.GameObject
                         if (Session.Character.Gold >= 5000 * packet.Type)
                         {
                             Session.Character.Gold -= 5000 * packet.Type;
-                            ServerManager.Instance.ChangeMap(Session.Character.CharacterId, tp.MapId, tp.MapX, tp.MapY);
+                            ServerManager.Instance.ChangeMap(Session.Character.VisualId, tp.MapId, tp.MapX, tp.MapY);
                         }
                         else
                         {
@@ -393,7 +393,7 @@ namespace GloomyTale.GameObject
                         {
                             Session.Character.Gold -= 500;
                             Session.SendPacket(Session.Character.GenerateGold());
-                            ServerManager.Instance.ChangeMap(Session.Character.CharacterId, tp.MapId, tp.MapX, tp.MapY);
+                            ServerManager.Instance.ChangeMap(Session.Character.VisualId, tp.MapId, tp.MapX, tp.MapY);
                         }
                         else
                         {
@@ -440,7 +440,7 @@ namespace GloomyTale.GameObject
                             Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("NOT_ENOUGH_INGREDIENTS"), 0));
                             return;
                         }
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 2536, 26, 31);
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, 2536, 26, 31);
                         Session.Character.Inventory.RemoveItemAmount(5919);
                     }
                     break;
@@ -1061,7 +1061,7 @@ namespace GloomyTale.GameObject
                         Session.Character.GeneralLogs.Add(new GeneralLogDTO
                         {
                             AccountId = Session.Account.AccountId,
-                            CharacterId = Session.Character.CharacterId,
+                            CharacterId = Session.Character.VisualId,
                             IpAddress = Session.IpAddress,
                             LogData = "1917",
                             LogType = "DailyReward",
@@ -1125,7 +1125,7 @@ namespace GloomyTale.GameObject
                     tp = npc?.Teleporters?.FirstOrDefault(s => s.Index == packet.Type);
                     if (tp != null)
                     {
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, tp.MapId, tp.MapX, tp.MapY);
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, tp.MapId, tp.MapX, tp.MapY);
                     }
                     break;
 
@@ -1186,7 +1186,7 @@ namespace GloomyTale.GameObject
                     ConcurrentBag<ArenaTeamMember> at = ServerManager.Instance.ArenaTeams.ToList().Where(s => s.Any(c => c.Session?.CurrentMapInstance != null)).OrderBy(s => rand.Next()).FirstOrDefault();
                     if (at != null)
                     {
-                        ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, at.FirstOrDefault().Session.CurrentMapInstance.MapInstanceId, 69, 100);
+                        ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId, at.FirstOrDefault().Session.CurrentMapInstance.MapInstanceId, 69, 100);
 
                         var zenas = at.OrderBy(s => s.Order).FirstOrDefault(s => s.Session != null && !s.Dead && s.ArenaTeamType == ArenaTeamType.ZENAS);
                         var erenia = at.OrderBy(s => s.Order).FirstOrDefault(s => s.Session != null && !s.Dead && s.ArenaTeamType == ArenaTeamType.ERENIA);
@@ -1225,7 +1225,7 @@ namespace GloomyTale.GameObject
                         {
                             if (ServerManager.Instance.ArenaMembers.ToList().All(s => s.Session != Session))
                             {
-                                if (ServerManager.Instance.IsCharacterMemberOfGroup(Session.Character.CharacterId))
+                                if (ServerManager.Instance.IsCharacterMemberOfGroup(Session.Character.VisualId))
                                 {
                                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("TALENT_ARENA_GROUP"), 0));
                                     Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TALENT_ARENA_GROUP"), 10));
@@ -1376,7 +1376,7 @@ namespace GloomyTale.GameObject
                 case 150:
                     if (npc != null && Session.Character.Level >= 55)
                     {
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 150, 153, 145);
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, 150, 153, 145);
                     }
                     else
                     {
@@ -1387,7 +1387,7 @@ namespace GloomyTale.GameObject
                 case 305:
                     if (npc != null)
                     {
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 243, 71, 245);
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, 243, 71, 245);
                     }
                     break;
 
@@ -1455,7 +1455,7 @@ namespace GloomyTale.GameObject
                     tp = npc?.Teleporters?.FirstOrDefault(s => s.Index == packet.Type);
                     if (Session.Character.Level > 87 && tp != null)
                     {
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, tp.MapId, tp.MapX, tp.MapY);
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, tp.MapId, tp.MapX, tp.MapY);
                     }
                     else
                     {
@@ -1760,7 +1760,7 @@ namespace GloomyTale.GameObject
                         }
                         else
                         {
-                            ServerManager.Instance.ChangeMap(Session.Character.CharacterId, tp.MapId, tp.MapX, tp.MapY);
+                            ServerManager.Instance.ChangeMap(Session.Character.VisualId, tp.MapId, tp.MapX, tp.MapY);
                         }
                     }
                     break;
@@ -1768,7 +1768,7 @@ namespace GloomyTale.GameObject
                 case 5004:
                     if (npc != null)
                     {
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 129, 77, 141);
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, 129, 77, 141);
                     }
                     break;
 
@@ -1782,7 +1782,7 @@ namespace GloomyTale.GameObject
                         }
                         Session.Character.Gold -= 30000;
                         Session.SendPacket(Session.Character.GenerateGold());
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 170, 127, 46);
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, 170, 127, 46);
                     }
                     break;
 
@@ -1790,7 +1790,7 @@ namespace GloomyTale.GameObject
                     tp = npc?.Teleporters?.FirstOrDefault(s => s.Index == packet.Type);
                     if (tp != null)
                     {
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, tp.MapId, tp.MapX, tp.MapY);
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, tp.MapId, tp.MapX, tp.MapY);
                     }
                     break;
 
@@ -1958,7 +1958,7 @@ namespace GloomyTale.GameObject
 
                         if (ServerManager.Instance.SpecialistGemMapInstances?.FirstOrDefault(s => s.Npcs.Any(n => n.NpcVNum == gemNpcVnum)) is MapInstance specialistGemMapInstance)
                         {
-                            ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, specialistGemMapInstance.MapInstanceId, 3, 3);
+                            ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId, specialistGemMapInstance.MapInstanceId, 3, 3);
                         }
                     }
                     break;

@@ -188,7 +188,7 @@ namespace GloomyTale.Handler
                     return;
                 }
 
-                if (bazaarItemDTO.SellerId != Session.Character.CharacterId)
+                if (bazaarItemDTO.SellerId != Session.Character.VisualId)
                 {
                     return;
                 }
@@ -423,7 +423,7 @@ namespace GloomyTale.Handler
                 IsPackage = cRegPacket.IsPackage != 0,
                 MedalUsed = medal != null,
                 Price = cRegPacket.Price,
-                SellerId = Session.Character.CharacterId,
+                SellerId = Session.Character.VisualId,
                 ItemInstanceId = bazaar.Id
             };
 
@@ -469,7 +469,7 @@ namespace GloomyTale.Handler
             BazaarItemDTO bz = DAOFactory.Instance.BazaarItemDAO.LoadById(cModPacket.BazaarId);
             if (bz != null)
             {
-                if (bz.SellerId != Session.Character.CharacterId)
+                if (bz.SellerId != Session.Character.VisualId)
                 {
                     return;
                 }

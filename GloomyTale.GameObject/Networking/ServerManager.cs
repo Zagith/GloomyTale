@@ -31,6 +31,7 @@ using GloomyTale.GameObject.Event.ACT4;
 using GloomyTale.Communication;
 using GloomyTale.Cofiguration;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.GameObject.Networking
 {
@@ -307,7 +308,7 @@ namespace GloomyTale.GameObject.Networking
                         {
                             if (member.LastSummoned == null && team.OrderBy(tm3 => tm3.Order).FirstOrDefault(tm3 => tm3.ArenaTeamType == member.ArenaTeamType && !tm3.Dead)?.Session == session)
                             {
-                                session.CurrentMapInstance.InstanceBag.DeadList.Add(session.Character.CharacterId);
+                                session.CurrentMapInstance.InstanceBag.DeadList.Add(session.Character.VisualId);
                                 member.Dead = true;
                                 team.ToList().Where(s => s.LastSummoned != null).ToList().ForEach(s =>
                                 {
@@ -338,7 +339,7 @@ namespace GloomyTale.GameObject.Networking
                                         o.SendPacket(member.Session.Character.GenerateTaP(2, true));
                                     }
 
-                                    o.SendPacket($"taw_d {member.Session.Character.CharacterId}");
+                                    o.SendPacket($"taw_d {member.Session.Character.VisualId}");
                                     o.SendPacket(member.Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WINNER_ARENA_ROUND"), killer?.Session.Character.Name/*, killer?.ArenaTeamType*/, member.Session.Character.Name), 10));
                                     o.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("WINNER_ARENA_ROUND"), killer?.Session.Character.Name/*, killer?.ArenaTeamType*/, member.Session.Character.Name), 0));
                                 });
@@ -463,14 +464,14 @@ namespace GloomyTale.GameObject.Networking
                     case MapInstanceType.TimeSpaceInstance:
                         lock (session.CurrentMapInstance.InstanceBag.DeadList)
                         {
-                            if (session.CurrentMapInstance.InstanceBag.Lives - session.CurrentMapInstance.InstanceBag.DeadList.ToList().Count(s => s == session.Character.CharacterId) < 0)
+                            if (session.CurrentMapInstance.InstanceBag.Lives - session.CurrentMapInstance.InstanceBag.DeadList.ToList().Count(s => s == session.Character.VisualId) < 0)
                             {
                                 session.Character.Hp = 1;
                                 session.Character.Mp = 1;
                             }
                             else
                             {
-                                session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("YOU_HAVE_LIFE"), session.CurrentMapInstance.InstanceBag.Lives - session.CurrentMapInstance.InstanceBag.DeadList.Count(e => e == session.Character.CharacterId)), 0));
+                                session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("YOU_HAVE_LIFE"), session.CurrentMapInstance.InstanceBag.Lives - session.CurrentMapInstance.InstanceBag.DeadList.Count(e => e == session.Character.VisualId)), 0));
                                 session.SendPacket(UserInterfaceHelper.GenerateDialog($"#revival^1 #revival^1 {Language.Instance.GetMessageFromKey("ASK_REVIVE_TS")}"));
                                 ReviveTask(session);
                             }
@@ -485,7 +486,7 @@ namespace GloomyTale.GameObject.Networking
                                 session.SendPacket(
                                     UserInterfaceHelper.GenerateMsg(
                                         Language.Instance.GetMessageFromKey("NOT_ENOUGH_CONTRIBUTI"), 0));
-                                ChangeMap(session.Character.CharacterId, 134, 142, 100);
+                                ChangeMap(session.Character.VisualId, 134, 142, 100);
                                 if (session.Character.Hp <= 0)
                                 {
                                     session.Character.Hp = 1;
@@ -497,7 +498,7 @@ namespace GloomyTale.GameObject.Networking
                             Task.Factory.StartNew(async () =>
                             {
                                 await Task.Delay(5000);
-                                Instance.ReviveFirstPosition(session.Character.CharacterId);
+                                Instance.ReviveFirstPosition(session.Character.VisualId);
                             });
                         }
                         else
@@ -509,9 +510,9 @@ namespace GloomyTale.GameObject.Networking
                                 session.Character.Mp = 1;
                                 session.Character.Group?.Raid.End();
                             }
-                            else if (3 - save.Count(s => s == session.Character.CharacterId) > 0)
+                            else if (3 - save.Count(s => s == session.Character.VisualId) > 0)
                             {
-                                session.SendPacket(UserInterfaceHelper.GenerateInfo(string.Format(Language.Instance.GetMessageFromKey("YOU_HAVE_LIFE"), 2 - session.CurrentMapInstance.InstanceBag.DeadList.Count(s => s == session.Character.CharacterId))));
+                                session.SendPacket(UserInterfaceHelper.GenerateInfo(string.Format(Language.Instance.GetMessageFromKey("YOU_HAVE_LIFE"), 2 - session.CurrentMapInstance.InstanceBag.DeadList.Count(s => s == session.Character.VisualId))));
 
                                 session.Character.Group?.Sessions.ForEach(grpSession =>
                                 {
@@ -521,7 +522,7 @@ namespace GloomyTale.GameObject.Networking
                                 Task.Factory.StartNew(async () =>
                                 {
                                     await Task.Delay(20000).ConfigureAwait(false);
-                                    Instance.ReviveFirstPosition(session.Character.CharacterId);
+                                    Instance.ReviveFirstPosition(session.Character.VisualId);
                                 });
                             }
                             else
@@ -529,7 +530,7 @@ namespace GloomyTale.GameObject.Networking
                                 Group grp = session.Character?.Group;
                                 session.Character.Hp = 1;
                                 session.Character.Mp = 1;
-                                ChangeMap(session.Character.CharacterId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
+                                ChangeMap(session.Character.VisualId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
                                 session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("KICK_RAID"), 0));
                                 if (grp != null)
                                 {
@@ -556,7 +557,7 @@ namespace GloomyTale.GameObject.Networking
                         }
                         else
                         {
-                            Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(o => ServerManager.Instance.ReviveFirstPosition(session.Character.CharacterId));
+                            Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(o => ServerManager.Instance.ReviveFirstPosition(session.Character.VisualId));
                         }
                         break;
 
@@ -574,7 +575,7 @@ namespace GloomyTale.GameObject.Networking
                         break;
 
                     default:
-                        Instance.ReviveFirstPosition(session.Character.CharacterId);
+                        Instance.ReviveFirstPosition(session.Character.VisualId);
                         break;
                 }
             }
@@ -646,7 +647,7 @@ namespace GloomyTale.GameObject.Networking
 
                     if (!noAggroLoss)
                     {
-                        session.CurrentMapInstance.RemoveMonstersTarget(session.Character.CharacterId);
+                        session.CurrentMapInstance.RemoveMonstersTarget(session.Character.VisualId);
                     }
 
                     session.Character.BattleEntity.RemoveOwnedMonsters();
@@ -692,8 +693,8 @@ namespace GloomyTale.GameObject.Networking
                         }
                     }
 
-                    session.CurrentMapInstance.UnregisterSession(session.Character.CharacterId);
-                    LeaveMap(session.Character.CharacterId);
+                    session.CurrentMapInstance.UnregisterSession(session.Character.VisualId);
+                    LeaveMap(session.Character.VisualId);
 
                     // cleanup sending queue to avoid sending uneccessary packets to it
                     session.ClearLowPriorityQueue();
@@ -802,7 +803,7 @@ namespace GloomyTale.GameObject.Networking
                             {
                                 if (!s.Character.IsChangingMapInstance && s.CurrentMapInstance != session.CurrentMapInstance)
                                 {
-                                    ChangeMapInstance(s.Character.CharacterId, session.CurrentMapInstance.MapInstanceId, mapX, mapY);
+                                    ChangeMapInstance(s.Character.VisualId, session.CurrentMapInstance.MapInstanceId, mapX, mapY);
                                 }
                             });
                         }
@@ -811,29 +812,29 @@ namespace GloomyTale.GameObject.Networking
                     {
                         session.Character.Family.Act4Raid.Sessions.Where(s => !s.Character.IsChangingMapInstance).ToList().ForEach(s =>
                         {
-                            ChangeMapInstance(s.Character.CharacterId, session.CurrentMapInstance.MapInstanceId, mapX, mapY);
+                            ChangeMapInstance(s.Character.VisualId, session.CurrentMapInstance.MapInstanceId, mapX, mapY);
                         });
                     }
 
                     Parallel.ForEach(
                         session.CurrentMapInstance.Sessions.Where(s =>
                             s.Character?.InvisibleGm == false &&
-                            s.Character.CharacterId != session.Character.CharacterId), visibleSession =>
+                            s.Character.VisualId != session.Character.VisualId), visibleSession =>
                             {
                                 if (ChannelId != 51 || session.Character.Faction == visibleSession.Character.Faction)
                                 {
                                     session.SendPacket(visibleSession.Character.GenerateIn());
                                     session.SendPacket(visibleSession.Character.GenerateGidx());
-                                    session.SendPacket(visibleSession.Character.GenerateTitleInfo());
+                                    session.SendPacket(visibleSession.Character.GenerateTitInfo());
                                     visibleSession.Character.Mates
-                                        .Where(m => (m.IsTeamMember || m.IsTemporalMate) && m.CharacterId != session.Character.CharacterId)
+                                        .Where(m => (m.IsTeamMember || m.IsTemporalMate) && m.CharacterId != session.Character.VisualId)
                                         .ToList().ForEach(m => session.SendPacket(m.GenerateIn()));
                                 }
                                 else
                                 {
                                     session.SendPacket(visibleSession.Character.GenerateIn(true, session.Account.Authority));
                                     visibleSession.Character.Mates
-                                        .Where(m => (m.IsTeamMember || m.IsTemporalMate) && m.CharacterId != session.Character.CharacterId)
+                                        .Where(m => (m.IsTeamMember || m.IsTemporalMate) && m.CharacterId != session.Character.VisualId)
                                         .ToList().ForEach(m => session.SendPacket(m.GenerateIn(true, ChannelId == 51, session.Account.Authority)));
                                 }
                             });
@@ -883,7 +884,7 @@ namespace GloomyTale.GameObject.Networking
                             {
                                 s.SendPacket(session.Character.GenerateIn());
                                 s.SendPacket(session.Character.GenerateGidx());
-                                s.SendPacket(session.Character.GenerateTitleInfo());
+                                s.SendPacket(session.Character.GenerateTitInfo());
                                 session.Character.Mates.Where(m => m.IsTeamMember || m.IsTemporalMate).ToList()
                                     .ForEach(m => s.SendPacket(m.GenerateIn(false, ChannelId == 51)));
                             }
@@ -896,7 +897,7 @@ namespace GloomyTale.GameObject.Networking
 
                             if (session.Character.GetBuff(BCardType.CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.ShadowAppears) is int[] EffectData && EffectData[0] != 0 && EffectData[1] != 0)
                             {
-                                s.CurrentMapInstance.Broadcast($"guri 0 {(short)VisualType.Player} {session.Character.CharacterId} {EffectData[0]} {EffectData[1]}");
+                                s.CurrentMapInstance.Broadcast($"guri 0 {(short)VisualType.Player} {session.Character.VisualId} {EffectData[0]} {EffectData[1]}");
                             }
 
                             session.Character.Mates.Where(m => m.IsTeamMember || m.IsTemporalMate).ToList()
@@ -949,7 +950,7 @@ namespace GloomyTale.GameObject.Networking
                             {
                                 ClientSession groupCharacterSession = Sessions.FirstOrDefault(s =>
                                     s.Character != null &&
-                                    s.Character.CharacterId == groupSession.Character.CharacterId &&
+                                    s.Character.VisualId == groupSession.Character.VisualId &&
                                     s.CurrentMapInstance == groupSession.CurrentMapInstance);
                                 if (groupCharacterSession == null)
                                 {
@@ -977,7 +978,7 @@ namespace GloomyTale.GameObject.Networking
                         session.Character.AddStaticBuff(new StaticBuffDTO
                         {
                             CardId = 339,
-                            CharacterId = session.Character.CharacterId,
+                            CharacterId = session.Character.VisualId,
                             RemainingTime = -1
                         });
                         session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("ENCASED_BURNING_SWORD")));
@@ -986,9 +987,9 @@ namespace GloomyTale.GameObject.Networking
                     session.SendPacket(session.Character.GenerateMinimapPosition());
                     session.CurrentMapInstance.OnCharacterDiscoveringMapEvents.ForEach(e =>
                     {
-                        if (!e.Item2.Contains(session.Character.CharacterId))
+                        if (!e.Item2.Contains(session.Character.VisualId))
                         {
-                            e.Item2.Add(session.Character.CharacterId);
+                            e.Item2.Add(session.Character.VisualId);
                             EventHelper.Instance.RunEvent(e.Item1, session);
                         }
                     });
@@ -1192,7 +1193,7 @@ namespace GloomyTale.GameObject.Networking
         {
             if (Groups != null)
             {
-                Group grp = Instance.Groups.Find(s => s.IsMemberOfGroup(session.Character.CharacterId));
+                Group grp = Instance.Groups.Find(s => s.IsMemberOfGroup(session.Character.VisualId));
                 if (grp != null)
                 {
                     switch (grp.GroupType)
@@ -1202,14 +1203,14 @@ namespace GloomyTale.GameObject.Networking
                         case GroupType.Team:
                             if (grp.Raid?.InstanceBag.Lock == true)
                             {
-                                grp.Raid.InstanceBag.DeadList.Add(session.Character.CharacterId);
+                                grp.Raid.InstanceBag.DeadList.Add(session.Character.VisualId);
                             }
                             if (grp.Sessions.ElementAt(0) == session && grp.SessionCount > 1)
                             {
                                 Broadcast(session,
                                     UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("NEW_LEADER")),
                                     ReceiverType.OnlySomeone, "",
-                                    grp.Sessions.ElementAt(1)?.Character.CharacterId ?? 0);
+                                    grp.Sessions.ElementAt(1)?.Character.VisualId ?? 0);
                             }
                             grp.LeaveGroup(session);
                             session.SendPacket(session.Character.GenerateRaid(1, true));
@@ -1222,7 +1223,7 @@ namespace GloomyTale.GameObject.Networking
                             }
                             if (session.CurrentMapInstance?.MapInstanceType == MapInstanceType.RaidInstance)
                             {
-                                ChangeMap(session.Character.CharacterId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
+                                ChangeMap(session.Character.VisualId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
                             }
                             session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("LEFT_RAID"), 0));
                             break;
@@ -1248,7 +1249,7 @@ namespace GloomyTale.GameObject.Networking
                         case GroupType.Group:
                             if (grp.Sessions.ElementAt(0) == session && grp.SessionCount > 1)
                             {
-                                Broadcast(session, UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("NEW_LEADER")), ReceiverType.OnlySomeone, "", grp.Sessions.ElementAt(1).Character.CharacterId);
+                                Broadcast(session, UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("NEW_LEADER")), ReceiverType.OnlySomeone, "", grp.Sessions.ElementAt(1).Character.VisualId);
                             }
                             grp.LeaveGroup(session);
                             if (grp.SessionCount == 1)
@@ -1829,12 +1830,12 @@ namespace GloomyTale.GameObject.Networking
                 }
             }
 
-            ChangeMapInstance(session.Character.CharacterId, minilandOwner.Character.Miniland.MapInstanceId, 5, 8);
+            ChangeMapInstance(session.Character.VisualId, minilandOwner.Character.Miniland.MapInstanceId, 5, 8);
             if (session.Character.Miniland.MapInstanceId != minilandOwner.Character.Miniland.MapInstanceId)
             {
                 session.SendPacket(UserInterfaceHelper.GenerateMsg(minilandOwner.Character.MinilandMessage, 0));
                 session.SendPacket(minilandOwner.Character.GenerateMlinfobr());
-                minilandOwner.Character.GeneralLogs.Add(new GeneralLogDTO { AccountId = session.Account.AccountId, CharacterId = session.Character.CharacterId, IpAddress = session.IpAddress, LogData = "Miniland", LogType = "World", Timestamp = DateTime.Now });
+                minilandOwner.Character.GeneralLogs.Add(new GeneralLogDTO { AccountId = session.Account.AccountId, CharacterId = session.Character.VisualId, IpAddress = session.IpAddress, LogData = "Miniland", LogType = "World", Timestamp = DateTime.Now });
                 session.SendPacket(minilandOwner.Character.GenerateMinilandObjectForFriends());
             }
             else
@@ -1866,7 +1867,7 @@ namespace GloomyTale.GameObject.Networking
             if (!session.Character.InvisibleGm)
             {
                 session.Character.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => session.CurrentMapInstance?.Broadcast(session, StaticPacketHelper.Out(VisualType.Npc, s.MateTransportId), ReceiverType.AllExceptMe));
-                session.CurrentMapInstance?.Broadcast(session, StaticPacketHelper.Out(VisualType.Player, session.Character.CharacterId), ReceiverType.AllExceptMe);
+                session.CurrentMapInstance?.Broadcast(session, StaticPacketHelper.Out(VisualType.Player, session.Character.VisualId), ReceiverType.AllExceptMe);
             }
         }
 
@@ -1943,22 +1944,22 @@ namespace GloomyTale.GameObject.Networking
                             switch (session.Character.Family.Act4Raid.MapInstanceType)
                             {
                                 case MapInstanceType.Act4Viserion:
-                                    ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
+                                    ServerManager.Instance.ChangeMapInstance(session.Character.VisualId,
                                         session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                     break;
 
                                 case MapInstanceType.Act4Orias:
-                                    ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
+                                    ServerManager.Instance.ChangeMapInstance(session.Character.VisualId,
                                         session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                     break;
 
                                 case MapInstanceType.Act4Zanarkand:
-                                    ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
+                                    ServerManager.Instance.ChangeMapInstance(session.Character.VisualId,
                                         session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                     break;
 
                                 case MapInstanceType.Act4Demetra:
-                                    ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
+                                    ServerManager.Instance.ChangeMapInstance(session.Character.VisualId,
                                         session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                     break;
                             }
@@ -1971,11 +1972,11 @@ namespace GloomyTale.GameObject.Networking
                             short y = (short)(42 + RandomNumber(-2, 3));
                             if (session.Character.Faction == FactionType.Angel)
                             {
-                                ChangeMap(session.Character.CharacterId, 130, x, y);
+                                ChangeMap(session.Character.VisualId, 130, x, y);
                             }
                             else if (session.Character.Faction == FactionType.Demon)
                             {
-                                ChangeMap(session.Character.CharacterId, 131, x, y);
+                                ChangeMap(session.Character.VisualId, 131, x, y);
                             }
                         }
                     }
@@ -1988,11 +1989,11 @@ namespace GloomyTale.GameObject.Networking
                             RespawnMapTypeDTO resp = session.Character.Respawn;
                             short x = (short)(resp.DefaultX + RandomNumber(-3, 3));
                             short y = (short)(resp.DefaultY + RandomNumber(-3, 3));
-                            ChangeMap(session.Character.CharacterId, resp.DefaultMapId, x, y);
+                            ChangeMap(session.Character.VisualId, resp.DefaultMapId, x, y);
                         }
                         else
                         {
-                            Instance.ChangeMap(session.Character.CharacterId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
+                            Instance.ChangeMap(session.Character.VisualId, session.Character.MapId, session.Character.MapX, session.Character.MapY);
                         }
                     }
                     session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateTp());
@@ -2120,7 +2121,7 @@ namespace GloomyTale.GameObject.Networking
                 {
                     return;
                 }
-                ChangeMapInstance(session.Character.CharacterId, guid, pos.X, pos.Y);
+                ChangeMapInstance(session.Character.VisualId, guid, pos.X, pos.Y);
             }
         }
 
@@ -3061,7 +3062,7 @@ namespace GloomyTale.GameObject.Networking
                     newFam.FamilyLogs = DAOFactory.Instance.FamilyLogDAO.LoadByFamilyId(famdto.FamilyId).ToList();
                     FamilyList[familyId] = newFam;
 
-                    Parallel.ForEach(Sessions.Where(s => newFam.FamilyCharacters.Any(m => m.CharacterId == s.Character.CharacterId)), session =>
+                    Parallel.ForEach(Sessions.Where(s => newFam.FamilyCharacters.Any(m => m.CharacterId == s.Character.VisualId)), session =>
                     {
                         if (session.Character.LastFamilyLeave < DateTime.Now.AddDays(-1).Ticks)
                         {
@@ -3081,7 +3082,7 @@ namespace GloomyTale.GameObject.Networking
                     {
                         FamilyList.Remove(fam.FamilyId);
                     }
-                    foreach (ClientSession sess in Sessions.Where(s => fam.FamilyCharacters.Any(f => f.CharacterId.Equals(s.Character.CharacterId))))
+                    foreach (ClientSession sess in Sessions.Where(s => fam.FamilyCharacters.Any(f => f.CharacterId.Equals(s.Character.VisualId))))
                     {
                         sess.Character.Family = null;
                         sess.SendPacket(sess.Character.GenerateGidx());
@@ -3098,7 +3099,7 @@ namespace GloomyTale.GameObject.Networking
             {
                 SCSCharacterMessage message = (SCSCharacterMessage)sender;
 
-                ClientSession targetSession = Sessions.SingleOrDefault(s => s.Character.CharacterId == message.DestinationCharacterId);
+                ClientSession targetSession = Sessions.SingleOrDefault(s => s.Character.VisualId == message.DestinationCharacterId);
                 switch (message.Type)
                 {
                     case MessageType.WhisperGM:
@@ -3338,7 +3339,7 @@ namespace GloomyTale.GameObject.Networking
                 }
                 if (revive)
                 {
-                    Instance.ReviveFirstPosition(session.Character.CharacterId);
+                    Instance.ReviveFirstPosition(session.Character.VisualId);
                 }
             });
         }

@@ -350,7 +350,7 @@ namespace GloomyTale.Handler
             Session.Character.ExchangeInfo.Gold = gold;
             Session.Character.ExchangeInfo.BankGold = bankGold;
             Session.CurrentMapInstance?.Broadcast(Session,
-                $"exc_list 1 {Session.Character.CharacterId} {gold} {bankGold} {packetList}", ReceiverType.OnlySomeone,
+                $"exc_list 1 {Session.Character.VisualId} {gold} {bankGold} {packetList}", ReceiverType.OnlySomeone,
                 "", Session.Character.ExchangeInfo.TargetCharacterId);
             Session.Character.ExchangeInfo.Validated = true;
         }
@@ -481,9 +481,9 @@ namespace GloomyTale.Handler
                                     Logger.Log.LogUserEvent("TRADE_REQUEST", Session.GenerateIdentity(),
                                         $"[ExchangeRequest][{targetSession.GenerateIdentity()}]");
 
-                                    Session.Character.TradeRequests.Add(targetSession.Character.CharacterId);
+                                    Session.Character.TradeRequests.Add(targetSession.Character.VisualId);
                                     targetSession.SendPacket(UserInterfaceHelper.GenerateDialog(
-                                        $"#req_exc^2^{Session.Character.CharacterId} #req_exc^5^{Session.Character.CharacterId} {string.Format(Language.Instance.GetMessageFromKey("INCOMING_EXCHANGE"), Session.Character.Name)}"));
+                                        $"#req_exc^2^{Session.Character.VisualId} #req_exc^5^{Session.Character.VisualId} {string.Format(Language.Instance.GetMessageFromKey("INCOMING_EXCHANGE"), Session.Character.Name)}"));
                                 }
                             }
 
@@ -493,7 +493,7 @@ namespace GloomyTale.Handler
                             if (Session.HasCurrentMapInstance && Session.HasSelectedCharacter
                                                               && Session.Character.ExchangeInfo != null
                                                               && Session.Character.ExchangeInfo.TargetCharacterId
-                                                              != Session.Character.CharacterId)
+                                                              != Session.Character.VisualId)
                             {
                                 if (!Session.HasCurrentMapInstance)
                                 {
@@ -673,9 +673,9 @@ namespace GloomyTale.Handler
                             {
                                 ClientSession otherSession =
                                     ServerManager.Instance.GetSessionByCharacterId(exchangeRequestPacket.CharacterId);
-                                if (exchangeRequestPacket.CharacterId == Session.Character.CharacterId
+                                if (exchangeRequestPacket.CharacterId == Session.Character.VisualId
                                     || Session.Character.Speed == 0 || otherSession == null
-                                    || otherSession.Character.TradeRequests.All(s => s != Session.Character.CharacterId))
+                                    || otherSession.Character.TradeRequests.All(s => s != Session.Character.VisualId))
                                 {
                                     return;
                                 }
@@ -705,11 +705,11 @@ namespace GloomyTale.Handler
                                 };
                                 sess.Character.ExchangeInfo = new ExchangeInfo
                                 {
-                                    TargetCharacterId = Session.Character.CharacterId,
+                                    TargetCharacterId = Session.Character.VisualId,
                                     Confirmed = false
                                 };
                                 Session.CurrentMapInstance?.Broadcast(Session,
-                                    $"exc_list 1 {Session.Character.CharacterId} -1", ReceiverType.OnlySomeone,
+                                    $"exc_list 1 {Session.Character.VisualId} -1", ReceiverType.OnlySomeone,
                                     "", exchangeRequestPacket.CharacterId);
                             }
                             else
@@ -821,9 +821,9 @@ namespace GloomyTale.Handler
                                 {
                                     Group group = ServerManager.Instance.Groups.Find(g =>
                                         g.IsMemberOfGroup(monsterMapItem.OwnerId.Value)
-                                        && g.IsMemberOfGroup(Session.Character.CharacterId));
+                                        && g.IsMemberOfGroup(Session.Character.VisualId));
                                     if (item.CreatedDate.AddSeconds(30) > DateTime.Now
-                                        && !(monsterMapItem.OwnerId == Session.Character.CharacterId
+                                        && !(monsterMapItem.OwnerId == Session.Character.VisualId
                                           || (group?.SharingMode == (byte)GroupSharingType.Everyone)))
                                     {
                                         Session.SendPacket(
@@ -1188,7 +1188,7 @@ namespace GloomyTale.Handler
 
                 if (Session.HasCurrentMapInstance
                     && Session.CurrentMapInstance.UserShops.FirstOrDefault(mapshop =>
-                        mapshop.Value.OwnerId.Equals(Session.Character.CharacterId)).Value == null
+                        mapshop.Value.OwnerId.Equals(Session.Character.VisualId)).Value == null
                     && (Session.Character.ExchangeInfo == null
                      || (Session.Character.ExchangeInfo?.ExchangeList).Count == 0))
                 {
@@ -2134,7 +2134,7 @@ namespace GloomyTale.Handler
                                 Session.Character.LastDelay = DateTime.Now;
                                 Session.SendPacket(UserInterfaceHelper.GenerateDelay(5000, 3, "#sl^1"));
                                 Session.CurrentMapInstance?.Broadcast(
-                                    UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.CharacterId),
+                                    UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.VisualId),
                                     Session.Character.PositionX, Session.Character.PositionY);
                             }
                         }
@@ -2462,7 +2462,7 @@ namespace GloomyTale.Handler
             }
 
             if (Session.HasCurrentMapInstance && Session.CurrentMapInstance.UserShops
-                    .FirstOrDefault(mapshop => mapshop.Value.OwnerId.Equals(Session.Character.CharacterId)).Value
+                    .FirstOrDefault(mapshop => mapshop.Value.OwnerId.Equals(Session.Character.VisualId)).Value
                 == null)
             {
                 ItemInstance inv =
@@ -2471,7 +2471,7 @@ namespace GloomyTale.Handler
                 {
                     inv.Item.Use(Session, ref inv, wearPacket.Type);
                     Session.Character.LoadSpeed();
-                    Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId,
+                    Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId,
                         123));
 
                     var ring = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Ring, InventoryType.Wear);
@@ -2582,10 +2582,10 @@ namespace GloomyTale.Handler
                 Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateCMode());
                 Session.SendPacket(Session.Character.GenerateLev());
                 Session.CurrentMapInstance?.Broadcast(
-                    StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 196),
+                    StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId, 196),
                     Session.Character.PositionX, Session.Character.PositionY);
                 Session.CurrentMapInstance?.Broadcast(
-                    UserInterfaceHelper.GenerateGuri(6, 1, Session.Character.CharacterId), Session.Character.PositionX,
+                    UserInterfaceHelper.GenerateGuri(6, 1, Session.Character.VisualId), Session.Character.PositionX,
                     Session.Character.PositionY);
                 Session.SendPacket(Session.Character.GenerateSpPoint());
                 Session.Character.LoadSpeed();
@@ -2600,7 +2600,7 @@ namespace GloomyTale.Handler
                         Session.Character.SkillsSp[skill.SkillVNum] = new CharacterSkill
                         {
                             SkillVNum = skill.SkillVNum,
-                            CharacterId = Session.Character.CharacterId
+                            CharacterId = Session.Character.VisualId
                         };
                     }
                 });

@@ -141,7 +141,7 @@ namespace GloomyTale.GameObject
                     {
                         invcopy.Type = InventoryType.Bazaar;
                         invcopy.Slot = i;
-                        invcopy.CharacterId = Owner.CharacterId;
+                        invcopy.CharacterId = Owner.VisualId;
                         DeleteFromSlotAndType(inv.Slot, inv.Type);
                         putItem(invcopy);
                         break;
@@ -158,7 +158,7 @@ namespace GloomyTale.GameObject
                     {
                         invcopy.Type = InventoryType.Bazaar;
                         invcopy.Slot = i;
-                        invcopy.CharacterId = Owner.CharacterId;
+                        invcopy.CharacterId = Owner.VisualId;
                         DeleteFromSlotAndType(inv.Slot, inv.Type);
                         putItem(invcopy);
                         break;
@@ -177,7 +177,7 @@ namespace GloomyTale.GameObject
                 {
                     invcopy.Type = InventoryType.Bazaar;
                     invcopy.Slot = i;
-                    invcopy.CharacterId = Owner.CharacterId;
+                    invcopy.CharacterId = Owner.VisualId;
                     putItem(invcopy);
                     break;
                 }
@@ -191,7 +191,7 @@ namespace GloomyTale.GameObject
         {
             if (Owner != null)
             {
-                ItemInstance newItem = InstantiateItemInstance(vnum, Owner.CharacterId, amount);
+                ItemInstance newItem = InstantiateItemInstance(vnum, Owner.VisualId, amount);
                 newItem.Rare = Rare;
                 newItem.Upgrade = Upgrade == 0 ? newItem.Item.ItemType == ItemType.Shell ? (byte)ServerManager.RandomNumber(50, 80) : Upgrade : Upgrade;
                 newItem.Design = Design;
@@ -215,7 +215,7 @@ namespace GloomyTale.GameObject
 
                 if (newItem.Item.Effect == 420 && newItem.Item.EffectValue == 911)
                 {
-                    newItem.BoundCharacterId = Owner.CharacterId;
+                    newItem.BoundCharacterId = Owner.VisualId;
                     newItem.DurabilityPoint = (int)newItem.Item.ItemValidTime;
                 }
 
@@ -280,7 +280,7 @@ namespace GloomyTale.GameObject
 
                 itemInstance.Slot = slot;
                 itemInstance.Type = type;
-                itemInstance.CharacterId = Owner.CharacterId;
+                itemInstance.CharacterId = Owner.VisualId;
 
                 if (ContainsKey(itemInstance.Id))
                 {

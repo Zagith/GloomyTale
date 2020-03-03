@@ -247,7 +247,7 @@ namespace GloomyTale.GameObject
                         mapInstance.XpRate = createMap.XpRate;
                         mapInstance.MapIndexX = createMap.IndexX;
                         mapInstance.MapIndexY = createMap.IndexY;
-                        mapInstance.InstanceBag.CreatorId = creator.CharacterId;
+                        mapInstance.InstanceBag.CreatorId = creator.VisualId;
                         if (!_mapInstanceDictionary.ContainsKey(createMap.Map))
                         {
                             _mapInstanceDictionary.Add(createMap.Map, mapInstance);

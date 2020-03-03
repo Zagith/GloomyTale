@@ -373,7 +373,7 @@ namespace GloomyTale.Handler
                                     }
                                     else
                                     {
-                                        Session.SendPacket(StaticPacketHelper.Cancel(2, target.CharacterId));
+                                        Session.SendPacket(StaticPacketHelper.Cancel(2, target.VisualId));
                                     }
                                 }
                             }
@@ -806,7 +806,7 @@ namespace GloomyTale.Handler
                                     }
 
                                     Observable.Timer(TimeSpan.FromMilliseconds(1000))
-                                        .Subscribe(o => ServerManager.Instance.AskPvpRevive(target.CharacterId));
+                                        .Subscribe(o => ServerManager.Instance.AskPvpRevive(target.VisualId));
                                 }
                             }
                             break;

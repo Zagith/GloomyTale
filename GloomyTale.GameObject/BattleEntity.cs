@@ -521,7 +521,7 @@ namespace GloomyTale.GameObject
         {
             get
             {
-                if (Character != null) return Character.CharacterId;
+                if (Character != null) return Character.VisualId;
                 else if (Mate != null) return Mate.MateTransportId;
                 else if (MapMonster != null) return MapMonster.MapMonsterId;
                 else if (MapNpc != null) return MapNpc.MapNpcId;
@@ -1235,7 +1235,7 @@ namespace GloomyTale.GameObject
                         }
                         else
                         {
-                            Character.Session?.SendPacket($"bf 1 {Character.CharacterId} 0.{indicator.Card.CardId}.0 {Level}");
+                            Character.Session?.SendPacket($"bf 1 {Character.VisualId} 0.{indicator.Card.CardId}.0 {Level}");
                             Character.Session?.SendPacket(Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_TERMINATED"), indicator.Card.Name), 20));
                         }
 
@@ -1316,7 +1316,7 @@ namespace GloomyTale.GameObject
                                     Character.AddStaticBuff(new StaticBuffDTO
                                     {
                                         CardId = 339,
-                                        CharacterId = Character.CharacterId,
+                                        CharacterId = Character.VisualId,
                                         RemainingTime = -1
                                     });
                                     Character.Session?.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("ENCASED_BURNING_SWORD")));
@@ -1338,7 +1338,7 @@ namespace GloomyTale.GameObject
 
                             case 620:
                                 {
-                                    if (Character.Session != null && Character.SavedLocation != null && indicator.Sender?.Character?.CharacterId == Character.CharacterId)
+                                    if (Character.Session != null && Character.SavedLocation != null && indicator.Sender?.Character?.VisualId == Character.VisualId)
                                     {
                                         Character.SavedLocation = null;
 
@@ -1838,7 +1838,7 @@ namespace GloomyTale.GameObject
                     {
                         if (MapInstance.MapInstanceType != MapInstanceType.TalentArenaMapInstance)
                         {
-                            Character.MapInstance.InstanceBag.DeadList.Add(Character.CharacterId);
+                            Character.MapInstance.InstanceBag.DeadList.Add(Character.VisualId);
                         }
                     }
                 }
@@ -2253,7 +2253,7 @@ namespace GloomyTale.GameObject
 
                                             if (team != null && team.FirstOrDefault(s => s.Session == Character.Session)?.ArenaTeamType != team.FirstOrDefault(s => s.Session == receiver.Character.Session)?.ArenaTeamType
                                                || MapInstance.MapInstanceType != MapInstanceType.TalentArenaMapInstance &&
-                                               (Character.Group == null || !Character.Group.IsMemberOfGroup(receiver.Character.CharacterId))
+                                               (Character.Group == null || !Character.Group.IsMemberOfGroup(receiver.Character.VisualId))
                                                && (iceteam == null || !iceteam.Contains(receiver.Character.Session)))
                                             {
                                                 return true;
@@ -2318,7 +2318,7 @@ namespace GloomyTale.GameObject
                             {
                                 if (IsMateTrainer(MapMonster.MonsterVNum))
                                 {
-                                    if (receiver.Mate != null && receiver.Mate.Owner.CharacterId == MapMonster.Owner.MapEntityId && MapInstance == receiver.Mate.Owner.Miniland)
+                                    if (receiver.Mate != null && receiver.Mate.Owner.VisualId == MapMonster.Owner.MapEntityId && MapInstance == receiver.Mate.Owner.Miniland)
                                     {
                                         return true;
                                     }

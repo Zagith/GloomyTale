@@ -82,12 +82,12 @@ namespace GloomyTale.GameObject
             str.AddRange(player.Character.Mates.Where(s => s.IsTeamMember).OrderByDescending(s => s.MateType).Select(mate => $"pst 2 {mate.MateTransportId} {((short)mate.MateType == 1 ? ++i : 0)} {(int)(mate.Hp / mate.MaxHp * 100)} {(int)(mate.Mp / mate.MaxMp * 100)} {mate.Hp} {mate.Mp} 0 0 0 {mate.Buff.GetAllItems().Aggregate("", (current, buff) => current + $" {buff.Card.CardId}")}"));
             Sessions.Where(s => s != player).ForEach(session =>
             {
-                str.Add($"pst 1 {session.Character.CharacterId} {++i} {(int)(session.Character.Hp / session.Character.HPLoad() * 100)} {(int)(session.Character.Mp / session.Character.MPLoad() * 100)} {session.Character.HPLoad()} {session.Character.MPLoad()} {(byte)session.Character.Class} {(byte)session.Character.Gender} {(session.Character.UseSp ? session.Character.Morph : 0)}{session.Character.Buff.GetAllItems().Where(s => !s.StaticBuff || new short[] { 339, 340 }.Contains(s.Card.CardId)).Aggregate("", (current, buff) => current + $" {buff.Card.CardId}")}");
+                str.Add($"pst 1 {session.Character.VisualId} {++i} {(int)(session.Character.Hp / session.Character.HPLoad() * 100)} {(int)(session.Character.Mp / session.Character.MPLoad() * 100)} {session.Character.HPLoad()} {session.Character.MPLoad()} {(byte)session.Character.Class} {(byte)session.Character.Gender} {(session.Character.UseSp ? session.Character.Morph : 0)}{session.Character.Buff.GetAllItems().Where(s => !s.StaticBuff || new short[] { 339, 340 }.Contains(s.Card.CardId)).Aggregate("", (current, buff) => current + $" {buff.Card.CardId}")}");
             });
             Sessions.Where(s => s == player).ForEach(session =>
             {
                 i = session.Character.Mates.Count(s => s.IsTeamMember);
-                str.Add($"pst 1 {session.Character.CharacterId} {++i} {(int)(session.Character.Hp / session.Character.HPLoad() * 100)} {(int)(session.Character.Mp / session.Character.MPLoad() * 100)} {session.Character.HPLoad()} {session.Character.MPLoad()} {(byte)session.Character.Class} {(byte)session.Character.Gender} {(session.Character.UseSp ? session.Character.Morph : 0)}");
+                str.Add($"pst 1 {session.Character.VisualId} {++i} {(int)(session.Character.Hp / session.Character.HPLoad() * 100)} {(int)(session.Character.Mp / session.Character.MPLoad() * 100)} {session.Character.HPLoad()} {session.Character.MPLoad()} {(byte)session.Character.Class} {(byte)session.Character.Gender} {(session.Character.UseSp ? session.Character.Morph : 0)}");
             });
             return str;
         }
@@ -107,7 +107,7 @@ namespace GloomyTale.GameObject
 
             try
             {
-                Sessions.ForEach(session => result += $" {session.Character.Level}.{(session.Character.UseSp || session.Character.IsVehicled ? session.Character.Morph : -1)}.{(short)session.Character.Class}.{Raid?.InstanceBag.DeadList.Count(s => s == session.Character.CharacterId) ?? 0}.{session.Character.Name}.{(short)session.Character.Gender}.{session.Character.CharacterId}.{session.Character.HeroLevel}");
+                Sessions.ForEach(session => result += $" {session.Character.Level}.{(session.Character.UseSp || session.Character.IsVehicled ? session.Character.Morph : -1)}.{(short)session.Character.Class}.{Raid?.InstanceBag.DeadList.Count(s => s == session.Character.VisualId) ?? 0}.{session.Character.Name}.{(short)session.Character.Gender}.{session.Character.VisualId}.{session.Character.HeroLevel}");
             }
             catch (Exception ex)
             {
@@ -135,7 +135,7 @@ namespace GloomyTale.GameObject
                     return null;
                 }
 
-                return sessions[_order].Character.CharacterId;
+                return sessions[_order].Character.VisualId;
             }
         }
 
@@ -152,9 +152,9 @@ namespace GloomyTale.GameObject
         }
 
         public bool IsMemberOfGroup(long entityId) => 
-            Sessions?.Any(s => s?.Character != null && (s.Character.CharacterId == entityId || s.Character.Mates.Any(m => m.IsTeamMember && m.MateTransportId == entityId))) == true;
+            Sessions?.Any(s => s?.Character != null && (s.Character.VisualId == entityId || s.Character.Mates.Any(m => m.IsTeamMember && m.MateTransportId == entityId))) == true;
 
-        public bool IsMemberOfGroup(ClientSession session) => Sessions?.Any(s => s?.Character?.CharacterId == session.Character.CharacterId) == true;
+        public bool IsMemberOfGroup(ClientSession session) => Sessions?.Any(s => s?.Character?.VisualId == session.Character.VisualId) == true;
 
         public void JoinGroup(long characterId)
         {
@@ -167,7 +167,7 @@ namespace GloomyTale.GameObject
 
         public bool JoinGroup(ClientSession session)
         {
-            if (Sessions.Count > 0 && session.Character.IsBlockedByCharacter(Sessions.FirstOrDefault().Character.CharacterId))
+            if (Sessions.Count > 0 && session.Character.IsBlockedByCharacter(Sessions.FirstOrDefault().Character.VisualId))
             {
                 session.SendPacket(
                     UserInterfaceHelper.GenerateInfo(
@@ -203,7 +203,7 @@ namespace GloomyTale.GameObject
             Sessions.Add(session);
             if (GroupType == GroupType.Group)
             {
-                if (Sessions.Find(c => c.Character.IsCoupleOfCharacter(session.Character.CharacterId)) is ClientSession couple)
+                if (Sessions.Find(c => c.Character.IsCoupleOfCharacter(session.Character.VisualId)) is ClientSession couple)
                 {
                     session.Character.AddStaticBuff(new StaticBuffDTO { CardId = 319 }, true);
                     couple.Character.AddStaticBuff(new StaticBuffDTO { CardId = 319 }, true);
@@ -219,7 +219,7 @@ namespace GloomyTale.GameObject
             result = $"fblst ";
             try
             {
-                Sessions.ForEach(session => result += $" {session.Character.Level}.{(session.Character.UseSp || session.Character.IsVehicled ? session.Character.Morph : -1)}.{(short)session.Character.Class}.{Raid?.InstanceBag.DeadList.Count(s => s == session.Character.CharacterId) ?? 0}.{session.Character.Name}.{(short)session.Character.Gender}.{session.Character.CharacterId}");
+                Sessions.ForEach(session => result += $" {session.Character.Level}.{(session.Character.UseSp || session.Character.IsVehicled ? session.Character.Morph : -1)}.{(short)session.Character.Class}.{Raid?.InstanceBag.DeadList.Count(s => s == session.Character.VisualId) ?? 0}.{session.Character.Name}.{(short)session.Character.Gender}.{session.Character.VisualId}");
             }
             catch (Exception ex)
             {
@@ -231,12 +231,12 @@ namespace GloomyTale.GameObject
         public void LeaveGroup(ClientSession session)
         {
             session.Character.Group = null;
-            if (Sessions.Find(c => c.Character.IsCoupleOfCharacter(session.Character.CharacterId)) is ClientSession couple)
+            if (Sessions.Find(c => c.Character.IsCoupleOfCharacter(session.Character.VisualId)) is ClientSession couple)
             {
                 session.Character.RemoveBuff(319, true);
                 couple.Character.RemoveBuff(319, true);
             }
-            Sessions.RemoveAll(s => s?.Character.CharacterId == session.Character.CharacterId);
+            Sessions.RemoveAll(s => s?.Character.VisualId == session.Character.VisualId);
             if (IsLeader(session) && GroupType != GroupType.Group && Sessions.Count > 1)
             {
                 Sessions.ForEach(s => s.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("TEAM_LEADER_CHANGE"), Sessions.ElementAt(0).Character?.Name), 0)));

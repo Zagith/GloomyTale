@@ -122,7 +122,7 @@ namespace GloomyTale.GameObject.Event.GAMES
                     session.SendPacket(session.Character.GenerateCond());
                     session.Character.LastSpeedChange = DateTime.Now;
                     session.CurrentMapInstance?.Broadcast(session.Character.GenerateCMode());
-                    session.SendPacket($"eff_s 1 {session.Character.CharacterId} 4323");
+                    session.SendPacket($"eff_s 1 {session.Character.VisualId} 4323");
                     _map.Broadcast("srlst 0");
                     session.SendPacket("say 1 -1 10 In 30 seconds The sheep farm raid begins soon.");
                     Observable.Timer(TimeSpan.FromSeconds(30)).Subscribe(o =>
@@ -208,7 +208,7 @@ namespace GloomyTale.GameObject.Event.GAMES
                     session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("STAY_TIME"), session.Character.SpCooldown), 11));
                     session.SendPacket($"sd {session.Character.SpCooldown}");
                     session.CurrentMapInstance?.Broadcast(session.Character.GenerateCMode());
-                    session.CurrentMapInstance?.Broadcast(UserInterfaceHelper.GenerateGuri(6, 1, session.Character.CharacterId), session.Character.PositionX, session.Character.PositionY);
+                    session.CurrentMapInstance?.Broadcast(UserInterfaceHelper.GenerateGuri(6, 1, session.Character.VisualId), session.Character.PositionX, session.Character.PositionY);
 
                     // ms_c
                     session.SendPacket(session.Character.GenerateSki());

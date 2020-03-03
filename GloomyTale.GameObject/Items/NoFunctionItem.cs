@@ -63,7 +63,7 @@ namespace GloomyTale.GameObject
                                     TitleType = inv.ItemVNum,
                                     Visible = false,
                                     Active = false,
-                                    CharacterId = session.Character.CharacterId
+                                    CharacterId = session.Character.VisualId
                                 });
                                 session.SendPacket(session.Character.GenerateTitle());
                                 session.Character.Inventory.RemoveItemAmount(inv.ItemVNum);

@@ -440,9 +440,9 @@ namespace GloomyTale.Handler
 
                 #region Unban Character
 
-                if (ServerManager.Instance.BannedCharacters.Contains(character.CharacterId))
+                if (ServerManager.Instance.BannedCharacters.Contains(character.VisualId))
                 {
-                    ServerManager.Instance.BannedCharacters.RemoveAll(s => s == character.CharacterId);
+                    ServerManager.Instance.BannedCharacters.RemoveAll(s => s == character.VisualId);
                 }
 
                 #endregion
@@ -464,7 +464,7 @@ namespace GloomyTale.Handler
 
                 character.GeneralLogs = new ThreadSafeGenericList<GeneralLogDTO>();
                 character.GeneralLogs.AddRange(DAOFactory.Instance.GeneralLogDAO.LoadByAccount(Session.Account.AccountId)
-                    .Where(s => s.LogType == "DailyReward" || s.CharacterId == character.CharacterId).ToList());
+                    .Where(s => s.LogType == "DailyReward" || s.CharacterId == character.VisualId).ToList());
 
                 #endregion
 
@@ -480,9 +480,9 @@ namespace GloomyTale.Handler
 
                 #region Other Character Stuffs
 
-                Session.Character.Respawns = DAOFactory.Instance.RespawnDAO.LoadByCharacter(Session.Character.CharacterId).ToList();
-                Session.Character.StaticBonusList = DAOFactory.Instance.StaticBonusDAO.LoadByCharacterId(Session.Character.CharacterId).ToList();
-                Session.Character.Titles = DAOFactory.Instance.CharacterTitleDAO.LoadByCharacterId(Session.Character.CharacterId).ToList();
+                Session.Character.Respawns = DAOFactory.Instance.RespawnDAO.LoadByCharacter(Session.Character.VisualId).ToList();
+                Session.Character.StaticBonusList = DAOFactory.Instance.StaticBonusDAO.LoadByCharacterId(Session.Character.VisualId).ToList();
+                Session.Character.Titles = DAOFactory.Instance.CharacterTitleDAO.LoadByCharacterId(Session.Character.VisualId).ToList();
                 Session.Character.LoadInventory();
                 Session.Character.LoadQuicklists();
                 Session.Character.GenerateMiniland();
@@ -504,7 +504,7 @@ namespace GloomyTale.Handler
                 //    DAOFactory.Instance.CharacterQuestDAO.InsertOrUpdate(firstQuest);
                 //}
 
-                DAOFactory.Instance.CharacterQuestDAO.LoadByCharacterId(Session.Character.CharacterId).ToList()
+                DAOFactory.Instance.CharacterQuestDAO.LoadByCharacterId(Session.Character.VisualId).ToList()
                     .ForEach(qst => Session.Character.Quests.Add((CharacterQuest)qst));
 
                 #endregion
@@ -520,7 +520,7 @@ namespace GloomyTale.Handler
 
                 #region Load Mates
 
-                DAOFactory.Instance.MateDAO.LoadByCharacterId(Session.Character.CharacterId).ToList().ForEach(s =>
+                DAOFactory.Instance.MateDAO.LoadByCharacterId(Session.Character.VisualId).ToList().ForEach(s =>
                 {
                     var mate = (Mate)s;
                     mate.Owner = Session.Character;
@@ -562,7 +562,7 @@ namespace GloomyTale.Handler
 
                 #region Load Static Buff
 
-                foreach (StaticBuffDTO staticBuff in DAOFactory.Instance.StaticBuffDAO.LoadByCharacterId(Session.Character.CharacterId))
+                foreach (StaticBuffDTO staticBuff in DAOFactory.Instance.StaticBuffDAO.LoadByCharacterId(Session.Character.VisualId))
                 {
                     if (staticBuff.CardId != 319 /* Wedding */)
                     {
@@ -577,7 +577,7 @@ namespace GloomyTale.Handler
                 Session.Character.GeneralLogs.Add(new GeneralLogDTO
                 {
                     AccountId = Session.Account.AccountId,
-                    CharacterId = Session.Character.CharacterId,
+                    CharacterId = Session.Character.VisualId,
                     IpAddress = Session.IpAddress,
                     LogData = "World",
                     LogType = "Connection",
@@ -586,7 +586,7 @@ namespace GloomyTale.Handler
 
                 Session.SendPacket("OK");
 
-                CommunicationServiceClient.Instance.ConnectCharacter(ServerManager.Instance.WorldId, character.CharacterId);
+                CommunicationServiceClient.Instance.ConnectCharacter(ServerManager.Instance.WorldId, character.VisualId);
 
 #warning remove this comment for allow 2auth system
                 /*Session.Character.HasGodMode = true;

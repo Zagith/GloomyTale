@@ -1,4 +1,5 @@
-﻿using GloomyTale.Domain;
+﻿using GloomyTale.Data;
+using GloomyTale.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -48,9 +49,9 @@ namespace GloomyTale.GameObject.ComponentEntities.Interfaces
 
         RegionType AccountLanguage { get; }
 
-        List<StaticBonusDto> StaticBonusList { get; set; }
+        List<StaticBonusDto> StaticBonusList { get; set; }*/
 
-        List<TitleDto> Titles { get; set; }*/
+        List<CharacterTitleDTO> Titles { get; set; }
 
         //bool IsDisconnecting { get; }
 

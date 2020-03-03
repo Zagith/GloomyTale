@@ -533,7 +533,7 @@ namespace GloomyTale.GameObject
                     }
                     if (session?.Character != null)
                     {
-                        Target = session.Character.CharacterId;
+                        Target = session.Character.VisualId;
                     }
                 }
             }

@@ -60,7 +60,7 @@ namespace GloomyTale.GameObject.Helpers
         {
             var log = new LogDropDTO
             {
-                CharacterId = character.Character.CharacterId,
+                CharacterId = character.Character.VisualId,
                 ItemVNum = inv.ItemVNum,
                 ItemName = inv.Item.Name,
                 Amount = amount,
@@ -77,7 +77,7 @@ namespace GloomyTale.GameObject.Helpers
         {
             var log = new LogPutItemDTO
             {
-                CharacterId = character.Character.CharacterId,
+                CharacterId = character.Character.VisualId,
                 ItemVNum = inv.ItemVNum,
                 Amount = inv.Amount,
                 Map = character.Character.MapId,

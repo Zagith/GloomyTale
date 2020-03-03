@@ -121,7 +121,7 @@ namespace GloomyTale.GameObject
             MapY = PositionY;
             MapX = PositionX;
             Direction = 2;
-            CharacterId = owner.CharacterId;
+            CharacterId = owner.VisualId;
             Skills = new List<NpcMonsterSkill>();
             foreach (NpcMonsterSkill ski in Monster.Skills)
             {
@@ -1728,7 +1728,7 @@ namespace GloomyTale.GameObject
                                     string.Format(Language.Instance.GetMessageFromKey("PVP_KILL"),
                                         Owner.Name, target.Character.Name), 10));
                                 Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
-                                    ServerManager.Instance.AskPvpRevive((long)target.Character?.CharacterId));
+                                    ServerManager.Instance.AskPvpRevive((long)target.Character?.VisualId));
                             }
                             else if (target.MapNpc != null)
                             {
@@ -1757,7 +1757,7 @@ namespace GloomyTale.GameObject
                     .GetCharactersInRange(
                         npcMonsterSkill.Skill.TargetRange == 0 ? MapX : RangeBaseX,
                         npcMonsterSkill.Skill.TargetRange == 0 ? MapY : RangeBaseY,
-                        npcMonsterSkill.Skill.TargetRange).Where(s => s.CharacterId != target.MapEntityId))
+                        npcMonsterSkill.Skill.TargetRange).Where(s => s.VisualId != target.MapEntityId))
                 {
                     if (!BattleEntity.CanAttackEntity(characterInRange.BattleEntity))
                     {
@@ -1861,16 +1861,16 @@ namespace GloomyTale.GameObject
 
                             characterInRange.GetDamage(dmg, BattleEntity);
                             BattleEntity.MapInstance.Broadcast(null, characterInRange.GenerateStat(), ReceiverType.OnlySomeone,
-                                "", characterInRange.CharacterId);
+                                "", characterInRange.VisualId);
 
                             BattleEntity.MapInstance.Broadcast(npcMonsterSkill != null
-                                ? StaticPacketHelper.SkillUsed(BattleEntity.UserType, BattleEntity.MapEntityId, (byte)VisualType.Player, characterInRange.CharacterId,
+                                ? StaticPacketHelper.SkillUsed(BattleEntity.UserType, BattleEntity.MapEntityId, (byte)VisualType.Player, characterInRange.VisualId,
                                     npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                                     npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, MapX, MapY,
                                     characterInRange.Hp > 0,
                                     (int)(characterInRange.Hp / characterInRange.HPLoad() * 100), dmg,
                                     hitmode, 0)
-                                : StaticPacketHelper.SkillUsed(BattleEntity.UserType, BattleEntity.MapEntityId, (byte)VisualType.Player, characterInRange.CharacterId, 0,
+                                : StaticPacketHelper.SkillUsed(BattleEntity.UserType, BattleEntity.MapEntityId, (byte)VisualType.Player, characterInRange.VisualId, 0,
                                     Monster.BasicCooldown, 11, Monster.BasicSkill, 0, 0, characterInRange.Hp > 0,
                                     (int)(characterInRange.Hp / characterInRange.HPLoad() * 100), dmg,
                                     hitmode, 0));
@@ -1893,7 +1893,7 @@ namespace GloomyTale.GameObject
                                         Owner.Name, characterInRange?.Name), 10));
                                 Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
                                 {
-                                    ServerManager.Instance.AskPvpRevive((long)characterInRange?.CharacterId);
+                                    ServerManager.Instance.AskPvpRevive((long)characterInRange?.VisualId);
                                 });
                             }
                         }

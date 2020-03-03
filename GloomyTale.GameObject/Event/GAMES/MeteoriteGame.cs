@@ -199,7 +199,7 @@ namespace GloomyTale.GameObject.Event.GAMES
                                 character.IsCustomSpeed = false;
                                 character.RemoveVehicle();
                                 character.GetDamage(655350, character.BattleEntity);
-                                Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o => ServerManager.Instance.AskRevive(character.CharacterId));
+                                Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o => ServerManager.Instance.AskRevive(character.VisualId));
                             }
                             _map.RemoveMonster(circle);
                             _map.Broadcast(StaticPacketHelper.Out(VisualType.Monster, circle.MapMonsterId));

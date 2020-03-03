@@ -103,7 +103,7 @@ namespace GloomyTale.Handler
                 const byte TIMER = 30;
                 Observable.Timer(TimeSpan.FromSeconds(3)).Subscribe(o =>
                 {
-                    Session.CurrentMapInstance.Broadcast($"ta_t 0 {client.Character.CharacterId} {TIMER}");
+                    Session.CurrentMapInstance.Broadcast($"ta_t 0 {client.Character.VisualId} {TIMER}");
                     client.Character.PositionX = x;
                     client.Character.PositionY = y;
                     Session.CurrentMapInstance.Broadcast(client.Character.GenerateTp());
@@ -150,13 +150,13 @@ namespace GloomyTale.Handler
         {
             if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance)
             {
-                ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
+                ServerManager.Instance.ChangeMap(Session.Character.VisualId, Session.Character.MapId,
                     Session.Character.MapX, Session.Character.MapY);
                 Session.Character.Timespace = null;
             }
             else if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.RaidInstance)
             {
-                ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
+                ServerManager.Instance.ChangeMap(Session.Character.VisualId, Session.Character.MapId,
                     Session.Character.MapX, Session.Character.MapY);
                 ServerManager.Instance.GroupLeave(Session);
             }
@@ -204,7 +204,7 @@ namespace GloomyTale.Handler
                         {
                             if (session != null)
                             {
-                                ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
+                                ServerManager.Instance.ChangeMapInstance(session.Character.VisualId,
                                     session.Character.Group.Raid.FirstMap.MapInstanceId,
                                     session.Character.Group.Raid.StartX, session.Character.Group.Raid.StartY);
                                 session.SendPacket("raidbf 0 0 25");
@@ -286,7 +286,7 @@ namespace GloomyTale.Handler
                         for (int i = 0; i < 2; i++)
                         {
                             Gift gift = null;
-                            if (!DAOFactory.Instance.TimeSpaceLogDAO.LoadByCharacterId(Session.Character.CharacterId).Any(s => s.TimeSpaceId == Session.Character.Timespace.ScriptedInstanceId))
+                            if (!DAOFactory.Instance.TimeSpaceLogDAO.LoadByCharacterId(Session.Character.VisualId).Any(s => s.TimeSpaceId == Session.Character.Timespace.ScriptedInstanceId))
                             {
                                 gift = Session.Character.Timespace.SpecialItems.ElementAtOrDefault(i);
                             }
@@ -294,7 +294,7 @@ namespace GloomyTale.Handler
                             if (gift != null)
                             {
                                 Session.Character.GiftAdd(gift.VNum, gift.Amount, design: gift.Design, forceRandom: gift.IsRandomRare);
-                                LogHelper.Instance.InsertTimeSpacesLog(Session.Character.CharacterId, Session.Character.Timespace.ScriptedInstanceId,
+                                LogHelper.Instance.InsertTimeSpacesLog(Session.Character.VisualId, Session.Character.Timespace.ScriptedInstanceId,
                                     DateTime.Now);
                             }
                         }
@@ -362,7 +362,7 @@ namespace GloomyTale.Handler
                                 && Session.Character.Group?.Sessions.Find(s =>
                                     s.CurrentMapInstance.InstanceBag?.Lock == false
                                     && s.CurrentMapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance
-                                    && s.Character.CharacterId != Session.Character.CharacterId
+                                    && s.Character.VisualId != Session.Character.VisualId
                                     && s.Character.Timespace?.Id == portal.Id
                                     && !s.Character.Timespace.IsIndividual) is ClientSession TeamMemberInInstance)
                             {
@@ -372,7 +372,7 @@ namespace GloomyTale.Handler
                                     Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("INSTANCE_ENTRIES"), entries), 10));
                                 }
                                 Session.SendPacket(UserInterfaceHelper.GenerateDialog(
-                                    $"#wreq^3^{TeamMemberInInstance.Character.CharacterId} #wreq^0^1 {Language.Instance.GetMessageFromKey("ASK_JOIN_TEAM_TS")}"));
+                                    $"#wreq^3^{TeamMemberInInstance.Character.VisualId} #wreq^0^1 {Language.Instance.GetMessageFromKey("ASK_JOIN_TEAM_TS")}"));
                             }
                             else
                             {
@@ -395,7 +395,7 @@ namespace GloomyTale.Handler
 
                         case 3:
                             ClientSession clientSession =
-                                Session.Character.Group?.Sessions.Find(s => s.Character.CharacterId == packet.Param);
+                                Session.Character.Group?.Sessions.Find(s => s.Character.VisualId == packet.Param);
                             if (clientSession != null && clientSession.CurrentMapInstance.InstanceBag?.Lock == false && clientSession.Character?.Timespace is ScriptedInstance TeamTimeSpace && !TeamTimeSpace.IsIndividual)
                             {
                                 if (portal.Id == TeamTimeSpace.Id)
@@ -433,7 +433,7 @@ namespace GloomyTale.Handler
                                         Session?.SendPacket(TeamTimeSpace.FirstMap.InstanceBag.GenerateScore());
                                         if (TeamTimeSpace.StartX != 0 || TeamTimeSpace.StartY != 0)
                                         {
-                                            ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
+                                            ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId,
                                                 clientSession.CurrentMapInstance.MapInstanceId, TeamTimeSpace.StartX, TeamTimeSpace.StartY);
                                         }
                                         else
@@ -497,7 +497,7 @@ namespace GloomyTale.Handler
                         //5seed
                         if (Session.Character.Inventory.CountItem(1012) >= 5)
                         {
-                            Session.CurrentMapInstance.InstanceBag.DeadList.Add(Session.Character.CharacterId);
+                            Session.CurrentMapInstance.InstanceBag.DeadList.Add(Session.Character.VisualId);
                             Session.Character.Dignity -= 20;
                             if (Session.Character.Dignity < -1000)
                             {
@@ -521,7 +521,7 @@ namespace GloomyTale.Handler
                     {
                         //1seed
                     }
-                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId, Session.Character.MapX, Session.Character.MapY);
+                    ServerManager.Instance.ChangeMap(Session.Character.VisualId, Session.Character.MapId, Session.Character.MapX, Session.Character.MapY);
                 }
                 if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.RaidInstance)
                 {
@@ -569,7 +569,7 @@ namespace GloomyTale.Handler
             ConcurrentBag<ArenaTeamMember> at = ServerManager.Instance.ArenaTeams.ToList().FirstOrDefault(s => s.Any(o => o.Session?.Character?.Name == packet.Username && Session.CurrentMapInstance != null));
             if (at != null)
             {
-                ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, at.FirstOrDefault(s => s.Session != null).Session.CurrentMapInstance.MapInstanceId, 69, 100);
+                ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId, at.FirstOrDefault(s => s.Session != null).Session.CurrentMapInstance.MapInstanceId, 69, 100);
 
                 var zenas = at.OrderBy(s => s.Order).FirstOrDefault(s => s.Session != null && !s.Dead && s.ArenaTeamType == ArenaTeamType.ZENAS);
                 var erenia = at.OrderBy(s => s.Order).FirstOrDefault(s => s.Session != null && !s.Dead && s.ArenaTeamType == ArenaTeamType.ERENIA);

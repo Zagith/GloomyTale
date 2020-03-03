@@ -55,7 +55,7 @@ namespace GloomyTale.Handler
                 ClientSession sess = ServerManager.Instance.GetSessionByCharacterId(mJoinPacket.CharacterId);
                 if (sess?.Character != null && (ServerManager.Instance.ChannelId != 51 || sess.Character.Faction == Session.Character.Faction))
                 {
-                    if (!Session.Character.IsFriendOfCharacter(sess.Character.CharacterId) && !sess.Character.BattleEntity.GetOwnedNpcs().Any(s => sess.Character.BattleEntity.IsSignpost(s.NpcVNum)))
+                    if (!Session.Character.IsFriendOfCharacter(sess.Character.VisualId) && !sess.Character.BattleEntity.GetOwnedNpcs().Any(s => sess.Character.BattleEntity.IsSignpost(s.NpcVNum)))
                     {
                         return;
                     }
@@ -113,7 +113,7 @@ namespace GloomyTale.Handler
                         }
 
                         Session.Character.MapInstance.Broadcast(
-                            UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.CharacterId));
+                            UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.VisualId));
                         Session.Character.CurrentMinigame = (short) (game == 0 ? 5102 :
                             game == 1 ? 5103 :
                             game == 2 ? 5105 :
@@ -121,7 +121,7 @@ namespace GloomyTale.Handler
                             game == 4 ? 5113 : 5112);
                         Session.Character.MinigameLog = new MinigameLogDTO
                         {
-                            CharacterId = Session.Character.CharacterId,
+                            CharacterId = Session.Character.VisualId,
                             StartTime = DateTime.Now.Ticks,
                             Minigame = game
                         };
@@ -132,13 +132,13 @@ namespace GloomyTale.Handler
                     case 2:
                         Session.Character.CurrentMinigame = 0;
                         Session.Character.MapInstance.Broadcast(
-                            UserInterfaceHelper.GenerateGuri(6, 1, Session.Character.CharacterId));
+                            UserInterfaceHelper.GenerateGuri(6, 1, Session.Character.VisualId));
                         break;
 
                     case 3:
                         Session.Character.CurrentMinigame = 0;
                         Session.Character.MapInstance.Broadcast(
-                            UserInterfaceHelper.GenerateGuri(6, 1, Session.Character.CharacterId));
+                            UserInterfaceHelper.GenerateGuri(6, 1, Session.Character.VisualId));
                         if (packet.Point.HasValue && Session.Character.MinigameLog != null)
                         {
                             Session.Character.MinigameLog.EndTime = DateTime.Now.Ticks;
@@ -184,7 +184,7 @@ namespace GloomyTale.Handler
                                     Session.Character.MinilandPoint -= 100;
                                     if (inv.Count == 0)
                                     {
-                                        Session.Character.SendGift(Session.Character.CharacterId, obj.VNum, obj.Amount, 0, 0, 0, false);
+                                        Session.Character.SendGift(Session.Character.VisualId, obj.VNum, obj.Amount, 0, 0, 0, false);
                                     }
 
                                     if (client != Session)
@@ -311,7 +311,7 @@ namespace GloomyTale.Handler
                                 }
                                 else
                                 {
-                                    Session.Character.SendGift(Session.Character.CharacterId, itemVNum, itemAmount, 0, 0, 0, false);
+                                    Session.Character.SendGift(Session.Character.VisualId, itemVNum, itemAmount, 0, 0, 0, false);
                                 }
 
                                 str += $" {itemVNum} {itemAmount}";
@@ -364,7 +364,7 @@ namespace GloomyTale.Handler
                     {
                         MinilandObject minilandobj = new MinilandObject
                         {
-                            CharacterId = Session.Character.CharacterId,
+                            CharacterId = Session.Character.VisualId,
                             ItemInstance = minilandobject,
                             ItemInstanceId = minilandobject.Id,
                             MapX = addObjPacket.PositionX,
@@ -456,7 +456,7 @@ namespace GloomyTale.Handler
 
                                 //Need to be review to permit one friend limit on the miniland
                                 Session.Character.Miniland.Sessions.Where(s => s.Character != Session.Character).ToList()
-                                    .ForEach(s => ServerManager.Instance.ChangeMap(s.Character.CharacterId,
+                                    .ForEach(s => ServerManager.Instance.ChangeMap(s.Character.VisualId,
                                         s.Character.MapId, s.Character.MapX, s.Character.MapY));
                                 break;
 
@@ -465,7 +465,7 @@ namespace GloomyTale.Handler
                                     UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("MINILAND_LOCK"),
                                         0));
                                 Session.Character.Miniland.Sessions.Where(s => s.Character != Session.Character).ToList()
-                                    .ForEach(s => ServerManager.Instance.ChangeMap(s.Character.CharacterId,
+                                    .ForEach(s => ServerManager.Instance.ChangeMap(s.Character.VisualId,
                                         s.Character.MapId, s.Character.MapX, s.Character.MapY));
                                 break;
 

@@ -901,7 +901,7 @@ namespace GloomyTale.GameObject
                         ShouldRespawn = false
                     };
                     MapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(31, 1,
-                        hitRequest.Session.Character.CharacterId, onyxX, onyxY));
+                        hitRequest.Session.Character.VisualId, onyxX, onyxY));
                     onyx.Initialize(MapInstance);
                     MapInstance.AddMonster(onyx);
                     MapInstance.Broadcast(onyx.GenerateIn());
@@ -2493,12 +2493,12 @@ namespace GloomyTale.GameObject
                                     string.Format(Language.Instance.GetMessageFromKey("PVP_KILL"),
                                         Owner.Character.Name, target.Character.Name), 10));
                                 Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
-                                    ServerManager.Instance.AskPvpRevive((long)target.Character?.CharacterId));
+                                    ServerManager.Instance.AskPvpRevive((long)target.Character?.VisualId));
                             }
                             else
                             {
                                 Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
-                                    ServerManager.Instance.AskRevive((long)target.Character?.CharacterId));
+                                    ServerManager.Instance.AskRevive((long)target.Character?.VisualId));
                             }
                         }
                         else if (target.Mate != null)
@@ -2581,7 +2581,7 @@ namespace GloomyTale.GameObject
                         npcMonsterSkill.Skill.TargetRange == 0 ? MapX : RangeBaseX,
                         npcMonsterSkill.Skill.TargetRange == 0 ? MapY : RangeBaseY,
                         skillRange,
-                        attackGreaterDistance).Where(s => s.CharacterId != target.MapEntityId))
+                        attackGreaterDistance).Where(s => s.VisualId != target.MapEntityId))
                 {
                     if (!BattleEntity.CanAttackEntity(characterInRange.BattleEntity))
                     {
@@ -2680,13 +2680,13 @@ namespace GloomyTale.GameObject
                             characterInRange.GetDamage(dmg, BattleEntity);
                             lock (DamageList)
                             {
-                                if (!DamageList.Any(s => s.Key.MapEntityId == characterInRange.CharacterId))
+                                if (!DamageList.Any(s => s.Key.MapEntityId == characterInRange.VisualId))
                                 {
                                     AddToAggroList(characterInRange.BattleEntity);
                                 }
                             }
                             MapInstance.Broadcast(null, characterInRange.GenerateStat(), ReceiverType.OnlySomeone,
-                                "", characterInRange.CharacterId);
+                                "", characterInRange.VisualId);
 
                             switch (hitmode)
                             {
@@ -2709,13 +2709,13 @@ namespace GloomyTale.GameObject
                             }
 
                             MapInstance.Broadcast(npcMonsterSkill != null
-                                ? StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Player, characterInRange.CharacterId,
+                                ? StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Player, characterInRange.VisualId,
                                     npcMonsterSkill.SkillVNum, npcMonsterSkill.Skill.Cooldown,
                                     npcMonsterSkill.Skill.AttackAnimation, npcMonsterSkill.Skill.Effect, MapX, MapY,
                                     characterInRange.Hp > 0,
                                     (int)(characterInRange.Hp / characterInRange.HPLoad() * 100), dmg,
                                     hitmode, 0)
-                                : StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Player, characterInRange.CharacterId, 0,
+                                : StaticPacketHelper.SkillUsed(VisualType.Monster, MapMonsterId, (byte)VisualType.Player, characterInRange.VisualId, 0,
                                     Monster.BasicCooldown, 11, Monster.BasicSkill, 0, 0, characterInRange.Hp > 0,
                                     (int)(characterInRange.Hp / characterInRange.HPLoad() * 100), dmg,
                                     hitmode, 0));
@@ -2742,14 +2742,14 @@ namespace GloomyTale.GameObject
                                             Owner.Character.Name, characterInRange?.Name), 10));
                                     Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
                                     {
-                                        ServerManager.Instance.AskPvpRevive((long)characterInRange?.CharacterId);
+                                        ServerManager.Instance.AskPvpRevive((long)characterInRange?.VisualId);
                                     });
                                 }
                                 else
                                 {
                                     Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
                                     {
-                                        ServerManager.Instance.AskRevive((long)characterInRange?.CharacterId);
+                                        ServerManager.Instance.AskRevive((long)characterInRange?.VisualId);
                                     });
                                 }
                             }

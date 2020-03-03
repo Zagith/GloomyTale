@@ -54,7 +54,7 @@ namespace GloomyTale.GameObject
                         session.Character.IsSitting = false;
                         session.SendPacket(session.Character.GenerateRest());
                     }
-                    session.SendPacket(UserInterfaceHelper.GenerateGuri(12, 1, session.Character.CharacterId, EffectValue));
+                    session.SendPacket(UserInterfaceHelper.GenerateGuri(12, 1, session.Character.VisualId, EffectValue));
                 }
                 else if (EffectValue == 0)
                 {
@@ -76,8 +76,8 @@ namespace GloomyTale.GameObject
                                     if (equip?.IsFixed == true)
                                     {
                                         equip.IsFixed = false;
-                                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 3003));
-                                        session.SendPacket(UserInterfaceHelper.GenerateGuri(17, 1, session.Character.CharacterId, SlotEquip));
+                                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.VisualId, 3003));
+                                        session.SendPacket(UserInterfaceHelper.GenerateGuri(17, 1, session.Character.VisualId, SlotEquip));
                                         session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("ITEM_UNFIXED"), 12));
                                         isUsed = true;
                                     }
@@ -90,7 +90,7 @@ namespace GloomyTale.GameObject
                                     {
                                         specialist.Rare = 0;
                                         session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SP_RESURRECTED"), 0));
-                                        session.SendPacket(UserInterfaceHelper.GenerateGuri(13, 1, session.Character.CharacterId, 1));
+                                        session.SendPacket(UserInterfaceHelper.GenerateGuri(13, 1, session.Character.VisualId, 1));
                                         session.Character.SpPoint = 10000;
                                         if (session.Character.SpPoint > 10000)
                                         {
@@ -113,7 +113,7 @@ namespace GloomyTale.GameObject
                         }
                         else
                         {
-                            session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)inv.Type}^{inv.Slot}^0^1^{TypeEquip}^{SlotEquip} {Language.Instance.GetMessageFromKey("QNA_ITEM")}");
+                            session.SendPacket($"qna #u_i^1^{session.Character.VisualId}^{(byte)inv.Type}^{inv.Slot}^0^1^{TypeEquip}^{SlotEquip} {Language.Instance.GetMessageFromKey("QNA_ITEM")}");
                         }
                     }
                 }

@@ -180,7 +180,7 @@ namespace GloomyTale.GameObject.Event
             }
             foreach (ClientSession sess in CaligorRaid.CaligorMapInstance.Sessions.ToList())
             {
-                ServerManager.Instance.ChangeMapInstance(sess.Character.CharacterId, CaligorRaid.UnknownLandMapInstance.MapInstanceId, sess.Character.MapX, sess.Character.MapY);
+                ServerManager.Instance.ChangeMapInstance(sess.Character.VisualId, CaligorRaid.UnknownLandMapInstance.MapInstanceId, sess.Character.MapX, sess.Character.MapY);
                 Thread.Sleep(100);
             }
             EventHelper.Instance.RunEvent(new EventContainer(CaligorRaid.CaligorMapInstance, EventActionType.DISPOSEMAP, null));

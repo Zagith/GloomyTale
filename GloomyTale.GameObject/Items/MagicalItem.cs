@@ -86,8 +86,8 @@ namespace GloomyTale.GameObject
                                 {
                                     case 0:
                                         session.SendPacket(wearable.ShellEffects.Any()
-                                            ? $"qna #u_i^1^{session.Character.CharacterId}^{(short)inv.Type}^{inv.Slot}^1^1^{(short)eqType}^{islot} {Language.Instance.GetMessageFromKey("ADD_OPTION_ON_STUFF_NOT_EMPTY")}"
-                                            : $"qna #u_i^1^{session.Character.CharacterId}^{(short)inv.Type}^{inv.Slot}^1^1^{(short)eqType}^{islot} {Language.Instance.GetMessageFromKey("ADD_OPTION_ON_STUFF")}");
+                                            ? $"qna #u_i^1^{session.Character.VisualId}^{(short)inv.Type}^{inv.Slot}^1^1^{(short)eqType}^{islot} {Language.Instance.GetMessageFromKey("ADD_OPTION_ON_STUFF_NOT_EMPTY")}"
+                                            : $"qna #u_i^1^{session.Character.VisualId}^{(short)inv.Type}^{inv.Slot}^1^1^{(short)eqType}^{islot} {Language.Instance.GetMessageFromKey("ADD_OPTION_ON_STUFF")}");
                                         break;
                                     case 1:
 
@@ -95,7 +95,7 @@ namespace GloomyTale.GameObject
                                         {
                                             return;
                                         }
-                                        if (wearable.BoundCharacterId != session.Character.CharacterId && wearable.BoundCharacterId != null)
+                                        if (wearable.BoundCharacterId != session.Character.VisualId && wearable.BoundCharacterId != null)
                                         {
                                             session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("NEED_FRAGANCE"), 0));
                                             return;
@@ -132,7 +132,7 @@ namespace GloomyTale.GameObject
                                                 session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("OPTION_FAIL"), 0));
                                                 return;
                                             }
-                                            wearable.BoundCharacterId = session.Character.CharacterId;
+                                            wearable.BoundCharacterId = session.Character.VisualId;
                                             wearable.ShellRarity = inv.Rare;
                                             wearable.ShellEffects.Clear();
                                             DAOFactory.Instance.ShellEffectDAO.DeleteByEquipmentSerialId(wearable.EquipmentSerialId);
@@ -154,10 +154,10 @@ namespace GloomyTale.GameObject
 
                     if (ItemType == ItemType.Event)
                     {
-                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, EffectValue));
+                        session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.VisualId, EffectValue));
                         if (MappingHelper.GuriItemEffects.ContainsKey(EffectValue))
                         {
-                            session.CurrentMapInstance?.Broadcast(UserInterfaceHelper.GenerateGuri(19, 1, session.Character.CharacterId, MappingHelper.GuriItemEffects[EffectValue]), session.Character.PositionX, session.Character.PositionY);
+                            session.CurrentMapInstance?.Broadcast(UserInterfaceHelper.GenerateGuri(19, 1, session.Character.VisualId, MappingHelper.GuriItemEffects[EffectValue]), session.Character.PositionX, session.Character.PositionY);
                         }
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }
@@ -222,7 +222,7 @@ namespace GloomyTale.GameObject
                                                         }
                                                     }
                                                 }
-                                                ServerManager.Instance.ChangeMap(session.Character.CharacterId, respawn.DefaultMapId, mapCell.X, mapCell.Y);
+                                                ServerManager.Instance.ChangeMap(session.Character.VisualId, respawn.DefaultMapId, mapCell.X, mapCell.Y);
                                             }
                                             session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                             break;
@@ -250,7 +250,7 @@ namespace GloomyTale.GameObject
                                                         }
                                                     }
                                                 }
-                                                ServerManager.Instance.ChangeMap(session.Character.CharacterId, respawnObj.DefaultMapId, mapCell.X, mapCell.Y);
+                                                ServerManager.Instance.ChangeMap(session.Character.VisualId, respawnObj.DefaultMapId, mapCell.X, mapCell.Y);
                                             }
                                             session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                             break;
@@ -287,7 +287,7 @@ namespace GloomyTale.GameObject
                                         case 2:
                                             if (respawn.DefaultX != 0 && respawn.DefaultY != 0 && respawn.DefaultMapId != 0)
                                             {
-                                                ServerManager.Instance.ChangeMap(session.Character.CharacterId, respawn.DefaultMapId, respawn.DefaultX, respawn.DefaultY);
+                                                ServerManager.Instance.ChangeMap(session.Character.VisualId, respawn.DefaultMapId, respawn.DefaultX, respawn.DefaultY);
                                             }
                                             session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                             break;
@@ -322,7 +322,7 @@ namespace GloomyTale.GameObject
                                 }
                                 else
                                 {
-                                    ServerManager.Instance.ChangeMap(session.Character.CharacterId, 98, 28, 34);
+                                    ServerManager.Instance.ChangeMap(session.Character.VisualId, 98, 28, 34);
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                 }
                                 break;
@@ -340,7 +340,7 @@ namespace GloomyTale.GameObject
                                     }
                                     else
                                     {
-                                        ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId, flag.MapInstance.MapInstanceId, flag.MapX, flag.MapY);
+                                        ServerManager.Instance.ChangeMapInstance(session.Character.VisualId, flag.MapInstance.MapInstanceId, flag.MapX, flag.MapY);
                                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                     }
                                 }
@@ -387,7 +387,7 @@ namespace GloomyTale.GameObject
                                                             }
                                                         }
                                                     }
-                                                    ServerManager.Instance.ChangeMap(session.Character.CharacterId, respawn.DefaultMapId, mapCell.X, mapCell.Y);
+                                                    ServerManager.Instance.ChangeMap(session.Character.VisualId, respawn.DefaultMapId, mapCell.X, mapCell.Y);
                                                 }
                                                 session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                             }
@@ -423,7 +423,7 @@ namespace GloomyTale.GameObject
                                                         }
                                                     }
                                                 }
-                                                ServerManager.Instance.ChangeMap(session.Character.CharacterId, respawnObj.DefaultMapId, mapCell.X, mapCell.Y);
+                                                ServerManager.Instance.ChangeMap(session.Character.VisualId, respawnObj.DefaultMapId, mapCell.X, mapCell.Y);
                                             }
                                             session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                             break;
@@ -501,7 +501,7 @@ namespace GloomyTale.GameObject
                                     s.Mate?.Owner.Session.SendPacket(s.Mate.GenerateStatInfo());
                                 });
                             session.Character.Inventory.RemoveItemFromInventory(inv.Id);
-                            session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 48));
+                            session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.VisualId, 48));
                         }
                     }
                     break;
@@ -516,7 +516,7 @@ namespace GloomyTale.GameObject
                             session.Character.Dignity = 100;
                         }
                         session.SendPacket(session.Character.GenerateFd());
-                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 49 - (byte)session.Character.Faction));
+                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.VisualId, 49 - (byte)session.Character.Faction));
                         session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                         session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
@@ -525,7 +525,7 @@ namespace GloomyTale.GameObject
                     {
                         session.Character.Dignity = 100;
                         session.SendPacket(session.Character.GenerateFd());
-                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 49 - (byte)session.Character.Faction));
+                        session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.VisualId, 49 - (byte)session.Character.Faction));
                         session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                         session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
@@ -536,7 +536,7 @@ namespace GloomyTale.GameObject
                 case 15:
                     if (!session.Character.IsVehicled && Option == 0)
                     {
-                        session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 3, session.Character.CharacterId, 1));
+                        session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 3, session.Character.VisualId, 1));
                     }
                     break;
 
@@ -544,7 +544,7 @@ namespace GloomyTale.GameObject
                 case 16:
                     if (!session.Character.IsVehicled && Option == 0)
                     {
-                        session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 4, session.Character.CharacterId, 1));
+                        session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 4, session.Character.VisualId, 1));
                     }
                     break;
 
@@ -608,7 +608,7 @@ namespace GloomyTale.GameObject
                             {
                                 if (sess?.Character != null && session?.CurrentMapInstance != null && session?.Character != null && sess.Character != session.Character)
                                 {
-                                    ServerManager.Instance.ChangeMapInstance(sess.Character.CharacterId, session.CurrentMapInstance.MapInstanceId, session.Character.MapX, session.Character.MapY);
+                                    ServerManager.Instance.ChangeMapInstance(sess.Character.VisualId, session.CurrentMapInstance.MapInstanceId, session.Character.MapX, session.Character.MapY);
                                 }
                             });
                             delay += 100;

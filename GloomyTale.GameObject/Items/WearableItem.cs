@@ -86,18 +86,18 @@ namespace GloomyTale.GameObject
                             case 790: // Tarot
                             case 932: // Attack amulet
                             case 933: // defense amulet
-                                inv.BoundCharacterId = session.Character.CharacterId;
+                                inv.BoundCharacterId = session.Character.VisualId;
                                 break;
                         }
 
                         if (!delay && ((EquipmentSlot == EquipmentType.Fairy && (MaxElementRate == 70 || MaxElementRate == 80)) || EquipmentSlot == EquipmentType.CostumeHat || EquipmentSlot == EquipmentType.CostumeSuit || EquipmentSlot == EquipmentType.WeaponSkin))
                         {
-                            session.SendPacket($"qna #u_i^1^{session.Character.CharacterId}^{(byte)itemToWearType}^{slot}^1 {Language.Instance.GetMessageFromKey("ASK_BIND")}");
+                            session.SendPacket($"qna #u_i^1^{session.Character.VisualId}^{(byte)itemToWearType}^{slot}^1 {Language.Instance.GetMessageFromKey("ASK_BIND")}");
                             return;
                         }
                         if (delay)
                         {
-                            inv.BoundCharacterId = session.Character.CharacterId;
+                            inv.BoundCharacterId = session.Character.VisualId;
                         }
                     }
 
@@ -140,7 +140,7 @@ namespace GloomyTale.GameObject
 
                         if (ItemType == ItemType.Weapon || ItemType == ItemType.Armor)
                         {
-                            if (inv.BoundCharacterId.HasValue && inv.BoundCharacterId.Value != session.Character.CharacterId)
+                            if (inv.BoundCharacterId.HasValue && inv.BoundCharacterId.Value != session.Character.VisualId)
                             {
                                 session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("BAD_EQUIPMENT"), 10));
                                 return;
@@ -373,8 +373,8 @@ namespace GloomyTale.GameObject
 
                         if (EquipmentSlot == EquipmentType.Amulet)
                         {
-                            session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 39));
-                            inv.BoundCharacterId = session.Character.CharacterId;
+                            session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.VisualId, 39));
+                            inv.BoundCharacterId = session.Character.VisualId;
                             if (inv.ItemDeleteTime > DateTime.Now || inv.DurabilityPoint > 0)
                             {
                                 session.Character.AddBuff(new Buff(62, session.Character.Level, false), session.Character.BattleEntity);

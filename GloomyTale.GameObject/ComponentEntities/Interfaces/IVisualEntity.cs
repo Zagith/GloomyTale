@@ -7,11 +7,11 @@ namespace GloomyTale.GameObject.ComponentEntities.Interfaces
     {
         VisualType VisualType { get; }
 
-        /*short VNum { get; }
+        //short VNum { get; }
 
         long VisualId { get; }
 
-        byte Direction { get; set; }
+        /*byte Direction { get; set; }
 
         Guid MapInstanceId { get; }
 

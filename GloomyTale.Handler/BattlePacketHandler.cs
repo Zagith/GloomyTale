@@ -178,14 +178,14 @@ namespace GloomyTale.Handler
                             {
                                 Session.SendPacket(StaticPacketHelper.Cancel(2));
                                 Session.SendPacket($"delay 1000 13 #guri^513^2^{target.MapNpcId}");
-                                Session.Character.MapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.CharacterId), ReceiverType.AllExceptMe);
+                                Session.Character.MapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.VisualId), ReceiverType.AllExceptMe);
                                 return;
                             }
                             if (target.NpcVNum == 866 /* Ramo Sacro */)
                             {
                                 Session.SendPacket(StaticPacketHelper.Cancel(2));
                                 Session.SendPacket($"delay 6000 4 #guri^400^{target.MapNpcId}");
-                                Session.Character.MapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.CharacterId), ReceiverType.AllExceptMe);
+                                Session.Character.MapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.VisualId), ReceiverType.AllExceptMe);
                                 return;
                             }
                         }
@@ -205,13 +205,13 @@ namespace GloomyTale.Handler
                     {
                         Character target = ServerManager.Instance.GetSessionByCharacterId(useSkillPacket.MapMonsterId)?.Character;
 
-                        if (target != null && target.CharacterId != Session.Character.CharacterId)
+                        if (target != null && target.VisualId != Session.Character.VisualId)
                         {
                             if (target.HasBuff(CardType.FrozenDebuff, (byte)AdditionalTypes.FrozenDebuff.EternalIce))
                             {
                                 Session.SendPacket(StaticPacketHelper.Cancel(2));
-                                Session.SendPacket($"delay 2000 5 #guri^502^1^{target.CharacterId}");
-                                Session.Character.MapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.CharacterId), ReceiverType.AllExceptMe);
+                                Session.SendPacket($"delay 2000 5 #guri^502^1^{target.VisualId}");
+                                Session.Character.MapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(2, 1, Session.Character.VisualId), ReceiverType.AllExceptMe);
                                 return;
                             }
                         }
@@ -314,7 +314,7 @@ namespace GloomyTale.Handler
                     case VisualType.Player:
                         if (Session.Character.Hp > 0)
                         {
-                            if (useSkillPacket.MapMonsterId != Session.Character.CharacterId)
+                            if (useSkillPacket.MapMonsterId != Session.Character.VisualId)
                             {
                                 TargetHit(useSkillPacket.CastId, useSkillPacket.UserType, useSkillPacket.MapMonsterId, true);
                             }
@@ -530,7 +530,7 @@ namespace GloomyTale.Handler
                         ShouldRespawn = false
                     };
                     target.CurrentMapInstance.Broadcast(UserInterfaceHelper.GenerateGuri(31, 1,
-                        hitRequest.Session.Character.CharacterId, onyxX, onyxY));
+                        hitRequest.Session.Character.VisualId, onyxX, onyxY));
                     onyx.Initialize(target.CurrentMapInstance);
                     target.CurrentMapInstance.AddMonster(onyx);
                     target.CurrentMapInstance.Broadcast(onyx.GenerateIn());
@@ -538,7 +538,7 @@ namespace GloomyTale.Handler
                     Observable.Timer(TimeSpan.FromMilliseconds(350)).Subscribe(o =>
                     {
                         target.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Monster, onyxId, 1,
-                            target.Character.CharacterId, -1, 0, -1, hitRequest.Skill.Effect, -1, -1, true, 92,
+                            target.Character.VisualId, -1, 0, -1, hitRequest.Skill.Effect, -1, -1, true, 92,
                             (int)(damage / 2D), 0, 0));
                         target.CurrentMapInstance.RemoveMonster(onyx);
                         target.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster,
@@ -658,7 +658,7 @@ namespace GloomyTale.Handler
                     hitRequest.Skill.SkillVNum == 1136 || 
                     hitRequest.Skill.SkillVNum == 1139 || 
                     hitRequest.Skill.SkillVNum == 1140) && damage == 0)
-                        Session.SendPacket( StaticPacketHelper.Cancel(2, target.Character.CharacterId));
+                        Session.SendPacket( StaticPacketHelper.Cancel(2, target.Character.VisualId));
 
                 int rnd = ServerManager.RandomNumber();
                 if(rnd <= 5 && hitRequest.Session.Character.HasBuff(755))
@@ -829,7 +829,7 @@ namespace GloomyTale.Handler
 
                         if (target.Character.MapInstance == CaligorRaid.CaligorMapInstance)
                         {
-                            ServerManager.Instance.AskRevive(target.Character.CharacterId);
+                            ServerManager.Instance.AskRevive(target.Character.VisualId);
                         }
                         else
                         {
@@ -850,8 +850,8 @@ namespace GloomyTale.Handler
                             target.Character.Hp = 1;
                             target.Character.Mp = 1;
                             var respawn = target?.Character?.Respawn;
-                            ServerManager.Instance.ChangeMap(target.Character.CharacterId, respawn.DefaultMapId);
-                            Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.CharacterId));
+                            ServerManager.Instance.ChangeMap(target.Character.VisualId, respawn.DefaultMapId);
+                            Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.VisualId));
                         }
                         else
                         {
@@ -884,7 +884,7 @@ namespace GloomyTale.Handler
                             target.Character.RemoveVehicle();
                         }
                         Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
-                            ServerManager.Instance.AskPvpRevive(target.Character.CharacterId));
+                            ServerManager.Instance.AskPvpRevive(target.Character.VisualId));
                     }
                 }
 
@@ -1077,7 +1077,7 @@ namespace GloomyTale.Handler
                     {
                         case TargetHitType.SingleTargetHit:
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId,
+                                hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
                                 hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.Skill.AttackAnimation,
                                 hitRequest.SkillEffect, hitRequest.Session.Character.PositionX,
                                 hitRequest.Session.Character.PositionY, isAlive,
@@ -1087,7 +1087,7 @@ namespace GloomyTale.Handler
 
                         case TargetHitType.SingleTargetHitCombo:
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId,
+                                hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
                                 hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.SkillCombo.Animation,
                                 hitRequest.SkillCombo.Effect, hitRequest.Session.Character.PositionX,
                                 hitRequest.Session.Character.PositionY, isAlive,
@@ -1105,7 +1105,7 @@ namespace GloomyTale.Handler
                                     hitRequest.Session.CurrentMapInstance.Broadcast(hitRequest.Session.Character.GenerateTp());
                                 }
                                 hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(
-                                    VisualType.Player, hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId, 
+                                    VisualType.Player, hitRequest.Session.Character.VisualId, 1, target.Character.VisualId, 
                                     hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect, 
                                     hitRequest.Session.Character.PositionX, hitRequest.Session.Character.PositionY, isAlive,
@@ -1135,7 +1135,7 @@ namespace GloomyTale.Handler
                                 }
 
                                 hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(
-                                    VisualType.Player, hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId, 
+                                    VisualType.Player, hitRequest.Session.Character.VisualId, 1, target.Character.VisualId, 
                                     -1, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect, 
                                     hitRequest.Session.Character.PositionX, hitRequest.Session.Character.PositionY, isAlive,
@@ -1166,7 +1166,7 @@ namespace GloomyTale.Handler
                             }
 
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId,
+                                hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
                                 hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.Skill.AttackAnimation,
                                 hitRequest.SkillEffect, hitRequest.Session.Character.PositionX,
                                 hitRequest.Session.Character.PositionY, isAlive,
@@ -1176,7 +1176,7 @@ namespace GloomyTale.Handler
 
                         case TargetHitType.ZoneHit:
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId,
+                                hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
                                 hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.Skill.AttackAnimation,
                                 hitRequest.SkillEffect, hitRequest.MapX, hitRequest.MapY, isAlive,
                                 (int)(target.Character.Hp / (float)target.Character.HPLoad() * 100), damage, hitmode,
@@ -1185,7 +1185,7 @@ namespace GloomyTale.Handler
 
                         case TargetHitType.SpecialZoneHit:
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                hitRequest.Session.Character.CharacterId, 1, target.Character.CharacterId,
+                                hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
                                 hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.Skill.AttackAnimation,
                                 hitRequest.SkillEffect, hitRequest.Session.Character.PositionX,
                                 hitRequest.Session.Character.PositionY, isAlive,
@@ -1202,7 +1202,7 @@ namespace GloomyTale.Handler
                 {
                     if (target != null)
                     {
-                        hitRequest?.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.CharacterId));
+                        hitRequest?.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.VisualId));
                     }
                 }
             }
@@ -1211,7 +1211,7 @@ namespace GloomyTale.Handler
                 // monster already has been killed, send cancel
                 if (target != null)
                 {
-                    hitRequest?.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.CharacterId));
+                    hitRequest?.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.VisualId));
                 }
             }
         }
@@ -1388,7 +1388,7 @@ namespace GloomyTale.Handler
                                                                             && s.Skill.SkillType == 2);
 
                             Session.CurrentMapInstance.Broadcast(StaticPacketHelper.CastOnTarget(VisualType.Player,
-                                Session.Character.CharacterId, targetType, targetId,
+                                Session.Character.VisualId, targetType, targetId,
                                 ski.Skill.CastAnimation, skillinfo?.Skill.CastEffect ?? ski.Skill.CastEffect,
                                 ski.Skill.SkillVNum));
 
@@ -1409,7 +1409,7 @@ namespace GloomyTale.Handler
                             }
 
                             Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                            Session.Character.CharacterId, 1, Session.Character.CharacterId, ski.Skill.SkillVNum,
+                            Session.Character.VisualId, 1, Session.Character.VisualId, ski.Skill.SkillVNum,
                             (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), ski.Skill.AttackAnimation,
                             skillEffect, Session.Character.PositionX,
                             Session.Character.PositionY, true,
@@ -1420,7 +1420,7 @@ namespace GloomyTale.Handler
                             {
                                 foreach (ClientSession character in ServerManager.Instance.Sessions.Where(s =>
                                     s.CurrentMapInstance == Session.CurrentMapInstance
-                                    && s.Character.CharacterId != Session.Character.CharacterId
+                                    && s.Character.VisualId != Session.Character.VisualId
                                     && s.Character.IsInRange(Session.Character.PositionX, Session.Character.PositionY,
                                         ski.TargetRange())))
                                 {
@@ -1488,10 +1488,10 @@ namespace GloomyTale.Handler
                                 .ForEach(s => s.ApplyBCards(targetEntity, Session.Character.BattleEntity));
 
                             targetEntity.MapInstance.Broadcast(StaticPacketHelper.CastOnTarget(VisualType.Player,
-                                Session.Character.CharacterId, targetEntity.UserType, targetEntity.MapEntityId,
+                                Session.Character.VisualId, targetEntity.UserType, targetEntity.MapEntityId,
                                 ski.Skill.CastAnimation, ski.Skill.CastEffect, ski.Skill.SkillVNum));
                             targetEntity.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                Session.Character.CharacterId, (byte)targetEntity.UserType, targetEntity.MapEntityId, ski.Skill.SkillVNum, (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D),
+                                Session.Character.VisualId, (byte)targetEntity.UserType, targetEntity.MapEntityId, ski.Skill.SkillVNum, (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D),
                                 ski.Skill.AttackAnimation, ski.Skill.Effect, targetEntity.PositionX,
                                 targetEntity.PositionY, true,
                                 (int)(targetEntity.Hp / targetEntity.HPLoad() * 100), 0, -1,
@@ -1500,7 +1500,7 @@ namespace GloomyTale.Handler
                         else if (ski.Skill.TargetType == 1 && ski.Skill.HitType != 1)
                         {
                             Session.CurrentMapInstance.Broadcast(StaticPacketHelper.CastOnTarget(VisualType.Player,
-                                Session.Character.CharacterId, VisualType.Player, Session.Character.CharacterId,
+                                Session.Character.VisualId, VisualType.Player, Session.Character.VisualId,
                                 ski.Skill.CastAnimation, ski.Skill.CastEffect, ski.Skill.SkillVNum));
 
                             if (ski.Skill.CastEffect != 0)
@@ -1509,7 +1509,7 @@ namespace GloomyTale.Handler
                             }
 
                             Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                Session.Character.CharacterId, 1, Session.Character.CharacterId, ski.Skill.SkillVNum,
+                                Session.Character.VisualId, 1, Session.Character.VisualId, ski.Skill.SkillVNum,
                                 (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), ski.Skill.AttackAnimation, ski.Skill.Effect,
                                 Session.Character.PositionX, Session.Character.PositionY, true,
                                 (int)(Session.Character.Hp / Session.Character.HPLoad() * 100), 0, -1,
@@ -1536,7 +1536,7 @@ namespace GloomyTale.Handler
                                         }
 
                                         IEnumerable<ClientSession> clientSessions =
-                                            Session.CurrentMapInstance.Sessions?.Where(s => s.Character.CharacterId != Session.Character.CharacterId &&
+                                            Session.CurrentMapInstance.Sessions?.Where(s => s.Character.VisualId != Session.Character.VisualId &&
                                                 s.Character.IsInRange(Session.Character.PositionX,
                                                     Session.Character.PositionY, ski.TargetRange()));
                                         if (clientSessions != null)
@@ -1546,7 +1546,7 @@ namespace GloomyTale.Handler
                                                 if (!Session.Character.BattleEntity.CanAttackEntity(target.Character.BattleEntity)
                                                   && (team == null || team.FirstOrDefault(s => s.Session == Session)?.ArenaTeamType == team.FirstOrDefault(s => s.Session == target.Character.Session)?.ArenaTeamType))
                                                 {
-                                                    if (Session.Character.MapInstance == ServerManager.Instance.ArenaInstance && (Session.Character.Group == null || !Session.Character.Group.IsMemberOfGroup(target.Character.CharacterId)))
+                                                    if (Session.Character.MapInstance == ServerManager.Instance.ArenaInstance && (Session.Character.Group == null || !Session.Character.Group.IsMemberOfGroup(target.Character.VisualId)))
                                                     {
                                                         continue;
                                                     }
@@ -1560,7 +1560,7 @@ namespace GloomyTale.Handler
                                                         s.ApplyBCards(target.Character.BattleEntity, Session.Character.BattleEntity));
 
                                                     Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                                        Session.Character.CharacterId, 1, target.Character.CharacterId, ski.Skill.SkillVNum,
+                                                        Session.Character.VisualId, 1, target.Character.VisualId, ski.Skill.SkillVNum,
                                                         (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), ski.Skill.AttackAnimation, ski.Skill.Effect,
                                                         target.Character.PositionX, target.Character.PositionY, true,
                                                         (int)(target.Character.Hp / target.Character.HPLoad() * 100), 0, -1,
@@ -1576,7 +1576,7 @@ namespace GloomyTale.Handler
                                             {
                                                 if (!Session.Character.BattleEntity.CanAttackEntity(target.BattleEntity))
                                                 {
-                                                    if (Session.Character.MapInstance == ServerManager.Instance.ArenaInstance && (Session.Character.Group == null || !Session.Character.Group.IsMemberOfGroup(target.Owner.CharacterId)))
+                                                    if (Session.Character.MapInstance == ServerManager.Instance.ArenaInstance && (Session.Character.Group == null || !Session.Character.Group.IsMemberOfGroup(target.Owner.VisualId)))
                                                     {
                                                         continue;
                                                     }
@@ -1590,7 +1590,7 @@ namespace GloomyTale.Handler
                                                         s.ApplyBCards(target.BattleEntity, Session.Character.BattleEntity));
 
                                                     Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                                        Session.Character.CharacterId, (byte)target.BattleEntity.UserType, target.MateTransportId, ski.Skill.SkillVNum,
+                                                        Session.Character.VisualId, (byte)target.BattleEntity.UserType, target.MateTransportId, ski.Skill.SkillVNum,
                                                         (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), ski.Skill.AttackAnimation, ski.Skill.Effect,
                                                         target.PositionX, target.PositionY, true,
                                                         (int)(target.Hp / target.HpLoad() * 100), 0, -1,
@@ -1627,7 +1627,7 @@ namespace GloomyTale.Handler
                                                         s.ApplyBCards(target.BattleEntity, Session.Character.BattleEntity));
 
                                                     Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                                        Session.Character.CharacterId, (byte)target.BattleEntity.UserType, target.MapMonsterId, ski.Skill.SkillVNum,
+                                                        Session.Character.VisualId, (byte)target.BattleEntity.UserType, target.MapMonsterId, ski.Skill.SkillVNum,
                                                         (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), ski.Skill.AttackAnimation, ski.Skill.Effect,
                                                         target.MapX, target.MapY, true,
                                                         (int)(target.CurrentHp / target.MaxHp * 100), 0, -1,
@@ -1660,7 +1660,7 @@ namespace GloomyTale.Handler
                                                         s.ApplyBCards(target.BattleEntity, Session.Character.BattleEntity));
 
                                                     Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                                        Session.Character.CharacterId, (byte)target.BattleEntity.UserType, target.MapNpcId, ski.Skill.SkillVNum,
+                                                        Session.Character.VisualId, (byte)target.BattleEntity.UserType, target.MapNpcId, ski.Skill.SkillVNum,
                                                         (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), ski.Skill.AttackAnimation, ski.Skill.Effect,
                                                         target.MapX, target.MapY, true,
                                                         (int)(target.CurrentHp / target.MaxHp * 100), 0, -1,
@@ -1712,7 +1712,7 @@ namespace GloomyTale.Handler
                                         if (ski.SkillVNum == 1061)
                                         {
                                             Session.CurrentMapInstance.Broadcast($"eff 1 {targetId} 4968");
-                                            Session.CurrentMapInstance.Broadcast($"eff 1 {Session.Character.CharacterId} 4968");
+                                            Session.CurrentMapInstance.Broadcast($"eff 1 {Session.Character.VisualId} 4968");
                                         }
 
                                         Session.SendPacket(Session.Character.GenerateStat());
@@ -1721,7 +1721,7 @@ namespace GloomyTale.Handler
                                                                                         && s.Skill.SkillType == 2);
                                         Session.CurrentMapInstance.Broadcast(
                                             StaticPacketHelper.CastOnTarget(VisualType.Player,
-                                                Session.Character.CharacterId, VisualType.Player, targetId, ski.Skill.CastAnimation,
+                                                Session.Character.VisualId, VisualType.Player, targetId, ski.Skill.CastAnimation,
                                                 characterSkillInfo?.Skill.CastEffect ?? ski.Skill.CastEffect,
                                                 ski.Skill.SkillVNum));
                                         Session.Character.Skills.Where(s => s.Id != ski.Id).ForEach(i => i.Hit = 0);
@@ -1751,8 +1751,8 @@ namespace GloomyTale.Handler
                                         {
                                             int count = 0;
                                             if (playerToAttack.CurrentMapInstance == Session.CurrentMapInstance
-                                                && playerToAttack.Character.CharacterId !=
-                                                Session.Character.CharacterId)
+                                                && playerToAttack.Character.VisualId !=
+                                                Session.Character.VisualId)
                                             {
                                                 if (Session.Character.BattleEntity.CanAttackEntity(playerToAttack.Character.BattleEntity))
                                                 {
@@ -1775,7 +1775,7 @@ namespace GloomyTale.Handler
 
                                                 if (character != null
                                                     && character.CurrentMapInstance == Session.CurrentMapInstance
-                                                    && character.Character.CharacterId != Session.Character.CharacterId
+                                                    && character.Character.VisualId != Session.Character.VisualId
                                                     && character != playerToAttack)
                                                 {
                                                     if (Session.Character.BattleEntity.CanAttackEntity(character.Character.BattleEntity))
@@ -1808,7 +1808,7 @@ namespace GloomyTale.Handler
                                                     IEnumerable<ClientSession> playersInAoeRange =
                                                         ServerManager.Instance.Sessions.Where(s =>
                                                             s.CurrentMapInstance == Session.CurrentMapInstance
-                                                            && s.Character.CharacterId != Session.Character.CharacterId
+                                                            && s.Character.VisualId != Session.Character.VisualId
                                                             && s != playerToAttack
                                                             && s.Character.IsInRange(playerToAttack.Character.PositionX,
                                                                 playerToAttack.Character.PositionY, ski.TargetRange()));
@@ -1849,7 +1849,7 @@ namespace GloomyTale.Handler
                                                     IEnumerable<ClientSession> playersInAoeRange =
                                                         ServerManager.Instance.Sessions.Where(s =>
                                                             s.CurrentMapInstance == Session.CurrentMapInstance
-                                                            && s.Character.CharacterId != Session.Character.CharacterId
+                                                            && s.Character.VisualId != Session.Character.VisualId
                                                             && s != playerToAttack
                                                             && s.Character.IsInRange(playerToAttack.Character.PositionX,
                                                                 playerToAttack.Character.PositionY, ski.TargetRange()));
@@ -1939,7 +1939,7 @@ namespace GloomyTale.Handler
                                     if (playerToAttack.Character.LastPvPKiller == null
                                         || playerToAttack.Character.LastPvPKiller != Session)
                                     {
-                                        Session.SendPacket($"delay 2000 5 #guri^502^1^{playerToAttack.Character.CharacterId}");
+                                        Session.SendPacket($"delay 2000 5 #guri^502^1^{playerToAttack.Character.VisualId}");
                                     }
                                 }
                                 else
@@ -1966,7 +1966,7 @@ namespace GloomyTale.Handler
                                         if (ski.SkillVNum == 1061)
                                         {
                                             Session.CurrentMapInstance.Broadcast($"eff 3 {targetId} 4968");
-                                            Session.CurrentMapInstance.Broadcast($"eff 1 {Session.Character.CharacterId} 4968");
+                                            Session.CurrentMapInstance.Broadcast($"eff 1 {Session.Character.VisualId} 4968");
                                         }
 
                                         #endregion
@@ -1979,7 +1979,7 @@ namespace GloomyTale.Handler
                                         CharacterSkill ski2 = Session.Character.Skills.FirstOrDefault(s => s.Skill.UpgradeSkill == ski.Skill.SkillVNum
                                             && s.Skill.Effect > 0 && s.Skill.SkillType == 2);
 
-                                        Session.CurrentMapInstance.Broadcast(StaticPacketHelper.CastOnTarget(VisualType.Player, Session.Character.CharacterId, VisualType.Monster, monsterToAttack.MapMonsterId,
+                                        Session.CurrentMapInstance.Broadcast(StaticPacketHelper.CastOnTarget(VisualType.Player, Session.Character.VisualId, VisualType.Monster, monsterToAttack.MapMonsterId,
                                             ski.Skill.CastAnimation, ski2?.Skill.CastEffect ?? ski.Skill.CastEffect, ski.Skill.SkillVNum));
 
                                         Session.Character.Skills.Where(x => x.Id != ski.Id).ForEach(x => x.Hit = 0);
@@ -2124,7 +2124,7 @@ namespace GloomyTale.Handler
                                         if (ski.SkillVNum == 1061)
                                         {
                                             Session.CurrentMapInstance.Broadcast($"eff 2 {targetId} 4968");
-                                            Session.CurrentMapInstance.Broadcast($"eff 1 {Session.Character.CharacterId} 4968");
+                                            Session.CurrentMapInstance.Broadcast($"eff 1 {Session.Character.VisualId} 4968");
                                         }
 
                                         ski.GetSkillBCards().ToList().Where(s => s.CastType == 1).ToList().ForEach(s => s.ApplyBCards(mateToAttack.BattleEntity, Session.Character.BattleEntity));
@@ -2135,7 +2135,7 @@ namespace GloomyTale.Handler
                                                                                         && s.Skill.SkillType == 2);
 
                                         Session.CurrentMapInstance.Broadcast(StaticPacketHelper.CastOnTarget(
-                                            VisualType.Player, Session.Character.CharacterId, VisualType.Npc,
+                                            VisualType.Player, Session.Character.VisualId, VisualType.Npc,
                                             mateToAttack.MateTransportId, ski.Skill.CastAnimation,
                                             characterSkillInfo?.Skill.CastEffect ?? ski.Skill.CastEffect,
                                             ski.Skill.SkillVNum));
@@ -2416,7 +2416,7 @@ namespace GloomyTale.Handler
                     }
                     
                     Session.CurrentMapInstance.Broadcast(
-                        $"ct_n 1 {Session.Character.CharacterId} 3 -1 {characterSkill.Skill.CastAnimation}" +
+                        $"ct_n 1 {Session.Character.VisualId} 3 -1 {characterSkill.Skill.CastAnimation}" +
                         $" {characterSkill.Skill.CastEffect} {characterSkill.Skill.SkillVNum}");
                     characterSkill.LastUse = DateTime.Now;
                     if (!Session.Character.HasGodMode)
@@ -2428,7 +2428,7 @@ namespace GloomyTale.Handler
                     Observable.Timer(TimeSpan.FromMilliseconds(characterSkill.Skill.CastTime * 100)).Subscribe(o =>
                     {
                         Session.CurrentMapInstance.Broadcast(
-                            $"bs 1 {Session.Character.CharacterId} {x} {y} {characterSkill.Skill.SkillVNum}" +
+                            $"bs 1 {Session.Character.VisualId} {x} {y} {characterSkill.Skill.SkillVNum}" +
                             $" {(short)(characterSkill.Skill.Cooldown + characterSkill.Skill.Cooldown * cooldownReduction / 100D)} {characterSkill.Skill.AttackAnimation}" +
                             $" {characterSkill.Skill.Effect} 0 0 1 1 0 0 0");
 
@@ -2454,7 +2454,7 @@ namespace GloomyTale.Handler
                         foreach (long id in Session.Character.GetMTListTargetQueue_QuickFix(characterSkill, VisualType.Monster))
                         {
                             MapMonster mon = Session.CurrentMapInstance.GetMonsterById(id);
-                            if (mon?.CurrentHp > 0 && mon?.Owner?.MapEntityId != Session.Character.CharacterId)
+                            if (mon?.CurrentHp > 0 && mon?.Owner?.MapEntityId != Session.Character.VisualId)
                             {
                                 count++;
                                 mon.HitQueue.Enqueue(new HitRequest(TargetHitType.SingleAOETargetHit, Session,
@@ -2467,7 +2467,7 @@ namespace GloomyTale.Handler
                         {
                             ClientSession character = ServerManager.Instance.GetSessionByCharacterId(id);
                             if (character != null && character.CurrentMapInstance == Session.CurrentMapInstance
-                                                  && character.Character.CharacterId != Session.Character.CharacterId)
+                                                  && character.Character.VisualId != Session.Character.VisualId)
                             {
                                 if (Session.Character.BattleEntity.CanAttackEntity(character.Character.BattleEntity))
                                 {

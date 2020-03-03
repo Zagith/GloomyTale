@@ -103,7 +103,7 @@ namespace GloomyTale.GameObject
 
         private static void Regenerate(ClientSession session, Item item)
         {
-            session.SendPacket(Helpers.StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.CharacterId, 6000));
+            session.SendPacket(Helpers.StaticPacketHelper.GenerateEff(VisualType.Player, session.Character.VisualId, 6000));
             session.Character.SnackAmount++;
             session.Character.MaxSnack = 0;
             session.Character.SnackHp += item.Hp / 5;

@@ -1031,8 +1031,8 @@ namespace GloomyTale.GameObject
                                                             mate.RefreshStats();
                                                             senderSession.Character.AddPetWithSkill(mate);
                                                             senderSession.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("CATCH_SUCCESS"), 0));
-                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, senderSession.Character.CharacterId, 197));
-                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player, senderSession.Character.CharacterId, 3, mapMonster.MapMonsterId, -1, 0, 15, -1, -1, -1, true, (int)((float)mapMonster.CurrentHp / (float)mapMonster.MaxHp * 100), 0, -1, 0));
+                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, senderSession.Character.VisualId, 197));
+                                                            senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player, senderSession.Character.VisualId, 3, mapMonster.MapMonsterId, -1, 0, 15, -1, -1, -1, true, (int)((float)mapMonster.CurrentHp / (float)mapMonster.MaxHp * 100), 0, -1, 0));
                                                             mapMonster.SetDeathStatement();
                                                             senderSession.CurrentMapInstance?.Broadcast(StaticPacketHelper.Out(VisualType.Monster, mapMonster.MapMonsterId));
                                                         }
@@ -1443,7 +1443,7 @@ namespace GloomyTale.GameObject
                                                 Observable.Timer(TimeSpan.FromMilliseconds(skill.Cooldown * 100 + 50)).Subscribe(s =>
                                                 {
                                                     session.Character.Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                                                        session.Character.CharacterId, 1, session.Character.CharacterId, skill.SkillVNum,
+                                                        session.Character.VisualId, 1, session.Character.VisualId, skill.SkillVNum,
                                                         NewCooldown, 2, skill.Effect,
                                                         session.Character.PositionX, session.Character.PositionY, true,
                                                         (int)(session.Character.Hp / session.Character.HPLoad() * 100), 0, -1,
@@ -1497,7 +1497,7 @@ namespace GloomyTale.GameObject
                                     {
                                         Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(obs =>
                                         {
-                                            ServerManager.Instance.AskRevive(session.Character.CharacterId);
+                                            ServerManager.Instance.AskRevive(session.Character.VisualId);
                                         });
                                     }
                                 }
@@ -1866,7 +1866,7 @@ namespace GloomyTale.GameObject
                                 if (chara.Session.CurrentMapInstance != null)
                                 {
                                     ConcurrentBag<MapMonster> ownedMonsters = new ConcurrentBag<MapMonster>();
-                                    ServerManager.GetAllMapInstances().ForEach(s => s.Monsters.Where(m => m.Owner?.MapEntityId == chara.CharacterId).ToList().ForEach(mon => ownedMonsters.Add(mon)));
+                                    ServerManager.GetAllMapInstances().ForEach(s => s.Monsters.Where(m => m.Owner?.MapEntityId == chara.VisualId).ToList().ForEach(mon => ownedMonsters.Add(mon)));
                                     if (ownedMonsters.Count >= 3)
                                     {
                                         chara.BattleEntity.RemoveOwnedMonsters(true);
@@ -2047,7 +2047,7 @@ namespace GloomyTale.GameObject
                                         {
                                             // Wind
 
-                                            character.Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, character.CharacterId, 4293));
+                                            character.Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player, character.VisualId, 4293));
 
                                             // Freeze
 
@@ -2283,7 +2283,7 @@ namespace GloomyTale.GameObject
                             }
                             else if (SubType == (byte)AdditionalTypes.MeteoriteTeleport.TeleportYouAndGroupToSavedLocation / 10)
                             {
-                                if (session.Character is Character character && character.CharacterId == sender?.Character?.CharacterId)
+                                if (session.Character is Character character && character.VisualId == sender?.Character?.VisualId)
                                 {
                                     if (character.SavedLocation == null)
                                     {
@@ -2293,7 +2293,7 @@ namespace GloomyTale.GameObject
                                             Y = character.PositionY
                                         };
 
-                                        session.MapInstance?.Broadcast($"eff_g 4497 {character.CharacterId} {character.SavedLocation.X} {character.SavedLocation.Y} 0");
+                                        session.MapInstance?.Broadcast($"eff_g 4497 {character.VisualId} {character.SavedLocation.X} {character.SavedLocation.Y} 0");
                                     }
                                     else
                                     {
@@ -2309,14 +2309,14 @@ namespace GloomyTale.GameObject
                                             Y = session.PositionY
                                         };
 
-                                        session.MapInstance?.Broadcast($"eff_g 4483 {character.CharacterId} {mapCellFrom.X} {mapCellFrom.Y} 0");
+                                        session.MapInstance?.Broadcast($"eff_g 4483 {character.VisualId} {mapCellFrom.X} {mapCellFrom.Y} 0");
 
                                         Observable.Timer(TimeSpan.FromSeconds(1))
                                             .Subscribe(t =>
                                             {
                                                 session.TeleportTo(mapCellTo);
 
-                                                session.MapInstance?.Broadcast($"eff_g 4497 {character.CharacterId} {mapCellTo.X} {mapCellTo.Y} 1");
+                                                session.MapInstance?.Broadcast($"eff_g 4497 {character.VisualId} {mapCellTo.X} {mapCellTo.Y} 1");
 
                                                 List<Character> friendCharacters = new List<Character>();
 
@@ -2330,7 +2330,7 @@ namespace GloomyTale.GameObject
                                                     friendCharacters.AddRange(character.Group.Sessions.Where(s => s.Character != null).Select(s => s.Character));
                                                 }
 
-                                                friendCharacters.Where(c => c.CharacterId != character.CharacterId && c.MapInstanceId == character.MapInstanceId
+                                                friendCharacters.Where(c => c.VisualId != character.VisualId && c.MapInstanceId == character.MapInstanceId
                                                     && Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom) <= skill.TargetRange).OrderBy(c => Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom)).Take(FirstData).ToList()
                                                 .ForEach(c => c.BattleEntity.TeleportTo(mapCellTo, 3));
                                             });

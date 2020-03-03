@@ -78,7 +78,7 @@ namespace GloomyTale.Handler
             {
                 return;
             }
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             ClientSession.UserLog.Add(packet.Username);
 
             Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
@@ -92,7 +92,7 @@ namespace GloomyTale.Handler
             }
 
             int n = 1;
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             foreach (string username in ClientSession.UserLog)
             {
                 Session.SendPacket(Session.Character.GenerateSay($"{n++}- {username}", 12));
@@ -108,7 +108,7 @@ namespace GloomyTale.Handler
             {
                 return;
             }
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             if (ClientSession.UserLog.Contains(packet.Username))
             {
                 ClientSession.UserLog.RemoveAll(username => username == packet.Username);
@@ -125,7 +125,7 @@ namespace GloomyTale.Handler
             }
 
             Mate mate = Session.Character.Mates?.ToList().FirstOrDefault(s => s.IsTeamMember && s.MateType == MateType.Partner);
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             if (mate?.Sp != null)
             {
                 mate.Sp.FullXp();
@@ -139,7 +139,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Act4Stat]Faction: {packet.Faction} Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 switch (packet.Faction)
                 {
                     case 1:
@@ -257,7 +257,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddMonster]NpcMonsterVNum: {packet.MonsterVNum} IsMoving: {packet.IsMoving}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (!Session.HasCurrentMapInstance)
                 {
                     return;
@@ -309,7 +309,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddNpc]NpcMonsterVNum: {packet.NpcVNum} IsMoving: {packet.IsMoving}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (!Session.HasCurrentMapInstance)
                 {
                     return;
@@ -361,7 +361,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddPartner]NpcMonsterVNum: {packet.MonsterVNum} Level: {packet.Level}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 AddMate(packet.MonsterVNum, packet.Level, MateType.Partner);
             }
             else
@@ -380,7 +380,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddPet]NpcMonsterVNum: {packet.MonsterVNum} Level: {packet.Level}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 AddMate(packet.MonsterVNum, packet.Level, MateType.Pet);
             }
             else
@@ -399,7 +399,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddPortal]DestinationMapId: {packet.DestinationMapId} DestinationMapX: {packet.DestinationX} DestinationY: {packet.DestinationY}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 AddPortal(packet.DestinationMapId, packet.DestinationX, packet.DestinationY,
                     packet.PortalType == null ? (short)-1 : (short)packet.PortalType, true);
             }
@@ -419,7 +419,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddShellEffect]Slot: {packet.Slot} EffectLevel: {packet.EffectLevel} Effect: {packet.Effect} Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 try
                 {
                     var instance =
@@ -457,7 +457,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddSkill]SkillVNum: {packet.SkillVNum}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Session.Character.AddSkill(packet.SkillVNum);
                 Session.SendPacket(Session.Character.GenerateSki());
             }
@@ -474,7 +474,7 @@ namespace GloomyTale.Handler
         public void ArenaWinner(ArenaWinnerPacket packet)
         {
             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ArenaWinner]");
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             Session.Character.ArenaWinner = Session.Character.ArenaWinner == 0 ? 1 : 0;
             Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateCMode());
             Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
@@ -490,7 +490,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Ban]CharacterName: {packet.CharacterName} Reason: {packet.Reason} Until: {(packet.Duration == 0 ? DateTime.Now.AddYears(15) : DateTime.Now.AddDays(packet.Duration))}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 BanMethod(packet.CharacterName, packet.Duration, packet.Reason);
             }
             else
@@ -513,7 +513,7 @@ namespace GloomyTale.Handler
 
             if (packet != null)
             {
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 switch (packet.Mode?.ToLower())
                 {
                     case "balance":
@@ -672,7 +672,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[BlockExp]CharacterName: {packet.CharacterName} Reason: {packet.Reason} Until: {DateTime.Now.AddMinutes(packet.Duration)}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Duration == 0)
                 {
                     packet.Duration = 60;
@@ -725,7 +725,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[BlockFExp]CharacterName: {packet.CharacterName} Reason: {packet.Reason} Until: {DateTime.Now.AddMinutes(packet.Duration)}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Duration == 0)
                 {
                     packet.Duration = 60;
@@ -852,7 +852,7 @@ namespace GloomyTale.Handler
         {
             if (packet != null)
             {
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Buff buff = new Buff(packet.CardId, packet.Level ?? (byte)1);
                 Session.Character.AddBuff(buff, Session.Character.BattleEntity);
             }
@@ -872,7 +872,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ChangeClass]Class: {packet.ClassType}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Session.Character.ChangeClass(packet.ClassType, true);
             }
             else
@@ -891,7 +891,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ChangeDignity]Dignity: {packet.Dignity}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Dignity >= -1000 && packet.Dignity <= 100)
                 {
                     Session.Character.Dignity = packet.Dignity;
@@ -925,7 +925,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[FLvl]FairyLevel: {packet.FairyLevel}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (fairy != null)
                 {
                     short fairylevel = packet.FairyLevel;
@@ -956,7 +956,7 @@ namespace GloomyTale.Handler
         public void ChangeGender(ChangeSexPacket packet)
         {
             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[ChangeSex]");
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             Session.Character.ChangeSex();
         }
 
@@ -970,7 +970,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[HeroLvl]HeroLevel: {packet.HeroLevel}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.HeroLevel <= 255)
                 {
                     Session.Character.HeroLevel = packet.HeroLevel;
@@ -984,10 +984,10 @@ namespace GloomyTale.Handler
                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(),
                         ReceiverType.AllExceptMe);
                     Session.CurrentMapInstance?.Broadcast(
-                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 6),
+                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId, 6),
                         Session.Character.PositionX, Session.Character.PositionY);
                     Session.CurrentMapInstance?.Broadcast(
-                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 198),
+                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId, 198),
                         Session.Character.PositionX, Session.Character.PositionY);
                 }
                 else
@@ -1011,7 +1011,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[JLvl]JobLevel: {packet.JobLevel}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (((Session.Character.Class == 0 && packet.JobLevel <= 20)
                     || (Session.Character.Class != 0 && packet.JobLevel <= 255))
                     && packet.JobLevel > 0)
@@ -1023,7 +1023,7 @@ namespace GloomyTale.Handler
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("JOBLEVEL_CHANGED"), 0));
                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(), ReceiverType.AllExceptMe);
                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
-                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 8), Session.Character.PositionX, Session.Character.PositionY);
+                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId, 8), Session.Character.PositionX, Session.Character.PositionY);
                 }
                 else
                 {
@@ -1046,7 +1046,7 @@ namespace GloomyTale.Handler
             if (packet != null && !Session.Character.IsSeal)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Lvl]Level: {packet.Level}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Level > 0)
                 {
                     Session.Character.Level = packet.Level; //Math.Min(,
@@ -1064,19 +1064,19 @@ namespace GloomyTale.Handler
                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(),
                         ReceiverType.AllExceptMe);
                     Session.CurrentMapInstance?.Broadcast(
-                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 6),
+                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId, 6),
                         Session.Character.PositionX, Session.Character.PositionY);
                     Session.CurrentMapInstance?.Broadcast(
-                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 198),
+                        StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId, 198),
                         Session.Character.PositionX, Session.Character.PositionY);
-                    ServerManager.Instance.UpdateGroup(Session.Character.CharacterId);
+                    ServerManager.Instance.UpdateGroup(Session.Character.VisualId);
                     if (Session.Character.Family != null)
                     {
                         ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId);
                         CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                         {
                             DestinationCharacterId = Session.Character.Family.FamilyId,
-                            SourceCharacterId = Session.Character.CharacterId,
+                            SourceCharacterId = Session.Character.VisualId,
                             SourceWorldId = ServerManager.Instance.WorldId,
                             Message = "fhis_stc",
                             Type = MessageType.Family
@@ -1106,7 +1106,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ChangeRep]Reputation: {packet.Reputation}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Reputation >= 0)
                 {
                     Session.Character.Reputation = packet.Reputation;
@@ -1138,7 +1138,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[SPLvl]SpecialistLevel: {packet.SpecialistLevel}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 var sp =
                     Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
                 if (sp != null && Session.Character.UseSp)
@@ -1160,7 +1160,7 @@ namespace GloomyTale.Handler
                         Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(),
                             ReceiverType.AllExceptMe);
                         Session.CurrentMapInstance?.Broadcast(
-                            StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 8),
+                            StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId, 8),
                             Session.Character.PositionX, Session.Character.PositionY);
                     }
                     else
@@ -1196,7 +1196,7 @@ namespace GloomyTale.Handler
             {
                 Session.SendPacket(
                     Session.Character.GenerateSay(
-                        $"CharacterName: {session.Character.Name} | CharacterId: {session.Character.CharacterId} | SessionId: {session.SessionId}", 12));
+                        $"CharacterName: {session.Character.Name} | CharacterId: {session.Character.VisualId} | SessionId: {session.SessionId}", 12));
             }
 
             Session.SendPacket(Session.Character.GenerateSay("----------------------------------------", 11));
@@ -1244,7 +1244,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[CharEdit]Property: {packet.Property} Value: {packet.Data}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Property != null && !string.IsNullOrEmpty(packet.Data))
                 {
                     PropertyInfo propertyInfo = Session.Character.GetType().GetProperty(packet.Property);
@@ -1252,7 +1252,7 @@ namespace GloomyTale.Handler
                     {
                         propertyInfo.SetValue(Session.Character,
                             Convert.ChangeType(packet.Data, propertyInfo.PropertyType));
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId);
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId);
                         Session.Character.Save();
                         Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"),
                             10));
@@ -1317,7 +1317,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Clear]InventoryType: {packet.InventoryType}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Parallel.ForEach(Session.Character.Inventory.Select(s => s.Value).Where(s => s.Type == packet.InventoryType),
                     inv =>
                     {
@@ -1342,7 +1342,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ClearMap]MapId: {Session.CurrentMapInstance.MapInstanceId}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Parallel.ForEach(Session.CurrentMapInstance.Monsters.Where(s => s.ShouldRespawn != true), monster =>
                 {
                     Session.CurrentMapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster,
@@ -1372,7 +1372,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Clone]Slot: {packet.Slot}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 ItemInstance item =
                     Session.Character.Inventory.LoadBySlotAndType(packet.Slot, InventoryType.Equipment);
                 if (item != null)
@@ -1460,7 +1460,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[CreateItem]ItemVNum: {packet.VNum} Amount/Design: {packet.Design} Upgrade: {packet.Upgrade}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 short vnum = packet.VNum;
                 short amount = 1;
                 sbyte rare = 0;
@@ -1587,7 +1587,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Demote]CharacterName: {packet.CharacterName}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
                 try
                 {
@@ -1643,9 +1643,9 @@ namespace GloomyTale.Handler
                                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(),
                                         ReceiverType.AllExceptMe);
                                 }
-                                ServerManager.Instance.ChangeMap(session.Character.CharacterId);
+                                ServerManager.Instance.ChangeMap(session.Character.VisualId);
                                 DAOFactory.Instance.AccountDAO.WriteGeneralLog(session.Account.AccountId, session.IpAddress,
-                                    session.Character.CharacterId, GeneralLogType.Demotion, $"by: {Session.Character.Name}");
+                                    session.Character.VisualId, GeneralLogType.Demotion, $"by: {Session.Character.Name}");
                             }
                             else
                             {
@@ -1689,7 +1689,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[DropRate]Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
                     ServerManager.Instance.DropRate = packet.Value;
@@ -1718,9 +1718,9 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Effect]EffectId: {packet.EffectId}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Session.CurrentMapInstance?.Broadcast(
-                    StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId,
+                    StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId,
                         packet.EffectId), Session.Character.PositionX, Session.Character.PositionY);
             }
             else
@@ -1753,7 +1753,7 @@ namespace GloomyTale.Handler
             }
             if (packet != null)
             {
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Session.SendPacket("scr 0 0 0 0 0 0 0");
                 if (Session.Character.Faction == FactionType.Angel)
                 {
@@ -1770,7 +1770,7 @@ namespace GloomyTale.Handler
                             0));
                 }
                 Session.SendPacket(StaticPacketHelper.GenerateEff(VisualType.Player,
-                    Session.Character.CharacterId, 4799 + (byte)Session.Character.Faction));
+                    Session.Character.VisualId, 4799 + (byte)Session.Character.Faction));
                 Session.SendPacket(Session.Character.GenerateFaction());
                 if (ServerManager.Instance.ChannelId == 51)
                 {
@@ -1803,7 +1803,7 @@ namespace GloomyTale.Handler
             }
             if (packet != null)
             {
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (String.IsNullOrEmpty(packet.FamilyName) && Session.Character.Family != null)
                 {
                     Session.Character.Family.ChangeFaction(Session.Character.Family.FamilyFaction == 1 ? (byte)2 : (byte)1, Session);
@@ -1835,7 +1835,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[FairyXPRate]Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
                     ServerManager.Instance.FairyXpRate = packet.Value;
@@ -1872,13 +1872,13 @@ namespace GloomyTale.Handler
 
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Gift]CharacterName: {packet.CharacterName} ItemVNum: {packet.VNum} Amount: {Amount} Rare: {packet.Rare} Upgrade: {packet.Upgrade}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.CharacterName == "*")
                 {
                     if (Session.HasCurrentMapInstance)
                     {
                         Parallel.ForEach(Session.CurrentMapInstance.Sessions,
-                            session => Session.Character.SendGift(session.Character.CharacterId, packet.VNum,
+                            session => Session.Character.SendGift(session.Character.VisualId, packet.VNum,
                                 Amount, packet.Rare, packet.Upgrade, packet.Design, false));
                         Session.SendPacket(
                             Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("GIFT_SENT"), 10));
@@ -1945,7 +1945,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Gold]Amount: {packet.Amount}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 long gold = packet.Amount;
                 long maxGold = ServerManager.Instance.MaxGold;
                 gold = gold > maxGold ? maxGold : gold;
@@ -1978,7 +1978,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[GoldDropRate]Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
                     ServerManager.Instance.GoldDropRate = packet.Value;
@@ -2008,7 +2008,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[GoldRate]Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
                     ServerManager.Instance.GoldRate = packet.Value;
@@ -2038,7 +2038,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ReputationRate]Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
                     ServerManager.Instance.ReputRate = packet.Value;
@@ -2068,9 +2068,9 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Guri]Type: {packet.Type} Value: {packet.Value} Arguments: {packet.Argument}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Session.SendPacket(UserInterfaceHelper.GenerateGuri(packet.Type, packet.Argument,
-                    Session.Character.CharacterId, packet.Value));
+                    Session.Character.VisualId, packet.Value));
             }
 
             Session.Character.GenerateSay(GuriCommandPacket.ReturnHelp(), 10);
@@ -2086,7 +2086,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[HairColor]HairColor: {packet.HairColor}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Session.Character.HairColor = packet.HairColor;
                 Session.SendPacket(Session.Character.GenerateEq());
                 Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateIn());
@@ -2108,7 +2108,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[HairStyle]HairStyle: {packet.HairStyle}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Session.Character.HairStyle = packet.HairStyle;
                 Session.SendPacket(Session.Character.GenerateEq());
                 Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateIn());
@@ -2173,7 +2173,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[HeroXPRate]Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
                     ServerManager.Instance.HeroXpRate = packet.Value;
@@ -2211,7 +2211,7 @@ namespace GloomyTale.Handler
                 Session.Character.Mates.Where(s => s.IsTeamMember).ToList()
                     .ForEach(s => Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
                 Session.CurrentMapInstance?.Broadcast(Session,
-                    StaticPacketHelper.Out(VisualType.Player, Session.Character.CharacterId), ReceiverType.AllExceptMe);
+                    StaticPacketHelper.Out(VisualType.Player, Session.Character.VisualId), ReceiverType.AllExceptMe);
             }
             else
             {
@@ -2252,7 +2252,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                        $"[ItemRain]ItemVNum: {packet.VNum} Amount: {packet.Amount} Count: {packet.Count} Time: {packet.Time}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 short vnum = packet.VNum;
                 short amount = packet.Amount;
                 if (amount > 999) { amount = 999; }
@@ -2287,7 +2287,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Kick]CharacterName: {packet.CharacterName}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.CharacterName == "*")
                 {
                     Parallel.ForEach(ServerManager.Instance.Sessions, session => session.Disconnect());
@@ -2311,7 +2311,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Kick]AccountName: {packet.AccountName} SessionId: {packet.SessionId}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.SessionId.HasValue) //if you set the sessionId, remove account verification
                 {
                     packet.AccountName = "";
@@ -2337,7 +2337,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Kill]CharacterName: {packet.CharacterName}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 ClientSession sess = ServerManager.Instance.GetSessionByCharacterName(packet.CharacterName);
                 if (sess != null)
                 {
@@ -2354,13 +2354,13 @@ namespace GloomyTale.Handler
                     sess.Character.Hp = 0;
                     sess.Character.LastDefence = DateTime.Now;
                     Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
-                        Session.Character.CharacterId, 1, sess.Character.CharacterId, 1114, 4, 11, 4260, 0, 0, false, 0, 60000, 3, 0));
+                        Session.Character.VisualId, 1, sess.Character.VisualId, 1114, 4, 11, 4260, 0, 0, false, 0, 60000, 3, 0));
                     sess.SendPacket(sess.Character.GenerateStat());
                     if (sess.Character.IsVehicled)
                     {
                         sess.Character.RemoveVehicle();
                     }
-                    ServerManager.Instance.AskRevive(sess.Character.CharacterId);
+                    ServerManager.Instance.AskRevive(sess.Character.VisualId);
                     Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
                 }
                 else
@@ -2386,7 +2386,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[PenaltyLog]CharacterName: {packet.CharacterName}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
                 if (!string.IsNullOrEmpty(name))
                 {
@@ -2499,7 +2499,7 @@ namespace GloomyTale.Handler
         public void MapDance(MapDancePacket packet)
         {
             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MapDance]");
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             if (Session.HasCurrentMapInstance)
             {
                 Session.CurrentMapInstance.IsDancing = !Session.CurrentMapInstance.IsDancing;
@@ -2525,7 +2525,7 @@ namespace GloomyTale.Handler
         public void MapPvp(MapPVPPacket packet)
         {
             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MapPVP]");
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             Session.CurrentMapInstance.IsPVP = !Session.CurrentMapInstance.IsPVP;
             Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
         }
@@ -2540,7 +2540,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Morph]MorphId: {packet.MorphId} MorphDesign: {packet.MorphDesign} Upgrade: {packet.Upgrade} MorphId: {packet.ArenaWinner}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.MorphId < 30 && packet.MorphId > 0)
                 {
                     Session.Character.UseSp = true;
@@ -2583,7 +2583,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Mute]CharacterName: {packet.CharacterName} Reason: {packet.Reason} Until: {DateTime.Now.AddMinutes(packet.Duration)}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Duration == 0)
                 {
                     packet.Duration = 60;
@@ -2608,7 +2608,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Packet]Packet: {packet.Packet}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 Session.SendPacket(packet.Packet);
                 Session.SendPacket(Session.Character.GenerateSay(packet.Packet, 10));
             }
@@ -2628,7 +2628,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Maintenance]Delay: {packet.Delay} Duration: {packet.Duration} Reason: {packet.Reason}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 DateTime dateStart = DateTime.Now.AddMinutes(packet.Delay);
                 MaintenanceLogDTO maintenance = new MaintenanceLogDTO
                 {
@@ -2655,7 +2655,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[PortalTo]DestinationMapId: {packet.DestinationMapId} DestinationMapX: {packet.DestinationX} DestinationY: {packet.DestinationY}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 AddPortal(packet.DestinationMapId, packet.DestinationX, packet.DestinationY,
                     packet.PortalType == null ? (short)-1 : (short)packet.PortalType, false);
             }
@@ -2687,7 +2687,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Promote]CharacterName: {packet.CharacterName}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
                 try
                 {
@@ -2733,9 +2733,9 @@ namespace GloomyTale.Handler
                             {
                                 session.Account.Authority = newAuthority;
                                 session.Character.Authority = newAuthority;
-                                ServerManager.Instance.ChangeMap(session.Character.CharacterId);
+                                ServerManager.Instance.ChangeMap(session.Character.VisualId);
                                 DAOFactory.Instance.AccountDAO.WriteGeneralLog(session.Account.AccountId, session.IpAddress,
-                                    session.Character.CharacterId, GeneralLogType.Promotion, $"by: {Session.Character.Name}");
+                                    session.Character.VisualId, GeneralLogType.Promotion, $"by: {Session.Character.Name}");
                             }
                             else
                             {
@@ -2780,7 +2780,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Rarify]Slot: {packet.Slot} Mode: {packet.Mode} Protection: {packet.Protection}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Slot >= 0)
                 {
                     var wearableInstance = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(packet.Slot, 0);
@@ -2803,7 +2803,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[RemoveMob]NpcMonsterId: {Session.Character.LastNpcMonsterId}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 MapMonster monster = Session.CurrentMapInstance.GetMonsterById(Session.Character.LastNpcMonsterId);
                 MapNpc npc = Session.CurrentMapInstance.GetNpc(Session.Character.LastNpcMonsterId);
                 if (monster != null)
@@ -2912,7 +2912,7 @@ namespace GloomyTale.Handler
                 {
                     Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[RemovePortal]MapId: {portal.SourceMapId} MapX: {portal.SourceX} MapY: {portal.SourceY}");
-                    LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                    LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                     Session.SendPacket(Session.Character.GenerateSay(
                         string.Format(Language.Instance.GetMessageFromKey("NEAREST_PORTAL"), portal.SourceMapId,
                             portal.SourceX, portal.SourceY), 12));
@@ -2937,7 +2937,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Resize]Size: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Value >= 0)
                 {
                     Session.Character.Size = packet.Value;
@@ -2959,7 +2959,7 @@ namespace GloomyTale.Handler
             int time = packet.Time > 0 ? packet.Time : 5;
 
             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Restart]Time: {time}");
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             if (ServerManager.Instance.TaskShutdown != null)
             {
                 ServerManager.Instance.ShutdownStop = true;
@@ -2983,7 +2983,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[RestartAll]");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 string worldGroup = !string.IsNullOrEmpty(packet.WorldGroup) ? packet.WorldGroup : ServerManager.Instance.ServerGroup;
 
                 int time = packet.Time;
@@ -3014,7 +3014,7 @@ namespace GloomyTale.Handler
                 string contents = packet.Contents;
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[SearchItem]Contents: {(string.IsNullOrEmpty(contents) ? "none" : contents)}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 string name = "";
                 byte page = 0;
                 if (!string.IsNullOrEmpty(contents))
@@ -3062,7 +3062,7 @@ namespace GloomyTale.Handler
                 string contents = packet.Contents;
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[SearchMonster]Contents: {(string.IsNullOrEmpty(contents) ? "none" : contents)}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 string name = "";
                 byte page = 0;
                 if (!string.IsNullOrEmpty(contents))
@@ -3109,7 +3109,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[SetPerfection]Slot: {packet.Slot} Type: {packet.Type} Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Slot >= 0)
                 {
                     var specialistInstance =
@@ -3182,11 +3182,11 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Shout]Message: {packet.Message}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
                     DestinationCharacterId = null,
-                    SourceCharacterId = Session.Character.CharacterId,
+                    SourceCharacterId = Session.Character.VisualId,
                     SourceWorldId = ServerManager.Instance.WorldId,
                     Message = packet.Message,
                     Type = MessageType.Shout
@@ -3208,7 +3208,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[ShoutHere]Message: {packet.Message}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 ServerManager.Shout(packet.Message);
             }
             else
@@ -3224,7 +3224,7 @@ namespace GloomyTale.Handler
         public void Shutdown(ShutdownPacket packet)
         {
             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Shutdown]");
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             if (ServerManager.Instance.TaskShutdown != null)
             {
                 ServerManager.Instance.ShutdownStop = true;
@@ -3246,7 +3246,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[ShutdownAll]");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (!string.IsNullOrEmpty(packet.WorldGroup))
                 {
                     CommunicationServiceClient.Instance.Shutdown(packet.WorldGroup);
@@ -3322,7 +3322,7 @@ namespace GloomyTale.Handler
         public void SpRefill(SPRefillPacket packet)
         {
             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[SPRefill]");
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             Session.Character.SpPoint = 10000;
             Session.Character.SpAdditionPoint = 1000000;
             Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SP_REFILL"), 0));
@@ -3339,7 +3339,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Event]EventType: {packet.EventType.ToString()}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.LvlBracket >= 0)
                 {
                     EventHelper.GenerateEvent(packet.EventType, packet.LvlBracket);
@@ -3365,7 +3365,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[GlobalEvent]EventType: {packet.EventType.ToString()}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
 #warning CommunicationServiceClient.Instance.RunGlobalEvent(packet.EventType);
             }
             else
@@ -3423,7 +3423,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Sudo]CharacterName: {packet.CharacterName} CommandContents:{packet.CommandContents}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.CharacterName == "*")
                 {
                     foreach (ClientSession sess in Session.CurrentMapInstance.Sessions.ToList().Where(s => s.Character?.Authority <= Session.Character.Authority))
@@ -3468,7 +3468,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Mob]NpcMonsterVNum: {packet.NpcMonsterVNum} Amount: {packet.Amount} IsMoving: {packet.IsMoving}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (Session.IsOnMap && Session.HasCurrentMapInstance)
                 {
                     NpcMonster npcmonster = ServerManager.GetNpcMonster(packet.NpcMonsterVNum);
@@ -3535,7 +3535,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[MobRain]NpcMonsterVNum: {packet.NpcMonsterVNum} Amount: {packet.Amount} IsMoving: {packet.IsMoving}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (Session.IsOnMap && Session.HasCurrentMapInstance)
                 {
                     NpcMonster npcmonster = ServerManager.GetNpcMonster(packet.NpcMonsterVNum);
@@ -3565,7 +3565,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[NPC]NpcMonsterVNum: {packet.NpcMonsterVNum} Amount: {packet.Amount} IsMoving: {packet.IsMoving}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (Session.IsOnMap && Session.HasCurrentMapInstance)
                 {
                     NpcMonster npcmonster = ServerManager.GetNpcMonster(packet.NpcMonsterVNum);
@@ -3641,7 +3641,7 @@ namespace GloomyTale.Handler
                 }
 
                 ClientSession session = ServerManager.Instance.GetSessionByCharacterName(packet.Data);
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (session != null)
                 {
                     Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
@@ -3655,7 +3655,7 @@ namespace GloomyTale.Handler
                     }
                     else
                     {
-                        ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
+                        ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId,
                             session.Character.MapInstanceId, mapX, mapY);
                     }
                 }
@@ -3672,7 +3672,7 @@ namespace GloomyTale.Handler
                         }
                         else
                         {
-                            ServerManager.Instance.ChangeMap(Session.Character.CharacterId, mapId, packet.X, packet.Y);
+                            ServerManager.Instance.ChangeMap(Session.Character.VisualId, mapId, packet.X, packet.Y);
                         }
                     }
                     else
@@ -3698,12 +3698,12 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Summon]CharacterName: {packet.CharacterName}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.CharacterName == "*")
                 {
                     Parallel.ForEach(
                         ServerManager.Instance.Sessions.Where(s =>
-                            s.Character != null && s.Character.CharacterId != Session.Character.CharacterId), session =>
+                            s.Character != null && s.Character.VisualId != Session.Character.VisualId), session =>
                         {
                             // clear any shop or trade on target character
                             Session.Character.DisposeShopAndExchange();
@@ -3733,7 +3733,7 @@ namespace GloomyTale.Handler
                                 }
                                 else
                                 {
-                                    ServerManager.Instance.ChangeMapInstance(session.Character.CharacterId,
+                                    ServerManager.Instance.ChangeMapInstance(session.Character.VisualId,
                                         Session.Character.MapInstanceId, mapXPossibility, mapYPossibility);
                                 }
                             }
@@ -3746,7 +3746,7 @@ namespace GloomyTale.Handler
                     if (targetSession?.Character.IsChangingMapInstance == false)
                     {
                         Session.Character.DisposeShopAndExchange();
-                        ServerManager.Instance.ChangeMapInstance(targetSession.Character.CharacterId,
+                        ServerManager.Instance.ChangeMapInstance(targetSession.Character.VisualId,
                             Session.Character.MapInstanceId, (short)(Session.Character.PositionX + 1),
                             (short)(Session.Character.PositionY + 1));
                     }
@@ -3772,7 +3772,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Unban]CharacterName: {packet.CharacterName}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
                 CharacterDTO chara = DAOFactory.Instance.CharacterDAO.LoadByName(name);
                 if (chara != null)
@@ -3811,9 +3811,9 @@ namespace GloomyTale.Handler
         public void Undercover(UndercoverPacket packet)
         {
             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Undercover]");
-            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
             Session.Character.Undercover = !Session.Character.Undercover;
-            ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, Session.CurrentMapInstance.MapInstanceId, Session.Character.PositionX, Session.Character.PositionY);
+            ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId, Session.CurrentMapInstance.MapInstanceId, Session.Character.PositionX, Session.Character.PositionY);
         }
 
         /// <summary>
@@ -3826,7 +3826,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Unmute]CharacterName: {packet.CharacterName}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 string name = packet.CharacterName;
                 CharacterDTO chara = DAOFactory.Instance.CharacterDAO.LoadByName(name);
                 if (chara != null)
@@ -3879,7 +3879,7 @@ namespace GloomyTale.Handler
                 }
 
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[BackMob]");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 object lastObject = Session.CurrentMapInstance.RemovedMobNpcList.LastOrDefault();
 
                 if (lastObject is MapMonster mapMonster)
@@ -3958,7 +3958,7 @@ namespace GloomyTale.Handler
                       && !Session.CurrentMapInstance.MapInstanceType.Equals(MapInstanceType.TalentArenaMapInstance)
                       && !Session.CurrentMapInstance.MapInstanceType.Equals(MapInstanceType.IceBreakerInstance))
                 {
-                    ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
+                    ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId,
                         Session.Character.MapInstanceId, Session.Character.PositionX, Session.Character.PositionY,
                         true);
                     Session.SendPacket(StaticPacketHelper.Cancel(2));
@@ -3976,7 +3976,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Upgrade]Slot: {packet.Slot} Mode: {packet.Mode} Protection: {packet.Protection}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Slot >= 0)
                 {
                     var wearableInstance =
@@ -4066,7 +4066,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Warn]CharacterName: {packet.CharacterName} Reason: {packet.Reason}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 string characterName = packet.CharacterName;
                 CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadByName(characterName);
                 if (character != null)
@@ -4169,7 +4169,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[XpRate]Value: {packet.Value}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (packet.Value <= 1000)
                 {
                     ServerManager.Instance.XpRate = packet.Value;
@@ -4200,7 +4200,7 @@ namespace GloomyTale.Handler
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Zoom]Value: {packet.Value}");
 
                 Session.SendPacket(
-                    UserInterfaceHelper.GenerateGuri(15, packet.Value, Session.Character.CharacterId));
+                    UserInterfaceHelper.GenerateGuri(15, packet.Value, Session.Character.VisualId));
             }
 
             Session.Character.GenerateSay(ZoomPacket.ReturnHelp(), 10);
@@ -4215,7 +4215,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Act4]");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 //if (ServerManager.Instance.IsAct4Online())
                 {
                     /*switch (Session.Character.Faction)
@@ -4261,7 +4261,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[LeaveAct4]");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (Session.Character.Channel.ChannelId == 51)
                 {
 #warning Act4 connection
@@ -4335,14 +4335,14 @@ namespace GloomyTale.Handler
                 {
                     Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[Gogo]MapId: {Session.CurrentMapInstance.Map.MapId} MapX: {packet.X} MapY: {packet.Y}");
-                    LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                    LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                     if (packet.X == 0 && packet.Y == 0)
                     {
                         ServerManager.Instance.TeleportOnRandomPlaceInMap(Session, Session.CurrentMapInstance.MapInstanceId);
                     }
                     else
                     {
-                        ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, Session.CurrentMapInstance.MapInstanceId, packet.X, packet.Y);
+                        ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId, Session.CurrentMapInstance.MapInstanceId, packet.X, packet.Y);
                     }
                 }
             }
@@ -4368,11 +4368,11 @@ namespace GloomyTale.Handler
                 {
                     Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                         $"[MapReset]MapId: {Session.CurrentMapInstance.Map.MapId}");
-                    LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                    LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                     GameObject.MapInstance newMapInstance = ServerManager.ResetMapInstance(Session.CurrentMapInstance);
 
                     Parallel.ForEach(Session.CurrentMapInstance.Sessions, sess =>
-                    ServerManager.Instance.ChangeMapInstance(sess.Character.CharacterId, newMapInstance.MapInstanceId, sess.Character.PositionX, sess.Character.PositionY));
+                    ServerManager.Instance.ChangeMapInstance(sess.Character.VisualId, newMapInstance.MapInstanceId, sess.Character.PositionX, sess.Character.PositionY));
                 }
             }
             else
@@ -4391,7 +4391,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                        $"[Drop]ItemVNum: {packet.VNum} Amount: {packet.Amount} Count: {packet.Count} Time: {packet.Time}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 short vnum = packet.VNum;
                 short amount = packet.Amount;
                 if (amount < 1) { amount = 1; }
@@ -4435,7 +4435,7 @@ namespace GloomyTale.Handler
                         {
                             Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                                 $"[ChangeShopName]ShopId: {shop.ShopId} Name: {packet.Name}");
-                            LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                            LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                             if (DAOFactory.Instance.ShopDAO.LoadById(shop.ShopId) is ShopDTO shopDTO)
                             {
                                 shop.Name = packet.Name;
@@ -4467,7 +4467,7 @@ namespace GloomyTale.Handler
         {
             if (Session.HasCurrentMapInstance)
             {
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (Session.CurrentMapInstance.GetNpc(Session.Character.LastNpcMonsterId) is MapNpc npc)
                 {
                     Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
@@ -4514,7 +4514,7 @@ namespace GloomyTale.Handler
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                                        $"[AddQuest]QuestId: {packet.QuestId}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (ServerManager.Instance.Quests.Any(q => q.QuestId == packet.QuestId))
                 {
                     Session.Character.AddQuest(packet.QuestId, false);
@@ -4543,7 +4543,7 @@ namespace GloomyTale.Handler
 
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                                        $"[ClassPack]Class: {packet.Class}");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 switch (packet.Class)
                 {
                     case 1:
@@ -4804,9 +4804,9 @@ namespace GloomyTale.Handler
             {
                 if (Session.Character.Channel.ChannelId != 51)
                 {
-                    LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                    LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                     Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Home]");
-                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 129, 127, 73);
+                    ServerManager.Instance.ChangeMap(Session.Character.VisualId, 129, 127, 73);
                 }
                 else
                 {
@@ -4850,7 +4850,7 @@ namespace GloomyTale.Handler
             if (packet != null)
             {
                 Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[ReloadSI]");
-                LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 ServerManager.Instance.LoadScriptedInstances();
                 Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
             }

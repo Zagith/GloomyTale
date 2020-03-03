@@ -112,7 +112,7 @@ namespace GloomyTale.Handler
             CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
             {
                 DestinationCharacterId = fam.FamilyId,
-                SourceCharacterId = Session.Character.CharacterId,
+                SourceCharacterId = Session.Character.VisualId,
                 SourceWorldId = ServerManager.Instance.WorldId,
                 Message = "fhis_stc",
                 Type = MessageType.Family
@@ -185,10 +185,10 @@ namespace GloomyTale.Handler
                     session.Character.ChangeFaction(FactionType.None);
                     FamilyCharacterDTO familyCharacter = new FamilyCharacterDTO
                     {
-                        CharacterId = session.Character.CharacterId,
+                        CharacterId = session.Character.VisualId,
                         DailyMessage = "",
                         Experience = 0,
-                        Authority = Session.Character.CharacterId == session.Character.CharacterId
+                        Authority = Session.Character.VisualId == session.Character.VisualId
                             ? FamilyAuthority.Head
                             : FamilyAuthority.Familydeputy,
                         FamilyId = family.FamilyId,
@@ -201,7 +201,7 @@ namespace GloomyTale.Handler
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
                     DestinationCharacterId = family.FamilyId,
-                    SourceCharacterId = Session.Character.CharacterId,
+                    SourceCharacterId = Session.Character.VisualId,
                     SourceWorldId = ServerManager.Instance.WorldId,
                     Message = "fhis_stc",
                     Type = MessageType.Family
@@ -240,7 +240,7 @@ namespace GloomyTale.Handler
                     CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                     {
                         DestinationCharacterId = Session.Character.Family.FamilyId,
-                        SourceCharacterId = Session.Character.CharacterId,
+                        SourceCharacterId = Session.Character.VisualId,
                         SourceWorldId = ServerManager.Instance.WorldId,
                         Message = UserInterfaceHelper.GenerateMsg(
                             $"<{Language.Instance.GetMessageFromKey("FAMILYCALL")}> {msg}", 0),
@@ -275,12 +275,12 @@ namespace GloomyTale.Handler
                 {
                     ccmsg = $"[{Session.Account.Authority.ToString()} {Session.Character.Name}]:{msg}";
                 }
-                LogHelper.Instance.InsertChatLog(ChatType.Family, Session.Character.CharacterId, familyChatPacket.Message, Session.IpAddress);
+                LogHelper.Instance.InsertChatLog(ChatType.Family, Session.Character.VisualId, familyChatPacket.Message, Session.IpAddress);
 
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
                     DestinationCharacterId = Session.Character.Family.FamilyId,
-                    SourceCharacterId = Session.Character.CharacterId,
+                    SourceCharacterId = Session.Character.VisualId,
                     SourceWorldId = ServerManager.Instance.WorldId,
                     Message = ccmsg,
                     Type = MessageType.FamilyChat
@@ -402,7 +402,7 @@ namespace GloomyTale.Handler
             CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
             {
                 DestinationCharacterId = fam.FamilyId,
-                SourceCharacterId = Session.Character.CharacterId,
+                SourceCharacterId = Session.Character.VisualId,
                 SourceWorldId = ServerManager.Instance.WorldId,
                 Message = "fhis_stc",
                 Type = MessageType.Family
@@ -455,7 +455,7 @@ namespace GloomyTale.Handler
                     return;
                 }
 
-                if (familyCharacter.CharacterId == Session.Character.CharacterId)
+                if (familyCharacter.CharacterId == Session.Character.VisualId)
                 {
                     Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("CANT_KICK_YOURSELF")));
                     return;
@@ -516,7 +516,7 @@ namespace GloomyTale.Handler
 
                 long familyId = Session.Character.Family.FamilyId;
 
-                DAOFactory.Instance.FamilyCharacterDAO.Delete(Session.Character.CharacterId);
+                DAOFactory.Instance.FamilyCharacterDAO.Delete(Session.Character.VisualId);
 
                 Logger.Log.LogUserEvent("GUILDCOMMAND", Session.GenerateIdentity(),
                     $"[FamilyLeave][{Session.Character.Family.FamilyId}]");
@@ -730,7 +730,7 @@ namespace GloomyTale.Handler
                     CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                     {
                         DestinationCharacterId = Session.Character.Family.FamilyId,
-                        SourceCharacterId = Session.Character.CharacterId,
+                        SourceCharacterId = Session.Character.VisualId,
                         SourceWorldId = ServerManager.Instance.WorldId,
                         Message = "fhis_stc",
                         Type = MessageType.Family
@@ -740,7 +740,7 @@ namespace GloomyTale.Handler
                         CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                         {
                             DestinationCharacterId = Session.Character.Family.FamilyId,
-                            SourceCharacterId = Session.Character.CharacterId,
+                            SourceCharacterId = Session.Character.VisualId,
                             SourceWorldId = ServerManager.Instance.WorldId,
                             Message = UserInterfaceHelper.GenerateInfo(
                                 "--- Family Message ---\n" + Session.Character.Family.FamilyMessage),
@@ -921,7 +921,7 @@ namespace GloomyTale.Handler
             ItemInstance item2 = previousInventory.DeepCopy();
             item2.Id = Guid.NewGuid();
             item2.Amount = fWithdrawPacket.Amount;
-            item2.CharacterId = Session.Character.CharacterId;
+            item2.CharacterId = Session.Character.VisualId;
 
             previousInventory.Amount -= fWithdrawPacket.Amount;
             if (previousInventory.Amount <= 0)
@@ -999,7 +999,7 @@ namespace GloomyTale.Handler
                         0));
             }
 
-            if (Session.Character.IsBlockedByCharacter(otherSession.Character.CharacterId))
+            if (Session.Character.IsBlockedByCharacter(otherSession.Character.VisualId))
             {
                 Session.SendPacket(
                     UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("BLACKLIST_BLOCKED")));
@@ -1034,8 +1034,8 @@ namespace GloomyTale.Handler
             Session.SendPacket(UserInterfaceHelper.GenerateInfo(
                 string.Format(Language.Instance.GetMessageFromKey("FAMILY_INVITED"), otherSession.Character.Name)));
             otherSession.SendPacket(UserInterfaceHelper.GenerateDialog(
-                $"#gjoin^1^{Session.Character.CharacterId} #gjoin^2^{Session.Character.CharacterId} {string.Format(Language.Instance.GetMessageFromKey("ASK_FAMILY_INVITED"), Session.Character.Family.Name)}"));
-            Session.Character.FamilyInviteCharacters.Add(otherSession.Character.CharacterId);
+                $"#gjoin^1^{Session.Character.VisualId} #gjoin^2^{Session.Character.VisualId} {string.Format(Language.Instance.GetMessageFromKey("ASK_FAMILY_INVITED"), Session.Character.Family.Name)}"));
+            Session.Character.FamilyInviteCharacters.Add(otherSession.Character.VisualId);
         }
 
         /// <summary>
@@ -1055,7 +1055,7 @@ namespace GloomyTale.Handler
 
                 ClientSession inviteSession = ServerManager.Instance.GetSessionByCharacterId(characterId);
 
-                if (inviteSession?.Character.FamilyInviteCharacters.GetAllItems().Contains(Session.Character.CharacterId) == true
+                if (inviteSession?.Character.FamilyInviteCharacters.GetAllItems().Contains(Session.Character.VisualId) == true
                     && inviteSession.Character.Family != null
                     && inviteSession.Character.Family.FamilyCharacters != null)
                 {
@@ -1066,7 +1066,7 @@ namespace GloomyTale.Handler
 
                     FamilyCharacterDTO familyCharacter = new FamilyCharacterDTO
                     {
-                        CharacterId = Session.Character.CharacterId,
+                        CharacterId = Session.Character.VisualId,
                         DailyMessage = "",
                         Experience = 0,
                         Authority = FamilyAuthority.Member,
@@ -1085,7 +1085,7 @@ namespace GloomyTale.Handler
                     CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                     {
                         DestinationCharacterId = inviteSession.Character.Family.FamilyId,
-                        SourceCharacterId = Session.Character.CharacterId,
+                        SourceCharacterId = Session.Character.VisualId,
                         SourceWorldId = ServerManager.Instance.WorldId,
                         Message = UserInterfaceHelper.GenerateMsg(
                             string.Format(Language.Instance.GetMessageFromKey("FAMILY_JOINED"), Session.Character.Name,
@@ -1139,7 +1139,7 @@ namespace GloomyTale.Handler
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
                     DestinationCharacterId = fam.FamilyId,
-                    SourceCharacterId = Session.Character.CharacterId,
+                    SourceCharacterId = Session.Character.VisualId,
                     SourceWorldId = ServerManager.Instance.WorldId,
                     Message = "fhis_stc",
                     Type = MessageType.Family
@@ -1150,7 +1150,7 @@ namespace GloomyTale.Handler
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
                     DestinationCharacterId = fam.FamilyId,
-                    SourceCharacterId = Session.Character.CharacterId,
+                    SourceCharacterId = Session.Character.VisualId,
                     SourceWorldId = ServerManager.Instance.WorldId,
                     Message = UserInterfaceHelper.GenerateMsg(
                         string.Format(Language.Instance.GetMessageFromKey("FAMILY_HEAD_CHANGE_GENDER")), 0),
@@ -1185,7 +1185,7 @@ namespace GloomyTale.Handler
                     CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                     {
                         DestinationCharacterId = Session.Character.Family.FamilyId,
-                        SourceCharacterId = Session.Character.CharacterId,
+                        SourceCharacterId = Session.Character.VisualId,
                         SourceWorldId = ServerManager.Instance.WorldId,
                         Message = "fhis_stc",
                         Type = MessageType.Family

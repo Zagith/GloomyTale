@@ -126,7 +126,7 @@ namespace GloomyTale.GameObject
             session.RegisterTime = DateTime.Now;
 
             // Create a ChatClient and store it in a collection
-            _sessions[session.Character.CharacterId] = session;
+            _sessions[session.Character.VisualId] = session;
             if (session.HasCurrentMapInstance)
             {
                 session.CurrentMapInstance.IsSleeping = false;
@@ -182,7 +182,7 @@ namespace GloomyTale.GameObject
                                 {
                                     if (sentPacket.Sender != null)
                                     {
-                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.CharacterId))
+                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.VisualId))
                                         {
                                             session.SendPacket(sentPacket.Packet);
                                         }
@@ -202,7 +202,7 @@ namespace GloomyTale.GameObject
                                 {
                                     if (sentPacket.Sender != null)
                                     {
-                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.CharacterId) || sentPacket.Packet.StartsWith("revive", StringComparison.CurrentCulture))
+                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.VisualId) || sentPacket.Packet.StartsWith("revive", StringComparison.CurrentCulture))
                                         {
                                             session.SendPacket(sentPacket.Packet);
                                         }
@@ -245,7 +245,7 @@ namespace GloomyTale.GameObject
                                 {
                                     if (sentPacket.Sender != null)
                                     {
-                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.CharacterId))
+                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.VisualId))
                                         {
                                             session.SendPacket(sentPacket.Packet);
                                         }
@@ -268,7 +268,7 @@ namespace GloomyTale.GameObject
                                 {
                                     if (sentPacket.Sender != null)
                                     {
-                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.CharacterId))
+                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.VisualId))
                                         {
                                             session.SendPacket(sentPacket.Packet);
                                         }
@@ -284,7 +284,7 @@ namespace GloomyTale.GameObject
                         {
                             foreach (ClientSession session in Sessions.Where(s => s.SessionId != sentPacket.Sender.SessionId && (s.Character?.Group == null || (s.Character?.Group?.GroupId != sentPacket.Sender?.Character?.Group?.GroupId))))
                             {
-                                if (session.HasSelectedCharacter && !sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.CharacterId))
+                                if (session.HasSelectedCharacter && !sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.VisualId))
                                 {
                                     session.SendPacket(sentPacket.Packet);
                                 }
@@ -299,7 +299,7 @@ namespace GloomyTale.GameObject
                             {
                                 if (sentPacket.Sender != null)
                                 {
-                                    if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.CharacterId))
+                                    if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.VisualId))
                                     {
                                         if (session.Character.Faction == sentPacket.Sender.Character.Faction)
                                         {
@@ -334,7 +334,7 @@ namespace GloomyTale.GameObject
                                 {
                                     if (sentPacket.Sender != null)
                                     {
-                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.CharacterId))
+                                        if (!sentPacket.Sender.Character.IsBlockedByCharacter(session.Character.VisualId))
                                         {
                                             session.SendPacket(sentPacket.Packet);
                                         }
@@ -351,12 +351,12 @@ namespace GloomyTale.GameObject
                     case ReceiverType.OnlySomeone:
                         if (sentPacket.SomeonesCharacterId > 0 || !string.IsNullOrEmpty(sentPacket.SomeonesCharacterName))
                         {
-                            ClientSession targetSession = Sessions.SingleOrDefault(s => s.Character.CharacterId == sentPacket.SomeonesCharacterId || s.Character.Name == sentPacket.SomeonesCharacterName);
+                            ClientSession targetSession = Sessions.SingleOrDefault(s => s.Character.VisualId == sentPacket.SomeonesCharacterId || s.Character.Name == sentPacket.SomeonesCharacterName);
                             if (targetSession?.HasSelectedCharacter == true)
                             {
                                 if (sentPacket.Sender != null)
                                 {
-                                    if (!sentPacket.Sender.Character.IsBlockedByCharacter(targetSession.Character.CharacterId))
+                                    if (!sentPacket.Sender.Character.IsBlockedByCharacter(targetSession.Character.VisualId))
                                     {
                                         targetSession.SendPacket(sentPacket.Packet);
                                     }
@@ -376,7 +376,7 @@ namespace GloomyTale.GameObject
                     case ReceiverType.AllNoEmoBlocked:
                         Parallel.ForEach(Sessions.Where(s => s?.Character.EmoticonsBlocked == false), session =>
                         {
-                            if (session?.HasSelectedCharacter == true && sentPacket.Sender?.Character.IsBlockedByCharacter(session.Character.CharacterId) == false)
+                            if (session?.HasSelectedCharacter == true && sentPacket.Sender?.Character.IsBlockedByCharacter(session.Character.VisualId) == false)
                             {
                                 session.SendPacket(sentPacket.Packet);
                             }
@@ -386,7 +386,7 @@ namespace GloomyTale.GameObject
                     case ReceiverType.AllNoHeroBlocked:
                         Parallel.ForEach(Sessions.Where(s => s?.Character.HeroChatBlocked == false), session =>
                         {
-                            if (session?.HasSelectedCharacter == true && sentPacket.Sender?.Character.IsBlockedByCharacter(session.Character.CharacterId) == false)
+                            if (session?.HasSelectedCharacter == true && sentPacket.Sender?.Character.IsBlockedByCharacter(session.Character.VisualId) == false)
                             {
                                 session.SendPacket(sentPacket.Packet);
                             }

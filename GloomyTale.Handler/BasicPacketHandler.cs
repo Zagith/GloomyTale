@@ -62,7 +62,7 @@ namespace GloomyTale.Handler
         {
             if (blPacket.CharacterName != null && ServerManager.Instance.GetSessionByCharacterName(blPacket.CharacterName) is ClientSession receiverSession)
             {
-                BlacklistAdd(new BlInsPacket { CharacterId = receiverSession.Character.CharacterId });
+                BlacklistAdd(new BlInsPacket { CharacterId = receiverSession.Character.VisualId });
             }
         }
         
@@ -72,7 +72,7 @@ namespace GloomyTale.Handler
         /// <param name="blInsPacket"></param>
         public void BlacklistAdd(BlInsPacket blInsPacket)
         {
-            if (Session.Character.CharacterId == blInsPacket.CharacterId)
+            if (Session.Character.VisualId == blInsPacket.CharacterId)
             {
                 return;
             }
@@ -228,7 +228,7 @@ namespace GloomyTale.Handler
 
                 case CharacterOption.GroupSharing:
                     Group grp = ServerManager.Instance.Groups.Find(
-                        g => g != null && g.IsMemberOfGroup(Session.Character.CharacterId));
+                        g => g != null && g.IsMemberOfGroup(Session.Character.VisualId));
                     if (grp == null)
                     {
                         return;
@@ -271,7 +271,7 @@ namespace GloomyTale.Handler
         {
             if (complimentPacket != null)
             {
-                if (Session.Character.CharacterId == complimentPacket.CharacterId)
+                if (Session.Character.VisualId == complimentPacket.CharacterId)
                 {
                     return;
                 }
@@ -298,7 +298,7 @@ namespace GloomyTale.Handler
                                 Session.Character.GeneralLogs.Add(new GeneralLogDTO
                                 {
                                     AccountId = Session.Account.AccountId,
-                                    CharacterId = Session.Character.CharacterId,
+                                    CharacterId = Session.Character.VisualId,
                                     IpAddress = Session.IpAddress,
                                     LogData = "World",
                                     LogType = nameof(Compliment),
@@ -341,7 +341,7 @@ namespace GloomyTale.Handler
         /// <param name="directionPacket"></param>
         public void Dir(DirectionPacket directionPacket)
         {
-            if (directionPacket.CharacterId == Session.Character.CharacterId)
+            if (directionPacket.CharacterId == Session.Character.VisualId)
             {
                 Session.Character.Direction = directionPacket.Direction;
                 Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateDir());
@@ -356,7 +356,7 @@ namespace GloomyTale.Handler
         {
             if (flPacket.CharacterName != null && ServerManager.Instance.GetSessionByCharacterName(flPacket.CharacterName) is ClientSession receiverSession)
             {
-                RelationAdd(new FInsPacket { Type = 1, CharacterId = receiverSession.Character.CharacterId });
+                RelationAdd(new FInsPacket { Type = 1, CharacterId = receiverSession.Character.VisualId });
             }
         }
 
@@ -368,7 +368,7 @@ namespace GloomyTale.Handler
         {
             long characterId = fInsPacket.CharacterId;
 
-            if (Session.Character.CharacterId == characterId)
+            if (Session.Character.VisualId == characterId)
             {
                 return;
             }
@@ -390,7 +390,7 @@ namespace GloomyTale.Handler
                             if (!Session.Character.IsBlockingCharacter(characterId))
                             {
                                 if (otherSession.Character.MarryRequestCharacters.GetAllItems()
-                                       .Contains(Session.Character.CharacterId))
+                                       .Contains(Session.Character.VisualId))
                                 {
                                     switch (fInsPacket.Type)
                                     {
@@ -410,7 +410,7 @@ namespace GloomyTale.Handler
                                     }
                                 }
                                 if (otherSession.Character.FriendRequestCharacters.GetAllItems()
-                                    .Contains(Session.Character.CharacterId))
+                                    .Contains(Session.Character.VisualId))
                                 {
                                     switch (fInsPacket.Type)
                                     {
@@ -453,7 +453,7 @@ namespace GloomyTale.Handler
                                     }
 
                                     otherSession.SendPacket(UserInterfaceHelper.GenerateDialog(
-                                        $"#fins^1^{Session.Character.CharacterId} #fins^2^{Session.Character.CharacterId} {string.Format(Language.Instance.GetMessageFromKey("FRIEND_ADD"), Session.Character.Name)}"));
+                                        $"#fins^1^{Session.Character.VisualId} #fins^2^{Session.Character.VisualId} {string.Format(Language.Instance.GetMessageFromKey("FRIEND_ADD"), Session.Character.Name)}"));
                                     Session.Character.FriendRequestCharacters.Add(characterId);
                                 }
                             }
@@ -500,7 +500,7 @@ namespace GloomyTale.Handler
         /// <param name="cspPacket"></param>
         public void SendBubbleMessage(CspPacket cspPacket)
         {
-            if (cspPacket.CharacterId == Session.Character.CharacterId && Session.Character.BubbleMessage != null)
+            if (cspPacket.CharacterId == Session.Character.VisualId && Session.Character.BubbleMessage != null)
             {
                 Session.Character.MapInstance.Broadcast(Session.Character.GenerateBubbleMessagePacket());
             }
@@ -531,7 +531,7 @@ namespace GloomyTale.Handler
                 int? sentChannelId = CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
                     DestinationCharacterId = character.CharacterId,
-                    SourceCharacterId = Session.Character.CharacterId,
+                    SourceCharacterId = Session.Character.VisualId,
                     SourceWorldId = ServerManager.Instance.WorldId,
                     Message = PacketFactory.Serialize(Session.Character.GenerateTalk(message)),
                     Type = MessageType.PrivateChat
@@ -544,7 +544,7 @@ namespace GloomyTale.Handler
                 }
                 else
                 {
-                    LogHelper.Instance.InsertChatLog(ChatType.Friend, Session.Character.CharacterId, message, Session.IpAddress);
+                    LogHelper.Instance.InsertChatLog(ChatType.Friend, Session.Character.VisualId, message, Session.IpAddress);
                 }
             }
         }
@@ -716,7 +716,7 @@ namespace GloomyTale.Handler
                         s.Character.GeneralLogs.Add(new GeneralLogDTO
                         {
                             AccountId = s.Account.AccountId,
-                            CharacterId = s.Character.CharacterId,
+                            CharacterId = s.Character.VisualId,
                             IpAddress = s.IpAddress,
                             LogData = s.Character.Timespace.Id.ToString(),
                             LogType = "InstanceEntry",
@@ -752,7 +752,7 @@ namespace GloomyTale.Handler
         {
             if (pinvPacket.CharacterName != null && ServerManager.Instance.GetSessionByCharacterName(pinvPacket.CharacterName) is ClientSession receiverSession)
             {
-                GroupJoin(new PJoinPacket { RequestType = GroupRequestType.Requested, CharacterId = receiverSession.Character.CharacterId });
+                GroupJoin(new PJoinPacket { RequestType = GroupRequestType.Requested, CharacterId = receiverSession.Character.VisualId });
             }
         }
 
@@ -769,7 +769,7 @@ namespace GloomyTale.Handler
 
                 if ((targetSession == null && !pjoinPacket.RequestType.Equals(GroupRequestType.Sharing)) 
                 || targetSession?.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance 
-                || ServerManager.Instance.ArenaMembers.ToList().Any(s => s.Session?.Character?.CharacterId == Session.Character.CharacterId)
+                || ServerManager.Instance.ArenaMembers.ToList().Any(s => s.Session?.Character?.VisualId == Session.Character.VisualId)
                 || (targetSession != null && ServerManager.Instance.ChannelId == 51 && targetSession.Character.Faction != Session.Character.Faction)
                 || Session.Character.Timespace != null 
                 || targetSession?.Character.Timespace != null)
@@ -793,14 +793,14 @@ namespace GloomyTale.Handler
                     }
 
                     if (ServerManager.Instance.IsCharacterMemberOfGroup(pjoinPacket.CharacterId)
-                        && ServerManager.Instance.IsCharacterMemberOfGroup(Session.Character.CharacterId))
+                        && ServerManager.Instance.IsCharacterMemberOfGroup(Session.Character.VisualId))
                     {
                         Session.SendPacket(
                             UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("ALREADY_IN_GROUP")));
                         return;
                     }
 
-                    if (Session.Character.CharacterId != pjoinPacket.CharacterId && targetSession != null)
+                    if (Session.Character.VisualId != pjoinPacket.CharacterId && targetSession != null)
                     {
                         if (Session.Character.IsBlockedByCharacter(pjoinPacket.CharacterId))
                         {
@@ -810,7 +810,7 @@ namespace GloomyTale.Handler
                             return;
                         }
 
-                        if (targetSession.Character.IsBlockedByCharacter(Session.Character.CharacterId))
+                        if (targetSession.Character.IsBlockedByCharacter(Session.Character.VisualId))
                         {
                             Session.SendPacket(
                                 UserInterfaceHelper.GenerateInfo(
@@ -827,7 +827,7 @@ namespace GloomyTale.Handler
                         else
                         {
                             // save sent group request to current character
-                            Session.Character.GroupSentRequestCharacterIds.Add(targetSession.Character.CharacterId);
+                            Session.Character.GroupSentRequestCharacterIds.Add(targetSession.Character.VisualId);
                             if (Session.Character.Group == null || Session.Character.Group.GroupType == GroupType.Group)
                             {
                                 if (targetSession.Character?.Group == null
@@ -837,7 +837,7 @@ namespace GloomyTale.Handler
                                         string.Format(Language.Instance.GetMessageFromKey("GROUP_REQUEST"),
                                             targetSession.Character.Name)));
                                     targetSession.SendPacket(UserInterfaceHelper.GenerateDialog(
-                                        $"#pjoin^3^{Session.Character.CharacterId} #pjoin^4^{Session.Character.CharacterId} {string.Format(Language.Instance.GetMessageFromKey("INVITED_YOU"), Session.Character.Name)}"));
+                                        $"#pjoin^3^{Session.Character.VisualId} #pjoin^4^{Session.Character.VisualId} {string.Format(Language.Instance.GetMessageFromKey("INVITED_YOU"), Session.Character.Name)}"));
                                 }
                                 else
                                 {
@@ -847,7 +847,7 @@ namespace GloomyTale.Handler
                             else if (Session.Character.Group.IsLeader(Session))
                             {
                                 targetSession.SendPacket(
-                                    $"qna #rd^1^{Session.Character.CharacterId}^1 {string.Format(Language.Instance.GetMessageFromKey("INVITE_RAID"), Session.Character.Name)}");
+                                    $"qna #rd^1^{Session.Character.VisualId}^1 {string.Format(Language.Instance.GetMessageFromKey("INVITE_RAID"), Session.Character.Name)}");
                             }
                         }
                     }
@@ -859,32 +859,32 @@ namespace GloomyTale.Handler
                         Session.SendPacket(
                             UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("GROUP_SHARE_INFO")));
                         Session.Character.Group.Sessions
-                            .Where(s => s.Character.CharacterId != Session.Character.CharacterId).ToList().ForEach(s =>
+                            .Where(s => s.Character.VisualId != Session.Character.VisualId).ToList().ForEach(s =>
                             {
                                 s.SendPacket(UserInterfaceHelper.GenerateDialog(
-                                    $"#pjoin^6^{Session.Character.CharacterId} #pjoin^7^{Session.Character.CharacterId} {string.Format(Language.Instance.GetMessageFromKey("INVITED_YOU_SHARE"), Session.Character.Name)}"));
-                                Session.Character.GroupSentRequestCharacterIds.Add(s.Character.CharacterId);
+                                    $"#pjoin^6^{Session.Character.VisualId} #pjoin^7^{Session.Character.VisualId} {string.Format(Language.Instance.GetMessageFromKey("INVITED_YOU_SHARE"), Session.Character.Name)}"));
+                                Session.Character.GroupSentRequestCharacterIds.Add(s.Character.VisualId);
                             });
                     }
                 }
                 else if (pjoinPacket.RequestType.Equals(GroupRequestType.Accepted))
                 {
                     if (targetSession?.Character.GroupSentRequestCharacterIds.GetAllItems()
-                            .Contains(Session.Character.CharacterId) == false)
+                            .Contains(Session.Character.VisualId) == false)
                     {
                         return;
                     }
 
                     try
                     {
-                        targetSession?.Character.GroupSentRequestCharacterIds.Remove(Session.Character.CharacterId);
+                        targetSession?.Character.GroupSentRequestCharacterIds.Remove(Session.Character.VisualId);
                     }
                     catch (Exception ex)
                     {
                         Logger.Log.Error(ex);
                     }
 
-                    if (ServerManager.Instance.IsCharacterMemberOfGroup(Session.Character.CharacterId)
+                    if (ServerManager.Instance.IsCharacterMemberOfGroup(Session.Character.VisualId)
                         && ServerManager.Instance.IsCharacterMemberOfGroup(pjoinPacket.CharacterId))
                     {
                         // everyone is in group, return
@@ -892,7 +892,7 @@ namespace GloomyTale.Handler
                     }
 
                     if (ServerManager.Instance.IsCharactersGroupFull(pjoinPacket.CharacterId)
-                        || ServerManager.Instance.IsCharactersGroupFull(Session.Character.CharacterId))
+                        || ServerManager.Instance.IsCharactersGroupFull(Session.Character.VisualId))
                     {
                         Session.SendPacket(
                             UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("GROUP_FULL")));
@@ -902,11 +902,11 @@ namespace GloomyTale.Handler
                     }
 
                     // get group and add to group
-                    if (ServerManager.Instance.IsCharacterMemberOfGroup(Session.Character.CharacterId))
+                    if (ServerManager.Instance.IsCharacterMemberOfGroup(Session.Character.VisualId))
                     {
                         // target joins source
                         Group currentGroup =
-                            ServerManager.Instance.GetGroupByCharacterId(Session.Character.CharacterId);
+                            ServerManager.Instance.GetGroupByCharacterId(Session.Character.VisualId);
 
                         if (currentGroup != null)
                         {
@@ -1017,7 +1017,7 @@ namespace GloomyTale.Handler
                         Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                             string.Format(Language.Instance.GetMessageFromKey("GROUP_JOIN"),
                                 targetSession?.Character.Name), 10));
-                        group.JoinGroup(Session.Character.CharacterId);
+                        group.JoinGroup(Session.Character.VisualId);
                         ServerManager.Instance.AddGroup(group);
                         targetSession?.SendPacket(
                             UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("GROUP_ADMIN")));
@@ -1039,12 +1039,12 @@ namespace GloomyTale.Handler
                 }
                 else if (pjoinPacket.RequestType == GroupRequestType.Declined)
                 {
-                    if (targetSession?.Character.GroupSentRequestCharacterIds.GetAllItems().Contains(Session.Character.CharacterId) == false)
+                    if (targetSession?.Character.GroupSentRequestCharacterIds.GetAllItems().Contains(Session.Character.VisualId) == false)
                     {
                         return;
                     }
 
-                    targetSession?.Character.GroupSentRequestCharacterIds.Remove(Session.Character.CharacterId);
+                    targetSession?.Character.GroupSentRequestCharacterIds.Remove(Session.Character.VisualId);
 
                     targetSession?.SendPacket(Session.Character.GenerateSay(
                         string.Format(Language.Instance.GetMessageFromKey("REFUSED_GROUP_REQUEST"),
@@ -1052,12 +1052,12 @@ namespace GloomyTale.Handler
                 }
                 else if (pjoinPacket.RequestType == GroupRequestType.AcceptedShare)
                 {
-                    if (targetSession?.Character.GroupSentRequestCharacterIds.GetAllItems().Contains(Session.Character.CharacterId) == false)
+                    if (targetSession?.Character.GroupSentRequestCharacterIds.GetAllItems().Contains(Session.Character.VisualId) == false)
                     {
                         return;
                     }
 
-                    targetSession?.Character.GroupSentRequestCharacterIds.Remove(Session.Character.CharacterId);
+                    targetSession?.Character.GroupSentRequestCharacterIds.Remove(Session.Character.VisualId);
 
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                         string.Format(Language.Instance.GetMessageFromKey("ACCEPTED_SHARE"),
@@ -1073,12 +1073,12 @@ namespace GloomyTale.Handler
                 else if (pjoinPacket.RequestType == GroupRequestType.DeclinedShare)
                 {
                     if (targetSession?.Character.GroupSentRequestCharacterIds.GetAllItems()
-                            .Contains(Session.Character.CharacterId) == false)
+                            .Contains(Session.Character.VisualId) == false)
                     {
                         return;
                     }
 
-                    targetSession?.Character.GroupSentRequestCharacterIds.Remove(Session.Character.CharacterId);
+                    targetSession?.Character.GroupSentRequestCharacterIds.Remove(Session.Character.VisualId);
 
                     Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("REFUSED_SHARE"), 0));
                 }
@@ -1102,7 +1102,7 @@ namespace GloomyTale.Handler
 
                 ServerManager.Instance.Broadcast(Session, Session.Character.GenerateSpk(groupSayPacket.Message, 3),
                     ReceiverType.Group);
-                LogHelper.Instance.InsertChatLog(ChatType.Friend, Session.Character.CharacterId, groupSayPacket.Message, Session.IpAddress);
+                LogHelper.Instance.InsertChatLog(ChatType.Friend, Session.Character.VisualId, groupSayPacket.Message, Session.IpAddress);
             }
         }
 
@@ -1141,7 +1141,7 @@ namespace GloomyTale.Handler
                         break;
                 }
 
-                Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateTitleInfo());
+                Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateTitInfo());
                 Session.SendPacket(Session.Character.GenerateTitle());
             }                
         }
@@ -1255,22 +1255,22 @@ namespace GloomyTale.Handler
                                             switch (Session.Character.Family.Act4Raid.MapInstanceType)
                                             {
                                                 case MapInstanceType.Act4Viserion:
-                                                    ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
+                                                    ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId,
                                                         Session.Character.Family.Act4Raid.MapInstanceId, 43, 179);
                                                     break;
 
                                                 case MapInstanceType.Act4Orias:
-                                                    ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
+                                                    ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId,
                                                         Session.Character.Family.Act4Raid.MapInstanceId, 15, 9);
                                                     break;
 
                                                 case MapInstanceType.Act4Zanarkand:
-                                                    ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
+                                                    ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId,
                                                         Session.Character.Family.Act4Raid.MapInstanceId, 24, 6);
                                                     break;
 
                                                 case MapInstanceType.Act4Demetra:
-                                                    ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
+                                                    ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId,
                                                         Session.Character.Family.Act4Raid.MapInstanceId, 20, 20);
                                                     break;
                                             }
@@ -1309,7 +1309,7 @@ namespace GloomyTale.Handler
                 if (Session?.CurrentMapInstance?.MapInstanceType == MapInstanceType.TimeSpaceInstance
                     && Session?.Character?.Timespace != null && !Session.Character.Timespace.InstanceBag.Lock)
                 {
-                    if (Session.Character.CharacterId == Session.Character.Timespace.InstanceBag.CreatorId)
+                    if (Session.Character.VisualId == Session.Character.Timespace.InstanceBag.CreatorId)
                     {
                         Session.SendPacket(UserInterfaceHelper.GenerateDialog(
                             $"#rstart^1 rstart {Language.Instance.GetMessageFromKey("FIRST_ROOM_START")}"));
@@ -1434,7 +1434,7 @@ namespace GloomyTale.Handler
                     && ServerManager.GetMapInstance(portal.DestinationMapInstanceId).MapInstanceType
                     == MapInstanceType.BaseMapInstance)
                 {
-                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
+                    ServerManager.Instance.ChangeMap(Session.Character.VisualId, Session.Character.MapId,
                         Session.Character.MapX, Session.Character.MapY);
                 }
                 else if (portal.DestinationMapInstanceId == Session.Character.Miniland.MapInstanceId)
@@ -1491,12 +1491,12 @@ namespace GloomyTale.Handler
                             }
                         }
 
-                        ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
+                        ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId,
                             portal.DestinationMapInstanceId, destinationX, destinationY);
                     }
                     else
                     {
-                        ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
+                        ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId,
                             portal.DestinationMapInstanceId, portal.DestinationX, portal.DestinationY);
                     }
                 }
@@ -1595,7 +1595,7 @@ namespace GloomyTale.Handler
                         return;
                     }
 
-                    if (targetSession.Character.CharacterId == Session.Character.CharacterId)
+                    if (targetSession.Character.VisualId == Session.Character.VisualId)
                     {
                         return;
                     }
@@ -1610,12 +1610,12 @@ namespace GloomyTale.Handler
                         return;
                     }
 
-                    targetSession.Character.GroupSentRequestCharacterIds.Add(Session.Character.CharacterId);
+                    targetSession.Character.GroupSentRequestCharacterIds.Add(Session.Character.VisualId);
 
                     GroupJoin(new PJoinPacket
                     {
                         RequestType = GroupRequestType.Accepted,
-                        CharacterId = targetSession.Character.CharacterId
+                        CharacterId = targetSession.Character.VisualId
                     });
 
                     break;
@@ -1670,7 +1670,7 @@ namespace GloomyTale.Handler
                             0));
                     if (Session?.CurrentMapInstance?.MapInstanceType == MapInstanceType.RaidInstance)
                     {
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, Session.Character.MapId,
                             Session.Character.MapX, Session.Character.MapY);
                     }
 
@@ -1904,7 +1904,7 @@ namespace GloomyTale.Handler
                             0));
                     if (Session?.CurrentMapInstance?.MapInstanceType == MapInstanceType.BAInstance)
                     {
-                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
+                        ServerManager.Instance.ChangeMap(Session.Character.VisualId, Session.Character.MapId,
                             Session.Character.MapX, Session.Character.MapY);
                     }
 
@@ -2048,7 +2048,7 @@ namespace GloomyTale.Handler
                                 Session.SendPacket(
                                     UserInterfaceHelper.GenerateMsg(
                                         Language.Instance.GetMessageFromKey("NOT_ENOUGH_SAVER"), 0));
-                                ServerManager.Instance.ReviveFirstPosition(Session.Character.CharacterId);
+                                ServerManager.Instance.ReviveFirstPosition(Session.Character.VisualId);
                             }
                             else
                             {
@@ -2070,7 +2070,7 @@ namespace GloomyTale.Handler
                                 Session.SendPacket(
                                     UserInterfaceHelper.GenerateMsg(
                                         Language.Instance.GetMessageFromKey("NOT_ENOUGH_REPUT"), 0));
-                                ServerManager.Instance.ReviveFirstPosition(Session.Character.CharacterId);
+                                ServerManager.Instance.ReviveFirstPosition(Session.Character.VisualId);
                             }
                             else
                             {
@@ -2099,7 +2099,7 @@ namespace GloomyTale.Handler
                                     y = 172;
                                     break;
                             }
-                            ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, Session.Character.MapInstance.MapInstanceId, x, y);
+                            ServerManager.Instance.ChangeMapInstance(Session.Character.VisualId, Session.Character.MapInstance.MapInstanceId, x, y);
                             Session.Character.AddBuff(new Buff(169, Session.Character.Level), Session.Character.BattleEntity);
                             break;
 
@@ -2109,7 +2109,7 @@ namespace GloomyTale.Handler
                             {
                                 Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                                     Language.Instance.GetMessageFromKey("NOT_ENOUGH_POWER_SEED"), 0));
-                                ServerManager.Instance.ReviveFirstPosition(Session.Character.CharacterId);
+                                ServerManager.Instance.ReviveFirstPosition(Session.Character.VisualId);
                                 Session.SendPacket(
                                     Session.Character.GenerateSay(
                                         Language.Instance.GetMessageFromKey("NOT_ENOUGH_SEED_SAY"), 0));
@@ -2141,7 +2141,7 @@ namespace GloomyTale.Handler
                     break;
 
                 case 1:
-                    ServerManager.Instance.ReviveFirstPosition(Session.Character.CharacterId);
+                    ServerManager.Instance.ReviveFirstPosition(Session.Character.VisualId);
                     if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance)
                     {
                         if (Session.Character.Level > 20)
@@ -2169,7 +2169,7 @@ namespace GloomyTale.Handler
                     }
                     else
                     {
-                        ServerManager.Instance.ReviveFirstPosition(Session.Character.CharacterId);
+                        ServerManager.Instance.ReviveFirstPosition(Session.Character.VisualId);
                     }
 
                     break;
@@ -2227,7 +2227,7 @@ namespace GloomyTale.Handler
             }
             else
             {
-                LogHelper.Instance.InsertChatLog(ChatType.General, Session.Character.CharacterId, message, Session.IpAddress);
+                LogHelper.Instance.InsertChatLog(ChatType.General, Session.Character.VisualId, message, Session.IpAddress);
 
                 byte type = CharacterHelper.AuthorityChatColor(Session.Character.Authority);
 
@@ -2314,7 +2314,7 @@ namespace GloomyTale.Handler
                         Title = datasplit[0],
                         Message = datasplit[1],
                         ReceiverId = receiver.CharacterId,
-                        SenderId = Session.Character.CharacterId,
+                        SenderId = Session.Character.VisualId,
                         IsSenderCopy = true,
                         SenderClass = Session.Character.Class,
                         SenderGender = Session.Character.Gender,
@@ -2333,7 +2333,7 @@ namespace GloomyTale.Handler
                         Title = datasplit[0],
                         Message = datasplit[1],
                         ReceiverId = receiver.CharacterId,
-                        SenderId = Session.Character.CharacterId,
+                        SenderId = Session.Character.VisualId,
                         IsSenderCopy = false,
                         SenderClass = Session.Character.Class,
                         SenderGender = Session.Character.Gender,
@@ -2425,7 +2425,7 @@ namespace GloomyTale.Handler
                         && (Session.Character.UseSp ? n.Morph == Session.Character.Morph : n.Morph == 0));
                     Session.Character.QuicklistEntries.Add(new QuicklistEntryDTO
                     {
-                        CharacterId = Session.Character.CharacterId,
+                        CharacterId = Session.Character.VisualId,
                         Type = type,
                         Q1 = q1,
                         Q2 = q2,
@@ -2576,7 +2576,7 @@ namespace GloomyTale.Handler
             
             if (Session.Character.Hp <= 0 && (!Session.Character.IsSeal || ServerManager.Instance.ChannelId != 51))
             {
-                ServerManager.Instance.ReviveFirstPosition(Session.Character.CharacterId);
+                ServerManager.Instance.ReviveFirstPosition(Session.Character.VisualId);
             }
             else
             {
@@ -2585,11 +2585,11 @@ namespace GloomyTale.Handler
                     RespawnMapTypeDTO resp = Session.Character.Respawn;
                     short x = (short)(resp.DefaultX + ServerManager.RandomNumber(-3, 3));
                     short y = (short)(resp.DefaultY + ServerManager.RandomNumber(-3, 3));
-                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, resp.DefaultMapId, x, y);
+                    ServerManager.Instance.ChangeMap(Session.Character.VisualId, resp.DefaultMapId, x, y);
                 }
                 else
                 {
-                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId);
+                    ServerManager.Instance.ChangeMap(Session.Character.VisualId);
                 }
             }
 
@@ -2638,9 +2638,9 @@ namespace GloomyTale.Handler
             Session.SendPacket(Session.Character.GenerateTitle());
             Session.SendPacket("zzim");
             Session.SendPacket(
-                $"twk 1 {Session.Character.CharacterId} {Session.Account.Name} {Session.Character.Name} shtmxpdlfeoqkr");
+                $"twk 1 {Session.Character.VisualId} {Session.Account.Name} {Session.Character.Name} shtmxpdlfeoqkr");
 
-            long? familyId = DAOFactory.Instance.FamilyCharacterDAO.LoadByCharacterId(Session.Character.CharacterId)?.FamilyId;
+            long? familyId = DAOFactory.Instance.FamilyCharacterDAO.LoadByCharacterId(Session.Character.VisualId)?.FamilyId;
             if (familyId.HasValue)
             {
                 Session.Character.Family = ServerManager.Instance.FamilyList[familyId.Value];
@@ -2701,7 +2701,7 @@ namespace GloomyTale.Handler
             }
 
             Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGidx());
-            Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateTitleInfo());
+            Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateTitInfo());
             Session.SendPacket(Session.Character.GenerateFinit());
             Session.SendPacket(Session.Character.GenerateBlinit());
             Session.SendPacket(clinit);
@@ -2728,7 +2728,7 @@ namespace GloomyTale.Handler
                 CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                 {
                     DestinationCharacterId = null,
-                    SourceCharacterId = Session.Character.CharacterId,
+                    SourceCharacterId = Session.Character.VisualId,
                     SourceWorldId = ServerManager.Instance.WorldId,
                     Message =
                         $"User {Session.Character.Name} with rank BitchNiggerFaggot has logged in, don't trust *it*!",
@@ -2807,7 +2807,7 @@ namespace GloomyTale.Handler
                     if (!Session.Character.InvisibleGm)
                     {
                         Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Move(VisualType.Player,
-                            Session.Character.CharacterId, walkPacket.XCoordinate, walkPacket.YCoordinate,
+                            Session.Character.VisualId, walkPacket.XCoordinate, walkPacket.YCoordinate,
                             Session.Character.Speed));
                     }
                     Session.SendPacket(Session.Character.GenerateCond());
@@ -2905,7 +2905,7 @@ namespace GloomyTale.Handler
                 int? sentChannelId = null;
                 if (receiver != null)
                 {
-                    if (receiver.CharacterId == Session.Character.CharacterId)
+                    if (receiver.CharacterId == Session.Character.VisualId)
                     {
                         return;
                     }
@@ -2928,7 +2928,7 @@ namespace GloomyTale.Handler
                     sentChannelId = CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                     {
                         DestinationCharacterId = receiver.CharacterId,
-                        SourceCharacterId = Session.Character.CharacterId,
+                        SourceCharacterId = Session.Character.VisualId,
                         SourceWorldId = ServerManager.Instance.WorldId,
                         Message = Session.Character.Authority >= AuthorityType.GS
                             ? Session.Character.GenerateSay(
@@ -2959,7 +2959,7 @@ namespace GloomyTale.Handler
                 }
                 else
                 {
-                    LogHelper.Instance.InsertChatLog(ChatType.Whisper, Session.Character.CharacterId, message, Session.IpAddress);
+                    LogHelper.Instance.InsertChatLog(ChatType.Whisper, Session.Character.VisualId, message, Session.IpAddress);
                 }
             }
             catch (Exception e)

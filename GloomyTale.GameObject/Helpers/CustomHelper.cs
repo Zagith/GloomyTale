@@ -185,7 +185,7 @@ namespace GloomyTale.GameObject.Helpers
                 {
                     Session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                 }
-                Session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.CharacterId, 3005), Session.Character.MapX, Session.Character.MapY);
+                Session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, Session.Character.VisualId, 3005), Session.Character.MapX, Session.Character.MapY);
                 Session.SendPacket(Session.Character.GenerateSay("-------------Perfection Result-------------", 11));
                 Session.SendPacket(Session.Character.GenerateSay("Success: " + Successi, 11));
                 Session.SendPacket(Session.Character.GenerateSay("Fail: " + Fallimenti, 11));
