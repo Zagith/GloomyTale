@@ -90,6 +90,7 @@ namespace GloomyTale.SqlServer.Mapping
             // recipes
             AddMapping<Recipe, RecipeDTO, GameObject.Recipe>(cfg);
             AddMapping<RecipeItem, RecipeItemDTO>(cfg);
+            AddMapping<RecipeList, RecipeListDTO>(cfg);
 
             // miniland
             AddMapping<MinilandObject, MinilandObjectDTO>(cfg);

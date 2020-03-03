@@ -129,7 +129,7 @@ namespace GloomyTale.GameObject
         /// <summary>
         /// Intializes the GameObject, will be injected by AutoMapper after Entity -&gt; GO mapping
         /// </summary>
-        public void Initialize()
+        public override void Initialize()
         {
             Teleporters = ServerManager.Instance.GetTeleportersByNpcVNum(NpcMonsterVNum);
             Drops = ServerManager.Instance.GetDropsByMonsterVNum(NpcMonsterVNum);

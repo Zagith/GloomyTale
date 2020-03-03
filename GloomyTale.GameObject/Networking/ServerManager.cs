@@ -76,7 +76,7 @@ namespace GloomyTale.GameObject.Networking
 
         private Dictionary<short, List<DropDTO>> _monsterDrops;
 
-        private Dictionary<short, List<NpcMonsterSkill>> _monsterSkills;
+        private ThreadSafeSortedList<short, List<NpcMonsterSkill>> _monsterSkills;
 
         private ThreadSafeSortedList<int, RecipeListDTO> _recipeLists;
 
@@ -1346,6 +1346,8 @@ namespace GloomyTale.GameObject.Networking
             Act4DemonStat = new PercentBar();
             Act6Erenia = new PercentBar();
             Act6Zenas = new PercentBar();*/
+
+            LoadBossEntities();
         }
 
         /*public void Initialize()
@@ -1894,26 +1896,26 @@ namespace GloomyTale.GameObject.Networking
                     var newMap = new MapInstance(mapObject, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, map.Side, map.GoldMapRate);
                     _mapinstances.TryAdd(guid, newMap);
 
-                    /*if (portals.TryGetValue(map.MapId, out PortalDTO[] port))
+                    if (portals.TryGetValue(map.MapId, out PortalDTO[] port))
                     {
                         newMap.LoadPortals(port);
-                    }*/
+                    }
 
-                    /*if (npcs.TryGetValue(map.MapId, out MapNpcDTO[] np))
+                    if (npcs.TryGetValue(map.MapId, out MapNpcDTO[] np))
                     {
                         newMap.LoadNpcs(np);
-                    }*/
+                    }
 
-                    /*if (monsters.TryGetValue(map.MapId, out MapMonsterDTO[] monst))
+                    if (monsters.TryGetValue(map.MapId, out MapMonsterDTO[] monst))
                     {
                         newMap.LoadMonsters(monst);
-                    }*/
+                    }
 
-                    /*foreach (MapNpc mapNpc in newMap.Npcs)
+                    foreach (MapNpc mapNpc in newMap.Npcs)
                     {
                         mapNpc.MapInstance = newMap;
-                        newMap.AddNpc(mapNpc);
-                    }*/
+                        newMap.AddNPC(mapNpc);
+                    }
 
                     foreach (MapMonster mapMonster in newMap.Monsters)
                     {
@@ -1934,6 +1936,59 @@ namespace GloomyTale.GameObject.Networking
             {
                 Logger.Log.Error("General Error", e);
             }
+        }
+
+        private void LoadShops()
+        {
+            _shops = new ThreadSafeSortedList<int, Shop>();
+            foreach (ShopDTO shopGrouping in DAOFactory.Instance.ShopDAO.LoadAll())
+            {
+                _shops[shopGrouping.MapNpcId] = (Shop)shopGrouping;
+            }
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPS_LOADED"), _shops.Count));
+        }
+
+        private void LoadShopSkills()
+        {
+            _shopSkills = new ThreadSafeSortedList<int, List<ShopSkillDTO>>();
+            foreach (IGrouping<int, ShopSkillDTO> shopSkillGrouping in DAOFactory.Instance.ShopSkillDAO.LoadAll().GroupBy(s => s.ShopId))
+            {
+                _shopSkills[shopSkillGrouping.Key] = shopSkillGrouping.ToList();
+            }
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPSKILLS_LOADED"),
+                _shopSkills.Sum(i => i.Count)));
+        }
+
+        private void LoadShopItems()
+        {
+            _shopItems = new ThreadSafeSortedList<int, List<ShopItemDTO>>();
+            foreach (IGrouping<int, ShopItemDTO> shopItemGrouping in DAOFactory.Instance.ShopItemDAO.LoadAll().GroupBy(s => s.ShopId))
+            {
+                _shopItems[shopItemGrouping.Key] = shopItemGrouping.ToList();
+            }
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("SHOPITEMS_LOADED"),
+                _shopItems.Sum(i => i.Count)));
+        }
+
+        private void LoadRecipes()
+        {
+            // intialize recipes
+            _recipes = new ThreadSafeSortedList<short, Recipe>();
+            Parallel.ForEach(DAOFactory.Instance.RecipeDAO.LoadAll(), recipeGrouping =>
+            {
+                Recipe recipe = new Recipe(recipeGrouping);
+                _recipes[recipeGrouping.RecipeId] = recipe;
+                recipe.Initialize();
+            });
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPES_LOADED"), _recipes.Count));
+
+            // initialize recipelist
+            _recipeLists = new ThreadSafeSortedList<int, RecipeListDTO>();
+            Parallel.ForEach(DAOFactory.Instance.RecipeListDAO.LoadAll(), recipeListGrouping => _recipeLists[recipeListGrouping.RecipeListId] = recipeListGrouping);
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("RECIPELISTS_LOADED"), _recipeLists.Count));
         }
 
         private void LoadMonsterDrops()
@@ -1957,18 +2012,35 @@ namespace GloomyTale.GameObject.Networking
                 _monsterDrops.Sum(i => i.Value.Count)));
         }
 
+        private static void LoadNpcMonsters()
+        {
+            IEnumerable<BCardDTO> bcards = DAOFactory.Instance.BCardDAO.LoadAll().ToArray().Where(s => s.NpcMonsterVNum.HasValue);
+            foreach (NpcMonsterDTO npcMonster in DAOFactory.Instance.NpcMonsterDAO.LoadAll().ToArray())
+            {
+                if (!(npcMonster is NpcMonster monster))
+                {
+                    continue;
+                }
+
+                monster.BCards = new List<BCard>();
+
+                foreach (BCardDTO s in bcards.Where(s => s.NpcMonsterVNum == monster.NpcMonsterVNum))
+                {
+                    monster.BCards.Add((BCard)s);
+                }
+
+                _npcmonsters.Add(monster);
+            }
+
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("NPCMONSTERS_LOADED"), _npcmonsters.Count));
+        }
+
         private void LoadMonsterSkills()
         {
             // initialize monsterskills
-            _monsterSkills = new Dictionary<short, List<NpcMonsterSkill>>();
-            foreach (IGrouping<short, NpcMonsterSkillDTO> monsterSkillGrouping in DAOFactory.Instance.NpcMonsterSkillDAO.LoadAll().ToArray().GroupBy(n => n.NpcMonsterVNum))
-            {
-                _monsterSkills[monsterSkillGrouping.Key] =
-                    monsterSkillGrouping.Select(n => n as NpcMonsterSkill).ToList();
-            }
-
-            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MONSTERSKILLS_LOADED"),
-                _monsterSkills.Sum(i => i.Value.Count)));
+            _monsterSkills = new ThreadSafeSortedList<short, List<NpcMonsterSkill>>();
+            Parallel.ForEach(DAOFactory.Instance.NpcMonsterSkillDAO.LoadAll().GroupBy(n => n.NpcMonsterVNum), monsterSkillGrouping => _monsterSkills[monsterSkillGrouping.Key] = monsterSkillGrouping.Select(n => n as NpcMonsterSkill).ToList());
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MONSTERSKILLS_LOADED"), _monsterSkills.Sum(i => i.Count)));
         }
 
         private static void LoadSkills()
@@ -2040,11 +2112,11 @@ namespace GloomyTale.GameObject.Networking
             LoadMonsterDrops();
             LoadMonsterSkills();
             //LoadBazaar();
-            //LoadNpcMonsters();
-            //LoadRecipes();
-            //LoadShopItems();
-            //LoadShopSkills();
-            //LoadShops();
+            LoadNpcMonsters();
+            LoadRecipes();
+            LoadShopItems();
+            LoadShopSkills();
+            LoadShops();
             //LoadTeleporters();
             LoadSkills();
             //LoadCards();

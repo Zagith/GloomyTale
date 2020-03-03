@@ -353,8 +353,6 @@ namespace GloomyTale.GameObject
             CurrentHp = MaxHp;
             CurrentMp = MaxMp;
 
-            Skills = new List<NpcMonsterSkill>();
-
             foreach (NpcMonsterSkill ski in Monster.Skills)
             {
                 Skills.Add(new NpcMonsterSkill { SkillVNum = ski.SkillVNum, Rate = ski.Rate });

@@ -445,39 +445,61 @@ namespace GloomyTale.GameObject
 
         public MapNpc GetNpc(long mapNpcId) => _npcs[mapNpcId];
 
-        public void LoadMonsters()
+        public void LoadMonsters(IEnumerable<MapMonsterDTO> monsters = null)
         {
-            Parallel.ForEach(DAOFactory.Instance.MapMonsterDAO.LoadFromMap(Map.MapId).ToList(), monster =>
+            if (monsters == null)
             {
-                MapMonster mapMonster = new MapMonster(monster);
-                mapMonster.Initialize(this);
-                int mapMonsterId = mapMonster.MapMonsterId;
-                _monsters[mapMonsterId] = mapMonster;
-                _mapMonsterIds[mapMonsterId] = mapMonsterId;
-            });
-        }
-
-        public void LoadNpcs()
-        {
-            Parallel.ForEach(DAOFactory.Instance.MapNpcDAO.LoadFromMap(Map.MapId).ToList(), npc =>
+                monsters = DAOFactory.Instance.MapMonsterDAO.LoadFromMap(Map.MapId);
+            }
+            foreach (MapMonsterDTO monster in monsters)
             {
-                MapNpc mapNpc = new MapNpc(npc);
-                mapNpc.Initialize(this);
-                int mapNpcId = mapNpc.MapNpcId;
-                _npcs[mapNpcId] = mapNpc;
-                _mapNpcIds[mapNpcId] = mapNpcId;
-            });
-        }
-
-        public void LoadPortals()
-        {
-            foreach (PortalDTO portal in DAOFactory.Instance.PortalDAO.LoadByMap(Map.MapId))
-            {
-                Portal p = new Portal(portal)
+                if (!(monster is MapMonster mapMonster))
                 {
-                    SourceMapInstanceId = MapInstanceId
-                };
-                Portals.Add(p);
+                    return;
+                }
+
+                mapMonster.Initialize(this);
+                mapMonster.MapMonsterId = monster.MapMonsterId;
+                _monsters[mapMonster.MapMonsterId] = mapMonster;
+            }
+        }
+
+        public void LoadNpcs(IEnumerable<MapNpcDTO> npcs = null)
+        {
+            if (npcs == null)
+            {
+                npcs = DAOFactory.Instance.MapNpcDAO.LoadFromMap(Map.MapId);
+            }
+
+            foreach (MapNpcDTO npc in npcs)
+            {
+                if (!(npc is MapNpc mapNpc))
+                {
+                    return;
+                }
+
+                mapNpc.Initialize(this);
+                mapNpc.MapNpcId = npc.MapNpcId;
+                _npcs[mapNpc.MapNpcId] = mapNpc;
+            }
+        }
+
+        public void LoadPortals(IEnumerable<PortalDTO> tmp = null)
+        {
+            if (tmp == null)
+            {
+                tmp = DAOFactory.Instance.PortalDAO.LoadByMap(Map.MapId);
+            }
+
+            foreach (PortalDTO portal in tmp)
+            {
+                if (!(portal is Portal portal2))
+                {
+                    return;
+                }
+
+                portal2.SourceMapInstanceId = MapInstanceId;
+                Portals.Add(portal2);
             }
         }
 

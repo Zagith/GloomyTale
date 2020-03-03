@@ -25,6 +25,7 @@ using GloomyTale.GameObject.Networking;
 using static GloomyTale.Domain.BCardType;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace GloomyTale.GameObject
 {
@@ -135,7 +136,7 @@ namespace GloomyTale.GameObject
 
         public bool Started { get; internal set; }
 
-        public List<NpcMonsterSkill> Skills { get; set; }
+        public ConcurrentBag<NpcMonsterSkill> Skills { get; set; } = new ConcurrentBag<NpcMonsterSkill>();
 
         public long Target { get; set; }
 
@@ -252,11 +253,7 @@ namespace GloomyTale.GameObject
                 shop.Initialize();
                 Shop = shop;
             }
-            Skills = new List<NpcMonsterSkill>();
-            foreach (NpcMonsterSkill ski in Npc.Skills)
-            {
-                Skills.Add(new NpcMonsterSkill { SkillVNum = ski.SkillVNum, Rate = ski.Rate });
-            }
+            Npc.Skills.ForEach(s => Skills.Add(s));
             BattleEntity = new BattleEntity(this);
 
             if (AliveTime > 0)
