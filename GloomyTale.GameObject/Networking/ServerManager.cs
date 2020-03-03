@@ -2012,6 +2012,13 @@ namespace GloomyTale.GameObject.Networking
                 _monsterDrops.Sum(i => i.Value.Count)));
         }
 
+        private void LoadMapNpcs()
+        {
+            _mapNpcs = new ThreadSafeSortedList<short, List<MapNpc>>();
+            Parallel.ForEach(DAOFactory.Instance.MapNpcDAO.LoadAll().GroupBy(t => t.MapId), mapNpcGrouping => _mapNpcs[mapNpcGrouping.Key] = mapNpcGrouping.Select(t => t as MapNpc).ToList());
+            Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("MAPNPCS_LOADED"), _mapNpcs.Sum(i => i.Count)));
+        }
+
         private static void LoadNpcMonsters()
         {
             IEnumerable<BCardDTO> bcards = DAOFactory.Instance.BCardDAO.LoadAll().ToArray().Where(s => s.NpcMonsterVNum.HasValue);
@@ -2095,6 +2102,43 @@ namespace GloomyTale.GameObject.Networking
             Logger.Log.Info(string.Format(Language.Instance.GetMessageFromKey("QUESTS_LOADED"), Quests.Count));
         }
 
+        private void LoadArenaMap()
+        {
+            if (DAOFactory.Instance.MapDAO.LoadById(2006) != null)
+            {
+                Logger.Log.Info("[ARENA] Arena Map Loaded");
+                ArenaInstance = GenerateMapInstance(2006, MapInstanceType.NormalInstance, new InstanceBag());
+                ArenaInstance.IsPVP = true;
+                ArenaInstance.Portals.Add(new Portal
+                {
+                    SourceMapId = 2006,
+                    SourceX = 37,
+                    SourceY = 15,
+                    DestinationMapId = 1,
+                    DestinationX = 0,
+                    DestinationY = 0,
+                    Type = -1
+                });
+            }
+
+            if (DAOFactory.Instance.MapDAO.LoadById(2106) != null)
+            {
+                Logger.Log.Info("[ARENA] Family Arena Map Loaded");
+                FamilyArenaInstance = GenerateMapInstance(2106, MapInstanceType.NormalInstance, new InstanceBag());
+                FamilyArenaInstance.IsPVP = true;
+                FamilyArenaInstance.Portals.Add(new Portal
+                {
+                    SourceMapId = 2107,
+                    SourceX = 10,
+                    SourceY = 5,
+                    DestinationMapId = 1,
+                    DestinationX = 0,
+                    DestinationY = 0,
+                    Type = -1
+                });
+            }
+        }
+
         public void Initialize(GameRateConfiguration rateConf, GameMinMaxConfiguration levelConf, GameTrueFalseConfiguration eventsConf)//, GameScheduledEventsConfiguration gameScheduledConf)
         {
             RateConfiguration = rateConf;
@@ -2121,7 +2165,7 @@ namespace GloomyTale.GameObject.Networking
             LoadSkills();
             //LoadCards();
             LoadQuests();
-            //LoadMapNpcs();
+            LoadMapNpcs();
             LoadMapsAndContent();
             LoadFamilies();
             LaunchEvents();
@@ -2130,14 +2174,7 @@ namespace GloomyTale.GameObject.Networking
             CharacterRelations = DAOFactory.Instance.CharacterRelationDAO.LoadAll().ToList();
             PenaltyLogs = DAOFactory.Instance.PenaltyLogDAO.LoadAll().ToList();
 
-            /*if (DAOFactory.Instance.MapDAO.LoadById((short)SpecialMapIdType.Lobby) != null)
-            {
-                Logger.Log.Info("[LOBBY] Lobby Map Loaded");
-                LobbyMapInstance = GenerateMapInstance((short)SpecialMapIdType.Lobby,
-                    MapInstanceType.LobbyMapInstance, new InstanceBag());
-            }*/
-
-            //LoadArenaMap();
+            LoadArenaMap();
             //LoadAct4Maps();
             //LoadAct4();
             LoadScriptedInstances();
