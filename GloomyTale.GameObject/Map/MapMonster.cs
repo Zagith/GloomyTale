@@ -174,7 +174,7 @@ namespace GloomyTale.GameObject
 
         public bool? ShouldRespawn { get; set; }
 
-        public List<NpcMonsterSkill> Skills { get; set; }
+        public ConcurrentBag<NpcMonsterSkill> Skills { get; set; } = new ConcurrentBag<NpcMonsterSkill>();
 
         public bool Started { get; internal set; }
 
@@ -353,10 +353,7 @@ namespace GloomyTale.GameObject
             CurrentHp = MaxHp;
             CurrentMp = MaxMp;
 
-            foreach (NpcMonsterSkill ski in Monster.Skills)
-            {
-                Skills.Add(new NpcMonsterSkill { SkillVNum = ski.SkillVNum, Rate = ski.Rate });
-            }
+            Monster.Skills.ForEach(s => Skills.Add(s));
 
             DamageList = new Dictionary<BattleEntity, long>();
             AggroList = new List<BattleEntity>();

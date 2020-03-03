@@ -1442,16 +1442,11 @@ namespace GloomyTale.GameObject.Networking
                 var monsters = DAOFactory.Instance.MapMonsterDAO.LoadAll().GroupBy(s => s.MapId).ToDictionary(s => s.Key, s => s.ToArray());
                 var npcs = DAOFactory.Instance.MapNpcDAO.LoadAll().GroupBy(s => s.MapId).ToDictionary(s => s.Key, s => s.ToArray());
                 var portals = DAOFactory.Instance.PortalDAO.LoadAll().GroupBy(s => s.SourceMapId).ToDictionary(s => s.Key, s => s.ToArray());
-                MapTypeMapDTO[] mapTypes = DAOFactory.Instance.MapTypeMapDAO.LoadAll().ToArray();
-                MapTypeDTO[] mapTypeMap = DAOFactory.Instance.MapTypeDAO.LoadAll().ToArray();
-                IEnumerable<RespawnMapTypeDTO> respawns = DAOFactory.Instance.RespawnMapTypeDAO.LoadAll();
 
                 foreach (MapDTO map in DAOFactory.Instance.MapDAO.LoadAll().ToArray())
                 {
                     Guid guid = Guid.NewGuid();
-                    IEnumerable<MapTypeMapDTO> mapType = mapTypes.Where(s => map.MapId == s.MapId);
                     var mapObject = new Map(map.MapId, map.GridMapId, map.Data)
-                        //mapTypeMap.Where(s => mapType.Any(p => p.MapTypeId == s.MapTypeId)), respawns)
                     {
                         Music = map.Music,
                         Name = map.Name,
