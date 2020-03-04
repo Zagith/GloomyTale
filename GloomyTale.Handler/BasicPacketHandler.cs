@@ -2502,7 +2502,7 @@ namespace GloomyTale.Handler
                 Session.Character.HeroChatBlocked = true;
                 Session.Character.ExchangeBlocked = true;
                 Session.Character.WhisperBlocked = true;
-                Session.Character.Invisible = true;
+                Session.Character.Camouflage = true;
                 Session.Character.NoAttack = true;
                 Session.Character.NoMove = true;
                 Session.Character.VerifiedLock = false;
@@ -2515,7 +2515,7 @@ namespace GloomyTale.Handler
                 Session.Character.HeroChatBlocked = false;
                 Session.Character.ExchangeBlocked = false;
                 Session.Character.WhisperBlocked = false;
-                Session.Character.Invisible = false;
+                Session.Character.Camouflage = false;
                 Session.Character.NoAttack = false;
                 Session.Character.NoMove = false;
                 Session.Character.VerifiedLock = true;
@@ -2804,7 +2804,7 @@ namespace GloomyTale.Handler
                     && !Session.Character.IsChangingMapInstance && !Session.Character.HasShopOpened)
                 {
                     Session.Character.PyjamaDead = false;
-                    if (!Session.Character.InvisibleGm)
+                    if (!Session.Character.Invisible)
                     {
                         Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Move(VisualType.Player,
                             Session.Character.VisualId, walkPacket.XCoordinate, walkPacket.YCoordinate,

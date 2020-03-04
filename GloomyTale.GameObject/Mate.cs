@@ -395,7 +395,7 @@ namespace GloomyTale.GameObject
 
         public string GenerateIn(bool hideNickname = false, bool isAct4 = false, AuthorityType receiverAuthority = AuthorityType.User)
         {
-            if (!IsTemporalMate && (Owner.Invisible || Owner.InvisibleGm || Owner.IsVehicled || Owner.IsSeal || !IsAlive) && Owner.MapInstance.Map.MapId != 20001)
+            if (!IsTemporalMate && (Owner.Camouflage || Owner.Invisible || Owner.IsVehicled || Owner.IsSeal || !IsAlive) && Owner.MapInstance.Map.MapId != 20001)
             {
                 return "";
             }

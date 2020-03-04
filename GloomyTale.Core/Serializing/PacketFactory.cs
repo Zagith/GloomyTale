@@ -464,7 +464,7 @@ namespace GloomyTale.Core
         /// <param name="listValues">Values in List of simple type.</param>
         /// <param name="propertyType">The simple type.</param>
         /// <returns>String of serialized bytes</returns>
-        private static string SerializeSimpleList(IList listValues, Type propertyType)
+        private static string SerializeSimpleList(IList listValues, Type propertyType, PacketIndexAttribute index)
         {
             string resultListPacket = string.Empty;
             int listValueCount = listValues.Count;
@@ -474,7 +474,7 @@ namespace GloomyTale.Core
 
                 for (int i = 1; i < listValueCount; i++)
                 {
-                    resultListPacket += $".{SerializeValue(propertyType.GenericTypeArguments[0], listValues[i]).Replace(" ", "")}";
+                    resultListPacket += $"{index.SpecialSeparator}{SerializeValue(propertyType.GenericTypeArguments[0], listValues[i]).Replace(" ", "")}";
                 }
             }
 
@@ -492,7 +492,7 @@ namespace GloomyTale.Core
                 if (subpacketPropertyInfo.Key.Index != 0)
                 {
                     serializedSubpacket += isReturnPacket ? "^" : 
-                        shouldRemoveSeparator ? " " : ".";
+                        shouldRemoveSeparator ? " " : subpacketPropertyInfo.Key.SpecialSeparator;
                 }
 
                 serializedSubpacket += SerializeValue(subpacketPropertyInfo.Value.PropertyType, subpacketPropertyInfo.Value.GetValue(value)).Replace(" ", "");
@@ -524,22 +524,22 @@ namespace GloomyTale.Core
                 // check for nullable without value or string
                 if (propertyType == typeof(string) && string.IsNullOrEmpty(Convert.ToString(value)))
                 {
-                    return " -";
+                    return $"{packetIndexAttribute?.SpecialSeparator}-";
                 }
                 if (Nullable.GetUnderlyingType(propertyType) != null && string.IsNullOrEmpty(Convert.ToString(value)))
                 {
-                    return " -1";
+                    return $"{packetIndexAttribute?.SpecialSeparator}-1";
                 }
 
                 // enum should be casted to number
                 if (propertyType.BaseType == typeof(Enum))
                 {
-                    return $" {Convert.ToInt16(value)}";
+                    return $"{packetIndexAttribute?.SpecialSeparator}{Convert.ToInt16(value)}";
                 }
                 if (propertyType == typeof(bool))
                 {
                     // bool is 0 or 1 not True or False
-                    return Convert.ToBoolean(value) ? " 1" : " 0";
+                    return Convert.ToBoolean(value) ? $"{packetIndexAttribute?.SpecialSeparator}1" : $"{packetIndexAttribute?.SpecialSeparator}0";
                 }
                 if (propertyType.BaseType?.Equals(typeof(PacketDefinition)) == true)
                 {
@@ -549,13 +549,13 @@ namespace GloomyTale.Core
                 if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>))
                     && propertyType.GenericTypeArguments[0].BaseType == typeof(PacketDefinition))
                 {
-                    return SerializeSubpackets((IList)value, propertyType, packetIndexAttribute?.RemoveSeparator ?? false);
+                    return packetIndexAttribute?.SpecialSeparator + SerializeSubpackets((IList)value, propertyType, packetIndexAttribute?.RemoveSeparator ?? false);
                 }
                 if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>))) //simple list
                 {
-                    return SerializeSimpleList((IList)value, propertyType);
+                    return packetIndexAttribute?.SpecialSeparator + SerializeSimpleList((IList)value, propertyType, packetIndexAttribute);
                 }
-                return $" {value}";
+                return $"{packetIndexAttribute?.SpecialSeparator}{value}";
             }
 
             return string.Empty;

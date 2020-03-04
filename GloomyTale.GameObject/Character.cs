@@ -221,9 +221,9 @@ namespace GloomyTale.GameObject
 
         public Inventory Inventory { get; set; }
 
-        public bool Invisible { get; set; }
+        public bool Camouflage { get; set; }
 
-        public bool InvisibleGm { get; set; }
+        public bool Invisible { get; set; }
 
         public bool IsChangingMapInstance { get; set; }
 
@@ -1829,7 +1829,7 @@ namespace GloomyTale.GameObject
             {
                 bf.StaticVisualEffect = Observable.Interval(TimeSpan.FromSeconds(2)).Subscribe(o =>
                 {
-                    if (!Invisible)
+                    if (!Camouflage)
                     {
                         Session?.CurrentMapInstance?.Broadcast(GenerateEff(881));
                     }
@@ -2094,7 +2094,7 @@ namespace GloomyTale.GameObject
                         CellonOptions.AddRange(necklace.CellonOptions);
                     }
 
-                    if (!Invisible)
+                    if (!Camouflage)
                     {
                         ItemInstance amulet = Inventory.LoadBySlotAndType((byte)EquipmentType.Amulet, InventoryType.Wear);
                         if (amulet != null)
@@ -2737,7 +2737,7 @@ namespace GloomyTale.GameObject
             return result;
         }
 
-        public string GenerateCInfo() => $"c_info {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + Name : Name : Authority == AuthorityType.BitchNiggerFaggot ? Name + "[BitchNiggerFaggot]" : Name)} - -1 {(Family != null && FamilyCharacter != null && !Undercover ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {VisualId} {(Invisible && Authority >= AuthorityType.TMOD ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {(byte)HairColor} {(byte)Class} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(/*Authority > AuthorityType.User && !Undercover ? CharacterHelper.AuthorityColor(Authority) : */Compliment)} {(UseSp || IsVehicled ? Morph : 0)} {(Invisible ? 1 : 0)} {Family?.FamilyLevel ?? 0} {(UseSp ? MorphUpgrade : 0)} {ArenaWinner}";
+        public string GenerateCInfo() => $"c_info {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + Name : Name : Authority == AuthorityType.BitchNiggerFaggot ? Name + "[BitchNiggerFaggot]" : Name)} - -1 {(Family != null && FamilyCharacter != null && !Undercover ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {VisualId} {(Camouflage && Authority >= AuthorityType.TMOD ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {(byte)HairColor} {(byte)Class} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(/*Authority > AuthorityType.User && !Undercover ? CharacterHelper.AuthorityColor(Authority) : */Compliment)} {(UseSp || IsVehicled ? Morph : 0)} {(Camouflage ? 1 : 0)} {Family?.FamilyLevel ?? 0} {(UseSp ? MorphUpgrade : 0)} {ArenaWinner}";
 
         public string GenerateCMap() => $"c_map 0 {MapInstance.Map.MapId} {(MapInstance.MapInstanceType != MapInstanceType.BaseMapInstance ? 1 : 0)}";
 
@@ -2833,8 +2833,8 @@ namespace GloomyTale.GameObject
                 color = head.Design;
             }
 
-            return $"eq {VisualId} {(Invisible && Authority >= AuthorityType.TMOD ? 6 : Undercover ? (byte)AuthorityType.User : Authority < AuthorityType.User ? (byte)AuthorityType.User : Authority >= AuthorityType.TMOD ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {(!InvisibleGm ? GenerateEqRareUpgradeForPacket() : null)}";
-            //return $"eq {CharacterId} {(Invisible ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {(!InvisibleGm ? GenerateEqRareUpgradeForPacket() : null)}";
+            return $"eq {VisualId} {(Camouflage && Authority >= AuthorityType.TMOD ? 6 : Undercover ? (byte)AuthorityType.User : Authority < AuthorityType.User ? (byte)AuthorityType.User : Authority >= AuthorityType.TMOD ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {(!Invisible ? GenerateEqRareUpgradeForPacket() : null)}";
+            //return $"eq {CharacterId} {(Camouflage ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {(!Invisible ? GenerateEqRareUpgradeForPacket() : null)}";
         }
 
         public EffectPacket GenerateEff(int effectid)
@@ -2962,17 +2962,6 @@ namespace GloomyTale.GameObject
             });
 
             return $"equip {GenerateEqRareUpgradeForPacket()}{eqlist}";
-        }
-
-        public ExtsPacket GenerateExts()
-        {
-            return new ExtsPacket
-            {
-#warning TODO URGENT
-                EquipmentExtension = (byte)(ServerManager.Instance.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                MainExtension = (byte)(ServerManager.Instance.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                EtcExtension = (byte)(ServerManager.Instance.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12))
-            };
         }
 
         public string GenerateFaction() => $"fs {(byte)Faction}";
@@ -3242,10 +3231,10 @@ namespace GloomyTale.GameObject
                 fairy = Inventory.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
             }
 
-            return $"in 1 {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + name : name : Authority == AuthorityType.BitchNiggerFaggot ? name + "[BitchNiggerFaggot]" : name)} - {VisualId} {PositionX} {PositionY} {Direction} {(Undercover ? (byte)AuthorityType.User : Authority >= AuthorityType.TMOD ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {Math.Ceiling(Hp / HPLoad() * 100)} {Math.Ceiling(Mp / MPLoad() * 100)} {(IsSitting ? 1 : 0)} {(Group?.GroupType == GroupType.Group ? (Group?.GroupId ?? -1) : -1)} {(fairy != null && !Undercover ? 4 : 0)} {fairy?.Item.Element ?? 0} 0 {fairy?.Item.Morph ?? 0} {InEffect} {(UseSp || IsVehicled || IsMorphed ? Morph : 0)} {GenerateEqRareUpgradeForPacket()} {(!Undercover ? (foe ? -1 : Family?.FamilyId ?? -1) : -1)} {(!Undercover ? (foe ? name : Family?.Name ?? "-") : "-")} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(Invisible ? 1 : 0)} {(UseSp ? MorphUpgrade : 0)} {faction} {(UseSp ? MorphUpgrade2 : 0)} {Level} {Family?.FamilyLevel ?? 0} 0|0|0 {ArenaWinner} {Compliment} {Size} {HeroLevel}";
+            return $"in 1 {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + name : name : Authority == AuthorityType.BitchNiggerFaggot ? name + "[BitchNiggerFaggot]" : name)} - {VisualId} {PositionX} {PositionY} {Direction} {(Undercover ? (byte)AuthorityType.User : Authority >= AuthorityType.TMOD ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {Math.Ceiling(Hp / HPLoad() * 100)} {Math.Ceiling(Mp / MPLoad() * 100)} {(IsSitting ? 1 : 0)} {(Group?.GroupType == GroupType.Group ? (Group?.GroupId ?? -1) : -1)} {(fairy != null && !Undercover ? 4 : 0)} {fairy?.Item.Element ?? 0} 0 {fairy?.Item.Morph ?? 0} {InEffect} {(UseSp || IsVehicled || IsMorphed ? Morph : 0)} {GenerateEqRareUpgradeForPacket()} {(!Undercover ? (foe ? -1 : Family?.FamilyId ?? -1) : -1)} {(!Undercover ? (foe ? name : Family?.Name ?? "-") : "-")} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(Camouflage ? 1 : 0)} {(UseSp ? MorphUpgrade : 0)} {faction} {(UseSp ? MorphUpgrade2 : 0)} {Level} {Family?.FamilyLevel ?? 0} 0|0|0 {ArenaWinner} {Compliment} {Size} {HeroLevel}";
         }
 
-        public string GenerateInvisible() => $"cl {VisualId} {(Invisible ? 1 : 0)} {(InvisibleGm ? 1 : 0)}";
+        public string GenerateInvisible() => $"cl {VisualId} {(Camouflage ? 1 : 0)} {(Invisible ? 1 : 0)}";
 
         public void GenerateKillBonus(MapMonster monsterToAttack, BattleEntity Killer)
         {
@@ -3784,19 +3773,6 @@ namespace GloomyTale.GameObject
         }
 
         public string GenerateMinilandPoint() => $"mlpt {MinilandPoint} 100";
-
-        public TitlePacket GenerateTitle()
-        {
-            var data = Titles.Select(s => new TitleSubPacket
-            {
-                TitleId = (short)(s.TitleType - 9300),
-                TitleStatus = (byte)((s.Visible ? 2 : 0) + (s.Active ? 4 : 0) + 1)
-            }).ToList();
-            return new TitlePacket
-            {
-                Data = data.Any() ? data : null
-            };
-        }
 
         public string GenerateEffs(TiteqPacketType type)
         {
@@ -6586,7 +6562,7 @@ namespace GloomyTale.GameObject
             if (StaticBonusList.RemoveAll(s => s.StaticBonusType == StaticBonusType.BackPack && s.DateEnd < DateTime.Now) > 0)
             {
                 Session.SendPacket(GenerateSay(Language.Instance.GetMessageFromKey("ITEM_TIMEOUT"), 10));
-                Session.SendPacket(GenerateExts());
+                Session.SendPacket(this.GenerateExts());
             }
 
             if (StaticBonusList.RemoveAll(

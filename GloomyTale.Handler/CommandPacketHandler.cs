@@ -200,8 +200,8 @@ namespace GloomyTale.Handler
                         Session.Character.hasVerifiedSecondPassword = true;
                         Session.SendPacket(Session.Character.GenerateSay($"You have successfully verified your identity!", 10));
                         Session.Character.HasGodMode = false;
-                        Session.Character.InvisibleGm = false;
                         Session.Character.Invisible = false;
+                        Session.Character.Camouflage = false;
                         Session.SendPacket(Session.Character.GenerateInvisible());
                         Session.SendPacket(Session.Character.GenerateEq());
                         Session.SendPacket(Session.Character.GenerateCMode());
@@ -1632,10 +1632,10 @@ namespace GloomyTale.Handler
                             {
                                 session.Account.Authority = newAuthority;
                                 session.Character.Authority = newAuthority;
-                                if (session.Character.InvisibleGm)
+                                if (session.Character.Invisible)
                                 {
+                                    session.Character.Camouflage = false;
                                     session.Character.Invisible = false;
-                                    session.Character.InvisibleGm = false;
                                     Session.Character.Mates.Where(m => m.IsTeamMember).ToList().ForEach(m =>
                                         Session.CurrentMapInstance?.Broadcast(m.GenerateIn(), ReceiverType.AllExceptMe));
                                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(),
@@ -2193,20 +2193,20 @@ namespace GloomyTale.Handler
         }
 
         /// <summary>
-        /// $Invisible Command
+        /// $Camouflage Command
         /// </summary>
         /// <param name="packet"></param>
         public void Invisible(InvisiblePacket packet)
         {
-            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[Invisible]");
+            Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), "[Camouflage]");
 
+            Session.Character.Camouflage = !Session.Character.Camouflage;
             Session.Character.Invisible = !Session.Character.Invisible;
-            Session.Character.InvisibleGm = !Session.Character.InvisibleGm;
             Session.SendPacket(Session.Character.GenerateInvisible());
             Session.SendPacket(Session.Character.GenerateEq());
             Session.SendPacket(Session.Character.GenerateCMode());
 
-            if (Session.Character.InvisibleGm)
+            if (Session.Character.Invisible)
             {
                 Session.Character.Mates.Where(s => s.IsTeamMember).ToList()
                     .ForEach(s => Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));

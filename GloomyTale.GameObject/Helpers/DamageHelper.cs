@@ -432,7 +432,7 @@ namespace GloomyTale.GameObject.Helpers
 
             #region Static
 
-            if (attacker.Character != null && attacker.Character.Invisible)
+            if (attacker.Character != null && attacker.Character.Camouflage)
             {
                 staticBoostCategory2 +=
                     GetAttackerBenefitingBuffs(CardType.LightAndShadow, (byte)AdditionalTypes.LightAndShadow.AdditionalDamageWhenHidden)[0];

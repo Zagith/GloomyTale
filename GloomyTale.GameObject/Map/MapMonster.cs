@@ -683,7 +683,7 @@ namespace GloomyTale.GameObject
                     entitiesList.AddRange(entitiesList.Where(s => s.Character != null).SelectMany(s => s.Character.BattleEntity.GetOwnedMonsters().Select(m => m.BattleEntity)).ToList());
                     entitiesList.AddRange(entitiesList.Where(s => s.MapNpc != null).ToList());
 
-                    BattleEntity newTarget = entitiesList.Where(s => (s.Character == null || !s.Character.InvisibleGm && (!s.Character.Invisible || CanSeeHiddenThings)))
+                    BattleEntity newTarget = entitiesList.Where(s => (s.Character == null || !s.Character.Invisible && (!s.Character.Camouflage || CanSeeHiddenThings)))
                         .OrderBy(e => Map.GetDistance(GetPos(), e.GetPos())).FirstOrDefault(e => BattleEntity.CanAttackEntity(e));
 
                     if (newTarget == null && Target != null)
@@ -707,7 +707,7 @@ namespace GloomyTale.GameObject
 
             BattleEntity target = MapInstance.BattleEntities.OrderBy(e => Map.GetDistance(GetPos(), e.GetPos()))
                 .FirstOrDefault(e => BattleEntity.CanAttackEntity(e) && (e.CanBeTargetted) && (e.Mate == null || !BattleEntity.IsMateTrainer(MonsterVNum) || e.MapInstance != e.Mate?.Owner.Miniland || e.TargettedByMonstersList(false).Count() < 9) && (e.Character == null
-                    || !e.Character.InvisibleGm && (!e.Character.Invisible || CanSeeHiddenThings)) && Map.GetDistance(GetPos(), e.GetPos()) < (NoticeRange == 0 ? Monster.NoticeRange : NoticeRange));
+                    || !e.Character.Invisible && (!e.Character.Camouflage || CanSeeHiddenThings)) && Map.GetDistance(GetPos(), e.GetPos()) < (NoticeRange == 0 ? Monster.NoticeRange : NoticeRange));
 
             if (target == null/* || MoveEvent != null*/)
             {
@@ -1677,7 +1677,7 @@ namespace GloomyTale.GameObject
                         || CurrentHp <= 0
                         || targetEntity.MapInstance != MapInstance
                         || (targetEntity.Character != null
-                            && (targetEntity.Character.Invisible || targetEntity.Character.InvisibleGm)
+                            && (targetEntity.Character.Camouflage || targetEntity.Character.Invisible)
                             && !CanSeeHiddenThings))
                     {
                         RemoveTarget();
@@ -1770,7 +1770,7 @@ namespace GloomyTale.GameObject
                                 TargetHit(BattleEntity, npcMonsterSkill);
                                 return;
                             }
-                            else if ((targetEntity.Character == null || (!targetEntity.Character.InvisibleGm || (!targetEntity.Character.Invisible || CanSeeHiddenThings))) && targetEntity.Hp > 0)
+                            else if ((targetEntity.Character == null || (!targetEntity.Character.Invisible || (!targetEntity.Character.Camouflage || CanSeeHiddenThings))) && targetEntity.Hp > 0)
                             {
                                 if (npcMonsterSkill?.Skill.TargetType == 1 && npcMonsterSkill?.Skill.HitType == 1 && npcMonsterSkill?.Skill.TargetRange > 0
                                     && CurrentMp >= npcMonsterSkill.Skill.MpCost && ((Map.GetDistance(
@@ -2069,7 +2069,7 @@ namespace GloomyTale.GameObject
                     {
                         List<BattleEntity> possibleTargets = MapInstance.BattleEntities
                            .OrderBy(e => Map.GetDistance(GetPos(), e.GetPos()))
-                           .Where(e => e.UserType == VisualType.Player && e.Character != null && BattleEntity.CanAttackEntity(e) && !e.Character.InvisibleGm && (!e.Character.Invisible || CanSeeHiddenThings) && Map.GetDistance(GetPos(), e.GetPos()) < npcMonsterSkill.Skill.Range)
+                           .Where(e => e.UserType == VisualType.Player && e.Character != null && BattleEntity.CanAttackEntity(e) && !e.Character.Invisible && (!e.Character.Camouflage || CanSeeHiddenThings) && Map.GetDistance(GetPos(), e.GetPos()) < npcMonsterSkill.Skill.Range)
                            .ToList();
                         Observable.Timer(TimeSpan.FromMilliseconds(castTime > 200 ? 200 : 0)).Subscribe(obs =>
                         {
@@ -2094,7 +2094,7 @@ namespace GloomyTale.GameObject
                     {
                         List<BattleEntity> possibleTargets = MapInstance.BattleEntities
                            .OrderBy(e => Map.GetDistance(GetPos(), e.GetPos()))
-                           .Where(e => e.UserType == VisualType.Player && e.Character != null && BattleEntity.CanAttackEntity(e) && !e.Character.InvisibleGm && (!e.Character.Invisible || CanSeeHiddenThings) && Map.GetDistance(GetPos(), e.GetPos()) < npcMonsterSkill.Skill.Range)
+                           .Where(e => e.UserType == VisualType.Player && e.Character != null && BattleEntity.CanAttackEntity(e) && !e.Character.Invisible && (!e.Character.Camouflage || CanSeeHiddenThings) && Map.GetDistance(GetPos(), e.GetPos()) < npcMonsterSkill.Skill.Range)
                            .ToList();
                         Observable.Timer(TimeSpan.FromMilliseconds(castTime > 200 ? 200 : 0)).Subscribe(obs =>
                         {

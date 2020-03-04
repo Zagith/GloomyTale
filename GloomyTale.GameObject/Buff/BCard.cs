@@ -1262,7 +1262,7 @@ namespace GloomyTale.GameObject
                                 {
                                     if (charact.MapInstance.MapInstanceType != MapInstanceType.NormalInstance || charact.MapInstance.Map.MapId != 2004)
                                     {
-                                        charact.Invisible = true;
+                                        charact.Camouflage = true;
                                         charact.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => charact.Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
                                         charact.Session.CurrentMapInstance?.Broadcast(charact.GenerateInvisible());
                                     }
@@ -1849,7 +1849,7 @@ namespace GloomyTale.GameObject
                                         chara.PositionY = y;
                                         chara.Session.CurrentMapInstance.Broadcast(chara.GenerateTp());
                                     }
-                                    chara.Invisible = true;
+                                    chara.Camouflage = true;
                                     chara.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => chara.Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
                                     chara.Session.CurrentMapInstance?.Broadcast(chara.GenerateInvisible());
                                 }

@@ -590,8 +590,8 @@ namespace GloomyTale.Handler
 
 #warning remove this comment for allow 2auth system
                 /*Session.Character.HasGodMode = true;
-                Session.Character.Invisible = true;
-                Session.Character.InvisibleGm = true;*/
+                Session.Character.Camouflage = true;
+                Session.Character.Invisible = true;*/
                 character.Channel = ServerManager.Instance;
 
                 #endregion

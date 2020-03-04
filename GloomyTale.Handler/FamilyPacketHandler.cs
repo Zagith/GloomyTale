@@ -294,7 +294,7 @@ namespace GloomyTale.Handler
                         if (Session.HasCurrentMapInstance && session.HasCurrentMapInstance
                             && Session.CurrentMapInstance == session.CurrentMapInstance)
                         {
-                            if (Session.Account.Authority != AuthorityType.GS && !Session.Character.InvisibleGm)
+                            if (Session.Account.Authority != AuthorityType.GS && !Session.Character.Invisible)
                             {
                                 session.SendPacket(Session.Character.GenerateSay(msg, 6));
                             }
@@ -308,7 +308,7 @@ namespace GloomyTale.Handler
                             session.SendPacket(Session.Character.GenerateSay(ccmsg, 6));
                         }
 
-                        if (!Session.Character.InvisibleGm)
+                        if (!Session.Character.Invisible)
                         {
                             session.SendPacket(Session.Character.GenerateSpk(msg, 1));
                         }

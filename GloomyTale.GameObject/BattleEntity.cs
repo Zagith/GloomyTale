@@ -784,8 +784,8 @@ namespace GloomyTale.GameObject
 
                 indicator.Sender = sender;
 
-                if ((Character != null && ((indicator.Card.BuffType == BuffType.Bad && Character.HasGodMode) || Character.InvisibleGm))
-                 || (Mate != null && ((indicator.Card.BuffType == BuffType.Bad && Mate.Owner.HasGodMode) || Mate.Owner.InvisibleGm)))
+                if ((Character != null && ((indicator.Card.BuffType == BuffType.Bad && Character.HasGodMode) || Character.Invisible))
+                 || (Mate != null && ((indicator.Card.BuffType == BuffType.Bad && Mate.Owner.HasGodMode) || Mate.Owner.Invisible)))
                 {
                     return;
                 }
@@ -1253,7 +1253,7 @@ namespace GloomyTale.GameObject
                          || indicator.Card.BCards.Any(s => s.Type == (byte)CardType.FalconSkill && s.SubType.Equals((byte)AdditionalTypes.FalconSkill.Hide / 10))
                          || indicator.Card.BCards.Any(s => s.Type == (byte)CardType.FalconSkill && s.SubType.Equals((byte)AdditionalTypes.FalconSkill.Ambush / 10)))
                         {
-                            Character.Invisible = false;
+                            Character.Camouflage = false;
                             foreach (Mate teamMate in Character.Mates?.Where(m => m != null && m.IsTeamMember))
                             {
                                 teamMate.PositionX = Character.PositionX;
@@ -2208,7 +2208,7 @@ namespace GloomyTale.GameObject
                             {
                                 case EntityType.Player:
                                     {
-                                        if (receiver.Character.InvisibleGm)
+                                        if (receiver.Character.Invisible)
                                         {
                                             return false;
                                         }
@@ -2263,7 +2263,7 @@ namespace GloomyTale.GameObject
                                     break;
                                 case EntityType.Mate:
                                     {
-                                        if ((receiver.Mate.Owner.IsVehicled || receiver.Mate.Owner.Invisible) && !receiver.Mate.IsTemporalMate)
+                                        if ((receiver.Mate.Owner.IsVehicled || receiver.Mate.Owner.Camouflage) && !receiver.Mate.IsTemporalMate)
                                         {
                                             return false;
                                         }
@@ -2301,7 +2301,7 @@ namespace GloomyTale.GameObject
 
                     case EntityType.Mate:
                         {
-                            if ((Mate.Owner.IsVehicled || Mate.Owner.Invisible) && !Mate.IsTemporalMate)
+                            if ((Mate.Owner.IsVehicled || Mate.Owner.Camouflage) && !Mate.IsTemporalMate)
                             {
                                 return false;
                             }
@@ -2342,7 +2342,7 @@ namespace GloomyTale.GameObject
                                             if ((ServerManager.Instance.ChannelId != 51 || 
                                                 MapMonster.Faction == FactionType.None ||
                                                 MapMonster.Faction != receiver.Character.Faction)
-                                              && !receiver.Character.InvisibleGm)
+                                              && !receiver.Character.Invisible)
                                             {
                                                 return true;
                                             }
@@ -2350,7 +2350,7 @@ namespace GloomyTale.GameObject
                                         break;
                                     case EntityType.Mate:
                                         {
-                                            if ((receiver.Mate.Owner.IsVehicled || receiver.Mate.Owner.Invisible) && !receiver.Mate.IsTemporalMate)
+                                            if ((receiver.Mate.Owner.IsVehicled || receiver.Mate.Owner.Camouflage) && !receiver.Mate.IsTemporalMate)
                                             {
                                                 return false;
                                             }
@@ -2398,7 +2398,7 @@ namespace GloomyTale.GameObject
                                         return false;
                                         /*{
                                             
-                                            if (!receiver.Character.InvisibleGm)
+                                            if (!receiver.Character.Invisible)
                                             {
                                                 return true;
                                             }
@@ -2406,7 +2406,7 @@ namespace GloomyTale.GameObject
                                         break;*/
                                     case EntityType.Mate:
                                         {
-                                            if ((receiver.Mate.Owner.IsVehicled || receiver.Mate.Owner.Invisible) && !receiver.Mate.IsTemporalMate)
+                                            if ((receiver.Mate.Owner.IsVehicled || receiver.Mate.Owner.Camouflage) && !receiver.Mate.IsTemporalMate)
                                             {
                                                 return false;
                                             }

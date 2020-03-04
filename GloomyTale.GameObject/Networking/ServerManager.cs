@@ -818,7 +818,7 @@ namespace GloomyTale.GameObject.Networking
 
                     Parallel.ForEach(
                         session.CurrentMapInstance.Sessions.Where(s =>
-                            s.Character?.InvisibleGm == false &&
+                            s.Character?.Invisible == false &&
                             s.Character.VisualId != session.Character.VisualId), visibleSession =>
                             {
                                 if (ChannelId != 51 || session.Character.Faction == visibleSession.Character.Faction)
@@ -876,7 +876,7 @@ namespace GloomyTale.GameObject.Networking
                         session.SendPacket("bc 0 0 0");
                     }
 
-                    if (!session.Character.InvisibleGm)
+                    if (!session.Character.Invisible)
                     {
                         Parallel.ForEach(session.CurrentMapInstance.Sessions.Where(s => s.Character != null), s =>
                         {
@@ -1864,7 +1864,7 @@ namespace GloomyTale.GameObject.Networking
                 return;
             }
             session.SendPacket(UserInterfaceHelper.GenerateMapOut());
-            if (!session.Character.InvisibleGm)
+            if (!session.Character.Invisible)
             {
                 session.Character.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => session.CurrentMapInstance?.Broadcast(session, StaticPacketHelper.Out(VisualType.Npc, s.MateTransportId), ReceiverType.AllExceptMe));
                 session.CurrentMapInstance?.Broadcast(session, StaticPacketHelper.Out(VisualType.Player, session.Character.VisualId), ReceiverType.AllExceptMe);

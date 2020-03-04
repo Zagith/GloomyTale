@@ -92,7 +92,7 @@ namespace GloomyTale.GameObject
         {
             try
             {
-                if (client == null || client.Character == null || !client.Character.InvisibleGm || content.StartsWith("out", StringComparison.CurrentCulture))
+                if (client == null || client.Character == null || !client.Character.Invisible || content.StartsWith("out", StringComparison.CurrentCulture))
                 {
                     spreadBroadcastpacket(new BroadcastPacket(client, content, receiver, characterName, characterId));
                 }

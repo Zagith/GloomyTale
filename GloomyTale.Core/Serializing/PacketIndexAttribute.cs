@@ -34,12 +34,13 @@ namespace GloomyTale.Core
         /// <param name="removeSeparator">
         /// Removes the separator (.) for List&lt;PacketDefinition&gt; packets.
         /// </param>
-        public PacketIndexAttribute(int index, bool isReturnPacket = false, bool serializeToEnd = false, bool removeSeparator = false)
+        public PacketIndexAttribute(int index, bool isReturnPacket = false, bool serializeToEnd = false, bool removeSeparator = false, string specialSeparator = "")
         {
             Index = index;
             IsReturnPacket = isReturnPacket;
             SerializeToEnd = serializeToEnd;
             RemoveSeparator = removeSeparator;
+            SpecialSeparator = specialSeparator;
         }
 
         #endregion
@@ -66,6 +67,7 @@ namespace GloomyTale.Core
         /// </summary>
         public bool SerializeToEnd { get; set; }
 
+        public string SpecialSeparator { get; set; }
         #endregion
     }
 }

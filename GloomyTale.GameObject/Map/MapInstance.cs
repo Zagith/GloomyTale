@@ -389,7 +389,7 @@ namespace GloomyTale.GameObject
         public List<string> GetMapItems()
         {
             List<string> packets = new List<string>();
-            Sessions.Where(s => s.Character?.InvisibleGm == false).ToList().ForEach(s => s.Character.Mates.Where(m => m.IsTeamMember).ToList().ForEach(m => packets.Add(m.GenerateIn())));
+            Sessions.Where(s => s.Character?.Invisible == false).ToList().ForEach(s => s.Character.Mates.Where(m => m.IsTeamMember).ToList().ForEach(m => packets.Add(m.GenerateIn())));
             Portals.ForEach(s => packets.Add(s.GenerateGp()));
             ScriptedInstances.Where(s => s.Type == ScriptedInstanceType.TimeSpace).ToList().ForEach(s => packets.Add(s.GenerateWp()));
             Monsters.ForEach(s =>

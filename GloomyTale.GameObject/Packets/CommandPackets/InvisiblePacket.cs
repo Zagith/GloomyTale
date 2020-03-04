@@ -5,9 +5,9 @@ using GloomyTale.Domain;
 
 namespace GloomyTale.GameObject.CommandPackets
 {
-    [PacketHeader("$Invisible" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD, AuthorityType.GS } )]
+    [PacketHeader("$Camouflage" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD, AuthorityType.GS } )]
     public class InvisiblePacket : PacketDefinition
     {
-        public static string ReturnHelp() => "$Invisible";
+        public static string ReturnHelp() => "$Camouflage";
     }
 }

@@ -283,7 +283,7 @@ namespace GloomyTale.Handler
 
                 bool isMuted = Session.Character.MuteMessage();
 
-                if (isMuted || Session.Character.IsVehicled || Session.Character.InvisibleGm)
+                if (isMuted || Session.Character.IsVehicled || Session.Character.Invisible)
                 {
                     Session.SendPacket(StaticPacketHelper.Cancel());
                     return;

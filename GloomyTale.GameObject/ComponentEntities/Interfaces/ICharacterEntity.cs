@@ -28,9 +28,9 @@ namespace GloomyTale.GameObject.ComponentEntities.Interfaces
 
         //int DignityIcon { get; }
 
-        //bool Camouflage { get; }
+        bool Camouflage { get; }
 
-       //bool Invisible { get; }
+        bool Invisible { get; }
 
         //IChannel Channel { get; }
 
@@ -45,9 +45,9 @@ namespace GloomyTale.GameObject.ComponentEntities.Interfaces
 
         //long BankGold { get; }
 
-        /*IInventoryService Inventory { get; }
+        Inventory Inventory { get; }
 
-        RegionType AccountLanguage { get; }
+        /*RegionType AccountLanguage { get; }
 
         List<StaticBonusDto> StaticBonusList { get; set; }*/
 

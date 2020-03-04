@@ -132,7 +132,7 @@ namespace GloomyTale.GameObject.Event.ARENA
                                 {
                                     obs3 = Observable.Interval(TimeSpan.FromSeconds(5)).Subscribe(effect =>
                                     {
-                                        arenamembers.Where(c => !c.Session.Character.Invisible).ToList().ForEach(o => map.Broadcast(o.Session.Character.GenerateEff(o.GroupId == s.GroupId ? 3012 : 3013)));
+                                        arenamembers.Where(c => !c.Session.Character.Camouflage).ToList().ForEach(o => map.Broadcast(o.Session.Character.GenerateEff(o.GroupId == s.GroupId ? 3012 : 3013)));
                                     });
                                 });
                                 IDisposable obs5 = Observable.Interval(TimeSpan.FromMilliseconds(500)).Subscribe(start3 =>
