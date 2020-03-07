@@ -30,6 +30,7 @@ using GloomyTale.GameObject.Event.BANDICOOTRUN;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 
 namespace GloomyTale.GameObject.Helpers
 {
@@ -206,7 +207,7 @@ namespace GloomyTale.GameObject.Helpers
                         #region EventForUser
 
                         case EventActionType.NPCDIALOG:
-                            session.SendPacket(session.Character.GenerateNpcDialog((int)evt.Parameter));
+                            session.SendPacket(session.Character.GenerateNpcReq((int)evt.Parameter));
                             break;
 
                         case EventActionType.SENDPACKET:

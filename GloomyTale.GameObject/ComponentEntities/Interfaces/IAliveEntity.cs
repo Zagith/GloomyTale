@@ -6,29 +6,29 @@
 
         byte Speed { get; }
 
-        byte Size { get; set; }
+        byte Size { get; set; }*/
 
         int Mp { get; set; }
 
         int Hp { get; set; }
 
-        short Morph { get; }
+        int Morph { get; }
 
-        byte MorphUpgrade { get; }
+        /*byte MorphUpgrade { get; }
 
         short MorphDesign { get; }
 
-        byte MorphBonus { get; }
+        byte MorphBonus { get; }*/
 
-        bool NoAttack { get; }
+        //bool NoAttack { get; }
 
-        bool NoMove { get; }
+        //bool NoMove { get; }
 
-        bool IsAlive { get; }
+        /*bool IsAlive { get; }
 
         short MapX { get; }
 
-        short MapY { get; }
+        short MapY { get; }*/
 
         int MaxHp { get; }
 
@@ -40,6 +40,6 @@
 
         short Race { get; }
 
-        Shop Shop { get; }*/
+        //Shop Shop { get; }
     }
 }

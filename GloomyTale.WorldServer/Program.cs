@@ -7,6 +7,7 @@ using GloomyTale.Core;
 using GloomyTale.DAL;
 using GloomyTale.DAL.EF.Helpers;
 using GloomyTale.GameObject;
+using GloomyTale.GameObject.Helpers;
 using GloomyTale.GameObject.Networking;
 using GloomyTale.Plugins;
 using GloomyTale.Plugins.Exceptions;
@@ -218,16 +219,16 @@ namespace GloomyTale.World
                 );
 
                 PacketFactory.Initialize<WalkPacket>();
-                string ip = "127.0.0.1";
+                string ip = "185.181.10.221";
 
 
                 WorldServer server;
             portloop:
                 try
                 {
-                    _exitHandler += ExitHandler;
+                    /*_exitHandler += ExitHandler;
                     AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
-                    NativeMethods.SetConsoleCtrlHandler(_exitHandler, true);
+                    NativeMethods.SetConsoleCtrlHandler(_exitHandler, true);*/
 
                     server = new WorldServer(IPAddress.Any, _port);
                     server.Start();
@@ -331,11 +332,11 @@ namespace GloomyTale.World
         #endregion
 
         #region Classes
-        public static class NativeMethods
+        /*public static class NativeMethods
         {
             [DllImport("Kernel32")]
             internal static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add); 
-        }
+        }*/
         #endregion
     }
 }

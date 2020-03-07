@@ -166,7 +166,7 @@ namespace GloomyTale.Login
                             // initialize PacketSerialization
                             PacketFactory.Initialize<WalkPacket>();
 
-                            var server = new LoginServer("127.0.0.1", port, new BasicSpamProtector());
+                            var server = new LoginServer("185.181.10.221", port, new BasicSpamProtector());
                             server.Start();
 
                             for (; ; )
@@ -183,6 +183,7 @@ namespace GloomyTale.Login
                         catch (Exception ex)
                         {
                             Logger.Log.LogEventError("INITIALIZATION_EXCEPTION", "General Error Server", ex);
+                            Console.ReadLine();
                         }
                     }
                 }

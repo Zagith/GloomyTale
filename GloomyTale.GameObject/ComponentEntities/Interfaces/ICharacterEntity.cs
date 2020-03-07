@@ -14,7 +14,7 @@ namespace GloomyTale.GameObject.ComponentEntities.Interfaces
 
         //short MapId { get; set; }
 
-        //GenderType Gender { get; }
+        GenderType Gender { get; }
 
         //HairStyleType HairStyle { get; }
 
@@ -86,5 +86,7 @@ namespace GloomyTale.GameObject.ComponentEntities.Interfaces
         //void ChangeClass(ClassType classType);
 
         //void ChangeMap(short mapId, short mapX, short mapY);
+
+        List<CharacterRelationDTO> CharacterRelations { get; }
     }
 }

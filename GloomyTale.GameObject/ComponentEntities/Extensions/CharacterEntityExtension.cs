@@ -1,4 +1,5 @@
 ﻿using GloomyTale.DAL;
+using GloomyTale.Data;
 using GloomyTale.Domain;
 using GloomyTale.GameObject.ComponentEntities.Interfaces;
 using GloomyTale.GameObject.Networking;
@@ -83,6 +84,46 @@ namespace GloomyTale.GameObject.ComponentEntities.Extensions
             }
 
             return new BlinitPacket { SubPackets = subpackets };
+        }
+
+        public static FinitPacket GenerateFinit(this ICharacterEntity visualEntity)
+        {
+            var subpackets = new List<FinitSubPacket>();
+            foreach (CharacterRelationDTO relation in visualEntity.CharacterRelations.ToList().Where(c => c.RelationType == CharacterRelationType.Friend || c.RelationType == CharacterRelationType.Spouse))
+            {
+                long id = relation.RelatedCharacterId == visualEntity.VisualId ? relation.CharacterId : relation.RelatedCharacterId;
+                var account = CommunicationServiceClient.Instance.IsCharacterConnected(ServerManager.Instance.ServerGroup, id);
+                var name = DAOFactory.Instance.CharacterDAO.LoadById(id).Name;
+                subpackets.Add(new FinitSubPacket
+                {
+                    CharacterId = relation.CharacterId,
+                    RelationType = relation.RelationType,
+                    IsOnline = account,
+                    CharacterName = name
+                });
+            }
+            return new FinitPacket { SubPackets = subpackets };
+        }
+
+        public static IconPacket GenerateIcon(this ICharacterEntity visualEntity, byte iconType, short iconParameter)
+        {
+            return new IconPacket
+            {
+                VisualType = visualEntity.VisualType,
+                VisualId = visualEntity.VisualId,
+                IconParameter = iconParameter,
+                IconType = iconType
+            };
+        }
+
+        public static ServerGetPacket GenerateGet(this ICharacterEntity visualEntity, long itemId)
+        {
+            return new ServerGetPacket
+            {
+                VisualType = visualEntity.VisualType,
+                VisualId = visualEntity.VisualId,
+                ItemId = itemId
+            };
         }
     }
 }

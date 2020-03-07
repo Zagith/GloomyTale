@@ -15,6 +15,7 @@
 using GloomyTale.Core;
 using GloomyTale.Data;
 using GloomyTale.Domain;
+using GloomyTale.GameObject.ComponentEntities.Extensions;
 using GloomyTale.GameObject.Helpers;
 using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.Networking;

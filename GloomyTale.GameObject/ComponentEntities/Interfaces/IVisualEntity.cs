@@ -11,9 +11,9 @@ namespace GloomyTale.GameObject.ComponentEntities.Interfaces
 
         long VisualId { get; }
 
-        /*byte Direction { get; set; }
+        byte Direction { get; set; }
 
-        Guid MapInstanceId { get; }
+        /*Guid MapInstanceId { get; }
 
         MapInstance MapInstance { get; }
 

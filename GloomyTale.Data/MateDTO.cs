@@ -34,7 +34,7 @@ namespace GloomyTale.Data
 
         public long Experience { get; set; }
 
-        public double Hp { get; set; }
+        public int Hp { get; set; }
 
         public bool IsSummonable { get; set; }
 
@@ -52,7 +52,7 @@ namespace GloomyTale.Data
 
         public MateType MateType { get; set; }
 
-        public double Mp { get; set; }
+        public int Mp { get; set; }
 
         public string Name { get; set; }
 

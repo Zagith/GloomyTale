@@ -366,7 +366,7 @@ namespace GloomyTale.GameObject
                     {
                         return;
                     }
-                    Session.SendPacket(Session.Character.GenerateNpcDialog(17));
+                    Session.SendPacket(Session.Character.GenerateNpcReq(17));
                     break;
 
                 case 26:

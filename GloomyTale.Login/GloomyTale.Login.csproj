@@ -5,6 +5,11 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <OutputPath>..\dist\Login\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\GloomyTale.Communication.RPC\GloomyTale.Communication.RPC.csproj" />
     <ProjectReference Include="..\GloomyTale.Core\GloomyTale.Core.csproj" />

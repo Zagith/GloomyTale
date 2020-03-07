@@ -28,10 +28,11 @@ using GloomyTale.GameObject.Battle;
 using System.IO;
 using System.Threading.Tasks;
 using GloomyTale.GameObject.Items.Instance;
+using GloomyTale.GameObject.ComponentEntities.Interfaces;
 
 namespace GloomyTale.GameObject
 {
-    public class Mate : MateDTO
+    public class Mate : MateDTO, INamedEntity
     {
         #region Members
 
@@ -140,7 +141,7 @@ namespace GloomyTale.GameObject
         #endregion
 
         #region Properties
-
+        
         public ItemInstance ArmorInstance { get; set; }
 
         public ItemInstance BootsInstance { get; set; }
@@ -157,11 +158,25 @@ namespace GloomyTale.GameObject
 
         public ItemInstance GlovesInstance { get; set; }
 
+        public VisualType VisualType => VisualType.Monster;
+
+        public long VisualId => MateId;
+
+        public int MaxHp => HpLoad();
+
+        public int MaxMp => MpLoad();
+
         public bool IsAlive { get; set; }
 
         public bool IsSitting { get; set; }
 
         public bool IsUsingSp { get; set; }
+
+        public int Morph { get; set; }
+
+        public byte HeroLevel { get; set; }
+
+        public short Race => Monster.Race;
 
         public DateTime LastHealth { get; set; }
 
@@ -176,10 +191,6 @@ namespace GloomyTale.GameObject
         public int MagicalDefense => MagicalDefenseLoad();
 
         public int MateTransportId { get; private set; }
-
-        public double MaxHp => HpLoad();
-
-        public double MaxMp => MpLoad();
 
         public int MeleeDefense => MeleeDefenseLoad();
 
@@ -568,8 +579,6 @@ namespace GloomyTale.GameObject
 
             return "";
         }
-
-        public string GenerateStatInfo() => $"st 2 {MateTransportId} {Level} 0 {(int) (Hp / MaxHp * 100)} {(int) (Mp / MaxMp * 100)} {Hp} {Mp}{Buff.GetAllItems().Aggregate("", (current, buff) => current + $" {buff.Card.CardId}.{buff.Level}")}";
 
         public void GenerateXp(int xp)
         {

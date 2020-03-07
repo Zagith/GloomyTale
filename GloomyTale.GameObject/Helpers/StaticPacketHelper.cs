@@ -77,8 +77,6 @@ namespace GloomyTale.GameObject.Helpers
 
         public static string Die(VisualType callerType, long callerId, VisualType targetType, long targetId) => $"die {(byte)callerType} {callerId} {(byte)targetType} {targetId}";
 
-        public static string GenerateGet(byte pickerType, long pickerId, long itemId) => $"get {pickerType} {pickerId} {itemId} 0";
-
         #endregion
     }
 }

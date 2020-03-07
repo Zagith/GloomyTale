@@ -882,7 +882,7 @@ namespace GloomyTale.Handler
 
                                     Session.CurrentMapInstance.DroppedList.Remove(getPacket.TransportId);
 
-                                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateGet(getPacket.PickerType, getPacket.PickerId, getPacket.TransportId));
+                                    Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGet(getPacket.TransportId));
 
                                     if (getPacket.PickerType == 2)
                                     {
@@ -905,12 +905,12 @@ namespace GloomyTale.Handler
                                         {
                                             Session.CurrentMapInstance.DroppedList.Remove(getPacket.TransportId);
 
-                                            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateGet(getPacket.PickerType, getPacket.PickerId, getPacket.TransportId));
+                                            Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGet(getPacket.TransportId));
 
                                             if (getPacket.PickerType == 2)
                                             {
                                                 Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Npc, getPacket.PickerId, 5004));
-                                                Session.SendPacket(Session.Character.GenerateIcon(1, 1, inv.ItemVNum));
+                                                Session.SendPacket(Session.Character.GenerateIcon(1, inv.ItemVNum));
                                             }
 
                                             Session.SendPacket(Session.Character.GenerateSay(
@@ -949,7 +949,7 @@ namespace GloomyTale.Handler
                                 {
                                     if (getPacket.PickerType == 2)
                                     {
-                                        Session.SendPacket(Session.Character.GenerateIcon(1, 1, 1046));
+                                        Session.SendPacket(Session.Character.GenerateIcon(1, 1046));
                                     }
 
                                     Session.Character.Gold += (int)(droppedGold.GoldAmount * multiplier);
@@ -972,7 +972,7 @@ namespace GloomyTale.Handler
                                 Session.SendPacket(Session.Character.GenerateGold());
                                 Session.CurrentMapInstance.DroppedList.Remove(getPacket.TransportId);
 
-                                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateGet(getPacket.PickerType, getPacket.PickerId, getPacket.TransportId));
+                                Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGet(getPacket.TransportId));
 
                                 if (getPacket.PickerType == 2)
                                 {

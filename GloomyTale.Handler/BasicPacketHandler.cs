@@ -344,7 +344,7 @@ namespace GloomyTale.Handler
             if (directionPacket.CharacterId == Session.Character.VisualId)
             {
                 Session.Character.Direction = directionPacket.Direction;
-                Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateDir());
+                Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateChangeDir());
             }
         }
 
