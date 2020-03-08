@@ -319,35 +319,6 @@ namespace GloomyTale.GameObject
             }
         }
 
-        public void DropItemsIC(List<Tuple<short, int>> list)
-        {
-            foreach (ClientSession sess in Sessions.Where(s => s.Character.MapInstance.Map.MapId == 2517))
-            {
-                foreach (Tuple<short, int> drop in list)
-                {
-
-                    if (sess.Character.InstantBattleScore >= 100)
-                    {
-                        if (drop.Item1 == 1046)
-                        {
-                            sess.Character.Gold += drop.Item2;
-
-                            if (sess.Character.Gold > 10000000)// ServerManager.Instance.Configuration.MaxGold)
-                            {
-                                sess.Character.Gold = 10000000;// ServerManager.Instance.Configuration.MaxGold;
-                                sess.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("MAX_GOLD"), 0));
-                            }
-                            sess.SendPacket(sess.Character.GenerateGold());
-                        }
-                        else
-                        {
-                            sess.Character.GiftAdd(drop.Item1, (short)drop.Item2);
-                        }
-                    }
-                }
-                sess.Character.InstantBattleScore = 0;
-            }
-        }
         public string GenerateMapDesignObjects()
         {
             var mlobjstring = "mltobj";
@@ -735,7 +706,8 @@ namespace GloomyTale.GameObject
                     AliveTime = summon.AliveTime,
                     AliveTimeMp = summon.AliveTimeMp,
                     BaseMaxHp = summon.MaxHp,
-                    BaseMaxMp = summon.MaxMp
+                    BaseMaxMp = summon.MaxMp,
+                    Name = summon.Name
                 };
 
                 if (summon.HasDelay > 0)

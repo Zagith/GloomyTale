@@ -77,10 +77,12 @@ namespace GloomyTale.GameObject
                         {
                             case 1:
                                 Session.Character.Inventory.AddNewToInventory(68, 1, InventoryType.Wear);
+                                Session.Character.Inventory.AddNewToInventory(2082, 10, InventoryType.Etc);
                                 break;
 
                             case 2:
                                 Session.Character.Inventory.AddNewToInventory(78, 1, InventoryType.Wear);
+                                Session.Character.Inventory.AddNewToInventory(2083, 10, InventoryType.Etc);
                                 break;
 
                             case 3:

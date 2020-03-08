@@ -110,6 +110,7 @@ namespace GloomyTale.Handler
                     MaxMateCount = 10,
                     MaxPartnerCount = 3,
                     SpPoint = 10000,
+                    Gold = 15000,
                     SpAdditionPoint = 0,
                     MinilandMessage = "Welcome",
                     State = CharacterState.Active,

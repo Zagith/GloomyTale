@@ -31,6 +31,7 @@ using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
 using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.ComponentEntities.Extensions;
+using GloomyTale.GameObject.Event.TRUEORFALSE;
 
 namespace GloomyTale.GameObject.Helpers
 {
@@ -178,6 +179,10 @@ namespace GloomyTale.GameObject.Helpers
 
                         case EventType.BANDICOOTRUN:
                             BandicootRun.GenerateBandicootRun();
+                            break;
+
+                        case EventType.TorF:
+                            TorFEvent.GenerateTorF();
                             break;
                     }
                 });
@@ -911,7 +916,7 @@ namespace GloomyTale.GameObject.Helpers
                             break;
 
                         case EventActionType.DROPITEMS:
-                            evt.MapInstance.DropItemsIC((List<Tuple<short, int>>)evt.Parameter);
+                            evt.MapInstance.DropItems((List<Tuple<short, int, short, short>>)evt.Parameter);
                             break;
 
                         case EventActionType.THROWITEMS:

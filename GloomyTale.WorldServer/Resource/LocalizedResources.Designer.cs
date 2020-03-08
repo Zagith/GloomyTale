@@ -2446,7 +2446,7 @@ namespace GloomyTale.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Do you want to join Rainbow Battle?.
+        ///   Cerca una stringa localizzata simile a Do you want to join Instant Battle?.
         /// </summary>
         internal static string INSTANTBATTLE_QUESTION {
             get {

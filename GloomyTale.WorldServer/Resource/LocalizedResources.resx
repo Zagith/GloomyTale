@@ -904,7 +904,7 @@
     <value>A wave of monsters is coming.</value>
   </data>
   <data name="INSTANTBATTLE_QUESTION" xml:space="preserve">
-    <value>Do you want to join Rainbow Battle?</value>
+    <value>Do you want to join Instant Battle?</value>
   </data>
   <data name="INSTANTBATTLE_SECONDS" xml:space="preserve">
     <value>The Instant Combat will start in {0} seconds.</value>

@@ -139,7 +139,11 @@ namespace GloomyTale.GameObject
         public DateTime LastMove { get; set; }
         
         public DateTime LastSkill { get; set; }
-        
+
+        public DateTime LastEffect42 { get; set; }
+
+        public DateTime LastEffect43 { get; set; }
+
         public IDisposable LifeEvent { get; set; }
 
         public MapInstance MapInstance { get; set; }
@@ -690,6 +694,8 @@ namespace GloomyTale.GameObject
                     {
                         RemoveTarget();
                     }
+                    else if (MapInstance.MapInstanceType == MapInstanceType.EventGameInstance)
+                        RemoveTarget();
                     else
                     {
                         Target = newTarget;
@@ -857,6 +863,7 @@ namespace GloomyTale.GameObject
 
                 // calculate damage
                 bool onyxWings = false;
+                bool windWings = hitRequest.Session.Character.HasBuff(686);
                 BattleEntity attackerBattleEntity = hitRequest.Mate == null
                     ? new BattleEntity(hitRequest.Session.Character, hitRequest.Skill)
                     : new BattleEntity(hitRequest.Mate);
@@ -885,6 +892,31 @@ namespace GloomyTale.GameObject
                 {
                     damage = (int)CurrentHp - 1;
                 }
+                else if (damage >= CurrentHp && BattleEntity.MapInstance.MapInstanceType == MapInstanceType.EventGameInstance)
+                    damage = (int)CurrentHp - 1;
+
+                //4th MA Sp Chains
+                int hpmplost = (int)(damage * 0.1);
+                if (BattleEntity.HasBuff(748))
+                {
+                    //MP increasing to the enemy
+                    hpmplost = (int)(damage * 0.05);
+                    if (attackerBattleEntity.Mp + hpmplost > attackerBattleEntity.MpMax)
+                        attackerBattleEntity.Mp = attackerBattleEntity.MpMax;
+                    else
+                        attackerBattleEntity.Mp += hpmplost;
+
+                    attackerBattleEntity.Character?.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
+
+                }
+
+                //Remove invisiblity on hit
+                if (attackerBattleEntity.Character != null && attackerBattleEntity.Character.HasBuff(746))
+                    attackerBattleEntity.Character.RemoveBuff(746);
+
+                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Skill.SkillVNum == 1607)
+                    hitRequest.Session.Character.TeleportOnMap(BattleEntity.MapMonster.MapX, BattleEntity.MapMonster.MapY);
+
                 else if (onyxWings)
                 {
                     short onyxX = (short)(hitRequest.Session.Character.PositionX + 2);
@@ -915,6 +947,18 @@ namespace GloomyTale.GameObject
                             0));
                         MapInstance.RemoveMonster(onyx);
                         MapInstance.Broadcast(StaticPacketHelper.Out(VisualType.Monster, onyx.MapMonsterId));
+                    });
+                }
+                else if (windWings && ServerManager.RandomNumber() < 40)
+                {
+                    BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, BattleEntity.MapMonster.MapMonsterId, 553));
+                    Observable.Timer(TimeSpan.FromMilliseconds(350)).Subscribe(o =>
+                    {
+                        BattleEntity.GetDamage(damage / 4, attackerBattleEntity);
+                        MapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player, hitRequest.Session.Character.CharacterId, 3,
+                            MapMonsterId, -1, 0, -1, 257, -1, -1, IsAlive, (int)(CurrentHp / MaxHp * 100),
+                            (int)(damage / 4D), 0, 0));
+                        BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, BattleEntity.MapMonster.MapMonsterId, 553));
                     });
                 }
 
@@ -1055,7 +1099,31 @@ namespace GloomyTale.GameObject
 
                         int rnd = ServerManager.RandomNumber();
                         if (rnd <= 5 && attackerBattleEntity.Character.HasBuff(755))
+                        {
                             BattleEntity.AddBuff(new Buff(754, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, BattleEntity.MapMonster.MapMonsterId, 42));
+                            BattleEntity.MapMonster.LastEffect42 = DateTime.Now;
+                        }
+
+                        if ((hitRequest.Skill.SkillVNum == 1122 ||
+                            hitRequest.Skill.SkillVNum == 1136 ||
+                            hitRequest.Skill.SkillVNum == 1139 ||
+                            hitRequest.Skill.SkillVNum == 1140) && hitmode == 4)
+                            hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, BattleEntity.MapMonster.MapMonsterId));
+
+                        rnd = ServerManager.RandomNumber();
+                        if ((hitRequest.Skill.SkillVNum == 946 && rnd < 15 ||
+                           (hitRequest.Skill.SkillVNum == 948 && rnd >= 15 && rnd <= 35) ||
+                           (hitRequest.Skill.SkillVNum == 951 && rnd >= 36 && rnd <= 56)) && hitmode != 4)
+                            foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 3 && b.Card.BuffType == BuffType.Good))
+                                BattleEntity.RemoveBuff(b.Card.CardId);
+                        else if (hitRequest.Skill.SkillVNum == 952 && rnd < 80)
+                            foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 4))
+                                BattleEntity.RemoveBuff(b.Card.CardId);
+
+                        rnd = ServerManager.RandomNumber();
+                        if (rnd <= 80 && hitRequest.Skill.SkillVNum == 1347)
+                            BattleEntity.AddBuff(new Buff(628, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
                     }
                 }
 
@@ -1252,13 +1320,6 @@ namespace GloomyTale.GameObject
                 {
                     if (hitRequest.Skill != null)
                     {
-                        short fairywings = 1;
-                        if (hitRequest.Session.Character.HasBuff(444))
-                        {
-                            int rnd = ServerManager.RandomNumber();
-                            if (rnd < 7)
-                                fairywings = 0;
-                        }
                         switch (hitRequest.TargetHitType)
                         {
                             case TargetHitType.SingleTargetHit:
@@ -1266,7 +1327,7 @@ namespace GloomyTale.GameObject
                                 {
                                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                         attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                         hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                         attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                         IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1278,7 +1339,7 @@ namespace GloomyTale.GameObject
                             case TargetHitType.SingleTargetHitCombo:
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.SkillCombo.Animation, hitRequest.SkillCombo.Effect,
                                     attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                     IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1299,7 +1360,7 @@ namespace GloomyTale.GameObject
                                     }
                                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                         attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                        hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                         hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                         attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                         IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1329,7 +1390,7 @@ namespace GloomyTale.GameObject
 
                                     BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                         attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                        -1, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                        -1, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                         hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                         attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                         IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1360,7 +1421,7 @@ namespace GloomyTale.GameObject
 
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                     attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                     IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1370,7 +1431,7 @@ namespace GloomyTale.GameObject
                             case TargetHitType.ZoneHit:
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect, hitRequest.MapX,
                                     hitRequest.MapY, IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
                                     (byte)(hitRequest.Skill.SkillType - 1)));
@@ -1379,7 +1440,7 @@ namespace GloomyTale.GameObject
                             case TargetHitType.SpecialZoneHit:
                                 BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(attackerBattleEntity.UserType,
                                     attackerBattleEntity.MapEntityId, (byte)BattleEntity.UserType, BattleEntity.MapEntityId,
-                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect,
                                     attackerBattleEntity.PositionX, attackerBattleEntity.PositionY,
                                     IsAlive, (int)(CurrentHp / MaxHp * 100), damage, hitmode,
@@ -1434,6 +1495,8 @@ namespace GloomyTale.GameObject
                                 {
                                     ski.LastUse = DateTime.Now.AddMilliseconds(ski.Skill.Cooldown * 100 * -1);
                                     attackerBattleEntity.Character.Session.SendPacket(StaticPacketHelper.SkillReset(ski.Skill.CastId));
+                                    attackerBattleEntity.Character.Session.CurrentMapInstance?.Broadcast(attackerBattleEntity.Character.GenerateEff(55));
+                                
                                 }
                             });
                         }
@@ -1555,6 +1618,22 @@ namespace GloomyTale.GameObject
                     }
                 }
 
+                if (MapInstance != null
+                    && Buff.ContainsKey(553)
+                    && LastEffect43.AddSeconds(1) <= DateTime.Now)
+                {
+                    LastEffect43 = DateTime.Now;
+                    MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, MapMonsterId, 43));
+                }
+
+                if (MapInstance != null
+                    && Buff.ContainsKey(754)
+                    && LastEffect42.AddSeconds(2) <= DateTime.Now)
+                {
+                    LastEffect42 = DateTime.Now;
+                    MapInstance.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, MapMonsterId, 42));
+                }
+
                 if (IsBoss && IsAlive)
                 {
                     MapInstance.Broadcast(GenerateBoss());
@@ -1623,7 +1702,7 @@ namespace GloomyTale.GameObject
                 }
 
                 // target following
-                else if (MapInstance != null)
+                else if (MapInstance != null && MapInstance.MapInstanceType != MapInstanceType.EventGameInstance)
                 {
                     HostilityTarget();
                     NpcMonsterSkill npcMonsterSkill = null;
@@ -2332,13 +2411,30 @@ namespace GloomyTale.GameObject
                         hitmode = 0;
                     }
 
+                    //Wolf master Block
+                    if (target.Character != null)
+                        if (target.Character.HasBuff(724))
+                        {
+                            target.Character.HasBlocked = true;
+                            damage = 0;
+                            target.Character.AddUltimatePoints(-1000); //works properly with -1000
+                            target.Character.RemoveBuff(724);
+                            target.Character.AddWolfBuffs();
+                        }
+                        else
+                            target.Character.HasBlocked = false;
+
                     bool firstHit = false;
 
                     target.GetDamage(damage, BattleEntity);
 
                     int rnd = ServerManager.RandomNumber();
-                    if (rnd < 7 && target.Character.HasBuff(755))
+                    if(rnd < 7 && target.Character != null && target.Character.HasBuff(755))
+                    {
                         BattleEntity.AddBuff(new Buff(553, target.Character.Level), target, true);
+                        BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Monster, BattleEntity.MapMonster.MapMonsterId, 43));
+                        BattleEntity.MapMonster.LastEffect43 = DateTime.Now;
+                    }
 
                     if (target.MapNpc != null)
                     {
@@ -2346,6 +2442,20 @@ namespace GloomyTale.GameObject
                         {
                             target.MapNpc.Target = MapMonsterId;
                         }
+                    }
+
+                    int hpmplost;
+                    if (BattleEntity.HasBuff(748))
+                    {
+                        //HP reduction
+                        hpmplost = (int)(damage * 0.10);
+                        if (BattleEntity.Hp - hpmplost < 1)
+                            hpmplost = BattleEntity.Hp - 1;
+                        else
+                            BattleEntity.Hp -= hpmplost;
+
+                        BattleEntity.MapInstance.Broadcast(BattleEntity?.GenerateDm(hpmplost));
+                        BattleEntity.GetDamage(hpmplost, BattleEntity);
                     }
 
                     if (target.Character != null)

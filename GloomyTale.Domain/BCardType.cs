@@ -112,6 +112,7 @@ namespace GloomyTale.Domain
             LotusSkills = 91,
             PixieCostumeWings = 96,
             WolfMaster = 97,
+            MobsDamage = 99
         }
     }
 
@@ -1113,6 +1114,14 @@ namespace GloomyTale.Domain
             AddUltimatePoints = 21,
             AddBuffsAndUltimatePoints = 22,
             CanExecuteUltimateSkills = 31
+        }
+
+        public enum MobsDamage : byte
+        {
+            IncreaseDamageToPlants = 11,
+            IncreaseDamageToAnimals = 21,
+            IncreaseDamageToMonsters = 31,
+            IncreaseDamageToKovolt = 41
         }
         #endregion
     }

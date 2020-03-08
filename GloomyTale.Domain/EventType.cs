@@ -28,6 +28,7 @@ namespace GloomyTale.Domain
         ICEBREAKER,
         SHEEPGAME,
         RAINBOWBATTLE,
-        BANDICOOTRUN
+        BANDICOOTRUN,
+        TorF
     }
 }

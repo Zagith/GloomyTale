@@ -64,6 +64,7 @@ namespace GloomyTale.Domain
         REMOVEAFTER,
         REMOVELAURENABUFF,
         DROPMETEORITE,
-        BOMBARDAMENTOMETEORITE
+        BOMBARDAMENTOMETEORITE,
+        TRUEORFALSE
     }
 }

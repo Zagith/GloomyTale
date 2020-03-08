@@ -1071,6 +1071,8 @@ namespace GloomyTale.GameObject.Helpers
                     if (attacker.Character.SkillComboCount > 0)
                     {
                         attacker.Character.SkillComboCount = 0;
+                        attacker.Character.LastSkillComboUse = DateTime.Now.AddSeconds(5);
+                        attacker.Character.Session.SendPacket(StaticPacketHelper.Cancel(2, attacker.Character.CharacterId));
                         attacker.Character.Session.SendPackets(attacker.Character.GenerateQuicklist());
                         attacker.Character.Session.SendPacket("ms_c 1");
                     }
@@ -1797,6 +1799,23 @@ namespace GloomyTale.GameObject.Helpers
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
                     }
                 }
+                else if (ReflectsMaximumDamageFrom[0] > 0)
+                {
+                    int maxReflectDamage = ReflectsMaximumDamageFrom[0];
+
+                    int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
+                    totalDamage -= reflectedDamage;
+
+                    if (!percentDamage)
+                    {
+                        reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
+
+                        defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)realAttacker.UserType, realAttacker.MapEntityId,
+                            -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
+
+                        defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
+                    }
+                }
             }
 
             #endregion
@@ -1906,6 +1925,15 @@ namespace GloomyTale.GameObject.Helpers
 
                 defender.RemoveBuff(619);
             }
+
+            #region Title damage
+
+            if (defender.EntityType == EntityType.Monster)
+            {
+                // defender.MapMonster.Monster.MonsterType;
+            }
+
+            #endregion
 
             return totalDamage;
         }

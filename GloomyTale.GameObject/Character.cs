@@ -110,6 +110,8 @@ namespace GloomyTale.GameObject
 
         public AuthorityType Authority { get; set; }
 
+        public CharacterTitleDTO ActiveTitle { get; set; }
+
         public Node[][] BrushFireJagged { get; set; }
 
         public string BubbleMessage { get; set; }
@@ -211,6 +213,8 @@ namespace GloomyTale.GameObject
 
         public bool HasShopOpened { get; set; }
 
+        public bool HasBlocked { get; set; }  //wolf master block
+
         public int HitCriticalRate { get; set; }
 
         public int HitCriticalChance { get; set; }
@@ -255,6 +259,10 @@ namespace GloomyTale.GameObject
         public DateTime LastDelay { get; set; }
 
         public DateTime LastEffect { get; set; }
+
+        public DateTime LastEffect42 { get; set; }
+
+        public DateTime LastEffect43 { get; set; }
 
         public DateTime LastFunnelUse { get; set; }
 
@@ -849,7 +857,13 @@ namespace GloomyTale.GameObject
 
         public void AddUltimatePoints(short points)
         {
-            UltimatePoints += points;
+            if (points < 0 && HasBlocked)
+            {
+                UltimatePoints -= points;
+                HasBlocked = false;
+            }
+            else if (points > 0)
+                UltimatePoints += points;
 
             if (UltimatePoints > 3000)
             {
@@ -2064,6 +2078,22 @@ namespace GloomyTale.GameObject
                     MapInstance.Broadcast(GenerateEff(35));
                 }
 
+                if (MapInstance != null
+                   && HasBuff(754)
+                   && LastEffect42.AddSeconds(2) <= DateTime.Now)
+                {
+                    LastEffect42 = DateTime.Now;
+                    MapInstance.Broadcast(GenerateEff(42));
+                }
+
+                if (MapInstance != null
+                    && HasBuff(553)
+                    && LastEffect43.AddSeconds(1) <= DateTime.Now)
+                {
+                    LastEffect43 = DateTime.Now;
+                    MapInstance.Broadcast(GenerateEff(43));
+                }
+
                 if (MapInstance == Miniland && LastLoyalty.AddSeconds(10) <= DateTime.Now)
                 {
                     LastLoyalty = DateTime.Now;
@@ -2253,6 +2283,12 @@ namespace GloomyTale.GameObject
                     {
                         bcard.ApplyBCards(BattleEntity, BattleEntity);
                     }
+
+                    ActiveTitle = Titles.Where(t => t.Active).FirstOrDefault();
+
+                    if (ActiveTitle != null)
+                        foreach (BCard b in EquipmentBCards.Where(bc => bc.ItemVNum == ActiveTitle.TitleType))
+                            b.ApplyBCards(BattleEntity, BattleEntity);
 
                     if (UseSp)
                     {
@@ -2951,6 +2987,13 @@ namespace GloomyTale.GameObject
                         }
                     }
                 }
+                Item title = null;
+                if (ActiveTitle != null)
+                    title = ServerManager.GetItem(ActiveTitle.TitleType);
+                else if (Titles.Where(t => t.Active == true).FirstOrDefault() != null)
+                    title = ServerManager.GetItem(Titles.Where(t => t.Active == true).FirstOrDefault().TitleType);
+                if (title != null)
+                    EquipmentBCards.AddRange(title.BCards);
             });
 
             return $"equip {GenerateEqRareUpgradeForPacket()}{eqlist}";
@@ -3461,7 +3504,13 @@ namespace GloomyTale.GameObject
                     if (monsterToAttack.Monster.MonsterType != MonsterType.Special)
                     {
                         #region item drop
-
+                        bool divideRate = true;
+                        if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act4)
+                         || MapInstance.Map.MapId == 20001 // Miniland
+                         || explodeMonsters.Contains(monsterToAttack.MonsterVNum))
+                        {
+                            divideRate = false;
+                        }
                         int dropRate = (ServerManager.Instance.DropRate + MapInstance.DropRate);
                         int x = 0;
                         double rndamount = ServerManager.RandomNumber() * random.NextDouble();
@@ -3472,14 +3521,6 @@ namespace GloomyTale.GameObject
                                 if (!explodeMonsters.Contains(monsterToAttack.MonsterVNum))
                                 {
                                     rndamount = ServerManager.RandomNumber() * random.NextDouble();
-                                }
-                                bool divideRate = true;
-                                if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act4)
-                                 || MapInstance.Map.MapId == 20001 // Miniland
-                                 || explodeMonsters.Contains(monsterToAttack.MonsterVNum)
-                                 || drop.IsLevelPenalty == false)
-                                {
-                                    divideRate = false;
                                 }
                                 double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
                                 if (rndamount <= (double)drop.DropChance * dropRate / 1000.000 / divider)
@@ -3600,8 +3641,8 @@ namespace GloomyTale.GameObject
                                             {
                                                 double multiplier = 1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseEarnedGold)[0] / 100D);
                                                 multiplier += (ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreGold)?.Value ?? 0) / 100D;
-
-                                                session.Character.Gold += (int)(drop2.Amount * multiplier);
+                                                double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
+                                                session.Character.Gold += (int)(drop2.Amount * multiplier / divider);
                                                 if (session.Character.Gold > maxGold)
                                                 {
                                                     session.Character.Gold = maxGold;

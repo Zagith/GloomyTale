@@ -1118,6 +1118,10 @@ namespace GloomyTale.Handler
                 switch (titEqPacket.Type)
                 {
                     case TiteqPacketType.Wiev:
+                        if (tit.Visible == false)
+                        {
+                            Session.SendPacket(Session.Character.GenerateEffs(titEqPacket.Type));
+                        }
                         foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
                         {
                             title.Visible = false;
@@ -1129,18 +1133,29 @@ namespace GloomyTale.Handler
                         });*/
                         break;
                     default:
+                        if (tit.Active == false)
+                        {
+                            Session.SendPacket(Session.Character.GenerateEffs(titEqPacket.Type));
+                            Session.Character.ActiveTitle = tit;
+                        }
+                        else
+                        {
+                            Session.Character.ActiveTitle = null;
+                        }
                         foreach (var title in Session.Character.Titles.Where(s => s.TitleType != titEqPacket.TitleVNum))
                         {
                             title.Active = false;
                         }
                         tit.Active = !tit.Active;
+                        Session.Character.GenerateEquipment();
+                        Session?.SendPacket(Session.Character.GenerateStat());
                         /*Session.SendPacket(new InfoPacket
                         {
                             Message = Session.GetMessageFromKey(LanguageKey.TITLE_EFFECT_CHANGED)
                         });*/
                         break;
                 }
-
+                Session.SendPackets(Session.Character.GenerateStatChar());
                 Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateTitInfo());
                 Session.SendPacket(Session.Character.GenerateTitle());
             }                

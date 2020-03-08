@@ -489,12 +489,80 @@ namespace GloomyTale.Handler
                     });
                     target.Character.RemoveBuff(36);
                     target.Character.RemoveBuff(548);
+                    target.Character.RemoveBuff(746);
                 }
 
                 if (Session.Character.Buff.FirstOrDefault(s => s.Card.BCards.Any(b => b.Type == (byte)BCardType.CardType.FalconSkill && b.SubType.Equals((byte)AdditionalTypes.FalconSkill.Hide / 10))) is Buff FalconHideBuff)
                 {
                     Session.Character.RemoveBuff(FalconHideBuff.Card.CardId);
                     Session.Character.AddBuff(new Buff(560, Session.Character.Level), Session.Character.BattleEntity);
+                }
+
+                //Remove invisiblity on hit
+                if (Session.Character.HasBuff(746))
+                    Session.Character.RemoveBuff(746);
+
+                if (hitRequest.Skill.SkillVNum == 1607 && target.Character.MapX != 0 && target.Character.MapY != 0)
+                    Session.Character.TeleportOnMap(target.Character.PositionX, target.Character.PositionY);
+
+                //2nd MA Sp
+
+                if (hitRequest.Session.Character.HasBuff(703)) // attack Possibility
+                    switch (hitRequest.Skill.SkillVNum)
+                    {
+                        case 1611:
+                            hitRequest.Session.Character.AddBuff(new Buff(698, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
+                            break;
+
+                        case 1612:
+                            {
+                                int mpSteal = (int)(target.Character.Mp * 0.20);
+                                if (mpSteal > 0)
+                                {
+                                    if (hitRequest.Session.Character.Mp + mpSteal > hitRequest.Session.Character.BattleEntity?.MpMax)
+                                        hitRequest.Session.Character.Mp = hitRequest.Session.Character.BattleEntity.MpMax;
+                                    else
+                                        hitRequest.Session.Character.Mp += mpSteal;
+
+                                    if (target.Character.Mp - mpSteal <= 0)
+                                        target.Character.Mp = 1;
+                                    else
+                                        target.Character.Mp -= mpSteal;
+
+                                    hitRequest.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
+                                    target.Character.Session?.SendPacket(target.Character.GenerateStat());
+                                }
+
+                            }
+                            break;
+
+                        case 1620:
+                            {
+                                if (target.Character.HasBuff(702))
+                                {
+                                    target.Character.RemoveBuff(702);
+                                    target.Character.RemoveBuff(701);
+                                    target.Character.AddBuff(new Buff(702, hitRequest.Session.Character.Level), target.Character.BattleEntity);
+                                    target.Character.AddBuff(new Buff(701, hitRequest.Session.Character.Level), target.Character.BattleEntity);
+                                }
+                                else
+                                    target.Character.AddBuff(new Buff(702, hitRequest.Session.Character.Level), target.Character.BattleEntity);
+                            }
+                            break;
+                    }
+
+
+
+                if (target.Character.HasBuff(694))
+                {
+                    target.Character.AddBuff(new Buff(703, target.Character.Level), target.Character.BattleEntity);
+                    target.Character.RemoveBuff(694);
+                }
+
+                if (target.Character.HasBuff(688))
+                {
+                    target.Character.AddBuff(new Buff(689, target.Character.Level), target.Character.BattleEntity);
+                    target.Character.RemoveBuff(688);
                 }
 
                 int[] manaShield = target.Character.GetBuff(CardType.LightAndShadow,
@@ -512,6 +580,64 @@ namespace GloomyTale.Handler
                         target.Character.DecreaseMp(reduce);
                     }
                     damage -= reduce;
+                }
+
+                //Wolf master Block
+                if (target.Character.HasBuff(724))
+                {
+                    target.Character.HasBlocked = true;
+                    damage = 0;
+                    target.Character.AddUltimatePoints(-1000); //works properly with -1000
+                    target.Character.RemoveBuff(724);
+                    target.Character.AddWolfBuffs();
+                }
+                else
+                    target.Character.HasBlocked = false;
+
+                //4th MA Sp Chains
+                int hpmplost;
+                if (target.Character.HasBuff(748) && damage > 0)
+                {
+                    //MP increasing to the enemy
+                    hpmplost = (int)(damage * 0.05);
+                    if (hitRequest.Session.Character.Mp + hpmplost > hitRequest.Session.Character.BattleEntity?.MpMax)
+                        hitRequest.Session.Character.Mp = hitRequest.Session.Character.BattleEntity.MpMax;
+                    else
+                        hitRequest.Session.Character.Mp += hpmplost;
+
+                    hitRequest.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
+
+
+                }
+
+
+                //4th MA Sp Chain malus
+                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Session.Character.HasBuff(748))
+                {
+                    //HP reduction
+                    hpmplost = (int)(damage * 0.10);
+                    if (hitRequest.Session.Character.Hp - hpmplost < 1)
+                    {
+                        hitRequest.Session.Character.Hp = 1;
+                        hpmplost = hitRequest.Session.Character.Hp - 1;
+                    }
+                    else
+                        hitRequest.Session.Character.Hp -= hpmplost;
+
+                    hitRequest.Session.CurrentMapInstance.Broadcast(hitRequest.Session.Character.BattleEntity?.GenerateDm(hpmplost));
+                    hitRequest.Session?.SendPacket(hitRequest.Session.Character?.GenerateStat());
+                }
+
+                if (hitRequest.Session.Character.HasBuff(686) && ServerManager.RandomNumber() < 40 && hitmode != 4 && hitmode != 2)
+                {
+                    Observable.Timer(TimeSpan.FromMilliseconds(350)).Subscribe(o =>
+                    {
+                        target.Character.GetDamage((int)(damage / 4D), battleEntity);
+                        hitRequest.Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player, hitRequest.Session.Character.CharacterId, 1,
+                            target.Character.CharacterId, -1, 0, -1, 257, -1, -1, true, 92,
+                            (int)(damage / 4D), 0, 0));
+                        target.CurrentMapInstance?.Broadcast(target.Character.GenerateEff(553));
+                    });
                 }
 
                 if (onyxWings && hitmode != 4 && hitmode != 2)
@@ -657,16 +783,38 @@ namespace GloomyTale.Handler
                 if((hitRequest.Skill.SkillVNum == 1122 || 
                     hitRequest.Skill.SkillVNum == 1136 || 
                     hitRequest.Skill.SkillVNum == 1139 || 
-                    hitRequest.Skill.SkillVNum == 1140) && damage == 0)
-                        Session.SendPacket( StaticPacketHelper.Cancel(2, target.Character.VisualId));
+                    hitRequest.Skill.SkillVNum == 1140) && hitmode == 4)
+                    hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.VisualId));
 
+                //test removing malus by dg skills
                 int rnd = ServerManager.RandomNumber();
-                if(rnd <= 5 && hitRequest.Session.Character.HasBuff(755))
-                    target.Character.AddBuff(new Buff(754, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity, true);
+                if ((hitRequest.Skill.SkillVNum == 946 && rnd < 15 ||
+                   (hitRequest.Skill.SkillVNum == 948 && rnd >= 15 && rnd <= 35) ||
+                   (hitRequest.Skill.SkillVNum == 951 && rnd >= 36 && rnd <= 56)) && hitmode != 4)
+                    foreach (Buff b in target.Character.Buff.Where(b => b.Card.Level <= 3 && b.Card.BuffType == BuffType.Good))
+                        target.Character.RemoveBuff(b.Card.CardId);
+
+
 
                 rnd = ServerManager.RandomNumber();
-                if(rnd < 7 && target.Character.HasBuff(755))
+                if (rnd <= 5 && hitRequest.Session.Character.HasBuff(755))
+                {
+                    target.Character.AddBuff(new Buff(754, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity, true);
+                    target?.CurrentMapInstance?.Broadcast(target.Character.GenerateEff(42));
+                    target.Character.LastEffect42 = DateTime.Now;
+                }
+                rnd = ServerManager.RandomNumber();
+                if (rnd < 7 && target.Character.HasBuff(755))
+                {
                     hitRequest.Session.Character.AddBuff(new Buff(553, target.Character.Level), target.Character.BattleEntity, true);
+                    target?.CurrentMapInstance?.Broadcast(target.Character.GenerateEff(43));
+                    target.Character.LastEffect43 = DateTime.Now;
+                }
+
+                //Pestilence by Swordsman 8th SP
+                rnd = ServerManager.RandomNumber();
+                if (rnd <= 80 && hitRequest.Skill.SkillVNum == 1347)
+                    target.Character.AddBuff(new Buff(628, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity, true);
 
                 // Magical Fetters
 
@@ -1066,19 +1214,12 @@ namespace GloomyTale.Handler
 
                 if (hitmode != 2)
                 {
-                    short fairywings = 1;
-                    if (hitRequest.Session.Character.HasBuff(444))
-                    {
-                        rnd = ServerManager.RandomNumber();
-                        if (rnd < 7)
-                            fairywings = 0;
-                    }
                     switch (hitRequest.TargetHitType)
                     {
                         case TargetHitType.SingleTargetHit:
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
                                 hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
-                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.Skill.AttackAnimation,
+                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)), hitRequest.Skill.AttackAnimation,
                                 hitRequest.SkillEffect, hitRequest.Session.Character.PositionX,
                                 hitRequest.Session.Character.PositionY, isAlive,
                                 (int)(target.Character.Hp / (float)target.Character.HPLoad() * 100), damage, hitmode,
@@ -1088,7 +1229,7 @@ namespace GloomyTale.Handler
                         case TargetHitType.SingleTargetHitCombo:
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
                                 hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
-                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.SkillCombo.Animation,
+                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)), hitRequest.SkillCombo.Animation,
                                 hitRequest.SkillCombo.Effect, hitRequest.Session.Character.PositionX,
                                 hitRequest.Session.Character.PositionY, isAlive,
                                 (int)(target.Character.Hp / (float)target.Character.HPLoad() * 100), damage, hitmode,
@@ -1106,7 +1247,7 @@ namespace GloomyTale.Handler
                                 }
                                 hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(
                                     VisualType.Player, hitRequest.Session.Character.VisualId, 1, target.Character.VisualId, 
-                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect, 
                                     hitRequest.Session.Character.PositionX, hitRequest.Session.Character.PositionY, isAlive,
                                     (int)(target.Character.Hp / (float)target.Character.HPLoad() * 100), damage, hitmode,
@@ -1136,7 +1277,7 @@ namespace GloomyTale.Handler
 
                                 hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(
                                     VisualType.Player, hitRequest.Session.Character.VisualId, 1, target.Character.VisualId, 
-                                    -1, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1),
+                                    -1, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)),
                                     hitRequest.Skill.AttackAnimation, hitRequest.SkillEffect, 
                                     hitRequest.Session.Character.PositionX, hitRequest.Session.Character.PositionY, isAlive,
                                     (int)(target.Character.Hp / (float)target.Character.HPLoad() * 100), damage, hitmode,
@@ -1167,7 +1308,7 @@ namespace GloomyTale.Handler
 
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
                                 hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
-                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.Skill.AttackAnimation,
+                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)), hitRequest.Skill.AttackAnimation,
                                 hitRequest.SkillEffect, hitRequest.Session.Character.PositionX,
                                 hitRequest.Session.Character.PositionY, isAlive,
                                 (int)(target.Character.Hp / (float)target.Character.HPLoad() * 100), damage, hitmode,
@@ -1177,7 +1318,7 @@ namespace GloomyTale.Handler
                         case TargetHitType.ZoneHit:
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
                                 hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
-                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.Skill.AttackAnimation,
+                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)), hitRequest.Skill.AttackAnimation,
                                 hitRequest.SkillEffect, hitRequest.MapX, hitRequest.MapY, isAlive,
                                 (int)(target.Character.Hp / (float)target.Character.HPLoad() * 100), damage, hitmode,
                                 (byte)(hitRequest.Skill.SkillType - 1)));
@@ -1186,7 +1327,7 @@ namespace GloomyTale.Handler
                         case TargetHitType.SpecialZoneHit:
                             hitRequest.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
                                 hitRequest.Session.Character.VisualId, 1, target.Character.VisualId,
-                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D) * fairywings + 1), hitRequest.Skill.AttackAnimation,
+                                hitRequest.Skill.SkillVNum, (short)((hitRequest.Skill.Cooldown + hitRequest.Skill.Cooldown * cooldownReduction / 100D)), hitRequest.Skill.AttackAnimation,
                                 hitRequest.SkillEffect, hitRequest.Session.Character.PositionX,
                                 hitRequest.Session.Character.PositionY, isAlive,
                                 (int)(target.Character.Hp / target.Character.HPLoad() * 100), damage, hitmode,
@@ -2344,9 +2485,22 @@ namespace GloomyTale.Handler
                                 {
                                     ski.LastUse = DateTime.Now.AddMilliseconds(ski.Skill.Cooldown * 100 * -1);
                                     Session.SendPacket(StaticPacketHelper.SkillReset(ski.Skill.CastId));
+                                    Session?.CurrentMapInstance?.Broadcast(Session.Character.GenerateEff(55));
                                 }
                             });
                         }
+
+                        //Reset 2nd MA S skill
+                        if (Session.Character.HasBuff(703) && ski.SkillVNum == 1617)
+                            Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(o =>
+                            {
+                                if (ski != null)
+                                {
+                                    ski.LastUse = DateTime.Now.AddMilliseconds(ski.Skill.Cooldown * 100 * -1);
+                                    Session.SendPacket(StaticPacketHelper.SkillReset(ski.Skill.CastId));
+                                    Session?.CurrentMapInstance?.Broadcast(Session.Character.GenerateEff(55));
+                                }
+                            });
                     }
                     else
                     {

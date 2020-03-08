@@ -303,7 +303,7 @@ namespace GloomyTale.GameObject
                     session.SendPacket(session.Character.GenerateEquipment());
                     session.CurrentMapInstance?.Broadcast(session.Character.GeneratePairy());
                     session.SendPacket(session.Character.GenerateFd());
-                    session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(), ReceiverType.AllExceptMe);
+                    session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                     session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
 
                     Logger.Log.LogUserEvent("EQUIPMENT_WEAR", session.GenerateIdentity(), $"IIId: {inv.Id} ItemVnum: {inv.ItemVNum} Upgrade: {inv.Upgrade} Rare: {inv.Rare}");

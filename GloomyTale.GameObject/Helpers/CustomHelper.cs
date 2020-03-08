@@ -35,24 +35,28 @@ namespace GloomyTale.GameObject.Helpers
                 case 6:
                 case 9:
                 case 12:
+                case 29:
                     stonevnum = 2514;
                     break;
 
                 case 3:
                 case 4:
                 case 14:
+                case 31:
                     stonevnum = 2515;
                     break;
 
                 case 5:
                 case 11:
                 case 15:
+                case 34:
                     stonevnum = 2516;
                     break;
 
                 case 10:
                 case 13:
                 case 7:
+                case 33:
                     stonevnum = 2517;
                     break;
 
