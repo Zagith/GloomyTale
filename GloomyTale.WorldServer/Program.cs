@@ -162,113 +162,29 @@ namespace GloomyTale.World
 
                 // initialize Loggers
                 CustomisationRegistration();
-               int _grpcPort = 17500;
+                int _grpcPort = 17500;
+                
+                int gRpcPort = _grpcPort;
+                string gRpcIp = Environment.GetEnvironmentVariable("GRPC_IP") ?? "localhost";
+                Server gRpcServer;
+                GRpcEndPoint gRpcEndPoint;
             Grpcportloop:
-                try {
-
-                    int gRpcPort = _grpcPort;
-                    string gRpcIp = Environment.GetEnvironmentVariable("GRPC_IP") ?? "localhost";
-                    var gRpcEndPoint = new GRpcEndPoint
+                try
+                {
+                    gRpcEndPoint = new GRpcEndPoint
                     {
                         Ip = gRpcIp,
                         Port = gRpcPort
                     };
-                    var gRpcServer = new Server
+                    gRpcServer = new Server
                     {
                         Services = { global::World.BindService(coreContainer.Resolve<WorldServiceImpl>()) },
                         Ports = { new ServerPort(gRpcEndPoint.Ip, gRpcEndPoint.Port, ServerCredentials.Insecure) }
                     };
-                    Logger.Log.Info($"[RPC-Server] Listening on {gRpcEndPoint.Ip}:{gRpcEndPoint.Port}");
+
+
+
                     gRpcServer.Start();
-
-                    InitializeMasterCommunication();
-
-                    // initialize api
-                    if (CommunicationServiceClient.Instance.IsMasterOnline())
-                    {
-                        Logger.Log.Info(Language.Instance.GetMessageFromKey("API_INITIALIZED"));
-                    }
-
-                    // initialize DB
-                    if (!DataAccessHelper.Initialize(coreContainer.Resolve<IOpenNosContextFactory>()))
-                    {
-                        Console.ReadKey();
-                        return;
-                    }
-
-                    DAOFactory.Initialize(coreContainer.Resolve<DAOFactory>());
-
-                    // initialilize maps
-                    ServerManager.Instance.Initialize(
-                        DependencyContainer.Instance.Get<GameRateConfiguration>(),
-                        DependencyContainer.Instance.Get<GameMinMaxConfiguration>(),
-                        DependencyContainer.Instance.Get<GameTrueFalseConfiguration>()
-                    //DependencyContainer.Instance.Get<GameScheduledEventsConfiguration>()
-                    );
-
-                    PacketFactory.Initialize<WalkPacket>();
-                    string ip = "127.0.0.1";
-
-
-                    WorldServer server;
-                portloop:
-                    try
-                    {
-                        server = new WorldServer(IPAddress.Any, _port);
-                        server.Start();
-                    }
-                    catch (SocketException ex)
-                    {
-                        if (ex.ErrorCode == 10048)
-                        {
-                            _port++;
-                            Logger.Log.Info("Port already in use! Incrementing...");
-                            goto portloop;
-                        }
-
-                        Logger.Log.Error("General Error", ex);
-                        Environment.Exit(1);
-                        return;
-                    }
-
-                    ServerManager.Instance.ServerGroup = Environment.GetEnvironmentVariable("SERVER_GROUP") ?? "GloomyVille";
-                    int sessionLimit = Convert.ToInt32(Environment.GetEnvironmentVariable("SERVER_SESSION_LIMIT") ?? "500");
-                    int? newChannelId = CommunicationServiceClient.Instance.RegisterWorldServer(new SerializableWorldServer
-                    {
-                        Id = ServerManager.Instance.WorldId,
-                        EndPointIp = ip,
-                        EndPointPort = _port,
-                        AccountLimit = sessionLimit,
-                        WorldGroup = ServerManager.Instance.ServerGroup
-                    }, gRpcEndPoint);
-
-                    if (newChannelId.HasValue)
-                    {
-                        ServerManager.Instance.ChannelId = newChannelId.Value;
-                        ServerManager.Instance.IpAddress = ip;
-                        ServerManager.Instance.Port = _port;
-#warning TODO Session limit
-                        //ServerManager.Instance.AccountLimit = sessionLimit;
-                        Console.Title = string.Format(Language.Instance.GetMessageFromKey("WORLD_SERVER_CONSOLE_TITLE"), ServerManager.Instance.ChannelId, ServerManager.Instance.Sessions.Count(),
-                            ServerManager.Instance.IpAddress, ServerManager.Instance.Port);
-                    }
-                    else
-                    {
-                        server.Stop();
-                        Logger.Log.Error("Could not retrieve ChannelId from Web API.", null);
-                        Console.ReadKey();
-                    }
-
-                    while (!ServerManager.Instance.InShutdown)
-                    {
-                        string tmp = Console.ReadLine();
-                        if (tmp == "quit")
-                        {
-                            break;
-                        }
-                    }
-                    server.Stop();
-                    gRpcServer.ShutdownAsync().ConfigureAwait(false).GetAwaiter().GetResult();
                 }
                 catch
                 {
@@ -276,6 +192,96 @@ namespace GloomyTale.World
                     Logger.Log.Info("Port already in use! Incrementing...");
                     goto Grpcportloop;
                 }
+                Logger.Log.Info($"[RPC-Server] Listening on {gRpcEndPoint.Ip}:{gRpcEndPoint.Port}");
+                InitializeMasterCommunication();
+
+                // initialize api
+                if (CommunicationServiceClient.Instance.IsMasterOnline())
+                {
+                    Logger.Log.Info(Language.Instance.GetMessageFromKey("API_INITIALIZED"));
+                }
+
+                // initialize DB
+                if (!DataAccessHelper.Initialize(coreContainer.Resolve<IOpenNosContextFactory>()))
+                {
+                    Console.ReadKey();
+                    return;
+                }
+
+                DAOFactory.Initialize(coreContainer.Resolve<DAOFactory>());
+
+                // initialilize maps
+                ServerManager.Instance.Initialize(
+                    DependencyContainer.Instance.Get<GameRateConfiguration>(),
+                    DependencyContainer.Instance.Get<GameMinMaxConfiguration>(),
+                    DependencyContainer.Instance.Get<GameTrueFalseConfiguration>()
+                    //DependencyContainer.Instance.Get<GameScheduledEventsConfiguration>()
+                );
+
+                PacketFactory.Initialize<WalkPacket>();
+                string ip = "127.0.0.1";
+
+
+                WorldServer server;
+            portloop:
+                try
+                {
+                    server = new WorldServer(IPAddress.Any, _port);
+                    server.Start();
+                }
+                catch (SocketException ex)
+                {
+                    if (ex.ErrorCode == 10048)
+                    {
+                        _port++;
+                        Logger.Log.Info("Port already in use! Incrementing...");
+                        goto portloop;
+                    }
+
+                    Logger.Log.Error("General Error", ex);
+                    Environment.Exit(1);
+                    return;
+                }
+
+                ServerManager.Instance.ServerGroup = Environment.GetEnvironmentVariable("SERVER_GROUP") ?? "GloomyVille";
+                int sessionLimit = Convert.ToInt32(Environment.GetEnvironmentVariable("SERVER_SESSION_LIMIT") ?? "500");
+                int? newChannelId = CommunicationServiceClient.Instance.RegisterWorldServer(new SerializableWorldServer
+                {
+                    Id = ServerManager.Instance.WorldId,
+                    EndPointIp = ip,
+                    EndPointPort = _port,
+                    AccountLimit = sessionLimit,
+                    WorldGroup = ServerManager.Instance.ServerGroup
+                }, gRpcEndPoint);
+
+                if (newChannelId.HasValue)
+                {
+                    ServerManager.Instance.ChannelId = newChannelId.Value;
+                    ServerManager.Instance.IpAddress = ip;
+                    ServerManager.Instance.Port = _port;
+#warning TODO Session limit
+                    //ServerManager.Instance.AccountLimit = sessionLimit;
+                    Console.Title = string.Format(Language.Instance.GetMessageFromKey("WORLD_SERVER_CONSOLE_TITLE"), ServerManager.Instance.ChannelId, ServerManager.Instance.Sessions.Count(),
+                        ServerManager.Instance.IpAddress, ServerManager.Instance.Port);
+                }
+                else
+                {
+                    server.Stop();
+                    Logger.Log.Error("Could not retrieve ChannelId from Web API.", null);
+                    Console.ReadKey();
+                }
+
+                while (!ServerManager.Instance.InShutdown)
+                {
+                    string tmp = Console.ReadLine();
+                    if (tmp == "quit")
+                    {
+                        break;
+                    }
+                }
+                server.Stop();
+                gRpcServer.ShutdownAsync().ConfigureAwait(false).GetAwaiter().GetResult();                
+                
 #if !DEBUG
                 DiscordHelper serverStatus = new DiscordHelper();
 #endif
