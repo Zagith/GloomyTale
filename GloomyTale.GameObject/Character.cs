@@ -1431,7 +1431,7 @@ namespace GloomyTale.GameObject
             });
             return $"qstlist {Quests.Aggregate("", (current, quest) => current + $" {quest.GetInfoPacket(quest.QuestId == newQuestId)}")}";
         }
-
+        public string GenerateGold() => $"gold {Gold} 0";
         public void IncrementQuests(QuestType type, int firstData = 0, int secondData = 0, int thirdData = 0, bool forGroupMember = false)
         {
             foreach (CharacterQuest quest in Quests.Where(q => q?.Quest?.QuestType == (int)type))

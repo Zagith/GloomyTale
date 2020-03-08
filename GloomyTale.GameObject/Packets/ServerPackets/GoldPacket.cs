@@ -11,6 +11,6 @@ namespace GloomyTale.GameObject.Packets.ServerPackets
         [PacketIndex(0)]
         public long Gold { get; set; }
         [PacketIndex(1)]
-        public int Unknown { get; set; }
+        public int Unknown { get; set; } = 0;
     }
 }

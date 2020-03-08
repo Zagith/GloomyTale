@@ -15,7 +15,7 @@ namespace GloomyTale.GameObject.ComponentEntities.Extensions
     {
         public static GoldPacket GenerateGold(this ICharacterEntity characterEntity)
         {
-            return new GoldPacket { Gold = characterEntity.Gold };
+            return new GoldPacket { Gold = characterEntity.Gold, Unknown = 0};
         }
 
         public static TitleInfoPacket GenerateTitInfo(this ICharacterEntity visualEntity)
