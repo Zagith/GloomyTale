@@ -46,7 +46,7 @@ namespace GloomyTale.Communication
         /*
          * World
          */
-        int? RegisterWorldServer(SerializableWorldServer worldServer, ICommunicationClientEndPoint endPoint);
+        int? RegisterWorldServer(SerializableWorldServer worldServer, ICommunicationClientEndPoint endPoint, bool IsFrozenCorwn = false);
         int? GetChannelIdByWorldId(Guid worldId);
         void Shutdown(string worldGroup);
         bool GetMaintenanceState();

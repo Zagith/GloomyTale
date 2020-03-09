@@ -1337,13 +1337,13 @@ namespace GloomyTale.GameObject.Networking
             AntiBotEnabled = GameTrueFalseConfiguration.AntiBot;
             Maintenance = GameTrueFalseConfiguration.Maintenance;
             MessageOfTheDay = GameTrueFalseConfiguration.MessageOfTheDay;
-            Schedules = GameScheduledEventsConfiguration.ScheduledEvents;
+            Schedules = GameScheduledEventsConfiguration.ScheduledEvents;*/
             Act4RaidStart = DateTime.Now;
-            Act4AngelStat = new PercentBar();
-            Act4DemonStat = new PercentBar();
-            Act6Erenia = new PercentBar();
+            Act4AngelStat = new Act4Stat();
+            Act4DemonStat = new Act4Stat();
+            /*Act6Erenia = new PercentBar();
             Act6Zenas = new PercentBar();*/
-
+            LastFCSent = DateTime.Now;
             LoadBossEntities();
         }
 

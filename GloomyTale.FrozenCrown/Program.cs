@@ -25,11 +25,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
-using ConfigurationHelper = GloomyTale.World.Configuration.ConfigurationHelper;
+using ConfigurationHelper = GloomyTale.FrozenCrown.Configuration.ConfigurationHelper;
 
-namespace GloomyTale.World
+
+namespace GloomyTale.FrozenCrown
 {
     public static class Program
     {
@@ -114,7 +114,7 @@ namespace GloomyTale.World
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("en-US");
 
             bool ignoreStartupMessages = false;
-            _port = 3438;
+            _port = 3439;
             int portArgIndex = Array.FindIndex(args, s => s == "--port");
             if (portArgIndex != -1
                 && args.Length >= portArgIndex + 1
@@ -162,8 +162,8 @@ namespace GloomyTale.World
 
                 // initialize Loggers
                 CustomisationRegistration();
-                int _grpcPort = 17501;
-                
+                int _grpcPort = 17500;
+
                 int gRpcPort = _grpcPort;
                 string gRpcIp = Environment.GetEnvironmentVariable("GRPC_IP") ?? "localhost";
                 Server gRpcServer;
@@ -186,10 +186,10 @@ namespace GloomyTale.World
 
                     gRpcServer.Start();
                 }
-                catch (Exception ex)
+                catch
                 {
                     _grpcPort++;
-                    Logger.Log.Info(ex.Message);
+                    Logger.Log.Info("Port already in use! Incrementing...");
                     goto Grpcportloop;
                 }
                 Logger.Log.Info($"[RPC-Server] Listening on {gRpcEndPoint.Ip}:{gRpcEndPoint.Port}");
@@ -215,7 +215,7 @@ namespace GloomyTale.World
                     DependencyContainer.Instance.Get<GameRateConfiguration>(),
                     DependencyContainer.Instance.Get<GameMinMaxConfiguration>(),
                     DependencyContainer.Instance.Get<GameTrueFalseConfiguration>()
-                    //DependencyContainer.Instance.Get<GameScheduledEventsConfiguration>()
+                //DependencyContainer.Instance.Get<GameScheduledEventsConfiguration>()
                 );
 
                 PacketFactory.Initialize<WalkPacket>();
@@ -229,18 +229,11 @@ namespace GloomyTale.World
                     server = new WorldServer(IPAddress.Any, _port);
                     server.Start();
                 }
-                catch (SocketException ex)
+                catch
                 {
-                    if (ex.ErrorCode == 10048)
-                    {
-                        _port++;
-                        Logger.Log.Info("Port already in use! Incrementing...");
-                        goto portloop;
-                    }
-
-                    Logger.Log.Error("General Error", ex);
-                    Environment.Exit(1);
-                    return;
+                    _port++;
+                    Logger.Log.Info("Port already in use! Incrementing...");
+                    goto portloop;
                 }
 
                 ServerManager.Instance.ServerGroup = Environment.GetEnvironmentVariable("SERVER_GROUP") ?? "GloomyVille";
@@ -252,7 +245,7 @@ namespace GloomyTale.World
                     EndPointPort = _port,
                     AccountLimit = sessionLimit,
                     WorldGroup = ServerManager.Instance.ServerGroup
-                }, gRpcEndPoint);
+                }, gRpcEndPoint, true);
 
                 if (newChannelId.HasValue)
                 {
@@ -280,8 +273,8 @@ namespace GloomyTale.World
                     }
                 }
                 server.Stop();
-                gRpcServer.ShutdownAsync().ConfigureAwait(false).GetAwaiter().GetResult();                
-                
+                gRpcServer.ShutdownAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+
 #if !DEBUG
                 DiscordHelper serverStatus = new DiscordHelper();
 #endif
