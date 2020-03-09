@@ -24,7 +24,7 @@ namespace GloomyTale.GameObject
     {
         #region Properties
 
-        public bool IsLimited => Authority >= AuthorityType.TMOD && Authority != AuthorityType.Administrator && Authority != AuthorityType.DEV;//permited by Pavvx
+        public bool IsLimited => Authority >= AuthorityType.TMOD && Authority != AuthorityType.Administrator && Authority != AuthorityType.DEV;
 
         public List<PenaltyLogDTO> PenaltyLogs
         {

@@ -250,7 +250,7 @@ namespace GloomyTale.GameObject
 
                     case 2411: // Cabrio mágico
                         MapSpeedBoost[1] = 4;
-                        MapSpeedBoost[145] = 4;
+                        MapSpeedBoost[129] = 4;
                         SpeedBoost = 2;
                         SpeedBoostDuration = 3;
                         break;
@@ -305,7 +305,7 @@ namespace GloomyTale.GameObject
 
                     case 2528: // Unicornio rosa
                         MapSpeedBoost[1] = 3;
-                        MapSpeedBoost[145] = 3;
+                        MapSpeedBoost[129] = 3;
                         SpeedBoostDuration = 5;
                         BCards.Add(new BCard
                         {
@@ -348,7 +348,7 @@ namespace GloomyTale.GameObject
                         ActSpeedBoost[51] = 2;
                         ActSpeedBoost[52] = 2;
                         MapSpeedBoost[1] = 1;
-                        MapSpeedBoost[145] = 1;
+                        MapSpeedBoost[129] = 1;
                         SpeedBoostDuration = 5;
                         BCards.Add(new BCard
                         {

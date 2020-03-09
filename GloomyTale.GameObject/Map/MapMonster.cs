@@ -914,7 +914,7 @@ namespace GloomyTale.GameObject
                 if (attackerBattleEntity.Character != null && attackerBattleEntity.Character.HasBuff(746))
                     attackerBattleEntity.Character.RemoveBuff(746);
 
-                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Skill.SkillVNum == 1607)
+                if (hitRequest.Session != null && hitRequest.Session.Character != null && hitRequest.Skill?.SkillVNum == 1607)
                     hitRequest.Session.Character.TeleportOnMap(BattleEntity.MapMonster.MapX, BattleEntity.MapMonster.MapY);
 
                 else if (onyxWings)
@@ -1462,7 +1462,7 @@ namespace GloomyTale.GameObject
                 }
                 if (attackerBattleEntity.Character != null)
                 {
-                    if (hitmode != 4 && hitmode != 2 && damage > 0)
+                    if (hitmode != 4 && hitmode != 2 && damage > 0 && hitRequest.Skill.SkillVNum != 1611 && hitRequest.Skill.SkillVNum != 1614)
                     {
                         attackerBattleEntity.Character.RemoveBuffByBCardTypeSubType(new List<KeyValuePair<byte, byte>>
                             {
@@ -1603,6 +1603,9 @@ namespace GloomyTale.GameObject
                     RunToX = FirstX;
                     RunToY = FirstY;
                 }
+
+                if (Buff.ContainsKey(692) && Buff.ContainsKey(691))
+                    RemoveBuff(691);
 
                 if ((DateTime.Now - LastEffect).TotalSeconds >= 5)
                 {
@@ -1769,7 +1772,7 @@ namespace GloomyTale.GameObject
                         return;
                     }
 
-                    bool instantAttack = MonsterVNum == 1439 || MonsterVNum == 1436 || MonsterVNum == 946 || MonsterVNum == 1382;
+                    bool instantAttack = MonsterVNum == 1439 || MonsterVNum == 1436 || MonsterVNum == 946 || MonsterVNum == 1382 || MonsterVNum == 974;
 
                     if ((DateTime.Now - LastSkill).TotalMilliseconds >= 1100 + (instantAttack ? 0 : (Monster.BasicCooldown * 200)))
                     {
@@ -2240,9 +2243,15 @@ namespace GloomyTale.GameObject
                         ref onyxWings);
 
                     // deal 0 damage to GM with GodMode
-                    if (target.Character != null && target.Character.HasGodMode || target.Mate != null && target.Mate.Owner.HasGodMode)
+                    if (target.Character != null && target.Character != null && target.Character.HasGodMode || target.Mate != null && target.Mate.Owner.HasGodMode)
                     {
                         damage = 0;
+                    }
+
+                    if (target.Character.HasBuff(746))
+                    {
+                        damage = 0;
+                        hitmode = 4;
                     }
 
                     if (target.Character != null)
@@ -2462,6 +2471,18 @@ namespace GloomyTale.GameObject
                     {
                         MapInstance.Broadcast(null, target.Character.GenerateStat(), ReceiverType.OnlySomeone,
                             "", target.MapEntityId);
+
+                        if (target.Character.HasBuff(694))
+                        {
+                            target.Character.AddBuff(new Buff(703, target.Character.Level), target.Character.BattleEntity);
+                            target.Character.RemoveBuff(694);
+                        }
+
+                        if (target.Character.HasBuff(688))
+                        {
+                            target.Character.AddBuff(new Buff(689, target.Character.Level), target.Character.BattleEntity);
+                            target.Character.RemoveBuff(688);
+                        }
 
                         // Magical Fetters
 
@@ -2718,6 +2739,12 @@ namespace GloomyTale.GameObject
                         }
 
                         if (characterInRange.HasGodMode)
+                        {
+                            damage = 0;
+                            hitmode = 4;
+                        }
+
+                        if (characterInRange.HasBuff(746))
                         {
                             damage = 0;
                             hitmode = 4;

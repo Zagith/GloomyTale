@@ -53,7 +53,9 @@ namespace GloomyTale.DAL.EF
 
         public virtual ICollection<PenaltyLog> PenaltyLog { get; set; }
 
-        public long ReferrerId { get; set; }
+        public string ReferrerId { get; set; }
+
+        public string ReferToken { get; set; }
 
         [MaxLength(45)]
         public string RegistrationIP { get; set; }
@@ -64,6 +66,9 @@ namespace GloomyTale.DAL.EF
         public bool DailyRewardSent { get; set; }
 
         public RegionType Language { get; set; }
+
+        [MaxLength(255)]
+        public string AdminName { get; set; }
         #endregion
     }
 }

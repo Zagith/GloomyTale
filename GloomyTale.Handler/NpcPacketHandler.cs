@@ -1388,11 +1388,11 @@ namespace GloomyTale.Handler
                 {
                     Session.SendPacket($"qna #guri^7600 {string.Format(Language.Instance.GetMessageFromKey("PERFECT_ALL"))}");
                 }
-                else if (npc.Shop?.ShopId == 2)
+                else if (npc.Shop?.ShopId == 90)
                 {
                     Session.SendPacket($"qna #guri^8889 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA"), 5000000)}");
                 }
-                else if (npc.Shop?.ShopId == 5)
+                else if (npc.Shop?.ShopId == 99)
                 {
                     ItemDTO item = DAOFactory.Instance.ItemDAO.LoadById(15297);
                     Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10, item.Name)}");

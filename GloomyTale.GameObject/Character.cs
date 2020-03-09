@@ -2060,6 +2060,12 @@ namespace GloomyTale.GameObject
                     BubbleMessage = null;
                 }
 
+                if (Morph == 29 || Morph == 30)
+                    Session.SendPackets(GenerateQuicklist());
+
+                if (HasBuff(691) && HasBuff(692))
+                    RemoveBuff(691);
+
                 if (CurrentMinigame != 0 && LastEffect.AddSeconds(3) <= DateTime.Now)
                 {
                     Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(VisualType.Player, VisualId, CurrentMinigame));
@@ -4215,6 +4221,31 @@ namespace GloomyTale.GameObject
                 .Aggregate(stash, (current, item) => current + $" {item.GenerateStashPacket()}");
         }
 
+#warning TODO: optimize this functions
+        private void GenerateQuickListSp1Am(ref string[] pktQs)
+        {
+            var morph = Morph;
+            if (Class == ClassType.MartialArtist && Morph == (byte)BrawlerMorphType.Dragon || Morph == (byte)BrawlerMorphType.Normal)
+            {
+                morph = 30;
+            }
+
+            for (var i = 0; i < 30; i++)
+            {
+                for (var j = 0; j < 2; j++)
+                {
+                    QuicklistEntryDTO qi = QuicklistEntries.Find(n => n.Q1 == j && n.Q2 == i && n.Morph == (UseSp ? morph : 0));
+                    short? pos = qi?.Pos;
+                    if (pos < 8 && qi.Type == 1 && Morph == 29)
+                    {
+                        pos += 8;
+                    }
+
+                    pktQs[j] += $" {qi?.Type ?? 7}.{qi?.Slot ?? 7}.{pos.ToString() ?? "-1"}";
+                }
+            }
+        }
+
         private void GenerateQuickListSp2Am(ref string[] pktQs)
         {
             var morph = Morph;
@@ -4279,6 +4310,9 @@ namespace GloomyTale.GameObject
 
             switch (Class)
             {
+                case ClassType.MartialArtist when Morph == 30 && UseSp && SpInstance.SpLevel >= 20 && HasBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.Transformation):
+                    GenerateQuickListSp1Am(ref pktQs);
+                    break;
                 case ClassType.MartialArtist when Morph == 31 && UseSp && SpInstance.SpLevel >= 20 && HasBuff(CardType.LotusSkills, (byte)AdditionalTypes.LotusSkills.ChangeLotusSkills):
                     GenerateQuickListSp2Am(ref pktQs);
                     break;
@@ -5355,13 +5389,18 @@ namespace GloomyTale.GameObject
 
         public void GetReferrerReward()
         {
-            long referrerId = Session.Account.ReferrerId;
-            if (Level >= 70 && referrerId != 0 && !VisualId.Equals(referrerId))
+            string referrerId = Session.Account.ReferrerId;
+            if (Level >= 70 && referrerId != "0" && !CharacterId.Equals(referrerId))
             {
                 List<GeneralLogDTO> logs = DAOFactory.Instance.GeneralLogDAO.LoadByLogType("ReferralProgram", null).Where(g => g.IpAddress.Equals(Session.Account.RegistrationIP.Split(':')[1].Replace("//", ""))).ToList();
                 if (logs.Count <= 5)
                 {
-                    CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadById(referrerId);
+                    AccountDTO account = DAOFactory.Instance.AccountDAO.LoadByRefToken(referrerId);
+                    if (account == null)
+                    {
+                        return;
+                    }
+                    CharacterDTO character = DAOFactory.Instance.CharacterDAO.LoadById(account.AccountId);
                     if (character == null || character.Level < 70)
                     {
                         return;
@@ -5751,7 +5790,7 @@ namespace GloomyTale.GameObject
 
             foreach (Skill ski in ServerManager.GetAllSkill())
             {
-                if (SpInstance != null && ski.Class == Morph + 31 && SpInstance.SpLevel >= ski.LevelMinimum)
+                if (SpInstance != null && (ski.Class == Morph + 31 || (Morph == 29 && ski.Class == 61) || (Morph == 30 && ski.Class == 60)) && SpInstance.SpLevel >= ski.LevelMinimum)
                 {
                     SkillsSp[ski.SkillVNum] = new CharacterSkill { SkillVNum = ski.SkillVNum, CharacterId = VisualId };
                 }
@@ -6981,9 +7020,9 @@ namespace GloomyTale.GameObject
             if (IsSitting)
             {
                 int regen = GetBuff(CardType.Recovery, (byte)AdditionalTypes.Recovery.MPRecoveryIncreased)[0];
-                return (int)((regen + CharacterHelper.MPHealth[(byte)Class] + CellonOptions.Where(s => s.Type == CellonOptionType.MPRestore).Sum(s => s.Value)) * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMPOnRest) / 100D));
+                return (int)((regen + CharacterHelper.MPHealth[(byte)Class] + CellonOptions.Where(s => s.Type == CellonOptionType.MPRestore).Sum(s => s.Value)) * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMPOnRest) / 100D) + (HasBuff(704) ? 30 : 0));
             }
-            return (DateTime.Now - LastDefence).TotalSeconds > 4 ? (int)((CharacterHelper.MPHealthStand[(byte)Class] * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMP) / 100D)) * naturalRecovery) : 0;
+            return (DateTime.Now - LastDefence).TotalSeconds > 4 ? (int)(((CharacterHelper.MPHealthStand[(byte)Class] * (1 + GetShellArmorEffectValue(ShellArmorEffectType.RecoveryMP) / 100D)) * naturalRecovery) + (HasBuff(704) ? 30 : 0)) : 0;
         }
 
         private double HeroXPLoad() => HeroLevel == 0 ? 1 : CharacterHelper.HeroXpData[HeroLevel - 1];

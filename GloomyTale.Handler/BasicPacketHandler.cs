@@ -2448,6 +2448,27 @@ namespace GloomyTale.Handler
                         Pos = data2,
                         Morph = Session.Character.UseSp ? (short)Session.Character.Morph : (short)0
                     });
+
+                    if(Session.Character.Morph == 29 || (Session.Character.Morph == 30 && data2 != 15))
+                    {
+                        Session.Character.QuicklistEntries.RemoveAll(n =>
+                        n.Q1 == q1 && n.Q2 == q2
+                        && (Session.Character.UseSp ? n.Morph == (Session.Character.Morph == 29 ? 30 : 29) : n.Morph == 0));
+                        if (type == 1 && Session.Character.Morph == 29)
+                            data2 = data2 == 7 ? (short)(data2 + 9) : (short)(data2 + 8);
+                        else if (type == 1 && Session.Character.Morph == 30)
+                            data2 = data2 == 16 ? (short)(data2 - 9) : (short)(data2 - 8);
+                        Session.Character.QuicklistEntries.Add(new QuicklistEntryDTO
+                        {
+                            CharacterId = Session.Character.CharacterId,
+                            Type = type,
+                            Q1 = q1,
+                            Q2 = q2,
+                            Slot = data1,
+                            Pos = data2,
+                            Morph = (short)(Session.Character.Morph == 29 ? 30 : 29)
+                        });
+                    }
                     Session.SendPacket($"qset {q1} {q2} {type}.{data1}.{data2}.0");
                     break;
 
@@ -2486,7 +2507,41 @@ namespace GloomyTale.Handler
                             Session.SendPacket($"qset {qlTo.Q1} {qlTo.Q2} {qlTo.Type}.{qlTo.Slot}.{qlTo.Pos}.0");
                         }
                     }
+                    if (Session.Character.Morph == 29 || Session.Character.Morph == 30)
+                    {
+                        qlFrom = Session.Character.QuicklistEntries.SingleOrDefault(n =>
+                           n.Q1 == data1 && n.Q2 == data2
+                                         && (Session.Character.UseSp ? n.Morph == (Session.Character.Morph == 29 ? 30 : 29) : n.Morph == 0));
+                        if (qlFrom != null)
+                        {
+                            QuicklistEntryDTO qlTo = Session.Character.QuicklistEntries.SingleOrDefault(n =>
+                                n.Q1 == q1 && n.Q2 == q2 && (Session.Character.UseSp
+                                    ? n.Morph == (Session.Character.Morph == 29 ? 30 : 29)
+                                    : n.Morph == 0));
+                            qlFrom.Q1 = q1;
+                            qlFrom.Q2 = q2;
+                            if (qlTo == null)
+                            {
+                                // Put 'from' to new position (datax)
+                                Session.SendPacket(
+                                    $"qset {qlFrom.Q1} {qlFrom.Q2} {qlFrom.Type}.{qlFrom.Slot}.{qlFrom.Pos}.0");
 
+                                // old 'from' is now empty.
+                                Session.SendPacket($"qset {data1} {data2} 7.7.-1.0");
+                            }
+                            else
+                            {
+                                // Put 'from' to new position (datax)
+                                Session.SendPacket(
+                                    $"qset {qlFrom.Q1} {qlFrom.Q2} {qlFrom.Type}.{qlFrom.Slot}.{qlFrom.Pos}.0");
+
+                                // 'from' is now 'to' because they exchanged
+                                qlTo.Q1 = data1;
+                                qlTo.Q2 = data2;
+                                Session.SendPacket($"qset {qlTo.Q1} {qlTo.Q2} {qlTo.Type}.{qlTo.Slot}.{qlTo.Pos}.0");
+                            }
+                        }
+                    }
                     break;
 
                 case 3:

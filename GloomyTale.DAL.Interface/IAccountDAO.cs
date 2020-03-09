@@ -30,6 +30,8 @@ namespace GloomyTale.DAL.Interface
 
         AccountDTO LoadByName(string name);
 
+        AccountDTO LoadByRefToken(string token);
+
         void WriteGeneralLog(long accountId, string ipAddress, long? characterId, GeneralLogType logType, string logData);
 
         #endregion

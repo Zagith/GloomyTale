@@ -233,10 +233,15 @@ namespace GloomyTale.GameObject
                                     }
                                     else
                                     {
-                                        if (cardId == 118 && session.Character.HasBuff(155))
+                                        if (buff.Card?.BuffType == BuffType.Bad && session.HasBuff(746))
                                             return;
+
+                                        if (cardId != null && (cardId == 118 || ItemVNum == 1248 || buff.Card?.CardId == 118) && session.HasBuff(155))
+                                            return;
+
+
                                         //Overwriting BearSpirit buff on Energy pot buff
-                                        if (cardId == 155)
+                                        if (cardId != null && session.Character != null && cardId == 155)
                                         {
                                             session.RemoveBuff(118);
                                             session.AddBuff(buff, sender, x: x, y: y);
@@ -247,6 +252,14 @@ namespace GloomyTale.GameObject
                                         else
                                             session.AddBuff(buff, sender, x: x, y: y);
                                     }
+                                    if (SkillVNum != null && SkillVNum == 1610)
+                                    {
+                                        session.Character.Session.SendPackets(session.Character.GenerateQuicklist());
+                                    }
+
+                                    if (SkillVNum != null && SkillVNum == 1609 && session.Character.HasBuff(689))
+                                        session.AddBuff(new Buff(704, session.Level, false), session);
+
                                 }
                                 else if (Chance < 0 && ServerManager.RandomNumber() < -Chance)
                                 {
@@ -282,13 +295,15 @@ namespace GloomyTale.GameObject
                         break;
 
                     case BCardType.CardType.Summons:
-                        if (sender.MapMonster?.MonsterVNum == 154)
+                        if (sender == null || (sender.EntityType == EntityType.Monster && (sender.MapMonster == null || sender.MapMonster?.MonsterVNum == 154)))
                         {
                             return;
                         }
                         bool move = SecondData != 1382;
                         List<MonsterToSummon> summonParameters = new List<MonsterToSummon>();
                         int amountToSpawn = firstData;
+                        if (sender.Character != null && sender.Character.HasBuff(703))
+                            amountToSpawn = 4;
                         int aliveTime = ServerManager.GetNpcMonster((short)SecondData).RespawnTime / (ServerManager.GetNpcMonster((short)SecondData).RespawnTime < 2400 ? ServerManager.GetNpcMonster((short)SecondData).RespawnTime < 150 ? 1 : 10 : 40) * (ServerManager.GetNpcMonster((short)SecondData).RespawnTime >= 150 ? 4 : 1);
                         for (int i = 0; i < amountToSpawn; i++)
                         {
@@ -2403,6 +2418,7 @@ namespace GloomyTale.GameObject
                             session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(196));
                             session.Character.DragonModeObservable?.Dispose();
                             session.RemoveBuff(676);
+                            session.Character.Session.SendPackets(session.Character.GenerateQuicklist());
                         }
                         else if (SubType == (byte)AdditionalTypes.MartialArts.Transformation / 10)
                         {
@@ -2412,6 +2428,7 @@ namespace GloomyTale.GameObject
                             session.Character.Session.SendPacket(session.Character.GenerateEff(196));
                             session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(196));
                             session.Character.DragonModeObservable?.Dispose();
+                            session.Character.Session.SendPackets(session.Character.GenerateQuicklist());
 
                             session.Character.DragonModeObservable = Observable.Timer(TimeSpan.FromSeconds(card.Duration * 0.1)).Subscribe(s =>
                             {
@@ -2420,6 +2437,7 @@ namespace GloomyTale.GameObject
                                 session.Character.MapInstance?.Broadcast(session.Character.GenerateCMode());
                                 session.Character.Session.SendPacket(session.Character.GenerateEff(196));
                                 session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(196));
+                                session.Character.Session.SendPackets(session.Character.GenerateQuicklist());
                             });
                         }
 

@@ -452,7 +452,13 @@ namespace GloomyTale.Handler
                     hitmode = 4;
                 }
                 else if (target.Character.LastPVPRevive > DateTime.Now.AddSeconds(-10)
-                         || hitRequest.Session.Character.LastPVPRevive > DateTime.Now.AddSeconds(-10))
+                     || hitRequest.Session.Character.LastPVPRevive > DateTime.Now.AddSeconds(-10))
+                {
+                    damage = 0;
+                    hitmode = 4;
+                }
+
+                if (target.Character.HasBuff(746))
                 {
                     damage = 0;
                     hitmode = 4;
@@ -502,10 +508,13 @@ namespace GloomyTale.Handler
                 if (Session.Character.HasBuff(746))
                     Session.Character.RemoveBuff(746);
 
+                //2nd MA Sp
+
                 if (hitRequest.Skill.SkillVNum == 1607 && target.Character.MapX != 0 && target.Character.MapY != 0)
                     Session.Character.TeleportOnMap(target.Character.PositionX, target.Character.PositionY);
 
-                //2nd MA Sp
+                if (hitRequest.Skill.SkillVNum == 1619)
+                    target.Character.AddBuff(new Buff(7, battleEntity.Level), battleEntity);
 
                 if (hitRequest.Session.Character.HasBuff(703)) // attack Possibility
                     switch (hitRequest.Skill.SkillVNum)
@@ -536,6 +545,26 @@ namespace GloomyTale.Handler
                             }
                             break;
 
+                        case 1614:
+                            {
+                                target.Character.RemoveBuff(691);
+                                target.Character.AddBuff(new Buff(692, hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
+                            }
+                            break;
+
+                        case 1619:
+                            {
+                                Observable.Timer(TimeSpan.FromMilliseconds(5500)).Subscribe(o =>
+                                {
+                                    target.CurrentMapInstance?.Broadcast(target.Character.GenerateEff(1072));
+                                    target.Character.GetDamage((int)(10 * hitRequest.Session.Character.Level), hitRequest.Session.Character.BattleEntity);
+                                    target.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player, hitRequest.Session.Character.CharacterId, 1,
+                                        target.Character.CharacterId, -1, 0, 0, 0, 0, 0, target.Character.Hp > 0, 92,
+                                        (int)(10 * hitRequest.Session.Character.Level), 0, 1));
+                                });
+                            }
+                            break;
+
                         case 1620:
                             {
                                 if (target.Character.HasBuff(702))
@@ -551,8 +580,6 @@ namespace GloomyTale.Handler
                             break;
                     }
 
-
-
                 if (target.Character.HasBuff(694))
                 {
                     target.Character.AddBuff(new Buff(703, target.Character.Level), target.Character.BattleEntity);
@@ -561,6 +588,7 @@ namespace GloomyTale.Handler
 
                 if (target.Character.HasBuff(688))
                 {
+                    target.CurrentMapInstance.Broadcast(target.Character.GenerateEff(1075));
                     target.Character.AddBuff(new Buff(689, target.Character.Level), target.Character.BattleEntity);
                     target.Character.RemoveBuff(688);
                 }
@@ -786,7 +814,7 @@ namespace GloomyTale.Handler
                     hitRequest.Skill.SkillVNum == 1140) && hitmode == 4)
                     hitRequest.Session.SendPacket(StaticPacketHelper.Cancel(2, target.Character.VisualId));
 
-                //test removing malus by dg skills
+                //Removing malus by dg skills
                 int rnd = ServerManager.RandomNumber();
                 if ((hitRequest.Skill.SkillVNum == 946 && rnd < 15 ||
                    (hitRequest.Skill.SkillVNum == 948 && rnd >= 15 && rnd <= 35) ||
@@ -1656,6 +1684,25 @@ namespace GloomyTale.Handler
                                 (int)(Session.Character.Hp / Session.Character.HPLoad() * 100), 0, -1,
                                 (byte)(ski.Skill.SkillType - 1)));
 
+                            //MA 1sp sp same cooldown for both transformation
+                            if (ski.Skill.SkillVNum == 1585)
+                                Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
+                                    Session.Character.CharacterId, 1, Session.Character.CharacterId, 1594,
+                                    (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), 41,
+                                    7494, Session.Character.PositionX,
+                                    Session.Character.PositionY, true,
+                                    (int)(Session.Character.Hp / Session.Character.HPLoad() * 100), 0, -2,
+                                    (byte)(ski.Skill.SkillType - 1)));
+                            else if (ski.Skill.SkillVNum == 1594)
+                                Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(VisualType.Player,
+                                    Session.Character.CharacterId, 1, Session.Character.CharacterId, 1585,
+                                    (short)(ski.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D), 41,
+                                    7495, Session.Character.PositionX,
+                                    Session.Character.PositionY, true,
+                                    (int)(Session.Character.Hp / Session.Character.HPLoad() * 100), 0, -2,
+                                    (byte)(ski.Skill.SkillType - 1)));
+
+
                             if (ski.SkillVNum != 1330)
                             {
                                 switch (ski.Skill.HitType)
@@ -2475,6 +2522,53 @@ namespace GloomyTale.Handler
                                 }
                             });
 
+                        if (ski.Skill.SkillVNum == 1585)
+                            Observable.Timer(TimeSpan.FromMilliseconds(cdResetMilliseconds))
+                                .Subscribe(o =>
+                                {
+                                    sendSkillReset();
+                                    if (cdResetMilliseconds <= 500) Observable.Timer(TimeSpan.FromMilliseconds(500)).Subscribe(obs => sendSkillReset());
+                                    void sendSkillReset()
+                                    {
+                                        List<CharacterSkill> charSkills = Session.Character.GetSkills();
+
+                                        CharacterSkill skill = charSkills.Find(s => s.Skill?.CastId == 16 && (s.Skill?.UpgradeSkill == 0 || s.Skill?.SkillType == 1));
+
+                                        if (skill != null && skill.LastUse.AddMilliseconds((short)(skill.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D) * 100 - 100) <= DateTime.Now)
+                                        {
+                                            if (cooldownReduction < 0)
+                                            {
+                                                skill.LastUse = DateTime.Now.AddMilliseconds(skill.Skill.Cooldown * 100 * -1);
+                                            }
+
+                                            Session.SendPacket(StaticPacketHelper.SkillReset(16));
+                                        }
+                                    }
+                                });
+                        else if (ski.Skill.SkillVNum == 1594)
+                            Observable.Timer(TimeSpan.FromMilliseconds(cdResetMilliseconds))
+                                .Subscribe(o =>
+                                {
+                                    sendSkillReset();
+                                    if (cdResetMilliseconds <= 500) Observable.Timer(TimeSpan.FromMilliseconds(500)).Subscribe(obs => sendSkillReset());
+                                    void sendSkillReset()
+                                    {
+                                        List<CharacterSkill> charSkills = Session.Character.GetSkills();
+
+                                        CharacterSkill skill = charSkills.Find(s => s.Skill?.CastId == 7 && (s.Skill?.UpgradeSkill == 0 || s.Skill?.SkillType == 1));
+
+                                        if (skill != null && skill.LastUse.AddMilliseconds((short)(skill.Skill.Cooldown + ski.Skill.Cooldown * cooldownReduction / 100D) * 100 - 100) <= DateTime.Now)
+                                        {
+                                            if (cooldownReduction < 0)
+                                            {
+                                                skill.LastUse = DateTime.Now.AddMilliseconds(skill.Skill.Cooldown * 100 * -1);
+                                            }
+
+                                            Session.SendPacket(StaticPacketHelper.SkillReset(7));
+                                        }
+                                    }
+                                });
+
                         int[] fairyWings = Session.Character.GetBuff(CardType.EffectSummon, 11);
                         int random = ServerManager.RandomNumber();
                         if (fairyWings[0] > random)
@@ -2501,6 +2595,15 @@ namespace GloomyTale.Handler
                                     Session?.CurrentMapInstance?.Broadcast(Session.Character.GenerateEff(55));
                                 }
                             });
+
+                        //Lotus position additional buff fix
+                        if (Session.Character.HasBuff(689) && ski.SkillVNum == 1610)
+                            Session.Character.AddBuff(new Buff(705, Session.Character.Level), Session?.Character?.BattleEntity);
+
+                        if (ski != null && ski.Skill.SkillVNum == 1618)
+                        {
+                            ski.GetSkillBCards().ForEach(s => s.ApplyBCards(Session.Character.BattleEntity, Session.Character.BattleEntity));
+                        }
                     }
                     else
                     {

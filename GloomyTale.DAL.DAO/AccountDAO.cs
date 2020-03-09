@@ -122,6 +122,26 @@ namespace GloomyTale.DAL.DAO
             return null;
         }
 
+        public AccountDTO LoadByRefToken(string token)
+        {
+            try
+            {
+                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                {
+                    Account account = context.Account.FirstOrDefault(a => a.ReferToken.Equals(token));
+                    if (account != null)
+                    {
+                        return _mapper.Map<AccountDTO>(account);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+            return null;
+        }
+
         public void WriteGeneralLog(long accountId, string ipAddress, long? characterId, GeneralLogType logType, string logData)
         {
             try
