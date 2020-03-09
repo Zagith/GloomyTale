@@ -60,44 +60,6 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public IEnumerable<TDTO> InsertOrUpdate(IEnumerable<TDTO> dtos)
-        {
-            try
-            {
-                IList<TDTO> results = new List<TDTO>();
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    foreach (TDTO dto in dtos)
-                    {
-                        results.Add(InsertOrUpdate(context, dto));
-                    }
-                }
-
-                return results;
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("UPDATE_ERROR"), e.Message), e);
-                return Enumerable.Empty<TDTO>();
-            }
-        }
-
-        public TDTO InsertOrUpdate(TDTO dto)
-        {
-            try
-            {
-                using (OpenNosContext context = DataAccessHelper.CreateContext())
-                {
-                    return InsertOrUpdate(context, dto);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(string.Format(Language.Instance.GetMessageFromKey("UPDATE_ERROR"), e.Message), e);
-                return null;
-            }
-        }
-
         public TDTO LoadById(Guid id)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
@@ -106,40 +68,10 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        protected virtual TDTO Insert(TDTO dto, OpenNosContext context)
-        {
-            TEntity entity = MapEntity(dto);
-            context.Set<TEntity>().Add(entity);
-            context.SaveChanges();
-            return _mapper.Map<TDTO>(entity);
-        }
-
-        protected virtual TDTO InsertOrUpdate(OpenNosContext context, TDTO dto)
-        {
-            Guid primaryKey = dto.Id;
-            TEntity entity = context.Set<TEntity>().FirstOrDefault(c => c.Id == primaryKey);
-            dto = entity == null ? Insert(dto, context) : Update(entity, dto, context);
-
-            return dto;
-        }
-
-        protected virtual TEntity MapEntity(TDTO dto) => _mapper.Map<TEntity>(dto);
-
-        protected virtual TDTO Update(TEntity entity, TDTO inventory, OpenNosContext context)
-        {
-            if (entity != null)
-            {
-                _mapper.Map(inventory, entity);
-            }
-
-            return _mapper.Map<TDTO>(entity);
-        }
-
         public virtual TDTO Save(TDTO obj)
         {
             try
-            {
-                
+            {                
                 using (OpenNosContext Context = DataAccessHelper.CreateContext())
                 {
                     TEntity model = Context.Set<TEntity>().Find(obj.Id);

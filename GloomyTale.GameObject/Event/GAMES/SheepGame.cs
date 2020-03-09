@@ -104,7 +104,7 @@ namespace GloomyTale.GameObject.Event.GAMES
                     if (session.Character.UseSp)
                     {
                         session.Character.LastSp = (DateTime.Now - Process.GetCurrentProcess().StartTime.AddSeconds(-50)).TotalSeconds;
-                        var specialist = session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+                        var specialist = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
                         if (specialist != null)
                         {
                             removeSP(session, specialist.ItemVNum);

@@ -65,8 +65,8 @@ namespace GloomyTale.Handler
                 {
                     if (guriPacket.Argument == 0 && short.TryParse(guriPacket.User.ToString(), out short slot))
                     {
-                        WearableInstance shell =
-                            Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(slot, InventoryType.Equipment);
+                        var shell =
+                            Session.Character.Inventory.LoadBySlotAndType(slot, InventoryType.Equipment);
                         if (shell?.ShellEffects.Count == 0 && shell.Upgrade > 0 && shell.Rare > 0
                             && Session.Character.Inventory.CountItem(1429) >= ((shell.Upgrade / 10) + shell.Rare))
                         {
@@ -975,7 +975,7 @@ namespace GloomyTale.Handler
                         && short.TryParse(guriPacket.User.ToString(), out short pearlSlot))
                     {
                         ItemInstance mount = Session.Character.Inventory.LoadBySlotAndType(mountSlot, InventoryType.Main);
-                        var pearl = Session.Character.Inventory.LoadBySlotAndType<BoxInstance>(pearlSlot, InventoryType.Equipment);
+                        var pearl = Session.Character.Inventory.LoadBySlotAndType(pearlSlot, InventoryType.Equipment);
 
                         if (mount?.Item == null || pearl?.Item == null)
                         {
@@ -1017,8 +1017,8 @@ namespace GloomyTale.Handler
                     if (short.TryParse(guriPacket.Value, out short fairySlot)
                         && short.TryParse(guriPacket.User.ToString(), out short pearlSlot))
                     {
-                        var fairy = Session.Character.Inventory.LoadBySlotAndType<WearableInstance>(fairySlot, InventoryType.Equipment);
-                        var pearl = Session.Character.Inventory.LoadBySlotAndType<BoxInstance>(pearlSlot, InventoryType.Equipment);
+                        var fairy = Session.Character.Inventory.LoadBySlotAndType(fairySlot, InventoryType.Equipment);
+                        var pearl = Session.Character.Inventory.LoadBySlotAndType(pearlSlot, InventoryType.Equipment);
 
                         if (fairy?.Item == null || pearl?.Item == null)
                         {
@@ -1070,7 +1070,7 @@ namespace GloomyTale.Handler
                         if (Session.Character.UseSp)
                         {
                             var specialistInstance =
-                                Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp,
+                                Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp,
                                     InventoryType.Wear);
                             if (specialistInstance != null)
                             {
@@ -1203,7 +1203,7 @@ namespace GloomyTale.Handler
                 {
                     if (Session.Character.Inventory.CountItem(1216) >= 1)
                     {
-                        var specialistInstance = Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+                        var specialistInstance = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
                         if (specialistInstance != null)
                         {
                             CustomHelper.Instance.SpeedPerfection(Session, specialistInstance);

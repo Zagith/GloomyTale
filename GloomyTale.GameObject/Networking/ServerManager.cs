@@ -168,8 +168,6 @@ namespace GloomyTale.GameObject.Networking
 
         public static ServerManager Instance => _instance ?? (_instance = new ServerManager());
 
-        public List<BoxItemDTO> BoxItems { get; set; } = new List<BoxItemDTO>();
-
         public Act4Stat Act4AngelStat { get; set; }
 
         public Act4Stat Act4DemonStat { get; set; }

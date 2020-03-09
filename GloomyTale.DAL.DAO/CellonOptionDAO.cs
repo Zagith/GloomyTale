@@ -72,35 +72,11 @@ namespace GloomyTale.DAL.DAO
             {
                 using (OpenNosContext context = DataAccessHelper.CreateContext())
                 {
-                    void insert(CellonOptionDTO cellonOption)
-                    {
-                        var entity = _mapper.Map<CellonOption>(cellonOption);
-                        context.CellonOption.Add(entity);
-                        context.SaveChanges();
-                        cellonOption.EquipmentSerialId = entity.EquipmentSerialId;
-                    }
-
-                    void update(CellonOption _entity, CellonOptionDTO cellonOption)
-                    {
-                        if (_entity != null)
-                        {
-                            _mapper.Map(cellonOption, _entity);
-                        }
-                    }
-
                     foreach (CellonOptionDTO item in cellonOption)
                     {
                         item.EquipmentSerialId = equipmentSerialId;
                         CellonOption entity = context.CellonOption.FirstOrDefault(c => c.EquipmentSerialId == item.EquipmentSerialId);
-
-                        if (entity == null)
-                        {
-                            Insert(item, context);
-                        }
-                        else
-                        {
-                            Update(entity, item, context);
-                        }
+                        Save(item);
                     }
 
                     context.SaveChanges();

@@ -59,7 +59,7 @@ namespace GloomyTale.GameObject
             LightResistance = character.LightResistance;
             ShadowResistance = character.DarkResistance;
 
-            WearableInstance weapon = null;
+            ItemInstance weapon = null;
 
             if (skill != null)
             {
@@ -74,11 +74,11 @@ namespace GloomyTale.GameObject
                             Hitrate = character.SecondWeaponHitRate;
                             CritChance = character.SecondWeaponCriticalChance;
                             CritRate = character.SecondWeaponCriticalRate;
-                            weapon = character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                            weapon = character.Inventory.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
                         }
                         else
                         {
-                            weapon = character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                            weapon = character.Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
                         }
                         break;
 
@@ -91,21 +91,21 @@ namespace GloomyTale.GameObject
                             Hitrate = character.SecondWeaponHitRate;
                             CritChance = character.SecondWeaponCriticalChance;
                             CritRate = character.SecondWeaponCriticalRate;
-                            weapon = character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                            weapon = character.Inventory.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
                         }
                         else
                         {
-                            weapon = character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                            weapon = character.Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
                         }
                         break;
 
                     case 2:
                         AttackType = AttackType.Magical;
-                        weapon = character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                        weapon = character.Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
                         break;
 
                     case 3:
-                        weapon = character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                        weapon = character.Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
                         switch (character.Class)
                         {
                             case ClassType.Adventurer:
@@ -130,7 +130,7 @@ namespace GloomyTale.GameObject
                             case ClassType.Adventurer:
                             case ClassType.Swordsman:
                             case ClassType.Magician:
-                                weapon = character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                                weapon = character.Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
                                 break;
 
                             case ClassType.Archer:
@@ -139,7 +139,7 @@ namespace GloomyTale.GameObject
                                 Hitrate = character.SecondWeaponHitRate;
                                 CritChance = character.SecondWeaponCriticalChance;
                                 CritRate = character.SecondWeaponCriticalRate;
-                                weapon = character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                                weapon = character.Inventory.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
                                 break;
                         }
                         break;
@@ -147,7 +147,7 @@ namespace GloomyTale.GameObject
             }
             else
             {
-                weapon = character.Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                weapon = character.Inventory?.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
                 switch (character.Class)
                 {
                     case ClassType.Adventurer:
@@ -189,7 +189,7 @@ namespace GloomyTale.GameObject
                 DamageMaximum = DamageMinimum + 1;
             }
 
-            WearableInstance armor = character.Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Armor, InventoryType.Wear);
+            var armor = character.Inventory?.LoadBySlotAndType((byte)EquipmentType.Armor, InventoryType.Wear);
             if (armor != null)
             {
                 DefenseUpgrade = armor.Upgrade;
@@ -231,8 +231,8 @@ namespace GloomyTale.GameObject
             }
 
             //Add Partner EquipmentBCards
-            WearableInstance gloves = (WearableInstance)mate.GlovesInstance;
-            WearableInstance boots = (WearableInstance)mate.BootsInstance;
+            var gloves = mate.GlovesInstance;
+            var boots = mate.BootsInstance;
             EntityType = EntityType.Mate;
             UserType = VisualType.Npc;
             DamageMinimum = mate.DamageMinimum;
@@ -1650,7 +1650,7 @@ namespace GloomyTale.GameObject
                 int hp = 0;
                 if (Character.UseSp)
                 {
-                    var specialist = Character.Inventory?.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+                    var specialist = Character.Inventory?.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
                     if (specialist != null)
                     {
                         int point = CharacterHelper.SlPoint(specialist.SlHP, 3) + Character.slhpbonus;
@@ -1701,7 +1701,7 @@ namespace GloomyTale.GameObject
                 double multiplicator = 1.0;
                 if (Character.UseSp)
                 {
-                    var specialist = Character.Inventory?.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+                    var specialist = Character.Inventory?.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
                     if (specialist != null)
                     {
                         int point = CharacterHelper.SlPoint(specialist.SlHP, 3) + Character.slhpbonus;

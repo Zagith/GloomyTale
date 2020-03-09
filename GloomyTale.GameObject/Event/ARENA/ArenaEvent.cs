@@ -664,10 +664,10 @@ namespace GloomyTale.GameObject.Event.ARENA
 
         private static void SendRewards(ArenaTeamMember member, bool win)
         {
-            SpecialistInstance SpInstance = null;
+            ItemInstance SpInstance = null;
             if (member.Session.Character.Inventory != null && member.Session.Character.UseSp)
             {
-                SpInstance = (member.Session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear));
+                SpInstance = (member.Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear));
             }
             if (win)
             {

@@ -60,7 +60,7 @@ namespace GloomyTale.GameObject
 
         public void Rarify()
         {
-            WearableInstance instance = (WearableInstance)GetItemInstance();
+            var instance = GetItemInstance();
             if (instance?.Item?.Type == InventoryType.Equipment && (instance?.Item?.ItemType == ItemType.Weapon || instance?.Item?.ItemType == ItemType.Armor))
             {
                 instance?.RarifyItem(RarifyMode.Drop, RarifyProtection.None);

@@ -205,7 +205,7 @@ namespace GloomyTale.GameObject
 
         public IDisposable DragonModeObservable { get; set; }
 
-        public SpecialistInstance SpInstance { get; set; }
+        public ItemInstance SpInstance { get; set; }
 
         public int UltimatePoints { get; set; }
 
@@ -2119,9 +2119,9 @@ namespace GloomyTale.GameObject
                         Session.SendPacket(GenerateRaid(3));
                     }
 
-                    WearableInstance ring = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Ring, InventoryType.Wear);
-                    WearableInstance bracelet = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Bracelet, InventoryType.Wear);
-                    WearableInstance necklace = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Necklace, InventoryType.Wear);
+                    var ring = Inventory.LoadBySlotAndType((byte)EquipmentType.Ring, InventoryType.Wear);
+                    var bracelet = Inventory.LoadBySlotAndType((byte)EquipmentType.Bracelet, InventoryType.Wear);
+                    var necklace = Inventory.LoadBySlotAndType((byte)EquipmentType.Necklace, InventoryType.Wear);
                     CellonOptions.Clear();
                     if (ring != null)
                     {
@@ -2954,7 +2954,8 @@ namespace GloomyTale.GameObject
                 {
                     for (short i = 0; i < 17; i++)
                     {
-                        WearableInstance item = Inventory.LoadBySlotAndType<WearableInstance>(i, InventoryType.Wear);
+                        ItemInstance item = Inventory.LoadBySlotAndType(i, InventoryType.Wear);
+
                         if (item != null)
                         {
                             if (item.Item.EquipmentSlot != EquipmentType.Sp)
@@ -3747,17 +3748,17 @@ namespace GloomyTale.GameObject
 
         public string GenerateLev()
         {
-            SpecialistInstance specialist = null;
+            ItemInstance specialist = null;
             if (Inventory != null)
             {
-                specialist = Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+                specialist = Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
             }
             return $"lev {Level} {(int)(Level < 100 ? LevelXp : LevelXp / 100)} {(!UseSp || specialist == null ? JobLevel : specialist.SpLevel)} {(!UseSp || specialist == null ? JobLevelXp : specialist.XP)} {(int)(Level < 100 ? XpLoad() : XpLoad() / 100)} {(!UseSp || specialist == null ? JobXPLoad() : SpXpLoad())} {Reputation} {GetCP()} {(int)(HeroLevel < 100 ? HeroXp : HeroXp / 100)} {HeroLevel} {(int)(HeroLevel < 100 ? HeroXPLoad() : HeroXPLoad() / 100)} 0";
         }
 
         public string GenerateLevelUp()
         {
-            Logger.Log.LogUserEvent("LEVELUP", Session.GenerateIdentity(), $"Level: {Level} JobLevel: {JobLevel} SPLevel: {Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear)?.SpLevel} HeroLevel: {HeroLevel} MapId: {Session.CurrentMapInstance?.Map.MapId} MapX: {PositionX} MapY: {PositionY}");
+            Logger.Log.LogUserEvent("LEVELUP", Session.GenerateIdentity(), $"Level: {Level} JobLevel: {JobLevel} SPLevel: {Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear)?.SpLevel} HeroLevel: {HeroLevel} MapId: {Session.CurrentMapInstance?.Map.MapId} MapX: {PositionX} MapY: {PositionY}");
             return $"levelup {VisualId}";
         }
 
@@ -3823,10 +3824,10 @@ namespace GloomyTale.GameObject
 
         public string GeneratePairy()
         {
-            WearableInstance fairy = null;
+            ItemInstance fairy = null;
             if (Inventory != null)
             {
-                fairy = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Fairy, InventoryType.Wear);
+                fairy = Inventory.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
             }
             ElementRate = 0;
             Element = 0;
@@ -3874,7 +3875,7 @@ namespace GloomyTale.GameObject
                 Session.CurrentMapInstance?.Broadcast(GenerateEff(198), PositionX, PositionY);
             }
         }
-        private void GenerateSpXpLevelUp(SpecialistInstance specialist)
+        private void GenerateSpXpLevelUp(ItemInstance specialist)
         {
             double t = SpXpLoad();
             while (UseSp && specialist.XP >= t)
@@ -4500,12 +4501,9 @@ namespace GloomyTale.GameObject
                     string info = string.Empty;
                     if (bz.Item.Item.Type == InventoryType.Equipment)
                     {
-                        if (bz.Item is WearableInstance item)
-                        {
-                            item.ShellEffects.Clear();
-                            item.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(bz.Item.EquipmentSerialId));
-                            info = item.GenerateEInfo().Replace(' ', '^').Replace("e_info^", "");
-                        }
+                        bz.Item.ShellEffects.Clear();
+                        bz.Item.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(bz.Item.EquipmentSerialId));
+                        info = bz.Item.GenerateEInfo().Replace(' ', '^').Replace("e_info^", "");
                     }
                     if (packet.Filter == 0 || packet.Filter == Status)
                     {
@@ -4563,7 +4561,7 @@ namespace GloomyTale.GameObject
 
         public string GenerateSayItem(string message, int type, byte itemInventory, short itemSlot, bool ignoreNickname = false)
         {
-            if (Inventory.LoadBySlotAndType(itemSlot, (InventoryType)itemInventory) is SpecialistInstance item)
+            if (Inventory.LoadBySlotAndType(itemSlot, (InventoryType)itemInventory) is ItemInstance item)
             {
                 return $"sayitem {(ignoreNickname ? 2 : 1)} {VisualId} {type} {message.Replace(' ', '^')} {(item.Item.EquipmentSlot == EquipmentType.Sp ? item.GenerateSlInfo() : item.GenerateEInfo())}";
             }
@@ -4671,17 +4669,11 @@ namespace GloomyTale.GameObject
                         case InventoryType.Equipment:
                             if (inv.Item.EquipmentSlot == EquipmentType.Sp)
                             {
-                                if (inv is SpecialistInstance specialistInstance)
-                                {
-                                    inv0 += $" {inv.Slot}.{inv.ItemVNum}.{specialistInstance.Rare}.{specialistInstance.Upgrade}.{specialistInstance.SpStoneUpgrade}";
-                                }
+                                inv0 += $" {inv.Slot}.{inv.ItemVNum}.{inv.Rare}.{inv.Upgrade}.{inv.SpStoneUpgrade}";
                             }
                             else
                             {
-                                if (inv is WearableInstance wearableInstance)
-                                {
-                                    inv0 += $" {inv.Slot}.{inv.ItemVNum}.{wearableInstance.Rare}.{(inv.Item.IsColored ? wearableInstance.Design : wearableInstance.Upgrade)}.0";
-                                }
+                                inv0 += $" {inv.Slot}.{inv.ItemVNum}.{inv.Rare}.{(inv.Item.IsColored ? inv.Design : inv.Upgrade)}.0";
                             }
                             break;
 
@@ -4698,17 +4690,11 @@ namespace GloomyTale.GameObject
                             break;
 
                         case InventoryType.Specialist:
-                            if (inv is SpecialistInstance specialist)
-                            {
-                                inv6 += $" {inv.Slot}.{inv.ItemVNum}.{specialist.Rare}.{specialist.Upgrade}.{specialist.SpStoneUpgrade}";
-                            }
+                            inv6 += $" {inv.Slot}.{inv.ItemVNum}.{inv.Rare}.{inv.Upgrade}.{inv.SpStoneUpgrade}";
                             break;
 
                         case InventoryType.Costume:
-                            if (inv is WearableInstance costumeInstance)
-                            {
-                                inv7 += $" {inv.Slot}.{inv.ItemVNum}.{costumeInstance.Rare}.{costumeInstance.Upgrade}.0";
-                            }
+                            inv7 += $" {inv.Slot}.{inv.ItemVNum}.{inv.Rare}.{inv.Upgrade}.0";
                             break;
                     }
                 }
@@ -4785,7 +4771,7 @@ namespace GloomyTale.GameObject
                 // handle specialist
                 if (Inventory != null)
                 {
-                    SpecialistInstance specialist = Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+                    var specialist = Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
                     if (specialist != null)
                     {
                         MinHit += specialist.DamageMinimum + (specialist.SpDamage * 10);
@@ -4809,8 +4795,8 @@ namespace GloomyTale.GameObject
                         DistanceDefence += specialist.DistanceDefence + (specialist.SpDefence * 10);
                         MagicalDefence += specialist.MagicDefence + (specialist.SpDefence * 10);
 
-                        WearableInstance mainWeapon = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
-                        WearableInstance secondaryWeapon = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                        var mainWeapon = Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                        var secondaryWeapon = Inventory.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
                         List<ShellEffectDTO> effects = new List<ShellEffectDTO>();
                         if (mainWeapon?.ShellEffects != null)
                         {
@@ -4949,7 +4935,7 @@ namespace GloomyTale.GameObject
             }
 
             // TODO: add base stats
-            WearableInstance weapon = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+            var weapon = Inventory?.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
             if (weapon != null)
             {
                 weaponUpgrade = weapon.Upgrade;
@@ -4962,7 +4948,7 @@ namespace GloomyTale.GameObject
                 // maxhp-mp
             }
 
-            WearableInstance weapon2 = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+            var weapon2 = Inventory?.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
             if (weapon2 != null)
             {
                 secondaryUpgrade = weapon2.Upgrade;
@@ -4975,7 +4961,7 @@ namespace GloomyTale.GameObject
                 // maxhp-mp
             }
 
-            WearableInstance armor = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Armor, InventoryType.Wear);
+            var armor = Inventory?.LoadBySlotAndType((byte)EquipmentType.Armor, InventoryType.Wear);
             if (armor != null)
             {
                 armorUpgrade = armor.Upgrade;
@@ -4986,7 +4972,7 @@ namespace GloomyTale.GameObject
                 DistanceDefenceRate += armor.DistanceDefenceDodge + armor.Item.DistanceDefenceDodge;
             }
 
-            WearableInstance fairy = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Fairy, InventoryType.Wear);
+            var fairy = Inventory?.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
             if (fairy != null)
             {
                 ElementRate += fairy.ElementRate + fairy.Item.ElementRate + (IsUsingFairyBooster ? 30 : 0)
@@ -4995,7 +4981,7 @@ namespace GloomyTale.GameObject
 
             for (short i = 1; i < 14; i++)
             {
-                WearableInstance item = Inventory?.LoadBySlotAndType<WearableInstance>(i, InventoryType.Wear);
+                var item = Inventory?.LoadBySlotAndType(i, InventoryType.Wear);
                 if (item != null && item.Item.EquipmentSlot != EquipmentType.MainWeapon
                         && item.Item.EquipmentSlot != EquipmentType.SecondaryWeapon
                         && item.Item.EquipmentSlot != EquipmentType.Armor
@@ -5582,7 +5568,7 @@ namespace GloomyTale.GameObject
                             {
                                 try
                                 {
-                                    ((WearableInstance)newItem).RarifyItem(RarifyMode.Drop, RarifyProtection.None, forceRare: rare);
+                                    newItem.RarifyItem(RarifyMode.Drop, RarifyProtection.None, forceRare: rare);
                                     newItem.Upgrade = (byte)(newItem.Item.BasicUpgrade + upgrade);
                                     if (newItem.Upgrade > 10)
                                     {
@@ -5600,7 +5586,7 @@ namespace GloomyTale.GameObject
                                 {
                                     try
                                     {
-                                        ((WearableInstance)newItem).RarifyItem(RarifyMode.Drop, RarifyProtection.None);
+                                        newItem.RarifyItem(RarifyMode.Drop, RarifyProtection.None);
                                         newItem.Upgrade = newItem.Item.BasicUpgrade;
                                         if (newItem.Rare >= minRare)
                                         {
@@ -5618,7 +5604,7 @@ namespace GloomyTale.GameObject
                         if (newItem.Item.Type.Equals(InventoryType.Equipment) && rare != 0 && !forceRandom)
                         {
                             newItem.Rare = (sbyte)rare;
-                            ((WearableInstance)newItem).SetRarityPoint();
+                            newItem.SetRarityPoint();
                         }
 
                         if (newItem.Item.ItemType == ItemType.Shell)
@@ -5629,10 +5615,10 @@ namespace GloomyTale.GameObject
                         if (newItem.Item.EquipmentSlot == EquipmentType.Gloves || newItem.Item.EquipmentSlot == EquipmentType.Boots)
                         {
                             newItem.Upgrade = upgrade;
-                            ((WearableInstance)newItem).DarkResistance = (short)(newItem.Item.DarkResistance * upgrade);
-                            ((WearableInstance)newItem).LightResistance = (short)(newItem.Item.LightResistance * upgrade);
-                            ((WearableInstance)newItem).WaterResistance = (short)(newItem.Item.WaterResistance * upgrade);
-                            ((WearableInstance)newItem).FireResistance = (short)(newItem.Item.FireResistance * upgrade);
+                            newItem.DarkResistance = (short)(newItem.Item.DarkResistance * upgrade);
+                            newItem.LightResistance = (short)(newItem.Item.LightResistance * upgrade);
+                            newItem.WaterResistance = (short)(newItem.Item.WaterResistance * upgrade);
+                            newItem.FireResistance = (short)(newItem.Item.FireResistance * upgrade);
                         }
 
                         List<ItemInstance> newInv = Inventory.AddToInventory(newItem);
@@ -5918,14 +5904,14 @@ namespace GloomyTale.GameObject
             {
                 inventory.CharacterId = VisualId;
                 Inventory[inventory.Id] = (ItemInstance)inventory;
-                WearableInstance iteminstance = inventory as WearableInstance;
+                ItemInstance iteminstance = inventory as ItemInstance;
                 iteminstance?.ShellEffects.Clear();
                 iteminstance?.ShellEffects.AddRange(DAOFactory.Instance.ShellEffectDAO.LoadByEquipmentSerialId(iteminstance.EquipmentSerialId));
             }
 
-            WearableInstance ring = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Ring, InventoryType.Wear);
-            WearableInstance bracelet = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Bracelet, InventoryType.Wear);
-            WearableInstance necklace = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Necklace, InventoryType.Wear);
+            var ring = Inventory.LoadBySlotAndType((byte)EquipmentType.Ring, InventoryType.Wear);
+            var bracelet = Inventory.LoadBySlotAndType((byte)EquipmentType.Bracelet, InventoryType.Wear);
+            var necklace = Inventory.LoadBySlotAndType((byte)EquipmentType.Necklace, InventoryType.Wear);
             CellonOptions.Clear();
             if (ring != null)
             {
@@ -6232,27 +6218,22 @@ namespace GloomyTale.GameObject
 
                         foreach (ItemInstance itemInstance in InventorySave)
                         {
-                            
-                            if (!(itemInstance is WearableInstance instance))
-                            {
-                                continue;
-                            }
-                            if (!instance.ShellEffects.Any())
+                            if (!itemInstance.ShellEffects.Any())
                             {
                                 continue;
                             }
                             DAOFactory.Instance.ShellEffectDAO.DeleteByEquipmentSerialId(itemInstance.EquipmentSerialId);
-                            DAOFactory.Instance.ShellEffectDAO.InsertOrUpdateFromList(((WearableInstance)itemInstance).ShellEffects, itemInstance.EquipmentSerialId);
-                            DAOFactory.Instance.CellonOptionDAO.InsertOrUpdateFromList(((WearableInstance)itemInstance).CellonOptions, itemInstance.EquipmentSerialId);
-                            instance.ShellEffects.ForEach(s =>
+                            DAOFactory.Instance.ShellEffectDAO.InsertOrUpdateFromList(itemInstance.ShellEffects, itemInstance.EquipmentSerialId);
+                            DAOFactory.Instance.CellonOptionDAO.InsertOrUpdateFromList(itemInstance.CellonOptions, itemInstance.EquipmentSerialId);
+                            itemInstance.ShellEffects.ForEach(s =>
                             {
-                                s.EquipmentSerialId = instance.EquipmentSerialId;
+                                s.EquipmentSerialId = itemInstance.EquipmentSerialId;
                                 DAOFactory.Instance.ShellEffectDAO.InsertOrUpdate(s);
                             });
-                            DAOFactory.Instance.CellonOptionDAO.Save(instance.CellonOptions);
-                            instance.CellonOptions.ForEach(s =>
+                            DAOFactory.Instance.CellonOptionDAO.Save(itemInstance.CellonOptions);
+                            itemInstance.CellonOptions.ForEach(s =>
                             {
-                                s.EquipmentSerialId = instance.EquipmentSerialId;                                
+                                s.EquipmentSerialId = itemInstance.EquipmentSerialId;                                
                             });
                         }
                     }
@@ -6511,7 +6492,7 @@ namespace GloomyTale.GameObject
                     case ClassType.Adventurer:
                         if (ski.Skill.Type == 1 && Inventory != null)
                         {
-                            WearableInstance wearable = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                            var wearable = Inventory.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
                             if (wearable != null)
                             {
                                 if (wearable.Ammo > 0)
@@ -6537,7 +6518,7 @@ namespace GloomyTale.GameObject
                     case ClassType.Swordsman:
                         if (ski.Skill.Type == 1 && Inventory != null)
                         {
-                            WearableInstance inv = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
+                            var inv = Inventory.LoadBySlotAndType((byte)EquipmentType.SecondaryWeapon, InventoryType.Wear);
                             if (inv != null)
                             {
                                 if (inv.Ammo > 0)
@@ -6564,7 +6545,7 @@ namespace GloomyTale.GameObject
                     case ClassType.Archer:
                         if (ski.Skill.Type == 1 && Inventory != null)
                         {
-                            WearableInstance inv = Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.MainWeapon, InventoryType.Wear);
+                            var inv = Inventory.LoadBySlotAndType((byte)EquipmentType.MainWeapon, InventoryType.Wear);
                             if (inv != null)
                             {
                                 if (inv.Ammo > 0)
@@ -6822,7 +6803,7 @@ namespace GloomyTale.GameObject
                     HeroXp += (int)((GetHXP(monster, grp) * expDamageRate / 50) * (isMonsterOwner ? 1 : 0.8f) * (1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)));
                 }
 
-                WearableInstance fairy = Inventory?.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Fairy, InventoryType.Wear);
+                var fairy = Inventory?.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
 
                 if (fairy != null)
                 {

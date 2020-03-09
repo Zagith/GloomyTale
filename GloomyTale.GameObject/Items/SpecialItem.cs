@@ -429,7 +429,7 @@ namespace GloomyTale.GameObject
                 case 666:
                     if (EffectValue == 1 && byte.TryParse(packetsplit[9], out byte islot))
                     {
-                        var wearInstance = session.Character.Inventory.LoadBySlotAndType<WearableInstance>(islot, InventoryType.Equipment);
+                        var wearInstance = session.Character.Inventory.LoadBySlotAndType(islot, InventoryType.Equipment);
 
                         if (wearInstance != null && (wearInstance.Item.ItemType == ItemType.Weapon || wearInstance.Item.ItemType == ItemType.Armor) && wearInstance.ShellEffects.Count != 0 && !wearInstance.Item.IsHeroic)
                         {
@@ -1334,7 +1334,7 @@ namespace GloomyTale.GameObject
                 //Max Perfections
                 case 30001:
                     {
-                        var SP = session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+                        var SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
                         if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade <= 99)
                         {
                             if (Option == 0)
@@ -1352,7 +1352,7 @@ namespace GloomyTale.GameObject
                 // Reset perfection
                 case 30002:
                     {
-                        var SP = session.Character.Inventory.LoadBySlotAndType<SpecialistInstance>((byte)EquipmentType.Sp, InventoryType.Wear);
+                        var SP = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
                         if (!session.Character.UseSp && SP != null && SP.SpStoneUpgrade > 0)
                         {
                             if (Option == 0)

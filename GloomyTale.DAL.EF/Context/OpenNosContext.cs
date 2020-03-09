@@ -35,8 +35,6 @@ namespace GloomyTale.DAL.EF
 
         public virtual DbSet<BCard> BCard { get; set; }
 
-        public virtual DbSet<BoxItem> BoxItem { get; set; }
-
         public virtual DbSet<Card> Card { get; set; }
 
         public virtual DbSet<CellonOption> CellonOption { get; set; }
@@ -177,15 +175,6 @@ namespace GloomyTale.DAL.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // remove automatic pluralization
-
-            modelBuilder.Entity<WearableInstance>()
-                .HasBaseType<ItemInstance>();
-
-            modelBuilder.Entity<SpecialistInstance>()
-                .HasBaseType<WearableInstance>();
-
-            modelBuilder.Entity<UsableInstance>()
-                .HasBaseType<ItemInstance>();
 
             modelBuilder.Entity<Account>()
                 .Property(e => e.Password)

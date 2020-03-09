@@ -396,10 +396,10 @@ namespace GloomyTale.GameObject
             $"{RangeDefense + (ArmorInstance?.Item.DistanceDefence ?? 0) + (GlovesInstance?.Item.DistanceDefence ?? 0) + (BootsInstance?.Item.DistanceDefence ?? 0)} " +
             $"{RangeDefenseDodge + (ArmorInstance?.Item.DistanceDefenceDodge ?? 0) + (GlovesInstance?.Item.DistanceDefenceDodge ?? 0) + (BootsInstance?.Item.DistanceDefenceDodge ?? 0)} " +
             $"{MagicalDefense + (ArmorInstance?.Item.MagicDefence ?? 0) + (GlovesInstance?.Item.MagicDefence ?? 0) + (BootsInstance?.Item.MagicDefence ?? 0)} " +
-            $"{EquipmentFireResistance + Monster.FireResistance + (((WearableInstance)GlovesInstance)?.FireResistance ?? 0) + (GlovesInstance?.Item.FireResistance ?? 0) + (((WearableInstance)BootsInstance)?.FireResistance ?? 0) + (BootsInstance?.Item.FireResistance ?? 0)} " +
-            $"{EquipmentWaterResistance + Monster.WaterResistance + (((WearableInstance)GlovesInstance)?.WaterResistance ?? 0) + (GlovesInstance?.Item.WaterResistance ?? 0) + (((WearableInstance)BootsInstance)?.WaterResistance ?? 0) + (BootsInstance?.Item.WaterResistance ?? 0)} " +
-            $"{EquipmentLightResistance + Monster.LightResistance + (((WearableInstance)GlovesInstance)?.LightResistance ?? 0) + (GlovesInstance?.Item.LightResistance ?? 0) + (((WearableInstance)BootsInstance)?.LightResistance ?? 0) + (BootsInstance?.Item.LightResistance ?? 0)} " +
-            $"{EquipmentDarkResistance + Monster.DarkResistance + (((WearableInstance)GlovesInstance)?.DarkResistance ?? 0) + (GlovesInstance?.Item.DarkResistance ?? 0) + (((WearableInstance)BootsInstance)?.DarkResistance ?? 0) + (BootsInstance?.Item.DarkResistance ?? 0)} " +
+            $"{EquipmentFireResistance + Monster.FireResistance + (GlovesInstance?.FireResistance ?? 0) + (GlovesInstance?.Item.FireResistance ?? 0) + (BootsInstance?.FireResistance ?? 0) + (BootsInstance?.Item.FireResistance ?? 0)} " +
+            $"{EquipmentWaterResistance + Monster.WaterResistance + (GlovesInstance?.WaterResistance ?? 0) + (GlovesInstance?.Item.WaterResistance ?? 0) + (BootsInstance?.WaterResistance ?? 0) + (BootsInstance?.Item.WaterResistance ?? 0)} " +
+            $"{EquipmentLightResistance + Monster.LightResistance + (GlovesInstance?.LightResistance ?? 0) + (GlovesInstance?.Item.LightResistance ?? 0) + (BootsInstance?.LightResistance ?? 0) + (BootsInstance?.Item.LightResistance ?? 0)} " +
+            $"{EquipmentDarkResistance + Monster.DarkResistance + (GlovesInstance?.DarkResistance ?? 0) + (GlovesInstance?.Item.DarkResistance ?? 0) + (BootsInstance?.DarkResistance ?? 0) + (BootsInstance?.Item.DarkResistance ?? 0)} " +
             $"{MaxHp} " +
             $"{MaxMp} " +
             $"-1 {Name.Replace(' ', '^')}";
@@ -523,10 +523,10 @@ namespace GloomyTale.GameObject
                         $"{RangeDefenseDodge + (ArmorInstance?.Item.DistanceDefenceDodge ?? 0) + (GlovesInstance?.Item.DistanceDefenceDodge ?? 0) + (BootsInstance?.Item.DistanceDefenceDodge ?? 0)} " +
                         $"{MagicalDefense + (ArmorInstance?.Item.MagicDefence ?? 0) + (GlovesInstance?.Item.MagicDefence ?? 0) + (BootsInstance?.Item.MagicDefence ?? 0)} " +
                         $"{(IsUsingSp ? Sp.Instance.Item.Element : 0)} " +
-                        $"{EquipmentFireResistance + Monster.FireResistance + (((WearableInstance)GlovesInstance)?.FireResistance ?? 0) + (GlovesInstance?.Item.FireResistance ?? 0) + (((WearableInstance)BootsInstance)?.FireResistance ?? 0) + (BootsInstance?.Item.FireResistance ?? 0)} " +
-                        $"{EquipmentWaterResistance + Monster.WaterResistance + (((WearableInstance)GlovesInstance)?.WaterResistance ?? 0) + (GlovesInstance?.Item.WaterResistance ?? 0) + (((WearableInstance)BootsInstance)?.WaterResistance ?? 0) + (BootsInstance?.Item.WaterResistance ?? 0)} " +
-                        $"{EquipmentLightResistance + Monster.LightResistance + (((WearableInstance)GlovesInstance)?.LightResistance ?? 0) + (GlovesInstance?.Item.LightResistance ?? 0) + (((WearableInstance)BootsInstance)?.LightResistance ?? 0) + (BootsInstance?.Item.LightResistance ?? 0)} " +
-                        $"{EquipmentDarkResistance + Monster.DarkResistance + (((WearableInstance)GlovesInstance)?.DarkResistance ?? 0) + (GlovesInstance?.Item.DarkResistance ?? 0) + (((WearableInstance)BootsInstance)?.DarkResistance ?? 0) + (BootsInstance?.Item.DarkResistance ?? 0)} " +
+                        $"{EquipmentFireResistance + Monster.FireResistance + (GlovesInstance?.FireResistance ?? 0) + (GlovesInstance?.Item.FireResistance ?? 0) + (BootsInstance?.FireResistance ?? 0) + (BootsInstance?.Item.FireResistance ?? 0)} " +
+                        $"{EquipmentWaterResistance + Monster.WaterResistance + (GlovesInstance?.WaterResistance ?? 0) + (GlovesInstance?.Item.WaterResistance ?? 0) + (BootsInstance?.WaterResistance ?? 0) + (BootsInstance?.Item.WaterResistance ?? 0)} " +
+                        $"{EquipmentLightResistance + Monster.LightResistance + (GlovesInstance?.LightResistance ?? 0) + (GlovesInstance?.Item.LightResistance ?? 0) + (BootsInstance?.LightResistance ?? 0) + (BootsInstance?.Item.LightResistance ?? 0)} " +
+                        $"{EquipmentDarkResistance + Monster.DarkResistance + (GlovesInstance?.DarkResistance ?? 0) + (GlovesInstance?.Item.DarkResistance ?? 0) + (BootsInstance?.DarkResistance ?? 0) + (BootsInstance?.Item.DarkResistance ?? 0)} " +
                         $"{Hp} " +
                         $"{MaxHp} " +
                         $"{Mp} " +
@@ -785,7 +785,7 @@ namespace GloomyTale.GameObject
             GlovesInstance = inv.Find(s => s.Item.EquipmentSlot == EquipmentType.Gloves);
             BootsInstance = inv.Find(s => s.Item.EquipmentSlot == EquipmentType.Boots);
 
-            SpecialistInstance partnerSpInstance = (SpecialistInstance)inv.Find(s => s.Item.EquipmentSlot == EquipmentType.Sp);
+            var partnerSpInstance = inv.Find(s => s.Item.EquipmentSlot == EquipmentType.Sp);
 
             if (partnerSpInstance != null)
             {

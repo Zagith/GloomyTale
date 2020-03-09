@@ -15,7 +15,7 @@ namespace GloomyTale.GameObject
     {
         #region Istantiation
 
-        public PartnerSp(SpecialistInstance instance)
+        public PartnerSp(ItemInstance instance)
         {
             Instance = instance;
 
@@ -26,7 +26,7 @@ namespace GloomyTale.GameObject
 
         #region Properties
 
-        public SpecialistInstance Instance { get; }
+        public ItemInstance Instance { get; }
 
         private long XpMax => 1;// ServerManager.Instance.Configuration.PartnerSpXp;
 

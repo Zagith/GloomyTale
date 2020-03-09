@@ -100,16 +100,17 @@ namespace GloomyTale.GameObject
                         break;
 
                     case InventoryType.Equipment:
-                        newItem = newItem.Item.ItemType == ItemType.Specialist
-                           ? new SpecialistInstance { ItemVNum = vnum, SpLevel = 1, Amount = 1 }
-                           : newItem.Item.ItemType == ItemType.Box
-                               ? new BoxInstance { ItemVNum = vnum, Amount = 1 }
-                               : new WearableInstance
-                               {
-                                   ItemVNum = vnum,
-                                   Amount = 1,
-                                   DurabilityPoint = newItem.Item.Effect != 790 && (newItem.Item.EffectValue < 863 || newItem.Item.EffectValue > 872) && !new int[] { 3951, 3952, 3953, 3954, 3955, 7427 }.Contains(newItem.Item.EffectValue) ? newItem.Item.EffectValue : 0
-                               };
+                        newItem = newItem.Item.ItemType == ItemType.Specialist ? new ItemInstance
+                        {
+                            ItemVNum = vnum,
+                            SpLevel = 1,
+                            Amount = 1
+                        } : new ItemInstance
+                        {
+                            ItemVNum = vnum,
+                            Amount = 1,
+                            DurabilityPoint = newItem.Item.Effect != 790 && (newItem.Item.EffectValue < 863 || newItem.Item.EffectValue > 872) && !new int[] { 3951, 3952, 3953, 3954, 3955, 7427 }.Contains(newItem.Item.EffectValue) ? newItem.Item.EffectValue : 0
+                        };
                         break;
                 }
             }

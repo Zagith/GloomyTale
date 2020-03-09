@@ -28,11 +28,9 @@ namespace GloomyTale.DAL.DAO
 {
     public class ItemInstanceDAO : SynchronizableBaseDAO<ItemInstance, ItemInstanceDTO>, IItemInstanceDAO
     {
-        private readonly IItemInstanceMappingTypes _mappingTypes;
 
-        public ItemInstanceDAO(IMapper mapper, IItemInstanceMappingTypes mappingTypes) : base(mapper)
+        public ItemInstanceDAO(IMapper mapper) : base(mapper)
         {
-            _mappingTypes = mappingTypes;
         }
 
         #region Methods
@@ -95,28 +93,6 @@ namespace GloomyTale.DAL.DAO
             }
         }
 
-        public interface IItemInstanceMappingTypes
-        {
-            List<(Type, Type)> Types { get; }
-        }
-
-        protected override ItemInstanceDTO InsertOrUpdate(OpenNosContext context, ItemInstanceDTO itemInstance)
-        {
-            try
-            {
-                ItemInstance entity = context.ItemInstance.FirstOrDefault(c => c.Id == itemInstance.Id);
-
-                itemInstance = entity == null ? Insert(itemInstance, context) : Update(entity, itemInstance, context);
-                context.SaveChanges();
-                return itemInstance;
-            }
-            catch (Exception e)
-            {
-                Logger.Log.Error(e);
-                return null;
-            }
-        }
-
         public IEnumerable<ItemInstanceDTO> LoadByCharacterId(long characterId)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
@@ -169,27 +145,6 @@ namespace GloomyTale.DAL.DAO
             catch (Exception e)
             {
                 Logger.Log.Error(e);
-                return null;
-            }
-        }
-
-
-        protected override ItemInstance MapEntity(ItemInstanceDTO dto)
-        {
-            try
-            {
-                var entity = _mapper.Map<ItemInstance>(dto);
-                (Type key, Type value) = _mappingTypes.Types.FirstOrDefault(k => k.Item1 == dto.GetType());
-                if (key != null)
-                {
-                    entity = _mapper.Map(dto, key, value) as ItemInstance;
-                }
-
-                return entity;
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
                 return null;
             }
         }

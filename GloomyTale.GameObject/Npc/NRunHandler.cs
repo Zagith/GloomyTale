@@ -1972,7 +1972,7 @@ namespace GloomyTale.GameObject
 
                         const long price = 10000000;
 
-                        var itemInstance = Session?.Character?.Inventory?.LoadBySlotAndType<WearableInstance>(0, InventoryType.Equipment);
+                        var itemInstance = Session?.Character?.Inventory?.LoadBySlotAndType(0, InventoryType.Equipment);
 
                         if (itemInstance?.Item != null && ((itemInstance.ItemVNum >= 4949 && itemInstance.ItemVNum <= 4966) || (itemInstance.ItemVNum >= 4978 && itemInstance.ItemVNum <= 4986)) && itemInstance.Rare == 8)
                         {

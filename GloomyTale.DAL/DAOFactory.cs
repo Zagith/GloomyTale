@@ -25,7 +25,7 @@ namespace GloomyTale.DAL
             Instance = dao;
         }
 
-        public DAOFactory (IAccountDAO _accountDAO,IBazaarItemDAO _bazaarItemDAO,IBCardDAO _bcardDAO,IBoxItemDAO _boxItemDAO,
+        public DAOFactory (IAccountDAO _accountDAO,IBazaarItemDAO _bazaarItemDAO,IBCardDAO _bcardDAO,
             ICardDAO _cardDAO,ICellonOptionDAO _cellonOptionDAO,ICharacterDAO _characterDAO,ICharacterRelationDAO _characterRelationDAO,
             ICharacterSkillDAO _characterSkillDAO,ICharacterTitlesDAO _characterTitleDAO,
             ICharacterQuestDAO _characterQuestDAO,IComboDAO _comboDAO,IDropDAO _dropDAO, IFamilyCharacterDAO _familyCharacterDAO,
@@ -45,7 +45,6 @@ namespace GloomyTale.DAL
             AccountDAO = _accountDAO;
             BazaarItemDAO = _bazaarItemDAO;
             BCardDAO = _bcardDAO;
-            BoxItemDAO = _boxItemDAO;
             CardDAO = _cardDAO;
             CellonOptionDAO = _cellonOptionDAO;
             CharacterDAO = _characterDAO;
@@ -115,8 +114,6 @@ namespace GloomyTale.DAL
         public IBazaarItemDAO BazaarItemDAO { get; }
 
         public IBCardDAO BCardDAO { get; }
-
-        public IBoxItemDAO BoxItemDAO { get; }
 
         public ICardDAO CardDAO { get; }
 

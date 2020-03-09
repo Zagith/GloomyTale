@@ -58,7 +58,7 @@ namespace GloomyTale.GameObject
                 case 0:
                     if (inv.Item.ItemType == ItemType.Shell)
                     {
-                        if (!((WearableInstance)inv).ShellEffects.Any())
+                        if (!inv.ShellEffects.Any())
                         {
                             session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SHELL_MUST_BE_IDENTIFIED"), 0));
                             return;
@@ -78,9 +78,9 @@ namespace GloomyTale.GameObject
                             return;
                         }
 
-                        if (((WearableInstance)inv).ShellEffects.Count != 0 && packetsplit?.Length > 9 && byte.TryParse(packetsplit[9], out byte islot))
+                        if (inv.ShellEffects.Count != 0 && packetsplit?.Length > 9 && byte.TryParse(packetsplit[9], out byte islot))
                         {
-                            var wearable = session.Character.Inventory.LoadBySlotAndType<WearableInstance>(islot, InventoryType.Equipment);
+                            var wearable = session.Character.Inventory.LoadBySlotAndType(islot, InventoryType.Equipment);
                             if (wearable != null && (wearable.Item.ItemType == ItemType.Weapon || wearable.Item.ItemType == ItemType.Armor) && wearable.Item.LevelMinimum >= inv.Upgrade && wearable.Rare >= inv.Rare && !wearable.Item.IsHeroic)
                             {
                                 switch (requestType)
@@ -92,7 +92,7 @@ namespace GloomyTale.GameObject
                                         break;
                                     case 1:
 
-                                        if (((WearableInstance)inv).ShellEffects == null)
+                                        if (inv.ShellEffects == null)
                                         {
                                             return;
                                         }
@@ -137,7 +137,7 @@ namespace GloomyTale.GameObject
                                             wearable.ShellRarity = inv.Rare;
                                             wearable.ShellEffects.Clear();
                                             DAOFactory.Instance.ShellEffectDAO.DeleteByEquipmentSerialId(wearable.EquipmentSerialId);
-                                            wearable.ShellEffects.AddRange(((WearableInstance)inv).ShellEffects);
+                                            wearable.ShellEffects.AddRange(inv.ShellEffects);
                                             if (wearable.EquipmentSerialId == Guid.Empty)
                                             {
                                                 wearable.EquipmentSerialId = Guid.NewGuid();

@@ -7,9 +7,6 @@ using AutoMapper.Configuration;
 using GloomyTale.DAL.EF;
 using GloomyTale.DAL.EF.Entities;
 using GloomyTale.Data;
-using BoxInstance = GloomyTale.GameObject.Items.Instance.BoxInstance;
-using SpecialistInstance = GloomyTale.GameObject.Items.Instance.SpecialistInstance;
-using WearableInstance = GloomyTale.GameObject.Items.Instance.WearableInstance;
 
 namespace GloomyTale.SqlServer.Mapping
 {
@@ -30,10 +27,6 @@ namespace GloomyTale.SqlServer.Mapping
             // EF to GameObject
             cfg.CreateMap<ItemInstance, GameObject.Items.Instance.ItemInstance>()
                 .ForMember(s => s.Item, opts => opts.Ignore());
-
-            MapItemInstance<BoxInstance>(cfg);
-            MapItemInstance<SpecialistInstance>(cfg);
-            MapItemInstance<WearableInstance>(cfg);
 
             AddMapping<Account, AccountDTO>(cfg);
             // character

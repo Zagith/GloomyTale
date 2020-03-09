@@ -10,7 +10,7 @@ namespace GloomyTale.GameObject.Helpers
     {
         #region Method
         
-        public void SpeedPerfection(ClientSession Session, SpecialistInstance specialistInstance, ItemInstance inv = null)
+        public void SpeedPerfection(ClientSession Session, ItemInstance specialistInstance, ItemInstance inv = null)
         {
             short[] upsuccess = { 50, 40, 30, 20, 10 };
 
@@ -209,7 +209,7 @@ namespace GloomyTale.GameObject.Helpers
             }      
         }
 
-        public void RemovePerfection(ClientSession session, SpecialistInstance SP, ItemInstance inv = null)
+        public void RemovePerfection(ClientSession session, ItemInstance SP, ItemInstance inv = null)
         {
             SP.SpFire = 0;
             SP.SpWater = 0;

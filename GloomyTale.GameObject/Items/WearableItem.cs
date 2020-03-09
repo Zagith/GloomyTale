@@ -131,7 +131,10 @@ namespace GloomyTale.GameObject
 
                         if (session.Character.UseSp)
                         {
-                            if (session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, equipment) is ItemInstance sp && sp.Item.Element != 0 && EquipmentSlot == EquipmentType.Fairy && Element != sp.Item.Element && Element != sp.Item.SecondaryElement)
+                            var sp =
+                                session.Character.Inventory.LoadBySlotAndType(
+                                    (byte)EquipmentType.Sp, equipment);
+                            if (sp != null && sp.Item.Element != 0 && EquipmentSlot == EquipmentType.Fairy && Element != sp.Item.Element && Element != sp.Item.SecondaryElement)
                             {
                                 session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("BAD_FAIRY"), 0));
                                 return;
@@ -261,7 +264,7 @@ namespace GloomyTale.GameObject
                                             return;
                                         }
 
-                                        mate.Sp = new PartnerSp((SpecialistInstance)inv);
+                                        mate.Sp = new PartnerSp(inv);
                                     }
                                 }
                                 break;
@@ -324,7 +327,7 @@ namespace GloomyTale.GameObject
                             case ItemType.Armor:
                                 session.Character.ShellEffectArmor.Clear();
 
-                                foreach (ShellEffectDTO dto in ((WearableInstance)inv).ShellEffects)
+                                foreach (ShellEffectDTO dto in inv.ShellEffects)
                                 {
                                     session.Character.ShellEffectArmor.Add(dto);
                                 }
@@ -335,7 +338,7 @@ namespace GloomyTale.GameObject
                                     case EquipmentType.MainWeapon:
                                         session.Character.ShellEffectMain.Clear();
 
-                                        foreach (ShellEffectDTO dto in ((WearableInstance)inv).ShellEffects)
+                                        foreach (ShellEffectDTO dto in inv.ShellEffects)
                                         {
                                             session.Character.ShellEffectMain.Add(dto);
                                         }
@@ -344,7 +347,7 @@ namespace GloomyTale.GameObject
                                     case EquipmentType.SecondaryWeapon:
                                         session.Character.ShellEffectSecondary.Clear();
 
-                                        foreach (ShellEffectDTO dto in ((WearableInstance)inv).ShellEffects)
+                                        foreach (ShellEffectDTO dto in inv.ShellEffects)
                                         {
                                             session.Character.ShellEffectSecondary.Add(dto);
                                         }
@@ -367,7 +370,7 @@ namespace GloomyTale.GameObject
 
                         if (EquipmentSlot == EquipmentType.Fairy)
                         {
-                            var fairy = session.Character.Inventory.LoadBySlotAndType<WearableInstance>((byte)EquipmentType.Fairy, equipment);
+                            var fairy = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Fairy, equipment);
                             session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("FAIRYSTATS"), fairy.XP, CharacterHelper.LoadFairyXPData(fairy.ElementRate + fairy.Item.ElementRate)), 10));
                         }
 
