@@ -496,7 +496,7 @@
     <value>Your job has been changed.</value>
   </data>
   <data name="CLIENTSESSION_DISPOSING" xml:space="preserve">
-    <value>Separation of the client, the packet won't be handled.</value>
+    <value>Separation of the client, the packet won't be handled. {0}</value>
   </data>
   <data name="CLIENT_ARRIVED" xml:space="preserve">
     <value>SessionId: {0} has connected</value>

@@ -1222,7 +1222,7 @@ namespace GloomyTale.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Separation of the client, the packet won&apos;t be handled..
+        ///   Cerca una stringa localizzata simile a Separation of the client, the packet won&apos;t be handled. {0}.
         /// </summary>
         internal static string CLIENTSESSION_DISPOSING {
             get {

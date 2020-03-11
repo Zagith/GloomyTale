@@ -2603,13 +2603,17 @@ namespace GloomyTale.Handler
                 if (Session.Character.MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (short)MapTypeEnum.Act4)
                     && ServerManager.Instance.ChannelId != 51)
                 {
-                    /*if (ServerManager.Instance.IsAct4Online())
+                    SerializableWorldServer act4ChannelInfo =
+                        CommunicationServiceClient.Instance.GetAct4ChannelInfo(ServerManager.Instance.ServerGroup);
+                    if (act4ChannelInfo == null)
                     {
-                        Session.Character.ChangeChannel(ServerManager.Instance.Configuration.Act4IP, ServerManager.Instance.Configuration.Act4Port, 2);
+                        shouldRespawn = true;
+                    }
+                    else
+                    {
+                        Session.Character.ChangeChannel(act4ChannelInfo.EndPointIp, (short)act4ChannelInfo.EndPointPort, 1);
                         return;
-                    }*/
-
-                    shouldRespawn = true;
+                    }
                 }
             }
 
