@@ -2557,10 +2557,10 @@ namespace GloomyTale.GameObject.Networking
 
         public void Act4Process()
         {
-           /* if (ChannelId != 51)
+           if (ChannelId != 51)
             {
                 return;
-            }*/
+            }
 
             MapInstance angelMapInstance = GetMapInstance(GetBaseMapInstanceIdByMapId(132));
             MapInstance demonMapInstance = GetMapInstance(GetBaseMapInstanceIdByMapId(133));

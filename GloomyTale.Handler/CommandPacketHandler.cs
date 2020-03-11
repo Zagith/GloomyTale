@@ -4223,7 +4223,7 @@ namespace GloomyTale.Handler
                 switch (player.Character.Faction)
                 {
                     case 0:
-                        ServerManager.Instance.ChangeMap(player.Character.CharacterId, 145, 51, 41);
+                        ServerManager.Instance.ChangeMap(player.Character.CharacterId, 129, 127, 73);
                         player.SendPacket(UserInterfaceHelper.GenerateInfo("ACT4_NEED_FACTION"));
                         return;
                     case FactionType.Angel:
@@ -4255,20 +4255,16 @@ namespace GloomyTale.Handler
                 LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
                 if (Session.Character.Channel.ChannelId == 51)
                 {
-#warning Act4 connection
-                    /*
-                    string connection = CommunicationServiceClient.Instance.RetrieveOriginWorld(Session.Character.AccountId);
-                    if (string.IsNullOrWhiteSpace(connection))
+                    SerializableWorldServer connection = CommunicationServiceClient.Instance.GetPreviousChannelByAccountId(Session.Account.AccountId);
+                    if (connection == null || Session.Character == null)
                     {
                         return;
                     }
-#warning change port alveus
-                    Session.Character.MapId = 145;
-                    Session.Character.MapX = 51;
-                    Session.Character.MapY = 41;
-                    int port = Convert.ToInt32(connection.Split(':')[1]);
-                    Session.Character.ChangeChannel(connection.Split(':')[0], port, 3);
-               */}
+                    Session.Character.MapId = 129;
+                    Session.Character.MapX = 127;
+                    Session.Character.MapY = 73;
+                    Session.Character.ChangeChannel(connection.EndPointIp, connection.EndPointPort, 3);
+                }
             }
 
             Session.Character.GenerateSay(LeaveAct4Packet.ReturnHelp(), 10);

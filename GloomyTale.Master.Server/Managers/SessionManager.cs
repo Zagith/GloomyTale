@@ -47,20 +47,20 @@ namespace GloomyTale.Master.Managers
         public void DisconnectByAccountId(long accountId)
         {
             PlayerSession sess = GetByAccountId(accountId);
-            if (sess.CanSwitchChannel)
+            if (sess != null)
             {
-
-            }
-            else
-            {
-                if (!_sessionByAccountId.Remove(accountId))
+                if (sess.CanSwitchChannel)
                 {
-                    // log the error
                     return;
                 }
-
-                _sessionBySessionId.Remove(sess.SessionId);
             }
+            if (!_sessionByAccountId.Remove(accountId, out PlayerSession session))
+            {
+                // log the error
+                return;
+            }
+
+            _sessionBySessionId.Remove(session.SessionId);
         }
 
         public PlayerSession GetByAccountId(long accountId)
