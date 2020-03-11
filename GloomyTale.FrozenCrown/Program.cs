@@ -245,7 +245,7 @@ namespace GloomyTale.FrozenCrown
                     EndPointPort = _port,
                     AccountLimit = sessionLimit,
                     WorldGroup = ServerManager.Instance.ServerGroup
-                }, gRpcEndPoint, true);
+                }, gRpcEndPoint);
 
                 if (newChannelId.HasValue)
                 {

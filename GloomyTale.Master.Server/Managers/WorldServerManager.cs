@@ -57,7 +57,12 @@ namespace GloomyTale.Master.Managers
             }
 
             servers.Add(worldServ);
-            worldServ.ChannelId = servers.Count;
+            if (serialized.EndPointPort == 3439)
+            {
+                worldServ.ChannelId = 51;
+            }
+            else
+                worldServ.ChannelId = servers.Count;
 
             return worldServ;
         }

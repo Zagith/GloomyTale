@@ -166,7 +166,7 @@ namespace GloomyTale.Master
         public override Task<Int> RegisterWorldServer(RegisterWorldServerRequest request, ServerCallContext context)
         {
             Guid worldId = request.RegisteredWorldServerInformations.Id.ToGuid();
-            SerializableWorldServer serialized = request.RegisteredWorldServerInformations.ToSerializableWorldServer();
+            SerializableWorldServer serialized = request.RegisteredWorldServerInformations.ToSerializableWorldServer();            
             WorldServer newWorld = _worldManager.RegisterWorldServer(serialized);
             _communicationManager.CreateCommunicationClient(worldId, request.GRPCEndPoint.Ip, request.GRPCEndPoint.Port);
             Logger.Log.Info($"[SERVER_REGISTRATION] {serialized.WorldGroup}:{serialized.Id}:{serialized.ChannelId}");

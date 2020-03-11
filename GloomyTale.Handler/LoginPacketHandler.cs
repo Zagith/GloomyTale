@@ -64,7 +64,11 @@ namespace GloomyTale.Handler
                     }
 
                     lastGroup = world.WorldGroup;
-                    int color = 0;
+                    int color = 0; // (int)Math.Round(((double)currentlyConnectedAccounts / world.AccountLimit) * 20) + 1;
+                    if (world.ChannelId == 51)
+                    {
+                        continue;
+                    }
                     packetBuilder.AppendFormat("{0}:{1}:{2}:", world.EndPointIp, world.EndPointPort, color);
                     packetBuilder.AppendFormat("{0}.{1}.{2} ", worldGroupCount, world.ChannelId, world.WorldGroup);
                 }

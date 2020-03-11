@@ -88,17 +88,12 @@ namespace GloomyTale.Communication.RPC
         }
 
 
-        public int? RegisterWorldServer(SerializableWorldServer worldServer, ICommunicationClientEndPoint endpoint, bool IsFrozenCorwn = false) {
-            int id = _proxy.RegisterWorldServer(new RegisterWorldServerRequest
+        public int? RegisterWorldServer(SerializableWorldServer worldServer, ICommunicationClientEndPoint endpoint) {
+            return _proxy.RegisterWorldServer(new RegisterWorldServerRequest
             {
                 RegisteredWorldServerInformations = worldServer.ToRegisteredWorldServer(),
                 GRPCEndPoint = endpoint.ToGRpcEndPointInformations()
             }).Id;
-            if (IsFrozenCorwn)
-            {
-                id = 51;
-            }
-            return id;
         }
 
         public string RetrieveServerStatistics(bool online = false) => throw new NotImplementedException();
