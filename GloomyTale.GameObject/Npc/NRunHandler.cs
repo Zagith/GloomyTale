@@ -1717,29 +1717,25 @@ namespace GloomyTale.GameObject
                         }
                         Session.Character.Gold -= 3000;
                         Session.SendPacket(Session.Character.GenerateGold());
-                        //if (ServerManager.Instance.IsAct4Online())
+                        switch (Session.Character.Faction)
                         {
-                            switch (Session.Character.Faction)
-                            {
-                                case FactionType.None:
-                                    Session.SendPacket(UserInterfaceHelper.GenerateInfo("You need to be part of a faction to join Act 4"));
-                                    return;
+                            case FactionType.None:
+                                Session.SendPacket(UserInterfaceHelper.GenerateInfo("You need to be part of a faction to join Act 4"));
+                                return;
 
-                                case FactionType.Angel:
-                                    Session.Character.MapId = 130;
-                                    Session.Character.MapX = 12;
-                                    Session.Character.MapY = 40;
-                                    break;
+                            case FactionType.Angel:
+                                Session.Character.MapId = 130;
+                                Session.Character.MapX = 12;
+                                Session.Character.MapY = 40;
+                                break;
 
-                                case FactionType.Demon:
-                                    Session.Character.MapId = 131;
-                                    Session.Character.MapX = 12;
-                                    Session.Character.MapY = 40;
-                                    break;
-                            }
-
-                            //Session.Character.ChangeChannel(ServerManager.Instance.Configuration.Act4IP, ServerManager.Instance.Configuration.Act4Port, 1);
+                            case FactionType.Demon:
+                                Session.Character.MapId = 131;
+                                Session.Character.MapX = 12;
+                                Session.Character.MapY = 40;
+                                break;
                         }
+                        Session.Character.ConnectAct4();
                     }
                     break;
 
