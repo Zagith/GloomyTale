@@ -28,10 +28,10 @@
     },
     "With Crown": {
       "Projects": {
-        "Opennos.Crown": {},
-        "Opennos.World": {},
-        "Opennos.Login": {},
-        "Opennos.Master.Server": {}
+        "GloomyTale.FrozenCrown": {},
+        "GloomyTale.World": {},
+        "GloomyTale.Login": {},
+        "GloomyTale.Master": {}
       }
     },
     "Parser": {

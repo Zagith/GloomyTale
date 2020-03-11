@@ -135,9 +135,14 @@ namespace GloomyTale.Communication.RPC
 
         public bool IsMasterOnline() => _proxy.IsMasterOnline(new Void()).Boolean;
 
-        public SerializableWorldServer GetPreviousChannelByAccountId(long accountId) => throw new NotImplementedException();
+        public SerializableWorldServer GetPreviousChannelByAccountId(long accountId) => _proxy.GetPreviousChannelByAccountId(accountId.ToLong()).ToSerializableWorldServer();
 
-        public bool ConnectCrossServerAccount(Guid worldId, long accountId, int sessionId) => throw new NotImplementedException();
+        public bool ConnectCrossServerAccount(Guid worldId, long accountId, int sessionId) => _proxy.ConnectCrossServerAccount(new ConnectAccountOnWorldRequest
+        {
+            AccountId = accountId,
+            SessionId = sessionId,
+            WorldId = worldId.ToUUID()
+        }).Boolean;
 
         public bool IsCrossServerLoginPermitted(long accountId, int sessionId) =>
             _proxy.IsCrossServerLoginPermitted(new AccountIdAndSessionIdRequest
@@ -155,7 +160,7 @@ namespace GloomyTale.Communication.RPC
             });
         }
 
-        public SerializableWorldServer GetAct4ChannelInfo(string worldGroup) => throw new NotImplementedException();
+        public SerializableWorldServer GetAct4ChannelInfo(string worldGroup) => _proxy.GetAct4ChannelInfo(worldGroup.ToName()).ToSerializableWorldServer();
 
         public IEnumerable<SerializableWorldServer> RetrieveRegisteredWorldServers()
         {

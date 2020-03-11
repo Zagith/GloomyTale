@@ -37,6 +37,22 @@ namespace GloomyTale.Master
         public override Task<Bool> ConnectAccountOnWorld(ConnectAccountOnWorldRequest request, ServerCallContext context) =>
             Task.FromResult(_sessionManager.ConnectAccountOnWorldId(request.WorldId.ToGuid(), request.AccountId).ToBool());
 
+        public override Task<Bool> ConnectCrossServerAccount(ConnectAccountOnWorldRequest request, ServerCallContext context)
+        {
+            PlayerSession account = _sessionManager.GetByAccountId(request.AccountId);
+            if (account != null)
+            {
+                account.CanSwitchChannel = false;
+                account.PreviousChannel = account.ConnectedWorld;
+                account.ConnectedWorld = _worldManager.GetWorldById(request.WorldId.ToGuid());
+                if (account.ConnectedWorld != null)
+                {
+                    return Task.FromResult(true.ToBool());
+                }
+            }
+            return Task.FromResult(false.ToBool());
+        }
+
         public override Task<Void> RegisterAccountLogin(RegisterAccountLoginRequest request, ServerCallContext context)
         {
             _sessionManager.ConnectAccount(request.AccountId, request.SessionId, request.AccountName);
@@ -204,7 +220,7 @@ namespace GloomyTale.Master
 
         public override Task<RegisteredWorldServer> GetAct4ChannelInfo(Name request, ServerCallContext context)
         {
-            IEnumerable<WorldServer> worlds = _worldManager.GetWorldsByWorldGroup(request.Str);
+            IEnumerable<WorldServer> worlds = _worldManager.GetWorldsByWorldGroup(request.Str).Where(s => s.Port == 3439);
 
             WorldServer world = worlds.FirstOrDefault(s => s.IsAct4);
 

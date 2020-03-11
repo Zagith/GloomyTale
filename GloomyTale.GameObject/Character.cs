@@ -6044,6 +6044,71 @@ namespace GloomyTale.GameObject
             }
         }
 
+        /// <summary>
+        ///     Connect to act4
+        /// </summary>
+        /// <returns></returns>
+        public bool ConnectAct4()
+        {
+            if (Faction == FactionType.None)
+            {
+                Session.SendPacket(
+                    UserInterfaceHelper.GenerateInfo(
+                        Language.Instance.GetMessageFromKey("ACT4_NEED_FACTION")));
+                return false;
+            }
+
+            SerializableWorldServer act4ChannelInfo =
+                CommunicationServiceClient.Instance.GetAct4ChannelInfo(ServerManager.Instance.ServerGroup);
+            if (act4ChannelInfo == null)
+            {
+                Session.SendPacket(
+                    UserInterfaceHelper.GenerateInfo(
+                        Language.Instance.GetMessageFromKey("ACT4_CHANNEL_OFFLINE")));
+                return false;
+            }
+            if (Session.Character.MapId == 153)
+            {
+                // RESPAWN AT CITADEL
+                Session.Character.MapX = (short)(39 + ServerManager.RandomNumber(-2, 3));
+                Session.Character.MapY = (short)(42 + ServerManager.RandomNumber(-2, 3));
+                Session.Character.MapId = (short)(Session.Character.Faction == FactionType.Angel ? 130 : 131);
+            }
+
+            switch (Session.Character.Faction)
+            {
+                case FactionType.Angel:
+                    Session.Character.MapId = 130;
+                    Session.Character.MapX = (short)(12 + ServerManager.RandomNumber(-2, 3));
+                    Session.Character.MapY = (short)(40 + ServerManager.RandomNumber(-2, 3));
+                    break;
+                case FactionType.Demon:
+                    Session.Character.MapId = 131;
+                    Session.Character.MapX = (short)(12 + ServerManager.RandomNumber(-2, 3));
+                    Session.Character.MapY = (short)(40 + ServerManager.RandomNumber(-2, 3));
+                    break;
+            }
+
+            ChangeChannel(act4ChannelInfo.EndPointIp, (short)act4ChannelInfo.EndPointPort, 1);
+            return true;
+
+            /*if (Session.CurrentMapInstance?.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4) != true)
+            {
+                return true;
+            }
+
+            MapInstance map =
+                ServerManager.Instance.Act4Maps.FirstOrDefault(s =>
+                    s.Map.MapId == Session.CurrentMapInstance.Map.MapId);
+            if (map != null)
+            {
+                ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId, map.MapInstanceId,
+                    Session.Character.MapX, Session.Character.MapY);
+            }
+
+            return true;*/
+        }
+
         public bool MuteMessage()
         {
             PenaltyLogDTO penalty = Session.Account.PenaltyLogs.OrderByDescending(s => s.DateEnd).FirstOrDefault();

@@ -168,6 +168,10 @@ namespace GloomyTale.GameObject.Networking
 
         public static ServerManager Instance => _instance ?? (_instance = new ServerManager());
 
+        public List<MapInstance> Act4Maps { get; set; }
+
+        public MapInstance CaligorMapInstance { get; set; }
+
         public Act4Stat Act4AngelStat { get; set; }
 
         public Act4Stat Act4DemonStat { get; set; }
@@ -1285,8 +1289,6 @@ namespace GloomyTale.GameObject.Networking
             }
         }
 
-        //public bool IsAct4Online() => CommunicationServiceClient.Instance.IsAct4Online(ServerGroup);
-
         private void InitializeConfigurations()
         {
             XpRate = RateConfiguration.XpRate;
@@ -1789,12 +1791,100 @@ namespace GloomyTale.GameObject.Networking
             PenaltyLogs = DAOFactory.Instance.PenaltyLogDAO.LoadAll().ToList();
 
             LoadArenaMap();
+            LoadAct4Maps();
+            LoadAct4();
             LoadGemsMap();
             LoadScriptedInstances();
             LoadBannedCharacters();
 
             //Register the new created TCPIP server to the api
             WorldId = Guid.NewGuid();
+        }
+
+        private void LoadAct4Maps()
+        {
+            if (DAOFactory.Instance.MapDAO.LoadById(154) != null)
+            {
+                CaligorMapInstance = GenerateMapInstance(154, MapInstanceType.CaligorInstance, new InstanceBag());
+                CaligorMapInstance.IsPVP = true;
+                Logger.Log.Info("[ACT4] Caligor Map Loaded");
+            }
+
+            if (Act4Maps == null)
+            {
+                Act4Maps = new List<MapInstance>();
+            }
+
+            foreach (Map m in _maps.Where(s => s.MapTypes.Any(o =>
+                o.MapTypeId == (short)MapTypeEnum.Act4)))
+            {
+                MapInstance act4Map = GenerateMapInstance(m.MapId, MapInstanceType.NormalInstance, new InstanceBag());
+                if (act4Map.Map.MapId == 153)
+                {
+                    act4Map.Portals.Clear();
+                    // ANGEL
+                    act4Map.Portals.Add(new Portal
+                    {
+                        DestinationMapId = 134,
+                        DestinationX = 140,
+                        DestinationY = 4,
+                        SourceX = 46,
+                        SourceY = 171,
+                        SourceMapId = 153,
+                        IsDisabled = false,
+                        Type = (short)PortalType.MapPortal
+                    });
+                    // DEMON
+                    act4Map.Portals.Add(new Portal
+                    {
+                        DestinationMapId = 134,
+                        DestinationX = 140,
+                        DestinationY = 4,
+                        SourceX = 140,
+                        SourceY = 171,
+                        SourceMapId = 153,
+                        IsDisabled = false,
+                        Type = (short)PortalType.MapPortal
+                    });
+                }
+
+                // TODO REMOVE THAT FOR RELEASE
+                if (act4Map.Map.MapId == 134)
+                {
+                    Portal portal = act4Map.Portals.Find(s => s.DestinationMapId == 153);
+                    if (portal != null)
+                    {
+                        portal.SourceX = 140;
+                        portal.SourceY = 11;
+                    }
+                }
+
+                act4Map.IsPVP = true;
+                Act4Maps.Add(act4Map);
+            }
+        }
+
+        private void LoadAct4()
+        {
+            foreach (MapInstance m in Act4Maps)
+            {
+                foreach (Portal portal in m.Portals)
+                {
+                    MapInstance mapInstance = Act4Maps.Find(s => s.Map.MapId == portal.DestinationMapId);
+                    if (mapInstance != null)
+                    {
+                        portal.DestinationMapInstanceId = mapInstance.MapInstanceId;
+                    }
+                    else
+                    {
+                        m.Portals.RemoveAll(s => s.DestinationMapId == portal.DestinationMapId);
+                        Logger.Log.Warn($"Could not find Act4Map with Id {portal.DestinationMapId}");
+                    }
+                }
+            }
+
+            Act4Maps.Add(CaligorMapInstance);
+            Logger.Log.Info("[ACT4] Initialized");
         }
 
         public bool IsCharacterMemberOfGroup(long characterId) => Groups?.Any(g => g.IsMemberOfGroup(characterId)) == true;
@@ -2467,10 +2557,10 @@ namespace GloomyTale.GameObject.Networking
 
         public void Act4Process()
         {
-            if (ChannelId != 51)
+           /* if (ChannelId != 51)
             {
                 return;
-            }
+            }*/
 
             MapInstance angelMapInstance = GetMapInstance(GetBaseMapInstanceIdByMapId(132));
             MapInstance demonMapInstance = GetMapInstance(GetBaseMapInstanceIdByMapId(133));
@@ -2659,7 +2749,7 @@ namespace GloomyTale.GameObject.Networking
             Observable.Interval(TimeSpan.FromMinutes(5)).Subscribe(x => SaveAllProcess());
             Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(x => Act4Process());
             Observable.Interval(TimeSpan.FromSeconds(2)).Subscribe(x => GroupProcess());
-            Observable.Interval(TimeSpan.FromMinutes(1)).Subscribe(x => Act4FlowerProcess());
+            //Observable.Interval(TimeSpan.FromMinutes(1)).Subscribe(x => Act4FlowerProcess());
             //Observable.Interval(TimeSpan.FromHours(3)).Subscribe(x => BotProcess());
             Observable.Interval(TimeSpan.FromSeconds(5)).Subscribe(x => MaintenanceProcess());
             Observable.Interval(TimeSpan.FromMinutes(RandomNumber(5, 20))).Subscribe(x => MeteoriteSpawn());

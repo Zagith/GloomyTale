@@ -4214,39 +4214,30 @@ namespace GloomyTale.Handler
         {
             if (packet != null)
             {
-                Logger.Log.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Act4]");
-                LogHelper.Instance.InsertCommandLog(Session.Character.VisualId, packet, Session.IpAddress);
-                //if (ServerManager.Instance.IsAct4Online())
+                ClientSession player = ServerManager.Instance.GetSessionByCharacterName(packet.Name == null ? Session.Character.Name : packet.Name);
+                if (player == null)
                 {
-                    /*switch (Session.Character.Faction)
-                    {
-                        case FactionType.None:
-#warning change port alveus
-                            ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 145, 51, 41);
-                            Session.SendPacket(UserInterfaceHelper.GenerateInfo("You need to be part of a faction to join Act 4"));
-                            return;
-
-                        case FactionType.Angel:
-                            Session.Character.MapId = 130;
-                            Session.Character.MapX = 12;
-                            Session.Character.MapY = 40;
-                            break;
-
-                        case FactionType.Demon:
-                            Session.Character.MapId = 131;
-                            Session.Character.MapX = 12;
-                            Session.Character.MapY = 40;
-                            break;
-                    }*/
-
-                   // Session.Character.ChangeChannel(ServerManager.Instance.Configuration.Act4IP, ServerManager.Instance.Configuration.Act4Port, 1);
+                    return;
                 }
-               // else
+
+                switch (player.Character.Faction)
                 {
-#warning change port alveus
-                    //ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 145, 51, 41);
-                    //Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("ACT4_OFFLINE")));
+                    case 0:
+                        ServerManager.Instance.ChangeMap(player.Character.CharacterId, 145, 51, 41);
+                        player.SendPacket(UserInterfaceHelper.GenerateInfo("ACT4_NEED_FACTION"));
+                        return;
+                    case FactionType.Angel:
+                        player.Character.MapId = 130;
+                        player.Character.MapX = 12;
+                        player.Character.MapY = 40;
+                        break;
+                    case FactionType.Demon:
+                        player.Character.MapId = 131;
+                        player.Character.MapX = 12;
+                        player.Character.MapY = 40;
+                        break;
                 }
+                player.Character.ConnectAct4();
             }
 
             Session.Character.GenerateSay(Act4Packet.ReturnHelp(), 10);

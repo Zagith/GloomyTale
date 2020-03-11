@@ -9,8 +9,11 @@ namespace GloomyTale.GameObject.CommandPackets
     public class Act4Packet : PacketDefinition
     {
         #region Properties
-        
-        public static string ReturnHelp() => "$Act4";
+
+        [PacketIndex(0)]
+        public string Name { get; set; }
+
+        public static string ReturnHelp() => "$Act4 Name (NotRequired)";
 
         #endregion
     }
