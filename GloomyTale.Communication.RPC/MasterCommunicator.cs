@@ -98,7 +98,16 @@ namespace GloomyTale.Communication.RPC
 
         public string RetrieveServerStatistics(bool online = false) => throw new NotImplementedException();
 
-        public int? SendMessageToCharacter(SCSCharacterMessage message) => throw new NotImplementedException();
+        public int? SendMessageToCharacter(SCSCharacterMessage message) {
+            return _proxy.SendMessageToCharacter(new MessageToCharacter
+            {
+                Message = message.Message,
+                DestinationCharacterId = message.DestinationCharacterId ?? 0,
+                SourceCharacterId = message.SourceCharacterId,
+                SourceWorldId = message.SourceWorldId.ToUUID(),
+                Type = (messageType)message.Type
+            }).Id;
+        }
 
         public void SendMail(string worldGroup, MailDTO mail)
         {

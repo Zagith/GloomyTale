@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GloomyTale.DAL.Interface;
+using GloomyTale.Domain;
+using GloomyTale.DAL;
 
 namespace GloomyTale.Master
 {
@@ -115,7 +117,146 @@ namespace GloomyTale.Master
             return Task.FromResult(new Void());
         }
 
-        public override async Task<Void> SendMessageToCharacter(MessageToCharacter request, ServerCallContext context) => await base.SendMessageToCharacter(request, context);
+        public override Task<Int> SendMessageToCharacter(MessageToCharacter request, ServerCallContext context)
+        {
+            var returnValue = -1;
+            WorldServer sourceWorld = _worldManager.GetWorldById(request.SourceWorldId.ToGuid());
+            if (request == null || request.Message == null || sourceWorld == null)
+            {
+                return null;
+            }
+
+            switch (request.Type)
+            {
+                case messageType.Family:
+                case messageType.FamilyChat:
+                case messageType.Broadcast:
+                    foreach (WorldServer world in _worldManager.GetWorlds().Where(w => w.WorldGroup.Equals(sourceWorld.WorldGroup)))
+                    {
+                        ICommunicationClient worldClient = _communicationManager.GetCommunicationClientByWorldId(world.Id);
+                        worldClient.SendMessageToCharacter(new SCSCharacterMessage
+                        {
+                            DestinationCharacterId = request.DestinationCharacterId,
+                            Message = request.Message,
+                            Type = (MessageType)request.Type,
+                            SourceCharacterId = request.SourceCharacterId,
+                            SourceWorldChannelId = (int)request.SourceCharacterId,
+                            SourceWorldId = request.SourceWorldId.ToGuid()
+                        });
+                    }
+                    returnValue = -1;
+                    return Task.FromResult(returnValue.ToInt());
+
+                /*case messageType.PrivateChat:
+                    if (request.DestinationCharacterId != 0)
+                    {
+                        PlayerSession receiverAccount = _sessionManager.GetByAccountId(request.DestinationCharacterId);
+                        if (receiverAccount?.ConnectedWorld != null)
+                        {
+                            if (sourceWorld.ChannelId == 51 && receiverAccount.ConnectedWorld.ChannelId == 51
+                                && DAOFactory.Instance.CharacterDAO.LoadById(request.SourceCharacterId).Faction
+                                != DAOFactory.Instance.CharacterDAO.LoadById((long)request.DestinationCharacterId).Faction)
+                            {
+                                PlayerSession SenderAccount = _sessionManager.GetByAccountId(request.SourceCharacterId);
+                                request.Message = $"talk {request.DestinationCharacterId} " + Language.Instance.GetMessageFromKey("CANT_TALK_OPPOSITE_FACTION");
+                                request.DestinationCharacterId = request.SourceCharacterId;
+                                SenderAccount.ConnectedWorld.
+                                returnValue = -1;
+                                return Task.FromResult(returnValue.ToInt());
+                            }
+                            else
+                            {
+                                receiverAccount.ConnectedWorld.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().SendMessageToCharacter(request);
+                                return Task.FromResult(receiverAcc.ConnectedWorld.ChannelId.ToInt());
+                            }
+                        }
+                    }
+                    break;*/
+                case messageType.Whisper:
+                    if (request.DestinationCharacterId != 0)
+                    {
+                        PlayerSession receiverAccount = _sessionManager.GetByAccountId(request.DestinationCharacterId);
+                        if (receiverAccount?.ConnectedWorld != null)
+                        {
+                            if (sourceWorld.ChannelId == 51 && receiverAccount.ConnectedWorld.ChannelId == 51
+                                && DAOFactory.Instance.CharacterDAO.LoadById(request.SourceCharacterId).Faction
+                                != DAOFactory.Instance.CharacterDAO.LoadById((long)request.DestinationCharacterId).Faction)
+                            {
+                                PlayerSession SenderAccount = _sessionManager.GetByAccountId(request.SourceCharacterId);
+                                request.Message = $"say 1 {request.SourceCharacterId} 11 {Language.Instance.GetMessageFromKey("CANT_TALK_OPPOSITE_FACTION")}";
+                                request.DestinationCharacterId = request.SourceCharacterId;
+                                request.Type = messageType.Other;
+                                ICommunicationClient world = _communicationManager.GetCommunicationClientByWorldId(receiverAccount.ConnectedWorld.Id);
+                                world.SendMessageToCharacter(new SCSCharacterMessage
+                                {
+                                    DestinationCharacterId = request.DestinationCharacterId,
+                                    Message = request.Message,
+                                    Type = (MessageType)request.Type,
+                                    SourceCharacterId = request.SourceCharacterId,
+                                    SourceWorldChannelId = (int)request.SourceCharacterId,
+                                    SourceWorldId = request.SourceWorldId.ToGuid()
+                                });
+                                returnValue = -1;
+                                return Task.FromResult(returnValue.ToInt());
+                            }
+                            else
+                            {
+                                ICommunicationClient world = _communicationManager.GetCommunicationClientByWorldId(receiverAccount.ConnectedWorld.Id);
+                                world.SendMessageToCharacter(new SCSCharacterMessage
+                                {
+                                    DestinationCharacterId = request.DestinationCharacterId,
+                                    Message = request.Message,
+                                    Type = (MessageType)request.Type,
+                                    SourceCharacterId = request.SourceCharacterId,
+                                    SourceWorldChannelId = (int)request.SourceCharacterId,
+                                    SourceWorldId = request.SourceWorldId.ToGuid()
+                                });
+                                return Task.FromResult(receiverAccount.ConnectedWorld.ChannelId.ToInt());
+                            }
+                        }
+                    }
+                    break;
+                case messageType.WhisperSupport:
+                case messageType.WhisperGm:
+                    if (request.DestinationCharacterId != 0)
+                    {
+                        PlayerSession account = _sessionManager.GetByAccountId(request.DestinationCharacterId);
+                        if (account?.ConnectedWorld != null)
+                        {
+                            ICommunicationClient world = _communicationManager.GetCommunicationClientByWorldId(account.ConnectedWorld.Id);
+                            world.SendMessageToCharacter(new SCSCharacterMessage
+                            {
+                                DestinationCharacterId = request.DestinationCharacterId,
+                                Message = request.Message,
+                                Type = (MessageType)request.Type,
+                                SourceCharacterId = request.SourceCharacterId,
+                                SourceWorldChannelId = (int)request.SourceCharacterId,
+                                SourceWorldId = request.SourceWorldId.ToGuid()
+                            });
+                            return Task.FromResult(account.ConnectedWorld.ChannelId.ToInt());
+                        }
+                    }
+                    break;
+
+                /*case messageType.Shout:
+                    foreach (WorldServer world in MSManager.Instance.WorldServers)
+                    {
+                        world.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().SendMessageToCharacter(request);
+                    }
+                    returnValue = -1;
+                    return Task.FromResult(returnValue.ToInt());
+
+                case messageType.Other:
+                    AccountConnection receiverAcc = MSManager.Instance.ConnectedAccounts.Find(a => a.CharacterId.Equals(request.DestinationCharacterId.Value));
+                    if (receiverAcc?.ConnectedWorld != null)
+                    {
+                        receiverAcc.ConnectedWorld.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().SendMessageToCharacter(request);
+                        return Task.FromResult(receiverAcc.ConnectedWorld.ChannelId.ToInt());
+                    }
+                    break;*/
+            }
+            return null;
+        }
 
         public override async Task<Bool> ChangeAuthority(ChangeAuthorityRequest request, ServerCallContext context) => await base.ChangeAuthority(request, context);
 

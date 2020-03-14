@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GloomyTale.Domain;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace GloomyTale.Communication.RPC
@@ -49,6 +50,18 @@ namespace GloomyTale.Communication.RPC
                 EndPointPort = (short)server.Port,
                 EndPointIp = server.IpAddress,
                 ChannelId = server.ChannelId
+            };
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SCSCharacterMessage ToSendMessageToCharacter(this SendMessageToCharacterRequest message) =>
+            new SCSCharacterMessage
+            {
+                DestinationCharacterId = message.DestinationCharacterId,
+                SourceCharacterId = message.SourceCharacterId,
+                SourceWorldChannelId = message.SourceWorldChannelId,
+                SourceWorldId = message.SourceWorldId.ToGuid(),
+                Type = (MessageType)message.MessageType,
+                Message = message.Message
             };
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -10,6 +10,7 @@ service Master {
 	rpc RegisterAccountLogin(RegisterAccountLoginRequest) returns (Void) {}
     rpc IsAccountConnected(Long) returns (Bool) {}
 	rpc ConnectAccountOnWorld(ConnectAccountOnWorldRequest) returns (Bool) {}
+	rpc ConnectCrossServerAccount(ConnectAccountOnWorldRequest) returns (Bool) {}
     rpc DisconnectAccount(Long) returns (Void) {}
     rpc PulseAccount(Long) returns (Void) {}
 
@@ -19,7 +20,7 @@ service Master {
     rpc IsCharacterConnected(IsCharacterConnectedRequest) returns (Bool) {}
     rpc ConnectCharacter(ConnectCharacterRequest) returns (Bool) {}
     rpc DisconnectCharacter(DisconnectCharacterRequest) returns (Void) {}
-	rpc SendMessageToCharacter(MessageToCharacter) returns (Void) {}
+	rpc SendMessageToCharacter(MessageToCharacter) returns (Int) {}
 	rpc ChangeAuthority(ChangeAuthorityRequest) returns (Bool) {}
 
 	/*

@@ -26,6 +26,7 @@ message SendMessageToCharacterRequest {
 	UUID SourceWorldId = 3;
 	int32 SourceWorldChannelId = 4;
 	int32 MessageType = 5;
+	string Message = 6;
 }
 
 message ChangeAuthorityWorldRequest {

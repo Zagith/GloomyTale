@@ -24,6 +24,7 @@ namespace GloomyTale.FrozenCrown
 
         public override Task<Void> SendMessageToCharacter(SendMessageToCharacterRequest request, ServerCallContext context)
         {
+            CommunicationServiceEvents.Instance.OnSendMessageToCharacter(request.ToSendMessageToCharacter());
             return Task.FromResult(new Void());
         }
 

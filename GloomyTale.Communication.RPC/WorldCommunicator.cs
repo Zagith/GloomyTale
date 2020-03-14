@@ -36,7 +36,15 @@ namespace GloomyTale.Communication.RPC
 
         public void SendMessageToCharacter(SCSCharacterMessage message)
         {
-            // 
+            _proxy.SendMessageToCharacter(new SendMessageToCharacterRequest
+            {
+                DestinationCharacterId = message.DestinationCharacterId ?? 0,
+                Message = message.Message,
+                MessageType = (int)message.Type,
+                SourceCharacterId = message.SourceCharacterId,
+                SourceWorldChannelId = message.SourceWorldChannelId,
+                SourceWorldId = message.SourceWorldId.ToUUID()
+            });
         }
 
         public void Shutdown()
