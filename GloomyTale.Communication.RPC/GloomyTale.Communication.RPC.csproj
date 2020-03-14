@@ -15,14 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="protobuf\world.proto~RF3b19882.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Protobuf Remove="protobuf\world.proto~RF3b19882.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\GloomyTale.Core\GloomyTale.Core.csproj" />
     <ProjectReference Include="..\GloomyTale.Master.Library\GloomyTale.Communication.csproj" />
   </ItemGroup>
