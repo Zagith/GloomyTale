@@ -2973,7 +2973,7 @@ namespace GloomyTale.Handler
                 message = message.Trim();
                 Session.SendPacket(Session.Character.GenerateSpk(message, 5));
                 CharacterDTO receiver = DAOFactory.Instance.CharacterDAO.LoadByName(characterName);
-                int? sentChannelId = null;
+                int sentChannelId = 0;
                 if (receiver != null)
                 {
                     if (receiver.CharacterId == Session.Character.VisualId)
@@ -3023,7 +3023,7 @@ namespace GloomyTale.Handler
                     });
                 }
 
-                if (sentChannelId == null)
+                if (sentChannelId == 0)
                 {
                     Session.SendPacket(
                         UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("USER_NOT_CONNECTED")));

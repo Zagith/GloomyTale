@@ -261,7 +261,7 @@ namespace GloomyTale.Master
                     returnValue = -1;
                     return Task.FromResult(returnValue.ToInt());
             }
-            return null;
+            return Task.FromResult(new Int());
         }
 
         public override async Task<Bool> ChangeAuthority(ChangeAuthorityRequest request, ServerCallContext context) => await base.ChangeAuthority(request, context);
