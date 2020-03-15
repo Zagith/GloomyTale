@@ -119,6 +119,11 @@ namespace GloomyTale.Master
 
         public override Task<Int> SendMessageToCharacter(MessageToCharacter request, ServerCallContext context)
         {
+            WorldServer worldGroup = _worldManager.GetWorldById(request.SourceWorldId.ToGuid());
+            if (worldGroup == null)
+            {
+                return null;
+            }
             var returnValue = -1;
             WorldServer sourceWorld = _worldManager.GetWorldById(request.SourceWorldId.ToGuid());
             if (request == null || request.Message == null || sourceWorld == null)
@@ -220,7 +225,7 @@ namespace GloomyTale.Master
                 case messageType.WhisperGm:
                     if (request.DestinationCharacterId != 0)
                     {
-                        PlayerSession account = _sessionManager.GetByAccountId(request.DestinationCharacterId);
+                        PlayerSession account = _sessionManager.GetByCharacterId(worldGroup.WorldGroup, request.DestinationCharacterId);
                         if (account?.ConnectedWorld != null)
                         {
                             ICommunicationClient world = _communicationManager.GetCommunicationClientByWorldId(account.ConnectedWorld.Id);
