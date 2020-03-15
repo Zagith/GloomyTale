@@ -2973,7 +2973,7 @@ namespace GloomyTale.Handler
                 message = message.Trim();
                 Session.SendPacket(Session.Character.GenerateSpk(message, 5));
                 CharacterDTO receiver = DAOFactory.Instance.CharacterDAO.LoadByName(characterName);
-                int sentChannelId = 0;
+                int? sentChannelId = 0;
                 if (receiver != null)
                 {
                     if (receiver.CharacterId == Session.Character.VisualId)
