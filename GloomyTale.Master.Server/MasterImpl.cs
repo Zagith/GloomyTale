@@ -136,7 +136,7 @@ namespace GloomyTale.Master
                 case messageType.Family:
                 case messageType.FamilyChat:
                 case messageType.Broadcast:
-                    foreach (WorldServer world in _worldManager.GetWorlds().Where(w => w.WorldGroup.Equals(sourceWorld.WorldGroup)))
+                    foreach (WorldServer world in _worldManager.GetWorlds().Where(w => w.WorldGroup.Equals(worldGroup.WorldGroup)))
                     {
                         ICommunicationClient worldClient = _communicationManager.GetCommunicationClientByWorldId(world.Id);
                         worldClient.SendMessageToCharacter(new SCSCharacterMessage
@@ -180,7 +180,7 @@ namespace GloomyTale.Master
                 case messageType.Whisper:
                     if (request.DestinationCharacterId != 0)
                     {
-                        PlayerSession receiverAccount = _sessionManager.GetByAccountId(request.DestinationCharacterId);
+                        PlayerSession receiverAccount = _sessionManager.GetByCharacterId(worldGroup.WorldGroup, request.DestinationCharacterId);
                         if (receiverAccount?.ConnectedWorld != null)
                         {
                             if (sourceWorld.ChannelId == 51 && receiverAccount.ConnectedWorld.ChannelId == 51
@@ -243,15 +243,24 @@ namespace GloomyTale.Master
                     }
                     break;
 
-                /*case messageType.Shout:
-                    foreach (WorldServer world in MSManager.Instance.WorldServers)
+                case messageType.Shout:
+                    foreach (WorldServer world in _worldManager.GetWorlds().Where(w => w.WorldGroup.Equals(worldGroup.WorldGroup)))
                     {
-                        world.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().SendMessageToCharacter(request);
+                        ICommunicationClient worldClient = _communicationManager.GetCommunicationClientByWorldId(world.Id);
+                        worldClient.SendMessageToCharacter(new SCSCharacterMessage
+                        {
+                            DestinationCharacterId = null,
+                            Message = request.Message,
+                            Type = (MessageType)request.Type,
+                            SourceCharacterId = request.SourceCharacterId,
+                            SourceWorldChannelId = (int)request.SourceCharacterId,
+                            SourceWorldId = request.SourceWorldId.ToGuid()
+                        });
                     }
                     returnValue = -1;
                     return Task.FromResult(returnValue.ToInt());
 
-                case messageType.Other:
+                /*case messageType.Other:
                     AccountConnection receiverAcc = MSManager.Instance.ConnectedAccounts.Find(a => a.CharacterId.Equals(request.DestinationCharacterId.Value));
                     if (receiverAcc?.ConnectedWorld != null)
                     {
