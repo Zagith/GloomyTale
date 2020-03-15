@@ -71,7 +71,6 @@ namespace GloomyTale.FrozenCrown
 
         public void DisconnectClient()
         {
-            _session.RemoveSession(this);
             Disconnect();
         }
 

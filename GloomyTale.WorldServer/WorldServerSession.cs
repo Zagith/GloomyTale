@@ -71,7 +71,6 @@ namespace GloomyTale.World
 
         public void DisconnectClient()
         {
-            _session.RemoveSession(this);
             Disconnect();
         }
 
