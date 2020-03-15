@@ -221,6 +221,7 @@ namespace GloomyTale.Master
                         }
                     }
                     break;
+                case messageType.Other:
                 case messageType.WhisperSupport:
                 case messageType.WhisperGm:
                     if (request.DestinationCharacterId != 0)
@@ -259,15 +260,6 @@ namespace GloomyTale.Master
                     }
                     returnValue = -1;
                     return Task.FromResult(returnValue.ToInt());
-
-                /*case messageType.Other:
-                    AccountConnection receiverAcc = MSManager.Instance.ConnectedAccounts.Find(a => a.CharacterId.Equals(request.DestinationCharacterId.Value));
-                    if (receiverAcc?.ConnectedWorld != null)
-                    {
-                        receiverAcc.ConnectedWorld.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().SendMessageToCharacter(request);
-                        return Task.FromResult(receiverAcc.ConnectedWorld.ChannelId.ToInt());
-                    }
-                    break;*/
             }
             return null;
         }
