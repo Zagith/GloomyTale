@@ -126,7 +126,11 @@ namespace OpenNos.GameObject.Event
                             foreach (ClientSession cli in mapinstance.Item1.Sessions.Where(s => s.Character != null).ToList())
                             {
                                 cli.Character.GenerateFamilyXp(cli.Character.Level * 4);
-                                //cli.Character.GetReputation(cli.Character.Level * 50);
+                                if (cli.Character.Reputation > 93809999)
+                                {
+                                    cli.Character.GetReputation(cli.Character.Level * 50);
+                                    cli.SendPacket(cli.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), cli.Character.Level * 50), 10));
+                                }
                                 cli.Character.Gold += cli.Character.Level * 1000;
                                 cli.Character.Gold = cli.Character.Gold > maxGold ? maxGold : cli.Character.Gold;
                                 cli.Character.SpAdditionPoint += cli.Character.Level * 100;
@@ -139,7 +143,6 @@ namespace OpenNos.GameObject.Event
                                 cli.SendPacket(cli.Character.GenerateSpPoint());
                                 cli.SendPacket(cli.Character.GenerateGold());
                                 cli.SendPacket(cli.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_MONEY"), cli.Character.Level * 1000), 10));
-                                cli.SendPacket(cli.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), cli.Character.Level * 50), 10));
                                 if (cli.Character.Family != null)
                                 {
                                     cli.SendPacket(cli.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_FXP"), cli.Character.Level * 4), 10));

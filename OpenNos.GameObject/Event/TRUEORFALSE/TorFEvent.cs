@@ -136,11 +136,15 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
                     {
                         s.Character.SpAdditionPoint = 1000000;
                     }
-
+                    if (s.Character.Reputation > 93809999)
+                    {
+                        s.Character.Reputation += s.Character.Level * 50;
+                        s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), s.Character.Level * 50), 10));
+                    }
                     s.SendPacket(s.Character.GenerateSpPoint());
                     s.SendPacket(s.Character.GenerateGold());
                     s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_MONEY"), s.Character.Level * 1000), 10));
-                    s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), s.Character.Level * 50), 10));
+                    
                     if (s.Character.Family != null)
                     {
                         s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_FXP"), s.Character.Level * 4), 10));

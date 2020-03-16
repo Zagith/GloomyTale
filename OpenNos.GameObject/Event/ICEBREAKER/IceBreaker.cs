@@ -96,7 +96,11 @@ namespace OpenNos.GameObject.Event
                     Map.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("ICEBREAKER_WIN"), 0));
                     Map.Sessions.ToList().ForEach(x =>
                     {
-                        //x.Character.GetReputation(x.Character.Level * 10);
+                        if (x.Character.Reputation > 93809999)
+                        {
+                            x.Character.GetReputation(x.Character.Level * 10);
+                            x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), x.Character.Level * 10), 10));
+                        }
                         if (x.Character.Dignity < 100)
                         {
                             x.Character.Dignity = 100;
@@ -109,7 +113,6 @@ namespace OpenNos.GameObject.Event
                         x.CurrentMapInstance?.Broadcast(x, x.Character.GenerateGidx(), ReceiverType.AllExceptMe);
                         x.SendPacket(x.Character.GenerateGold());
                         x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_MONEY"), GoldRewards[currentBracket]), 10));
-                        x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), x.Character.Level * 10), 10));
                         x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("DIGNITY_RESTORED"), 100), 10));
                     });
                     Thread.Sleep(5000);
@@ -153,7 +156,11 @@ namespace OpenNos.GameObject.Event
                         {
                             WinnerTeam.ToList().ForEach(x =>
                             {
-                                //x.Character.GetReputation(x.Character.Level * 10);
+                                if (x.Character.Reputation > 93809999)
+                                {
+                                    x.Character.GetReputation(x.Character.Level * 10);
+                                    x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), x.Character.Level * 10), 10));
+                                }
                                 if (x.Character.Dignity < 100)
                                 {
                                     x.Character.Dignity = 100;
@@ -167,7 +174,6 @@ namespace OpenNos.GameObject.Event
                                 x.CurrentMapInstance?.Broadcast(x, x.Character.GenerateGidx(), ReceiverType.AllExceptMe);
                                 x.SendPacket(x.Character.GenerateGold());
                                 x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_MONEY"), GoldRewards[currentBracket]), 10));
-                                x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), x.Character.Level * 10), 10));
                                 x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("DIGNITY_RESTORED"), x.Character.Level * 10), 10));
                             });
                             break;

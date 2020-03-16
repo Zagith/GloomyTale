@@ -929,7 +929,8 @@ namespace OpenNos.Handler
                                     s.Character.GetContributi(250);
                                 }
                             }
-                            /*int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
+
+                            int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
 
                             if (levelDifference < 30)
                             {
@@ -952,20 +953,24 @@ namespace OpenNos.Handler
 
                                 if (ReputationValue > 0)
                                 {
-                                    hitRequest.Session.Character.Reputation += ReputationValue;
-                                    hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
-                                        string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"),
-                                            (short)ReputationValue), 12));
-
+                                    if (Session.Character.Reputation > 93809999)
+                                    {
+                                        hitRequest.Session.Character.Reputation += ReputationValue;
+                                        hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
+                                            string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"),
+                                                (short)ReputationValue), 12));
+                                    }
                                     int act4RaidPenalty =
                                         ((target.Character.Faction == FactionType.Angel && ServerManager.Instance.Act4DemonStat.Mode == 3)
                                         || (target.Character.Faction == FactionType.Demon && ServerManager.Instance.Act4AngelStat.Mode == 3))
                                         ? 2 : 1;
-
-                                    target.Character.Reputation -= ReputationValue/* * act4RaidPenalty;
-                                    target.SendPacket(target.Character.GenerateSay(
-                                        string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
-                                            (short)ReputationValue/* * act4RaidPenalty), 11));
+                                    if (target.Character.Reputation > 93809999)
+                                    { 
+                                        target.Character.Reputation -= ReputationValue * act4RaidPenalty;
+                                        target.SendPacket(target.Character.GenerateSay(
+                                            string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
+                                                (short)ReputationValue * act4RaidPenalty), 11));
+                                    }
                                 }
                                 else
                                 {
@@ -979,9 +984,9 @@ namespace OpenNos.Handler
                             else
                             {
                                 hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TOO_LEVEL_DIFFERENCE"), 11));
-                            }*/
-            }
-            else
+                            }
+                        }
+                        else
                         {
                             hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TARGET_SAME_IP"), 11));
                         }
