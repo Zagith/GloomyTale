@@ -1651,44 +1651,56 @@ namespace OpenNos.GameObject
                                     int rnd = ServerManager.RandomNumber(0, 100);
                                     foreach (RollGeneratedItemDTO rollitem in rollGeneratedItemDtos.Where(s => s.Probability == 10000))
                                     {
-                                        sbyte rare = 0;
+                                        byte rare = rollitem.ItemGeneratedRare;
                                         if (rollitem.IsRareRandom)
                                         {
-
-
-                                            for (int j = ItemHelper.RareRate.Length - 1; j >= 0; j--)
+                                            if (rollitem.ItemGeneratedUpgradeMax != 0)
                                             {
-                                                if (rnd < ItemHelper.RareRate[j])
+                                                rare = (byte)ServerManager.RandomNumber(rollitem.ItemGeneratedRare, rollitem.ItemGeneratedUpgradeMax);
+                                            }
+                                            else
+                                            {
+                                                for (int j = ItemHelper.RareRate.Length - 1; j >= 0; j--)
                                                 {
-                                                    rare = (sbyte)j;
-                                                    break;
+                                                    if (rnd < ItemHelper.RareRate[j])
+                                                    {
+                                                        rare = (byte)j;
+                                                        break;
+                                                    }
+                                                }
+                                                if (rare < 1)
+                                                {
+                                                    rare = 1;
                                                 }
                                             }
-                                            if (rare < 1)
-                                            {
-                                                rare = 1;
-                                            }
                                         }
-                                        session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, (byte)rare, design: rollitem.ItemGeneratedDesign);
+                                        session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, rare, design: rollitem.ItemGeneratedDesign);
                                     }
                                     foreach (RollGeneratedItemDTO rollitem in rollGeneratedItemDtos.Where(s => s.Probability != 10000).OrderBy(s => ServerManager.RandomNumber()))
                                     {
-                                        sbyte rare = 0;
+                                        byte rare = rollitem.ItemGeneratedRare;
                                         if (rollitem.IsRareRandom)
                                         {
-                                            rnd = ServerManager.RandomNumber(0, 100);
-
-                                            for (int j = ItemHelper.RareRate.Length - 1; j >= 0; j--)
+                                            if (rollitem.ItemGeneratedUpgradeMax != 0)
                                             {
-                                                if (rnd < ItemHelper.RareRate[j])
-                                                {
-                                                    rare = (sbyte)j;
-                                                    break;
-                                                }
+                                                rare = (byte)ServerManager.RandomNumber(rollitem.ItemGeneratedRare, rollitem.ItemGeneratedUpgradeMax);
                                             }
-                                            if (rare < 1)
+                                            else
                                             {
-                                                rare = 1;
+                                                rnd = ServerManager.RandomNumber(0, 100);
+
+                                                for (int j = ItemHelper.RareRate.Length - 1; j >= 0; j--)
+                                                {
+                                                    if (rnd < ItemHelper.RareRate[j])
+                                                    {
+                                                        rare = (byte)j;
+                                                        break;
+                                                    }
+                                                }
+                                                if (rare < 1)
+                                                {
+                                                    rare = 1;
+                                                }
                                             }
                                         }
 
@@ -1708,7 +1720,7 @@ namespace OpenNos.GameObject
                                                 Type = MessageType.Shout
                                             });
                                         }*/
-                                        session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, (byte)rare, design: rollitem.ItemGeneratedDesign);//, rollitem.ItemGeneratedUpgrade);
+                                        session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, rare, design: rollitem.ItemGeneratedDesign);//, rollitem.ItemGeneratedUpgrade);
                                         break;
                                     }
                                     session.Character.Inventory.RemoveItemAmount(VNum);

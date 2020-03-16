@@ -51,7 +51,7 @@ namespace GloomyTale.DiscordBot
                 services.GetRequiredService<CommandService>().Log += LogAsync;
 
                 // Tokens should be considered secret data, and never hard-coded.
-                await client.LoginAsync(TokenType.Bot, "NjQ3MzQ4OTczMjc0NjYwODY1.XeJiGw.-puEdzyP-ExA0fyG9ScuplxxCy0");
+                await client.LoginAsync(TokenType.Bot, "NjQ3MzQ4OTczMjc0NjYwODY1.Xm58lQ.Xr_MFgfugcybB0lf4IlnzpAxKbA");
                 await client.StartAsync();
 
                 await services.GetRequiredService<CommandHandlingService>().InitializeAsync();

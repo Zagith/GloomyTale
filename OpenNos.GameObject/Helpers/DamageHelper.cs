@@ -1895,7 +1895,17 @@ namespace OpenNos.GameObject.Helpers
                 if (rnd <= 33)
                     defender.AddBuff(new Buff(681, attacker.Level), attacker);
             }
-            
+
+            #endregion
+
+            #region Remove Astuzia del falco
+            if (defender != null && skill != null)
+            {
+                if (skill.SkillVNum == 1124 && defender.HasBuff(577))
+                {
+                    defender.RemoveBuff(577);
+                }
+            }
             #endregion
 
             if (defender.Character != null && defender.HasBuff(CardType.NoDefeatAndNoDamage, (byte)AdditionalTypes.NoDefeatAndNoDamage.TransferAttackPower))

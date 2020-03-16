@@ -1,5 +1,6 @@
 ﻿using OpenNos.Data.Enums;
 using OpenNos.Data.I18N;
+using OpenNos.Domain.I18N;
 using System.Collections.Generic;
 
 namespace OpenNos.DAL.Interface
@@ -8,7 +9,7 @@ namespace OpenNos.DAL.Interface
     {
         #region Methods
 
-        IEnumerable<I18NItemDto> FindByName(string name);
+        IEnumerable<I18NItemDto> FindByName(string name, RegionType regionType);
 
         I18NItemDto Insert(I18NItemDto teleporter);
 

@@ -103,7 +103,6 @@
     <Compile Include="Modules\FrozenCrownModule.cs" />
     <Compile Include="Modules\HelpModule.cs" />
     <Compile Include="Modules\LanguageModule.cs" />
-    <Compile Include="Modules\MusicModule.cs" />
     <Compile Include="Modules\PublicModule.cs" />
     <Compile Include="Modules\SendItemModule.cs" />
     <Compile Include="Program.cs" />

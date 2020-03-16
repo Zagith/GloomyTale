@@ -5,6 +5,7 @@ using OpenNos.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data.Enums;
 using OpenNos.Data.I18N;
+using OpenNos.Domain.I18N;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,12 @@ namespace OpenNos.DAL.DAO
     {
         #region Methods
 
-        public IEnumerable<II18NNpcMonsterDto> FindByName(string name)
+        public IEnumerable<II18NNpcMonsterDto> FindByName(string name, RegionType regionType)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
                 List<II18NNpcMonsterDto> result = new List<II18NNpcMonsterDto>();
-                foreach (I18NNpcMonster item in context.I18NNpcMonster.Where(s => string.IsNullOrEmpty(name) ? s.Text.Equals("") : s.Text.Contains(name)))
+                foreach (I18NNpcMonster item in context.I18NNpcMonster.Where(s => s.RegionType == regionType && (string.IsNullOrEmpty(name) ? s.Text.Equals("") : s.Text.Contains(name))))
                 {
                     II18NNpcMonsterDto dto = new II18NNpcMonsterDto();
                     Mapper.Mappers.I18NNpcMonsterMapper.ToI18NNpcMonsterDTO(item, dto);

@@ -24,6 +24,9 @@ namespace OpenNos.Mapper.Mappers
             output.OriginalItemVNum = input.OriginalItemVNum;
             output.Probability = input.Probability;
             output.RollGeneratedItemId = input.RollGeneratedItemId;
+            output.ItemGeneratedUpgrade = input.MaximumOriginalItemRare;
+            output.ItemGeneratedRare = input.ItemGeneratedRare;
+            output.ItemGeneratedUpgradeMax = input.ItemGeneratedUpgradeMax;
 
             return true;
         }
@@ -45,6 +48,9 @@ namespace OpenNos.Mapper.Mappers
             output.OriginalItemVNum = input.OriginalItemVNum;
             output.Probability = input.Probability;
             output.RollGeneratedItemId = input.RollGeneratedItemId;
+            output.ItemGeneratedUpgrade = input.ItemGeneratedUpgrade;
+            output.ItemGeneratedRare = input.ItemGeneratedRare;
+            output.ItemGeneratedUpgradeMax = input.ItemGeneratedUpgradeMax;
 
             return true;
         }

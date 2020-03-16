@@ -3022,7 +3022,7 @@ namespace OpenNos.Handler
                         ? ""
                         : packetsplit.Skip(withPage ? 1 : 0).Aggregate((a, b) => a + ' ' + b);
                 }
-                foreach (I18NItemDto i18nItemName in DAOFactory.I18NItemDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
+                foreach (I18NItemDto i18nItemName in DAOFactory.I18NItemDAO.FindByName(name, Session.Account.Language).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
                 {
                     ItemDTO item = DAOFactory.ItemDAO.LoadByKey(i18nItemName.Key);
                     if (item != null)
@@ -3070,7 +3070,7 @@ namespace OpenNos.Handler
                         ? ""
                         : packetsplit.Skip(withPage ? 1 : 0).Aggregate((a, b) => a + ' ' + b);
                 }
-                foreach (II18NNpcMonsterDto i18nItemName in DAOFactory.I18NNpcMonsterDAO.FindByName(name).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
+                foreach (II18NNpcMonsterDto i18nItemName in DAOFactory.I18NNpcMonsterDAO.FindByName(name, Session.Account.Language).OrderBy(s => s.Key).Skip(page * 200).Take(200).ToList())
                 {
                     NpcMonsterDTO npcMonsters = DAOFactory.NpcMonsterDAO.LoadByKey(i18nItemName.Key);
                     if (npcMonsters != null)

@@ -93,11 +93,11 @@ namespace OpenNos.GameObject
                                     if (currentrnd >= rnd)
                                     {
                                         Item i = ServerManager.GetItem(rollitem.ItemGeneratedVNum);
-                                        sbyte rare = 0;
+                                        byte rare = rollitem.ItemGeneratedRare;
                                         byte upgrade = 0;
                                         if (i.ItemType == ItemType.Armor || i.ItemType == ItemType.Weapon || i.ItemType == ItemType.Shell || i.ItemType == ItemType.Box)
                                         {
-                                            rare = box.Rare;
+                                            rare = (byte)box.Rare;
                                         }
                                         if (i.ItemType == ItemType.Shell)
                                         {
@@ -109,26 +109,34 @@ namespace OpenNos.GameObject
                                             {
                                                 rare = 7;
                                             }
+                                            
                                             upgrade = (byte)ServerManager.RandomNumber(50, 81);
                                         }
                                         if (rollitem.IsRareRandom)
                                         {
-                                            rnd = ServerManager.RandomNumber(0, 100);
+                                            if (rollitem.ItemGeneratedUpgradeMax != 0)
+                                            {
+                                                rare = (byte)ServerManager.RandomNumber(rollitem.ItemGeneratedRare, rollitem.ItemGeneratedUpgradeMax);
+                                            }
+                                            else
+                                            {
+                                                rnd = ServerManager.RandomNumber(0, 100);
 
-                                            for (int j = ItemHelper.RareRate.Length - 1; j >= 0; j--)
-                                            {
-                                                if (rnd < ItemHelper.RareRate[j])
+                                                for (int j = ItemHelper.RareRate.Length - 1; j >= 0; j--)
                                                 {
-                                                    rare = (sbyte)j;
-                                                    break;
+                                                    if (rnd < ItemHelper.RareRate[j])
+                                                    {
+                                                        rare = (byte)j;
+                                                        break;
+                                                    }
                                                 }
-                                            }
-                                            if (rare < 1)
-                                            {
-                                                rare = 1;
-                                            }
+                                                if (rare < 1)
+                                                {
+                                                    rare = 1;
+                                                }
+                                            }                                            
                                         }
-                                        session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, (byte)rare, upgrade, rollitem.ItemGeneratedDesign);
+                                        session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, rare, upgrade, rollitem.ItemGeneratedDesign);
                                         session.SendPacket($"rdi {rollitem.ItemGeneratedVNum} {rollitem.ItemGeneratedAmount}");
                                         session.Character.Inventory.RemoveItemFromInventory(box.Id);
                                         return;

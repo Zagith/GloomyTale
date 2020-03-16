@@ -41,6 +41,14 @@ namespace OpenNos.Data
 
         public short RollGeneratedItemId { get; set; }
 
+        public byte ItemGeneratedUpgrade { get; set; }
+
+        public byte ItemGeneratedUpgradeMax { get; set; }
+
+        public bool IsSuperReward { get; set; }
+
+        public byte ItemGeneratedRare { get; set; }
+
         #endregion
     }
 }

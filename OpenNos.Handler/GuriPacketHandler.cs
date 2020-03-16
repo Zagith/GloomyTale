@@ -476,28 +476,35 @@ namespace OpenNos.Handler
                         int currentrnd = 0;
                         foreach (RollGeneratedItemDTO rollitem in rollGeneratedItemDtos.OrderBy(s => ServerManager.RandomNumber()))
                         {
-                            sbyte rare = 0;
+                            byte rare = rollitem.ItemGeneratedRare;
                             if (rollitem.IsRareRandom)
                             {
-                                rnd = ServerManager.RandomNumber(0, 100);
-
-                                for (int j = 7; j >= 0; j--)
+                                if (rollitem.ItemGeneratedUpgradeMax != 0)
                                 {
-                                    if (rnd < ItemHelper.RareRate[j])
-                                    {
-                                        rare = (sbyte)j;
-                                        break;
-                                    }
+                                    rare = (byte)ServerManager.RandomNumber(rollitem.ItemGeneratedRare, rollitem.ItemGeneratedUpgradeMax);
                                 }
-                                if (rare < 1)
+                                else
                                 {
-                                    rare = 1;
+                                    rnd = ServerManager.RandomNumber(0, 100);
+
+                                    for (int j = 7; j >= 0; j--)
+                                    {
+                                        if (rnd < ItemHelper.RareRate[j])
+                                        {
+                                            rare = (byte)j;
+                                            break;
+                                        }
+                                    }
+                                    if (rare < 1)
+                                    {
+                                        rare = 1;
+                                    }
                                 }
                             }
 
                             if (rollitem.Probability == 10000)
                             {
-                                Session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, (byte)rare, design: rollitem.ItemGeneratedDesign);
+                                Session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, rare, design: rollitem.ItemGeneratedDesign);
                                 continue;
                             }
                             currentrnd += rollitem.Probability;
@@ -505,7 +512,7 @@ namespace OpenNos.Handler
                             {
                                 continue;
                             }
-                            Session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, (byte)rare, design: rollitem.ItemGeneratedDesign);//, rollitem.ItemGeneratedUpgrade);
+                            Session.Character.GiftAdd(rollitem.ItemGeneratedVNum, rollitem.ItemGeneratedAmount, rare, design: rollitem.ItemGeneratedDesign);//, rollitem.ItemGeneratedUpgrade);
                             break;
                         }
                         Session.Character.Inventory.RemoveItemAmount(relictVNum);

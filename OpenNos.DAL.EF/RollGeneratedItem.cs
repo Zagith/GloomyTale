@@ -49,6 +49,10 @@ namespace OpenNos.DAL.EF
 
         public bool IsSuperReward { get; set; }
 
+        public byte ItemGeneratedRare { get; set; }
+
+        public byte ItemGeneratedUpgradeMax { get; set; }
+
         #endregion
     }
 }
