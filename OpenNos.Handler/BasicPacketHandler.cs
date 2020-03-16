@@ -1254,7 +1254,7 @@ namespace OpenNos.Handler
                     case (sbyte)PortalType.DarkRaid:
                         if (!packet.Parameter.HasValue)
                         {
-                            Session.SendPacket($"qna #preq^1 {string.Format(Language.Instance.GetMessageFromKey("ACT4_RAID_ENTER"), Session.Character.Level * 5)}");
+                            Session.SendPacket($"qna #preq^1 {string.Format(Language.Instance.GetMessageFromKey("ACT4_RAID_ENTER"), 10000)}");
                             return;
                         }
                         else
@@ -1265,7 +1265,7 @@ namespace OpenNos.Handler
                                 {
                                     if (Session.Character.Level > 49)
                                     {
-                                        if (Session.Character.Contributi > 10000)
+                                        if (Session.Character.Contributi >= 10000)
                                         {
                                             Session.Character.SetContributi(-10000);
 

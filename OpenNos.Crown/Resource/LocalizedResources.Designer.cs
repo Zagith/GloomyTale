@@ -142,7 +142,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a {0} reputation points are needed. Do you want to go in?.
+        ///   Cerca una stringa localizzata simile a {0} contribution points are needed. Do you want to go in?.
         /// </summary>
         internal static string ACT4_RAID_ENTER {
             get {
@@ -480,6 +480,15 @@ namespace OpenNos.World.Resource {
         internal static string ASK_REVIVE {
             get {
                 return ResourceManager.GetString("ASK_REVIVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Do you want to revive? It will cost you {0} contributes..
+        /// </summary>
+        internal static string ASK_REVIVE_ACT4 {
+            get {
+                return ResourceManager.GetString("ASK_REVIVE_ACT4", resourceCulture);
             }
         }
         
@@ -1146,6 +1155,15 @@ namespace OpenNos.World.Resource {
         internal static string CHANNEL {
             get {
                 return ResourceManager.GetString("CHANNEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a You have {0} contribute points.
+        /// </summary>
+        internal static string CHARACTER_CONTRIBUTE {
+            get {
+                return ResourceManager.GetString("CHARACTER_CONTRIBUTE", resourceCulture);
             }
         }
         

@@ -4349,6 +4349,15 @@ namespace OpenNos.Handler
         }
 
         /// <summary>
+        /// $Contribute Command
+        /// </summary>
+        /// <param name="packet"></param>
+        public void Contribute(ContributePacket packet)
+        {
+            Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("CHARACTER_CONTRIBUTE"), Session.Character.Contributi), 10));
+        }
+
+        /// <summary>
         /// $MapReset Command
         /// </summary>
         /// <param name="packet"></param>

@@ -235,6 +235,7 @@
     <Compile Include="Packets\ClientPackets\UsePartnerSkillPacket.cs" />
     <Compile Include="Packets\CommandPackets\AddUserLogPacket.cs" />
     <Compile Include="Packets\CommandPackets\CHPacket.cs" />
+    <Compile Include="Packets\CommandPackets\ContributePacket.cs" />
     <Compile Include="Packets\CommandPackets\MeteoriteSpawnPacket.cs" />
     <Compile Include="Packets\CommandPackets\PartnerSpXpPacket.cs" />
     <Compile Include="Packets\CommandPackets\RemoveUserLogPacket.cs" />

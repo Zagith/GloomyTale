@@ -506,7 +506,7 @@ namespace OpenNos.GameObject.Networking
                     case MapInstanceType.Act4Zanarkand:
                     case MapInstanceType.Act4Orias:
                     case MapInstanceType.Act4Viserion:
-                        session.SendPacket(UserInterfaceHelper.GenerateDialog($"#revival^0 #revival^1 {string.Format(Language.Instance.GetMessageFromKey("ASK_REVIVE_ACT4RAID"), session.Character.Level * 10)}"));
+                        session.SendPacket(UserInterfaceHelper.GenerateDialog($"#revival^0 #revival^1 {string.Format(Language.Instance.GetMessageFromKey("ASK_REVIVE_ACT4RAID"), 250)}"));
                         ReviveTask(session);
                         break;
 
@@ -1819,7 +1819,7 @@ namespace OpenNos.GameObject.Networking
                         {
                             session.Character.Hp = 1;
                             session.Character.Mp = 1;
-
+                            session.Character.Contributi -= 250;
                             switch (session.Character.Family.Act4Raid.MapInstanceType)
                             {
                                 case MapInstanceType.Act4Viserion:

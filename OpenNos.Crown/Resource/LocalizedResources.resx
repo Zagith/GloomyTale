@@ -1819,7 +1819,7 @@
     <value>Entry limit reached.</value>
   </data>
   <data name="ACT4_RAID_ENTER" xml:space="preserve">
-    <value>{0} reputation points are needed. Do you want to go in?</value>
+    <value>{0} contribution points are needed. Do you want to go in?</value>
   </data>
   <data name="ACT4_RAID_EXIT" xml:space="preserve">
     <value>Do you want to go to Bitoren Tundra?</value>
@@ -2039,5 +2039,11 @@
   </data>
   <data name="WORLD_SERVER_CONSOLE_TITLE" xml:space="preserve">
     <value>GloomyTale - ACT4 WORLD SERVER - ID : {0} | Players : {1} | IP : {2}:{3}</value>
+  </data>
+  <data name="ASK_REVIVE_ACT4" xml:space="preserve">
+    <value>Do you want to revive? It will cost you {0} contributes.</value>
+  </data>
+  <data name="CHARACTER_CONTRIBUTE" xml:space="preserve">
+    <value>You have {0} contribute points</value>
   </data>
 </root>
