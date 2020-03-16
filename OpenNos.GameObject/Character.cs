@@ -1064,7 +1064,7 @@ namespace OpenNos.GameObject
             if (medal == null)
             {
                 // Check if there is NosBazaar in Map
-                if (!Session.Character.MapInstance.Npcs.Any(s => s.NpcVNum == 524))
+                if (!Session.Character.MapInstance.Npcs.Any(s => s.NpcVNum == 524 || s.NpcVNum == 539))
                 {
                     return false;
                 }
