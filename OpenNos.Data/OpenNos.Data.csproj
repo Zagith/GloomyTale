@@ -165,6 +165,7 @@
     <Compile Include="TeleporterDTO.cs" />
     <Compile Include="ScriptedInstanceDTO.cs" />
     <Compile Include="TimeSpacesLogDTO.cs" />
+    <Compile Include="TrueOrFalseDTO.cs" />
     <Compile Include="UserDTO.cs" />
     <Compile Include="MinigameLogDTO.cs" />
   </ItemGroup>

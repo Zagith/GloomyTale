@@ -1681,13 +1681,17 @@ namespace OpenNos.GameObject
                                         byte rare = rollitem.ItemGeneratedRare;
                                         if (rollitem.IsRareRandom)
                                         {
+                                            rnd = ServerManager.RandomNumber(0, 100);
                                             if (rollitem.ItemGeneratedUpgradeMax != 0)
                                             {
-                                                rare = (byte)ServerManager.RandomNumber(rollitem.ItemGeneratedRare, rollitem.ItemGeneratedUpgradeMax);
+                                                if (rnd <= 50)
+                                                {
+                                                    rare = 7;
+                                                }
                                             }
                                             else
                                             {
-                                                rnd = ServerManager.RandomNumber(0, 100);
+                                                
 
                                                 for (int j = ItemHelper.RareRate.Length - 1; j >= 0; j--)
                                                 {

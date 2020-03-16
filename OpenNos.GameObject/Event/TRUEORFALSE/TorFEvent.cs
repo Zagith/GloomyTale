@@ -1,8 +1,11 @@
 ﻿using OpenNos.Core;
+using OpenNos.DAL;
+using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -18,18 +21,20 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
         public static MapMonster False { get; set; }
         public static bool answer { get; set; }
 
-        public static void GenerateTorF()
+        public static void GenerateTorF(short questionType)
         {
             _map = ServerManager.GenerateMapInstance(2566, MapInstanceType.EventGameInstance, new InstanceBag());
             TorFEventThread torfThread = new TorFEventThread();
-            Observable.Timer(TimeSpan.FromMinutes(0)).Subscribe(X => torfThread.Run());
+            Observable.Timer(TimeSpan.FromMinutes(0)).Subscribe(X => torfThread.Run(questionType));
         }
 
     }
 
     public class TorFEventThread
     {
-        public void Run()
+        public List<TrueOrFalseDTO> Questions { get; set; }
+
+        public void Run(short questionType)
         {
             ServerManager.Shout("True or False event is starting!");
             Thread.Sleep(5 * 1000);
@@ -80,6 +85,10 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
 
             #endregion
 
+            #region Questions preparing
+            Questions = DAOFactory.TrueOrFalseDAO.LoadByType(questionType).ToList();
+            #endregion
+
             Thread.Sleep(20 * 1000);
             ServerManager.Shout("True or False event STARTED!");
             Portal p = ServerManager.GetMapInstanceByMapId(129).Portals.Where(p => p.DestinationMapId == 2566).FirstOrDefault();
@@ -92,74 +101,26 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
             EventHelper.Instance.RunEvent(new EventContainer(ServerManager.GetMapInstanceByMapId(129), EventActionType.CHANGEPORTALTYPE, new Tuple<int, PortalType>(p.PortalId, PortalType.Closed)));
 
             byte wave = 0;
-            while (TorFEvent._map.Sessions.Count() > 0 && wave < 5)
+            while (TorFEvent._map.Sessions.Count() > 0 && wave < Questions.Count)
             {
-                switch (wave)
+                byte roundCount = 1;
+                string lastRound = "last";
+                string writeRound = roundCount < Questions.Count ? roundCount.ToString() : lastRound;
+                foreach (TrueOrFalseDTO question in Questions)
                 {
-                    case 0:
-                        {
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Let's start with 1st round!!", 0)));
-                            Thread.Sleep(5 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Is Bunny a TDC? Time to choose: 20 secs", 0)));
-                            Thread.Sleep(10 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("10 secs reamining! Make your choise!!", 0)));
-                            Thread.Sleep(10 * 1000);
-                            TorFEvent.answer = true;
-                        }
-                        break;
-
-                    case 1:
-                        {
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Let's start with 2nd round!!", 0)));
-                            Thread.Sleep(5 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Is Akaysen a Game Admin? Time to choose: 20 secs", 0)));
-                            Thread.Sleep(10 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("10 secs reamining! Make your choise!!", 0)));
-                            Thread.Sleep(10 * 1000);
-                            TorFEvent.answer = false;
-                        }
-                        break;
-
-                    case 2:
-                        {
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Let's start with 3rd round!!", 0)));
-                            Thread.Sleep(5 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Is Zagith a programmer? Time to choose: 20 secs", 0)));
-                            Thread.Sleep(10 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("10 secs reamining! Make your choise!!", 0)));
-                            Thread.Sleep(10 * 1000);
-                            TorFEvent.answer = true;
-                        }
-                        break;
-
-                    case 3:
-                        {
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Let's start with 4th round!!", 0)));
-                            Thread.Sleep(5 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Is Antwen italian? Time to choose: 20 secs", 0)));
-                            Thread.Sleep(10 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("10 secs reamining! Make your choise!!", 0)));
-                            Thread.Sleep(10 * 1000);
-                            TorFEvent.answer = true;
-                        }
-                        break;
-
-                    case 4:
-                        {
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Let's start with LAST round!!", 0)));
-                            Thread.Sleep(5 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("Is CarlosC turkish? Time to choose: 20 secs", 0)));
-                            Thread.Sleep(10 * 1000);
-                            EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("10 secs reamining! Make your choise!!", 0)));
-                            Thread.Sleep(10 * 1000);
-                            TorFEvent.answer = false;
-                        }
-                        break;
+                    EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg($"Let's start with {writeRound} round!!", 0)));
+                    Thread.Sleep(5 * 1000);
+                    EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg($"{question.Question}", 0)));
+                    Thread.Sleep(10 * 1000);
+                    EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("10 secs reamining! Make your choise!!", 0)));
+                    Thread.Sleep(10 * 1000);
+                    TorFEvent.answer = question.Answer;
+                    EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("AND THE ANSWER IS...", 0)));
+                    Thread.Sleep(3 * 1000);
+                    KickLosers();
+                    wave++;
+                    roundCount++;
                 }
-                EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("AND THE ANSWER IS...", 0)));
-                Thread.Sleep(3 * 1000);
-                KickLosers();
-                wave++;
             }
 
             if (TorFEvent._map.Sessions.Count() > 0)
@@ -281,22 +242,22 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
         {
             if (TorFEvent.answer)
             {
+                EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("TRUE", 0)));
                 foreach (ClientSession s in TorFEvent._map.Sessions)
                     if (!TorFEvent._map.GetCharactersInRange(TorFEvent.True.MapX, TorFEvent.True.MapY, 3).Contains(s.Character))
                         ServerManager.Instance.ChangeMap(s.Character.CharacterId, 129, 65, 134);
                     else
-                        s.Character.TeleportOnMap(17, 26);
-                EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("TRUE", 0)));
+                        s.Character.TeleportOnMap(17, 26);                
                 Thread.Sleep(3 * 1000);
             }
             else
             {
+                EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("FALSE", 0)));
                 foreach (ClientSession s in TorFEvent._map.Sessions)
                     if (!TorFEvent._map.GetCharactersInRange(TorFEvent.False.MapX, TorFEvent.False.MapY, 3).Contains(s.Character))
                         ServerManager.Instance.ChangeMap(s.Character.CharacterId, 129, 65, 134);
                     else
-                        s.Character.TeleportOnMap(17, 26);
-                EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("FALSE", 0)));
+                        s.Character.TeleportOnMap(17, 26);                
                 Thread.Sleep(3 * 1000);
             }
 

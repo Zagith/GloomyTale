@@ -62,9 +62,9 @@ namespace OpenNos.GameObject.Helpers
             return a;
         }
 
-        public static void GenerateEvent(EventType type, int LvlBracket = -1)
+        public static void GenerateEvent(EventType type, int LvlBracket = -1, short QuestionType = -1)
         {
-            if (type == EventType.ICEBREAKER && LvlBracket < 0)
+            if (type == EventType.ICEBREAKER && LvlBracket < 0 || type == EventType.TorF && QuestionType < 0)
             {
                 return;
             }
@@ -180,7 +180,7 @@ namespace OpenNos.GameObject.Helpers
                             break;
 
                         case EventType.TorF:
-                            TorFEvent.GenerateTorF();
+                            TorFEvent.GenerateTorF(QuestionType);
                             break;
                     }
                 });

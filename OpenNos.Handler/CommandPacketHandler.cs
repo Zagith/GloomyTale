@@ -3337,10 +3337,14 @@ namespace OpenNos.Handler
                 Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[Event]EventType: {packet.EventType.ToString()}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
-                if (packet.LvlBracket >= 0)
+                if (packet.LvlBracket >= 1 && packet.EventType == EventType.TorF)
+                {
+                    EventHelper.GenerateEvent(packet.EventType, QuestionType: (short)packet.LvlBracket);
+                }
+                else if(packet.LvlBracket >= 0)
                 {
                     EventHelper.GenerateEvent(packet.EventType, packet.LvlBracket);
-                }
+                }                 
                 else
                 {
                     EventHelper.GenerateEvent(packet.EventType);

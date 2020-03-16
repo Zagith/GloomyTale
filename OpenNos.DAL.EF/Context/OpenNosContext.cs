@@ -176,6 +176,9 @@ namespace OpenNos.DAL.EF
         public virtual DbSet<FortuneWheel> FortuneWheel { get; set; }
 
         public virtual DbSet<TimeSpacesLog> TimeSpacesLog { get; set; }
+
+        public virtual DbSet<TrueOrFalse> TrueOrFalse { get; set; }
+
         #endregion
 
         #region Methods
