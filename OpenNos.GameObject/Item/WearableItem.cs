@@ -307,7 +307,7 @@ namespace OpenNos.GameObject
 
                     Logger.LogUserEvent("EQUIPMENT_WEAR", session.GenerateIdentity(), $"IIId: {inv.Id} ItemVnum: {inv.ItemVNum} Upgrade: {inv.Upgrade} Rare: {inv.Rare}");
 
-                    ScriptedInstance raid = ServerManager.Instance.Raids.FirstOrDefault(s => s.RequiredItems?.Any(obj => obj?.VNum == VNum) == true)?.Copy();
+                    ScriptedInstance raid = ServerManager.Instance.Raids.FirstOrDefault(s => s.RequieredItems?.Any(obj => obj?.VNum == VNum) == true)?.Copy();
                     if (raid?.DailyEntries > 0)
                     {
                         var entries = raid.DailyEntries - session.Character.GeneralLogs.CountLinq(s => s.LogType == "InstanceEntry" && short.Parse(s.LogData) == raid.Id && s.Timestamp.Date == DateTime.Today);

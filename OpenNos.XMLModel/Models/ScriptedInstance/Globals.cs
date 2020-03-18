@@ -36,7 +36,7 @@ namespace OpenNos.XMLModel.Models.ScriptedInstance
 
         public Reputation Reputation { get; set; }
 
-        public Item[] RequiredItems { get; set; }
+        public Item[] RequieredItems { get; set; }
 
         public Item[] SpecialItems { get; set; }
 

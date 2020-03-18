@@ -1133,7 +1133,7 @@ namespace OpenNos.Handler
                 }
                 else if (guriPacket.Type == 8888)
                 {
-                    if (Session.Character.Inventory.CountItem(2009) >= 10)
+                    if (Session.Character.Inventory.CountItem(15297) >= 10)
                     {
 
                         DateTime now = DateTime.Now;

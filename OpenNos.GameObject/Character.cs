@@ -3602,7 +3602,7 @@ namespace OpenNos.GameObject
                     if (monsterToAttack.Monster.MonsterType != MonsterType.Special)
                     {
                         #region item drop
-                        bool divideRate = true;
+                        bool divideRate = false;
                         if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act4)
                          || MapInstance.Map.MapId == 20001 // Miniland
                          || explodeMonsters.Contains(monsterToAttack.MonsterVNum))
@@ -7306,7 +7306,7 @@ namespace OpenNos.GameObject
             var entries = instance.DailyEntries - Session.Character.GeneralLogs.CountLinq(s => s.LogType == "InstanceEntry" && short.Parse(s.LogData) == instance.Id && s.Timestamp.Date == DateTime.Today);
             if (instance.DailyEntries == 0 || entries > 0)
             {
-                foreach (Gift requiredItem in instance.RequiredItems)
+                foreach (Gift requiredItem in instance.RequieredItems)
                 {
                     if (Session.Character.Inventory.CountItem(requiredItem.VNum) < requiredItem.Amount)
                     {

@@ -183,9 +183,9 @@ namespace OpenNos.GameObject
                     session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("INSTANCE_NO_MORE_ENTRIES"), 10));
                     return false;
                 }
-                if (Raid.RequiredItems != null)
+                if (Raid.RequieredItems != null)
                 {
-                    foreach (Gift requiredItem in Raid.RequiredItems)
+                    foreach (Gift requiredItem in Raid.RequieredItems)
                     {
                         if (ServerManager.GetItem(requiredItem.VNum).Type == InventoryType.Equipment
                         && !session.Character.Inventory.Any(s => s.ItemVNum == requiredItem.VNum && s.Type == InventoryType.Wear))

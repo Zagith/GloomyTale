@@ -98,7 +98,7 @@ namespace OpenNos.GameObject
 
         public int Reputation { get; set; }
 
-        public List<Gift> RequiredItems { get; set; }
+        public List<Gift> RequieredItems { get; set; }
 
         public int RoomAmount { get; internal set; }
 
@@ -153,7 +153,7 @@ namespace OpenNos.GameObject
             }
             const int WinnerScore = 0;
             const string Winner = "";
-            return $"rbr 0.0.0 4 15 {LevelMinimum}.{LevelMaximum} {RequiredItems?.Sum(s => s.Amount)} {drawgift} {specialitems} {bonusitems} {WinnerScore}.{(WinnerScore > 0 ? Winner : "")} 0 0 {Name}\n{Label}";
+            return $"rbr 0.0.0 4 15 {LevelMinimum}.{LevelMaximum} {RequieredItems?.Sum(s => s.Amount)} {drawgift} {specialitems} {bonusitems} {WinnerScore}.{(WinnerScore > 0 ? Winner : "")} 0 0 {Name}\n{Label}";
         }
 
         public string GenerateWp() => $"wp {PositionX} {PositionY} {ScriptedInstanceId} 0 {LevelMinimum} {LevelMaximum}";
@@ -170,7 +170,7 @@ namespace OpenNos.GameObject
 
                 if (Model?.Globals != null)
                 {
-                    RequiredItems = new List<Gift>();
+                    RequieredItems = new List<Gift>();
                     DrawItems = new List<Gift>();
                     SpecialItems = new List<Gift>();
                     GiftItems = new List<Gift>();
@@ -191,11 +191,11 @@ namespace OpenNos.GameObject
                     Name = Model.Globals.Name?.Value ?? "No Name";
                     Label = Model.Globals.Label?.Value ?? "No Description";
                     IsGiantTeam = Model.Globals.GiantTeam != null;
-                    if (Model.Globals.RequiredItems != null)
+                    if (Model.Globals.RequieredItems != null)
                     {
-                        foreach (XMLModel.Objects.Item item in Model.Globals.RequiredItems)
+                        foreach (XMLModel.Objects.Item item in Model.Globals.RequieredItems)
                         {
-                            RequiredItems.Add(new Gift(item.VNum, item.Amount, item.Design, item.IsRandomRare));
+                            RequieredItems.Add(new Gift(item.VNum, item.Amount, item.Design, item.IsRandomRare));
                         }
                     }
                     if (Model.Globals.DrawItems != null)

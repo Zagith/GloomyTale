@@ -413,7 +413,7 @@ namespace OpenNos.Handler
                                     var entries = TeamTimeSpace.DailyEntries - Session.Character.GeneralLogs.CountLinq(s => s.LogType == "InstanceEntry" && short.Parse(s.LogData) == TeamTimeSpace.Id && s.Timestamp.Date == DateTime.Today);
                                     if (TeamTimeSpace.DailyEntries == 0 || entries > 0)
                                     {
-                                        foreach (Gift gift in TeamTimeSpace.RequiredItems)
+                                        foreach (Gift gift in TeamTimeSpace.RequieredItems)
                                         {
                                             if (Session.Character.Inventory.CountItem(gift.VNum) < gift.Amount)
                                             {

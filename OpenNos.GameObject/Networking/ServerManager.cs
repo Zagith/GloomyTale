@@ -990,7 +990,8 @@ namespace OpenNos.GameObject.Networking
                     ShopAllowed = baseMapInstance.Map.ShopAllowed,
                     XpRate = baseMapInstance.Map.XpRate,
                     MeteoriteLevel = baseMapInstance.MeteoriteLevel,
-                    GoldMapRate = baseMapInstance.GoldMapRate
+                    GoldMapRate = baseMapInstance.GoldMapRate,
+                    Side = baseMapInstance.Side
                 };
                 MapInstance mapInstance = new MapInstance(mapinfo, baseMapInstance.MapInstanceId, baseMapInstance.ShopAllowed, baseMapInstance.MapInstanceType, new InstanceBag(), baseMapInstance.MeteoriteLevel, baseMapInstance.Side, baseMapInstance.GoldMapRate, baseMapInstance.DropAllowed);
                 mapInstance.LoadMonsters();
@@ -1546,7 +1547,8 @@ namespace OpenNos.GameObject.Networking
                         ShopAllowed = map.ShopAllowed,
                         XpRate = map.XpRate,
                         MeteoriteLevel = map.MeteoriteLevel,
-                        GoldMapRate = map.GoldMapRate
+                        GoldMapRate = map.GoldMapRate,
+                        Side = map.Side
                     };
                     _maps.Add(mapinfo);
                     MapInstance newMap = new MapInstance(mapinfo, guid, map.ShopAllowed, MapInstanceType.BaseMapInstance, new InstanceBag(), map.MeteoriteLevel, map.Side, map.GoldMapRate, true);

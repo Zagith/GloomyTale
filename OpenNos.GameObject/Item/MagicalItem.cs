@@ -599,14 +599,26 @@ namespace OpenNos.GameObject
                 case 300:
                     if (session.Character.Group != null && session.Character.Group.GroupType != GroupType.Group && session.Character.Group.IsLeader(session) && session.CurrentMapInstance.Portals.Any(s => s.Type == (short)PortalType.Raid))
                     {
-                        int delay = 0;
+                        int delay = 0; 
+                        bool hasSide = session.CurrentMapInstance.Map.Side != 0 ? true : false;
                         foreach (ClientSession sess in session.Character.Group.Sessions.GetAllItems())
                         {
                             Observable.Timer(TimeSpan.FromMilliseconds(delay)).Subscribe(o =>
                             {
-                                if (sess?.Character != null && session?.CurrentMapInstance != null && session?.Character != null && sess.Character != session.Character)
-                                {
-                                    ServerManager.Instance.ChangeMapInstance(sess.Character.CharacterId, session.CurrentMapInstance.MapInstanceId, session.Character.MapX, session.Character.MapY);
+                                if (hasSide == false || hasSide == true && (session.CurrentMapInstance.Map.Side == (int)SideReputMapType.Side2 && sess?.Character.Reputation >= (long)SideReputType.Side2 ||
+                                    session.CurrentMapInstance.Map.Side == (int)SideReputMapType.Side3 && sess?.Character.Reputation >= (long)SideReputType.Side3 ||
+                                    session.CurrentMapInstance.Map.Side == (int)SideReputMapType.Side4 && sess?.Character.Reputation >= (long)SideReputType.Side4 ||
+                                    session.CurrentMapInstance.Map.Side == (int)SideReputMapType.Side5 && sess?.Character.Reputation >= (long)SideReputType.Side5 ||
+                                    session.CurrentMapInstance.Map.Side == (int)SideReputMapType.Side6 && sess?.Character.Reputation >= (long)SideReputType.Side6 ||
+                                    session.CurrentMapInstance.Map.Side == (int)SideReputMapType.Side7 && sess?.Character.Reputation >= (long)SideReputType.Side7 ||
+                                    session.CurrentMapInstance.Map.Side == (int)SideReputMapType.Side8 && sess?.Character.Reputation >= (long)SideReputType.Side8 ||
+                                    session.CurrentMapInstance.Map.Side == (int)SideReputMapType.Side9 && sess?.Character.Reputation >= (long)SideReputType.Side9 ||
+                                    session.CurrentMapInstance.Map.Side == (int)SideReputMapType.Side10 && sess?.Character.Reputation >= (long)SideReputType.Side10))
+                                { 
+                                    if (sess?.Character != null && session?.CurrentMapInstance != null && session?.Character != null && sess.Character != session.Character)
+                                    {
+                                        ServerManager.Instance.ChangeMapInstance(sess.Character.CharacterId, session.CurrentMapInstance.MapInstanceId, session.Character.MapX, session.Character.MapY);
+                                    }
                                 }
                             });
                             delay += 100;
