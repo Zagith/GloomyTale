@@ -139,7 +139,11 @@ namespace OpenNos.GameObject.Event
                                 {
                                     cli.Character.SpAdditionPoint = 1000000;
                                 }
-
+                                Item iteminfo = ServerManager.GetItem(2428);
+                                ItemInstance inv = cli.Character.Inventory
+                                    .AddNewToInventory(iteminfo.VNum, 1).FirstOrDefault();
+                                cli.SendPacket(cli.Character.GenerateSay(
+                                    $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {iteminfo.Name[cli.Account.Language]} x 1", 12));
                                 cli.SendPacket(cli.Character.GenerateSpPoint());
                                 cli.SendPacket(cli.Character.GenerateGold());
                                 cli.SendPacket(cli.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_MONEY"), cli.Character.Level * 1000), 10));
@@ -368,7 +372,7 @@ namespace OpenNos.GameObject.Event
                             case 2:
                                 map.GenerateMonsters(826, 30, true, new List<EventContainer>()).ToList()
                                     .ForEach(s => summonParameters.Add(s));
-                                map.GenerateMonsters(1286, 30, true, new List<EventContainer>()).ToList()
+                                map.GenerateMonsters(824, 30, true, new List<EventContainer>()).ToList()
                                     .ForEach(s => summonParameters.Add(s));
                                 break;
 
