@@ -15,9 +15,10 @@ namespace GloomyTale.DiscordBot.Modules
         {
             if (Context.Channel.Name == "language-chooise")
             {
-                if (region.ToString() == "English")
+                if (region != RegionType.FRENCH || region != RegionType.GERMAN || region != RegionType.ITALIAN || region != RegionType.POLISH
+                    || region != RegionType.RUSSIAN || region != RegionType.SPANISH || region != RegionType.TURKISH)
                 {
-                    await ReplyAsync("English language is default.");
+                    await ReplyAsync("the role doesn't exist.");
                     return;
                 }
                 var role = Context.Guild.Roles.FirstOrDefault(r => r.Name == $"{region.ToString()}");
