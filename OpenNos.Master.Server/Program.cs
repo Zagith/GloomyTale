@@ -15,6 +15,7 @@
 using log4net;
 using OpenNos.Core;
 using OpenNos.DAL.EF.Helpers;
+using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.Scs.Communication.EndPoints.Tcp;
 using OpenNos.SCS.Communication.ScsServices.Service;
@@ -22,8 +23,11 @@ using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
+using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
+
 namespace OpenNos.Master.Server
 {
     internal static class Program
@@ -102,6 +106,16 @@ namespace OpenNos.Master.Server
                     _server.ClientDisconnected += OnClientDisconnected;
 
                     _server.Start();
+
+                    // AUTO SESSION KICK
+                    Observable.Interval(TimeSpan.FromMinutes(1)).Subscribe(x =>
+                    {
+                        Parallel.ForEach(
+                            MSManager.Instance.ConnectedAccounts.Where(s =>
+                                s.LastPulse.AddMinutes(1) <= DateTime.Now),
+                            connection => { CommunicationServiceClient.Instance.KickSession(connection.AccountId, null); });
+                    });
+
                     Logger.Info(Language.Instance.GetMessageFromKey("STARTED"));
                     if (!ignoreTelemetry)
                     {
