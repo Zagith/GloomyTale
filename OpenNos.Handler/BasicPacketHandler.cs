@@ -1202,8 +1202,7 @@ namespace OpenNos.Handler
 
             double timeSpanSinceLastPortal = currentRunningSeconds - Session.Character.LastPortal;
 
-            if (Session.Account?.Authority != AuthorityType.Administrator
-                && (timeSpanSinceLastPortal < 4 || !Session.HasCurrentMapInstance))
+            if (timeSpanSinceLastPortal < 4 || !Session.HasCurrentMapInstance)
             {
                 Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("CANT_MOVE"), 10));
                 return;
