@@ -1,6 +1,7 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
 using GloomyTale.DiscordBot.Enumerations;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,16 +16,16 @@ namespace GloomyTale.DiscordBot.Modules
         {
             if (Context.Channel.Name == "language-chooise")
             {
-                if (region != RegionType.FRENCH || region != RegionType.GERMAN || region != RegionType.ITALIAN || region != RegionType.POLISH
-                    || region != RegionType.RUSSIAN || region != RegionType.SPANISH || region != RegionType.TURKISH)
+                if (region == RegionType.HELP)
                 {
-                    await ReplyAsync("the role doesn't exist.");
+                    await ReplyAsync("roles: \nENGLISH,\nGERMAN,\nFRENCH,\nITALIAN,\nSPANISH,\nRUSSIAN,\nTURKISH,\nPOLISH");
                     return;
                 }
                 var role = Context.Guild.Roles.FirstOrDefault(r => r.Name == $"{region.ToString()}");
                 if (role == null)
                 {
                     await ReplyAsync("the role doesn't exist.");
+                    await ReplyAsync("help: /lang help \nroles: \nENGLISH,\nGERMAN,\nFRENCH,\nITALIAN,\nSPANISH,\nRUSSIAN,\nTURKISH,\nPOLISH");
                     return;
                 }
 
