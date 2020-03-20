@@ -88,6 +88,7 @@ namespace OpenNos.DAL
         private static II18NShopNameDAO _i18nShopDAO;
         private static ITimeSpaceLogDAO _timespacelogDAO;
         private static ITrueOrFalseDAO _trueOrFalseDAO;
+        private static IMultiAccountExceptionDAO _multiAccountExceptionDAO;
         #endregion
 
         #region Properties
@@ -225,6 +226,8 @@ namespace OpenNos.DAL
         public static ITimeSpaceLogDAO TimeSpaceLogDAO => _timespacelogDAO ?? (_timespacelogDAO = new TimeSpaceLogDAO());
 
         public static ITrueOrFalseDAO TrueOrFalseDAO => _trueOrFalseDAO ?? (_trueOrFalseDAO = new TrueOrFalseDAO());
+
+        public static IMultiAccountExceptionDAO MultiAccountExceptionDAO => _multiAccountExceptionDAO ?? (_multiAccountExceptionDAO = new MultiAccountExceptionDAO());
 
         #endregion
     }

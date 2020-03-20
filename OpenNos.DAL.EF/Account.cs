@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.DAL.EF.Entities;
 using OpenNos.Domain;
 using OpenNos.Domain.I18N;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace OpenNos.DAL.EF
             Character = new HashSet<Character>();
             GeneralLog = new HashSet<GeneralLog>();
             PenaltyLog = new HashSet<PenaltyLog>();
+            MultiAccountException = new HashSet<MultiAccountException>();
         }
 
         #endregion
@@ -44,6 +46,8 @@ namespace OpenNos.DAL.EF
         public string Email { get; set; }
 
         public virtual ICollection<GeneralLog> GeneralLog { get; set; }
+
+        public ICollection<MultiAccountException> MultiAccountException { get; }
 
         [MaxLength(255)]
         public string Name { get; set; }

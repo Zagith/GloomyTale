@@ -102,6 +102,7 @@
     <Compile Include="IMapNpcDAO.cs" />
     <Compile Include="IMapTypeDAO.cs" />
     <Compile Include="IMapTypeMapDAO.cs" />
+    <Compile Include="IMultiAccountExceptionDAO.cs" />
     <Compile Include="INpcMonsterSkillDAO.cs" />
     <Compile Include="IPartnerSkillDAO.cs" />
     <Compile Include="IPenaltyLogDAO.cs" />

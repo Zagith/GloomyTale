@@ -104,6 +104,7 @@
     <Compile Include="Entities\I18NQuest.cs" />
     <Compile Include="Entities\I18NShopName.cs" />
     <Compile Include="Entities\I18NSkill.cs" />
+    <Compile Include="Entities\MultiAccountException.cs" />
     <Compile Include="Entities\TimeSpacesLog.cs" />
     <Compile Include="Entities\TrueOrFalse.cs" />
     <Compile Include="LogChat.cs" />
@@ -210,6 +211,10 @@
     <Compile Include="Migrations\202003161702171_TorfQuestions.cs" />
     <Compile Include="Migrations\202003161702171_TorfQuestions.designer.cs">
       <DependentUpon>202003161702171_TorfQuestions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003202132135_MultiAccountCheck.cs" />
+    <Compile Include="Migrations\202003202132135_MultiAccountCheck.designer.cs">
+      <DependentUpon>202003202132135_MultiAccountCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="Quest.cs" />
@@ -364,6 +369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003161702171_TorfQuestions.resx">
       <DependentUpon>202003161702171_TorfQuestions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003202132135_MultiAccountCheck.resx">
+      <DependentUpon>202003202132135_MultiAccountCheck.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

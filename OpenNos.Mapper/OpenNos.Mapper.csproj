@@ -78,6 +78,7 @@
     <Compile Include="Mappers\MapTypeMapper.cs" />
     <Compile Include="Mappers\MateMapper.cs" />
     <Compile Include="Mappers\MinilandObjectMapper.cs" />
+    <Compile Include="Mappers\MultiAccountExceptionMapper.cs" />
     <Compile Include="Mappers\PartnerSkillMapper.cs" />
     <Compile Include="Mappers\QuestLogMapper.cs" />
     <Compile Include="Mappers\QuestObjectiveMapper.cs" />

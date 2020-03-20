@@ -179,6 +179,8 @@ namespace OpenNos.DAL.EF
 
         public virtual DbSet<TrueOrFalse> TrueOrFalse { get; set; }
 
+        public virtual DbSet<MultiAccountException> MultiAccountException { get; set; }
+
         #endregion
 
         #region Methods
@@ -195,6 +197,12 @@ namespace OpenNos.DAL.EF
             modelBuilder.Entity<Account>()
                 .HasMany(e => e.Character)
                 .WithRequired(e => e.Account)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<MultiAccountException>()
+                .HasRequired(e => e.Account)
+                .WithMany(e => e.MultiAccountException)
+                .HasForeignKey(e => e.AccountId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Account>()

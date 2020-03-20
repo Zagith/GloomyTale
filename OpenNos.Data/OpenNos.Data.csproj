@@ -113,6 +113,7 @@
     <Compile Include="LogDropDTO.cs" />
     <Compile Include="LogPutItemDTO.cs" />
     <Compile Include="MaintenanceLogDTO.cs" />
+    <Compile Include="MultiAccountExceptionDTO.cs" />
     <Compile Include="PartnerSkillDTO.cs" />
     <Compile Include="QuestDTO.cs" />
     <Compile Include="QuestLogDTO.cs" />

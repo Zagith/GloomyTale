@@ -2855,6 +2855,59 @@ namespace OpenNos.Handler
                     Session.Character.IsSeal = false;
                 }
             }
+
+            #region Multi account detection
+
+            bool trapTriggered = false;
+            bool possibleUnregisteredException = false;
+            long[][] connections = CommunicationServiceClient.Instance.RetrieveOnlineCharacters(Session.Character.CharacterId);
+            foreach (long[] connection in connections)
+            {
+                if (connection != null)
+                {
+                    CharacterDTO characterDTO = DAOFactory.CharacterDAO.LoadById(connection[0]);
+                    if (characterDTO != null)
+                    {
+                        MultiAccountExceptionDTO exception = DAOFactory.MultiAccountExceptionDAO.LoadByAccount(characterDTO.AccountId);
+                        if (exception == null && connections.Length > 3)
+                        {
+                            Session.Disconnect();
+                            trapTriggered = true;
+                        }
+                        if (exception != null && connections.Length > exception.ExceptionLimit)
+                        {
+                            Session.Disconnect();
+                            possibleUnregisteredException = true;
+                        }
+                    }
+                }
+            }
+            if (possibleUnregisteredException)
+            {
+                foreach (ClientSession team in ServerManager.Instance.Sessions.Where(s =>
+                s.Account.Authority >= AuthorityType.GM))
+                {
+                    if (team.HasSelectedCharacter)
+                    {
+                        team.SendPacket(team.Character.GenerateSay(
+                            string.Format("Possible unregistered exception detected for user: " + Session.Character.Name + ", CharacterId: " + Session.Character.CharacterId), 12));
+                    }
+                }
+            }
+            if (trapTriggered)
+            {
+                foreach (ClientSession team in ServerManager.Instance.Sessions.Where(s =>
+                s.Account.Authority >= AuthorityType.GM))
+                {
+                    if (team.HasSelectedCharacter)
+                    {
+                        team.SendPacket(team.Character.GenerateSay(
+                            string.Format("Possible multi account abusing user: " + Session.Character.Name + ", CharacterId: " + Session.Character.CharacterId), 12));
+                    }
+                }
+            }
+
+            #endregion
         }
 
         /// <summary>
