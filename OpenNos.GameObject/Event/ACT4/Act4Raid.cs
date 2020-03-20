@@ -211,14 +211,14 @@ namespace OpenNos.GameObject.Event
 
                 case MapInstanceType.Act4Zanarkand:
                     _mapId = 2618;
-                    _bossMapId = 136;
+                    _bossMapId = 142;
                     _bossVNum = 2049;
-                    _bossX = 55;
-                    _bossY = 12;
+                    _bossX = 30;
+                    _bossY = 28;
                     _sourcePortalX = 102;
                     _sourcePortalY = 15;
-                    _destPortalX = 144;
-                    _destPortalY = 129;
+                    _destPortalX = 20;
+                    _destPortalY = 55;
                     _bossMove = true;
                     break;
 

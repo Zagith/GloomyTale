@@ -1274,22 +1274,22 @@ namespace OpenNos.Handler
                                             {
                                                 case MapInstanceType.Act4Viserion:
                                                     ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
-                                                        Session.Character.Family.Act4Raid.MapInstanceId, 43, 179);
+                                                        Session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                                     break;
 
                                                 case MapInstanceType.Act4Orias:
                                                     ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
-                                                        Session.Character.Family.Act4Raid.MapInstanceId, 15, 9);
+                                                        Session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                                     break;
 
                                                 case MapInstanceType.Act4Zanarkand:
                                                     ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
-                                                        Session.Character.Family.Act4Raid.MapInstanceId, 24, 6);
+                                                        Session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                                     break;
 
                                                 case MapInstanceType.Act4Demetra:
                                                     ServerManager.Instance.ChangeMapInstance(Session.Character.CharacterId,
-                                                        Session.Character.Family.Act4Raid.MapInstanceId, 20, 20);
+                                                        Session.Character.Family.Act4Raid.MapInstanceId, 97, 130);
                                                     break;
                                             }
                                         }

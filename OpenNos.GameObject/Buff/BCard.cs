@@ -279,19 +279,37 @@ namespace OpenNos.GameObject
                                     session.Character.LastSpeedChange = DateTime.Now;
                                     session.Character.LoadSpeed();
                                     session.Character.Session?.SendPacket(session.Character.GenerateCond());
-
-                                    //Invisible 4th class 4th sp
-                                    if (session.Character is Character charact && CardId == 746)
-                                    {
-                                        if (charact.MapInstance.MapInstanceType != MapInstanceType.NormalInstance || charact.MapInstance.Map.MapId != 2004)
+                                    if (session.Character is Character charact)
                                         {
-                                            charact.Invisible = true;
-                                            charact.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => charact.Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
-                                            charact.Session.CurrentMapInstance?.Broadcast(charact.GenerateInvisible());
+                                        switch (SubType)
+                                        {
+                                            case (byte)AdditionalTypes.Move.MoveSpeedDecreased:
+                                                Card speedDebuff = ServerManager.Instance.GetCardByCardId(CardId.Value);
+                                                if (speedDebuff == null)
+                                                {
+                                                    return;
+                                                }
+                                                charact.Speed /= (byte)(100 / FirstData);
+                                                Observable.Timer(TimeSpan.FromSeconds(speedDebuff.Duration * 0.1)).Subscribe(s =>
+                                                {
+                                                    charact.LoadSpeed();
+                                                });
+                                                break;
                                         }
-                                        else if (card != null)
+
+                                        //Invisible 4th class 4th sp
+                                        if (CardId == 746)
                                         {
-                                            charact.RemoveBuff(card.CardId);
+                                            if (charact.MapInstance.MapInstanceType != MapInstanceType.NormalInstance || charact.MapInstance.Map.MapId != 2004)
+                                            {
+                                                charact.Invisible = true;
+                                                charact.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => charact.Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
+                                                charact.Session.CurrentMapInstance?.Broadcast(charact.GenerateInvisible());
+                                            }
+                                            else if (card != null)
+                                            {
+                                                charact.RemoveBuff(card.CardId);
+                                            }
                                         }
                                     }
                                 }
