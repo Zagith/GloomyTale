@@ -1043,6 +1043,17 @@ namespace OpenNos.GameObject
                     }
                     indicator.RemainingTime = indicator.Card.Duration == 0 ? buffTime : indicator.Card.Duration;
 
+                    BuffObservables[indicator.Card.CardId] = Observable.Timer(TimeSpan.FromMilliseconds(indicator.RemainingTime * 100))
+                        .Subscribe(o =>
+                        {
+                            RemoveBuff(indicator.Card.CardId);
+                            if (indicator.Card.TimeoutBuff != 0
+                                && ServerManager.RandomNumber() < indicator.Card.TimeoutBuffChance)
+                            {
+                                AddBuff(new Buff(indicator.Card.TimeoutBuff, Level), sender);
+                            }
+                        });
+
                     // Amulet remaining time
                     if (indicator.Card.CardId == 62)
                     {

@@ -278,9 +278,12 @@ namespace OpenNos.Handler
                     }
                 }
 
-                Session.Character.RemoveBuff(614);
-                Session.Character.RemoveBuff(615);
-                Session.Character.RemoveBuff(616);
+                Observable.Timer(TimeSpan.FromMilliseconds(200)).Subscribe(observer =>
+                {
+                    Session.Character.RemoveBuff(614);
+                    Session.Character.RemoveBuff(615);
+                    Session.Character.RemoveBuff(616);
+                });
 
                 bool isMuted = Session.Character.MuteMessage();
 

@@ -410,6 +410,27 @@ namespace OpenNos.GameObject.Helpers
 
             #region Boost
 
+            boostCategory1 +=
+                GetAttackerBenefitingBuffs(CardType.Damage, (byte)AdditionalTypes.Damage.DamageIncreased)
+                    [0] / 100D;
+            if(defender.Character != null && defender.Character.Class == ClassType.Magician || attacker.Character != null && attacker.Character.Class == ClassType.Magician)
+            {
+                boostCategory1 +=
+                GetDefenderBenefitingBuffs(CardType.Damage, (byte)AdditionalTypes.Damage.DamageDecreased)
+                    [0] / 100D;
+            }
+            else
+            {
+                boostCategory1 +=
+                GetAttackerBenefitingBuffs(CardType.Damage, (byte)AdditionalTypes.Damage.DamageDecreased)
+                    [0] / 100D;
+            }
+            boostCategory1 +=
+                GetAttackerBenefitingBuffs(CardType.Item, (byte)AdditionalTypes.Item.AttackIncreased)[0]
+                / 100D;
+            boostCategory1 +=
+                GetDefenderBenefitingBuffs(CardType.Item, (byte)AdditionalTypes.Item.DefenceIncreased)[0]
+                / 100D;
             shellBoostCategory1 += GetShellWeaponEffectValue(ShellWeaponEffectType.PercentageTotalDamage) / 100D;
 
             if ((attacker.EntityType == EntityType.Player || attacker.EntityType == EntityType.Mate)
@@ -443,9 +464,18 @@ namespace OpenNos.GameObject.Helpers
             boostCategory2 +=
                 GetAttackerBenefitingBuffs(CardType.Damage, (byte)AdditionalTypes.Damage.DamageIncreased)
                     [0] / 100D;
-            boostCategory2 +=
+            if (defender.Character != null && defender.Character.Class == ClassType.Magician || attacker.Character != null && attacker.Character.Class == ClassType.Magician)
+            {
+                boostCategory2 +=
                 GetDefenderBenefitingBuffs(CardType.Damage, (byte)AdditionalTypes.Damage.DamageDecreased)
                     [0] / 100D;
+            }
+            else
+            {
+                boostCategory2 +=
+                GetAttackerBenefitingBuffs(CardType.Damage, (byte)AdditionalTypes.Damage.DamageDecreased)
+                    [0] / 100D;
+            }
             boostCategory2 +=
                 GetAttackerBenefitingBuffs(CardType.Item, (byte)AdditionalTypes.Item.AttackIncreased)[0]
                 / 100D;
@@ -1026,11 +1056,6 @@ namespace OpenNos.GameObject.Helpers
                     {
                         chance = 100 - AttackHitChanceNegated;
                     }
-                }
-
-                if (attacker.HasBuff(CardType.GuarantedDodgeRangedAttack, (byte)AdditionalTypes.GuarantedDodgeRangedAttack.AttackHitChance100))
-                {
-                    chance = 0;
                 }
             }
 
@@ -1906,6 +1931,21 @@ namespace OpenNos.GameObject.Helpers
                     defender.RemoveBuff(577);
                 }
             }
+            #endregion
+
+            #region Corsia di sorpasso
+            /*if (attacker.HasBuff(614))
+            {
+                foreach (Buff bf in attacker.Buffs.GetAllItems().Where(b => b.Card.CardId == 614))
+                    attacker.RemoveBuff(bf.Card.CardId);
+                attacker.AddBuff(new Buff(615, attacker.Character.Level), attacker);
+            }
+            else if (attacker.HasBuff(615))
+            {
+                foreach (Buff bf in attacker.Buffs.GetAllItems().Where(b => b.Card.CardId == 615))
+                    attacker.RemoveBuff(bf.Card.CardId);
+                attacker.AddBuff(new Buff(617, attacker.Character.Level), attacker);
+            }*/
             #endregion
 
             if (defender.Character != null && defender.HasBuff(CardType.NoDefeatAndNoDamage, (byte)AdditionalTypes.NoDefeatAndNoDamage.TransferAttackPower))
