@@ -5307,7 +5307,14 @@ namespace OpenNos.GameObject
             return $"ta_ps {groups.TrimEnd(' ')}";
         }
 
-        public string GenerateTit() => $"tit {Language.Instance.GetMessageFromKey(Class == (byte)ClassType.Adventurer ? nameof(ClassType.Adventurer).ToUpper() : Class == ClassType.Swordsman ? nameof(ClassType.Swordsman).ToUpper() : Class == ClassType.Archer ? nameof(ClassType.Archer).ToUpper() : nameof(ClassType.Magician).ToUpper())} {Name}";
+        public string GenerateTit()
+        {
+            string className = Class == (byte)ClassType.Adventurer ? "Adventurer":
+                                  Class == ClassType.Swordsman ? "Swordsman" :
+                                      Class == ClassType.Archer ? "Archer" : 
+                                      Class == ClassType.Magician ? "Magician" : "MartialArtist";
+            return $"tit {className} {Name}";
+        }
 
         public string GenerateTp() => BattleEntity.GenerateTp();
 
