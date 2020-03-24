@@ -25,14 +25,14 @@ namespace OpenNos.GameObject.Helpers
 
         public static string CastOnTarget(UserType attackerType, long attackerId, UserType defenderType, long defenderId, short castAnimation, short castEffect, short skillVNum) => $"ct {(byte)attackerType} {attackerId} {(byte)defenderType} {defenderId} {castAnimation} {castEffect} {skillVNum}";
 
-        public static EffectPacket GenerateEff(UserType effectType, long callerId, int effectId)
+        public static string GenerateEff(UserType effectType, long callerId, int effectId)
         {
             return new EffectPacket
             {
                 EffectType = effectType,
                 CallerId = callerId,
                 EffectId = effectId
-            };
+            }.ToString();
         }
 
         public static string In(UserType type, short callerVNum, long callerId, short mapX, short mapY, int direction, int currentHp, int currentMp, short dialog, InRespawnType respawnType, bool isSitting, string Name, bool invisible)

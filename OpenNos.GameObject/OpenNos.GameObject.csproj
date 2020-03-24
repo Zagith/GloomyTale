@@ -240,6 +240,7 @@
     <Compile Include="Packets\CommandPackets\SetLockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UnlockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UserLogPacket.cs" />
+    <Compile Include="Packets\ServerPackets\EffectPacket.cs" />
     <Compile Include="Packets\ServerPackets\ExtsPacket.cs" />
     <Compile Include="Packets\ServerPackets\TitlePacket.cs" />
     <Compile Include="Packets\ServerPackets\TitleSubPacket.cs" />
@@ -532,7 +533,6 @@
     <Compile Include="Packets\ClientPackets\CharacterRenamePacket.cs" />
     <Compile Include="Packets\ServerPackets\CListPacket.cs" />
     <Compile Include="Packets\ServerPackets\DialogPacket.cs" />
-    <Compile Include="Packets\ServerPackets\EffectPacket.cs" />
     <Compile Include="Packets\ServerPackets\EqPacket.cs" />
     <Compile Include="Packets\ServerPackets\EquipPacket.cs" />
     <Compile Include="Packets\ServerPackets\GetPacket.cs" />

@@ -568,7 +568,7 @@ namespace OpenNos.GameObject
 
         private void TriggerHandler(string packetHeader, string packet, bool force, bool ignoreAuthority = false)
         {
-            if (ServerManager.Instance.InShutdown)
+            if (ServerManager.Instance.InShutdown || string.IsNullOrWhiteSpace(packetHeader))
             {
                 return;
             }
@@ -586,8 +586,7 @@ namespace OpenNos.GameObject
                     }
                 }
 
-                string[] key = HandlerMethods.Keys.FirstOrDefault(s => s.Any(m => string.Equals(m, packetHeader, StringComparison.CurrentCultureIgnoreCase)));
-                HandlerMethodReference methodReference = key != null ? HandlerMethods[key] : null;
+                HandlerMethodReference methodReference = PacketFacility.GetHandlerMethodReference(packetHeader);
                 if (methodReference != null)
                 {
                     if (!force && methodReference.Amount > 1 && !_waitForPacketsAmount.HasValue)

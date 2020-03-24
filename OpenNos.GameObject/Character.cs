@@ -2930,14 +2930,14 @@ namespace OpenNos.GameObject
             //return $"eq {CharacterId} {(Invisible ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {(!InvisibleGm ? GenerateEqRareUpgradeForPacket() : null)}";
         }
 
-        public EffectPacket GenerateEff(int effectid)
+        public string GenerateEff(int effectid)
         {
             return new EffectPacket
             {
                 EffectType = UserType.Player,
                 CallerId = CharacterId,
                 EffectId = effectid
-            };
+            }.ToString();
         }
 
         public string GenerateEqListForPacket()
@@ -3066,14 +3066,14 @@ namespace OpenNos.GameObject
             return $"equip {GenerateEqRareUpgradeForPacket()}{eqlist}";
         }
 
-        public ExtsPacket GenerateExts()
+        public string GenerateExts()
         {
             return new ExtsPacket
             {
                 EquipmentExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
                 MainExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
                 EtcExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12))
-            };
+            }.ToString();
         }
 
         public string GenerateFaction() => $"fs {(byte)Faction}";
@@ -3443,7 +3443,7 @@ namespace OpenNos.GameObject
                                     {
                                         Session.SendPacket(Killer.Mate.GenerateStatInfo());
                                     }
-                                    Session.SendPacket(new EffectPacket { EffectType = Killer.UserType, CallerId = Killer.MapEntityId, EffectId = 6007 });
+                                    Session.SendPacket($"eff {Killer.UserType} {Killer.MapEntityId} 6007");
                                 }
                             }
                         }
