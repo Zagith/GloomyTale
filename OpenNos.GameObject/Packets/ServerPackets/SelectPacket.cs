@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ServerPackets
 {
     [PacketHeader("select")]
-    public class SelectPacket : PacketDefinition
+    public class SelectPacket
     {
         #region Properties
 

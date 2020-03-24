@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$BlockFExp", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.SGM } )]
-    public class BlockFExpPacket : PacketDefinition
+    public class BlockFExpPacket
     {
         #region Properties
 

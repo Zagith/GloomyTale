@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("sl")]
-    public class SpTransformPacket : PacketDefinition
+    public class SpTransformPacket
     {
         #region Properties
 

@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("walk")]
-    public class WalkPacket : PacketDefinition
+    public class WalkPacket
     {
         #region Properties
 

@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("escape")]
-    public class EscapePacket : PacketDefinition
+    public class EscapePacket
     {
         #region Properties        
 

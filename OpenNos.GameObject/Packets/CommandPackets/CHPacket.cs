@@ -4,7 +4,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$CH", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.DEV })] //for the momment
-    public class CHPacket : PacketDefinition
+    public class CHPacket
     {
         #region Properties
 

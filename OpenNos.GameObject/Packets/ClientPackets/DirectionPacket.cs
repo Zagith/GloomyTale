@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("dir")]
-    public class DirectionPacket : PacketDefinition
+    public class DirectionPacket
     {
         #region Properties
 

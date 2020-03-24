@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("qset")]
-    public class QSetPacket : PacketDefinition
+    public class QSetPacket
     {
         #region Properties
 

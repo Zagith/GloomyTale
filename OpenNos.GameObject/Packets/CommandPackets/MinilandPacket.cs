@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Miniland", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.BA } )]
-    public class MinilandPacket : PacketDefinition
+    public class MinilandPacket
     {
         #region Properties
         [PacketIndex(0)]

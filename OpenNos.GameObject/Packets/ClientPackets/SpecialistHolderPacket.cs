@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("s_carrier")]
-    public class SpecialistHolderPacket : PacketDefinition
+    public class SpecialistHolderPacket
     {
         #region Properties
 

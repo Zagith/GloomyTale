@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$ClassPack", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.GA, AuthorityType.BA })]
-    public class ClassPackPacket : PacketDefinition
+    public class ClassPackPacket
     {
         #region Properties
 

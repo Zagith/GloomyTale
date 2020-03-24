@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Unmute", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.SGM } )]
-    public class UnmutePacket : PacketDefinition
+    public class UnmutePacket
     {
         #region Properties
 

@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("req_exc")]
-    public class ExchangeRequestPacket : PacketDefinition
+    public class ExchangeRequestPacket
     {
         [PacketIndex(0)]
         public RequestExchangeType RequestType { get; set; }

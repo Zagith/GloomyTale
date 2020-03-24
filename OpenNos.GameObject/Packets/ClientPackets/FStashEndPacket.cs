@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("f_stash_end")]
-    public class FStashEndPacket : PacketDefinition
+    public class FStashEndPacket
     {
         #region Properties
 

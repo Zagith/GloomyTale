@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$LeaveAct4", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD } )]
-    public class LeaveAct4Packet : PacketDefinition
+    public class LeaveAct4Packet
     {
         #region Properties
         

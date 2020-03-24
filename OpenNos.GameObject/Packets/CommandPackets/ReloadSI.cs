@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$ReloadSI" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TM } )]
-    public class ReloadSIPacket : PacketDefinition
+    public class ReloadSIPacket
     {
         #region Properties
         

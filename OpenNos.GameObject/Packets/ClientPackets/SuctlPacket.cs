@@ -4,7 +4,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("suctl")]
-    public class SuctlPacket : PacketDefinition
+    public class SuctlPacket
     {
         [PacketIndex(0)]
         public int CastId { get; set; }

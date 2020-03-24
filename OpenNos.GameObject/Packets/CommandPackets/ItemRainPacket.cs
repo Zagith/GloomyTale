@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$ItemRain", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
-    public class ItemRainPacket : PacketDefinition
+    public class ItemRainPacket
     {
         #region Properties
 

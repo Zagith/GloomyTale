@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$SPRefill", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
-    public class SPRefillPacket : PacketDefinition
+    public class SPRefillPacket
     {
         public static string ReturnHelp() => "$SPRefill";
     }

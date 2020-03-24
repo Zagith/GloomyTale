@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Kill", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.SGM } )]
-    public class KillPacket : PacketDefinition
+    public class KillPacket
     {
         #region Properties
 

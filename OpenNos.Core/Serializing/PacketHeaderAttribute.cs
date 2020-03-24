@@ -14,6 +14,7 @@
 
 using OpenNos.Domain;
 using System;
+using System.Linq;
 
 namespace OpenNos.Core
 {
@@ -22,21 +23,37 @@ namespace OpenNos.Core
     {
         #region Instantiation
 
-        public PacketHeaderAttribute(params string[] identification) => Identification = identification;
+        public PacketHeaderAttribute(int amount = 1, params string[] identification)
+        {
+            Identification = identification.Select(t => t.ToLower()).ToArray();
+            Amount = amount;
+        }
+
+        public PacketHeaderAttribute(params string[] identification) => Identification = identification.Select(t => t.ToLower()).ToArray();
 
         #endregion
 
         #region Properties
 
         /// <summary>
+        /// Amount of required packets
+        /// </summary>
+        public int Amount { get; }
+
+        /// <summary>
         /// Permission to handle the packet
         /// </summary>
-        public AuthorityType[] Authorities { get; set; }
+        public AuthorityType Authority { get; set; }
 
         /// <summary>
         /// String identification of the Packet
         /// </summary>
         public string[] Identification { get; set; }
+
+        /// <summary>
+        /// Specifies if packet needs character to execute handling
+        /// </summary>
+        public bool CharacterRequired { get; set; }
 
         /// <summary>
         /// Pass the packet to handler method even if the serialization has failed.

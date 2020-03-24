@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$GlobalEvent", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
-    public class GlobalEventPacket : PacketDefinition
+    public class GlobalEventPacket
     {
         #region Properties
 

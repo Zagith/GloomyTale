@@ -5,8 +5,8 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$RollBack", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TM } )]
-    public class BackMobPacket : PacketDefinition
+    [PacketHeader("$RollBack", PassNonParseablePacket = true, Authority = AuthorityType.GM)]
+    public class BackMobPacket
     {
         #region Properties
 

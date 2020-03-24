@@ -672,7 +672,10 @@ namespace OpenNos.GameObject.Event.ARENA
             {
                 member.Session.Character.GetXp(RewardsHelper.ArenaXpReward(member.Session.Character.Level), false);
                 member.Session.Character.GetJobExp(RewardsHelper.ArenaXpReward(SpInstance != null ? SpInstance.SpLevel : member.Session.Character.JobLevel), false);
-                //member.Session.Character.GetReputation(500);
+                if (member.Session.Character.Reputation >= (long)SideReputType.Side10)
+                {
+                    member.Session.Character.GetReputation(500);
+                }
                 member.Session.Character.GiftAdd(2800, 1);
                 member.Session.Character.GetGold(member.Session.Character.Level * 1000);
                 member.Session.Character.TalentWin++;
@@ -681,7 +684,10 @@ namespace OpenNos.GameObject.Event.ARENA
             {
                 member.Session.Character.GetXp(RewardsHelper.ArenaXpReward(member.Session.Character.Level) / 2, false);
                 member.Session.Character.GetJobExp(RewardsHelper.ArenaXpReward(SpInstance != null ? SpInstance.SpLevel : member.Session.Character.JobLevel) / 2, false);
-                //member.Session.Character.GetReputation(200);
+                if (member.Session.Character.Reputation >= (long)SideReputType.Side10)
+                {
+                    member.Session.Character.GetReputation(200);
+                }
                 member.Session.Character.GiftAdd(2801, 3);
                 member.Session.Character.GetGold(member.Session.Character.Level * 500);
                 member.Session.Character.TalentLose++;

@@ -4,7 +4,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("u_ps")]
-    public class UsePartnerSkillPacket : PacketDefinition
+    public class UsePartnerSkillPacket
     {
         #region Properties
 

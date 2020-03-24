@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("ranksk")]
-    public class RankSkPacket : PacketDefinition
+    public class RankSkPacket
     {
         #region Properties
 

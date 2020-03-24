@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$RestartAll", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TM } )]
-    public class RestartAllPacket : PacketDefinition
+    public class RestartAllPacket
     {
         [PacketIndex(0)]
         public string WorldGroup { get; set; }

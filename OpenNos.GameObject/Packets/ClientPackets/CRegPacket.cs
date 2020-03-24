@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("c_reg")]
-    public class CRegPacket : PacketDefinition
+    public class CRegPacket
     {
         #region Properties
 

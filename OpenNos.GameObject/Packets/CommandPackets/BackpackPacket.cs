@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Backpack", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.DEV } )]
-    public class BackpackPacket : PacketDefinition
+    public class BackpackPacket
     {
         #region Methods
 

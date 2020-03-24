@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Position", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD } )]
-    public class PositionPacket : PacketDefinition
+    public class PositionPacket
     {
         public static string ReturnHelp() => "$Position";
     }

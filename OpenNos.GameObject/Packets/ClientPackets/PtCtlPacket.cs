@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("ptctl")]
-    public class PtCtlPacket : PacketDefinition
+    public class PtCtlPacket
     {
         #region Properties
 

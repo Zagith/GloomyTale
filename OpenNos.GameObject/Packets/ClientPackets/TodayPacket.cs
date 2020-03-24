@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("today_cts")]
-    public class TodayPacket : PacketDefinition
+    public class TodayPacket
     {
         #region Properties
 

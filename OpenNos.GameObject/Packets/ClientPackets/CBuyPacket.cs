@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("c_buy")]
-    public class CBuyPacket : PacketDefinition
+    public class CBuyPacket
     {
         #region Properties
         [PacketIndex(0)]

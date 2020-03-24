@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("f_repos")]
-    public class FReposPacket : PacketDefinition
+    public class FReposPacket
     {
         #region Properties        
 

@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("sortopen")]
-    public class SortOpenPacket : PacketDefinition
+    public class SortOpenPacket
     {
     }
 }

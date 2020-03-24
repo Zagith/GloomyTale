@@ -5,7 +5,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("fmg")]
-    public class FamilyManagementPacket : PacketDefinition
+    public class FamilyManagementPacket
     {
         #region Properties
 

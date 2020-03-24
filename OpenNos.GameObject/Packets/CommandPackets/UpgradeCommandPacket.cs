@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Upgrade", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
-    public class UpgradeCommandPacket : PacketDefinition
+    public class UpgradeCommandPacket
     {
         #region Properties
 

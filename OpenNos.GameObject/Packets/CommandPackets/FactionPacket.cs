@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Faction", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD } )]
-    public class FactionPacket : PacketDefinition
+    public class FactionPacket
     {
         public static string ReturnHelp() => "$Faction";
     }

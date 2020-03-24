@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("pulse")]
-    public class PulsePacket : PacketDefinition
+    public class PulsePacket
     {
         #region Properties
 

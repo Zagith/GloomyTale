@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("guri")]
-    public class GuriPacket : PacketDefinition
+    public class GuriPacket
     {
         #region Properties        
 

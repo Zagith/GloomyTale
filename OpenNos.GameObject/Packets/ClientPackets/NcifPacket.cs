@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("ncif")]
-    public class NcifPacket : PacketDefinition
+    public class NcifPacket
     {
         #region Properties
 

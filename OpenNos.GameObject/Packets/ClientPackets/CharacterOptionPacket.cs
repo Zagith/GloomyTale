@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("gop")]
-    public class CharacterOptionPacket : PacketDefinition
+    public class CharacterOptionPacket
     {
         [PacketIndex(0)]
         public CharacterOption Option { get; set; }

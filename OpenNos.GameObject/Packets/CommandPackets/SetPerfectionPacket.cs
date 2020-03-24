@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Perfection", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
-    public class SetPerfectionPacket : PacketDefinition
+    public class SetPerfectionPacket
     {
         #region Properties
 

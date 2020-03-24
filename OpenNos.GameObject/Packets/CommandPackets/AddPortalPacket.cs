@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$AddPortal", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TM } )]
-    public class AddPortalPacket : PacketDefinition
+    public class AddPortalPacket
     {
         #region Properties
 

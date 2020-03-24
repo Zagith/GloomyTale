@@ -6,7 +6,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ServerPackets
 {
     [PacketHeader("bf")]
-    public class BfPacket : PacketDefinition
+    public class BfPacket
     {
         [PacketIndex(0)]
         public byte Type { get; set; }
@@ -22,7 +22,7 @@ namespace OpenNos.GameObject.Packets.ServerPackets
     }
 
     [PacketHeader("sub_buff")]
-    public class BuffSubPacket : PacketDefinition
+    public class BuffSubPacket
     {
         [PacketIndex(0)]
         public int Value { get; set; } // uses left of buff, used for example for rarifying

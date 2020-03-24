@@ -7,7 +7,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("Char_NEW_JOB")]
-    public class CharacterJobCreatePacket : PacketDefinition, ICharacterCreatePacket
+    public class CharacterJobCreatePacket, ICharacterCreatePacket
     {
         #region Properties
 

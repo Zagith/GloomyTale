@@ -243,11 +243,11 @@ namespace OpenNos.GameObject.Networking
                 switch (session.CurrentMapInstance.MapInstanceType)
                 {
                     case MapInstanceType.TalentArenaMapInstance:
-                        ConcurrentBag<ArenaTeamMember> team = Instance.ArenaTeams.ToList().FirstOrDefault(s => s.Any(o => o.Session == session));
-                        var member = team?.FirstOrDefault(s => s.Session == session);
+                        ConcurrentBag<ArenaTeamMember> team = Instance.ArenaTeams.FirstOrDefault(s => s.Any(o => o.Session == session));
+                        ArenaTeamMember member = team?.FirstOrDefault(s => s.Session == session);
                         if (member != null)
                         {
-                            if (member.LastSummoned == null && team.OrderBy(tm3 => tm3.Order).FirstOrDefault(tm3 => tm3.ArenaTeamType == member.ArenaTeamType && !tm3.Dead)?.Session == session)
+                            if (member.LastSummoned == null)
                             {
                                 session.CurrentMapInstance.InstanceBag.DeadList.Add(session.Character.CharacterId);
                                 member.Dead = true;
@@ -258,71 +258,46 @@ namespace OpenNos.GameObject.Networking
                                     s.Session.Character.PositionY = s.ArenaTeamType == ArenaTeamType.ERENIA ? (short)39 : (short)40;
                                     session.CurrentMapInstance.Broadcast(s.Session.Character.GenerateTp());
                                     s.Session.SendPacket(UserInterfaceHelper.Instance.GenerateTaSt(TalentArenaOptionType.Watch));
-
-                                    List<BuffType> bufftodisable = new List<BuffType> { BuffType.Bad };
-                                    s.Session.Character.DisableBuffs(bufftodisable);
-                                    s.Session.Character.Hp = (int)s.Session.Character.HPLoad();
-                                    s.Session.Character.Mp = (int)s.Session.Character.MPLoad();
                                 });
-                                var killer = team.OrderBy(s => s.Order).FirstOrDefault(s => !s.Dead && s.ArenaTeamType != member.ArenaTeamType);
-                                session.CurrentMapInstance.Broadcast(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("TEAM_WINNER_ARENA_ROUND"), killer?.Session.Character.Name, killer?.ArenaTeamType), 10));
-                                session.CurrentMapInstance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("TEAM_WINNER_ARENA_ROUND"), killer?.Session.Character.Name, killer?.ArenaTeamType), 0));
-                                session.CurrentMapInstance.Sessions.Except(team.Where(s => s.ArenaTeamType == killer?.ArenaTeamType).Select(s => s.Session)).ToList().ForEach(o =>
+                                ArenaTeamMember arenaKiller = team.OrderBy(s => s.Order).FirstOrDefault(s => !s.Dead && s.ArenaTeamType != member.ArenaTeamType);
+                                session.CurrentMapInstance.Broadcast(session.Character.GenerateSay(string.Format("TEAM_WINNER_ARENA_ROUND", arenaKiller?.Session.Character.Name, arenaKiller?.ArenaTeamType), 10));
+                                session.CurrentMapInstance.Broadcast(
+                                    UserInterfaceHelper.GenerateMsg(string.Format("TEAM_WINNER_ARENA_ROUND", arenaKiller?.Session.Character.Name, arenaKiller?.ArenaTeamType), 0));
+                                session.CurrentMapInstance.Sessions.Except(team.Where(s => s.ArenaTeamType == arenaKiller?.ArenaTeamType).Select(s => s.Session)).ToList().ForEach(o =>
                                 {
-                                    if (killer?.ArenaTeamType == ArenaTeamType.ERENIA)
+                                    if (arenaKiller?.ArenaTeamType == ArenaTeamType.ERENIA)
                                     {
-                                        o.SendPacket(killer.Session.Character.GenerateTaM(2));
-                                        o.SendPacket(killer.Session.Character.GenerateTaP(2, true));
+                                        o.SendPacket(arenaKiller.Session.Character.GenerateTaM(2));
+                                        o.SendPacket(arenaKiller.Session.Character.GenerateTaP(2, true));
                                     }
                                     else
                                     {
                                         o.SendPacket(member.Session.Character.GenerateTaM(2));
                                         o.SendPacket(member.Session.Character.GenerateTaP(2, true));
                                     }
-
                                     o.SendPacket($"taw_d {member.Session.Character.CharacterId}");
-                                    o.SendPacket(member.Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WINNER_ARENA_ROUND"), killer?.Session.Character.Name/*, killer?.ArenaTeamType*/, member.Session.Character.Name), 10));
-                                    o.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("WINNER_ARENA_ROUND"), killer?.Session.Character.Name/*, killer?.ArenaTeamType*/, member.Session.Character.Name), 0));
+                                    o.SendPacket(member.Session.Character.GenerateSay(
+                                        string.Format("WINNER_ARENA_ROUND", arenaKiller?.Session.Character.Name, arenaKiller?.ArenaTeamType, member.Session.Character.Name), 10));
+                                    o.SendPacket(UserInterfaceHelper.GenerateMsg(
+                                        string.Format("WINNER_ARENA_ROUND", arenaKiller?.Session.Character.Name, arenaKiller?.ArenaTeamType, member.Session.Character.Name), 0));
                                 });
-                                team.Replace(friends => friends.ArenaTeamType == member.ArenaTeamType).ToList().ForEach(friends => { friends.Session.SendPacket(friends.Session.Character.GenerateTaFc(0)); });
-                            }
-                            else
-                            {
-                                member.LastSummoned = null;
-                                ArenaTeamMember tm = team.OrderBy(tm3 => tm3.Order).FirstOrDefault(tm3 => tm3.ArenaTeamType == member.ArenaTeamType && !tm3.Dead);
-                                team.Replace(friends => friends.ArenaTeamType == member.ArenaTeamType).ToList().ForEach(friends => { friends.Session.SendPacket(tm.Session.Character.GenerateTaFc(0)); });
                             }
 
+                            member.Session.Character.PositionX = member.ArenaTeamType == ArenaTeamType.ERENIA ? (short)120 : (short)19;
+                            member.Session.Character.PositionY = member.ArenaTeamType == ArenaTeamType.ERENIA ? (short)39 : (short)40;
+                            session.CurrentMapInstance.Broadcast(member.Session, member.Session.Character.GenerateTp());
+                            session.SendPacket(UserInterfaceHelper.Instance.GenerateTaSt(TalentArenaOptionType.Watch));
+                            team.Where(friends => friends.ArenaTeamType == member.ArenaTeamType).ToList().ForEach(friends => { friends.Session.SendPacket(friends.Session.Character.GenerateTaFc(0)); });
                             team.ToList().ForEach(arenauser =>
                             {
-                                if (arenauser?.Session?.Character != null)
-                                {
-                                    arenauser.Session.SendPacket(arenauser.Session.Character.GenerateTaP(2, true));
-                                    arenauser.Session.SendPacket(arenauser.Session.Character.GenerateTaM(2));
-                                }
+                                arenauser.Session.SendPacket(arenauser.Session.Character.GenerateTaP(2, true));
+                                arenauser.Session.SendPacket(arenauser.Session.Character.GenerateTaM(2));
                             });
 
-                            Observable.Timer(TimeSpan.FromSeconds(3)).Subscribe(s =>
-                            {
-                                if (member?.Session != null)
-                                {
-                                    member.Session.Character.PositionX = member.ArenaTeamType == ArenaTeamType.ERENIA ? (short)120 : (short)19;
-                                    member.Session.Character.PositionY = member.ArenaTeamType == ArenaTeamType.ERENIA ? (short)39 : (short)40;
-                                    member.Session.CurrentMapInstance.Broadcast(member.Session, member.Session.Character.GenerateTp());
-                                    member.Session.SendPacket(UserInterfaceHelper.Instance.GenerateTaSt(TalentArenaOptionType.Watch));
-                                }
-                            });
-
-                            Observable.Timer(TimeSpan.FromSeconds(4)).Subscribe(s =>
-                            {
-                                if (session != null)
-                                {
-                                    session.Character.Hp = (int)session.Character.HPLoad();
-                                    session.Character.Mp = (int)session.Character.MPLoad();
-                                    session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateRevive());
-                                    session.SendPacket(session.Character.GenerateStat());
-                                }
-                            });
+                            session.Character.Hp = (int)session.Character.HPLoad();
+                            session.Character.Mp = (int)session.Character.MPLoad();
+                            session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateRevive());
+                            session.SendPacket(session.Character.GenerateStat());
                         }
 
                         break;

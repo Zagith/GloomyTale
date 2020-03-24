@@ -191,8 +191,6 @@
     <Compile Include="Event\GAMES\SheepGame.cs" />
     <Compile Include="Event\ICEBREAKER\IceBreaker.cs" />
     <Compile Include="Event\RainbowBattle\RainbowBattle.cs" />
-    <Compile Include="Event\TALENTARENA %28Unused%29\TalentArena.cs" />
-    <Compile Include="Event\TALENTARENA %28Unused%29\TalentArenaBattle.cs" />
     <Compile Include="Event\TIMESPACES\Bts.cs" />
     <Compile Include="Event\TIMESPACES\Pts.cs" />
     <Compile Include="Event\TRUEORFALSE\TorFEvent.cs" />

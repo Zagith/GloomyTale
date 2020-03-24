@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.Packets.ServerPackets
 {
     [PacketHeader("mv")]
-    public class MovePacket : PacketDefinition
+    public class MovePacket
     {
         #region Properties
 

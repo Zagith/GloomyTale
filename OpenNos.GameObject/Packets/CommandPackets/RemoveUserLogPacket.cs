@@ -4,7 +4,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$RemoveUserLog", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.Administrator })]
-    public class RemoveUserLogPacket : PacketDefinition
+    public class RemoveUserLogPacket
     {
         #region Properties
 

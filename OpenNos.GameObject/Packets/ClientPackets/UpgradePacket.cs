@@ -5,7 +5,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("up_gr")]
-    public class UpgradePacket : PacketDefinition
+    public class UpgradePacket
     {
         #region Properties
 

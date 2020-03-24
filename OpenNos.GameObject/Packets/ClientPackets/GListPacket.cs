@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("glist")]
-    public class GListPacket : PacketDefinition
+    public class GListPacket
     {
         #region Properties
 

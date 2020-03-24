@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("preq")]
-    public class PreqPacket : PacketDefinition
+    public class PreqPacket
     {
         #region Properties
         

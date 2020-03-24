@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("npc_req")]
-    public class RequestNpcPacket : PacketDefinition
+    public class RequestNpcPacket
     {
         #region Properties
 

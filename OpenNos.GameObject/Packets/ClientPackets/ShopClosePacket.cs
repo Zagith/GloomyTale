@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("shopclose")]
-    public class ShopClosePacket : PacketDefinition
+    public class ShopClosePacket
     {
         #region Properties
 

@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("revival")]
-    public class RevivalPacket : PacketDefinition
+    public class RevivalPacket
     {
         #region Properties
 

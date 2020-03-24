@@ -5,8 +5,8 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$Act4", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD } )]
-    public class Act4Packet : PacketDefinition
+    [PacketHeader("$Act4", PassNonParseablePacket = true, Authority = AuthorityType.GM)]
+    public class Act4Packet
     {
         #region Properties
         

@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("wear")]
-    public class WearPacket : PacketDefinition
+    public class WearPacket
     {
         #region Properties
 

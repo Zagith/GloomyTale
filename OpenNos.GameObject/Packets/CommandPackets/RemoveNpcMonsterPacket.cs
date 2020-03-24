@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$RemoveMonster", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
-    public class RemoveMobPacket : PacketDefinition
+    public class RemoveMobPacket
     {
         public static string ReturnHelp() => "$RemoveMonster";
     }

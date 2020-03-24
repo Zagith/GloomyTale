@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("frank_cts")]
-    public class FrankCtsPacket : PacketDefinition
+    public class FrankCtsPacket
     {
         #region Properties        
 

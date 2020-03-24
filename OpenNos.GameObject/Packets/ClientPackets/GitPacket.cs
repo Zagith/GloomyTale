@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("git")]
-    public class GitPacket : PacketDefinition
+    public class GitPacket
     {
         #region Properties
 

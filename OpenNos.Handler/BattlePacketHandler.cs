@@ -441,7 +441,7 @@ namespace OpenNos.Handler
 
                 if (ServerManager.RandomNumber() < increaseEnemyCooldownChance[0])
                 {
-                    cooldownReduction -= increaseEnemyCooldownChance[1];
+                    cooldownReduction += increaseEnemyCooldownChance[1];
                 }
 
                 int hitmode = 0;
@@ -1529,7 +1529,7 @@ namespace OpenNos.Handler
 
                     if (ServerManager.RandomNumber() < increaseEnemyCooldownChance[0])
                     {
-                        cooldownReduction -= increaseEnemyCooldownChance[1];
+                        cooldownReduction += increaseEnemyCooldownChance[1];
                     }
 
                     short mpCost = ski.MpCost();
@@ -2689,7 +2689,7 @@ namespace OpenNos.Handler
 
                     if (ServerManager.RandomNumber() < increaseEnemyCooldownChance[0])
                     {
-                        cooldownReduction -= increaseEnemyCooldownChance[1];
+                        cooldownReduction += increaseEnemyCooldownChance[1];
                     }
 
                     Session.CurrentMapInstance.Broadcast(

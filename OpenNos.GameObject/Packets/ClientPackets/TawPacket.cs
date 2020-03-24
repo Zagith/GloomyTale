@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("taw")]
-    public class TawPacket : PacketDefinition
+    public class TawPacket
     {
         #region Properties
 

@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject.Packets.ServerPackets
 {
     [PacketHeader("exts")]
-    public class ExtsPacket : PacketDefinition
+    public class ExtsPacket
     {
         [PacketIndex(0)]
         public byte Type { get; set; }

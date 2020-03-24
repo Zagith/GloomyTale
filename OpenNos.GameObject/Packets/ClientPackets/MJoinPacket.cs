@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("mjoin")]
-    public class MJoinPacket : PacketDefinition
+    public class MJoinPacket
     {
         #region Properties
 

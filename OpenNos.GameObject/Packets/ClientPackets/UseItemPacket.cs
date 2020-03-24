@@ -5,7 +5,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("u_i")]
-    public class UseItemPacket : PacketDefinition
+    public class UseItemPacket
     {
 
         [PacketIndex(2)]

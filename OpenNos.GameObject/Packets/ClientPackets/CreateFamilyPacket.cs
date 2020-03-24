@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("glmk")]
-    public class CreateFamilyPacket : PacketDefinition
+    public class CreateFamilyPacket
     {
         #region Properties
 

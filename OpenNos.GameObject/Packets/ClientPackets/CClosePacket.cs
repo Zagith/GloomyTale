@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("c_close")]
-    public class CClosePacket : PacketDefinition
+    public class CClosePacket
     {
         #region Properties
 

@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("csp")]
-    public class CspPacket : PacketDefinition
+    public class CspPacket
     {
         #region Properties
 

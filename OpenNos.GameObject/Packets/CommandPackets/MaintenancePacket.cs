@@ -7,7 +7,7 @@ namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Maintenance", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TM } )]
 
-    public class MaintenancePacket : PacketDefinition
+    public class MaintenancePacket
     {
         #region Properties
 

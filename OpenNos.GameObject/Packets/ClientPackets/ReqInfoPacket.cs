@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("req_info")]
-    public class ReqInfoPacket : PacketDefinition
+    public class ReqInfoPacket
     {
         #region Properties
 

@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Unban", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.SGM } )]
-    public class UnbanPacket : PacketDefinition
+    public class UnbanPacket
     {
         #region Properties
 

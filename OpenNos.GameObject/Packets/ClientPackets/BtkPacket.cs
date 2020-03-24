@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("btk")]
-    public class BtkPacket : PacketDefinition
+    public class BtkPacket
     {
         #region Properties
 

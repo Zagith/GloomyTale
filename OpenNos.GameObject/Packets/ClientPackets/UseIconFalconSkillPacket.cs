@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("ob_a")]
-    public class UseIconFalconSkillPacket : PacketDefinition
+    public class UseIconFalconSkillPacket
     {
         #region Properties        
         

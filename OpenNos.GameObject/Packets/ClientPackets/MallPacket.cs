@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("mall")]
-    public class MallPacket : PacketDefinition
+    public class MallPacket
     {
         #region Properties
 

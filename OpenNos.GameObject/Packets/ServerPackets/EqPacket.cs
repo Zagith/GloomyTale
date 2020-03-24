@@ -5,19 +5,19 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("eq")]
-    public class EqPacket : PacketDefinition
+    public class EqPacket
     {
         [PacketIndex(0)]
         public long Id { get; set; }
     }
 
     [PacketHeader("eqsub")]
-    public class EqSubPacket : PacketDefinition
+    public class EqSubPacket
     {
     }
 
     [PacketHeader("eqraresub")]
-    public class EqRareSubPacket : PacketDefinition
+    public class EqRareSubPacket
     {
     }
 }

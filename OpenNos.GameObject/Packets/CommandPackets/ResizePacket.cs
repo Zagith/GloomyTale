@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Resize", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.SGM, AuthorityType.SMOD } )]
-    public class ResizePacket : PacketDefinition
+    public class ResizePacket
     {
         #region Properties
 

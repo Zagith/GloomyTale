@@ -59,8 +59,6 @@ namespace OpenNos.GameObject
 
         public byte SharingMode { get; set; }
 
-        public TalentArenaBattle TalentArenaBattle { get; set; }
-
         #endregion
 
         #region Methods

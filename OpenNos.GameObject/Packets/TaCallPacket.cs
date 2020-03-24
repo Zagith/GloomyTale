@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("ta_call")]
-    public class TaCallPacket : PacketDefinition
+    public class TaCallPacket
     {
         #region Properties
 

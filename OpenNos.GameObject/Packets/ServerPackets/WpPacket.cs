@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject
 {
     [PacketHeader("wp")]
-    public class WpPacket : PacketDefinition
+    public class WpPacket
     {
         #region Properties
 

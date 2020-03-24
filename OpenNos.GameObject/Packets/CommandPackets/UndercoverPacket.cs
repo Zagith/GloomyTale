@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Undercover", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TM } )]
-    public class UndercoverPacket : PacketDefinition
+    public class UndercoverPacket
     {
         public static string ReturnHelp() => "$Undercover";
     }

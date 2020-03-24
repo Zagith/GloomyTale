@@ -4,7 +4,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.Packets.CommandPackets
 {
     [PacketHeader("$Meteor", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.GM })]
-    public class MeteoriteSpawnPacket : PacketDefinition
+    public class MeteoriteSpawnPacket
     {
         public static string ReturnHelp()
         {

@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("c_mod")]
-    public class CModPacket : PacketDefinition
+    public class CModPacket
     {
         #region Properties
         

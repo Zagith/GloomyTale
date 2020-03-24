@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("Char_DEL")]
-    public class CharacterDeletePacket : PacketDefinition
+    public class CharacterDeletePacket
     {
         #region Properties
 

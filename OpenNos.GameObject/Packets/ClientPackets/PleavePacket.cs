@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("pleave")]
-    public class PLeavePacket : PacketDefinition
+    public class PLeavePacket
     {
         #region Properties
 

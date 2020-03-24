@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("npinfo")]
-    public class NpinfoPacket : PacketDefinition
+    public class NpinfoPacket
     {
         #region Properties
 

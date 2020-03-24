@@ -7,7 +7,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("in")]
-    public class InPacket : PacketDefinition
+    public class InPacket
     {
         #region Properties
 

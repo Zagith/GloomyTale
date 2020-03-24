@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("game_start")]
-    public class GameStartPacket : PacketDefinition
+    public class GameStartPacket
     {
     }
 }

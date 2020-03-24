@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("compl")]
-    public class ComplimentPacket : PacketDefinition
+    public class ComplimentPacket
     {
         #region Properties
 

@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject
 {
     [PacketHeader("ntcp_ac")]
-    public class NtcpAcPacket : PacketDefinition
+    public class NtcpAcPacket
     {
         #region Properties
 

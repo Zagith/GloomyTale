@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("ps_op", PassNonParseablePacket = true)]
-    public class PartnerSkillOpenPacket : PacketDefinition
+    public class PartnerSkillOpenPacket
     {
         #region Properties
 

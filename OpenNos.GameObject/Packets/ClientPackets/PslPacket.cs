@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("psl")]
-    public class PslPacket : PacketDefinition
+    public class PslPacket
     {
         [PacketIndex(0)]
         public int Type { get; set; }

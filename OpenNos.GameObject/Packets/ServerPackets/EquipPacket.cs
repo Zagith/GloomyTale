@@ -6,7 +6,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("equip")]
-    public class EquipPacket : PacketDefinition
+    public class EquipPacket
     {
         #region Properties
 
@@ -23,7 +23,7 @@ namespace OpenNos.GameObject
     }
 
     [PacketHeader("sub_equipment")] // actually no header rendered, avoid error
-    public class EquipSubPacket : PacketDefinition
+    public class EquipSubPacket
     {
         #region Properties
 

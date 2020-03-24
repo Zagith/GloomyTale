@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Guri", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.DEV } )]
-    public class GuriCommandPacket : PacketDefinition
+    public class GuriCommandPacket
     {
         #region Properties
 

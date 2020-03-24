@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$HeroXpRate", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
-    public class HeroXpRatePacket : PacketDefinition
+    public class HeroXpRatePacket
     {
         #region Properties
 

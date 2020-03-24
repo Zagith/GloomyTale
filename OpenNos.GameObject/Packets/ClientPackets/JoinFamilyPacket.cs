@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("gjoin")]
-    public class JoinFamilyPacket : PacketDefinition
+    public class JoinFamilyPacket
     {
         #region Properties
 

@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("qt")]
-    public class QtPacket : PacketDefinition
+    public class QtPacket
     {
         #region Properties
 

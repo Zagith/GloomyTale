@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("pt_ctl_sub_packet")] // header will be ignored for serializing just sub list packets
-    public class PtCtlSubPacket : PacketDefinition
+    public class PtCtlSubPacket
     {
         [PacketIndex(0)]
         public long UserId { get; set; }

@@ -97,7 +97,7 @@
     <Compile Include="UselessPacketHandler.cs" />
     <Compile Include="InventoryPacketHandler.cs" />
     <Compile Include="CommandPacketHandler.cs" />
-    <Compile Include="LoginPacketHandler.cs" />
+    <Compile Include="Login\LoginPacketHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BasicPacketHandler.cs" />
   </ItemGroup>

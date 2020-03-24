@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$NpcName", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.GA })]
-    public class ChangeNpcMonsterNamePacket : PacketDefinition
+    public class ChangeNpcMonsterNamePacket
     {
         #region Properties
 

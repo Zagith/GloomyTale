@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("say_p")]
-    public class SayPPacket : PacketDefinition
+    public class SayPPacket
     {
         #region Properties
         [PacketIndex(0)]

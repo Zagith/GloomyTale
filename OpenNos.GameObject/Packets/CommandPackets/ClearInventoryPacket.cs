@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Clear", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA, AuthorityType.BA } )]
-    public class ClearInventoryPacket : PacketDefinition
+    public class ClearInventoryPacket
     {
         #region Properties
 

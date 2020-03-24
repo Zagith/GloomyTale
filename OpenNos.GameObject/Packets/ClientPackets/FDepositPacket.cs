@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("f_deposit")]
-    public class FDepositPacket : PacketDefinition
+    public class FDepositPacket
     {
         #region Properties        
 

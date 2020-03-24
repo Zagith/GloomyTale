@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject.Packets.ServerPackets
 {
     [PacketHeader("treq")]
-    public class TreqPacket : PacketDefinition
+    public class TreqPacket
     {
         #region Properties
 

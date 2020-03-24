@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("fb")]
-    public class FbPacket : PacketDefinition
+    public class FbPacket
     {
         #region Properties        
 

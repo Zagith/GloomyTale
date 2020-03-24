@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$KickSession", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GM } )]
-    public class KickSessionPacket : PacketDefinition
+    public class KickSessionPacket
     {
         #region Properties
 

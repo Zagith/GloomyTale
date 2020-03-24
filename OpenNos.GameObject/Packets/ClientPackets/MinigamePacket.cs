@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("mg")]
-    public class MinigamePacket : PacketDefinition
+    public class MinigamePacket
     {
         #region Properties
         [PacketIndex(0)]

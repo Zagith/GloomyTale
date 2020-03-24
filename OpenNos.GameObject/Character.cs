@@ -1904,15 +1904,16 @@ namespace OpenNos.GameObject
 
         public void ChangeChannel(string ip, int port, byte mode)
         {
-            Session.SendPacket($"mz {ip} {port} {Slot}");
-            Session.SendPacket($"it {mode}");
-            Session.IsDisposing = true;
-            CommunicationServiceClient.Instance.RegisterCrossServerAccountLogin(Session.Account.AccountId, Session.SessionId);
-
             //explictly save data before disconnecting to prevent data loss
             Save();
 
-            Session.Disconnect();
+            CommunicationServiceClient.Instance.RegisterCrossServerAccountLogin(Session.Account.AccountId, Session.SessionId);
+
+            Session.SendPacket($"mz {ip} {port} {Slot}");
+            Session.SendPacket($"it {mode}");
+            Session.IsDisposing = true;
+
+            Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(observer => Session.Disconnect());
         }
 
         public void ChangeClass(ClassType characterClass, bool fromCommand, bool noItem = true)
@@ -5200,7 +5201,8 @@ namespace OpenNos.GameObject
 
         public string GenerateTaM(int type)
         {
-            ConcurrentBag<ArenaTeamMember> tm = ServerManager.Instance.ArenaTeams.ToList().FirstOrDefault(s => s.Any(o => o.Session == Session));
+            ConcurrentBag<ArenaTeamMember> tm = 
+                ServerManager.Instance.ArenaTeams.ToList().FirstOrDefault(s => s.Any(o => o.Session == Session));
             var score1 = 0;
             var score2 = 0;
             if (tm == null)
@@ -5231,25 +5233,14 @@ namespace OpenNos.GameObject
             List<ArenaTeamMember> MyTeam = arenateam.Where(s => s.ArenaTeamType == type && s.Order != null).ToList();
             List<ArenaTeamMember> EnemyTeam = arenateam.Where(s => s.ArenaTeamType != type && s.Order != null).ToList();
 
-            for (int i = 0; i < 3; i++)
+            for (byte i = 0; i < 6; i++)
             {
-                if (MyTeam.Where(s => s.Order == i).FirstOrDefault() is ArenaTeamMember arenamember)
+                ArenaTeamMember arenamembers = arenateam.FirstOrDefault(s =>
+                    (i < 3 ? s.ArenaTeamType == type : s.ArenaTeamType != type) && s.Order == (i % 3));
+                if (arenamembers != null && (i <= 2 || showOponent))
                 {
                     groups +=
-                    $"{(arenamember.Dead ? 0 : 1)}.{arenamember.Session.Character.CharacterId}.{(byte)arenamember.Session.Character.Class}.{(byte)arenamember.Session.Character.Gender}.{(byte)arenamember.Session.Character.Morph} ";
-                }
-                else
-                {
-                    groups += $"-1.-1.-1.-1.-1 ";
-                }
-            }
-
-            for (int i = 0; i < 3; i++)
-            {
-                if (EnemyTeam.Where(s => s.Order == i).FirstOrDefault() is ArenaTeamMember arenamember && showOponent)
-                {
-                    groups +=
-                        $"{(arenamember.Dead ? 0 : 1)}.{arenamember.Session.Character.CharacterId}.{(byte)arenamember.Session.Character.Class}.{(byte)arenamember.Session.Character.Gender}.{(byte)arenamember.Session.Character.Morph} ";
+                        $"{(arenamembers.Dead ? 0 : 1)}.{arenamembers.Session.Character.CharacterId}.{(byte)arenamembers.Session.Character.Class}.{(byte)arenamembers.Session.Character.Gender}.{(byte)arenamembers.Session.Character.Morph} ";
                 }
                 else
                 {
@@ -7421,6 +7412,8 @@ namespace OpenNos.GameObject
             Session.CurrentMapInstance.Broadcast($"tp {1} {CharacterId} {x} {y} 0");
             Session.SendPacket(GenerateCond());
         }
+
+        public string GenerateBsInfo(byte type, int arenaeventtype, int time, byte titletype) => $"bsinfo {type} {arenaeventtype} {time} {titletype}";
         #endregion
     }
 }

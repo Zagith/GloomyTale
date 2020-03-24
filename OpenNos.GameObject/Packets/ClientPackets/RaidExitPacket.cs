@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ServerPackets
 {
     [PacketHeader("rxit")]
-    public class RaidExitPacket : PacketDefinition
+    public class RaidExitPacket
     {
         #region Properties
 

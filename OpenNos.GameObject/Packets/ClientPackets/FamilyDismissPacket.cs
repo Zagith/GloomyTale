@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("glrm")]
-    public class FamilyDismissPacket : PacketDefinition
+    public class FamilyDismissPacket
     {
         #region Properties
 

@@ -4,7 +4,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$GiveMall", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.TM })]
-    public class GiveMallPacket : PacketDefinition
+    public class GiveMallPacket
     {
         #region Properties
 

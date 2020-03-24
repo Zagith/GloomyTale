@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("sell")]
-    public class SellPacket : PacketDefinition
+    public class SellPacket
     {
         #region Properties
 

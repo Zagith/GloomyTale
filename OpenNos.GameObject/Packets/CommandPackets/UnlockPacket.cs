@@ -4,7 +4,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$Pw", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.User })]
-    public class UnlockPacket : PacketDefinition
+    public class UnlockPacket
     {
         #region Properties
 

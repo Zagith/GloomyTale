@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("$pinv")]
-    public class PinvPacket : PacketDefinition
+    public class PinvPacket
     {
         #region Properties
 

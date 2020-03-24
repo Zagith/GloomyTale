@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("mkraid")]
-    public class MkRaidPacket : PacketDefinition
+    public class MkRaidPacket
     {
         #region Properties        
 

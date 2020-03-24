@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("$bl")]
-    public class BlPacket : PacketDefinition
+    public class BlPacket
     {
         #region Properties
 

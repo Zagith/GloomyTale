@@ -7,7 +7,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("mtlist")]
-    public class MultiTargetListPacket : PacketDefinition
+    public class MultiTargetListPacket
     {
         #region Properties
 
@@ -21,7 +21,7 @@ namespace OpenNos.GameObject
     }
 
     [PacketHeader("mtlist_sub_packet")] // header will be ignored for serializing just sub list packets
-    public class MultiTargetListSubPacket : PacketDefinition
+    public class MultiTargetListSubPacket
     {
         [PacketIndex(0)]
         public UserType TargetType { get; set; }

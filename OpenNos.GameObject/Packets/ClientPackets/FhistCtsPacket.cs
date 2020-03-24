@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("fhis_cts")]
-    public class FhistCtsPacket : PacketDefinition
+    public class FhistCtsPacket
     {
         #region Properties        
 

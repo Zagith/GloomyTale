@@ -4,7 +4,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("tit_eq")]
-    public class TiteqPacket : PacketDefinition
+    public class TiteqPacket
     {
         #region Properties
 

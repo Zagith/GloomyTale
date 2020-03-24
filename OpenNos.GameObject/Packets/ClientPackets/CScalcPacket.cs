@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("c_scalc")]
-    public class CScalcPacket : PacketDefinition
+    public class CScalcPacket
     {
         #region Properties
 

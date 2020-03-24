@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$ChangeSex", "$Sex" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD } )]
-    public class ChangeSexPacket : PacketDefinition
+    public class ChangeSexPacket
     {
         public static string ReturnHelp() => "$ChangeSex | $Sex";
     }

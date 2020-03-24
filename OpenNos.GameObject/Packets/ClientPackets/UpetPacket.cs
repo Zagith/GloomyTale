@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("u_pet")]
-    public class UpetPacket : PacketDefinition
+    public class UpetPacket
     {
         [PacketIndex(0)]
         public int MateTransportId { get; set; }

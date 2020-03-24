@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("fdel")]
-    public class FDelPacket : PacketDefinition
+    public class FDelPacket
     {
         #region Properties
 

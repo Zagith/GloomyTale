@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("/")]
-    public class WhisperPacket : PacketDefinition
+    public class WhisperPacket
     {
         #region Properties
 

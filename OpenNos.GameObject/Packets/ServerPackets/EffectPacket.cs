@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("eff")]
-    public class EffectPacket : PacketDefinition
+    public class EffectPacket
     {
         #region Properties
 

@@ -21,36 +21,25 @@ namespace OpenNos.Core.Handling
     {
         #region Instantiation
 
-        public HandlerMethodReference(Action<object, object> handlerMethod, IPacketHandler parentHandler, PacketAttribute handlerMethodAttribute)
+        public HandlerMethodReference(Type packetBaseParameterType)
         {
-            HandlerMethod = handlerMethod;
-            ParentHandler = parentHandler;
-            HandlerMethodAttribute = handlerMethodAttribute;
-            Identification = HandlerMethodAttribute.Header;
-            PassNonParseablePacket = false;
-            Authorities = new AuthorityType[] { AuthorityType.User };
-        }
-
-        public HandlerMethodReference(Action<object, object> handlerMethod, IPacketHandler parentHandler, Type packetBaseParameterType)
-        {
-            HandlerMethod = handlerMethod;
-            ParentHandler = parentHandler;
             PacketDefinitionParameterType = packetBaseParameterType;
             PacketHeaderAttribute headerAttribute = (PacketHeaderAttribute)Array.Find(PacketDefinitionParameterType.GetCustomAttributes(true), ca => ca.GetType().Equals(typeof(PacketHeaderAttribute)));
+            Amount = headerAttribute?.Amount ?? 1;
             Identification = headerAttribute?.Identification;
             PassNonParseablePacket = headerAttribute?.PassNonParseablePacket ?? false;
-            Authorities = headerAttribute?.Authorities ?? new AuthorityType[] { AuthorityType.User };
+            CharacterRequired = headerAttribute?.CharacterRequired ?? true;
+            Authority = headerAttribute?.Authority ?? AuthorityType.User;
         }
 
         #endregion
 
         #region Properties
 
-        public AuthorityType[] Authorities { get; }
+        public int Amount { get; }
 
-        public Action<object, object> HandlerMethod { get; }
-
-        public PacketAttribute HandlerMethodAttribute { get; }
+        public AuthorityType Authority { get; }
+        public bool CharacterRequired { get; }
 
         /// <summary>
         /// String identification of the Packet by Header
@@ -58,8 +47,6 @@ namespace OpenNos.Core.Handling
         public string[] Identification { get; }
 
         public Type PacketDefinitionParameterType { get; }
-
-        public IPacketHandler ParentHandler { get; }
 
         public bool PassNonParseablePacket { get; }
 

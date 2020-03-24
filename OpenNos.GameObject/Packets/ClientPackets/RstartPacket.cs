@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("rstart")]
-    public class RStartPacket : PacketDefinition
+    public class RStartPacket
     {
         #region Properties        
 

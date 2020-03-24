@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("f_withdraw")]
-    public class FWithdrawPacket : PacketDefinition
+    public class FWithdrawPacket
     {
         #region Properties        
 

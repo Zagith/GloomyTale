@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("snap")]
-    public class SnapPacket : PacketDefinition
+    public class SnapPacket
     {
         #region Properties
 

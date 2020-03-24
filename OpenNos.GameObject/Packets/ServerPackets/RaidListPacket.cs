@@ -3,7 +3,7 @@
 namespace OpenNos.GameObject
 {
     [PacketHeader("rl")]
-    public class RaidListPacket : PacketDefinition
+    public class RaidListPacket
     {
         #region Properties
 

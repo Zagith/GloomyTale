@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("u_s")]
-    public class UseSkillPacket : PacketDefinition
+    public class UseSkillPacket
     {
         #region Properties        
 

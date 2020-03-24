@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ServerPackets
 {
     [PacketHeader("mvi")]
-    public class MviPacket : PacketDefinition
+    public class MviPacket
     {
         #region Properties
 

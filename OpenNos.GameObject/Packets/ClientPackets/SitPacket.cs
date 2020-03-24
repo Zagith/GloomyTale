@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace OpenNos.GameObject
 {
     [PacketHeader("rest")]
-    public class SitPacket : PacketDefinition
+    public class SitPacket
     {
         #region Properties
 
@@ -20,7 +20,7 @@ namespace OpenNos.GameObject
     }
 
     [PacketHeader("sit_sub_packet")] // header will be ignored for serializing just sub list packets
-    public class SitSubPacket : PacketDefinition
+    public class SitSubPacket
     {
         [PacketIndex(0)]
         public byte UserType { get; set; }

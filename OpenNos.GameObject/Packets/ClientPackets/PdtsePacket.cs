@@ -4,7 +4,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ClientPackets
 {
     [PacketHeader("pdtse")]
-    public class PdtsePacket : PacketDefinition
+    public class PdtsePacket
     {
         #region Properties
 

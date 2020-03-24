@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject.CommandPackets
 {
     [PacketHeader("$FLvl", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA, AuthorityType.BA } )]
-    public class ChangeFairyLevelPacket : PacketDefinition
+    public class ChangeFairyLevelPacket
     {
         #region Properties
 

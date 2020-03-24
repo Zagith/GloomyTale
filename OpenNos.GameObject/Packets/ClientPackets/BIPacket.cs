@@ -6,7 +6,7 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("b_i")]
-    public class BIPacket : PacketDefinition
+    public class BIPacket
     {
         #region Properties
 

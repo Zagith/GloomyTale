@@ -5,7 +5,7 @@ using OpenNos.Core;
 namespace OpenNos.GameObject.Packets.ServerPackets
 {
     [PacketHeader("wreq")]
-    public class WreqPacket : PacketDefinition
+    public class WreqPacket
     {
         #region Properties
 
