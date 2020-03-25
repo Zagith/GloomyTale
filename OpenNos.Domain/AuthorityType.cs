@@ -22,7 +22,6 @@ namespace OpenNos.Domain
         Unconfirmed = -1,
         User = 0,
         GS = 20,
-        TGM = 50,
         GM = 51,
         SGM = 52,
         GA = 53,

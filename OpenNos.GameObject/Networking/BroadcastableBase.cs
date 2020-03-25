@@ -70,12 +70,6 @@ namespace OpenNos.GameObject
 
         public void Broadcast(string packet, int xRangeCoordinate, int yRangeCoordinate) => Broadcast(new BroadcastPacket(null, packet, ReceiverType.AllInRange, xCoordinate: xRangeCoordinate, yCoordinate: yRangeCoordinate));
 
-        public void Broadcast(PacketDefinition packet, ReceiverType receiver = ReceiverType.All) => Broadcast(null, packet, receiver);
-
-        public void Broadcast(PacketDefinition packet, int xRangeCoordinate, int yRangeCoordinate) => Broadcast(new BroadcastPacket(null, PacketFactory.Serialize(packet), ReceiverType.AllInRange, xCoordinate: xRangeCoordinate, yCoordinate: yRangeCoordinate));
-
-        public void Broadcast(ClientSession client, PacketDefinition packet, ReceiverType receiver = ReceiverType.All, string characterName = "", long characterId = -1) => Broadcast(client, PacketFactory.Serialize(packet), receiver, characterName, characterId);
-
         public void Broadcast(BroadcastPacket packet)
         {
             try
@@ -305,7 +299,7 @@ namespace OpenNos.GameObject
                                         {
                                             session.SendPacket(sentPacket.Packet);
                                         }
-                                        else if (session.Account.Authority >= AuthorityType.TMOD /*|| session.Account.Authority == AuthorityType.Moderator*/)
+                                        else if (session.Account.Authority >= AuthorityType.GM)
                                         {
                                             string[] vals = sentPacket.Packet.Split(' ');
                                             if (vals[0] == "say" && vals[3] == "13")
