@@ -1560,7 +1560,7 @@ namespace OpenNos.Handler
                         // Area on attacker
                         if (ski.Skill.TargetType == 1 && ski.Skill.HitType == 1)
                         {
-                            if (Session.Character.MapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && !Session.Character.MapInstance.IsPVP)
+                            if (Session.Character.MapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && !Session.Character.MapInstance.IsPvp)
                             {
                                 Session.SendPacket(StaticPacketHelper.Cancel(2, targetId));
                                 return;
@@ -1887,7 +1887,7 @@ namespace OpenNos.Handler
                         }
                         else if (ski.Skill.TargetType == 0)
                         {
-                            if (Session.Character.MapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && !Session.Character.MapInstance.IsPVP)
+                            if (Session.Character.MapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && !Session.Character.MapInstance.IsPvp)
                             {
                                 Session.SendPacket(StaticPacketHelper.Cancel(2, targetId));
                                 return;

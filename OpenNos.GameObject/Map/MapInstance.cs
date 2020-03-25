@@ -139,7 +139,7 @@ namespace OpenNos.GameObject
 
         public int Side { get; set; }
 
-        public bool IsPVP { get; set; }
+        public bool IsPvp { get; set; }
 
         public bool IsScriptedInstance => MapInstanceType == MapInstanceType.TimeSpaceInstance || MapInstanceType == MapInstanceType.RaidInstance;
 

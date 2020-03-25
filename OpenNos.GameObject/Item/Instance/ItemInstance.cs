@@ -1416,8 +1416,9 @@ namespace OpenNos.GameObject
             }
         }
 
-        public void SetRarityPoint()
+        public void SetRarityPoint(bool partner = false)
         {
+#warning TODO review partner system
             switch (Item.EquipmentSlot)
             {
                 case EquipmentType.MainWeapon:

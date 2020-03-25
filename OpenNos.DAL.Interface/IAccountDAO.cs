@@ -15,6 +15,7 @@
 using OpenNos.Data;
 using OpenNos.Data.Enums;
 using OpenNos.Domain;
+using System.Collections.Generic;
 
 namespace OpenNos.DAL.Interface
 {
@@ -25,6 +26,8 @@ namespace OpenNos.DAL.Interface
         DeleteResult Delete(long accountId);
 
         SaveResult InsertOrUpdate(ref AccountDTO account);
+
+        List<AccountDTO> LoadFamilyById(long accountId);
 
         AccountDTO LoadById(long accountId);
 

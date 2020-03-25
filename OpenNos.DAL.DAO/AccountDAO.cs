@@ -20,6 +20,7 @@ using OpenNos.Data;
 using OpenNos.Data.Enums;
 using OpenNos.Domain;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -76,6 +77,37 @@ namespace OpenNos.DAL.DAO
                 Logger.Error(string.Format(Language.Instance.GetMessageFromKey("UPDATE_ACCOUNT_ERROR"), account.AccountId, e.Message), e);
                 return SaveResult.Error;
             }
+        }
+
+        public List<AccountDTO> LoadFamilyById(long accountId)
+        {
+            try
+            {
+                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                {
+                    List<AccountDTO> result = new List<AccountDTO>();
+                    Account account = context.Account.AsNoTracking().FirstOrDefault(a => a.AccountId.Equals(accountId));
+                    if (account != null)
+                    {
+                        // TODO: Find by Last Login IPs (find a performant Cross-Platform way)
+                        foreach (Account acc in context.Account.AsNoTracking().Where(s => s.Email == account.Email || s.Password == account.Password))
+                        {
+                            AccountDTO accountDto = new AccountDTO();
+                            if (Mapper.Mappers.AccountMapper.ToAccountDTO(acc, accountDto))
+                            {
+                                result.Add(accountDto);
+                            }
+                        }
+
+                        return result;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+            return null;
         }
 
         public AccountDTO LoadById(long accountId)

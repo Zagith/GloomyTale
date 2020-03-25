@@ -1708,7 +1708,7 @@ namespace OpenNos.GameObject.Helpers
                 int Stiloso = GetDefenderBenefitingBuffs(CardType.EffectSummon, (byte)AdditionalTypes.EffectSummon.AddBuff)[0];
                 if (ServerManager.RandomNumber(0, 100) < Stiloso)
                 {
-                    if (defender.Character.Session.CurrentMapInstance.IsPVP)
+                    if (defender.Character.Session.CurrentMapInstance.IsPvp)
                     {
                         if (defender.Character.Session.CurrentMapInstance.Map.MapTypes.Any(s =>
                                         s.MapTypeId == (short)MapTypeEnum.Act4))

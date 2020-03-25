@@ -100,7 +100,7 @@ namespace OpenNos.GameObject.Event.ARENA
                                 }
 
                                 MapInstance map = ServerManager.GenerateMapInstance(2015, MapInstanceType.TalentArenaMapInstance, new InstanceBag());
-                                map.IsPVP = true;
+                                map.IsPvp = true;
                                 ConcurrentBag<ArenaTeamMember> arenaTeam = new ConcurrentBag<ArenaTeamMember>();
                                 ServerManager.Instance.ArenaTeams.Add(arenaTeam);
 
@@ -413,7 +413,7 @@ namespace OpenNos.GameObject.Event.ARENA
 
                                         if (tm != null && tm2 != null)
                                         {
-                                            map.IsPVP = false;
+                                            map.IsPvp = false;
 
                                             arenaTeam.ToList().ForEach(friends =>
                                             {
@@ -467,7 +467,7 @@ namespace OpenNos.GameObject.Event.ARENA
                                                 tm2.Session.SendPacket(UserInterfaceHelper.Instance.GenerateTaSt(TalentArenaOptionType.Call));
 
                                                 map.Broadcast("ta_s");
-                                                Observable.Timer(TimeSpan.FromSeconds(5)).Subscribe(start4 => { map.IsPVP = true; });
+                                                Observable.Timer(TimeSpan.FromSeconds(5)).Subscribe(start4 => { map.IsPvp = true; });
                                             });
                                         }
                                         else
@@ -532,7 +532,7 @@ namespace OpenNos.GameObject.Event.ARENA
                                                     }
                                                     break;
                                             }
-                                            map.IsPVP = false;
+                                            map.IsPvp = false;
                                             obs3.Dispose();
                                             obs2.Dispose();
                                             obs7?.Dispose();

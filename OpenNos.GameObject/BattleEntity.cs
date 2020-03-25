@@ -2245,7 +2245,7 @@ namespace OpenNos.GameObject
                                                 return true;
                                             }
                                         }
-                                        else if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (short)MapTypeEnum.PVPMap) || MapInstance.IsPVP
+                                        else if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (short)MapTypeEnum.PVPMap) || MapInstance.IsPvp
                                               || HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP) && receiver.HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP))
                                         {
                                             if (MapInstance == ServerManager.Instance.FamilyArenaInstance

@@ -1570,7 +1570,7 @@ namespace OpenNos.GameObject.Networking
                 if (DAOFactory.MapDAO.LoadById(2006) != null)
                 {
                     ArenaInstance = GenerateMapInstance(2006, MapInstanceType.NormalInstance, new InstanceBag());
-                    ArenaInstance.IsPVP = true;
+                    ArenaInstance.IsPvp = true;
 
                     Portal portal = new Portal
                     {
@@ -1593,7 +1593,7 @@ namespace OpenNos.GameObject.Networking
                 if (DAOFactory.MapDAO.LoadById(2106) != null)
                 {
                     FamilyArenaInstance = GenerateMapInstance(2106, MapInstanceType.NormalInstance, new InstanceBag());
-                    FamilyArenaInstance.IsPVP = true;
+                    FamilyArenaInstance.IsPvp = true;
 
                     Portal portal = new Portal
                     {

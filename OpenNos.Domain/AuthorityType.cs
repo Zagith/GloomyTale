@@ -22,17 +22,10 @@ namespace OpenNos.Domain
         Unconfirmed = -1,
         User = 0,
         GS = 20,
-        TMOD = 30,
-        MOD = 31,
-        SMOD = 32,
-        BA = 33,
         TGM = 50,
         GM = 51,
         SGM = 52,
         GA = 53,
-        TM = 60,
-        CM = 70,
-        DEV = 80,
         Administrator = 100
     }
 }

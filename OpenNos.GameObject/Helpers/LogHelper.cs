@@ -20,10 +20,10 @@ namespace OpenNos.GameObject.Helpers
             DAOFactory.QuestLogDAO.InsertOrUpdate(ref log);
         }
 
-        public void InsertCommandLog(long characterId, PacketDefinition commandPacket, string ipAddress)
+        public void InsertCommandLog(long characterId, string commandPacket, string ipAddress)
         {
             string withoutHeaderpacket = string.Empty;
-            string[] packet = commandPacket.OriginalContent.Split(' ');
+            string[] packet = commandPacket.Split(' ');
             for (int i = 1; i < packet.Length; i++)
             {
                 withoutHeaderpacket += $" {packet[i]}";
@@ -32,7 +32,7 @@ namespace OpenNos.GameObject.Helpers
             var command = new LogCommandsDTO
             {
                 CharacterId = characterId,
-                Command = commandPacket.OriginalHeader,
+                Command = commandPacket,
                 Data = withoutHeaderpacket,
                 IpAddress = ipAddress,
                 Timestamp = DateTime.Now
