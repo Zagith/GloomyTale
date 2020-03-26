@@ -277,7 +277,6 @@
     <Compile Include="Packets\ClientPackets\HeroPacket.cs" />
     <Compile Include="Packets\ClientPackets\JoinFamilyPacket.cs" />
     <Compile Include="Packets\ClientPackets\LbsPacket.cs" />
-    <Compile Include="Packets\ClientPackets\LoginPacket.cs" />
     <Compile Include="Packets\ClientPackets\MallPacket.cs" />
     <Compile Include="Packets\ClientPackets\MinigamePacket.cs" />
     <Compile Include="Packets\ClientPackets\MJoinPacket.cs" />

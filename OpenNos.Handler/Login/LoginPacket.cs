@@ -13,6 +13,7 @@
  */
 
 using OpenNos.Core;
+using OpenNos.Core.Serializing;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
@@ -25,54 +26,69 @@ using System.Linq;
 
 namespace OpenNos.Handler
 {
-    public class LoginPacketHandler : IPacketHandler
+    [PacketHeader("NoS0575", CharacterRequired = false)]
+    public class LoginPacket
     {
-        #region Members
+        #region Properties
 
-        private readonly ClientSession _session;
+        public int Number { get; set; }
 
-        #endregion
+        public string Name { get; set; }
 
-        #region Instantiation
+        public string Password { get; set; }
 
-        public LoginPacketHandler(ClientSession session) => _session = session;
+        public string ClientDataOld { get; set; }
+
+        public string ClientData { get; set; }
 
         #endregion
 
         #region Methods
 
-        private string BuildServersPacket(string username, int sessionId, bool ignoreUserName)
+        public static void HandlePacket(object session, string packet)
         {
-            string channelpacket =
-                CommunicationServiceClient.Instance.RetrieveRegisteredWorldServers(username, sessionId, ignoreUserName);
-
-            if (channelpacket == null || !channelpacket.Contains(':'))
-            {
-                Logger.Debug(
-                    "Could not retrieve Worldserver groups. Please make sure they've already been registered.");
-                _session.SendPacket($"failc {Language.Instance.GetMessageFromKey("NO_WORLDSERVERS")}");
-            }
-
-            return channelpacket;
-        }
-
-        /// <summary>
-        /// login packet
-        /// </summary>
-        /// <param name="loginPacket"></param>
-        public void VerifyLogin(LoginPacket loginPacket)
-        {
-            if (loginPacket == null || loginPacket.Name == null || loginPacket.Password == null)
+            string[] packetSplit = packet.Split(' ');
+            if (packetSplit.Length < 6)
             {
                 return;
+            }
+            LoginPacket loginPacket = new LoginPacket();
+            if (int.TryParse(packetSplit[1], out int number))
+            {
+                loginPacket.Number = number;
+                loginPacket.Name = packetSplit[2];
+                loginPacket.Password = packetSplit[3];
+                loginPacket.ClientDataOld = packetSplit[4];
+                loginPacket.ClientData = packetSplit[5];
+                loginPacket.ExecuteHandler(session as ClientSession);
+            }
+        }
+
+        public static void Register() => PacketFacility.AddHandler(typeof(LoginPacket), HandlePacket);
+
+        private void ExecuteHandler(ClientSession session)
+        {
+            string BuildServersPacket(string username, int sessionId, bool ignoreUserName)
+            {
+                string channelpacket =
+                    CommunicationServiceClient.Instance.RetrieveRegisteredWorldServers(username, sessionId, ignoreUserName);
+
+                if (channelpacket == null || !channelpacket.Contains(':'))
+                {
+                    Logger.Debug(
+                        "Could not retrieve Worldserver groups. Please make sure they've already been registered.");
+                    session.SendPacket($"failc {Language.Instance.GetMessageFromKey("NO_WORLDSERVERS")}");
+                }
+
+                return channelpacket;
             }
 
             UserDTO user = new UserDTO
             {
-                Name = loginPacket.Name,
+                Name = Name,
                 Password = ConfigurationManager.AppSettings["UseOldCrypto"] == "true"
-                    ? CryptographyBase.Sha512(LoginCryptography.GetPassword(loginPacket.Password)).ToUpper()
-                    : loginPacket.Password
+                    ? CryptographyBase.Sha512(LoginCryptography.GetPassword(Password)).ToUpper()
+                    : Password
             };
             if (user == null || user.Name == null || user.Password == null)
             {
@@ -81,18 +97,18 @@ namespace OpenNos.Handler
             AccountDTO loadedAccount = DAOFactory.AccountDAO.LoadByName(user.Name);
             if (loadedAccount != null && loadedAccount.Name != user.Name)
             {
-                _session.SendPacket($"failc {(byte)LoginFailType.WrongCaps}");
+                session.SendPacket($"failc {(byte)LoginFailType.WrongCaps}");
                 return;
             }
             if (loadedAccount?.Password.ToUpper().Equals(user.Password) == true)
             {
-                string ipAddress = _session.IpAddress;
+                string ipAddress = session.IpAddress;
                 DAOFactory.AccountDAO.WriteGeneralLog(loadedAccount.AccountId, ipAddress, null,
                     GeneralLogType.Connection, "LoginServer");
 
                 if (DAOFactory.PenaltyLogDAO.LoadByIp(ipAddress).Count() > 0)
                 {
-                    _session.SendPacket($"failc {(byte)LoginFailType.CantConnect}");
+                    session.SendPacket($"failc {(byte)LoginFailType.CantConnect}");
                     return;
                 }
 
@@ -104,7 +120,7 @@ namespace OpenNos.Handler
                         .FirstOrDefault(s => s.DateEnd > DateTime.Now && s.Penalty == PenaltyType.Banned);
                     if (penalty != null)
                     {
-                        _session.SendPacket($"failc {(byte)LoginFailType.Banned}");
+                        session.SendPacket($"failc {(byte)LoginFailType.Banned}");
                     }
                     else
                     {
@@ -112,30 +128,30 @@ namespace OpenNos.Handler
                         {
                             case AuthorityType.Unconfirmed:
                                 {
-                                    _session.SendPacket($"failc {(byte)LoginFailType.CantConnect}");
+                                    session.SendPacket($"failc {(byte)LoginFailType.CantConnect}");
                                 }
                                 break;
 
                             case AuthorityType.Banned:
                                 {
-                                    _session.SendPacket($"failc {(byte)LoginFailType.Banned}");
+                                    session.SendPacket($"failc {(byte)LoginFailType.Banned}");
                                 }
                                 break;
 
                             case AuthorityType.Closed:
                                 {
-                                    _session.SendPacket($"failc {(byte)LoginFailType.CantConnect}");
+                                    session.SendPacket($"failc {(byte)LoginFailType.CantConnect}");
                                 }
                                 break;
 
                             default:
                                 {
-                                    if (loadedAccount.Authority < AuthorityType.SMOD)
+                                    if (loadedAccount.Authority < AuthorityType.GM)
                                     {
                                         MaintenanceLogDTO maintenanceLog = DAOFactory.MaintenanceLogDAO.LoadFirst();
                                         if (maintenanceLog != null && maintenanceLog.DateStart < DateTime.Now)
                                         {
-                                            _session.SendPacket($"failc {(byte)LoginFailType.Maintenance}");
+                                            session.SendPacket($"failc {(byte)LoginFailType.Maintenance}");
                                             return;
                                         }
                                     }
@@ -154,17 +170,17 @@ namespace OpenNos.Handler
                                         Logger.Error("General Error SessionId: " + newSessionId, ex);
                                     }
 
-                                    string[] clientData = loginPacket.ClientData.Split('.');
+                                    string[] clientData = ClientData.Split('.');
 
                                     if (clientData.Length < 2)
                                     {
-                                        clientData = loginPacket.ClientDataOld.Split('.');
+                                        clientData = ClientDataOld.Split('.');
                                     }
 
                                     bool ignoreUserName = short.TryParse(clientData[3], out short clientVersion)
                                                           && (clientVersion < 3075
                                                            || ConfigurationManager.AppSettings["UseOldCrypto"] == "true");
-                                    _session.SendPacket(BuildServersPacket(user.Name, newSessionId, ignoreUserName));
+                                    session.SendPacket(BuildServersPacket(user.Name, newSessionId, ignoreUserName));
                                 }
                                 break;
                         }
@@ -172,15 +188,14 @@ namespace OpenNos.Handler
                 }
                 else
                 {
-                    _session.SendPacket($"failc {(byte)LoginFailType.AlreadyConnected}");
+                    session.SendPacket($"failc {(byte)LoginFailType.AlreadyConnected}");
                 }
             }
             else
             {
-                _session.SendPacket($"failc {(byte)LoginFailType.AccountOrPasswordWrong}");
+                session.SendPacket($"failc {(byte)LoginFailType.AccountOrPasswordWrong}");
             }
         }
-
         #endregion
     }
 }

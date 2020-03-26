@@ -215,8 +215,8 @@
     <Compile Include="BattlePacketHandler.cs" />
     <Compile Include="UselessPacketHandler.cs" />
     <Compile Include="InventoryPacketHandler.cs" />
-    <Compile Include="CommandPackets\Extensions\CommandPacketExtension.cs" />
-    <Compile Include="Login\LoginPacketHandler.cs" />
+    <Compile Include="Extensions\CommandPacketExtension.cs" />
+    <Compile Include="Login\LoginPacket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BasicPacketHandler.cs" />
   </ItemGroup>
