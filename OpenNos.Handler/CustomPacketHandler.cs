@@ -17,24 +17,8 @@ using OpenNos.GameObject;
 
 namespace OpenNos.Handler
 {
-    public class CustomPacketHandler : IPacketHandler
+    public class CustomPacketHandler
     {
-        #region Instantiation
-
-        public CustomPacketHandler(ClientSession session) => Session = session;
-
-        #endregion
-
-        #region Properties
-
-        private ClientSession Session { get; }
-
-        #endregion
-
-        #region Methods
-
-        // Your custom packet code written here. Put Packet Definitions in OpenNos.GameObject/Packets/CustomPackets
-
-        #endregion
+        
     }
 }

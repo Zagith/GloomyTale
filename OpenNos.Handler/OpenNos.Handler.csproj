@@ -84,7 +84,36 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicPackets\BlacklistAddPacket.cs" />
+    <Compile Include="BasicPackets\BlDelPacket.cs" />
+    <Compile Include="BasicPackets\BlInsPacket.cs" />
+    <Compile Include="BasicPackets\CharacterOptionPacket.cs" />
+    <Compile Include="BasicPackets\ComplimentPacket.cs" />
+    <Compile Include="BasicPackets\DirectionPacket.cs" />
+    <Compile Include="BasicPackets\EntryPointPacket.cs" />
+    <Compile Include="BasicPackets\FDelPacket.cs" />
+    <Compile Include="BasicPackets\FInsPacket.cs" />
+    <Compile Include="BasicPackets\FriendBTalkPacket.cs" />
+    <Compile Include="BasicPackets\GameStartPacket.cs" />
+    <Compile Include="BasicPackets\GetGiftPacket.cs" />
+    <Compile Include="BasicPackets\GroupJoinPacket.cs" />
+    <Compile Include="BasicPackets\GroupLeavePacket.cs" />
+    <Compile Include="BasicPackets\GroupTalkPacket.cs" />
+    <Compile Include="BasicPackets\HeroPacket.cs" />
+    <Compile Include="BasicPackets\NcifPacket.cs" />
+    <Compile Include="BasicPackets\PReqPacket.cs" />
+    <Compile Include="BasicPackets\PulsePacket.cs" />
+    <Compile Include="BasicPackets\RaidListRegisterPacket.cs" />
+    <Compile Include="BasicPackets\RaidManagePacket.cs" />
+    <Compile Include="BasicPackets\RaidStartPacket.cs" />
+    <Compile Include="BasicPackets\ReqInfoPacket.cs" />
+    <Compile Include="BasicPackets\RestPacket.cs" />
+    <Compile Include="BasicPackets\RevivalPacket.cs" />
+    <Compile Include="BasicPackets\SayPacket.cs" />
+    <Compile Include="BasicPackets\WalkPacket.cs" />
+    <Compile Include="BasicPackets\WhisperPacket.cs" />
     <Compile Include="BazaarPacketHandler.cs" />
+    <Compile Include="CharacterLobby\SelectPacket.cs" />
     <Compile Include="CharacterScreenPacketHandler.cs" />
     <Compile Include="CommandPackets\Act4\Act4Packet.cs" />
     <Compile Include="CommandPackets\Act4\Act4StatPacket.cs" />

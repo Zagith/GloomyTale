@@ -8,7 +8,6 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     {
         #region Properties
 
-        [PacketIndex(0)]
         public string CharacterName { get; set; }
 
         #endregion

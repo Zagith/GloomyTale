@@ -18,61 +18,8 @@ using OpenNos.GameObject.Packets.ClientPackets;
 
 namespace OpenNos.Handler
 {
-    public class UselessPacketHandler : IPacketHandler
+    public class UselessPacketHandler
     {
-        #region Instantiation
-
-        public UselessPacketHandler(ClientSession session) => Session = session;
-
-        #endregion
-
-        #region Properties
-
-        public ClientSession Session { get; }
-
-        #endregion
-
-        #region Methods
-
-        public void CClose(CClosePacket cClosePacket)
-        {
-            // idk
-        }
-
-        public void FStashEnd(FStashEndPacket fStashEndPacket)
-        {
-            // idk
-        }
-
-        public void FStashEnd(StashEndPacket stashEndPacket)
-        {
-            // idk
-        }
-
-        public void Lbs(LbsPacket lbsPacket)
-        {
-            // idk
-        }
-
-        public void ShopClose(ShopClosePacket shopClosePacket)
-        {
-            // Not needed for now.
-        }
-
-        public void Snap(SnapPacket snapPacket)
-        {
-            // Not needed for now. (pictures)
-        }
-
-        public void PdtClose(PdtClosePacket pdtclose)
-        {
-            // idk
-        }
-
-        public void ScPCtsPacket(ScPCtsPacket scptcs)
-        {
-            // idk
-        }
-        #endregion
+        
     }
 }

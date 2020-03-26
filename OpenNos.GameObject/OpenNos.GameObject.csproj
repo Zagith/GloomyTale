@@ -227,8 +227,6 @@
     <Compile Include="Packets\BscPacket.cs" />
     <Compile Include="Packets\ClientPackets\AddobjPacket.cs" />
     <Compile Include="Packets\ClientPackets\BIPacket.cs" />
-    <Compile Include="Packets\ClientPackets\BlDelPacket.cs" />
-    <Compile Include="Packets\ClientPackets\BlInsPacket.cs" />
     <Compile Include="Packets\ClientPackets\BlPacket.cs" />
     <Compile Include="Packets\ClientPackets\BtkPacket.cs" />
     <Compile Include="Packets\ClientPackets\CBlistPacket.cs" />
@@ -319,7 +317,6 @@
     <Compile Include="Packets\ClientPackets\SayPacket.cs" />
     <Compile Include="Packets\ClientPackets\SayPPacket.cs" />
     <Compile Include="Packets\ClientPackets\ScPCtsPacket.cs" />
-    <Compile Include="Packets\ClientPackets\SelectPacket.cs" />
     <Compile Include="Packets\ClientPackets\SellPacket.cs" />
     <Compile Include="Packets\ClientPackets\ShopClosePacket.cs" />
     <Compile Include="Packets\ClientPackets\ShoppingPacket.cs" />

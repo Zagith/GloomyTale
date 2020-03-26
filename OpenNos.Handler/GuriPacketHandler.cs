@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace OpenNos.Handler
 {
-    public class GuriPacketHandler : IPacketHandler
+    public class GuriPacketHandler
     {
         #region Instantiation
 

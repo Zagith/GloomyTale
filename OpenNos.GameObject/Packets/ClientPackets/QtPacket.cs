@@ -7,10 +7,8 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     {
         #region Properties
 
-        [PacketIndex(0)]
         public short Type { get; set; }
 
-        [PacketIndex(1)]
         public int Data { get; set; }
 
         #endregion

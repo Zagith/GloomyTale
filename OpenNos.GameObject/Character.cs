@@ -2830,7 +2830,7 @@ namespace OpenNos.GameObject
             return result;
         }
 
-        public string GenerateCInfo() => $"c_info {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + Name : Name : Authority == AuthorityType.BitchNiggerFaggot ? Name + "[BitchNiggerFaggot]" : Name)} - -1 {(Family != null && FamilyCharacter != null && !Undercover ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {CharacterId} {(Invisible && Authority >= AuthorityType.TMOD ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {(byte)HairColor} {(byte)Class} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(/*Authority > AuthorityType.User && !Undercover ? CharacterHelper.AuthorityColor(Authority) : */Compliment)} {(UseSp || IsVehicled ? Morph : 0)} {(Invisible ? 1 : 0)} {Family?.FamilyLevel ?? 0} {(UseSp ? MorphUpgrade : 0)} {ArenaWinner}";
+        public string GenerateCInfo() => $"c_info {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + Name : Name : Authority == AuthorityType.BitchNiggerFaggot ? Name + "[BitchNiggerFaggot]" : Name)} - -1 {(Family != null && FamilyCharacter != null && !Undercover ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {CharacterId} {(Invisible && Authority >= AuthorityType.GM ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {(byte)HairColor} {(byte)Class} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(/*Authority > AuthorityType.User && !Undercover ? CharacterHelper.AuthorityColor(Authority) : */Compliment)} {(UseSp || IsVehicled ? Morph : 0)} {(Invisible ? 1 : 0)} {Family?.FamilyLevel ?? 0} {(UseSp ? MorphUpgrade : 0)} {ArenaWinner}";
 
         public string GenerateCMap() => $"c_map 0 {MapInstance.Map.MapId} {(MapInstance.MapInstanceType != MapInstanceType.BaseMapInstance ? 1 : 0)}";
 
@@ -2926,7 +2926,7 @@ namespace OpenNos.GameObject
                 color = head.Design;
             }
 
-            return $"eq {CharacterId} {(Invisible && Authority >= AuthorityType.TMOD ? 6 : Undercover ? (byte)AuthorityType.User : Authority < AuthorityType.User ? (byte)AuthorityType.User : Authority >= AuthorityType.TMOD ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {(!InvisibleGm ? GenerateEqRareUpgradeForPacket() : null)}";
+            return $"eq {CharacterId} {(Invisible && Authority >= AuthorityType.GM ? 6 : Undercover ? (byte)AuthorityType.User : Authority < AuthorityType.User ? (byte)AuthorityType.User : Authority >= AuthorityType.GM ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {(!InvisibleGm ? GenerateEqRareUpgradeForPacket() : null)}";
             //return $"eq {CharacterId} {(Invisible ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {(!InvisibleGm ? GenerateEqRareUpgradeForPacket() : null)}";
         }
 
@@ -3313,13 +3313,13 @@ namespace OpenNos.GameObject
         {
             string name = Name;
 
-            if (receiverAuthority >= AuthorityType.TMOD)
+            if (receiverAuthority >= AuthorityType.GM)
             {
                 foe = false;
                 name = $"[{Faction}]{name}";
             }
 
-            if (foe && Authority < AuthorityType.TMOD)
+            if (foe && Authority < AuthorityType.GM)
             {
                 name = "!§$%&/()=?*+~#";
             }
@@ -3347,7 +3347,7 @@ namespace OpenNos.GameObject
                 fairy = Inventory.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
             }
 
-            return $"in 1 {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + name : name : Authority == AuthorityType.BitchNiggerFaggot ? name + "[BitchNiggerFaggot]" : name)} - {CharacterId} {PositionX} {PositionY} {Direction} {(Undercover ? (byte)AuthorityType.User : Authority >= AuthorityType.TMOD ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {Math.Ceiling(Hp / HPLoad() * 100)} {Math.Ceiling(Mp / MPLoad() * 100)} {(IsSitting ? 1 : 0)} {(Group?.GroupType == GroupType.Group ? (Group?.GroupId ?? -1) : -1)} {(fairy != null && !Undercover ? 4 : 0)} {fairy?.Item.Element ?? 0} 0 {fairy?.Item.Morph ?? 0} {InEffect} {(UseSp || IsVehicled || IsMorphed ? Morph : 0)} {GenerateEqRareUpgradeForPacket()} {(!Undercover ? (foe ? -1 : Family?.FamilyId ?? -1) : -1)} {(!Undercover ? (foe ? name : Family?.Name ?? "-") : "-")} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(Invisible ? 1 : 0)} {(UseSp ? MorphUpgrade : 0)} {faction} {(UseSp ? MorphUpgrade2 : 0)} {Level} {Family?.FamilyLevel ?? 0} 0|0|0 {ArenaWinner} {Compliment} {Size} {HeroLevel}";
+            return $"in 1 {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + name : name : Authority == AuthorityType.BitchNiggerFaggot ? name + "[BitchNiggerFaggot]" : name)} - {CharacterId} {PositionX} {PositionY} {Direction} {(Undercover ? (byte)AuthorityType.User : Authority >= AuthorityType.GM ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {Math.Ceiling(Hp / HPLoad() * 100)} {Math.Ceiling(Mp / MPLoad() * 100)} {(IsSitting ? 1 : 0)} {(Group?.GroupType == GroupType.Group ? (Group?.GroupId ?? -1) : -1)} {(fairy != null && !Undercover ? 4 : 0)} {fairy?.Item.Element ?? 0} 0 {fairy?.Item.Morph ?? 0} {InEffect} {(UseSp || IsVehicled || IsMorphed ? Morph : 0)} {GenerateEqRareUpgradeForPacket()} {(!Undercover ? (foe ? -1 : Family?.FamilyId ?? -1) : -1)} {(!Undercover ? (foe ? name : Family?.Name ?? "-") : "-")} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(Invisible ? 1 : 0)} {(UseSp ? MorphUpgrade : 0)} {faction} {(UseSp ? MorphUpgrade2 : 0)} {Level} {Family?.FamilyLevel ?? 0} 0|0|0 {ArenaWinner} {Compliment} {Size} {HeroLevel}";
         }
 
         public string GenerateInvisible() => $"cl {CharacterId} {(Invisible ? 1 : 0)} {(InvisibleGm ? 1 : 0)}";
@@ -3898,7 +3898,7 @@ namespace OpenNos.GameObject
             return $"titinfo 1 {CharacterId} {visibleTitle} {effectiveTitle}";
         }
 
-        public TitlePacket GenerateTitle()
+        public string GenerateTitle()
         {
             var data = Titles.Select(s => new TitleSubPacket
             {
@@ -3908,7 +3908,7 @@ namespace OpenNos.GameObject
             return new TitlePacket
             {
                 Data = data.Any() ? data : null
-            };
+            }.ToString();
         }
 
         public string GenerateEffs(TiteqPacketType type)
@@ -5190,13 +5190,13 @@ namespace OpenNos.GameObject
 
         public string GenerateTaFc(byte type) => $"ta_fc {type} {CharacterId}";
 
-        public TalkPacket GenerateTalk(string message)
+        public string GenerateTalk(string message)
         {
             return new TalkPacket
             {
                 CharacterId = CharacterId,
                 Message = message
-            };
+            }.ToString();
         }
 
         public string GenerateTaM(int type)
@@ -7370,7 +7370,7 @@ namespace OpenNos.GameObject
                             : SpCooldown;
                     }
                 }
-                if (Authority >= AuthorityType.TMOD || forced)
+                if (Authority >= AuthorityType.GM || forced)
                 {
                     SpCooldown = 0;
                 }
