@@ -508,7 +508,7 @@ namespace GloomyTale.GameObject
                     //short mapX = Path[maxindex - 1].X;
                     //short mapY = Path[maxindex - 1].Y;
                     double waitingtime = Map.GetDistance(new MapCell { X = mapX, Y = mapY }, new MapCell { X = MapX, Y = MapY }) / (double)Npc.Speed;
-                    MapInstance.Broadcast(new BroadcastPacket(null, PacketFactory.Serialize(StaticPacketHelper.Move(VisualType.Npc, MapNpcId, mapX, mapY, Npc.Speed)), ReceiverType.All, xCoordinate: mapX, yCoordinate: mapY));
+                    //MapInstance.Broadcast(new BroadcastPacket(null, PacketFactory.Serialize(StaticPacketHelper.Move(VisualType.Npc, MapNpcId, mapX, mapY, Npc.Speed)), ReceiverType.All, xCoordinate: mapX, yCoordinate: mapY));
                     LastMove = DateTime.Now.AddSeconds(waitingtime > 1 ? 1 : waitingtime);
 
                     Observable.Timer(TimeSpan.FromMilliseconds((int)((waitingtime > 1 ? 1 : waitingtime) * 1000))).Subscribe(x =>
@@ -671,7 +671,7 @@ namespace GloomyTale.GameObject
                             short mapX = Path[maxindex - 1].X;
                             short mapY = Path[maxindex - 1].Y;
                             double waitingtime = Map.GetDistance(new MapCell { X = mapX, Y = mapY }, new MapCell { X = MapX, Y = MapY }) / (double)Npc.Speed;
-                            MapInstance.Broadcast(new BroadcastPacket(null, PacketFactory.Serialize(StaticPacketHelper.Move(VisualType.Npc, MapNpcId, mapX, mapY, Npc.Speed)), ReceiverType.All, xCoordinate: mapX, yCoordinate: mapY));
+                            //MapInstance.Broadcast(new BroadcastPacket(null, PacketFactory.Serialize(StaticPacketHelper.Move(VisualType.Npc, MapNpcId, mapX, mapY, Npc.Speed)), ReceiverType.All, xCoordinate: mapX, yCoordinate: mapY));
                             LastMove = DateTime.Now.AddSeconds(waitingtime > 1 ? 1 : waitingtime);
 
                             Observable.Timer(TimeSpan.FromMilliseconds((int)((waitingtime > 1 ? 1 : waitingtime) * 1000))).Subscribe(x =>

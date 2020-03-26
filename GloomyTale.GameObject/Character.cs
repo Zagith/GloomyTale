@@ -2786,7 +2786,7 @@ namespace GloomyTale.GameObject
             return !IsSeal ? $"c_mode 1 {VisualId} {(UseSp || IsVehicled || IsMorphed ? Morph : 0)} {(!IsLaurenaMorph() && UseSp ? MorphUpgrade : 0)} {(!IsLaurenaMorph() && UseSp ? MorphUpgrade2 : 0)} {ArenaWinner} {Size} {item?.Item.Morph ?? 0}" : "";
         }
 
-        public string GenerateCond() => $"cond 1 {VisualId} {(!IsLaurenaMorph() && !CanAttack() ? 1 : 0)} {(!CanMove() ? 1 : 0)} {Speed}";
+        public string GenerateCond() => $"cond 1 {VisualId} {(HasBuff(BCardType.CardType.SpecialAttack, (byte)AdditionalTypes.SpecialAttack.NoAttack) ? 1 : 0)} {(HasBuff(BCardType.CardType.Move, (byte)AdditionalTypes.Move.MovementImpossible) ? 1 : 0)} {Speed}";
 
         public bool CanAttack() => !NoAttack && !HasBuff(CardType.SpecialAttack, (byte)AdditionalTypes.SpecialAttack.NoAttack) && !HasBuff(CardType.FrozenDebuff, (byte)AdditionalTypes.FrozenDebuff.EternalIce);
 

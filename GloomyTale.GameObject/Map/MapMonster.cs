@@ -785,7 +785,7 @@ namespace GloomyTale.GameObject
                             MoveEvent?.Events.ForEach(e => EventHelper.Instance.RunEvent(e, monster: this));
                         });
 
-                    MapInstance.Broadcast(StaticPacketHelper.Move(VisualType.Monster, MapMonsterId, tempX, tempY, Monster.Speed));
+                    //MapInstance.Broadcast(StaticPacketHelper.Move(VisualType.Monster, MapMonsterId, tempX, tempY, Monster.Speed));
                     MapInstance.Broadcast(StaticPacketHelper.Say(3, MapMonsterId, 0, "!!!!"));
                 }
             }

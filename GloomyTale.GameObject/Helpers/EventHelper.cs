@@ -27,7 +27,6 @@ using GloomyTale.GameObject.Networking;
 using GloomyTale.Data;
 using GloomyTale.GameObject.Event.RainbowBattle;
 using GloomyTale.GameObject.Event.BANDICOOTRUN;
-using GloomyTale.GameObject.Networking;
 using GloomyTale.Communication;
 using GloomyTale.GameObject.Items.Instance;
 using GloomyTale.GameObject.ComponentEntities.Extensions;

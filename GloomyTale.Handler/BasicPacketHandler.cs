@@ -2878,7 +2878,7 @@ namespace GloomyTale.Handler
                     if (!Session.Character.Invisible)
                     {
                         Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Move(VisualType.Player,
-                            Session.Character.VisualId, walkPacket.XCoordinate, walkPacket.YCoordinate,
+                            Session.Character.CharacterId, walkPacket.XCoordinate, walkPacket.YCoordinate,
                             Session.Character.Speed));
                     }
                     Session.SendPacket(Session.Character.GenerateCond());

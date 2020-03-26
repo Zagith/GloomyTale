@@ -912,8 +912,8 @@ namespace GloomyTale.Handler
                                 mate.MapX = positionX;
                                 mate.MapY = positionY;
                             }
-                            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Move(VisualType.Npc, petId, positionX,
-                                positionY, mate.Monster.Speed));
+                            //Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Move(VisualType.Npc, petId, positionX,
+                             //   positionY, mate.Monster.Speed));
                             if (mate.LastMonsterAggro.AddSeconds(5) > DateTime.Now)
                             {
                                 mate.UpdateBushFire();
