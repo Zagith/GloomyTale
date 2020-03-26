@@ -3237,7 +3237,8 @@ namespace OpenNos.GameObject
             {
                 if (relatedCharacterLoggedId.HasValue && (relatedCharacterLoggedId.Value == relation.RelatedCharacterId || relatedCharacterLoggedId.Value == relation.CharacterId))
                 {
-                    result += $" {relatedCharacterLoggedId}.{(isConnected ? 1 : 0)}";
+                    string name = DAOFactory.CharacterDAO.LoadById(relatedCharacterLoggedId.Value).Name;
+                    result += $" {relatedCharacterLoggedId}.{(isConnected ? 1 : 0)}.{name}";
                 }
             }
             return result;

@@ -1,4 +1,3 @@
-using Mapster;
 using OpenNos.DAL.EF;
 using OpenNos.Data;
 using OpenNos.Data.Base;
@@ -15,7 +14,6 @@ namespace OpenNos.Mapper.Mappers
             {
                 return false;
             }
-            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
             output.BuffType = input.BuffType;
             output.CardId = input.CardId;
             output.Delay = input.Delay;
@@ -36,7 +34,6 @@ namespace OpenNos.Mapper.Mappers
             {
                 return false;
             }
-            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
             output.BuffType = input.BuffType;
             output.CardId = input.CardId;
             output.Delay = input.Delay;
