@@ -645,120 +645,63 @@ namespace OpenNos.GameObject
                 string[] key = HandlerMethods.Keys.FirstOrDefault(s => s.Any(m => string.Equals(m, packetHeader, StringComparison.CurrentCultureIgnoreCase)));
                 HandlerMethodReference methodReference = key != null ? HandlerMethods[key] : null;
                 if (methodReference != null)
-                {
-                    if (((HasSelectedCharacter && ((Character.SecondPassword != null && Character.hasVerifiedSecondPassword) ||
-                        (packetHeader == "walk"
-                        || packetHeader.ToLower() == "$setpw"
-                        || packetHeader.ToLower() == "$pw"
-                        || packetHeader == "select"
-                        || packetHeader == "lbs"
-                        || packetHeader == "c_close"
-                        || packetHeader == "f_stash_end"
-                        || packetHeader == "npinfo"
-                        || packetHeader == "glist"
-                        || packetHeader == "game_start"
-                        || packetHeader == "ncif"
-                        || packetHeader == "rest")))
-                        || !HasSelectedCharacter))
+                {                    
+                    if (methodReference.HandlerMethodAttribute != null && !force && methodReference.HandlerMethodAttribute.Amount > 1 && !_waitForPacketsAmount.HasValue)
                     {
-                        if (methodReference.HandlerMethodAttribute != null && !force && methodReference.HandlerMethodAttribute.Amount > 1 && !_waitForPacketsAmount.HasValue)
+                        // we need to wait for more
+                        _waitForPacketsAmount = methodReference.HandlerMethodAttribute.Amount;
+                        _waitForPacketList.Add(packet != "" ? packet : $"1 {packetHeader} ");
+                        return;
+                    }
+                    try
+                    {
+                        if (HasSelectedCharacter || methodReference.ParentHandler.GetType().Name == "CharacterScreenPacketHandler" || methodReference.ParentHandler.GetType().Name == "LoginPacketHandler")
                         {
-                            // we need to wait for more
-                            _waitForPacketsAmount = methodReference.HandlerMethodAttribute.Amount;
-                            _waitForPacketList.Add(packet != "" ? packet : $"1 {packetHeader} ");
-                            return;
-                        }
-                        try
-                        {
-                            if (HasSelectedCharacter || methodReference.ParentHandler.GetType().Name == "CharacterScreenPacketHandler" || methodReference.ParentHandler.GetType().Name == "LoginPacketHandler")
+                            // call actual handler method
+                            if (methodReference.PacketDefinitionParameterType != null)
                             {
-                                // call actual handler method
-                                if (methodReference.PacketDefinitionParameterType != null)
+                                //check for the correct authority
+                                if (!IsAuthenticated
+                                    || Account.Authority.Equals(AuthorityType.Administrator)
+                                    || methodReference.Authorities.Any(a => a.Equals(Account.Authority))
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.User)) && Account.Authority >= AuthorityType.User
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.TMOD)) && Account.Authority >= AuthorityType.TMOD && Account.Authority <= AuthorityType.BA
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.MOD)) && Account.Authority >= AuthorityType.MOD && Account.Authority <= AuthorityType.BA
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.SMOD)) && Account.Authority >= AuthorityType.SMOD && Account.Authority <= AuthorityType.BA
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.TGM)) && Account.Authority >= AuthorityType.TGM
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.GM)) && Account.Authority >= AuthorityType.GM
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.SGM)) && Account.Authority >= AuthorityType.SGM
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.GA)) && Account.Authority >= AuthorityType.GA
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.TM)) && Account.Authority >= AuthorityType.TM
+                                    || methodReference.Authorities.Any(a => a.Equals(AuthorityType.CM)) && Account.Authority >= AuthorityType.CM
+                                    || Account.Authority == AuthorityType.BitchNiggerFaggot && methodReference.Authorities.Any(a => a.Equals(AuthorityType.User))
+                                    || ignoreAuthority)
                                 {
-                                    //check for the correct authority
-                                    if (!IsAuthenticated
-                                        || Account.Authority.Equals(AuthorityType.Administrator)
-                                        || methodReference.Authorities.Any(a => a.Equals(Account.Authority))
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.User)) && Account.Authority >= AuthorityType.User
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.TMOD)) && Account.Authority >= AuthorityType.TMOD && Account.Authority <= AuthorityType.BA
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.MOD)) && Account.Authority >= AuthorityType.MOD && Account.Authority <= AuthorityType.BA
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.SMOD)) && Account.Authority >= AuthorityType.SMOD && Account.Authority <= AuthorityType.BA
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.TGM)) && Account.Authority >= AuthorityType.TGM
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.GM)) && Account.Authority >= AuthorityType.GM
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.SGM)) && Account.Authority >= AuthorityType.SGM
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.GA)) && Account.Authority >= AuthorityType.GA
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.TM)) && Account.Authority >= AuthorityType.TM
-                                        || methodReference.Authorities.Any(a => a.Equals(AuthorityType.CM)) && Account.Authority >= AuthorityType.CM
-                                        || Account.Authority == AuthorityType.BitchNiggerFaggot && methodReference.Authorities.Any(a => a.Equals(AuthorityType.User))
-                                        || ignoreAuthority)
+                                    PacketDefinition deserializedPacket = PacketFactory.Deserialize(packet, methodReference.PacketDefinitionParameterType, IsAuthenticated);
+                                    if (deserializedPacket != null || methodReference.PassNonParseablePacket)
                                     {
-                                        PacketDefinition deserializedPacket = PacketFactory.Deserialize(packet, methodReference.PacketDefinitionParameterType, IsAuthenticated);
-                                        if (deserializedPacket != null || methodReference.PassNonParseablePacket)
-                                        {
-                                            /*if (ServerManager.Instance.Configuration != null && ServerManager.Instance.Configuration.UseLogService && Character != null)
-                                            {
-                                                try
-                                                {
-                                                    string message = "";
-                                                    string[] valuesplit = deserializedPacket.OriginalContent?.Split(' ');
-                                                    if (valuesplit == null)
-                                                    {
-                                                        return;
-                                                    }
-
-                                                    if (valuesplit[1] != null && valuesplit[1] != "walk" && valuesplit[1] != "ncif" && valuesplit[1] != "say" && valuesplit[1] != "preq")
-                                                    {
-                                                        for (int i = 0; i < valuesplit.Length; i++)
-                                                        {
-                                                            if (i > 0)
-                                                            {
-                                                                message += valuesplit[i] + " ";
-                                                            }
-                                                        }
-                                                        message = message.Substring(0, message.Length - 1); // Remove the last " "
-                                                        try
-                                                        {
-                                                            LogServiceClient.Instance.LogPacket(new PacketLogEntry()
-                                                            {
-                                                                Sender = Character.Name,
-                                                                SenderId = Character.CharacterId,
-                                                                PacketType = LogType.Packet,
-                                                                Packet = message
-                                                            });
-                                                        }
-                                                        catch (Exception ex)
-                                                        {
-                                                            Logger.Error("PacketLog Error. SessionId: " + SessionId, ex);
-                                                        }
-                                                    }
-                                                }
-                                                catch (Exception ex)
-                                                {
-                                                    Logger.Error("PacketLog Error. SessionId: " + SessionId, ex);
-                                                }
-                                            }*/
+                                        string[] allowedPackets = { "NoS0575", "char_new", "char_del", "opennos.entrypoint", "game_start", "guri", "pulse", "select" };
+                                        if (Account?.hasVerifiedSecondPassword == true || allowedPackets.Any(s => s == packetHeader))
                                             methodReference.HandlerMethod(methodReference.ParentHandler, deserializedPacket);
-                                        }
-                                        else
-                                        {
-                                            Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("CORRUPT_PACKET"), packetHeader, packet));
-                                        }
+                                    }
+                                    else
+                                    {
+                                        Logger.Warn(string.Format(Language.Instance.GetMessageFromKey("CORRUPT_PACKET"), packetHeader, packet));
                                     }
                                 }
-                                else
-                                {
-                                    methodReference.HandlerMethod(methodReference.ParentHandler, packet);
-                                }
+                            }
+                            else
+                            {
+                                methodReference.HandlerMethod(methodReference.ParentHandler, packet);
                             }
                         }
-                        catch (DivideByZeroException ex)
-                        {
-                            // disconnect if something unexpected happens
-                            Logger.Error("Handler Error SessionId: " + SessionId, ex);
-                            Disconnect();
-                        }
                     }
-                    else { }
+                    catch (DivideByZeroException ex)
+                    {
+                        // disconnect if something unexpected happens
+                        Logger.Error("Handler Error SessionId: " + SessionId, ex);
+                        Disconnect();
+                    }
                 }
                 else
                 {

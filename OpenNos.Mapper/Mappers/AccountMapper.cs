@@ -24,6 +24,7 @@ namespace OpenNos.Mapper.Mappers
             output.RegistrationIP = input.RegistrationIP;
             output.VerificationToken = input.VerificationToken;
             output.Language = input.Language;
+            output.TotpSecret = input.TotpSecret;
 
             return true;
         }
@@ -45,6 +46,7 @@ namespace OpenNos.Mapper.Mappers
             output.RegistrationIP = input.RegistrationIP;
             output.VerificationToken = input.VerificationToken;
             output.Language = input.Language;
+            output.TotpSecret = input.TotpSecret;
 
             return true;
         }

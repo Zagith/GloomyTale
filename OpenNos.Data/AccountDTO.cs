@@ -42,6 +42,9 @@ namespace OpenNos.Data
         public string VerificationToken { get; set; }
 
         public RegionType Language { get; set; }
+
+        public string TotpSecret { get; set; }
+
         #endregion
     }
 }

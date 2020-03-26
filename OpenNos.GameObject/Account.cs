@@ -14,14 +14,24 @@
 
 using OpenNos.Data;
 using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 
 namespace OpenNos.GameObject
 {
     public class Account : AccountDTO
     {
+
+        #region Members
+
+        public bool hasVerifiedSecondPassword;
+
+        #endregion
+
         public Account(AccountDTO input)
         {
             AccountId = input.AccountId;
@@ -34,6 +44,7 @@ namespace OpenNos.GameObject
             RegistrationIP = input.RegistrationIP;
             VerificationToken = input.VerificationToken;
             Language = input.Language;
+            TotpSecret = input.TotpSecret;
         }
 
         #region Properties
@@ -50,6 +61,17 @@ namespace OpenNos.GameObject
             }
         }
 
+        public void UnlockAccount(ClientSession Session)
+        {
+            Session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 11, Session.Account.AccountId, 2));
+            Observable.Timer(TimeSpan.FromSeconds(60)).Subscribe(o =>
+            {
+                if (Session.Account.hasVerifiedSecondPassword == false)
+                {
+                    Session.Disconnect();
+                }
+            });
+        }
         #endregion
     }
 }

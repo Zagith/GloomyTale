@@ -9,6 +9,9 @@ namespace OpenNos.GameObject
     {
         #region Properties
 
+        [PacketIndex(0)]
+        public byte Type { get; set; }
+
         #endregion
     }
 }

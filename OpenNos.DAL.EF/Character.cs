@@ -208,8 +208,6 @@ namespace OpenNos.DAL.EF
 
         public bool WhisperBlocked { get; set; }
 
-        public string SecondPassword { get; set; }
-
         public int Contributi { get; set; }
         #endregion
     }

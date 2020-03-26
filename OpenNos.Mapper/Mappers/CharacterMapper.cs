@@ -75,7 +75,6 @@ namespace OpenNos.Mapper.Mappers
             output.TalentSurrender = input.TalentSurrender;
             output.TalentWin = input.TalentWin;
             output.WhisperBlocked = input.WhisperBlocked;
-            output.SecondPassword = input.SecondPassword;
             output.Contributi = input.Contributi;
 
             return true;
@@ -148,7 +147,6 @@ namespace OpenNos.Mapper.Mappers
             output.TalentSurrender = input.TalentSurrender;
             output.TalentWin = input.TalentWin;
             output.WhisperBlocked = input.WhisperBlocked;
-            output.SecondPassword = input.SecondPassword;
             output.Contributi = input.Contributi;
 
             return true;

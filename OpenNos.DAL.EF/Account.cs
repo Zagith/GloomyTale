@@ -74,6 +74,8 @@ namespace OpenNos.DAL.EF
         [MaxLength(255)]
         public string AdminName { get; set; }
 
+        [MaxLength(32)]
+        public string TotpSecret { get; set; }
         #endregion
     }
 }

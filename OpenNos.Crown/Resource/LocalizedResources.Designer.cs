@@ -5371,6 +5371,51 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Your TOTP Secret Key and Reset Password were generated successfully!\nFirst of all: Install FreeOTP, Authy or Google Authenticator on your Smartphone and complete the basic setup\nSecond: Create a new entry with the following details:\n    Type: Time-based(TOTP)\n    Secret: {0}\n    Id(if requested): {2}\n\nIn case you lost access to your phone, use the following reset password (write it down somewhere safe):\n{1}\nMAKE A SCREENSHOT OF THE WHOLE MESSAGE UNTIL IT IS VERIFIED TO WORK!\nOTHERWISE YOUR ACCOUNT [stringa troncata]&quot;;.
+        /// </summary>
+        internal static string TOTP_DETAILS {
+            get {
+                return ResourceManager.GetString("TOTP_DETAILS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Generating your TOTP Secret Key and Reset Password... This can take a second or two....
+        /// </summary>
+        internal static string TOTP_GENERATING {
+            get {
+                return ResourceManager.GetString("TOTP_GENERATING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Please unlock your Account using your TOTP!\nIn case you forgot it, use $TOTPReset with your reset password..
+        /// </summary>
+        internal static string TOTP_INFO {
+            get {
+                return ResourceManager.GetString("TOTP_INFO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Your TOTP Secret Key has been reset! Please use $TOTPRequest to request a new Secret Key.
+        /// </summary>
+        internal static string TOTP_RESET {
+            get {
+                return ResourceManager.GetString("TOTP_RESET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Your input was verified. Have fun playing..
+        /// </summary>
+        internal static string TOTP_VERIFIED {
+            get {
+                return ResourceManager.GetString("TOTP_VERIFIED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a The user has blocked exchanges!.
         /// </summary>
         internal static string TRADE_BLOCKED {

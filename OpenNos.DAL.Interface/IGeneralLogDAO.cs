@@ -42,6 +42,7 @@ namespace OpenNos.DAL.Interface
 
         void WriteGeneralLog(long accountId, string ipAddress, long? characterId, string logType, string logData);
 
+        IEnumerable<GeneralLogDTO> LoadByLogType(string logType, long? characterId, bool onlyToday = false);
         #endregion
     }
 }

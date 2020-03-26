@@ -19,6 +19,7 @@ namespace OpenNos.Domain
         Connection,
         Promotion,
         Demotion,
-        ReferralProgram
+        ReferralProgram,
+        TOTP
     }
 }

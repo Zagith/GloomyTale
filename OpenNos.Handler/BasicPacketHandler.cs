@@ -2633,15 +2633,6 @@ namespace OpenNos.Handler
             }
 
             Session.SendPacket(Session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WELCOME_SERVER"), ServerManager.Instance.ServerGroup), 10));
-            Session.Character.hasVerifiedSecondPassword = true;
-            Session.SendPacket(UserInterfaceHelper.GenerateInfo("Please enter your pin with $Pw. If you don't have a pin, use $SetPw"));
-            Session.Character.PinAsk = Observable.Interval(TimeSpan.FromSeconds(15)).Subscribe(x =>
-            {
-                if (!Session.Character.hasVerifiedSecondPassword)
-                {
-                    Session.SendPacket(UserInterfaceHelper.GenerateInfo("Please enter your pin with $Pw. If you have no pin, use $SetPw"));
-                }
-            });
 
             Session.Character.LoadSpeed();
             Session.Character.LoadSkills();
@@ -2801,44 +2792,15 @@ namespace OpenNos.Handler
             Session.Character.LoadSentMail();
             Session.Character.DeleteTimeout();
 
-            if (Session.Character.Authority == AuthorityType.BitchNiggerFaggot)
+            Session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 11, Session.Account.AccountId, 2));
+            Observable.Timer(TimeSpan.FromSeconds(60)).Subscribe(o =>
             {
-                CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
+                if (Session.Account.hasVerifiedSecondPassword == false)
                 {
-                    DestinationCharacterId = null,
-                    SourceCharacterId = Session.Character.CharacterId,
-                    SourceWorldId = ServerManager.Instance.WorldId,
-                    Message =
-                        $"User {Session.Character.Name} with rank BitchNiggerFaggot has logged in, don't trust *it*!",
-                    Type = MessageType.Shout
-                });
-            }
-
-            /*QuestModel quest = ServerManager.Instance.QuestList.Where(s => s.QuestGiver.Type == QuestGiverType.InitialQuest).FirstOrDefault();
-            if(quest != null)
-           {
-                quest = quest.Copy();
-          
-                int current = 0;
-                int max = 0;
-
-                if (quest.KillObjectives != null)
-                {
-                    max = quest.KillObjectives[0].GoalAmount;
-                    current = quest.KillObjectives[0].CurrentAmount;
+                    Session.Disconnect();
                 }
+            });
 
-                if(quest.WalkObjective != null)
-                {
-                    Session.SendPacket($"target {quest.WalkObjective.MapX} {quest.WalkObjective.MapY} {quest.WalkObjective.MapId} {quest.QuestDataVNum}");
-                }
-
-                //Quest Packet Definition: qstlist {Unknown}.{QuestVNUM}.{QuestVNUM}.{GoalType}.{Current}.{Goal}.{Finished}.{GoalType}.{Current}.{Goal}.{Finished}.{GoalType}.{Current}.{Goal}.{Finished}.{ShowDialog}
-                //Same for qsti
-                Session.SendPacket($"qstlist 5.{quest.QuestDataVNum}.{quest.QuestDataVNum}.{quest.QuestGoalType}.{current}.{max}.0.0.0.0.0.0.0.0.0.1");
-
-            }
-            */
             if (Session.Character.Quests.Any())
             {
                 Session.SendPacket(Session.Character.GenerateQuestsPacket());

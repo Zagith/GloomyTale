@@ -152,6 +152,38 @@ namespace OpenNos.DAL.DAO
             }
         }
 
+        public IEnumerable<GeneralLogDTO> LoadByLogType(string logType, long? characterId, bool onlyToday = false)
+        {
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                List<GeneralLogDTO> result = new List<GeneralLogDTO>();
+                if (onlyToday)
+                {
+                    DateTime today = DateTime.UtcNow.Date;
+                    foreach (GeneralLog log in context.GeneralLog.AsNoTracking().Where(c =>
+                        c.Timestamp.Year == today.Year && c.Timestamp.Month == today.Month
+                         && c.Timestamp.Day == today.Day && c.LogType.Equals(logType) && c.CharacterId == characterId))
+                    {
+                        GeneralLogDTO dto = new GeneralLogDTO();
+                        Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(log, dto);
+                        result.Add(dto);
+                    }
+                }
+                else
+                {
+                    foreach (GeneralLog log in context.GeneralLog.AsNoTracking().Where(c =>
+                        c.LogType.Equals(logType) && c.CharacterId == characterId))
+                    {
+                        GeneralLogDTO dto = new GeneralLogDTO();
+                        Mapper.Mappers.GeneralLogMapper.ToGeneralLogDTO(log, dto);
+                        result.Add(dto);
+                    }
+                }
+
+                return result;
+            }
+        }
+
         public IEnumerable<GeneralLogDTO> LoadByIp(string ip)
         {
             using (OpenNosContext context = DataAccessHelper.CreateContext())

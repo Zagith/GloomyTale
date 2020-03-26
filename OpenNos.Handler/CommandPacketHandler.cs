@@ -160,13 +160,13 @@ namespace OpenNos.Handler
         {
             if (p != null && p.Message != null)
             {
-                if (Session.Character.SecondPassword == null)
+                //if (Session.Character.SecondPassword == null)
                 {
                     if (p.Message.Length >= 8)
                     {
-                        Session.Character.SecondPassword = CryptographyBase.Sha512(p.Message);
+                        //Session.Character.SecondPassword = CryptographyBase.Sha512(p.Message);
                         Session.Character.Save();
-                        Session.Character.hasVerifiedSecondPassword = true;
+                        //Session.Character.hasVerifiedSecondPassword = true;
                         Session.SendPacket(Session.Character.GenerateSay($"Done! Your second password (or pin) is now: {p.Message}. Do not forget it.", 10));
                         Session.Character.HasGodMode = false;
                     }
@@ -175,72 +175,14 @@ namespace OpenNos.Handler
                         Session.SendPacket(Session.Character.GenerateSay($"Your pin lenght cannot be less than 8 characters.", 10));
                     }
                 }
-                else
+                //else
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You already have a pin. Please, if you have forgotten it, contact a staff member.", 10));
+                    //Session.SendPacket(Session.Character.GenerateSay($"You already have a pin. Please, if you have forgotten it, contact a staff member.", 10));
                 }
             }
             else
             {
                 Session.SendPacket(Session.Character.GenerateSay(SetLockPacket.ReturnHelp(), 10));
-            }
-        }
-
-        public void ConfirmPass(UnlockPacket p)
-        {
-            if (p != null && p.Message != null)
-            {
-                if (Session.Character.SecondPassword != null)
-                {
-                    if (CryptographyBase.Sha512(p.Message) == Session.Character.SecondPassword)
-                    {
-                        Session.Character.hasVerifiedSecondPassword = true;
-                        Session.SendPacket(Session.Character.GenerateSay($"You have successfully verified your identity!", 10));
-                        Session.Character.HasGodMode = false;
-                        Session.Character.InvisibleGm = false;
-                        Session.Character.Invisible = false;
-                        Session.SendPacket(Session.Character.GenerateInvisible());
-                        Session.SendPacket(Session.Character.GenerateEq());
-                        Session.SendPacket(Session.Character.GenerateCMode());
-                        Session.Character.SideReputationAddBuff();
-                        foreach (Mate teamMate in Session.Character.Mates.Where(m => m.IsTeamMember))
-                        {
-                            teamMate.PositionX = Session.Character.PositionX;
-                            teamMate.PositionY = Session.Character.PositionY;
-                            teamMate.UpdateBushFire();
-                            Parallel.ForEach(Session.CurrentMapInstance.Sessions.Where(s => s.Character != null), s =>
-                            {
-                                if (ServerManager.Instance.ChannelId != 51 || Session.Character.Faction == s.Character.Faction)
-                                {
-                                    s.SendPacket(teamMate.GenerateIn(false, ServerManager.Instance.ChannelId == 51));
-                                }
-                                else
-                                {
-                                    s.SendPacket(teamMate.GenerateIn(true, ServerManager.Instance.ChannelId == 51, s.Account.Authority));
-                                }
-                            });
-                            Session.SendPacket(Session.Character.GeneratePinit());
-                            Session.Character.Mates.ForEach(s => Session.SendPacket(s.GenerateScPacket()));
-                            Session.SendPackets(Session.Character.GeneratePst());
-                        }
-                        Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(),
-                            ReceiverType.AllExceptMe);
-                        Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(),
-                            ReceiverType.AllExceptMe);
-                    }
-                    else
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"Wrong pin.", 10));
-                    }
-                }
-                else
-                {
-                    Session.SendPacket(Session.Character.GenerateSay($"You didn't set a pin yet. Use $SetPin to set a pin.", 10));
-                }
-            }
-            else
-            {
-                Session.SendPacket(Session.Character.GenerateSay(UnlockPacket.ReturnHelp(), 10));
             }
         }
 

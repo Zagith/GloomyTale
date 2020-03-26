@@ -49,9 +49,7 @@ namespace OpenNos.GameObject
 
         public int slhpbonus;
 
-        private byte _speed;
-
-        public bool hasVerifiedSecondPassword;
+        private byte _speed;        
 
         #endregion
 
@@ -142,7 +140,6 @@ namespace OpenNos.GameObject
             TalentSurrender = input.TalentSurrender;
             TalentWin = input.TalentWin;
             WhisperBlocked = input.WhisperBlocked;
-            SecondPassword = input.SecondPassword;
             Contributi = input.Contributi;
         }
 

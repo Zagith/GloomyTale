@@ -1,5 +1,6 @@
 ﻿using OpenNos.Core;
 using OpenNos.Core.Extensions;
+using OpenNos.Core.Otp;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
@@ -889,6 +890,26 @@ namespace OpenNos.Handler
                             Session.Character.BubbleMessageEnd = DateTime.Now.AddMinutes(30);
                             Session.SendPacket($"csp_r {Session.Character.BubbleMessage}");
                             Session.Character.Inventory.RemoveItemAmount(bubbleVNum);
+                        }
+                    }
+
+                    if (guriPacket.Argument == 11 && !string.IsNullOrWhiteSpace(guriPacket.Value))
+                    {
+                        if (string.IsNullOrWhiteSpace(Session.Account.TotpSecret))
+                        {
+                            Session.Account.TotpSecret = guriPacket.Value;
+                            Session.Character.Save();
+                            Session.SendPacket(Session.Character.GenerateSay($"Done! Your second password (or pin) is now: {guriPacket.Value}. Do not forget it.", 10));
+                            Session.Account.hasVerifiedSecondPassword = true;
+                        }
+                        else if (Session.Account.TotpSecret == guriPacket.Value)
+                        {
+                            Session.Account.hasVerifiedSecondPassword = true;
+                        }
+                        else
+                        {
+                            Session.SendPacket(Session.Character.GenerateSay($"Wrong password.", 10));
+                            Session.Disconnect();
                         }
                     }
                 }
