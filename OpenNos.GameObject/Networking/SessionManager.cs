@@ -23,19 +23,13 @@ namespace OpenNos.GameObject
     {
         #region Members
 
-        protected Type _packetHandler;
-
         protected ConcurrentDictionary<long, ClientSession> _sessions = new ConcurrentDictionary<long, ClientSession>();
 
         #endregion
 
         #region Instantiation
 
-        public SessionManager(Type packetHandler, bool isWorldServer)
-        {
-            _packetHandler = packetHandler;
-            IsWorldServer = isWorldServer;
-        }
+        public SessionManager(bool isWorldServer) => IsWorldServer = isWorldServer;
 
         #endregion
 

@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("Char_REN")]
     public class CharacterRenamePacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public byte Slot { get; set; }
@@ -15,6 +15,6 @@ namespace OpenNos.GameObject
         [PacketIndex(1)]
         public string Name { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

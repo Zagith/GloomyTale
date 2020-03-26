@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("c_buy")]
     public class CBuyPacket
     {
-        #region Properties
+        /*#region Properties
         [PacketIndex(0)]
         public int BazaarId { get; set; }
 
@@ -20,6 +20,6 @@ namespace OpenNos.GameObject
         [PacketIndex(3)]
         public long Price { get; set; }   
 
-        #endregion
+        #endregion*/
     }
 }

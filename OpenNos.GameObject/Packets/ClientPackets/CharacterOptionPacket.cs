@@ -8,10 +8,10 @@ namespace OpenNos.GameObject
     [PacketHeader("gop")]
     public class CharacterOptionPacket
     {
-        [PacketIndex(0)]
+        /*[PacketIndex(0)]
         public CharacterOption Option { get; set; }
 
         [PacketIndex(1)]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; }*/
     }
 }

@@ -228,7 +228,6 @@
     <Compile Include="Packets\ClientPackets\AddobjPacket.cs" />
     <Compile Include="Packets\ClientPackets\BIPacket.cs" />
     <Compile Include="Packets\ClientPackets\BlPacket.cs" />
-    <Compile Include="Packets\ClientPackets\BtkPacket.cs" />
     <Compile Include="Packets\ClientPackets\CBlistPacket.cs" />
     <Compile Include="Packets\ClientPackets\CBuyPacket.cs" />
     <Compile Include="Packets\ClientPackets\CClosePacket.cs" />
@@ -238,7 +237,6 @@
     <Compile Include="Packets\ClientPackets\CharacterOptionPacket.cs" />
     <Compile Include="Packets\ClientPackets\CharacterRenamePacket.cs" />
     <Compile Include="Packets\ClientPackets\CModPacket.cs" />
-    <Compile Include="Packets\ClientPackets\ComplimentPacket.cs" />
     <Compile Include="Packets\ClientPackets\CreateFamilyPacket.cs" />
     <Compile Include="Packets\ClientPackets\CRegPacket.cs" />
     <Compile Include="Packets\ClientPackets\CScalcPacket.cs" />
@@ -246,7 +244,6 @@
     <Compile Include="Packets\ClientPackets\CSlistPacket.cs" />
     <Compile Include="Packets\ClientPackets\CspPacket.cs" />
     <Compile Include="Packets\ClientPackets\DepositPacket.cs" />
-    <Compile Include="Packets\ClientPackets\DirectionPacket.cs" />
     <Compile Include="Packets\ClientPackets\EquipmentInfoPacket.cs" />
     <Compile Include="Packets\ClientPackets\EscapePacket.cs" />
     <Compile Include="Packets\ClientPackets\ExchangeListPacket.cs" />
@@ -266,13 +263,9 @@
     <Compile Include="Packets\ClientPackets\FStashEndPacket.cs" />
     <Compile Include="Packets\ClientPackets\FWithdrawPacket.cs" />
     <Compile Include="Packets\ClientPackets\GameStartPacket.cs" />
-    <Compile Include="Packets\ClientPackets\GetGiftPacket.cs" />
     <Compile Include="Packets\ClientPackets\GetPacket.cs" />
     <Compile Include="Packets\ClientPackets\GitPacket.cs" />
     <Compile Include="Packets\ClientPackets\GListPacket.cs" />
-    <Compile Include="Packets\ClientPackets\GroupSayPacket.cs" />
-    <Compile Include="Packets\ClientPackets\GuriPacket.cs" />
-    <Compile Include="Packets\ClientPackets\HeroPacket.cs" />
     <Compile Include="Packets\ClientPackets\JoinFamilyPacket.cs" />
     <Compile Include="Packets\ClientPackets\LbsPacket.cs" />
     <Compile Include="Packets\ClientPackets\MallPacket.cs" />

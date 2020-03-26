@@ -7,11 +7,11 @@ namespace OpenNos.GameObject
     [PacketHeader("frank_cts")]
     public class FrankCtsPacket
     {
-        #region Properties        
+        /*#region Properties        
 
         [PacketIndex(0)]
         public byte Type { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

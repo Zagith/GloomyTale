@@ -8,7 +8,7 @@ namespace OpenNos.GameObject
     [PacketHeader("c_blist")]
     public class CBListPacket
     {
-        #region Properties
+        /*#region Properties
   
         [PacketIndex(0)]
         public int Index { get; set; }
@@ -37,6 +37,6 @@ namespace OpenNos.GameObject
         [PacketIndex(8, SerializeToEnd = true)]
         public string ItemVNumFilter { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

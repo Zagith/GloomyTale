@@ -8,7 +8,7 @@ using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
-using OpenNos.Handler.CommandPackets.Extensions;
+using OpenNos.Handler.Extensions;
 using System;
 using System.Linq;
 

@@ -39,7 +39,7 @@ namespace OpenNos.GameObject
 
         #region Instantiation
 
-        public NetworkManager(string ipAddress, int port, Type packetHandler, Type fallbackEncryptor, bool isWorldServer) : base(packetHandler, isWorldServer)
+        public NetworkManager(string ipAddress, int port, Type fallbackEncryptor, bool isWorldServer) : base(isWorldServer)
         {
             _encryptor = (EncryptorT)Activator.CreateInstance(typeof(EncryptorT));
 
@@ -90,7 +90,7 @@ namespace OpenNos.GameObject
             }
 
             ClientSession session = new ClientSession(client);
-            session.Initialize(_encryptor, _packetHandler, IsWorldServer);
+            session.Initialize(_encryptor, IsWorldServer);
 
             return session;
         }

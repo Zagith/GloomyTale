@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("c_reg")]
     public class CRegPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public int Type { get; set; }
@@ -32,6 +32,6 @@ namespace OpenNos.GameObject
         [PacketIndex(10)]
         public byte MedalUsed { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

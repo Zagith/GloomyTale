@@ -8,7 +8,7 @@ namespace OpenNos.GameObject
     [PacketHeader("fauth")]
     public class FAuthPacket
     {
-        #region Properties
+        /*#region Properties
         [PacketIndex(0)]
         public FamilyAuthority MemberType { get; set; }
 
@@ -17,6 +17,6 @@ namespace OpenNos.GameObject
 
         [PacketIndex(2)]
         public byte Value { get; set; }
-        #endregion
+        #endregion*/
     }
 }

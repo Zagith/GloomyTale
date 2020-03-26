@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("c_mod")]
     public class CModPacket
     {
-        #region Properties
+        /*#region Properties
         
         [PacketIndex(0)]
         public long BazaarId { get; set; }
@@ -21,6 +21,6 @@ namespace OpenNos.GameObject
         [PacketIndex(3)]
         public long Price { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

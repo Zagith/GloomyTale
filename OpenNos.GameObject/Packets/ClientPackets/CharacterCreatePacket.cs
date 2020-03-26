@@ -7,9 +7,9 @@ using OpenNos.Domain;
 namespace OpenNos.GameObject
 {
     [PacketHeader("Char_NEW")]
-    public class CharacterCreatePacket, ICharacterCreatePacket
+    public class CharacterCreatePacket//, ICharacterCreatePacket
     {
-        #region Properties
+       /* #region Properties
 
         [PacketIndex(0)]
         public string Name { get; set; }
@@ -31,6 +31,6 @@ namespace OpenNos.GameObject
             return $"Create Character Name: {Name} Slot: {Slot}";
         }
 
-        #endregion
+        #endregion*/
     }
 }

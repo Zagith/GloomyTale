@@ -7,12 +7,12 @@ namespace OpenNos.GameObject
     [PacketHeader("git")]
     public class GitPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public int ButtonId { get; set; }
 
        
-        #endregion
+        #endregion*/
     }
 }

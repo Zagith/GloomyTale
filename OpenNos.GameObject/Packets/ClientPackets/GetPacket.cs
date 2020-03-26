@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("get")]
     public class GetPacket
     {
-        #region Properties        
+        /*#region Properties        
         [PacketIndex(0)]
         public byte PickerType { get; set; }
 
@@ -17,6 +17,6 @@ namespace OpenNos.GameObject
         [PacketIndex(2)]
         public long TransportId { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

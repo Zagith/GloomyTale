@@ -7,7 +7,7 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader("csp")]
     public class CspPacket
     {
-        #region Properties
+       /* #region Properties
 
         [PacketIndex(0)]
         public long CharacterId { get; set; }
@@ -15,6 +15,6 @@ namespace OpenNos.GameObject.Packets.ClientPackets
         [PacketIndex(1, serializeToEnd: true)]
         public string Message { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

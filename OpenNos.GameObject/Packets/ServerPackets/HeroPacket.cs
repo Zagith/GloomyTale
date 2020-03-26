@@ -7,7 +7,7 @@ namespace OpenNos.GameObject.ServerPackets
     [PacketHeader("hero")]
     public class HeroPacket
     {
-        #region Properties
+       /* #region Properties
 
         [PacketIndex(0)]
         public int Type { get; set; }
@@ -18,6 +18,6 @@ namespace OpenNos.GameObject.ServerPackets
         [PacketIndex(2)]
         public string Message { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

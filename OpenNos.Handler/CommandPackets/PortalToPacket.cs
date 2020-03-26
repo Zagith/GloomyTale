@@ -4,7 +4,7 @@ using OpenNos.Core;
 using OpenNos.Core.Serializing;
 using OpenNos.Domain;
 using OpenNos.GameObject;
-using OpenNos.Handler.CommandPackets.Extensions;
+using OpenNos.Handler.Extensions;
 using System;
 
 namespace OpenNos.Handler.CommandPackets

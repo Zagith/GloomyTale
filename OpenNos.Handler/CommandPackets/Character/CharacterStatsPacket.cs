@@ -7,7 +7,7 @@ using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Networking;
-using OpenNos.Handler.CommandPackets.Extensions;
+using OpenNos.Handler.Extensions;
 
 namespace OpenNos.Handler.CommandPackets.Character
 {

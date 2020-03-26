@@ -7,7 +7,7 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader("fmg")]
     public class FamilyManagementPacket
     {
-        #region Properties
+       /* #region Properties
 
         [PacketIndex(0)]
         public FamilyAuthority FamilyAuthorityType { get; set; }
@@ -15,6 +15,6 @@ namespace OpenNos.GameObject.Packets.ClientPackets
         [PacketIndex(1)]
         public long TargetId { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

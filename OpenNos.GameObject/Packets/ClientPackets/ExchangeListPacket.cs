@@ -7,10 +7,10 @@ namespace OpenNos.GameObject
     [PacketHeader("exc_list")]
     public class ExchangeListPacket
     {
-        [PacketIndex(1)]
+        /*[PacketIndex(1)]
         public long CharacterId { get; set; }
 
         [PacketIndex(2)]
-        public long Gold { get; set; }
+        public long Gold { get; set; }*/
     }
 }

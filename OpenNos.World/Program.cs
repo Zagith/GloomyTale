@@ -14,10 +14,13 @@
 
 using log4net;
 using OpenNos.Core;
+using OpenNos.Core.Serializing;
 using OpenNos.DAL.EF.Helpers;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Networking;
 using OpenNos.Handler;
+using OpenNos.Handler.BasicPackets;
+using OpenNos.Handler.CommandPackets;
 using OpenNos.Master.Library.Client;
 using OpenNos.Master.Library.Data;
 using OpenNos.World.Resource;
@@ -136,8 +139,17 @@ namespace OpenNos.World
                 return;
             }
 
-            // TODO: initialize ClientLinkManager initialize PacketSerialization
-            PacketFactory.Initialize<WalkPacket>();
+            PacketFacility.Initialize(typeof(EntryPointPacket));
+            PacketFacility.Initialize(typeof(UseSkillPacket));
+            /*PacketFacility.Initialize(typeof(BazaarBuyPacket));
+            PacketFacility.Initialize(typeof(CreateFamilyPacket));
+            PacketFacility.Initialize(typeof(DeleteItemPacket));
+            PacketFacility.Initialize(typeof(MateControlPacket));
+            PacketFacility.Initialize(typeof(MinilandAddObjectPacket));*/
+            PacketFacility.Initialize(typeof(BuyPacket));
+            PacketFacility.Initialize(typeof(EscapePacket));
+            PacketFacility.Initialize(typeof(CClosePacket));
+            PacketFacility.Initialize(typeof(HelpPacket));
 
             try
             {
@@ -157,7 +169,7 @@ namespace OpenNos.World
         portloop:
             try
             {
-                networkManager = new NetworkManager<WorldCryptography>(ipAddress, _port, typeof(CommandPacketHandler), typeof(LoginCryptography), true);
+                networkManager = new NetworkManager<WorldCryptography>(ipAddress, _port, typeof(LoginCryptography), true);
             }
             catch (SocketException ex)
             {

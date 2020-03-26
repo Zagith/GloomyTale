@@ -5,17 +5,17 @@ using OpenNos.Core;
 namespace OpenNos.GameObject
 {
     [PacketHeader("dlg")]
-    public class DialogPacket<TAnswerYesPacket, TAnswerNoPacket>
-        where TAnswerYesPacket
-        where TAnswerNoPacket
+    public class DialogPacket/*<TAnswerYesPacket, TAnswerNoPacket>
+        where TAnswerYesPacket,
+        where TAnswerNoPacket*/
     {
-        [PacketIndex(0, true)]
+        /*[PacketIndex(0, true)]
         public TAnswerYesPacket AnswerYesReturnPacket { get; set; }
 
         [PacketIndex(1, true)]
         public TAnswerNoPacket AnswerNoReturnPacket { get; set; }
 
         [PacketIndex(2, SerializeToEnd = true)]
-        public string DialogText { get; set; }
+        public string DialogText { get; set; }*/
     }
 }

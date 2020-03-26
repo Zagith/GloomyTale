@@ -6,7 +6,7 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader("eqinfo")]
     public class EquipmentInfoPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public byte Type { get; set; }
@@ -20,6 +20,6 @@ namespace OpenNos.GameObject.Packets.ClientPackets
         [PacketIndex(3)]
         public long? ShopOwnerId { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("addobj")]
     public class AddObjPacket
     {
-        #region Properties
+       /* #region Properties
 
 
         [PacketIndex(0)]
@@ -16,6 +16,6 @@ namespace OpenNos.GameObject
         public short PositionX { get; set; }
         [PacketIndex(2)]
         public short PositionY { get; set; }
-        #endregion
+        #endregion*/
     }
 }

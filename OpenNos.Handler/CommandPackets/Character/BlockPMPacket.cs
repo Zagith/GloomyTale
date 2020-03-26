@@ -8,7 +8,7 @@ using OpenNos.GameObject.Helpers;
 
 namespace OpenNos.Handler.CommandPackets.Character
 {
-    [PacketHeader("$BlockPM", PassNonParseablePacket = true, Authority = AuthorityType.TGM)]
+    [PacketHeader("$BlockPM", PassNonParseablePacket = true, Authority = AuthorityType.GM)]
     public class BlockPMPacket
     {
         #region Methods

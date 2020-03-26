@@ -286,7 +286,7 @@ namespace OpenNos.GameObject
             return $"Account: {Account.Name}";
         }
 
-        public void Initialize(CryptographyBase encryptor, Type packetHandler, bool isWorldServer)
+        public void Initialize(CryptographyBase encryptor, bool isWorldServer)
         {
             _encryptor = encryptor;
             _client.Initialize(encryptor);

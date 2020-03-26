@@ -6,11 +6,11 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader(":")]
     public class FamilyChatPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0, serializeToEnd: true)]
         public string Message { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

@@ -6,11 +6,11 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader("$fl")]
     public class FlPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public string CharacterName { get; set; }
         
-        #endregion
+        #endregion*/
     }
 }

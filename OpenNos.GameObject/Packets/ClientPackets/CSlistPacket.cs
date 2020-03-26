@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("c_slist")]
     public class CSListPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public byte Index { get; set; }
@@ -16,6 +16,6 @@ namespace OpenNos.GameObject
         [PacketIndex(1)]
         public byte Filter { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

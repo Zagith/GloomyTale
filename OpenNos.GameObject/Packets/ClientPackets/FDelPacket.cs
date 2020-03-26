@@ -6,11 +6,11 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader("fdel")]
     public class FDelPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public long CharacterId { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

@@ -5,7 +5,7 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader("fb")]
     public class FbPacket
     {
-        #region Properties        
+        /*#region Properties        
 
         [PacketIndex(0)]
         public short Type { get; set; }
@@ -16,6 +16,6 @@ namespace OpenNos.GameObject.Packets.ClientPackets
         [PacketIndex(2)]
         public short? Parameter { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

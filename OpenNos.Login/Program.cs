@@ -14,6 +14,7 @@
 
 using log4net;
 using OpenNos.Core;
+using OpenNos.Core.Serializing;
 using OpenNos.DAL.EF.Helpers;
 using OpenNos.GameObject;
 using OpenNos.Handler;
@@ -105,9 +106,9 @@ namespace OpenNos.Login
                     try
                     {
                         // initialize PacketSerialization
-                        PacketFactory.Initialize<WalkPacket>();
+                        PacketFacility.Initialize(typeof(LoginPacket));
 
-                        NetworkManager<LoginCryptography> networkManager = new NetworkManager<LoginCryptography>(ConfigurationManager.AppSettings["IPAddress"], port, typeof(LoginPacket), typeof(LoginCryptography), false);
+                        NetworkManager<LoginCryptography> networkManager = new NetworkManager<LoginCryptography>(ConfigurationManager.AppSettings["IPAddress"], port, typeof(LoginCryptography), false);
                     }
                     catch (Exception ex)
                     {

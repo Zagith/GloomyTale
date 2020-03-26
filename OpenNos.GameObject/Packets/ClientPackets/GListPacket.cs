@@ -6,11 +6,11 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader("glist")]
     public class GListPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(1)]
         public byte Type { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

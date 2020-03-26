@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("f_withdraw")]
     public class FWithdrawPacket
     {
-        #region Properties        
+        /*#region Properties        
 
         [PacketIndex(0)]
         public short Slot { get; set; }
@@ -17,6 +17,6 @@ namespace OpenNos.GameObject
 
         [PacketIndex(2)]
         public byte? Unknown { get; set; }
-        #endregion
+        #endregion*/
     }
 }

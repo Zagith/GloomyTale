@@ -8,7 +8,7 @@ namespace OpenNos.GameObject
     [PacketHeader("deposit")]
     public class DepositPacket
     {
-        #region Properties        
+        /*#region Properties        
 
         [PacketIndex(0)]
         public InventoryType Inventory { get; set; }
@@ -25,6 +25,6 @@ namespace OpenNos.GameObject
         [PacketIndex(4)]
         public bool PartnerBackpack { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

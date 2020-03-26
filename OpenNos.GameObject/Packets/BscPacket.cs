@@ -6,7 +6,7 @@ namespace OpenNos.GameObject
     [PacketHeader("bsc")]
     public class BscPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public byte Type { get; set; }
@@ -14,6 +14,6 @@ namespace OpenNos.GameObject
         [PacketIndex(1)]
         public byte? Option { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

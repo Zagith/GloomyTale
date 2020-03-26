@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("f_repos")]
     public class FReposPacket
     {
-        #region Properties        
+        /*#region Properties        
 
         [PacketIndex(0)]
         public byte OldSlot { get; set; }
@@ -20,6 +20,6 @@ namespace OpenNos.GameObject
 
         [PacketIndex(3)]
         public byte? Unknown { get; set; }
-        #endregion
+        #endregion*/
     }
 }

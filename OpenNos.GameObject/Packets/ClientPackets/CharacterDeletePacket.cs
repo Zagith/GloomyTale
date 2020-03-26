@@ -7,7 +7,7 @@ namespace OpenNos.GameObject
     [PacketHeader("Char_DEL")]
     public class CharacterDeletePacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public byte Slot { get; set; }
@@ -20,6 +20,6 @@ namespace OpenNos.GameObject
             return $"Delete Character Slot {Slot}";
         }
 
-        #endregion
+        #endregion*/
     }
 }

@@ -6,7 +6,7 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader("fins")]
     public class FInsPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public byte Type { get; set; }
@@ -14,6 +14,6 @@ namespace OpenNos.GameObject.Packets.ClientPackets
         [PacketIndex(1)]
         public long CharacterId { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

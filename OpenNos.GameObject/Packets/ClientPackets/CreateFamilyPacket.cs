@@ -6,11 +6,11 @@ namespace OpenNos.GameObject.Packets.ClientPackets
     [PacketHeader("glmk")]
     public class CreateFamilyPacket
     {
-        #region Properties
+        /*#region Properties
 
         [PacketIndex(0)]
         public string CharacterName { get; set; }
 
-        #endregion
+        #endregion*/
     }
 }

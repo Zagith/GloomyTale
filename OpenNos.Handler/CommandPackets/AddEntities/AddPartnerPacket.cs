@@ -5,7 +5,7 @@ using OpenNos.Core.Serializing;
 using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Helpers;
-using OpenNos.Handler.CommandPackets.Extensions;
+using OpenNos.Handler.Extensions;
 
 namespace OpenNos.Handler.CommandPackets.AddEntities
 {
@@ -62,7 +62,7 @@ namespace OpenNos.Handler.CommandPackets.AddEntities
                 Logger.LogUserEvent("GMCOMMAND", session.GenerateIdentity(),
                     $"[AddPartner]NpcMonsterVNum: {MonsterVNum} Level: {Level}");
 
-                session.AddMate(session, MonsterVNum, Level, MateType.Partner);
+                session.AddMate(MonsterVNum, Level, MateType.Partner);
             }
             else
             {
