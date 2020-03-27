@@ -13,7 +13,7 @@ namespace OpenNos.Master.Server.controllers
         // POST /Authority 
         [AuthorizeRole(AuthorityType.Administrator)]
         public bool Post([FromBody] ChangeAuthorityParameter authorityParameter) =>
-            CommunicationServiceClient.Instance.ChangeAuthority(authorityParameter.WorldGroup, authorityParameter.CharacterName, authorityParameter.Authority);
+            CommunicationServiceClient.Instance.ChangeAuthority(authorityParameter.WorldGroup, authorityParameter.CharacterName, (AuthorityType)authorityParameter.Authority);
 
         public string Get()
         {
