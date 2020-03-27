@@ -182,6 +182,8 @@
     <Compile Include="AuthorizationServerProvider.cs" />
     <Compile Include="CommunicationService.cs" />
     <Compile Include="AuthentificationService.cs" />
+    <Compile Include="Controllers\ControllersParameters\MailPostParameter.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="DiscordService.cs" />
     <Compile Include="MallService.cs" />
     <Compile Include="MailService.cs" />
@@ -296,9 +298,7 @@
   <ItemGroup>
     <Content Include="on-logo-icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\ControllersParameters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

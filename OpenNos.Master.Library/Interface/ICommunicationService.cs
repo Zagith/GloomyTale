@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Data;
 using OpenNos.Master.Library.Data;
 using OpenNos.SCS.Communication.ScsServices.Service;
 using System;
@@ -256,6 +257,8 @@ namespace OpenNos.Master.Library.Interface
         /// <param name="worldGroup">WorldGroup the Relations should be updated on</param>
         /// <param name="relationId">Id of the Relation that should be updated</param>
         void UpdateRelation(string worldGroup, long relationId);
+
+        void SendMail(string worldGroup, MailDTO mail);
 
         #endregion
     }

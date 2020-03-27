@@ -14,6 +14,7 @@
 
 using OpenNos.Core;
 using OpenNos.DAL;
+using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.Master.Library.Data;
 using OpenNos.Master.Library.Interface;
@@ -656,6 +657,26 @@ namespace OpenNos.Master.Server
                 world.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().UpdateRelation(relationId);
             }
         }
+
+        public void SendMail(string worldGroup, MailDTO mail)
+        {
+            if (!IsCharacterConnected(worldGroup, mail.ReceiverId))
+            {
+                DAOFactory.MailDAO.InsertOrUpdate(ref mail);
+            }
+            else
+            {
+                AccountConnection account = MSManager.Instance.ConnectedAccounts.Find(a => a.CharacterId.Equals(mail.ReceiverId));
+                if (account?.ConnectedWorld == null)
+                {
+                    DAOFactory.MailDAO.InsertOrUpdate(ref mail);
+                    return;
+                }
+
+                account.ConnectedWorld.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().SendMail(mail);
+            }
+        }
+
 
         #endregion
     }

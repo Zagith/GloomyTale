@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 
+using OpenNos.Data;
 using OpenNos.Master.Library.Data;
 
 namespace OpenNos.Master.Library.Interface
@@ -43,6 +44,8 @@ namespace OpenNos.Master.Library.Interface
         void UpdateRelation(long relationId);
 
         void UpdateStaticBonus(long characterId);
+
+        void SendMail(MailDTO mail);
 
         #endregion
     }

@@ -14,6 +14,7 @@
 
 using OpenNos.Core;
 using OpenNos.DAL;
+using OpenNos.Data;
 using OpenNos.Master.Library.Data;
 using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.Scs.Communication;
@@ -87,6 +88,8 @@ namespace OpenNos.Master.Library.Client
         public event EventHandler RestartEvent;
 
         public event EventHandler StaticBonusRefresh;
+
+        public event EventHandler MailSent;
 
         #endregion
 
@@ -197,6 +200,10 @@ namespace OpenNos.Master.Library.Client
         internal void OnUpdateRelation(long relationId) => RelationRefresh?.Invoke(relationId, null);
 
         internal void OnUpdateStaticBonus(long characterId) => StaticBonusRefresh?.Invoke(characterId, null);
+
+        public void SendMail(string worldGroup, MailDTO mail) => _client.ServiceProxy.SendMail(worldGroup, mail);
+
+        internal void OnSendMail(MailDTO mail) => MailSent?.Invoke(mail, null);
 
         #endregion
     }

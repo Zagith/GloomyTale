@@ -6542,7 +6542,7 @@ namespace OpenNos.GameObject
                     EqPacket = GenerateEqListForPacket(),
                     SenderMorphId = Morph == 0 ? (short)-1 : (short)(Morph > short.MaxValue ? 0 : Morph)
                 };
-                MailServiceClient.Instance.SendMail(mail);
+                CommunicationServiceClient.Instance.SendMail(ServerManager.Instance.ServerGroup, mail);
             }
         }
 

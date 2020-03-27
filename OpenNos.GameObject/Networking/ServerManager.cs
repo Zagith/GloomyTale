@@ -2551,7 +2551,7 @@ namespace OpenNos.GameObject.Networking
             CommunicationServiceClient.Instance.ShutdownEvent += OnShutdown;
             CommunicationServiceClient.Instance.RestartEvent += OnRestart;
             ConfigurationServiceClient.Instance.ConfigurationUpdate += OnConfiguratinEvent;
-            MailServiceClient.Instance.MailSent += OnMailSent;
+            CommunicationServiceClient.Instance.MailSent += OnMailSent;
             _lastGroupId = 1;
         }
 
