@@ -13,6 +13,7 @@
  */
 
 using OpenNos.Data;
+using OpenNos.Domain;
 using OpenNos.Master.Library.Data;
 
 namespace OpenNos.Master.Library.Interface
@@ -46,6 +47,8 @@ namespace OpenNos.Master.Library.Interface
         void UpdateStaticBonus(long characterId);
 
         void SendMail(MailDTO mail);
+
+        void ChangeAuthority(long accountAccountId, AuthorityType authority);
 
         #endregion
     }

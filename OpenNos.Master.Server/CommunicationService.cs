@@ -76,6 +76,29 @@ namespace OpenNos.Master.Server
             }
         }
 
+        public bool ChangeAuthority(string worldGroup, string characterName, AuthorityType authority)
+        {
+            CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(characterName);
+            if (character == null)
+            {
+                return false;
+            }
+
+            if (!IsAccountConnected(character.AccountId))
+            {
+                AccountDTO account = DAOFactory.AccountDAO.LoadById(character.AccountId);
+                account.Authority = authority;
+                DAOFactory.AccountDAO.InsertOrUpdate(ref account);
+            }
+            else
+            {
+                AccountConnection account = MSManager.Instance.ConnectedAccounts.Find(s => s.AccountId == character.AccountId);
+                account?.ConnectedWorld.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().ChangeAuthority(account.AccountId, authority);
+            }
+
+            return true;
+        }
+
         public bool ConnectAccount(Guid worldId, long accountId, int sessionId)
         {
             if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))

@@ -15,6 +15,7 @@
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.Domain;
 using OpenNos.Master.Library.Data;
 using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.Scs.Communication;
@@ -91,6 +92,8 @@ namespace OpenNos.Master.Library.Client
 
         public event EventHandler MailSent;
 
+        public event EventHandler AuthorityChange;
+
         #endregion
 
         #region Properties
@@ -108,6 +111,8 @@ namespace OpenNos.Master.Library.Client
         public void Cleanup() => _client.ServiceProxy.Cleanup();
 
         public void CleanupOutdatedSession() => _client.ServiceProxy.CleanupOutdatedSession();
+
+        public bool ChangeAuthority(string worldGroup, string characterName, AuthorityType authority) => _client.ServiceProxy.ChangeAuthority(worldGroup, characterName, authority);
 
         public bool ConnectAccount(Guid worldId, long accountId, int sessionId) => _client.ServiceProxy.ConnectAccount(worldId, accountId, sessionId);
 
@@ -204,6 +209,12 @@ namespace OpenNos.Master.Library.Client
         public void SendMail(string worldGroup, MailDTO mail) => _client.ServiceProxy.SendMail(worldGroup, mail);
 
         internal void OnSendMail(MailDTO mail) => MailSent?.Invoke(mail, null);
+
+        internal void OnAuthorityChange(long accountId, AuthorityType authority)
+        {
+            Tuple<long, AuthorityType> tu = new Tuple<long, AuthorityType>(accountId, authority);
+            AuthorityChange?.Invoke(tu, null);
+        }
 
         #endregion
     }

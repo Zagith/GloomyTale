@@ -13,6 +13,7 @@
  */
 
 using OpenNos.Data;
+using OpenNos.Domain;
 using OpenNos.Master.Library.Data;
 using OpenNos.Master.Library.Interface;
 using System.Threading.Tasks;
@@ -48,6 +49,8 @@ namespace OpenNos.Master.Library.Client
         public void UpdateStaticBonus(long characterId) => Task.Run(() => CommunicationServiceClient.Instance.OnUpdateStaticBonus(characterId));
 
         public void SendMail(MailDTO mail) => Task.Run(() => CommunicationServiceClient.Instance.OnSendMail(mail));
+
+        public void ChangeAuthority(long accountId, AuthorityType authority) => Task.Run(() => CommunicationServiceClient.Instance.OnAuthorityChange(accountId, authority));
 
         #endregion
     }

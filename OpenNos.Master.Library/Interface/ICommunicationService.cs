@@ -13,6 +13,7 @@
  */
 
 using OpenNos.Data;
+using OpenNos.Domain;
 using OpenNos.Master.Library.Data;
 using OpenNos.SCS.Communication.ScsServices.Service;
 using System;
@@ -38,6 +39,8 @@ namespace OpenNos.Master.Library.Interface
         void Cleanup();
 
         void CleanupOutdatedSession();
+
+        bool ChangeAuthority(string worldGroup, string characterName, AuthorityType authority);
 
         /// <summary>
         /// Registers the Login of the given Account and removes the permission to login
