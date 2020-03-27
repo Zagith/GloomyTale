@@ -236,3 +236,9 @@ _Pvt_Extensions
 *.txt
 !exclude.txt
 
+OpenNos.Login/app.config
+OpenNos.Crown/app.config
+OpenNos.World/app.config
+OpenNos.Master.Server/app.config
+OpenNos.DAL.EF/app.config
+OpenNos.Import.Console/app.config
