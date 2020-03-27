@@ -217,6 +217,9 @@
   <ItemGroup>
     <Content Include="on-logo-icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\ControllersParameters\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
