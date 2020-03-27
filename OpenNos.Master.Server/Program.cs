@@ -13,6 +13,7 @@
  */
 
 using log4net;
+using Microsoft.Owin.Hosting;
 using OpenNos.Core;
 using OpenNos.DAL.EF.Helpers;
 using OpenNos.Master.Library.Client;
@@ -104,7 +105,7 @@ namespace OpenNos.Master.Server
                     _server.AddService<IAuthentificationService, AuthentificationService>(new AuthentificationService());
                     _server.ClientConnected += OnClientConnected;
                     _server.ClientDisconnected += OnClientDisconnected;
-
+                    WebApp.Start<Startup>(ConfigurationManager.AppSettings["WebAppURL"]);
                     _server.Start();
 
                     // AUTO SESSION KICK
