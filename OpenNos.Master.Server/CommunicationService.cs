@@ -12,6 +12,7 @@
  * GNU General Public License for more details.
  */
 
+using Newtonsoft.Json;
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
@@ -445,6 +446,28 @@ namespace OpenNos.Master.Server
                 channelPacket += $"{world.Endpoint.IpAddress}:{world.Endpoint.TcpPort}:{channelcolor}:{worldCount}.{world.ChannelId}.{world.WorldGroup} ";
             }
             return channelPacket;
+        }
+
+        public string RetrieveServerStatistic(bool onlinePlayers = false)
+        {
+            if (onlinePlayers)
+            {
+                return $"{MSManager.Instance.ConnectedAccounts.Count}";
+            }
+
+            Dictionary<int, List<AccountConnection.CharacterSession>> dictionary =
+                MSManager.Instance.WorldServers.ToDictionary(world => world.ChannelId, world => new List<AccountConnection.CharacterSession>());
+
+            foreach (IGrouping<int, AccountConnection> accountConnections in MSManager.Instance.ConnectedAccounts.Where(s => s.Character != null).GroupBy(s => s.ConnectedWorld.ChannelId))
+            {
+                foreach (AccountConnection i in accountConnections)
+                {
+                    dictionary[accountConnections.Key].Add(i.Character);
+                }
+            }
+
+            return JsonConvert.SerializeObject(dictionary);
+
         }
 
         public IEnumerable<string> RetrieveServerStatistics()

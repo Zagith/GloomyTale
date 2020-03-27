@@ -26,7 +26,7 @@ namespace OpenNos.Master.Server
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
             appBuilder.UseCors(CorsOptions.AllowAll);
-            appBuilder.Use(config);
+            appBuilder.UseWebApi(config);
         }
 
         public void ConfigureOAuth(IAppBuilder app)

@@ -203,6 +203,7 @@ namespace OpenNos.Master.Library.Interface
         /// </summary>
         /// <returns>the actual result</returns>
         IEnumerable<string> RetrieveServerStatistics();
+        string RetrieveServerStatistic(bool online = false);
 
         /// <summary>
         /// Runs an event on all registered Worlds

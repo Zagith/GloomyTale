@@ -160,7 +160,9 @@ namespace OpenNos.Master.Library.Client
 
         public IEnumerable<string> RetrieveServerStatistics() => _client.ServiceProxy.RetrieveServerStatistics();
 
-        public void RunGlobalEvent(Domain.EventType eventType) => _client.ServiceProxy.RunGlobalEvent(eventType);
+        public void RunGlobalEvent(EventType eventType) => _client.ServiceProxy.RunGlobalEvent(eventType);
+
+        public string RetrieveServerStatistic(bool online = false) => _client.ServiceProxy.RetrieveServerStatistic(online);
 
         public int? SendMessageToCharacter(SCSCharacterMessage message) => _client.ServiceProxy.SendMessageToCharacter(message);
 
