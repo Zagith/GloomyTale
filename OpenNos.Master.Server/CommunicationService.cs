@@ -12,8 +12,10 @@
  * GNU General Public License for more details.
  */
 
+using Newtonsoft.Json;
 using OpenNos.Core;
 using OpenNos.DAL;
+using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.Master.Library.Data;
 using OpenNos.Master.Library.Interface;
@@ -73,6 +75,29 @@ namespace OpenNos.Master.Server
             {
                 KickSession(account.AccountId, null);
             }
+        }
+
+        public bool ChangeAuthority(string worldGroup, string characterName, AuthorityType authority)
+        {
+            CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(characterName);
+            if (character == null)
+            {
+                return false;
+            }
+
+            if (!IsAccountConnected(character.AccountId))
+            {
+                AccountDTO account = DAOFactory.AccountDAO.LoadById(character.AccountId);
+                account.Authority = authority;
+                DAOFactory.AccountDAO.InsertOrUpdate(ref account);
+            }
+            else
+            {
+                AccountConnection account = MSManager.Instance.ConnectedAccounts.Find(s => s.AccountId == character.AccountId);
+                account?.ConnectedWorld.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().ChangeAuthority(account.AccountId, authority);
+            }
+
+            return true;
         }
 
         public bool ConnectAccount(Guid worldId, long accountId, int sessionId)
@@ -423,6 +448,28 @@ namespace OpenNos.Master.Server
             return channelPacket;
         }
 
+        public string RetrieveServerStatistic(bool onlinePlayers = false)
+        {
+            if (onlinePlayers)
+            {
+                return $"{MSManager.Instance.ConnectedAccounts.Count}";
+            }
+
+            Dictionary<int, List<AccountConnection.CharacterSession>> dictionary =
+                MSManager.Instance.WorldServers.ToDictionary(world => world.ChannelId, world => new List<AccountConnection.CharacterSession>());
+
+            foreach (IGrouping<int, AccountConnection> accountConnections in MSManager.Instance.ConnectedAccounts.Where(s => s.Character != null).GroupBy(s => s.ConnectedWorld.ChannelId))
+            {
+                foreach (AccountConnection i in accountConnections)
+                {
+                    dictionary[accountConnections.Key].Add(i.Character);
+                }
+            }
+
+            return JsonConvert.SerializeObject(dictionary);
+
+        }
+
         public IEnumerable<string> RetrieveServerStatistics()
         {
             if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
@@ -656,6 +703,26 @@ namespace OpenNos.Master.Server
                 world.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().UpdateRelation(relationId);
             }
         }
+
+        public void SendMail(string worldGroup, MailDTO mail)
+        {
+            if (!IsCharacterConnected(worldGroup, mail.ReceiverId))
+            {
+                DAOFactory.MailDAO.InsertOrUpdate(ref mail);
+            }
+            else
+            {
+                AccountConnection account = MSManager.Instance.ConnectedAccounts.Find(a => a.CharacterId.Equals(mail.ReceiverId));
+                if (account?.ConnectedWorld == null)
+                {
+                    DAOFactory.MailDAO.InsertOrUpdate(ref mail);
+                    return;
+                }
+
+                account.ConnectedWorld.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().SendMail(mail);
+            }
+        }
+
 
         #endregion
     }

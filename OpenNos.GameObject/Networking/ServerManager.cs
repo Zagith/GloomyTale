@@ -2551,7 +2551,8 @@ namespace OpenNos.GameObject.Networking
             CommunicationServiceClient.Instance.ShutdownEvent += OnShutdown;
             CommunicationServiceClient.Instance.RestartEvent += OnRestart;
             ConfigurationServiceClient.Instance.ConfigurationUpdate += OnConfiguratinEvent;
-            MailServiceClient.Instance.MailSent += OnMailSent;
+            CommunicationServiceClient.Instance.MailSent += OnMailSent;
+            CommunicationServiceClient.Instance.AuthorityChange += OnAuthorityChange;
             _lastGroupId = 1;
         }
 
@@ -2587,6 +2588,25 @@ namespace OpenNos.GameObject.Networking
             {
                 sess.Character.StaticBonusList = DAOFactory.StaticBonusDAO.LoadByCharacterId(characterId).ToList();
             }
+        }
+
+        private void OnAuthorityChange(object sender, EventArgs e)
+        {
+            if (sender == null)
+            {
+                return;
+            }
+
+            Tuple<long, AuthorityType> args = (Tuple<long, AuthorityType>)sender;
+            ClientSession account = Sessions.FirstOrDefault(s => s.Account.AccountId == args.Item1);
+            if (account == null)
+            {
+                return;
+            }
+
+            account.Account.Authority = args.Item2;
+            account.SendPacket(
+                $"say 1 0 10 ({Language.Instance.GetMessageFromKey("ADMINISTRATOR")}) You are now {account.Account.Authority.ToString()}");
         }
 
         private void OnMailSent(object sender, EventArgs e)

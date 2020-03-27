@@ -2363,8 +2363,10 @@ namespace OpenNos.Handler
                             : (short)(Session.Character.Morph > short.MaxValue ? 0 : Session.Character.Morph)
                     };
 
-                    MailServiceClient.Instance.SendMail(mailcopy);
-                    MailServiceClient.Instance.SendMail(mail);
+                    DAOFactory.MailDAO.InsertOrUpdate(ref mail);
+                    CommunicationServiceClient.Instance.SendMail(ServerManager.Instance.ServerGroup, mail);
+                    DAOFactory.MailDAO.InsertOrUpdate(ref mailcopy);
+                    CommunicationServiceClient.Instance.SendMail(ServerManager.Instance.ServerGroup, mailcopy);
 
                     //Session.Character.MailList.Add((Session.Character.MailList.Count > 0 ? Session.Character.MailList.OrderBy(s => s.Key).Last().Key : 0) + 1, mailcopy);
                     Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("MAILED"),
