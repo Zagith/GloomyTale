@@ -807,18 +807,20 @@ namespace OpenNos.GameObject
                     RemoveBuff(4005);
                     RemoveBuff(4004);
                     break;
-                case (long)SideReputType.Side10:
-                    RemoveBuff(4003);
-                    AddBuff(new Buff(4004, Level, isPermaBuff: true), BattleEntity);
-                    RemoveBuff(4006);
-                    RemoveBuff(4007);
-                    RemoveBuff(4008);
-                    RemoveBuff(4009);
-                    RemoveBuff(4010);
-                    RemoveBuff(4012);
-                    RemoveBuff(4013);
-                    RemoveBuff(4005);
-                    break;
+            }
+
+            if (Reputation >= (long)SideReputType.Side10)
+            {
+                RemoveBuff(4003);
+                AddBuff(new Buff(4004, Level, isPermaBuff: true), BattleEntity);
+                RemoveBuff(4006);
+                RemoveBuff(4007);
+                RemoveBuff(4008);
+                RemoveBuff(4009);
+                RemoveBuff(4010);
+                RemoveBuff(4012);
+                RemoveBuff(4013);
+                RemoveBuff(4005);
             }
         }
 
@@ -2345,6 +2347,30 @@ namespace OpenNos.GameObject
                         }
                         switch (specialist.Design)
                         {
+                            case 1:
+                                if (!Buff.ContainsKey(4016))
+                                {
+                                    AddBuff(new Buff(4016, Level), BattleEntity, true);
+                                }
+                                break;
+                            case 2:
+                                if (!Buff.ContainsKey(4017))
+                                {
+                                    AddBuff(new Buff(4017, Level), BattleEntity, true);
+                                }
+                                break;
+                            case 3:
+                                if (!Buff.ContainsKey(4014))
+                                {
+                                    AddBuff(new Buff(4014, Level), BattleEntity, true);
+                                }
+                                break;
+                            case 4:
+                                if (!Buff.ContainsKey(4015))
+                                {
+                                    AddBuff(new Buff(4015, Level), BattleEntity, true);
+                                }
+                                break;
                             case 6:
                                 if (!Buff.ContainsKey(387))
                                 {
