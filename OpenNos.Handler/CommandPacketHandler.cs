@@ -50,6 +50,34 @@ namespace OpenNos.Handler
 
         #region Methods
 
+        /// $ChannelStart
+        /// </summary>
+        /// <param name="channelstartPacket"></param>
+        public void ChannelStart(ChannelstartPacket channelstartPacket)
+        {
+            Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[ChannelStart]");
+
+
+            /*if (channelstartPacket.Corona != 1)
+            {
+                Process.Start("C:\\Users\\Administrator\\Desktop\\downsidenossource\\OpenNos.World\\bin\\Release\\OpenNos.World.exe", $"--nomsg");
+            }
+            else
+            {
+                Process.Start("C:\\Users\\Administrator\\Desktop\\downsidenossource\\OpenNos.CH51\\bin\\Release\\OpenNos.World.exe", $"--nomsg");
+            }*/
+            Process.Start("OpenNos.World.exe", $"--nomsg");
+            Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
+           /* if (channelstartPacket.Shout == 1)
+            {
+                ServerManager.Shout("A new Channel has been started!");
+            }
+            else if (channelstartPacket.Shout != 1)
+            {
+                return;
+            }*/
+        }
+
         /// <summary>
         /// $Meteorite Command
         /// </summary>

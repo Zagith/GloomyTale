@@ -234,6 +234,7 @@
     <Compile Include="Packets\ClientPackets\TiteqPacket.cs" />
     <Compile Include="Packets\ClientPackets\UsePartnerSkillPacket.cs" />
     <Compile Include="Packets\CommandPackets\AddUserLogPacket.cs" />
+    <Compile Include="Packets\CommandPackets\ChannelstartPacket.cs" />
     <Compile Include="Packets\CommandPackets\CHPacket.cs" />
     <Compile Include="Packets\CommandPackets\ContributePacket.cs" />
     <Compile Include="Packets\CommandPackets\MeteoriteSpawnPacket.cs" />

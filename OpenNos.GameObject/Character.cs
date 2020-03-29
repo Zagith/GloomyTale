@@ -7012,13 +7012,64 @@ namespace OpenNos.GameObject
             {
                 return 0;
             }
-            int lowBaseGold = ServerManager.RandomNumber(6 * mapMonster.Monster?.Level ?? 1, 12 * mapMonster.Monster?.Level ?? 1);
-            int actMultiplier = Session?.CurrentMapInstance?.Map.MapTypes?.Any(s => s.MapTypeId == (short)MapTypeEnum.Act52) ?? false ? 10 : 1;
-            if (Session?.CurrentMapInstance?.Map.MapTypes?.Any(s => s.MapTypeId == (short)MapTypeEnum.Act61 || s.MapTypeId == (short)MapTypeEnum.Act61a || s.MapTypeId == (short)MapTypeEnum.Act61d) == true)
+            int lowBaseGold = 0;
+
+            switch(MapId)
             {
-                actMultiplier = 5;
+                // Side 1
+                case 4:
+                    lowBaseGold = ServerManager.RandomNumber(450, 950);
+                    break;
+                // Side 2
+                case 117:
+                case 118:
+                    lowBaseGold = ServerManager.RandomNumber(1400, 2000);
+                    break;
+                // Side 3
+                case 185:
+                case 198:
+                    lowBaseGold = ServerManager.RandomNumber(2300, 3500);
+                    break;
+                // Side 4
+                case 101:
+                case 28:
+                    lowBaseGold = ServerManager.RandomNumber(3800, 5000);
+                    break;
+                // Side 5
+                case 242:
+                case 244:
+                    lowBaseGold = ServerManager.RandomNumber(5400, 7200);
+                    break;
+                // Side 6
+                case 247:
+                case 2587:
+                    lowBaseGold = ServerManager.RandomNumber(7500, 9000);
+                    break;
+                // Side 7
+                case 10:
+                case 80:
+                    lowBaseGold = ServerManager.RandomNumber(9500, 11500);
+                    break;
+                // Side 8
+                case 43:
+                case 44:
+                    lowBaseGold = ServerManager.RandomNumber(12500, 15500);
+                    break;
+                // Side 9
+                case 261:
+                case 262:
+                    lowBaseGold = ServerManager.RandomNumber(17000, 20000);
+                    break;
+                // Side 10
+                case 212:
+                case 209:
+                    lowBaseGold = ServerManager.RandomNumber(25000, 40000);
+                    break;
+                default:
+                    lowBaseGold = ServerManager.RandomNumber(6 * mapMonster.Monster?.Level ?? 1, 12 * mapMonster.Monster?.Level ?? 1);
+                    break;
             }
-            return lowBaseGold * actMultiplier;
+            return lowBaseGold;
         }
 
         private int GetHXP(MapMonster mapMonster, Group group)
@@ -7087,14 +7138,14 @@ namespace OpenNos.GameObject
         {
             NpcMonster npcMonster = mapMonster.Monster;
 
-            int partySize = group?.GroupType == GroupType.Group ? group.Sessions.ToList().Count(s => s?.Character != null && s.Character.MapInstance == mapMonster.MapInstance && s.Character.Level < ServerManager.Instance.Configuration.MaxLevel) : 1;
+            int partySize = group?.GroupType == GroupType.Group  && group.SessionCount > 2 ? group.Sessions.ToList().Count(s => s?.Character != null && s.Character.MapInstance == mapMonster.MapInstance && s.Character.Level < ServerManager.Instance.Configuration.MaxLevel) : 1;
 
             if (partySize < 1)
             {
                 partySize = 1;
             }
 
-            double sharedXp = (double)npcMonster.XP / partySize;
+            double sharedXp = (double)npcMonster.XP * partySize == 3 ? 2 : 1;
 
             if (npcMonster.Level >= 80)
             {
