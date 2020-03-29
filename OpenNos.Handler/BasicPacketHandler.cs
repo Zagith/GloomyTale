@@ -2049,7 +2049,7 @@ namespace OpenNos.Handler
         /// <param name="revivalPacket"></param>
         public void Revive(RevivalPacket revivalPacket)
         {
-            if (Session.Character.Hp > 0)
+            if (Session.Character.Hp > 0 && Session.Account.hasVerifiedSecondPassword == true)
             {
                 return;
             }
@@ -2191,6 +2191,9 @@ namespace OpenNos.Handler
                     }
 
                     break;
+                case 51:
+                    Session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 11, Session.Account.AccountId, 2));
+                    return;
             }
             Session.Character.BattleEntity.SendBuffsPacket();
         }
@@ -2794,14 +2797,17 @@ namespace OpenNos.Handler
             Session.Character.LoadSentMail();
             Session.Character.DeleteTimeout();
 
-            Session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 11, Session.Account.AccountId, 2));
-            Observable.Timer(TimeSpan.FromSeconds(60)).Subscribe(o =>
+            if (Session.Account.hasVerifiedSecondPassword == false)
             {
-                if (Session.Account.hasVerifiedSecondPassword == false)
+                Session.SendPacket(UserInterfaceHelper.GenerateDialog($"#revival^51 #revival^51 Please insert the secondary password. If is your first login it will automatically saved. Don't use the primary password!"));
+                /*Observable.Timer(TimeSpan.FromSeconds(60)).Subscribe(o =>
                 {
-                    Session.Disconnect();
-                }
-            });
+                    if (Session.Account.hasVerifiedSecondPassword == false)
+                    {
+                        Session.Disconnect();
+                    }
+                });*/
+            }
 
             if (Session.Character.Quests.Any())
             {

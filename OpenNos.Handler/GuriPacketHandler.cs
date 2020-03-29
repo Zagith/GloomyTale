@@ -896,6 +896,11 @@ namespace OpenNos.Handler
                     {
                         if (string.IsNullOrWhiteSpace(Session.Account.TotpSecret))
                         {
+                            if (CryptographyBase.Sha512(guriPacket.Value) == Session.Account.Password)
+                            {
+                                Session.SendPacket(UserInterfaceHelper.GenerateDialog($"#revival^51 #revival^51 Please don't use the primary password!"));
+                                return;
+                            }
                             Session.Account.TotpSecret = guriPacket.Value;
                             Session.Character.Save();
                             Session.SendPacket(Session.Character.GenerateSay($"Done! Your second password (or pin) is now: {guriPacket.Value}. Do not forget it.", 10));

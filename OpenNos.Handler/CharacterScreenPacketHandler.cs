@@ -280,7 +280,7 @@ namespace OpenNos.Handler
                     if (loginPacketParts.Length > 7 && loginPacketParts[4] == "DAC"
                         && loginPacketParts[8] == "CrossServerAuthenticate")
                     {
-                        isCrossServerLogin = true;
+                        isCrossServerLogin = true;                        
                         account = DAOFactory.AccountDAO.LoadByName(loginPacketParts[5]);
                     }
                     else
@@ -323,6 +323,10 @@ namespace OpenNos.Handler
                         {
                             Session.InitializeAccount(new Account(account), isCrossServerLogin);
                             ServerManager.Instance.CharacterScreenSessions[Session.Account.AccountId] = Session;
+                            if (isCrossServerLogin)
+                            {
+                                Session.Account.hasVerifiedSecondPassword = true;
+                            }
                         }
                         else
                         {

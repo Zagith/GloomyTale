@@ -680,7 +680,7 @@ namespace OpenNos.GameObject
                                     PacketDefinition deserializedPacket = PacketFactory.Deserialize(packet, methodReference.PacketDefinitionParameterType, IsAuthenticated);
                                     if (deserializedPacket != null || methodReference.PassNonParseablePacket)
                                     {
-                                        string[] allowedPackets = { "NoS0575", "Char_NEW", "Char_DEL", "opennos.entrypoint", "game_start", "guri", "pulse", "select" };
+                                        string[] allowedPackets = { "NoS0575", "Char_NEW", "Char_DEL", "opennos.entrypoint", "game_start", "guri", "pulse", "select", "revival"};
                                         if (Account?.hasVerifiedSecondPassword == true || allowedPackets.Any(s => s == packetHeader))
                                             methodReference.HandlerMethod(methodReference.ParentHandler, deserializedPacket);
                                     }
