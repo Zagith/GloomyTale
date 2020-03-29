@@ -7,6 +7,7 @@ using OpenNos.GameObject;
 using OpenNos.GameObject.Event;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
+using OpenNos.Master.Library.Client;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -914,6 +915,37 @@ namespace OpenNos.Handler
                         {
                             Session.SendPacket(Session.Character.GenerateSay($"Wrong password.", 10));
                             Session.Disconnect();
+                        }
+                    }
+                    if (guriPacket.Argument == 12 && !string.IsNullOrWhiteSpace(guriPacket.Value))
+                    {
+                        CharacterDTO findCharName = DAOFactory.CharacterDAO.LoadByName(guriPacket.Value);
+
+                        if(findCharName == null)
+                        {
+                            Session.Character.Name = guriPacket.Value;
+                            Session.SendPacket(
+                                UserInterfaceHelper.GenerateMsg(
+                                    "Name Changed!", 0));
+                            string connection = CommunicationServiceClient.Instance.RetrieveWorld(Session.Character.AccountId);
+                            Guid? removeItem = DAOFactory.ItemInstanceDAO.LoadByCharacterIdAndItemId(Session.Character.CharacterId, (short)guriPacket.User)?.Id;
+                            if (removeItem != null)
+                            {
+                                Session.Character.Inventory.RemoveItemFromInventory(removeItem.Value);
+                            }
+                            if (string.IsNullOrWhiteSpace(connection))
+                            {
+                                return;
+                            }
+                            int port = Convert.ToInt32(connection.Split(':')[1]);
+                            Session.Character.ChangeChannel(connection.Split(':')[0], port, 3);
+                        }
+                        else
+                        {
+                            Session.SendPacket(
+                                UserInterfaceHelper.GenerateMsg(
+                                    "Name Already Exist.", 0));
+                            Session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 12, Session.Character.CharacterId, 2));
                         }
                     }
                 }

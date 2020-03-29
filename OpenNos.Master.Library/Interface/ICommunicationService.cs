@@ -189,6 +189,7 @@ namespace OpenNos.Master.Library.Interface
         /// <returns>IP:Port of the Server, null if not existing</returns>
         string RetrieveOriginWorld(long accountId);
 
+        string RetrieveWorld(long accountId);
         /// <summary>
         /// Generates the Channel Selection Packet
         /// </summary>

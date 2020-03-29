@@ -323,10 +323,6 @@ namespace OpenNos.Handler
                         {
                             Session.InitializeAccount(new Account(account), isCrossServerLogin);
                             ServerManager.Instance.CharacterScreenSessions[Session.Account.AccountId] = Session;
-                            if (isCrossServerLogin)
-                            {
-                                Session.Account.hasVerifiedSecondPassword = true;
-                            }
                         }
                         else
                         {

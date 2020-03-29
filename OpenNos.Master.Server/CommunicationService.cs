@@ -416,6 +416,21 @@ namespace OpenNos.Master.Server
             return null;
         }
 
+        public string RetrieveWorld(long accountId)
+        {
+            if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
+            {
+                return null;
+            }
+
+            AccountConnection account = MSManager.Instance.ConnectedAccounts.Find(s => s.AccountId.Equals(accountId));
+            if (account?.ConnectedWorld != null)
+            {
+                return $"{account.ConnectedWorld.Endpoint.IpAddress}:{account.ConnectedWorld.Endpoint.TcpPort}";
+            }
+            return null;
+        }
+
         public string RetrieveRegisteredWorldServers(string username, int sessionId, bool ignoreUserName)
         {
             if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))

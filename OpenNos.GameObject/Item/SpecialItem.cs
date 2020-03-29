@@ -883,7 +883,7 @@ namespace OpenNos.GameObject
                         }
                     }
                     break;
-
+                 
                 // Sealed Vessel
                 case 1002:
                     int type, secondaryType, inventoryType, slot;
@@ -993,6 +993,11 @@ namespace OpenNos.GameObject
                                 break;
                         }
                     }
+                    break;
+
+                //ChangeName
+                case 767:
+                    session.SendPacket(UserInterfaceHelper.GenerateGuri(10, 12, session.Character.CharacterId, inv.ItemVNum));
                     break;
 
                 // Golden Bazaar Medal

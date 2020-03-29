@@ -156,6 +156,8 @@ namespace OpenNos.Master.Library.Client
 
         public string RetrieveOriginWorld(long accountId) => _client.ServiceProxy.RetrieveOriginWorld(accountId);
 
+        public string RetrieveWorld(long accountId) => _client.ServiceProxy.RetrieveWorld(accountId);
+
         public string RetrieveRegisteredWorldServers(string username, int sessionId, bool ignoreUserName) => _client.ServiceProxy.RetrieveRegisteredWorldServers(username, sessionId, ignoreUserName);
 
         public IEnumerable<string> RetrieveServerStatistics() => _client.ServiceProxy.RetrieveServerStatistics();
