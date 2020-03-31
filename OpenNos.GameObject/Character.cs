@@ -7171,7 +7171,7 @@ namespace OpenNos.GameObject
                 partySize = 1;
             }
 
-            double sharedXp = (double)npcMonster.XP * partySize == 3 ? 2 : 1;
+            double sharedXp = (double)npcMonster.XP * (partySize == 3 ? 2 : 1);
 
             if (npcMonster.Level >= 80)
             {
