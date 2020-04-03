@@ -980,7 +980,7 @@ namespace OpenNos.Handler
                                 }
                                 else
                                 {
-                                    if (hitRequest.Character.Reputation - ReputationValue >= (long)SideReputType.Side10)
+                                    if (hitRequest.Session.Character.Reputation - ReputationValue >= (long)SideReputType.Side10)
                                     {
                                         hitRequest.Session.Character.Reputation -= ReputationValue;
                                         hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
