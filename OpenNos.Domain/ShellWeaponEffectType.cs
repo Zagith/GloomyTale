@@ -47,8 +47,7 @@ namespace OpenNos.Domain
         SLHP = 29,
         SLGlobal = 30,
         GainMoreGold = 31,
-        GainMoreXP = 32, //Not implemented
-#warning TODO Shell XP
+        GainMoreXP = 32,
         GainMoreCXP = 33, //Not implemented
         PercentageDamageInPVP = 34,
         ReducesPercentageEnemyDefenceInPVP = 35,
