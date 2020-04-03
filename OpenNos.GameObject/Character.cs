@@ -4118,27 +4118,6 @@ namespace OpenNos.GameObject
 
                 ClientSession session = ServerManager.Instance.GetSessionByCharacterId(CharacterId);
 
-                if (Session.Character.Level == 25)
-                {
-                    AddBob(session);
-                }
-
-
-                if (Session.Character.Level == 32)
-                {
-                    AddTom(session);
-                }
-
-                if (Session.Character.Level == 49)
-                {
-                    AddKliff(session);
-                }
-
-                if (Level >= 20)
-                {
-                    //GetReputation(50);
-                }
-
                 LevelRewards(Level);
             }
         }
@@ -4472,79 +4451,7 @@ namespace OpenNos.GameObject
 
 
             return pktQs;
-        }
-
-        public void AddBob(ClientSession session)
-        {
-            Mate equipedMate = session.Character.Mates?.SingleOrDefault(s => s.IsTeamMember && s.MateType == MateType.Partner);
-
-            if (equipedMate != null)
-            {
-                equipedMate.RemoveTeamMember();
-                session.Character.MapInstance.Broadcast(equipedMate.GenerateOut());
-            }
-
-            Mate mate = new Mate(session.Character, ServerManager.GetNpcMonster(317), 24, MateType.Partner);
-            session.Character.Mates?.Add(mate);
-            mate.RefreshStats();
-            session.SendPacket($"ctl 2 {mate.PetId} 3");
-            session.Character.MapInstance.Broadcast(mate.GenerateIn());
-            session.SendPacket(UserInterfaceHelper.GeneratePClear());
-            session.SendPackets(session.Character.GenerateScP());
-            session.SendPackets(session.Character.GenerateScN());
-            session.SendPacket(session.Character.GeneratePinit());
-            session.SendPackets(session.Character.Mates.Where(s => s.IsTeamMember)
-                .OrderBy(s => s.MateType)
-                .Select(s => s.GeneratePst()));
-        }
-
-        public void AddTom(ClientSession session)
-        {
-            Mate equipedMate = session.Character.Mates?.SingleOrDefault(s => s.IsTeamMember && s.MateType == MateType.Partner);
-
-            if (equipedMate != null)
-            {
-                equipedMate.RemoveTeamMember();
-                session.Character.MapInstance.Broadcast(equipedMate.GenerateOut());
-            }
-
-            Mate mate = new Mate(session.Character, ServerManager.GetNpcMonster(318), 31, MateType.Partner);
-            session.Character.Mates?.Add(mate);
-            mate.RefreshStats();
-            session.SendPacket($"ctl 2 {mate.PetId} 3");
-            session.Character.MapInstance.Broadcast(mate.GenerateIn());
-            session.SendPacket(UserInterfaceHelper.GeneratePClear());
-            session.SendPackets(session.Character.GenerateScP());
-            session.SendPackets(session.Character.GenerateScN());
-            session.SendPacket(session.Character.GeneratePinit());
-            session.SendPackets(session.Character.Mates.Where(s => s.IsTeamMember)
-                .OrderBy(s => s.MateType)
-                .Select(s => s.GeneratePst()));
-        }
-
-        public void AddKliff(ClientSession session)
-        {
-            Mate equipedMate = session.Character.Mates?.SingleOrDefault(s => s.IsTeamMember && s.MateType == MateType.Partner);
-
-            if (equipedMate != null)
-            {
-                equipedMate.RemoveTeamMember();
-                session.Character.MapInstance.Broadcast(equipedMate.GenerateOut());
-            }
-
-            Mate mate = new Mate(session.Character, ServerManager.GetNpcMonster(319), 48, MateType.Partner);
-            session.Character.Mates?.Add(mate);
-            mate.RefreshStats();
-            session.SendPacket($"ctl 2 {mate.PetId} 3");
-            session.Character.MapInstance.Broadcast(mate.GenerateIn());
-            session.SendPacket(UserInterfaceHelper.GeneratePClear());
-            session.SendPackets(session.Character.GenerateScP());
-            session.SendPackets(session.Character.GenerateScN());
-            session.SendPacket(session.Character.GeneratePinit());
-            session.SendPackets(session.Character.Mates.Where(s => s.IsTeamMember)
-                .OrderBy(s => s.MateType)
-                .Select(s => s.GeneratePst()));
-        }
+        }       
 
         public string GenerateFbt(int Type, bool exit = false)
         {
@@ -5553,52 +5460,52 @@ namespace OpenNos.GameObject
                         return 32;
                 }
             }*/
-            if (Reputation <= 5)
+            if (Reputation < (long)SideReputType.Side1)
             {
                 return 1;
             }
 
-            if (Reputation <= 49)
+            if (Reputation < (long)SideReputType.Side2)
             {
                 return 4;
             }
 
-            if (Reputation <= 329)
+            if (Reputation < (long)SideReputType.Side3)
             {
                 return 5;
             }
 
-            if (Reputation <= 1999)
+            if (Reputation < (long)SideReputType.Side4)
             {
                 return 6;
             }
 
-            if (Reputation <= 12049)
+            if (Reputation < (long)SideReputType.Side5)
             {
                 return 7;
             }
 
-            if (Reputation <= 72329)
+            if (Reputation < (long)SideReputType.Side6)
             {
                 return 8;
             }
 
-            if (Reputation <= 434099)
+            if (Reputation < (long)SideReputType.Side7)
             {
                 return 9;
             }
 
-            if (Reputation <= 2604899)
+            if (Reputation < (long)SideReputType.Side8)
             {
                 return 10;
             }
 
-            if (Reputation <= 15629999)
+            if (Reputation < (long)SideReputType.Side9)
             {
                 return 11;
             }
 
-            return Reputation <= 93809999 ? 12 : 13;
+            return Reputation < (long)SideReputType.Side10 ? 12 : 13;
         }
 
         /// <summary>
@@ -6574,22 +6481,25 @@ namespace OpenNos.GameObject
 
         public void GetReputation(int amount, bool applyRate = true)
         {
-            amount = amount * (amount > 0 && applyRate ? ServerManager.Instance.Configuration.RateReputation : 1);
-            int beforeReputIco = GetReputationIco();
-            Reputation += amount;
-            Session.SendPacket(GenerateFd());
-            if (beforeReputIco != GetReputationIco())
+            if (Reputation >= (long)SideReputType.Side10)
             {
-                Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
-            }
-            Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
-            if (amount > 0)
-            {
-                Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("REPUT_INCREASE"), amount), 12));
-            }
-            else if (amount < 0)
-            {
-                Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("REPUT_DECREASE"), amount), 11));
+                amount = amount * (amount > 0 && applyRate ? ServerManager.Instance.Configuration.RateReputation : 1);
+                int beforeReputIco = GetReputationIco();
+                Reputation += amount;
+                Session.SendPacket(GenerateFd());
+                if (beforeReputIco != GetReputationIco())
+                {
+                    Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
+                }
+                Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
+                if (amount > 0)
+                {
+                    Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("REPUT_INCREASE"), amount), 12));
+                }
+                else if (amount < 0)
+                {
+                    Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("REPUT_DECREASE"), amount), 11));
+                }
             }
         }
 

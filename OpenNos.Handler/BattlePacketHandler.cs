@@ -956,7 +956,7 @@ namespace OpenNos.Handler
 
                                 if (ReputationValue > 0)
                                 {
-                                    if (Session.Character.Reputation > 93809999)
+                                    if (Session.Character.Reputation >= (long)SideReputType.Side10)
                                     {
                                         hitRequest.Session.Character.Reputation += ReputationValue;
                                         hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
@@ -967,20 +967,26 @@ namespace OpenNos.Handler
                                         ((target.Character.Faction == FactionType.Angel && ServerManager.Instance.Act4DemonStat.Mode == 3)
                                         || (target.Character.Faction == FactionType.Demon && ServerManager.Instance.Act4AngelStat.Mode == 3))
                                         ? 2 : 1;
-                                    if (target.Character.Reputation > 93809999)
-                                    { 
-                                        target.Character.Reputation -= ReputationValue * act4RaidPenalty;
-                                        target.SendPacket(target.Character.GenerateSay(
-                                            string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
-                                                (short)ReputationValue * act4RaidPenalty), 11));
+                                    if (target.Character.Reputation >= (long)SideReputType.Side10)
+                                    {
+                                        if (target.Character.Reputation - ReputationValue * act4RaidPenalty >= (long)SideReputType.Side10)
+                                        {
+                                            target.Character.Reputation -= ReputationValue * act4RaidPenalty;
+                                            target.SendPacket(target.Character.GenerateSay(
+                                                string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
+                                                    (short)ReputationValue * act4RaidPenalty), 11));
+                                        }
                                     }
                                 }
                                 else
                                 {
-                                    hitRequest.Session.Character.Reputation -= ReputationValue;
-                                    hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
-                                        string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
-                                            (short)ReputationValue), 11));
+                                    if (hitRequest.Character.Reputation - ReputationValue >= (long)SideReputType.Side10)
+                                    {
+                                        hitRequest.Session.Character.Reputation -= ReputationValue;
+                                        hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
+                                            string.Format(Language.Instance.GetMessageFromKey("LOSE_REP"),
+                                                (short)ReputationValue), 11));
+                                    }
                                 }
                                 hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateLev());
                             }

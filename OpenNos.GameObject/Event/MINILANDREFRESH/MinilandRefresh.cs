@@ -37,14 +37,15 @@ namespace OpenNos.GameObject.Event
                 ClientSession Session = ServerManager.Instance.GetSessionByCharacterId(chara.CharacterId);
                 if (Session != null)
                 {
-                    //Session.Character.GetReputation(2 * count);
+                    Session.Character.GetReputation(2 * count);
                     Session.Character.MinilandPoint = 2000;
                 }
                 else if (CommunicationServiceClient.Instance.IsCharacterConnected(ServerManager.Instance.ServerGroup, chara.CharacterId))
                 {
                     if (gen == null)
                     {
-                        //chara.Reputation += 2 * count;
+                        if (chara.Reputation >= (long)SideReputType.Side10)
+                            chara.Reputation += 2 * count;
                     }
                     chara.MinilandPoint = 2000;
                     CharacterDTO chara2 = chara;

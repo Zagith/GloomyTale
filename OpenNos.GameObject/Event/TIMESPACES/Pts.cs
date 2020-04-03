@@ -83,7 +83,7 @@ namespace OpenNos.GameObject.Event.TIMESPACES
                             foreach (ClientSession cli in mapinstance.Item1.Sessions.Where(s => s.Character != null).ToList())
                             {
                                 cli.Character.GenerateFamilyXp(cli.Character.Level * 4);
-                                if (cli.Character.Reputation > 93809999)
+                                if (cli.Character.Reputation >= (long)SideReputType.Side10)
                                 {
                                     cli.Character.GetReputation(MediaLivello * 75);
                                     cli.SendPacket(cli.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), MediaLivello * 75), 10));

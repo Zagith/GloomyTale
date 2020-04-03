@@ -25,6 +25,7 @@ namespace OpenNos.Domain
         ReducedAllBleedingType = 57,
         ReducedStun = 58,
         ReducedAllStun = 59,
+#warning TODO
         ReducedParalysis = 60, //Not implemented
         ReducedFreeze = 61,
         ReducedBlind = 62, //Not implemented
@@ -37,6 +38,7 @@ namespace OpenNos.Domain
         RecoveryHP = 69,
         RecoveryMPOnRest = 70,
         RecoveryMP = 71,
+#warning TODO
         RecoveryHPInDefence = 72, //Not implemented
         ReducedCritChanceRecive = 73,
         IncreasedFireResistence = 74,

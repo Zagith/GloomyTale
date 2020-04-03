@@ -257,8 +257,9 @@ namespace OpenNos.GameObject
                     break;
                 // Honour Medals
                 case 69:
-                    if (session.Character.Reputation <= 93809999)
+                    if (session.Character.Reputation >= (long)SideReputType.Side10)
                     {
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("CANNOT_USE")), 11));
                         return;
                     }
                     session.Character.Reputation += ReputPrice;
