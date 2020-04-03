@@ -112,7 +112,19 @@ namespace OpenNos.Domain
             LotusSkills = 91,
             PixieCostumeWings = 96,
             WolfMaster = 97,
-            MobsDamage = 99
+            MobsDamage = 99,
+            Type100 = 100,
+
+            //101 - ???
+            Type101 = 101,
+            Type102 = 102,
+            Type103 = 103,
+            Type104 = 104,
+            Type107 = 107,
+            Type108 = 108,
+            Type109 = 109,
+            Type110 = 110,
+            Spsl = 200
         }
     }
 
@@ -1118,10 +1130,124 @@ namespace OpenNos.Domain
 
         public enum MobsDamage : byte
         {
-            IncreaseDamageToPlants = 11,
-            IncreaseDamageToAnimals = 21,
-            IncreaseDamageToMonsters = 31,
-            IncreaseDamageToKovolt = 41
+            IncreaseDamageToLowLevelPlant = 11,
+            DecreaseDamageToLowLevelPlant = 12,
+            IncreaseDamageToLowLevelAnimal = 21,
+            DecreaseDamageToLowLevelAnimal = 22,
+            IncreaseDamageToLowLevelMonster = 31,
+            DecreaseDamageToLowLevelMonster = 32,
+            IncreaseDamageToKovolt = 41,
+            DecreaseDamageToKovolt = 42,
+            IncreaseDamageToCatsie = 51,
+            DecreaseDamageToCatsie = 52
+        }
+
+        public enum Type100 : byte
+        {
+            IncreaseDamageToLowLevelSpirit = 11,
+            DecreaseDamageToLowLevelSpirit = 12,
+            IncreaseDamageToAngel = 21,
+            DecreaseDamageToAngel = 22,
+            IncreaseDamageToDemon = 31,
+            DecreaseDamageToDemon = 32,
+            IncreaseDamageToLowLevelUndead = 41,
+            DecreaseDamageToLowLevelUndead = 42,
+            IncreaseProductionPointConsume = 51,
+            DecreaseProductionPointConsume = 52
+        }
+
+        public enum Type101 : byte
+        {
+            IncreaseDamageToLODMonster = 11,
+            DecreaseDamageToLODMonster = 12,
+            IncreaseDamageToSealed = 21,
+            DecreaseDamageToSealed = 22,
+            IncreaseXpGain = 31,
+            DecreaseXpGain = 32,
+            IncreaseJXpGain = 41,
+            DecreaseJXpGain = 42,
+            IncreaseDodge = 51,
+            DecreaseDodge = 52
+        }
+
+        public enum Type102 : byte
+        {
+            IncreaseSLDamage = 11,
+            DecreaseSLDamage = 12,
+            IncreaseSLDefence = 21,
+            DecreaseSLDefence = 22,
+            IncreaseSLElement = 31,
+            DecreaseSLElement = 32,
+            IncreaseSLHp = 41,
+            DecreaseSLHp = 42,
+            IncreaseHitRate = 51,
+            DecreaseHitRate = 52
+        }
+
+        public enum Type103 : byte
+        {
+            IncreaseAllAttack = 11,
+            DecreaseAllAttack = 12,
+            IncreaseMeleeAttack = 21,
+            DecreaseMeleeAttack = 22,
+            IncreaseRangedAttack = 31,
+            DecreaseRangedAttack = 32,
+            IncreaseMagicAttack = 41,
+            DecreaseMagicAttack = 42,
+            IncreaseConcentration = 51,
+            DecreaseConcentration = 52
+        }
+
+        public enum Type104 : byte
+        {
+            ReflectOnDeff = 11,
+            AreaDamageEachSecond = 21,
+            SummonMonsterOnDef = 31,
+            //SubType 4 didn't exist.
+            AreaBuffEachSecond = 51
+        }
+
+        public enum Type107 : byte
+        {
+            IncreaseMagicDamage = 11,
+            DecreaseMagicDamage = 12,
+            IncreaseElementResOnDef = 21,
+            DecreaseElementResOnDef = 22,
+            IncreaseXpGain = 31,
+            DecreaseXpGain = 32,
+            //SubType 4 didn't exist.
+            IncreaseDodge = 51,
+            DecreaseDodge = 52
+        }
+
+        public enum Type108 : byte
+        {
+            ReflectCritOnDef = 11,
+            IncreaseDodgeByMissingHp = 21,
+            DecreaseDodgeByMissingHp = 22,
+            IncreaseCritDamageWithCount = 31,
+            DecreaseCritDamageWithCount = 32,
+            TransferDamageToMp = 41,
+            IncreaseAttackByMagicRes = 51,
+            DecreaseAttackByMagicRes = 52
+        }
+
+        public enum Type109 : byte
+        {
+            //SubType 1 didn't exist.
+            //SubType 2 didn't exist.
+            //SubType 3 didn't exist.
+            ChanceToIncreaseDamage = 41,
+            ChanceToDecreaseDamage = 42,
+            IncreaseElementOnDebuff = 51,
+            DecreaseElementOnDebuff = 52
+        }
+
+        public enum Type110 : byte
+        {
+            RecoveryHpOnDodge = 11,
+            DecreaseHpOnDodge = 12,
+            BeastKingTarget = 21
         }
         #endregion
     }
