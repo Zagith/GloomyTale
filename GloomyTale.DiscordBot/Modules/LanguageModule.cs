@@ -13,6 +13,8 @@ namespace GloomyTale.DiscordBot.Modules
         [Command("lang")]
         [Name("lang")]
         [Summary("STAFF: Give sent the message for add the languages")]
+        [RequireUserPermission(GuildPermission.ManageMessages)]
+        [RequireBotPermission(GuildPermission.ManageMessages)]
         public async Task Translation()
         {
             if (Context.Channel.Name == "language-chooise")
