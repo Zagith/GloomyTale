@@ -100,10 +100,12 @@
   <ItemGroup>
     <Compile Include="Enumerations\RegionType.cs" />
     <Compile Include="Extensions\ChannelExtension.cs" />
+    <Compile Include="Modules\DeleteMessage.cs" />
     <Compile Include="Modules\FrozenCrownModule.cs" />
     <Compile Include="Modules\HelpModule.cs" />
     <Compile Include="Modules\LanguageModule.cs" />
     <Compile Include="Modules\PublicModule.cs" />
+    <Compile Include="Modules\RebootModule.cs" />
     <Compile Include="Modules\SendItemModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
