@@ -47,7 +47,7 @@ namespace GloomyTale.DiscordBot.Services
                 return;
             }
 
-            await context.Channel.SendMessageAsync($"error: {result.ToString()}");
+            await context.Channel.SendMessageAsync($"error: {result}");
         }
     }
 }

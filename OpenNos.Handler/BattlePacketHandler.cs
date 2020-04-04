@@ -1182,9 +1182,12 @@ namespace OpenNos.Handler
                                     {
                                         Buff buff = new Buff(66, battleEntity.Level);
                                         var shellRes = shell.Value * (battleEntityDefense.ShellArmorEffects?.Find(s =>
-                                        s.Effect == (byte)ShellArmorEffectType.ReducedAllStun)?.Value
-                                        + battleEntityDefense.ShellArmorEffects?.Find(s =>
-                                        s.Effect == (byte)ShellArmorEffectType.ReducedAllNegativeEffect).Value) / 100D;
+                                                  s.Effect == (byte)ShellArmorEffectType.ReducedStun)?.Value
+                                              + battleEntityDefense.ShellArmorEffects?.Find(s =>
+                                                  s.Effect == (byte)ShellArmorEffectType.ReducedAllStun)?.Value
+                                              + battleEntityDefense.ShellArmorEffects?.Find(s =>
+                                                      s.Effect == (byte)ShellArmorEffectType.ReducedAllNegativeEffect)
+                                                  ?.Value) / 100D;
                                         var shellValue = shell.Value - shellRes;
                                         if (ServerManager.RandomNumber() <= shell.Value)
                                         {
