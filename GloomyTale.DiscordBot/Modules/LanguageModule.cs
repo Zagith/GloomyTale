@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using GloomyTale.DiscordBot.Enumerations;
 using System;
@@ -10,36 +11,31 @@ namespace GloomyTale.DiscordBot.Modules
     public class TranslationModule : ModuleBase<SocketCommandContext>
     {
         [Command("lang")]
-        [Name("lang <language>")]
-        [Summary("Give the language roles (You have to be on #language-chooise)")]
-        public async Task Translation(RegionType region)
+        [Name("lang")]
+        [Summary("STAFF: Give sent the message for add the languages")]
+        public async Task Translation()
         {
             if (Context.Channel.Name == "language-chooise")
             {
-                if (region == RegionType.HELP)
+                EmbedBuilder demon = new EmbedBuilder
                 {
-                    await ReplyAsync("roles: \nGERMAN,\nFRENCH,\nITALIAN,\nSPANISH,\nRUSSIAN,\nTURKISH,\nPOLISH");
-                    return;
-                }
-                var role = Context.Guild.Roles.FirstOrDefault(r => r.Name == $"{region.ToString()}");
-                if (role == null)
-                {
-                    await ReplyAsync("the role doesn't exist.");
-                    await ReplyAsync("help: /lang help \nroles: \nGERMAN,\nFRENCH,\nITALIAN,\nSPANISH,\nRUSSIAN,\nTURKISH,\nPOLISH");
-                    return;
-                }
-
-                var user = (SocketGuildUser)Context.User;
-                if (role.Members.Any(r => r.Username == user.Username))
-                {
-                    await user.RemoveRoleAsync(role);
-                    await ReplyAsync($"{user.Username} lost the role {role.Name}.");
-                }
-                else
-                {
-                    await user.AddRoleAsync(role);
-                    await ReplyAsync($"{user.Username} got the role {role.Name}.");
-                }
+                    Title = "Language Chooise",
+                    Description = "React an emoji to receive the role"
+                };
+                
+                var message = await ReplyAsync("", false, demon.Build());
+                var emote = new Emoji("🇮🇹");
+                var emote1 = new Emoji("🇪🇸");
+                var emote2 = new Emoji("🇫🇷");
+                var emote3 = new Emoji("🇩🇪");
+                var emote4 = new Emoji("🇵🇱");
+                var emote5 = new Emoji("🇹🇷");
+                await message.AddReactionAsync(emote);
+                await message.AddReactionAsync(emote1);
+                await message.AddReactionAsync(emote2);
+                await message.AddReactionAsync(emote3);
+                await message.AddReactionAsync(emote4);
+                await message.AddReactionAsync(emote5);
             }
             else
             {
