@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace GloomyTale.DiscordBot.Modules
 
         [Command("help")]
         [Name("help")]
+        [Summary("This command ")]
         public async Task HelpAsync()
         {
             var builder = new EmbedBuilder()
@@ -28,17 +30,33 @@ namespace GloomyTale.DiscordBot.Modules
             {
                 string description = null;
                 string title = null;
-                foreach (var cmd in module.Commands.Where(s => !s.Summary.Contains("STAFF")))
+                var user = (SocketGuildUser)Context.User;
+                if (user.GuildPermissions.Administrator)
                 {
-                    var result = await cmd.CheckPreconditionsAsync(Context);
-                    if (result.IsSuccess)
+                    foreach (var cmd in module.Commands)
                     {
-                        title = $"/{cmd.Name}";
-                        description += cmd.Summary;
+                        var result = await cmd.CheckPreconditionsAsync(Context);
+                        if (result.IsSuccess)
+                        {
+                            title = $"/{cmd.Name}";
+                            description += cmd.Summary;
+                        }
+
                     }
-
                 }
+                else
+                {
+                    foreach (var cmd in module.Commands.Where(s => !s.Summary.Contains("STAFF")))
+                    {
+                        var result = await cmd.CheckPreconditionsAsync(Context);
+                        if (result.IsSuccess)
+                        {
+                            title = $"/{cmd.Name}";
+                            description += cmd.Summary;
+                        }
 
+                    }
+                }
                 if (!string.IsNullOrWhiteSpace(description))
                 {
                     builder.AddField(x =>
@@ -55,6 +73,7 @@ namespace GloomyTale.DiscordBot.Modules
 
         [Command("help")]
         [Name("help <name>")]
+        [Summary("show specific command help")]
         public async Task HelpAsync(string command)
         {
             var result = _service.Search(Context, command);

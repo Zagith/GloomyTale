@@ -10,7 +10,7 @@ namespace GloomyTale.DiscordBot.Modules
     {
         [Command("send-item")]
         [Name("send-item <characterName> <vnum> <amount>")]
-        [Summary("Send an item in game")]
+        [Summary("STAFF: Send an item in game")]
         [RequireUserPermission(GuildPermission.Administrator)]
         public async Task SendItem(string characterName, short vnum, short amount)
         {
