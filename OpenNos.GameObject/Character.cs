@@ -6843,8 +6843,11 @@ namespace OpenNos.GameObject
                 {
                     specialist = Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
                 }
-
-                int xp = (int)(GetXP(monster, grp) * expDamageRate * (isMonsterOwner ? 1 : 0.8f) * (1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)) * (1 + (GetBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.IncreaseBattleAndJobExperience)[0] / 100) * ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreXP)?.Value ?? 1));
+                double shellXp = (1 +  (ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreXP)?.Value / 100D)) ?? 1;
+                int xp = (int)(GetXP(monster, grp) * expDamageRate * (isMonsterOwner ? 1 : 0.8f) * (1 + (
+                    GetBuff(CardType.Item, (byte)AdditionalTypes.Item.EXPIncreased)[0] / 100D)) * (1 + (
+                        GetBuff(CardType.MartialArts, (byte)AdditionalTypes.MartialArts.IncreaseBattleAndJobExperience)[0] / 100))
+                        * shellXp);
 
                 if (monster.Monster.MaxLevelXP > 0 && monster.Monster.MinLevelXP > 0)
                 {
