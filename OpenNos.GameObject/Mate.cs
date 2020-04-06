@@ -632,8 +632,9 @@ namespace OpenNos.GameObject
             multiplicator += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.IncreasesMaximumHP)[0] / 100D;
             hp += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPIncreased)[0];
             hp += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPMPIncreased)[0];
+            hp += Monster.MaxHP - MateHelper.Instance.HpData[Monster.Level]; // Monster HpBonus
 
-            return (int)((MateHelper.Instance.HpData[GetMateType(), Level] + hp) * multiplicator);
+            return (int)((MateHelper.Instance.HpData[Level] + hp) * multiplicator);
         }
 
         public int MpLoad()

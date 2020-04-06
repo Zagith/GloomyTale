@@ -49,7 +49,7 @@ namespace OpenNos.GameObject.Helpers
 
         public short[,] Concentrate { get; private set; }
 
-        public short[,] HpData { get; private set; }
+        public int[] HpData { get; private set; }
 
         public short[,] MpData { get; private set; }
 
@@ -168,29 +168,15 @@ namespace OpenNos.GameObject.Helpers
 
         public void LoadHpData()
         {
-            HpData = new short[3, 100];
+            HpData = new int[100];
 
-            int baseValue = 0;
-
-            for (int i = 0; i < 3; i++)
+            int baseHp = 150;
+            int hpBaseUp = 40;
+            for (int i = 0; i < HpData.Length; i++)
             {
-                switch (i)
-                {
-                    case 0:
-                        baseValue = 22628;
-                        break;
-                    case 1:
-                        baseValue = 12728;
-                        break;
-                    case 2:
-                        baseValue = 9900;
-                        break;
-                }
-
-                for (int j = 0; j < 100; j++)
-                {
-                    HpData[i, j] = (short)(baseValue * j / 100);
-                }
+                HpData[i] = baseHp;
+                hpBaseUp += 5;
+                baseHp += hpBaseUp;
             }
         }
 
