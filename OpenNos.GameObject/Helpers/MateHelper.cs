@@ -272,7 +272,9 @@ namespace OpenNos.GameObject.Helpers
                 { 842, 399 }, // INDIAN BUSHTAIL
                 { 843, 403 }, // VIKING BUSHTAIL
                 { 844, 391 }, // COWBOY BUSHTAIL
-                { 2105, 383 } // INFERNO
+                { 2105, 383 }, // INFERNO
+                { 2709, 711 }, // OPOSSUM DELLA FORTUNA SFACCIATA
+                { 2704, 710 } // OPOSSUM DELLA FORTUNA
             };
         }
 

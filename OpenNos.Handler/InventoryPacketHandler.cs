@@ -896,8 +896,39 @@ namespace OpenNos.Handler
                                             characterDropperId = mapItemInstance.CharacterId;
                                         }
                                         short amount = mapItem.Amount;
-                                        ItemInstance inv = Session.Character.Inventory.AddToInventory(mapItemInstance)
+                                        ItemInstance inv = null;
+                                        if (mapItem is MonsterMapItem)
+                                        {
+                                            int rnd = Session.Character.GetBuff(CardType.Type95,
+                                               (byte)AdditionalTypes.Type95.IncreaseItemDrop)[0];
+                                            int rnd1 = ServerManager.RandomNumber();
+                                            if (rnd1 <= rnd)
+                                            {
+                                                amount *= 2;
+                                                mapItemInstance.Amount *= 2;
+                                            }
+                                            
+                                            if (mapItemInstance.Item.Type == InventoryType.Equipment)
+                                            {
+                                                int amountItem = mapItemInstance.Amount;
+                                                mapItemInstance.Amount = 1;
+                                                for (int i = 0; i < amountItem; i++)
+                                                {
+                                                    inv = Session.Character.Inventory.AddToInventory(mapItemInstance)
+                                                        .FirstOrDefault();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                inv = Session.Character.Inventory.AddToInventory(mapItemInstance)
+                                                .FirstOrDefault();
+                                            }
+                                        }
+                                        else
+                                        {
+                                            inv = Session.Character.Inventory.AddToInventory(mapItemInstance)
                                             .FirstOrDefault();
+                                        }
                                         if (inv != null)
                                         {
                                             Session.CurrentMapInstance.DroppedList.Remove(getPacket.TransportId);

@@ -2491,6 +2491,39 @@ namespace OpenNos.GameObject
                             }
                             break;
 
+                        case BCardType.CardType.Type95:
+                            break;
+
+                        case BCardType.CardType.Type100:
+                            break;
+
+                        case BCardType.CardType.Type101:
+                            break;
+
+                        case BCardType.CardType.Type102:
+                            break;
+
+                        case BCardType.CardType.Type103:
+                            break;
+
+                        case BCardType.CardType.Type104:
+                            break;
+
+                        case BCardType.CardType.Type107:
+                            break;
+
+                        case BCardType.CardType.Type108:
+                            break;
+
+                        case BCardType.CardType.Type109:
+                            break;
+
+                        case BCardType.CardType.Type110:
+                            break;
+
+                        case BCardType.CardType.Spsl:
+                            break;
+
                         default:
                             Logger.Warn($"Card Type {Type} not defined!");
                             break;

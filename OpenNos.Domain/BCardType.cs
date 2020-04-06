@@ -110,6 +110,7 @@ namespace OpenNos.Domain
             MartialArts = 89,
             // ??? = 90~95,
             LotusSkills = 91,
+            Type95 = 95,
             PixieCostumeWings = 96,
             WolfMaster = 97,
             MobsDamage = 99,
@@ -1118,6 +1119,11 @@ namespace OpenNos.Domain
         {
             ChangeMoonSkills = 31,
             ChangeLotusSkills = 41
+        }
+
+        public enum Type95 : byte
+        {
+            IncreaseItemDrop = 10
         }
 
         public enum WolfMaster : byte
