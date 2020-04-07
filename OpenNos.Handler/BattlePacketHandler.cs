@@ -847,6 +847,32 @@ namespace OpenNos.Handler
                     target.Character.LastEffect43 = DateTime.Now;
                 }
 
+                if (rnd < 25 && hitRequest.Session.Character.HasBuff(4014))
+                {
+                    target.Character.AddBuff(new Buff(187, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    target.Character.LastEffect45 = DateTime.Now;
+                }
+                if (rnd < 30 && hitRequest.Session.Character.HasBuff(4017))
+                {
+                    target.Character.AddBuff(new Buff(70, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    target.Character.LastEffect46 = DateTime.Now;
+                }
+                if (rnd < 20 && hitRequest.Session.Character.HasBuff(4017))
+                {
+                    target.Character.AddBuff(new Buff(68, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    target.Character.LastEffect46 = DateTime.Now;
+                }
+                if (rnd < 35 && hitRequest.Session.Character.HasBuff(4015))
+                {
+                    target.Character.AddBuff(new Buff(133, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    target.Character.LastEffect44 = DateTime.Now;
+                }
+                if (rnd < 35 && hitRequest.Session.Character.HasBuff(4016))
+                {
+                    hitRequest.Session.Character.AddBuff(new Buff(453, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    hitRequest.Session.Character.LastEffect47 = DateTime.Now;
+                }
+
                 //Pestilence by Swordsman 8th SP
                 rnd = ServerManager.RandomNumber();
                 if (rnd <= 80 && hitRequest.Skill.SkillVNum == 1347)

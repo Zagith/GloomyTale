@@ -307,6 +307,14 @@ namespace OpenNos.GameObject
 
         public DateTime LastEffect43 { get; set; }
 
+        public DateTime LastEffect44 { get; set; }
+
+        public DateTime LastEffect45 { get; set; }
+
+        public DateTime LastEffect46 { get; set; }
+
+        public DateTime LastEffect47 { get; set; }
+
         public DateTime LastFunnelUse { get; set; }
 
         public DateTime LastHealth { get; set; }
@@ -2118,31 +2126,57 @@ namespace OpenNos.GameObject
                 {
                     MessageCounter--;
                 }
-
-                if (MapInstance != null
-                    && HasBuff(CardType.FrozenDebuff, (byte)AdditionalTypes.FrozenDebuff.EternalIce)
-                    && LastFreeze.AddSeconds(1) <= DateTime.Now)
+                if (MapInstance != null)
                 {
-                    LastFreeze = DateTime.Now;
-                    MapInstance.Broadcast(GenerateEff(35));
-                }
+                    if (HasBuff(CardType.FrozenDebuff, (byte)AdditionalTypes.FrozenDebuff.EternalIce)
+                        && LastFreeze.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastFreeze = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(35));
+                    }
 
-                if (MapInstance != null
-                    && HasBuff(754)
-                    && LastEffect42.AddSeconds(2) <= DateTime.Now)
-                {
-                    LastEffect42 = DateTime.Now;
-                    MapInstance.Broadcast(GenerateEff(42));
-                }
+                    if (HasBuff(754)
+                        && LastEffect42.AddSeconds(2) <= DateTime.Now)
+                    {
+                        LastEffect42 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(42));
+                    }
 
-                if (MapInstance != null
-                    && HasBuff(553)
-                    && LastEffect43.AddSeconds(1) <= DateTime.Now)
-                {
-                    LastEffect43 = DateTime.Now;
-                    MapInstance.Broadcast(GenerateEff(43));
-                }
+                    if (HasBuff(553)
+                        && LastEffect43.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastEffect43 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(43));
+                    }
 
+                    if (HasBuff(133)
+                       && LastEffect44.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastEffect44 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(35));
+                    }
+
+                    if (HasBuff(187)
+                       && LastEffect45.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastEffect45 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(24));
+                    }
+
+                    if ((HasBuff(70) || HasBuff(81))
+                       && LastEffect46.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastEffect46 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(651));
+                    }
+
+                    if (HasBuff(453)
+                       && LastEffect47.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastEffect47 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(654));
+                    }
+                }
                 if (MapInstance == Miniland && LastLoyalty.AddSeconds(10) <= DateTime.Now)
                 {
                     LastLoyalty = DateTime.Now;
@@ -3092,9 +3126,9 @@ namespace OpenNos.GameObject
         {
             return new ExtsPacket
             {
-                EquipmentExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                MainExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                EtcExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12))
+                EquipmentExtension = (byte)((HaveBigBackPack() ? ServerManager.Instance.Configuration.BackpackSize : 48) + ((HaveBackpack() ? 1 : 0) * 12)),
+                MainExtension = (byte)((HaveBigBackPack() ? ServerManager.Instance.Configuration.BackpackSize : 48) + ((HaveBackpack() ? 1 : 0) * 12)),
+                EtcExtension = (byte)((HaveBigBackPack() ? ServerManager.Instance.Configuration.BackpackSize : 48) + ((HaveBackpack() ? 1 : 0) * 12))
             };
         }
 
@@ -5676,6 +5710,7 @@ namespace OpenNos.GameObject
 
         public bool HaveBackpack() => StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.BackPack);
 
+        public bool HaveBigBackPack() => StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.BigBackPack);
         public void IncreaseDollars(int amount)
         {
             try

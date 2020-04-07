@@ -2493,7 +2493,10 @@ namespace OpenNos.GameObject
 
                         case BCardType.CardType.Type95:
                             break;
-
+                        case BCardType.CardType.PixieCostumeWings:
+                            break;
+                        case BCardType.CardType.MobsDamage:
+                            break;
                         case BCardType.CardType.Type100:
                             break;
 

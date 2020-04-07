@@ -1099,6 +1099,21 @@ namespace OpenNos.GameObject
                     }
                     break;
 
+                case 604:
+                    if (session.Character.StaticBonusList.All(s => s.StaticBonusType != StaticBonusType.BigBackPack))
+                    {
+                        session.Character.StaticBonusList.Add(new StaticBonusDTO
+                        {
+                            CharacterId = session.Character.CharacterId,
+                            DateEnd = DateTime.Now.AddYears(15),
+                            StaticBonusType = StaticBonusType.BigBackPack
+                        });
+                        session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                        session.SendPacket(session.Character.GenerateExts());
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                    }
+                    break;
+
                 // Pet Basket
                 case 1007:
                     if (session.Character.StaticBonusList.All(s => s.StaticBonusType != StaticBonusType.PetBasket))
