@@ -3593,7 +3593,7 @@ namespace OpenNos.GameObject
                 }
 
                 // end owner set
-                if (Session.HasCurrentMapInstance && ((MapInstance.MapInstanceType == MapInstanceType.BaseMapInstance || MapInstance.MapInstanceType == MapInstanceType.LodInstance) || MapInstance.DropAllowed))
+                if (Session.HasCurrentMapInstance && ((MapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance || MapInstance.MapInstanceType == MapInstanceType.BaseMapInstance || MapInstance.MapInstanceType == MapInstanceType.LodInstance) || MapInstance.DropAllowed))
                 {
                     short[] explodeMonsters = new short[] { 1348, 1906 };
 
