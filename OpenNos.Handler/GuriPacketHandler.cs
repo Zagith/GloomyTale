@@ -596,6 +596,22 @@ namespace OpenNos.Handler
                         Session.Character.ClearLaurena();
                     }
                 }
+                else if (guriPacket.Type == 514) // Meteore event
+                {
+                    if (ServerManager.Instance.IsInstantBattle == true)
+                    {
+                        Session.Character.IsWaitingForEvent |= ServerManager.Instance.EventInWaiting;
+                    }
+                    else
+                    {
+                        if (ServerManager.Instance.EventInWaiting == true && Session.Character.IsWaitingForEvent == false)
+                        {
+                            Session.SendPacket("bsinfo 0 1 30 0");
+                            Session.SendPacket("esf 2");
+                            Session.Character.IsWaitingForEvent = true;
+                        }
+                    }
+                }
                 else if (guriPacket.Type == 506) // Meteore event
                 {
                     if (ServerManager.Instance.IsInstantBattle == true)
@@ -1266,18 +1282,23 @@ namespace OpenNos.Handler
                     if (Session.Character.Inventory.CountItem(1216) >= 1)
                     {
                         ItemInstance specialistInstance = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-                        if (specialistInstance != null)
+                        if (Session.Character.UseSp != true)
                         {
-                            CustomHelper.Instance.SpeedPerfection(Session, specialistInstance);
+                            if (specialistInstance != null)
+                            {
+                                CustomHelper.Instance.SpeedPerfection(Session, specialistInstance);
+                            }
+                            else
+                            {
+                                Session.SendPacket(Session.Character.GenerateSay("You must wear the Special Card to perfect", 10));
+                            }
                         }
                         else
-                        {
-                            Session.SendPacket(Session.Character.GenerateSay("You must wear the Special Card to perfect", 10));
-                        }
+                            Session.SendPacket(Session.Character.GenerateSay("You must remove the transformation", 10));
                     }
                     else
                     {
-                        Session.SendPacket(Session.Character.GenerateSay("You need {item name} for perfect the sp", 10));
+                        Session.SendPacket(Session.Character.GenerateSay("You need Black Diamond Key for perfect the sp", 10));
                     }
                 }
             }

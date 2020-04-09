@@ -689,10 +689,11 @@ namespace OpenNos.GameObject
                 }
                 else
                 {
-                    targettedByMonsters = MapInstance?.Monsters.Where(s => s?.Target?.MapEntityId == MapEntityId && s.Target.EntityType == EntityType).Select(s => s.BattleEntity).ToList();
+
+                    targettedByMonsters = MapInstance.Monsters.Where(s => s.Target != null &&  s.Target.MapEntityId == MapEntityId && s.Target.EntityType == EntityType).Select(s => s.BattleEntity).ToList();
                     if (Character != null)
                     {
-                        Character.Mates.Where(s => s.IsTeamMember).ToList().ForEach(m => targettedByMonsters.AddRange(MapInstance?.Monsters.Where(s => s?.Target?.MapEntityId == m.BattleEntity.MapEntityId && s.Target.EntityType == m.BattleEntity.EntityType).Select(s => s.BattleEntity).ToList()));
+                        Character.Mates.Where(s => s.IsTeamMember).ToList().ForEach(m => targettedByMonsters.AddRange(MapInstance.Monsters.Where(s => s.Target?.MapEntityId == m.BattleEntity.MapEntityId && s.Target.EntityType == m.BattleEntity.EntityType).Select(s => s.BattleEntity).ToList()));
                     }
                 }
                 return targettedByMonsters;

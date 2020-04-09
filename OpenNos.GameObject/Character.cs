@@ -623,6 +623,16 @@ namespace OpenNos.GameObject
 
         public IDisposable SealDisposable { get; set; }
 
+        public bool CanAttackSh { get; set; }
+
+        public int SheepScore1 { get; set; }
+
+        public int SheepScore2 { get; set; }
+
+        public int SheepScore3 { get; set; }
+
+        public bool IsWaitingForGift { get; set; }
+
         public bool PyjamaDead { get; set; }
 
         #endregion
@@ -7444,6 +7454,40 @@ namespace OpenNos.GameObject
             Session.CurrentMapInstance.Broadcast($"tp {1} {CharacterId} {x} {y} 0");
             Session.SendPacket(GenerateCond());
         }
+
+        public void GenerateSheepScore(UserType type)
+        {
+            if (!CanAttackSh)
+            {
+                return;
+            }
+
+            // For SheepScore , If u have Killed Most Player and u are not Killed you have more Point in official need to re-write this later c:
+            // Not Important for moment.
+            switch (type)
+            {
+                case UserType.Player:
+                    SheepScore1 += 10;
+                    SheepScore3 += 1;
+                    break;
+                case UserType.Monster:
+                    SheepScore1 += 5;
+                    SheepScore2 += 1;
+                    break;
+                default:
+                    return;
+            }
+
+            Session.CurrentMapInstance?.Broadcast($"srlst 2 {CharacterId} {Name} {SheepScore1} {SheepScore2} {SheepScore3}");
+            CanAttackSh = false;
+            Session.SendPacket("sh_c");
+            Observable.Timer(TimeSpan.FromSeconds(7)).Subscribe(s =>
+            {
+                Session.SendPacket("sh_o");
+                CanAttackSh = true;
+            });
+        }
+
         #endregion
     }
 }

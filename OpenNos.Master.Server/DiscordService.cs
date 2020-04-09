@@ -96,10 +96,19 @@ namespace OpenNos.Master.Server
 
         public void Home(string characterName)
         {
+
             CharacterDTO character = DAOFactory.CharacterDAO.LoadByName(characterName);
             if (character != null)
             {
-                ServerManager.Instance.ChangeMap(character.CharacterId, 129, 127, 73);
+                long[][] connections = CommunicationServiceClient.Instance.RetrieveOnlineCharacters(character.CharacterId);
+                foreach (long[] connection in connections)
+                {
+                    if (connection != null)
+                    {
+                        ServerManager.Instance.ChangeMap(connection[0], 129, 127, 73);
+                    }
+                }
+                
             }
         }
     }

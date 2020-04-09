@@ -5,6 +5,7 @@ using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
+using OpenNos.GameObject.Packets.ClientPackets;
 using OpenNos.GameObject.Packets.ServerPackets;
 using System;
 using System.Collections.Concurrent;
@@ -29,6 +30,45 @@ namespace OpenNos.Handler
         #endregion
 
         #region Methods
+
+        public void ShPacket(ShPacket packet)
+        {
+            if (packet == null)
+            {
+                return;
+            }
+
+            switch (packet.TargetType)
+            {
+                case UserType.Player:
+                    ClientSession target = ServerManager.Instance.GetSessionBySessionId(packet.TargetId);
+
+                    if (target == null || !target.Character.CanAttackSh || target == Session)
+                    {
+                        return;
+                    }
+                    Session.Character.GenerateSheepScore(packet.TargetType);
+                    target.Character.Speed = 0;
+                    target.SendPacket(UserInterfaceHelper.GenerateInfo(string.Format(Language.Instance.GetMessageFromKey("RESURRECT_IN_SECONDS"), 10)));
+                    target.Character.CanAttackSh = false;
+                    Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(s =>
+                    {
+                        if (target != null || target != Session) // Possible Crash , bcs u have a Timer <- , Need to check if is useless or not 
+                        {
+                            target.Character.SheepScore1 -= 10; // Need to verify on Official Nostale If you Lost Only 10 Pts
+                            target.Character.CanAttackSh = true;
+                            target.Character.Speed = 5;
+                            ServerManager.Instance.TeleportOnRandomPlaceInMap(target, target.CurrentMapInstance.MapInstanceId);
+                        }
+                    });
+                    break;
+                case UserType.Monster:
+                    Session.Character.GenerateSheepScore(packet.TargetType);
+                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Out(UserType.Monster, packet.TargetId));
+                    break;
+            }
+        }
+
         public void ButtonCancel(BscPacket packet)
         {
             switch (packet.Type)

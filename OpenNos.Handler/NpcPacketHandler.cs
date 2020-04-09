@@ -1390,8 +1390,7 @@ namespace OpenNos.Handler
                 }
                 else if (npc.Shop?.ShopId == 99)
                 {
-                    ItemDTO item = DAOFactory.ItemDAO.LoadById(15297);
-                    Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10, item.Name[Session.Account.Language])}");
+                    Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10)}");
                 }
                 else if (!string.IsNullOrEmpty(npc.GetNpcDialog()))
                 {

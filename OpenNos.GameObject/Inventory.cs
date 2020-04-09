@@ -57,7 +57,7 @@ namespace OpenNos.GameObject
                 InventoryType.Specialist => 45 + Expensions[pocket],
                 InventoryType.Costume => 60 + Expensions[pocket],
                 InventoryType.Wear => 17,
-                _ => Owner.Session.Character.HaveBigBackPack() ? ServerManager.Instance.Configuration.BackpackSize + Expensions[pocket] : 48 + Expensions[pocket]
+                _ => Owner.Session != null && Owner.Session.Character.HaveBigBackPack() ? ServerManager.Instance.Configuration.BackpackSize + Expensions[pocket] : 48 + Expensions[pocket]
             });
         }
 

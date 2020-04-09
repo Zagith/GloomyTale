@@ -204,14 +204,14 @@ namespace OpenNos.GameObject
                                // Not Created for moment .
                             break;
                         case 2: // Sheep Mini Game
-                            /*session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
-                            EventHelper.Instance.GenerateEvent(EventType., false);
-                            session.Character.Inventory.RemoveItemAmountFromInventory(1, inv.Id);*/
+                            session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
+                            EventHelper.GenerateEvent(EventType.SHEEPGAME);
+                            session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                             break;
                         case 3: // Meteor Mini Game
-                            session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
+                           /* session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
                             EventHelper.GenerateEvent(EventType.METEORITEGAME);
-                            //session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                            session.Character.Inventory.RemoveItemFromInventory(inv.Id);*/
                             break;
                     }
                     break;

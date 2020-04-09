@@ -143,6 +143,14 @@ namespace OpenNos.GameObject
 
         public DateTime LastEffect43 { get; set; }
 
+        public DateTime LastEffect44 { get; set; }
+
+        public DateTime LastEffect45 { get; set; }
+
+        public DateTime LastEffect46 { get; set; }
+
+        public DateTime LastEffect47 { get; set; }
+
         public IDisposable LifeEvent { get; set; }
 
         public MapInstance MapInstance { get; set; }
@@ -1109,6 +1117,32 @@ namespace OpenNos.GameObject
                             BattleEntity.AddBuff(new Buff(754, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
                             BattleEntity.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, BattleEntity.MapMonster.MapMonsterId, 42));
                             BattleEntity.MapMonster.LastEffect42 = DateTime.Now;
+                        }
+
+                        if (rnd < 3 && attackerBattleEntity.Character.HasBuff(4014))
+                        {
+                            BattleEntity.AddBuff(new Buff(187, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapMonster.LastEffect45 = DateTime.Now;
+                        }
+                        if (rnd < 3 && attackerBattleEntity.Character.HasBuff(4017))
+                        {
+                            BattleEntity.AddBuff(new Buff(70, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapMonster.LastEffect46 = DateTime.Now;
+                        }
+                        if (rnd < 3 && attackerBattleEntity.Character.HasBuff(4017))
+                        {
+                            BattleEntity.AddBuff(new Buff(68, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapMonster.LastEffect46 = DateTime.Now;
+                        }
+                        if (rnd < 3 && attackerBattleEntity.Character.HasBuff(4015))
+                        {
+                            BattleEntity.AddBuff(new Buff(133, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapMonster.LastEffect44 = DateTime.Now;
+                        }
+                        if (rnd < 25 && attackerBattleEntity.Character.HasBuff(4016))
+                        {
+                            BattleEntity.AddBuff(new Buff(453, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapMonster.LastEffect47 = DateTime.Now;
                         }
 
                         if ((hitRequest.Skill.SkillVNum == 1122 ||
@@ -2262,6 +2296,11 @@ namespace OpenNos.GameObject
 
                     if (target.Character != null)
                     {
+                        if (target.Character.MeditationDictionary.Count != 0)
+                        {
+                            target.Character.AddBuff(new Buff(542, target.Character.Level), target.Character.BattleEntity);
+                            target.Character.MeditationDictionary.Clear();
+                        }
                         if (ServerManager.RandomNumber() < target.Character.GetBuff(CardType.DarkCloneSummon,
                             (byte)AdditionalTypes.DarkCloneSummon.ConvertDamageToHPChance)[0])
                         {

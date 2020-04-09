@@ -61,7 +61,7 @@ namespace OpenNos.GameObject.Event.GAMES
 
                 if (mapinstance.Item1.Sessions.Count() < 1)
                 {
-                    mapinstance.Item1.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("INSTANTBATTLE_NOT_ENOUGH_PLAYERS"), 0));
+                    mapinstance.Item1.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("OVILE_NOT_ENOUGH_PLAYERS"), 0));
                     EventHelper.Instance.ScheduleEvent(TimeSpan.FromSeconds(5), new EventContainer(mapinstance.Item1, EventActionType.DISPOSEMAP, null));
                     continue;
                 }
