@@ -597,16 +597,6 @@ namespace OpenNos.GameObject
             }) <= distance;
         }
 
-        public void RunTacchettaEvent()
-        {
-            OnTacchettaEvents.ForEach(e => EventHelper.Instance.RunEvent(e, monster: this));
-        }
-
-        public void RunTacchettaDivisoDueEvent()
-        {
-            OnTacchettaDivisoDueEvents.ForEach(e => EventHelper.Instance.RunEvent(e, monster: this));
-        }
-
         public void RunDeathEvent()
         {
             Buff.ClearAll();
@@ -1542,60 +1532,6 @@ namespace OpenNos.GameObject
                         }
                     }
 
-                }
-
-                if (CurrentHp > 0)
-                {
-                    if (hitRequest.Session.CurrentMapInstance.Map.MapId == 2517)
-                    {
-                        hitRequest.Session.Character.InstantBattleScore += 10;
-                    }
-                    #region TacchettaDivisoDue
-                    if (OnTacchettaDivisoDueEvents != null)
-                    {
-
-                        if ((MaxHp - CurrentHp >= MaxHp * 0.5) && TacchettaDivisoDue3 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                            TacchettaDivisoDue3 = true;
-                        }
-
-                        if ((MaxHp - CurrentHp >= MaxHp * 0.9) && TacchettaDivisoDue5 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                            TacchettaDivisoDue5 = true;
-                        }
-                    }
-                    #endregion
-
-                    #region Tacchetta
-                    if (OnTacchettaEvents != null)
-                    {
-                        if ((MaxHp - CurrentHp >= MaxHp / 5) && Tacchetta1 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchetta(this);
-                            Tacchetta1 = true;
-                        }
-
-                        if (((MaxHp - CurrentHp >= (MaxHp / 5) * 2)) && Tacchetta2 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchetta(this);
-                            Tacchetta2 = true;
-                        }
-
-                        if (((MaxHp - CurrentHp >= (MaxHp / 5) * 3)) && Tacchetta3 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchetta(this);
-                            Tacchetta3 = true;
-                        }
-
-                        if (((MaxHp - CurrentHp >= (MaxHp / 5) * 4)) && Tacchetta4 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchetta(this);
-                            Tacchetta4 = true;
-                        }
-                    }
-                    #endregion
                 }
 
                 if (CurrentHp <= 0 && !isCaptureSkill)

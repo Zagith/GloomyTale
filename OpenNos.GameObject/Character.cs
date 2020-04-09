@@ -147,8 +147,6 @@ namespace OpenNos.GameObject
 
         #region Properties
 
-        public int InstantBattleScore { get; set; }
-
         public bool IsDisposed { get; private set; }
 
         public AuthorityType Authority { get; set; }
@@ -965,32 +963,6 @@ namespace OpenNos.GameObject
 
             Session.SendPacket(this.GenerateFtPtPacket());
             Session.SendPackets(this.GenerateQuicklist());
-        }
-
-        public void GenerateTacchetta(MapMonster monsterToAttack)
-        {
-            lock (_syncObj)
-            {
-                if (monsterToAttack == null || !monsterToAttack.IsAlive)
-                {
-                    return;
-                }
-
-                monsterToAttack.RunTacchettaEvent();
-            }
-        }
-
-        public void GenerateTacchettaDivisoDue(MapMonster monsterToAttack)
-        {
-            lock (_syncObj)
-            {
-                if (monsterToAttack == null || !monsterToAttack.IsAlive)
-                {
-                    return;
-                }
-
-                monsterToAttack.RunTacchettaDivisoDueEvent();
-            }
         }
 
         public void GetDamageInPercentage(double percentage)
@@ -3690,7 +3662,7 @@ namespace OpenNos.GameObject
                                 }
 
                                 double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
-                                if (rndamount <= (double)drop.DropChance * dropRate / 1000.000 / divider)
+                                if (rndamount <= (double)drop.DropChance * dropRate / 1000.000)
                                 {
                                     x++;
                                     if (Session.CurrentMapInstance != null)
@@ -3809,7 +3781,7 @@ namespace OpenNos.GameObject
                                                 double multiplier = 1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseEarnedGold)[0] / 100D);
                                                 multiplier += (ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreGold)?.Value ?? 0) / 100D;
                                                 double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
-                                                session.Character.Gold += (int)(drop2.Amount * multiplier / divider);
+                                                session.Character.Gold += (int)(drop2.Amount * multiplier);
                                                 if (session.Character.Gold > maxGold)
                                                 {
                                                     session.Character.Gold = maxGold;
