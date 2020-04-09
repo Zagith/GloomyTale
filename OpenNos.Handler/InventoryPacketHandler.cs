@@ -763,8 +763,7 @@ namespace OpenNos.Handler
                 || (Session.Character.IsVehicled
                  && Session.CurrentMapInstance?.MapInstanceType != MapInstanceType.EventGameInstance)
                 || !Session.HasCurrentMapInstance
-                || Session.Character.IsSeal
-                || (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance && Session.CurrentMapInstance.InstanceBag.EndState != 0))
+                || Session.Character.IsSeal)
             {
                 return;
             }

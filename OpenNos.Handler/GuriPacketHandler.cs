@@ -1279,27 +1279,20 @@ namespace OpenNos.Handler
                 }
                 else if (guriPacket.Type == 7600)
                 {
-                    if (Session.Character.Inventory.CountItem(1216) >= 1)
+                    ItemInstance specialistInstance = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                    if (Session.Character.UseSp != true)
                     {
-                        ItemInstance specialistInstance = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
-                        if (Session.Character.UseSp != true)
+                        if (specialistInstance != null)
                         {
-                            if (specialistInstance != null)
-                            {
-                                CustomHelper.Instance.SpeedPerfection(Session, specialistInstance);
-                            }
-                            else
-                            {
-                                Session.SendPacket(Session.Character.GenerateSay("You must wear the Special Card to perfect", 10));
-                            }
+                            CustomHelper.Instance.SpeedPerfection(Session, specialistInstance);
                         }
                         else
-                            Session.SendPacket(Session.Character.GenerateSay("You must remove the transformation", 10));
+                        {
+                            Session.SendPacket(Session.Character.GenerateSay("You must wear the Special Card to perfect", 10));
+                        }
                     }
                     else
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay("You need Black Diamond Key for perfect the sp", 10));
-                    }
+                        Session.SendPacket(Session.Character.GenerateSay("You must remove the transformation", 10));
                 }
             }
         }

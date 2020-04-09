@@ -2151,13 +2151,6 @@ namespace OpenNos.GameObject
                         LastEffect46 = DateTime.Now;
                         MapInstance.Broadcast(GenerateEff(651));
                     }
-
-                    if (HasBuff(453)
-                       && LastEffect47.AddSeconds(1) <= DateTime.Now)
-                    {
-                        LastEffect47 = DateTime.Now;
-                        MapInstance.Broadcast(GenerateEff(654));
-                    }
                 }
                 if (MapInstance == Miniland && LastLoyalty.AddSeconds(10) <= DateTime.Now)
                 {
@@ -5693,6 +5686,7 @@ namespace OpenNos.GameObject
         public bool HaveBackpack() => StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.BackPack);
 
         public bool HaveBigBackPack() => StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.BigBackPack);
+
         public void IncreaseDollars(int amount)
         {
             try
@@ -6498,7 +6492,7 @@ namespace OpenNos.GameObject
 
         public void GetReputation(int amount, bool applyRate = true)
         {
-            if (Reputation >= (long)SideReputType.Side10)
+           /* if (Reputation >= (long)SideReputType.Side10)
             {
                 amount = amount * (amount > 0 && applyRate ? ServerManager.Instance.Configuration.RateReputation : 1);
                 int beforeReputIco = GetReputationIco();
@@ -6517,7 +6511,7 @@ namespace OpenNos.GameObject
                 {
                     Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("REPUT_DECREASE"), amount), 11));
                 }
-            }
+            }*/
         }
 
         public void SetRespawnPoint(short mapId, short mapX, short mapY)

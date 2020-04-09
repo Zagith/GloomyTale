@@ -1129,10 +1129,10 @@ namespace OpenNos.GameObject
                             BattleEntity.AddBuff(new Buff(133, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
                             BattleEntity.MapMonster.LastEffect44 = DateTime.Now;
                         }
-                        if (rnd < 25 && attackerBattleEntity.Character.HasBuff(4016))
+                        if (rnd < 100 && attackerBattleEntity.Character.HasBuff(4016) && !attackerBattleEntity.Character.HasBuff(453))
                         {
-                            BattleEntity.AddBuff(new Buff(453, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
-                            BattleEntity.MapMonster.LastEffect47 = DateTime.Now;
+                            attackerBattleEntity.Character.AddBuff(new Buff(453, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            MapInstance.Broadcast(attackerBattleEntity.Character.GenerateEff(647));
                         }
 
                         if ((hitRequest.Skill.SkillVNum == 1122 ||

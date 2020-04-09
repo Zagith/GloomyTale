@@ -868,10 +868,10 @@ namespace OpenNos.Handler
                     target.Character.LastEffect44 = DateTime.Now;
                 }
 
-                if (rnd < 25 && hitRequest.Session.Character.HasBuff(4016))
+                if (rnd < 100 && hitRequest.Session.Character.HasBuff(4016) && !hitRequest.Session.Character.HasBuff(453))
                 {
-                    target.Character.AddBuff(new Buff(453, target.Character.Level), hitRequest.Session.Character.BattleEntity);
-                    target.Character.LastEffect47 = DateTime.Now;
+                    hitRequest.Session.Character.AddBuff(new Buff(453, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    hitRequest.Session.CurrentMapInstance?.Broadcast(hitRequest.Session.Character.GenerateEff(647));
                 }
 
                 if (target.Character.MeditationDictionary.Count != 0)
@@ -965,7 +965,7 @@ namespace OpenNos.Handler
                                 }
                             }
 
-                            int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
+                            /*int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
 
                             if (levelDifference < 30)
                             {
@@ -984,11 +984,11 @@ namespace OpenNos.Handler
                                     ReputationValue -= 150 + (-levelDifference * 10);
                                 }
 
-                                ReputationValue *= ServerManager.Instance.Configuration.RateReputation;
+                                iReputationValue *= ServerManager.Instance.Configuration.RateReputation;
 
                                 if (ReputationValue > 0)
                                 {
-                                    if (Session.Character.Reputation >= (long)SideReputType.Side10)
+                                    f (Session.Character.Reputation >= (long)SideReputType.Side10)
                                     {
                                         hitRequest.Session.Character.Reputation += ReputationValue;
                                         hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
@@ -1025,7 +1025,7 @@ namespace OpenNos.Handler
                             else
                             {
                                 hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TOO_LEVEL_DIFFERENCE"), 11));
-                            }
+                            }*/
                         }
                         else
                         {
