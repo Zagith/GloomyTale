@@ -237,10 +237,8 @@
     <Compile Include="Packets\CommandPackets\ChannelstartPacket.cs" />
     <Compile Include="Packets\CommandPackets\CHPacket.cs" />
     <Compile Include="Packets\CommandPackets\ContributePacket.cs" />
-    <Compile Include="Packets\CommandPackets\MeteoriteSpawnPacket.cs" />
     <Compile Include="Packets\CommandPackets\PartnerSpXpPacket.cs" />
     <Compile Include="Packets\CommandPackets\RemoveUserLogPacket.cs" />
-    <Compile Include="Packets\CommandPackets\SetLockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UnlockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UserLogPacket.cs" />
     <Compile Include="Packets\ServerPackets\ExtsPacket.cs" />

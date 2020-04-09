@@ -2040,9 +2040,6 @@
   <data name="I18NITEMS_LOADED" xml:space="preserve">
     <value>I18N Items loaded</value>
   </data>
-  <data name="METEORITE_SPAWN" xml:space="preserve">
-    <value>Gloomy Stone of level {0} appeared to{2}</value>
-  </data>
   <data name="WORLD_SERVER_CONSOLE_TITLE" xml:space="preserve">
     <value>GloomyTale - WORLD SERVER - ID : {0} | Players : {1} | IP : {2}:{3}</value>
   </data>

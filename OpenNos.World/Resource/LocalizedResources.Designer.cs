@@ -3229,15 +3229,6 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gloomy Stone of level {0} appeared to{2}.
-        /// </summary>
-        internal static string METEORITE_SPAWN {
-            get {
-                return ResourceManager.GetString("METEORITE_SPAWN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The meteorite game has started!.
         /// </summary>
         internal static string METEORITE_STARTED {

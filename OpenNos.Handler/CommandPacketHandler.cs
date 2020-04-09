@@ -56,44 +56,8 @@ namespace OpenNos.Handler
         public void ChannelStart(ChannelstartPacket channelstartPacket)
         {
             Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[ChannelStart]");
-
-
-            /*if (channelstartPacket.Corona != 1)
-            {
-                Process.Start("C:\\Users\\Administrator\\Desktop\\downsidenossource\\OpenNos.World\\bin\\Release\\OpenNos.World.exe", $"--nomsg");
-            }
-            else
-            {
-                Process.Start("C:\\Users\\Administrator\\Desktop\\downsidenossource\\OpenNos.CH51\\bin\\Release\\OpenNos.World.exe", $"--nomsg");
-            }*/
             Process.Start("OpenNos.World.exe", $"--nomsg");
             Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
-           /* if (channelstartPacket.Shout == 1)
-            {
-                ServerManager.Shout("A new Channel has been started!");
-            }
-            else if (channelstartPacket.Shout != 1)
-            {
-                return;
-            }*/
-        }
-
-        /// <summary>
-        /// $Meteorite Command
-        /// </summary>
-        /// <param name="meteoriteSpawnPacket"></param>
-        public void MeteoriteSpawn(MeteoriteSpawnPacket meteoriteSpawnPacket)
-        {
-            if (meteoriteSpawnPacket != null)
-            {
-                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[MeteoriteSpawn]");
-
-                ServerManager.Instance.MeteoriteSpawn();
-            }
-            else
-            {
-                Session.SendPacket(Session.Character.GenerateSay(EventPacket.ReturnHelp(), 10));
-            }
         }
 
         public void AddUserLog(AddUserLogPacket packet)
@@ -181,36 +145,6 @@ namespace OpenNos.Handler
             else
             {
                 Session.SendPacket(Session.Character.GenerateSay(Act4StatPacket.ReturnHelp(), 10));
-            }
-        }
-
-        public void SetPin(SetLockPacket p)
-        {
-            if (p != null && p.Message != null)
-            {
-                //if (Session.Character.SecondPassword == null)
-                {
-                    if (p.Message.Length >= 8)
-                    {
-                        //Session.Character.SecondPassword = CryptographyBase.Sha512(p.Message);
-                        Session.Character.Save();
-                        //Session.Character.hasVerifiedSecondPassword = true;
-                        Session.SendPacket(Session.Character.GenerateSay($"Done! Your second password (or pin) is now: {p.Message}. Do not forget it.", 10));
-                        Session.Character.HasGodMode = false;
-                    }
-                    else
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"Your pin lenght cannot be less than 8 characters.", 10));
-                    }
-                }
-                //else
-                {
-                    //Session.SendPacket(Session.Character.GenerateSay($"You already have a pin. Please, if you have forgotten it, contact a staff member.", 10));
-                }
-            }
-            else
-            {
-                Session.SendPacket(Session.Character.GenerateSay(SetLockPacket.ReturnHelp(), 10));
             }
         }
 
