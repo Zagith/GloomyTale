@@ -240,7 +240,7 @@ namespace OpenNos.Handler
                         new MapCell { X = Session.Character.PositionX, Y = Session.Character.PositionY },
                         new MapCell { X = Session.Character.Group.Raid.PositionX, Y = Session.Character.Group.Raid.PositionY }) < 2)
                 {
-                    if ((Session.Character.Group.SessionCount > 2 || Session.Character.Authority >= AuthorityType.TGM)
+                    if ((Session.Character.Group.SessionCount > 0 || Session.Character.Authority >= AuthorityType.TGM)
                     && Session.Character.Group.Sessions.All(s => s.CurrentMapInstance == Session.CurrentMapInstance))
                     {
                         if (Session.Character.Group.Raid.FirstMap == null)
@@ -255,13 +255,13 @@ namespace OpenNos.Handler
 
                         Session.Character.Group.Raid.InstanceBag.Lock = true;
 
-                        //Session.Character.Group.Characters.Where(s => s.CurrentMapInstance != Session.CurrentMapInstance).ToList().ForEach(
-                        //session =>
-                        //{
-                        //    Session.Character.Group.LeaveGroup(session);
-                        //    session.SendPacket(session.Character.GenerateRaid(1, true));
-                        //    session.SendPacket(session.Character.GenerateRaid(2, true));
-                        //});
+                        Session.Character.Group.Sessions.Where(s => s.CurrentMapInstance != Session.CurrentMapInstance).ToList().ForEach(
+                        session =>
+                        {
+                            Session.Character.Group.LeaveGroup(session);
+                            session.SendPacket(session.Character.GenerateRaid(1, true));
+                            session.SendPacket(session.Character.GenerateRaid(2, true));
+                        });
 
                         Session.Character.Group.Raid.InstanceBag.Lives = (short)Session.Character.Group.SessionCount;
 

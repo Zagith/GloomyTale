@@ -61,7 +61,7 @@ namespace OpenNos.GameObject
 
             Logger.Info(Language.Instance.GetMessageFromKey("STARTED"), memberName: "NetworkManager");
 #if !DEBUG
-            DiscordHelper serverStatus = new DiscordHelper();
+           // DiscordHelper serverStatus = new DiscordHelper();
 #endif
 
         }

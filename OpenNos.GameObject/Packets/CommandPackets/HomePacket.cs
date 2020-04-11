@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$Home", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.User })]
+    [PacketHeader("$Home", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.GM })]
     public class HomePacket : PacketDefinition
     {
         #region Properties

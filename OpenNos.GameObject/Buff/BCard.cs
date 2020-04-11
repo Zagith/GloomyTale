@@ -114,10 +114,19 @@ namespace OpenNos.GameObject
                 delayTime = ForceDelay * 100;
             }
 
-            if (BCardId > 0)
+            if (BCardId != null && BCardId > 0)
+            {
+                try
+                {
                     session.BCardDisposables[skill?.SkillVNum == 1098 ? skill.SkillVNum * 1000 : BCardId]?.Dispose();
-                else
+                }
+                catch (NullReferenceException ex)
+                {
+                    Logger.Debug(
+                        $"Bcard error: {ex}");
                     return;
+                }
+            }
             if (session.MapInstance.MapInstanceType != MapInstanceType.EventGameInstance)
                 session.BCardDisposables[skill?.SkillVNum == 1098 ? skill.SkillVNum * 1000 : BCardId] = Observable.Timer(TimeSpan.FromMilliseconds(delayTime)).Subscribe(o =>
                 {
