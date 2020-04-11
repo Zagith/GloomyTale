@@ -953,12 +953,6 @@ namespace OpenNos.GameObject
                                         return;
                                     }
 
-                                    if (session.Account.IsLimited)
-                                    {
-                                        session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                                        return;
-                                    }
-
                                     switch (packetType)
                                     {
                                         case 0:

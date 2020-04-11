@@ -236,10 +236,8 @@
     <Compile Include="Packets\CommandPackets\AddUserLogPacket.cs" />
     <Compile Include="Packets\CommandPackets\ChannelstartPacket.cs" />
     <Compile Include="Packets\CommandPackets\CHPacket.cs" />
-    <Compile Include="Packets\CommandPackets\ContributePacket.cs" />
     <Compile Include="Packets\CommandPackets\PartnerSpXpPacket.cs" />
     <Compile Include="Packets\CommandPackets\RemoveUserLogPacket.cs" />
-    <Compile Include="Packets\CommandPackets\UnlockPacket.cs" />
     <Compile Include="Packets\CommandPackets\UserLogPacket.cs" />
     <Compile Include="Packets\ServerPackets\ExtsPacket.cs" />
     <Compile Include="Packets\ServerPackets\TitlePacket.cs" />
@@ -261,7 +259,6 @@
     <Compile Include="Packets\CommandPackets\ReloadSI.cs" />
     <Compile Include="Packets\CommandPackets\AddNpcPacket.cs" />
     <Compile Include="Packets\CommandPackets\AddQuestPacket.cs" />
-    <Compile Include="Packets\CommandPackets\ClassPackPacket.cs" />
     <Compile Include="Packets\CommandPackets\CustomNpcMonsterNamePacket.cs" />
     <Compile Include="Packets\CommandPackets\DropPacket.cs" />
     <Compile Include="Packets\CommandPackets\HomePacket.cs" />
@@ -277,7 +274,6 @@
     <Compile Include="Packets\CommandPackets\MapResetPacket.cs" />
     <Compile Include="Packets\CommandPackets\ChangeShopNamePacket.cs" />
     <Compile Include="Packets\CommandPackets\BackMobPacket.cs" />
-    <Compile Include="Packets\CommandPackets\GiveMallPacket.cs" />
     <Compile Include="Packets\CustomPackets\NtcpAcPacket.cs" />
     <Compile Include="Packets\TaCallPacket.cs" />
     <Compile Include="PartnerSkill.cs" />

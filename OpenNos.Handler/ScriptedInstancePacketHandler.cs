@@ -185,17 +185,45 @@ namespace OpenNos.Handler
         /// <param name="escapePacket"></param>
         public void Escape(EscapePacket escapePacket)
         {
-            if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance)
+            switch (Session.CurrentMapInstance.MapInstanceType)
             {
-                ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
-                    Session.Character.MapX, Session.Character.MapY);
-                Session.Character.Timespace = null;
-            }
-            else if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.RaidInstance)
-            {
-                ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
-                    Session.Character.MapX, Session.Character.MapY);
-                ServerManager.Instance.GroupLeave(Session);
+                case MapInstanceType.TimeSpaceInstance:
+                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
+                        Session.Character.MapX, Session.Character.MapY);
+                    Session.Character.Timespace = null;
+                    break;
+
+                case MapInstanceType.RaidInstance:
+                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
+                        Session.Character.MapX, Session.Character.MapY);
+                    ServerManager.Instance.GroupLeave(Session);
+                    break;
+
+                case MapInstanceType.TalentArenaMapInstance:
+                    ServerManager.Instance.TeleportOnRandomPlaceInMap(Session, ServerManager.Instance.ArenaInstance.MapInstanceId);
+                    break;
+
+                case MapInstanceType.SheepGameInstance:
+                    int miniscore = 50; // your score
+                    if (Session.Character.SheepScore1 > miniscore && Session.Character.IsWaitingForGift == true) // Anti Afk to get Reward
+                    {
+                        short[] random1 = { 1, 2, 3 };
+                        short[] random = { 2, 4, 6 };
+                        short[] acorn = { 5947, 5948, 5949, 5950 };
+                        Session.Character.GiftAdd(5951, random1[ServerManager.RandomNumber(0, random1.Length)]);
+                        int rnd = ServerManager.RandomNumber(0, 5);
+                        switch (rnd)
+                        {
+                            case 2:
+                                Session.Character.GiftAdd(acorn[ServerManager.RandomNumber(0, acorn.Length)], random[ServerManager.RandomNumber(0, random.Length)]);
+                                break;
+                            default:
+                                break;
+                        }
+                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId, Session.Character.MapX, Session.Character.MapY);
+                        Session.Character.IsWaitingForGift = false;
+                    }
+                    break;
             }
         }
 

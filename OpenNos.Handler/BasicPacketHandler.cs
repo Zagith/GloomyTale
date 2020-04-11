@@ -1385,54 +1385,49 @@ namespace OpenNos.Handler
                     Session.SendPacket(Session.Character.GenerateSay($"This map requires the object: " + portal.NomeOggetto + "and VIP bonus!", 10));
                     return;
                 }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side1 && portal.Side == (int)SideReputMapType.Side1)
+                if (Session.Character.Reputation < (long)SideReputPortalType.Side2 && portal.Side == (int)SideReputMapType.Side2 && Session.Character.Level < 25)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 1", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 2 and level 25", 10));
                     return;
                 }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side2 && portal.Side == (int)SideReputMapType.Side2)
+                if (Session.Character.Reputation < (long)SideReputPortalType.Side3 && portal.Side == (int)SideReputMapType.Side3 && Session.Character.Level < 35)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 2", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 3 and level 35", 10));
                     return;
                 }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side3 && portal.Side == (int)SideReputMapType.Side3)
+                if (Session.Character.Reputation < (long)SideReputPortalType.Side4 && portal.Side == (int)SideReputMapType.Side4 && Session.Character.Level < 45)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 3", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 4 and level 45", 10));
                     return;
                 }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side4 && portal.Side == (int)SideReputMapType.Side4)
+                if (Session.Character.Reputation < (long)SideReputPortalType.Side5 && portal.Side == (int)SideReputMapType.Side5 && Session.Character.Level < 55)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 4", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 5 and level 55", 10));
                     return;
                 }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side5 && portal.Side == (int)SideReputMapType.Side5)
+                if (Session.Character.Reputation < (long)SideReputPortalType.Side6 && portal.Side == (int)SideReputMapType.Side6 && Session.Character.Level < 65)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 5", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 6 and level 65", 10));
                     return;
                 }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side6 && portal.Side == (int)SideReputMapType.Side6)
+                if (Session.Character.Reputation < (long)SideReputPortalType.Side7 && portal.Side == (int)SideReputMapType.Side7 && Session.Character.Level < 75)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 6", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 7 and level 75", 10));
                     return;
                 }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side7 && portal.Side == (int)SideReputMapType.Side7)
+                if (Session.Character.Reputation < (long)SideReputPortalType.Side8 && portal.Side == (int)SideReputMapType.Side8 && Session.Character.Level < 85)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 7", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 8 and level 85", 10));
                     return;
                 }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side8 && portal.Side == (int)SideReputMapType.Side8)
+                if (Session.Character.Reputation < (long)SideReputPortalType.Side9 && portal.Side == (int)SideReputMapType.Side9 && Session.Character.Level < 90)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 8", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 9 and level 90", 10));
                     return;
                 }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side9 && portal.Side == (int)SideReputMapType.Side9)
+                if (Session.Character.Reputation < (long)SideReputPortalType.Side10 && portal.Side == (int)SideReputMapType.Side10 && Session.Character.Level < 93)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 9", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side10 && portal.Side == (int)SideReputMapType.Side10)
-                {
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 10", 10));
+                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 10 and level 93", 10));
                     return;
                 }
                 if (portal.RequiredItem != 0)

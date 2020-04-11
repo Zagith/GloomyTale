@@ -49,8 +49,6 @@ namespace OpenNos.GameObject
 
         #region Properties
 
-        public bool IsLimited => Authority >= AuthorityType.TMOD && Authority != AuthorityType.Administrator && Authority != AuthorityType.DEV;//permited by Pavvx
-
         public List<PenaltyLogDTO> PenaltyLogs
         {
             get

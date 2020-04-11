@@ -447,11 +447,6 @@ namespace OpenNos.Handler
         [Packet("m_shop")]
         public void CreateShop(string packet)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             string[] packetsplit = packet.Split(' ');
             InventoryType[] type = new InventoryType[20];

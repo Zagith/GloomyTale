@@ -321,11 +321,6 @@ namespace OpenNos.Handler
         /// <param name="fDepositPacket"></param>
         public void FamilyDeposit(FDepositPacket fDepositPacket)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             if (fDepositPacket == null)
             {
@@ -770,11 +765,6 @@ namespace OpenNos.Handler
         /// <param name="fReposPacket"></param>
         public void FamilyRepos(FReposPacket fReposPacket)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             if (fReposPacket == null)
             {

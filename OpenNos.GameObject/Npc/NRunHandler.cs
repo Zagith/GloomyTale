@@ -1489,11 +1489,6 @@ namespace OpenNos.GameObject
 
                 case 1600:
                     {
-                        if (Session.Account.IsLimited)
-                        {
-                            Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                            return;
-                        }
 
                         Session.SendPacket(Session.Character.OpenFamilyWarehouse());
                     }

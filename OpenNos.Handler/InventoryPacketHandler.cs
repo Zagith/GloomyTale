@@ -232,11 +232,6 @@ namespace OpenNos.Handler
         [Packet("exc_list")]
         public void ExchangeList(string packet)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             Logger.LogUserEvent("EXC_LIST", Session.GenerateIdentity(),
                 $"Packet string: {packet.ToString()}");
@@ -358,11 +353,6 @@ namespace OpenNos.Handler
         /// <param name="exchangeRequestPacket"></param>
         public void ExchangeRequest(ExchangeRequestPacket exchangeRequestPacket)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             if (exchangeRequestPacket != null)
             {
@@ -390,11 +380,6 @@ namespace OpenNos.Handler
                                 return;
                             }
 
-                            if (targetSession.Account.IsLimited)
-                            {
-                                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("CANNOT_TRADE_LIMITED_ACCOUNT")));
-                                return;
-                            }
 
                             if (targetSession.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance)
                             {
@@ -753,11 +738,6 @@ namespace OpenNos.Handler
         /// <param name="getPacket"></param>
         public void GetItem(GetPacket getPacket)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             if (getPacket == null || Session.Character.LastSkillUse.AddSeconds(1) > DateTime.Now
                 || (Session.Character.IsVehicled
@@ -1123,12 +1103,6 @@ namespace OpenNos.Handler
         /// <param name="putPacket"></param>
         public void PutItem(PutPacket putPacket)
         {
-
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             if (putPacket == null || Session.Character.HasShopOpened)
             {
