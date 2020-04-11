@@ -271,12 +271,6 @@ namespace OpenNos.Handler
                 return;
             }
 
-            if (suctlPacket.TargetType != UserType.Npc
-                && Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT"), 0));
-                return;
-            }
 
             PenaltyLogDTO penalty = Session.Account.PenaltyLogs.OrderByDescending(s => s.DateEnd).FirstOrDefault();
             if (Session.Character.IsMuted() && penalty != null)

@@ -147,8 +147,6 @@ namespace OpenNos.GameObject
 
         #region Properties
 
-        public int InstantBattleScore { get; set; }
-
         public bool IsDisposed { get; private set; }
 
         public AuthorityType Authority { get; set; }
@@ -306,6 +304,14 @@ namespace OpenNos.GameObject
         public DateTime LastEffect42 { get; set; }
 
         public DateTime LastEffect43 { get; set; }
+
+        public DateTime LastEffect44 { get; set; }
+
+        public DateTime LastEffect45 { get; set; }
+
+        public DateTime LastEffect46 { get; set; }
+
+        public DateTime LastEffect47 { get; set; }
 
         public DateTime LastFunnelUse { get; set; }
 
@@ -614,6 +620,16 @@ namespace OpenNos.GameObject
         public IDisposable WalkDisposable { get; set; }
 
         public IDisposable SealDisposable { get; set; }
+
+        public bool CanAttackSh { get; set; }
+
+        public int SheepScore1 { get; set; }
+
+        public int SheepScore2 { get; set; }
+
+        public int SheepScore3 { get; set; }
+
+        public bool IsWaitingForGift { get; set; }
 
         public bool PyjamaDead { get; set; }
 
@@ -947,32 +963,6 @@ namespace OpenNos.GameObject
 
             Session.SendPacket(this.GenerateFtPtPacket());
             Session.SendPackets(this.GenerateQuicklist());
-        }
-
-        public void GenerateTacchetta(MapMonster monsterToAttack)
-        {
-            lock (_syncObj)
-            {
-                if (monsterToAttack == null || !monsterToAttack.IsAlive)
-                {
-                    return;
-                }
-
-                monsterToAttack.RunTacchettaEvent();
-            }
-        }
-
-        public void GenerateTacchettaDivisoDue(MapMonster monsterToAttack)
-        {
-            lock (_syncObj)
-            {
-                if (monsterToAttack == null || !monsterToAttack.IsAlive)
-                {
-                    return;
-                }
-
-                monsterToAttack.RunTacchettaDivisoDueEvent();
-            }
         }
 
         public void GetDamageInPercentage(double percentage)
@@ -2118,31 +2108,50 @@ namespace OpenNos.GameObject
                 {
                     MessageCounter--;
                 }
-
-                if (MapInstance != null
-                    && HasBuff(CardType.FrozenDebuff, (byte)AdditionalTypes.FrozenDebuff.EternalIce)
-                    && LastFreeze.AddSeconds(1) <= DateTime.Now)
+                if (MapInstance != null)
                 {
-                    LastFreeze = DateTime.Now;
-                    MapInstance.Broadcast(GenerateEff(35));
-                }
+                    if (HasBuff(CardType.FrozenDebuff, (byte)AdditionalTypes.FrozenDebuff.EternalIce)
+                        && LastFreeze.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastFreeze = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(35));
+                    }
 
-                if (MapInstance != null
-                    && HasBuff(754)
-                    && LastEffect42.AddSeconds(2) <= DateTime.Now)
-                {
-                    LastEffect42 = DateTime.Now;
-                    MapInstance.Broadcast(GenerateEff(42));
-                }
+                    if (HasBuff(754)
+                        && LastEffect42.AddSeconds(2) <= DateTime.Now)
+                    {
+                        LastEffect42 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(42));
+                    }
 
-                if (MapInstance != null
-                    && HasBuff(553)
-                    && LastEffect43.AddSeconds(1) <= DateTime.Now)
-                {
-                    LastEffect43 = DateTime.Now;
-                    MapInstance.Broadcast(GenerateEff(43));
-                }
+                    if (HasBuff(553)
+                        && LastEffect43.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastEffect43 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(43));
+                    }
 
+                    if (HasBuff(133)
+                       && LastEffect44.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastEffect44 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(35));
+                    }
+
+                    if (HasBuff(187)
+                       && LastEffect45.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastEffect45 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(24));
+                    }
+
+                    if ((HasBuff(70) || HasBuff(81))
+                       && LastEffect46.AddSeconds(1) <= DateTime.Now)
+                    {
+                        LastEffect46 = DateTime.Now;
+                        MapInstance.Broadcast(GenerateEff(651));
+                    }
+                }
                 if (MapInstance == Miniland && LastLoyalty.AddSeconds(10) <= DateTime.Now)
                 {
                     LastLoyalty = DateTime.Now;
@@ -3092,9 +3101,9 @@ namespace OpenNos.GameObject
         {
             return new ExtsPacket
             {
-                EquipmentExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                MainExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12)),
-                EtcExtension = (byte)(ServerManager.Instance.Configuration.BackpackSize + ((HaveBackpack() ? 1 : 0) * 12))
+                EquipmentExtension = (byte)((HaveBigBackPack() ? ServerManager.Instance.Configuration.BackpackSize : 48) + ((HaveBackpack() ? 1 : 0) * 12)),
+                MainExtension = (byte)((HaveBigBackPack() ? ServerManager.Instance.Configuration.BackpackSize : 48) + ((HaveBackpack() ? 1 : 0) * 12)),
+                EtcExtension = (byte)((HaveBigBackPack() ? ServerManager.Instance.Configuration.BackpackSize : 48) + ((HaveBackpack() ? 1 : 0) * 12))
             };
         }
 
@@ -3549,7 +3558,7 @@ namespace OpenNos.GameObject
                 }
 
                 // end owner set
-                if (Session.HasCurrentMapInstance && ((MapInstance.MapInstanceType == MapInstanceType.BaseMapInstance || MapInstance.MapInstanceType == MapInstanceType.LodInstance) || MapInstance.DropAllowed))
+                if (Session.HasCurrentMapInstance && ((MapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance || MapInstance.MapInstanceType == MapInstanceType.BaseMapInstance || MapInstance.MapInstanceType == MapInstanceType.LodInstance) || MapInstance.DropAllowed))
                 {
                     short[] explodeMonsters = new short[] { 1348, 1906 };
 
@@ -3646,7 +3655,7 @@ namespace OpenNos.GameObject
                                 }
 
                                 double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
-                                if (rndamount <= (double)drop.DropChance * dropRate / 1000.000 / divider)
+                                if (rndamount <= (double)drop.DropChance * dropRate / 1000.000)
                                 {
                                     x++;
                                     if (Session.CurrentMapInstance != null)
@@ -3765,7 +3774,7 @@ namespace OpenNos.GameObject
                                                 double multiplier = 1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseEarnedGold)[0] / 100D);
                                                 multiplier += (ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreGold)?.Value ?? 0) / 100D;
                                                 double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
-                                                session.Character.Gold += (int)(drop2.Amount * multiplier / divider);
+                                                session.Character.Gold += (int)(drop2.Amount * multiplier);
                                                 if (session.Character.Gold > maxGold)
                                                 {
                                                     session.Character.Gold = maxGold;
@@ -5676,6 +5685,8 @@ namespace OpenNos.GameObject
 
         public bool HaveBackpack() => StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.BackPack);
 
+        public bool HaveBigBackPack() => StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.BigBackPack);
+
         public void IncreaseDollars(int amount)
         {
             try
@@ -6481,7 +6492,7 @@ namespace OpenNos.GameObject
 
         public void GetReputation(int amount, bool applyRate = true)
         {
-            if (Reputation >= (long)SideReputType.Side10)
+           /* if (Reputation >= (long)SideReputType.Side10)
             {
                 amount = amount * (amount > 0 && applyRate ? ServerManager.Instance.Configuration.RateReputation : 1);
                 int beforeReputIco = GetReputationIco();
@@ -6500,7 +6511,7 @@ namespace OpenNos.GameObject
                 {
                     Session.SendPacket(GenerateSay(string.Format(Language.Instance.GetMessageFromKey("REPUT_DECREASE"), amount), 11));
                 }
-            }
+            }*/
         }
 
         public void SetRespawnPoint(short mapId, short mapX, short mapY)
@@ -7409,6 +7420,40 @@ namespace OpenNos.GameObject
             Session.CurrentMapInstance.Broadcast($"tp {1} {CharacterId} {x} {y} 0");
             Session.SendPacket(GenerateCond());
         }
+
+        public void GenerateSheepScore(UserType type)
+        {
+            if (!CanAttackSh)
+            {
+                return;
+            }
+
+            // For SheepScore , If u have Killed Most Player and u are not Killed you have more Point in official need to re-write this later c:
+            // Not Important for moment.
+            switch (type)
+            {
+                case UserType.Player:
+                    SheepScore1 += 10;
+                    SheepScore3 += 1;
+                    break;
+                case UserType.Monster:
+                    SheepScore1 += 5;
+                    SheepScore2 += 1;
+                    break;
+                default:
+                    return;
+            }
+
+            Session.CurrentMapInstance?.Broadcast($"srlst 2 {CharacterId} {Name} {SheepScore1} {SheepScore2} {SheepScore3}");
+            CanAttackSh = false;
+            Session.SendPacket("sh_c");
+            Observable.Timer(TimeSpan.FromSeconds(7)).Subscribe(s =>
+            {
+                Session.SendPacket("sh_o");
+                CanAttackSh = true;
+            });
+        }
+
         #endregion
     }
 }

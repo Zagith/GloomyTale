@@ -236,6 +236,11 @@ namespace OpenNos.PathFinder
             Node[][] grid = JaggedArrayExtensions.CreateJaggedArray<Node>(GridX, GridY);
 
             Node node = new Node();
+            if (GridX < user.X || GridY < user.Y)
+            {
+                user.X = (short)(GridX - 1);
+                user.Y = (short)(GridY - 1);
+            }
             if (grid[user.X][user.Y] == null)
             {
                 grid[user.X][user.Y] = new Node(Grid[user.X][user.Y]);

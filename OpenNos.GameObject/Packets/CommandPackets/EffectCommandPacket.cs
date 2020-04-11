@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$Effect", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.SGM, AuthorityType.SMOD } )]
+    [PacketHeader("$Effect", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
     public class EffectCommandPacket : PacketDefinition
     {
         #region Properties

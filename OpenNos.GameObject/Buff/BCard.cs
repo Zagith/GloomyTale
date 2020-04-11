@@ -1843,7 +1843,6 @@ namespace OpenNos.GameObject
                                                 if (oldSkill?.Skill != null && newSkill?.Skill != null)
                                                 {
                                                     newSkill.FirstCastId = oldSkill.FirstCastId;
-#warning TODO: check skill combo con veggente
                                                     if (((newSkillVNum == 1126 || newSkillVNum == 1125) && character.SkillComboCount > 4)
                                                          || ((newSkillVNum == 1140 || newSkillVNum == 1139) && character.SkillComboCount > 8))
                                                     {
@@ -2497,7 +2496,10 @@ namespace OpenNos.GameObject
 
                         case BCardType.CardType.Type95:
                             break;
-
+                        case BCardType.CardType.PixieCostumeWings:
+                            break;
+                        case BCardType.CardType.MobsDamage:
+                            break;
                         case BCardType.CardType.Type100:
                             break;
 

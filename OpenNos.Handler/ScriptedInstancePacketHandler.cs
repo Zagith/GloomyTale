@@ -5,6 +5,7 @@ using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
+using OpenNos.GameObject.Packets.ClientPackets;
 using OpenNos.GameObject.Packets.ServerPackets;
 using System;
 using System.Collections.Concurrent;
@@ -29,6 +30,45 @@ namespace OpenNos.Handler
         #endregion
 
         #region Methods
+
+        public void ShPacket(ShPacket packet)
+        {
+            if (packet == null)
+            {
+                return;
+            }
+
+            switch (packet.TargetType)
+            {
+                case UserType.Player:
+                    ClientSession target = ServerManager.Instance.GetSessionBySessionId(packet.TargetId);
+
+                    if (target == null || !target.Character.CanAttackSh || target == Session)
+                    {
+                        return;
+                    }
+                    Session.Character.GenerateSheepScore(packet.TargetType);
+                    target.Character.Speed = 0;
+                    target.SendPacket(UserInterfaceHelper.GenerateInfo(string.Format(Language.Instance.GetMessageFromKey("RESURRECT_IN_SECONDS"), 10)));
+                    target.Character.CanAttackSh = false;
+                    Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(s =>
+                    {
+                        if (target != null || target != Session) // Possible Crash , bcs u have a Timer <- , Need to check if is useless or not 
+                        {
+                            target.Character.SheepScore1 -= 10; // Need to verify on Official Nostale If you Lost Only 10 Pts
+                            target.Character.CanAttackSh = true;
+                            target.Character.Speed = 5;
+                            ServerManager.Instance.TeleportOnRandomPlaceInMap(target, target.CurrentMapInstance.MapInstanceId);
+                        }
+                    });
+                    break;
+                case UserType.Monster:
+                    Session.Character.GenerateSheepScore(packet.TargetType);
+                    Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.Out(UserType.Monster, packet.TargetId));
+                    break;
+            }
+        }
+
         public void ButtonCancel(BscPacket packet)
         {
             switch (packet.Type)
@@ -145,17 +185,45 @@ namespace OpenNos.Handler
         /// <param name="escapePacket"></param>
         public void Escape(EscapePacket escapePacket)
         {
-            if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance)
+            switch (Session.CurrentMapInstance.MapInstanceType)
             {
-                ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
-                    Session.Character.MapX, Session.Character.MapY);
-                Session.Character.Timespace = null;
-            }
-            else if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.RaidInstance)
-            {
-                ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
-                    Session.Character.MapX, Session.Character.MapY);
-                ServerManager.Instance.GroupLeave(Session);
+                case MapInstanceType.TimeSpaceInstance:
+                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
+                        Session.Character.MapX, Session.Character.MapY);
+                    Session.Character.Timespace = null;
+                    break;
+
+                case MapInstanceType.RaidInstance:
+                    ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId,
+                        Session.Character.MapX, Session.Character.MapY);
+                    ServerManager.Instance.GroupLeave(Session);
+                    break;
+
+                case MapInstanceType.TalentArenaMapInstance:
+                    ServerManager.Instance.TeleportOnRandomPlaceInMap(Session, ServerManager.Instance.ArenaInstance.MapInstanceId);
+                    break;
+
+                case MapInstanceType.SheepGameInstance:
+                    int miniscore = 50; // your score
+                    if (Session.Character.SheepScore1 > miniscore && Session.Character.IsWaitingForGift == true) // Anti Afk to get Reward
+                    {
+                        short[] random1 = { 1, 2, 3 };
+                        short[] random = { 2, 4, 6 };
+                        short[] acorn = { 5947, 5948, 5949, 5950 };
+                        Session.Character.GiftAdd(5951, random1[ServerManager.RandomNumber(0, random1.Length)]);
+                        int rnd = ServerManager.RandomNumber(0, 5);
+                        switch (rnd)
+                        {
+                            case 2:
+                                Session.Character.GiftAdd(acorn[ServerManager.RandomNumber(0, acorn.Length)], random[ServerManager.RandomNumber(0, random.Length)]);
+                                break;
+                            default:
+                                break;
+                        }
+                        ServerManager.Instance.ChangeMap(Session.Character.CharacterId, Session.Character.MapId, Session.Character.MapX, Session.Character.MapY);
+                        Session.Character.IsWaitingForGift = false;
+                    }
+                    break;
             }
         }
 

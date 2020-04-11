@@ -204,14 +204,14 @@ namespace OpenNos.GameObject
                                // Not Created for moment .
                             break;
                         case 2: // Sheep Mini Game
-                            /*session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
-                            EventHelper.Instance.GenerateEvent(EventType., false);
-                            session.Character.Inventory.RemoveItemAmountFromInventory(1, inv.Id);*/
+                            session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
+                            EventHelper.GenerateEvent(EventType.SHEEPGAME);
+                            session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                             break;
                         case 3: // Meteor Mini Game
-                            session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
+                           /* session.SendPacket($"say 1 {session.Character.CharacterId} 10 Registration starts in 5 seconds.");
                             EventHelper.GenerateEvent(EventType.METEORITEGAME);
-                            //session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                            session.Character.Inventory.RemoveItemFromInventory(inv.Id);*/
                             break;
                     }
                     break;
@@ -257,10 +257,11 @@ namespace OpenNos.GameObject
                     break;
                 // Honour Medals
                 case 69:
+                    return;
                     if (session.Character.Reputation >= (long)SideReputType.Side10)
                     {
                         session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("CANNOT_USE")), 11));
-                        return;
+                        
                     }
                     session.Character.Reputation += ReputPrice;
                     session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("REPUT_INCREASE"), ReputPrice), 11));
@@ -952,12 +953,6 @@ namespace OpenNos.GameObject
                                         return;
                                     }
 
-                                    if (session.Account.IsLimited)
-                                    {
-                                        session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                                        return;
-                                    }
-
                                     switch (packetType)
                                     {
                                         case 0:
@@ -1095,6 +1090,21 @@ namespace OpenNos.GameObject
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                         session.SendPacket(session.Character.GenerateExts());
                         session.SendPacket("ib 1278 1");
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                    }
+                    break;
+
+                case 604:
+                    if (session.Character.StaticBonusList.All(s => s.StaticBonusType != StaticBonusType.BigBackPack))
+                    {
+                        session.Character.StaticBonusList.Add(new StaticBonusDTO
+                        {
+                            CharacterId = session.Character.CharacterId,
+                            DateEnd = DateTime.Now.AddYears(15),
+                            StaticBonusType = StaticBonusType.BigBackPack
+                        });
+                        session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                        session.SendPacket(session.Character.GenerateExts());
                         session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
                     }
                     break;

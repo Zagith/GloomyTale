@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$ArenaWinner", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TM } )]
+    [PacketHeader("$ArenaWinner", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.SGM } )]
     public class ArenaWinnerPacket : PacketDefinition
     {
         public static string ReturnHelp() => "$ArenaWinner";

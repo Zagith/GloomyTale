@@ -30,7 +30,7 @@ namespace OpenNos.GameObject.Event
 
         public static void GenerateInstantBattle()
         {
-            /*ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("INSTANTBATTLE_MINUTES"), 5), 0));
+            ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("INSTANTBATTLE_MINUTES"), 5), 0));
             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("INSTANTBATTLE_MINUTES"), 5), 1));
             Thread.Sleep(4 * 60 * 1000);
             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("INSTANTBATTLE_MINUTES"), 1), 0));
@@ -38,7 +38,7 @@ namespace OpenNos.GameObject.Event
             Thread.Sleep(30 * 1000);
             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("INSTANTBATTLE_SECONDS"), 30), 0));
             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("INSTANTBATTLE_SECONDS"), 30), 1));
-            Thread.Sleep(20 * 1000);*/
+            Thread.Sleep(20 * 1000);
             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("INSTANTBATTLE_SECONDS"), 10), 0));
             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("INSTANTBATTLE_SECONDS"), 10), 1));
             Thread.Sleep(10 * 1000);
@@ -103,7 +103,7 @@ namespace OpenNos.GameObject.Event
             {
                 long maxGold = ServerManager.Instance.Configuration.MaxGold;
                 Thread.Sleep(10 * 1000);
-                /*if (!mapinstance.Item1.Sessions.Skip(3 - 1).Any())
+                if (!mapinstance.Item1.Sessions.Skip(3 - 1).Any())
                 {
                     mapinstance.Item1.Sessions.Where(s => s.Character != null).ToList().ForEach(s => {
                         s.Character.RemoveBuffByBCardTypeSubType(new List<KeyValuePair<byte, byte>>()
@@ -114,7 +114,7 @@ namespace OpenNos.GameObject.Event
                         });
                         ServerManager.Instance.ChangeMap(s.Character.CharacterId, s.Character.MapId, s.Character.MapX, s.Character.MapY);
                     });
-                }*/
+                }
                 Observable.Timer(TimeSpan.FromMinutes(12)).Subscribe(X =>
                 {
                     for (int d = 0; d < 180; d++)
@@ -126,11 +126,11 @@ namespace OpenNos.GameObject.Event
                             foreach (ClientSession cli in mapinstance.Item1.Sessions.Where(s => s.Character != null).ToList())
                             {
                                 cli.Character.GenerateFamilyXp(cli.Character.Level * 4);
-                                if (cli.Character.Reputation >= (long)SideReputType.Side10)
+                                /*if (cli.Character.Reputation >= (long)SideReputType.Side10)
                                 {
                                     cli.Character.GetReputation(cli.Character.Level * 50);
                                     cli.SendPacket(cli.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), cli.Character.Level * 50), 10));
-                                }
+                                }*/
                                 cli.Character.Gold += cli.Character.Level * 1000;
                                 cli.Character.Gold = cli.Character.Gold > maxGold ? maxGold : cli.Character.Gold;
                                 cli.Character.SpAdditionPoint += cli.Character.Level * 100;

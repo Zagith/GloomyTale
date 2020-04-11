@@ -13,6 +13,18 @@ cd World
 start OpenNos.World.exe
 timeout 2
 
+cd..
+
+cd World
+start OpenNos.World.exe
+timeout 2
+
+cd..
+
+cd World
+start OpenNos.World.exe
+timeout 2
+
 cd ..
 
 cd FrozenCrown

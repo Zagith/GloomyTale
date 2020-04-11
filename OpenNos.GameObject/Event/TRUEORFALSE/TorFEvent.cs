@@ -136,11 +136,11 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
                     {
                         s.Character.SpAdditionPoint = 1000000;
                     }
-                    if (s.Character.Reputation >= (long)SideReputType.Side10)
+                    /*if (s.Character.Reputation >= (long)SideReputType.Side10)
                     {
                         s.Character.Reputation += s.Character.Level * 50;
                         s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), s.Character.Level * 50), 10));
-                    }
+                    }*/
                     s.SendPacket(s.Character.GenerateSpPoint());
                     s.SendPacket(s.Character.GenerateGold());
                     s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_MONEY"), s.Character.Level * 1000), 10));

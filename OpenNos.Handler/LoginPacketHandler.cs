@@ -160,11 +160,7 @@ namespace OpenNos.Handler
                                     {
                                         clientData = loginPacket.ClientDataOld.Split('.');
                                     }
-
-                                    bool ignoreUserName = short.TryParse(clientData[3], out short clientVersion)
-                                                          && (clientVersion < 3075
-                                                           || ConfigurationManager.AppSettings["UseOldCrypto"] == "true");
-                                    _session.SendPacket(BuildServersPacket(user.Name, newSessionId, ignoreUserName));
+                                    _session.SendPacket(BuildServersPacket(user.Name, newSessionId, false));
                                 }
                                 break;
                         }

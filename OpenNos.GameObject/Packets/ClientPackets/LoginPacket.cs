@@ -17,6 +17,9 @@ namespace OpenNos.GameObject.Packets.ClientPackets
         [PacketIndex(2)]
         public string Password { get; set; }
 
+        [PacketIndex(3)]
+        public string Test { get; set; }
+
         [PacketIndex(4)]
         public string ClientDataOld { get; set; }
 

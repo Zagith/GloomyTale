@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$ChangeDignity", "$Dignity" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD } )]
+    [PacketHeader("$ChangeDignity", "$Dignity" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM } )]
     public class ChangeDignityPacket : PacketDefinition
     {
         #region Properties

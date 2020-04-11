@@ -44,8 +44,8 @@ namespace OpenNos.GameObject.Event
                 {
                     if (gen == null)
                     {
-                        if (chara.Reputation >= (long)SideReputType.Side10)
-                            chara.Reputation += 2 * count;
+                        /*if (chara.Reputation >= (long)SideReputType.Side10)
+                            chara.Reputation += 2 * count;*/
                     }
                     chara.MinilandPoint = 2000;
                     CharacterDTO chara2 = chara;

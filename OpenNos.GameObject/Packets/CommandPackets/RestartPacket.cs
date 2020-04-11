@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$Restart", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TM } )]
+    [PacketHeader("$Restart", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.SGM } )]
     public class RestartPacket : PacketDefinition
     {
         [PacketIndex(0)]

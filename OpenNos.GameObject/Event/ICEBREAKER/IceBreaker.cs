@@ -96,11 +96,11 @@ namespace OpenNos.GameObject.Event
                     Map.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("ICEBREAKER_WIN"), 0));
                     Map.Sessions.ToList().ForEach(x =>
                     {
-                        if (x.Character.Reputation >= (long)SideReputType.Side10)
+                        /*if (x.Character.Reputation >= (long)SideReputType.Side10)
                         {
                             x.Character.GetReputation(x.Character.Level * 10);
                             x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), x.Character.Level * 10), 10));
-                        }
+                        }*/
                         if (x.Character.Dignity < 100)
                         {
                             x.Character.Dignity = 100;
@@ -156,11 +156,11 @@ namespace OpenNos.GameObject.Event
                         {
                             WinnerTeam.ToList().ForEach(x =>
                             {
-                                if (x.Character.Reputation >= (long)SideReputType.Side10)
+                               /* if (x.Character.Reputation >= (long)SideReputType.Side10)
                                 {
                                     x.Character.GetReputation(x.Character.Level * 10);
                                     x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), x.Character.Level * 10), 10));
-                                }
+                                }*/
                                 if (x.Character.Dignity < 100)
                                 {
                                     x.Character.Dignity = 100;

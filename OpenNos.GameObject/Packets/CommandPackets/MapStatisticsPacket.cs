@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$MapStat", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA, AuthorityType.BA } )]
+    [PacketHeader("$MapStat", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GM } )]
     public class MapStatisticsPacket : PacketDefinition
     {
         #region Properties

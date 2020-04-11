@@ -192,9 +192,7 @@ namespace OpenNos.World
                 Logger.Error("Could not retrieve ChannelId from Web API.");
                 Console.ReadKey();
             }
-#if !DEBUG
-            //DiscordHelper serverStatus = new DiscordHelper();
-#endif
+
         }
 
         private static bool ExitHandler(CtrlType sig)

@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$ResetMap" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
+    [PacketHeader("$ResetMap" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.SGM } )]
     public class MapResetPacket : PacketDefinition
     {
         #region Properties

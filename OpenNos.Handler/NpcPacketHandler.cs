@@ -447,11 +447,6 @@ namespace OpenNos.Handler
         [Packet("m_shop")]
         public void CreateShop(string packet)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             string[] packetsplit = packet.Split(' ');
             InventoryType[] type = new InventoryType[20];
@@ -1390,8 +1385,7 @@ namespace OpenNos.Handler
                 }
                 else if (npc.Shop?.ShopId == 99)
                 {
-                    ItemDTO item = DAOFactory.ItemDAO.LoadById(15297);
-                    Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10, item.Name[Session.Account.Language])}");
+                    Session.SendPacket($"qna #guri^8888 {string.Format(Language.Instance.GetMessageFromKey("GIRO_RUOTA_SHOP"), 10)}");
                 }
                 else if (!string.IsNullOrEmpty(npc.GetNpcDialog()))
                 {

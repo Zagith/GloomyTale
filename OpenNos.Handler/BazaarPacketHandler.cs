@@ -50,11 +50,6 @@ namespace OpenNos.Handler
         /// <param name="cBuyPacket"></param>
         public void BuyBazaar(CBuyPacket cBuyPacket)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             BazaarItemDTO bz = DAOFactory.BazaarItemDAO.LoadById(cBuyPacket.BazaarId);
             if (bz != null && cBuyPacket.Amount > 0)
@@ -316,11 +311,6 @@ namespace OpenNos.Handler
         /// <param name="cRegPacket"></param>
         public void SellBazaar(CRegPacket cRegPacket)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             if (!Session.Character.CanUseNosBazaar())
             {
@@ -451,11 +441,6 @@ namespace OpenNos.Handler
         /// <param name="cModPacket"></param>
         public void ModPriceBazaar(CModPacket cModPacket)
         {
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT")));
-                return;
-            }
 
             if (!Session.Character.CanUseNosBazaar())
             {

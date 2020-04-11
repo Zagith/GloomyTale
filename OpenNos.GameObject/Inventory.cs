@@ -50,6 +50,17 @@ namespace OpenNos.GameObject
 
         private byte GetMaxSlot(InventoryType pocket)
         {
+            if (Owner == null || Owner.Session == null)
+            {
+                return (byte)(pocket switch
+                {
+                    InventoryType.Miniland => 50 + Expensions[pocket],
+                    InventoryType.Specialist => 45 + Expensions[pocket],
+                    InventoryType.Costume => 60 + Expensions[pocket],
+                    InventoryType.Wear => 17,
+                    _ => 48 + Expensions[pocket]
+                });
+            }
             //TODO make this configurable
             return (byte)(pocket switch
             {
@@ -57,7 +68,7 @@ namespace OpenNos.GameObject
                 InventoryType.Specialist => 45 + Expensions[pocket],
                 InventoryType.Costume => 60 + Expensions[pocket],
                 InventoryType.Wear => 17,
-                _ => ServerManager.Instance.Configuration.BackpackSize + Expensions[pocket]
+                _ => Owner.Session.Character.HaveBigBackPack() ? ServerManager.Instance.Configuration.BackpackSize + Expensions[pocket] : 48 + Expensions[pocket] + ((Owner.Session.Character.HaveBackpack() ? 1 : 0) * 12)
             });
         }
 

@@ -143,6 +143,14 @@ namespace OpenNos.GameObject
 
         public DateTime LastEffect43 { get; set; }
 
+        public DateTime LastEffect44 { get; set; }
+
+        public DateTime LastEffect45 { get; set; }
+
+        public DateTime LastEffect46 { get; set; }
+
+        public DateTime LastEffect47 { get; set; }
+
         public IDisposable LifeEvent { get; set; }
 
         public MapInstance MapInstance { get; set; }
@@ -587,16 +595,6 @@ namespace OpenNos.GameObject
                 X = MapX,
                 Y = MapY
             }) <= distance;
-        }
-
-        public void RunTacchettaEvent()
-        {
-            OnTacchettaEvents.ForEach(e => EventHelper.Instance.RunEvent(e, monster: this));
-        }
-
-        public void RunTacchettaDivisoDueEvent()
-        {
-            OnTacchettaDivisoDueEvents.ForEach(e => EventHelper.Instance.RunEvent(e, monster: this));
         }
 
         public void RunDeathEvent()
@@ -1111,6 +1109,32 @@ namespace OpenNos.GameObject
                             BattleEntity.MapMonster.LastEffect42 = DateTime.Now;
                         }
 
+                        if (rnd < 3 && attackerBattleEntity.Character.HasBuff(4014))
+                        {
+                            BattleEntity.AddBuff(new Buff(187, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapMonster.LastEffect45 = DateTime.Now;
+                        }
+                        if (rnd < 3 && attackerBattleEntity.Character.HasBuff(4017))
+                        {
+                            BattleEntity.AddBuff(new Buff(70, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapMonster.LastEffect46 = DateTime.Now;
+                        }
+                        if (rnd < 3 && attackerBattleEntity.Character.HasBuff(4017))
+                        {
+                            BattleEntity.AddBuff(new Buff(68, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapMonster.LastEffect46 = DateTime.Now;
+                        }
+                        if (rnd < 3 && attackerBattleEntity.Character.HasBuff(4015))
+                        {
+                            BattleEntity.AddBuff(new Buff(133, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            BattleEntity.MapMonster.LastEffect44 = DateTime.Now;
+                        }
+                        if (rnd < 100 && attackerBattleEntity.Character.HasBuff(4016) && !attackerBattleEntity.Character.HasBuff(453))
+                        {
+                            attackerBattleEntity.Character.AddBuff(new Buff(453, attackerBattleEntity.Character.Level), attackerBattleEntity, true);
+                            MapInstance.Broadcast(attackerBattleEntity.Character.GenerateEff(647));
+                        }
+
                         if ((hitRequest.Skill.SkillVNum == 1122 ||
                              hitRequest.Skill.SkillVNum == 1136 ||
                              hitRequest.Skill.SkillVNum == 1139 ||
@@ -1508,60 +1532,6 @@ namespace OpenNos.GameObject
                         }
                     }
 
-                }
-
-                if (CurrentHp > 0)
-                {
-                    if (hitRequest.Session.CurrentMapInstance.Map.MapId == 2517)
-                    {
-                        hitRequest.Session.Character.InstantBattleScore += 10;
-                    }
-                    #region TacchettaDivisoDue
-                    if (OnTacchettaDivisoDueEvents != null)
-                    {
-
-                        if ((MaxHp - CurrentHp >= MaxHp * 0.5) && TacchettaDivisoDue3 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                            TacchettaDivisoDue3 = true;
-                        }
-
-                        if ((MaxHp - CurrentHp >= MaxHp * 0.9) && TacchettaDivisoDue5 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchettaDivisoDue(this);
-                            TacchettaDivisoDue5 = true;
-                        }
-                    }
-                    #endregion
-
-                    #region Tacchetta
-                    if (OnTacchettaEvents != null)
-                    {
-                        if ((MaxHp - CurrentHp >= MaxHp / 5) && Tacchetta1 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchetta(this);
-                            Tacchetta1 = true;
-                        }
-
-                        if (((MaxHp - CurrentHp >= (MaxHp / 5) * 2)) && Tacchetta2 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchetta(this);
-                            Tacchetta2 = true;
-                        }
-
-                        if (((MaxHp - CurrentHp >= (MaxHp / 5) * 3)) && Tacchetta3 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchetta(this);
-                            Tacchetta3 = true;
-                        }
-
-                        if (((MaxHp - CurrentHp >= (MaxHp / 5) * 4)) && Tacchetta4 == false)
-                        {
-                            hitRequest.Session.Character.GenerateTacchetta(this);
-                            Tacchetta4 = true;
-                        }
-                    }
-                    #endregion
                 }
 
                 if (CurrentHp <= 0 && !isCaptureSkill)
@@ -2262,6 +2232,11 @@ namespace OpenNos.GameObject
 
                     if (target.Character != null)
                     {
+                        if (target.Character.MeditationDictionary.Count != 0)
+                        {
+                            target.Character.AddBuff(new Buff(542, target.Character.Level), target.Character.BattleEntity);
+                            target.Character.MeditationDictionary.Clear();
+                        }
                         if (ServerManager.RandomNumber() < target.Character.GetBuff(CardType.DarkCloneSummon,
                             (byte)AdditionalTypes.DarkCloneSummon.ConvertDamageToHPChance)[0])
                         {

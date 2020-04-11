@@ -456,7 +456,7 @@ namespace OpenNos.Core
             string serializedSubPacket = "";
             KeyValuePair<Tuple<Type, string>, Dictionary<PacketIndexAttribute, PropertyInfo>> subpacketSerializationInfo = GetSerializationInformation(packetBasePropertyType.GetGenericArguments()[0]);
 
-            if (listValues.Count > 0)
+            if (listValues?.Count > 0)
             {
                 foreach (object listValue in listValues)
                 {

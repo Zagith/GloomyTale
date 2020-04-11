@@ -62,9 +62,6 @@ namespace OpenNos.Domain
         ONSTOP,
         ONTIMEOUT,
         REMOVEAFTER,
-        REMOVELAURENABUFF,
-        DROPMETEORITE,
-        BOMBARDAMENTOMETEORITE,
-        TRUEORFALSE
+        REMOVELAURENABUFF
     }
 }

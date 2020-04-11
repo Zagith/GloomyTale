@@ -154,13 +154,6 @@ namespace OpenNos.Handler
                 return;
             }
 
-            if (Session.Account.IsLimited)
-            {
-                Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("LIMITED_ACCOUNT"), 0));
-                Session.SendPacket(StaticPacketHelper.Cancel());
-                return;
-            }
-
             Session.Character.WalkDisposable?.Dispose();
             Session.Character.Direction = Session.Character.BeforeDirection;
 
@@ -847,6 +840,38 @@ namespace OpenNos.Handler
                     target.Character.LastEffect43 = DateTime.Now;
                 }
 
+                if (rnd < 3 && hitRequest.Session.Character.HasBuff(4014))
+                {
+                    target.Character.AddBuff(new Buff(187, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    target.Character.LastEffect45 = DateTime.Now;
+                }
+                if (rnd < 3 && hitRequest.Session.Character.HasBuff(4017))
+                {
+                    target.Character.AddBuff(new Buff(70, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    target.Character.LastEffect46 = DateTime.Now;
+                }
+                if (rnd < 3 && hitRequest.Session.Character.HasBuff(4017))
+                {
+                    target.Character.AddBuff(new Buff(68, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    target.Character.LastEffect46 = DateTime.Now;
+                }
+                if (rnd < 3 && hitRequest.Session.Character.HasBuff(4015))
+                {
+                    target.Character.AddBuff(new Buff(133, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    target.Character.LastEffect44 = DateTime.Now;
+                }
+
+                if (rnd < 100 && hitRequest.Session.Character.HasBuff(4016) && !hitRequest.Session.Character.HasBuff(453))
+                {
+                    hitRequest.Session.Character.AddBuff(new Buff(453, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    hitRequest.Session.CurrentMapInstance?.Broadcast(hitRequest.Session.Character.GenerateEff(647));
+                }
+
+                if (target.Character.MeditationDictionary.Count != 0)
+                {
+                    target.Character.AddBuff(new Buff(542, target.Character.Level), hitRequest.Session.Character.BattleEntity);
+                    target.Character.MeditationDictionary.Clear();
+                }
                 //Pestilence by Swordsman 8th SP
                 rnd = ServerManager.RandomNumber();
                 if (rnd <= 80 && hitRequest.Skill.SkillVNum == 1347)
@@ -933,7 +958,7 @@ namespace OpenNos.Handler
                                 }
                             }
 
-                            int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
+                            /*int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
 
                             if (levelDifference < 30)
                             {
@@ -952,11 +977,11 @@ namespace OpenNos.Handler
                                     ReputationValue -= 150 + (-levelDifference * 10);
                                 }
 
-                                ReputationValue *= ServerManager.Instance.Configuration.RateReputation;
+                                iReputationValue *= ServerManager.Instance.Configuration.RateReputation;
 
                                 if (ReputationValue > 0)
                                 {
-                                    if (Session.Character.Reputation >= (long)SideReputType.Side10)
+                                    f (Session.Character.Reputation >= (long)SideReputType.Side10)
                                     {
                                         hitRequest.Session.Character.Reputation += ReputationValue;
                                         hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(
@@ -993,7 +1018,7 @@ namespace OpenNos.Handler
                             else
                             {
                                 hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TOO_LEVEL_DIFFERENCE"), 11));
-                            }
+                            }*/
                         }
                         else
                         {

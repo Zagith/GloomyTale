@@ -4,7 +4,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$Sudo", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TM } )]
+    [PacketHeader("$Sudo", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA } )]
     public class SudoPacket : PacketDefinition
     {
         [PacketIndex(0)]

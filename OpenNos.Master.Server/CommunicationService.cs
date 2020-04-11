@@ -431,7 +431,7 @@ namespace OpenNos.Master.Server
             return null;
         }
 
-        public string RetrieveRegisteredWorldServers(string username, int sessionId, bool ignoreUserName)
+        public string RetrieveRegisteredWorldServers(string username, int sessionId, bool ignoreUserName = false)
         {
             if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
             {
@@ -440,7 +440,11 @@ namespace OpenNos.Master.Server
 
             string lastGroup = "";
             byte worldCount = 0;
-            string channelPacket = "NsTeST" + (ignoreUserName ? "" : " " + username) + $" {sessionId} ";
+            /*
+             * Should be:
+             * "NsTeST", "", "countryId", "username", "2", "sessionId", "serverInfosList", "-1:-1:-1:10000.10000.1"
+             */
+            string channelPacket = "NsTeST" + " " + username + $" {sessionId} ";
 
             foreach (WorldServer world in MSManager.Instance.WorldServers.OrderBy(w => w.WorldGroup))
             {

@@ -16,6 +16,7 @@ using OpenNos.Core;
 using OpenNos.Core.Networking.Communication.Scs.Communication.EndPoints.Tcp;
 using OpenNos.Core.Networking.Communication.Scs.Server;
 using OpenNos.Domain;
+using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,10 @@ namespace OpenNos.GameObject
             _server.Start();
 
             Logger.Info(Language.Instance.GetMessageFromKey("STARTED"), memberName: "NetworkManager");
+#if !DEBUG
+            DiscordHelper serverStatus = new DiscordHelper();
+#endif
+
         }
 
         #endregion

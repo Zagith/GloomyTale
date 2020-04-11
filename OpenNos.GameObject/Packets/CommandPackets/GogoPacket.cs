@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$Go" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD } )]
+    [PacketHeader("$Go" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GM} )]
     public class GogoPacket : PacketDefinition
     {
         #region Properties

@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$Drop", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA, AuthorityType.BA  } )]
+    [PacketHeader("$Drop", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GA  } )]
     public class DropPacket : PacketDefinition
     {
         #region Properties

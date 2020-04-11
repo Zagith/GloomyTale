@@ -21,6 +21,7 @@ namespace OpenNos.Domain
         BackPack = 2,
         PetBasket = 3,
         PetBackPack = 4,
+        BigBackPack = 5,
         AutoLoot = 250,
         FastVessels = 251,
         MultipleReturns = 252,

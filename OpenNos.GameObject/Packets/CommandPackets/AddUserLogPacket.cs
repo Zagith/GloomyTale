@@ -3,7 +3,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$AddUserLog", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.Administrator })]
+    [PacketHeader("$AddUserLog", PassNonParseablePacket = true, Authorities = new AuthorityType[] { AuthorityType.GA })]
     public class AddUserLogPacket : PacketDefinition
     {
         #region Properties
