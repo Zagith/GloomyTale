@@ -135,13 +135,6 @@ namespace OpenNos.Handler
                                 Language.Instance.GetMessageFromKey("PARTY_MEMBER_IN_FAMILY")));
                         return;
                     }
-                    else if (session.Character.LastFamilyLeave > DateTime.Now.AddDays(-1).Ticks)
-                    {
-                        Session.SendPacket(
-                            UserInterfaceHelper.GenerateInfo(
-                                Language.Instance.GetMessageFromKey("PARTY_MEMBER_HAS_PENALTY")));
-                        return;
-                    }
                 }
 
                 if (Session.Character.Gold < 200000)
@@ -211,7 +204,7 @@ namespace OpenNos.Handler
             }
         }
 
-        [Packet("%Familyshout")]
+        [Packet("%Shout", "%Grido", "%Familyshout")]
         public void FamilyCall(string packet)
         {
             if (Session.Character.Family != null && Session.Character.FamilyCharacter != null)
@@ -411,7 +404,7 @@ namespace OpenNos.Handler
                 }));
         }
 
-        [Packet("%Familydismiss", "%FamilyKick")]
+        [Packet("%Kick", "%Caccia", "%Familydismiss", "%FamilyKick")]
         public void FamilyKick(string packet)
         {
             string[] packetsplit = packet.Split(' ');
@@ -463,7 +456,6 @@ namespace OpenNos.Handler
                     Session.Character.Family.InsertFamilyLog(FamilyLogType.FamilyManaged, familyCharacter.Character.Name);
 
                     kickSession.Character.Family = null;
-                    kickSession.Character.LastFamilyLeave = DateTime.Now.Ticks;
 
                     Observable.Timer(TimeSpan.FromSeconds(5)).Subscribe(o => ServerManager.Instance.FamilyRefresh(Session.Character.Family.FamilyId));
                 }
@@ -482,14 +474,12 @@ namespace OpenNos.Handler
 
                     CharacterDTO familyCharacterDTO = familyCharacter.Character;
 
-                    familyCharacterDTO.LastFamilyLeave = DateTime.Now.Ticks;
-
                     DAOFactory.CharacterDAO.InsertOrUpdate(ref familyCharacterDTO);
                 }
             }
         }
 
-        [Packet("%Familyleave")]
+        [Packet("%Lascia", "%Familyleave", "%FamilyLeave", "%Leave")]
         public void FamilyLeave(string packet)
         {
             string[] packetsplit = packet.Split(' ');
@@ -517,12 +507,12 @@ namespace OpenNos.Handler
                     $"[FamilyLeave][{Session.Character.Family.FamilyId}]");
 
                 Session.Character.Family.InsertFamilyLog(FamilyLogType.FamilyManaged, Session.Character.Name);
-                Session.Character.LastFamilyLeave = DateTime.Now.Ticks;
                 Session.Character.Family = null;
                 Observable.Timer(TimeSpan.FromSeconds(5)).Subscribe(o =>
                 ServerManager.Instance.FamilyRefresh(familyId));
                 Observable.Timer(TimeSpan.FromSeconds(10)).Subscribe(o =>
                 ServerManager.Instance.FamilyRefresh(familyId));
+                Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateGidx());
             }
         }
 
@@ -941,7 +931,7 @@ namespace OpenNos.Handler
                 message: $"{item2.ItemVNum}|{fWithdrawPacket.Amount}");
         }
 
-        [Packet("%Familyinvite")]
+        [Packet("%Invite","%Invita", "%Familyinvite")]
         public void InviteFamily(string packet)
         {
             string[] packetsplit = packet.Split(' ');
@@ -1009,12 +999,6 @@ namespace OpenNos.Handler
                 return;
             }
 
-            if (otherSession.Character.LastFamilyLeave > DateTime.Now.AddDays(-1).Ticks)
-            {
-                Session.SendPacket(
-                    UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("CANT_ENTER_FAMILY")));
-                return;
-            }
             if (ServerManager.Instance.ChannelId == 51 && otherSession.Character.Faction != Session.Character.Faction)
             {
                 return;
@@ -1098,7 +1082,7 @@ namespace OpenNos.Handler
             }
         }
 
-        [Packet("%Género", "%Sex")]
+        [Packet("%Sesso", "%Sex")]
         public void ResetSex(string packet)
         {
             string[] packetsplit = packet.Split(' ');
@@ -1148,7 +1132,7 @@ namespace OpenNos.Handler
             }
         }
 
-        [Packet("%Título", "%Title")]
+        [Packet("%Titolo", "%Title")]
         public void TitleChange(string packet)
         {
             if (Session.Character.Family != null && Session.Character.FamilyCharacter != null
@@ -1185,7 +1169,7 @@ namespace OpenNos.Handler
             }
         }
 
-        [Packet("%Hoy", "%Today")]
+        [Packet("%Oggi", "%Today")]
         public void TodayMessage(string packet)
         {
             if (Session.Character.Family != null && Session.Character.FamilyCharacter != null)

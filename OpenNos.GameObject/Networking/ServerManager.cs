@@ -2679,16 +2679,13 @@ namespace OpenNos.GameObject.Networking
 
                     Parallel.ForEach(Sessions.Where(s => newFam.FamilyCharacters.Any(m => m.CharacterId == s.Character.CharacterId)), session =>
                     {
-                        if (session.Character.LastFamilyLeave < DateTime.Now.AddDays(-1).Ticks)
-                        {
-                            session.Character.Family = newFam;
+                        session.Character.Family = newFam;
 
-                            if (tuple.Item2)
-                            {
-                                session.Character.ChangeFaction((FactionType)newFam.FamilyFaction);
-                            }
-                            session?.CurrentMapInstance?.Broadcast(session?.Character?.GenerateGidx());
+                        if (tuple.Item2)
+                        {
+                            session.Character.ChangeFaction((FactionType)newFam.FamilyFaction);
                         }
+                        session?.CurrentMapInstance?.Broadcast(session?.Character?.GenerateGidx());
                     });
                 }
                 else if (fam != null)
