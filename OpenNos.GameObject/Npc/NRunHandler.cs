@@ -1373,7 +1373,7 @@ namespace OpenNos.GameObject
                     break;
 
                 case 150:
-                    if (npc != null && Session.Character.Level >= 55)
+                    if (npc != null && Session.Character.Level >= 30)
                     {
                         ServerManager.Instance.ChangeMap(Session.Character.CharacterId, 150, 153, 145);
                     }
