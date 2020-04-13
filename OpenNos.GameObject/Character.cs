@@ -1141,7 +1141,11 @@ namespace OpenNos.GameObject
 #if DEBUG
             Session.SendPacket(Session.Character.GenerateSay($"QuestId: {questId}", 10));
 #endif
-
+            if (Quests.Count() > 5)
+            {
+                Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("TOO_MUCH_QUESTS"), 0));
+                return;
+            }
             var characterQuest = new CharacterQuest(questId, CharacterId);
             if (Quests.Any(q => q.QuestId == questId) || characterQuest.Quest == null || (isMain && Quests.Any(q => q.IsMainQuest))
             || (Quests.Where(q => q.Quest.QuestType != (byte)QuestType.WinRaid).ToList().Count >= 5 && characterQuest.Quest.QuestType != (byte)QuestType.WinRaid && !isMain)

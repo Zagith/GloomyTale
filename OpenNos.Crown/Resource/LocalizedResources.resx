@@ -2061,4 +2061,7 @@
   <data name="TOTP_VERIFIED" xml:space="preserve">
     <value>Your input was verified. Have fun playing.</value>
   </data>
+  <data name="TOO_MUCH_QUESTS" xml:space="preserve">
+    <value>You have too many quests</value>
+  </data>
 </root>

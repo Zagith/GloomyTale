@@ -1262,7 +1262,7 @@ namespace OpenNos.Handler
                             {
                                 if ((int)Session.Character.Faction == portal.Type - 9 && Session.Character.Family?.Act4Raid != null)
                                 {
-                                    if (Session.Character.Level > 49)
+                                    if (Session.Character.Level > 30)
                                     {
                                         if (Session.Character.Contributi >= 10000)
                                         {
@@ -2659,7 +2659,7 @@ namespace OpenNos.Handler
             #endregion
             if (Session?.Character == null || Session.IsOnMap || !Session.HasSelectedCharacter)
             {
-                // character should have been selected in SelectCharacter
+                // character should have been selected in SelebctCharacter
                 return;
             }
 
@@ -2803,7 +2803,7 @@ namespace OpenNos.Handler
 
             Session.SendPacket(Session.Character.GenerateGold());
             Session.SendPackets(Session.Character.GenerateQuicklist());
-
+            Session.Character.SideReputationAddBuff();
             string clinit = "clinit";
             string flinit = "flinit";
             string kdlinit = "kdlinit";

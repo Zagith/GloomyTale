@@ -2052,4 +2052,7 @@
   <data name="CHARACTER_CONTRIBUTE" xml:space="preserve">
     <value>You have {0} contribute points</value>
   </data>
+  <data name="TOO_MUCH_QUESTS" xml:space="preserve">
+    <value>You have too many quests</value>
+  </data>
 </root>

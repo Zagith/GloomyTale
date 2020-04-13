@@ -5380,6 +5380,15 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have too many quests.
+        /// </summary>
+        internal static string TOO_MUCH_QUESTS {
+            get {
+                return ResourceManager.GetString("TOO_MUCH_QUESTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total session number.
         /// </summary>
         internal static string TOTAL_SESSION {

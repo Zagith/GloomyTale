@@ -321,7 +321,47 @@ namespace OpenNos.GameObject
             {
                 if (IsBoss)
                 {
-                    MaxHp *= 5;
+                    if (ServerManager.Instance.GetSessionByCharacterId(MapInstance.InstanceBag.CreatorId)?.Character.Group is Group raidGroup)
+                    {
+                        int entitiesCount = raidGroup.Sessions.Count;
+                        switch (MonsterVNum)
+                        {
+                            case 2357:
+                                MaxHp *= entitiesCount;
+                                break;
+                            case 445:
+                                MaxHp *= entitiesCount;
+                                break;
+                            case 1186:
+                                MaxHp *= entitiesCount;
+                                break;
+                            case 601:
+                                MaxHp *= entitiesCount;
+                                break;
+                            case 606:
+                                MaxHp *= entitiesCount;
+                                break;
+                            case 556:
+                                MaxHp *= entitiesCount;
+                                break;
+                            case 367:
+                                MaxHp *= entitiesCount;
+                                break;
+                            case 2691:
+                                MaxHp *= entitiesCount;
+                                break;
+                            case 563:
+                                MaxHp *= entitiesCount;
+                                break;
+                            case 443:
+                                MaxHp *= entitiesCount;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        MaxHp *= 5;
+                    }
                     MaxMp *= 5;
                 }
                 else
@@ -1148,7 +1188,7 @@ namespace OpenNos.GameObject
                             foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 3 && b.Card.BuffType == BuffType.Good))
                                 BattleEntity.RemoveBuff(b.Card.CardId);
                         else if (hitRequest.Skill.SkillVNum == 952 && rnd < 80)
-                            foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 4))
+                            foreach (Buff b in BattleEntity.Buffs.Where(b => b.Card.Level <= 4 && b.Card.BuffType == BuffType.Good))
                                 BattleEntity.RemoveBuff(b.Card.CardId);
 
                         rnd = ServerManager.RandomNumber();

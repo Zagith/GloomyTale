@@ -129,11 +129,14 @@ namespace OpenNos.GameObject.Event.GAMES
 
                 int i = 0;
 
-                while (_map?.Sessions?.Any() == true)
+                while (_map?.Sessions?.Any() == true && i <= 8)
                 {
                     runRound(i++);
                 }
 
+                if(_map?.Sessions?.Any() == true)
+                    foreach(ClientSession c in _map.Sessions)
+                        ServerManager.Instance.ChangeMap(c.Character.CharacterId, c.Character.MapId, c.Character.MapX, c.Character.MapY);
                 //ended
             }
 
