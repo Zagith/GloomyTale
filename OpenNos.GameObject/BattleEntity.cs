@@ -1691,8 +1691,7 @@ namespace OpenNos.GameObject
                     MaxHp += 5000;
                 else
                 {
-                    int hpp = (int)(MaxHp * (bearHp / 100D));
-                    MaxHp += hpp;
+                    MaxHp += (int)(MaxHp * (bearHp / 100D));
                 }
                     
 
