@@ -1511,6 +1511,9 @@ namespace OpenNos.Handler
                                     newAuthority = AuthorityType.GM;
                                     break;
                                 case AuthorityType.GM:
+                                    newAuthority = AuthorityType.TGM;
+                                    break;
+                                case AuthorityType.TGM:
                                     newAuthority = AuthorityType.GS;
                                     break;
                                 case AuthorityType.GS:
@@ -2022,7 +2025,7 @@ namespace OpenNos.Handler
             {
                 int count = 0;
                 foreach (ClientSession team in ServerManager.Instance.Sessions.Where(s =>
-                    s.Account.Authority >= AuthorityType.GM))
+                    s.Account.Authority >= AuthorityType.TGM))
                 {
                     if (team.HasSelectedCharacter)
                     {

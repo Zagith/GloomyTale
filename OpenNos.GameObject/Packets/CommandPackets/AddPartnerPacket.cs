@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$AddPartner", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GM } )]
+    [PacketHeader("$AddPartner", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM } )]
     public class AddPartnerPacket : PacketDefinition
     {
         #region Properties

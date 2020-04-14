@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$GodMode", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GM } )]
+    [PacketHeader("$GodMode", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM } )]
     public class GodModePacket : PacketDefinition
     {
         public static string ReturnHelp() => "$GodMode";

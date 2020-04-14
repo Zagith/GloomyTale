@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$Lvl", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.GM } )]
+    [PacketHeader("$Lvl", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM } )]
     public class ChangeLevelPacket : PacketDefinition
     {
         #region Properties

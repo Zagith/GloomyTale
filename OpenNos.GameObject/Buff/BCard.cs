@@ -114,19 +114,8 @@ namespace OpenNos.GameObject
                 delayTime = ForceDelay * 100;
             }
 
-            if (BCardId != null && BCardId > 0)
-            {
-                try
-                {
-                    session.BCardDisposables[skill?.SkillVNum == 1098 ? skill.SkillVNum * 1000 : BCardId]?.Dispose();
-                }
-                catch (NullReferenceException ex)
-                {
-                    Logger.Debug(
-                        $"Bcard error: {ex}");
-                    return;
-                }
-            }
+            if (BCardId > 0) session.BCardDisposables[skill?.SkillVNum == 1098 ? skill.SkillVNum * 1000 : BCardId]?.Dispose();
+
             if (session.MapInstance.MapInstanceType != MapInstanceType.EventGameInstance)
                 session.BCardDisposables[skill?.SkillVNum == 1098 ? skill.SkillVNum * 1000 : BCardId] = Observable.Timer(TimeSpan.FromMilliseconds(delayTime)).Subscribe(o =>
                 {
@@ -258,6 +247,7 @@ namespace OpenNos.GameObject
                                             //Overwriting BearSpirit buff on Energy pot buff
                                             if (cardId != null && session.Character != null && cardId == 155)
                                             {
+                                                session.RemoveBuff(138);
                                                 session.RemoveBuff(118);
                                                 session.AddBuff(buff, sender, x: x, y: y);
                                                 session.Character.HPLoad();

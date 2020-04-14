@@ -101,14 +101,12 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
             EventHelper.Instance.RunEvent(new EventContainer(ServerManager.GetMapInstanceByMapId(129), EventActionType.CHANGEPORTALTYPE, new Tuple<int, PortalType>(p.PortalId, PortalType.Closed)));
 
             byte wave = 0;
-            while (TorFEvent._map.Sessions.Count() > 0 && wave < Questions.Count)
+            while (TorFEvent._map.Sessions.Count() > 1 && wave < Questions.Count)
             {
                 byte roundCount = 1;
-                string lastRound = "last";
-                string writeRound = roundCount < Questions.Count ? roundCount.ToString() : lastRound;
                 foreach (TrueOrFalseDTO question in Questions)
                 {
-                    EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg($"Let's start with {writeRound} round!!", 0)));
+                    EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg($"Let's start with {roundCount} round!!", 0)));
                     Thread.Sleep(5 * 1000);
                     EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg($"{question.Question}", 0)));
                     Thread.Sleep(10 * 1000);

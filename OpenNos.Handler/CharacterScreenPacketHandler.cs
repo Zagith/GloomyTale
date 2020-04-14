@@ -143,8 +143,8 @@ namespace OpenNos.Handler
                     DAOFactory.CharacterQuestDAO.InsertOrUpdate(new CharacterQuestDTO
                     {
                         CharacterId = characterDTO.CharacterId,
-                        QuestId = 6275,
-                        IsMainQuest = false
+                        QuestId = 1548,
+                        IsMainQuest = true
                     });
                 }
 

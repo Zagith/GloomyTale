@@ -2851,13 +2851,13 @@ namespace OpenNos.Handler
             if (Session.Account.hasVerifiedSecondPassword == false)
             {
                 Session.SendPacket(UserInterfaceHelper.GenerateDialog($"#revival^51 #revival^51 Please insert the secondary password. If is your first login it will automatically saved. Don't use the primary password!"));
-                /*Observable.Timer(TimeSpan.FromSeconds(60)).Subscribe(o =>
+                Observable.Timer(TimeSpan.FromSeconds(60)).Subscribe(o =>
                 {
                     if (Session.Account.hasVerifiedSecondPassword == false)
                     {
                         Session.Disconnect();
                     }
-                });*/
+                });
             }
 
             if (Session.Character.Quests.Any())
@@ -2906,7 +2906,7 @@ namespace OpenNos.Handler
             if (possibleUnregisteredException)
             {
                 foreach (ClientSession team in ServerManager.Instance.Sessions.Where(s =>
-                s.Account.Authority >= AuthorityType.GM))
+                s.Account.Authority >= AuthorityType.TGM))
                 {
                     if (team.HasSelectedCharacter)
                     {
@@ -2918,7 +2918,7 @@ namespace OpenNos.Handler
             if (trapTriggered)
             {
                 foreach (ClientSession team in ServerManager.Instance.Sessions.Where(s =>
-                s.Account.Authority >= AuthorityType.GM))
+                s.Account.Authority >= AuthorityType.TGM))
                 {
                     if (team.HasSelectedCharacter)
                     {

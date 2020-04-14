@@ -29,7 +29,7 @@ namespace OpenNos.GameObject.Event.GAMES
     {
         #region Methods
 
-        public const int MiniPlayerForStart = 3;
+        public const int MiniPlayerForStart = 1;
 
         public static void GenerateMeteoriteGame()
         {
@@ -136,7 +136,7 @@ namespace OpenNos.GameObject.Event.GAMES
 
                 if(_map?.Sessions?.Any() == true)
                     foreach(ClientSession c in _map.Sessions)
-                        ServerManager.Instance.ChangeMap(c.Character.CharacterId, c.Character.MapId, c.Character.MapX, c.Character.MapY);
+                        ServerManager.Instance.ChangeMap(c.Character.CharacterId, 129, 127, 73);
                 //ended
             }
 

@@ -1007,6 +1007,7 @@ namespace OpenNos.GameObject
                 if (Buffs[indicator.Card.CardId] is Buff oldBuff)
                 {
                     Buffs.Remove(indicator.Card.CardId);
+                    RemoveBuff(indicator.Card.CardId);
                 }
 
                 Buffs[indicator.Card.CardId] = indicator;
@@ -1044,7 +1045,15 @@ namespace OpenNos.GameObject
                     }
                     indicator.RemainingTime = indicator.Card.Duration == 0 ? buffTime : indicator.Card.Duration;
 
-                    BuffObservables[indicator.Card.CardId] = Observable.Timer(TimeSpan.FromMilliseconds(indicator.RemainingTime * 100))
+                    indicator.Card.BCards.ForEach(c => c.ApplyBCards(this, sender, x: x, y: y));
+                    if (BuffObservables.ContainsKey(indicator.Card.CardId))
+                    {
+                        BuffObservables[indicator.Card.CardId]?.Dispose();
+                        BuffObservables.Remove(indicator.Card.CardId);
+                    }
+
+                    // WTF???
+                    /*BuffObservables[indicator.Card.CardId] = Observable.Timer(TimeSpan.FromMilliseconds(indicator.RemainingTime * 100))
                         .Subscribe(o =>
                         {
                             RemoveBuff(indicator.Card.CardId);
@@ -1053,7 +1062,7 @@ namespace OpenNos.GameObject
                             {
                                 AddBuff(new Buff(indicator.Card.TimeoutBuff, Level), sender);
                             }
-                        });
+                        });*/
 
                     // Amulet remaining time
                     if (indicator.Card.CardId == 62)
@@ -1086,15 +1095,9 @@ namespace OpenNos.GameObject
                     {
                         Mate.Owner.Session.SendPackets(Mate.Owner.GeneratePst());
                     }
-                }
+                }              
 
-                if (BuffObservables.ContainsKey(indicator.Card.CardId))
-                {
-                    BuffObservables[indicator.Card.CardId]?.Dispose();
-                    BuffObservables.Remove(indicator.Card.CardId);
-                }
-
-                indicator.Card.BCards.ForEach(c => c.ApplyBCards(this, sender, x: x, y: y));
+               
 
                 if (indicator.Card.BCards.Any(s => s.Type == (byte)CardType.Move && !s.SubType.Equals((byte)AdditionalTypes.Move.MovementImpossible / 10)))
                 {

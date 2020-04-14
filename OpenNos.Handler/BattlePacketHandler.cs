@@ -1581,6 +1581,53 @@ namespace OpenNos.Handler
                         }
                     }
 
+                    if(Session.HasCurrentMapInstance && Session.Character.Morph == 33)
+                    {
+                        switch(ski.Skill.SkillVNum)
+                        {
+                            case 649:
+                            case 657:
+                                if (Session.Character.UltimatePoints < 1000)
+                                {
+                                    Session.SendPacket(StaticPacketHelper.Cancel(2, targetId));
+                                    Session.SendPacket(
+                                        Session.Character.GenerateSay("Not enough Ultimate Points.", 10));
+                                    return;
+                                }
+                                else
+                                    Session.Character.RemoveUltimatePoints(1000);
+                                break;
+
+                            case 648:
+                            case 656:
+                                if (Session.Character.UltimatePoints < 2000)
+                                {
+                                    Session.SendPacket(StaticPacketHelper.Cancel(2, targetId));
+                                    Session.SendPacket(
+                                        Session.Character.GenerateSay("Not enough Ultimate Points.", 10));
+                                    return;
+                                }
+                                else
+                                    Session.Character.RemoveUltimatePoints(2000);
+                                break;
+
+                            case 650:
+                            case 655:
+                            case 658:
+                            case 659:
+                                if (Session.Character.UltimatePoints < 3000)
+                                {
+                                    Session.SendPacket(StaticPacketHelper.Cancel(2, targetId));
+                                    Session.SendPacket(
+                                        Session.Character.GenerateSay("Not enough Ultimate Points.", 10));
+                                    return;
+                                }
+                                else
+                                    Session.Character.RemoveUltimatePoints(3000);
+                                break;
+                        }
+                    }
+
                     if (Session.Character.Mp >= mpCost && Session.Character.Hp > hpCost && Session.HasCurrentMapInstance)
                     {
                         if (!Session.Character.HasGodMode)
@@ -2710,6 +2757,50 @@ namespace OpenNos.Handler
                         int amountDecreased = -(characterSkill.MpCost() * HPDecreasedByConsumingMP / 100);
                         hpCost = (short)amountDecreased;
                         mpCost -= (short)amountDecreased;
+                    }
+                }
+
+                if (Session.HasCurrentMapInstance && Session.Character.Morph == 33)
+                {
+                    switch (characterSkill.Skill.SkillVNum)
+                    {
+                        case 649:
+                        case 657:
+                            if (Session.Character.UltimatePoints < 1000)
+                            {
+                                Session.SendPacket(StaticPacketHelper.Cancel(2));
+                                Session.SendPacket(
+                                    Session.Character.GenerateSay("Not enough Ultimate Points.", 10));
+                            }
+                            else
+                                Session.Character.RemoveUltimatePoints(1000);
+                            break;
+
+                        case 648:
+                        case 656:
+                            if (Session.Character.UltimatePoints < 2000)
+                            {
+                                Session.SendPacket(StaticPacketHelper.Cancel(2));
+                                Session.SendPacket(
+                                    Session.Character.GenerateSay("Not enough Ultimate Points.", 10));
+                            }
+                            else
+                                Session.Character.RemoveUltimatePoints(2000);
+                            break;
+
+                        case 650:
+                        case 655:
+                        case 658:
+                        case 659:
+                            if (Session.Character.UltimatePoints < 3000)
+                            {
+                                Session.SendPacket(StaticPacketHelper.Cancel(2));
+                                Session.SendPacket(
+                                    Session.Character.GenerateSay("Not enough Ultimate Points.", 10));
+                            }
+                            else
+                                Session.Character.RemoveUltimatePoints(3000);
+                            break;
                     }
                 }
 
