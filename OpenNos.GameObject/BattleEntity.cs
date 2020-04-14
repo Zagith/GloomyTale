@@ -1682,15 +1682,19 @@ namespace OpenNos.GameObject
                     }
                 }
                 hp += CellonOptions.Where(s => s.Type == CellonOptionType.HPMax).Sum(s => s.Value);
-                multiplicator += GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;
+                //multiplicator += GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;
                 multiplicator += GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.IncreasesMaximumHP)[0] / 100D;
 
                 MaxHp = (int)((CharacterHelper.HPData[(byte)Character.Class, Level] + hp + GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPIncreased)[0] + GetBuff(CardType.MaxHPMP, (byte)AdditionalTypes.MaxHPMP.MaximumHPMPIncreased)[0]) * multiplicator);
-
-                if (MaxHp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D > 5000)
+                int bearHp = GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0];
+                if (MaxHp * (bearHp / 100D) > 5000)
                     MaxHp += 5000;
                 else
-                    MaxHp += MaxHp * GetBuff(CardType.BearSpirit, (byte)AdditionalTypes.BearSpirit.IncreaseMaximumHP)[0] / 100D;
+                {
+                    int hpp = (int)(MaxHp * (bearHp / 100D));
+                    MaxHp += hpp;
+                }
+                    
 
             }
             else

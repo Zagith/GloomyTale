@@ -319,7 +319,7 @@ namespace OpenNos.GameObject.Helpers
                 List<BazaarItemLink> bzlistsearched = bzlist.Where(s => itemssearch.Contains(s.Item.ItemVNum.ToString())).ToList();
 
                 //price up price down quantity up quantity down
-                List<BazaarItemLink> definitivelist = itemssearch.Count > 0 ? bzlistsearched : bzlist;
+                List<BazaarItemLink> definitivelist = itemssearch.Any() ? bzlistsearched : bzlist;
                 switch (packet.OrderFilter)
                 {
                     case 0:

@@ -130,6 +130,7 @@ namespace OpenNos.GameObject
                         mate.Level++;
                         session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 8), mate.PositionX, mate.PositionY);
                         session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 198), mate.PositionX, mate.PositionY);
+                        mate.RefreshStats();
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }
                     break;

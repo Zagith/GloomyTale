@@ -7365,6 +7365,10 @@ namespace OpenNos.GameObject
 
                 EquipmentBCards.RemoveAll(s => s.ItemVNum.Equals(vnum));
 
+                //Fix ultimate points on removing SP
+                if (Morph == 33)
+                    RemoveUltimatePoints(3000);
+
                 UseSp = false;
                 LoadSpeed();
                 Session.SendPacket(GenerateCond());

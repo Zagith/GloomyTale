@@ -50,7 +50,8 @@ namespace OpenNos.GameObject
             }
 
             if ((session.CurrentMapInstance.MapInstanceType.Equals(MapInstanceType.TalentArenaMapInstance) && VNum != 5935)
-                || session.CurrentMapInstance.MapInstanceType.Equals(MapInstanceType.IceBreakerInstance))
+                || session.CurrentMapInstance.MapInstanceType.Equals(MapInstanceType.IceBreakerInstance ) 
+                || session.CurrentMapInstance.Map.MapId == 2006 || session.CurrentMapInstance.Map.MapId == 2106)
             {
                 return;
             }
