@@ -2252,8 +2252,17 @@ namespace OpenNos.GameObject
                                             }
                                         }
                                         else if (MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (short)MapTypeEnum.PVPMap) || MapInstance.IsPVP
-                                              || HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP) && receiver.HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP))
+                                             || HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP) && receiver.HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP))
                                         {
+                                            if (HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP) 
+                                                && receiver.HasBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.AbleToFightPVP))
+                                            {
+                                                int levelDifference = Level - receiver.Level;
+                                                if (levelDifference > 5 || levelDifference < -5)
+                                                {
+                                                    return false;
+                                                }
+                                            }
                                             if (MapInstance == ServerManager.Instance.FamilyArenaInstance
                                                 && ((Character.Family != null && receiver.Character.Family != null && Character.Family == receiver.Character.Family)
                                                 || Character.Family == null && receiver.Character.Family == null))

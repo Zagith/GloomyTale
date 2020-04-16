@@ -156,7 +156,7 @@ namespace OpenNos.Handler
 
             Session.Character.WalkDisposable?.Dispose();
             Session.Character.Direction = Session.Character.BeforeDirection;
-
+            
             switch (useSkillPacket.UserType)
             {
                 case UserType.Npc:
@@ -1101,6 +1101,30 @@ namespace OpenNos.Handler
                             });
                         }
                     }
+                    else if (target.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance)
+                    {
+                        hitRequest.Session.Character.PvpScore += 3;
+                        hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay("You received 3 pvp points.", 11));
+                        hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay($"Total pvp points: {hitRequest.Session.Character.PvpScore}", 10));
+                        target.Character.PvpScore -= 5;
+                        target.Character.Session.SendPacket(target.Character.GenerateSay("You have lost 5 pvp points", 12));
+                        
+                        if (target.Character.PvpScore < 0)
+                        {
+                            target.Character.PvpScore = 0;
+                        }
+                        target.Character.Session.SendPacket(target.Character.GenerateSay($"Total pvp points: {target.Character.PvpScore}", 10));
+                        hitRequest.Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateSay(
+                            string.Format(Language.Instance.GetMessageFromKey("PVP_KILL"),
+                                hitRequest.Session.Character.Name, target.Character.Name), 10));
+
+                        if (target.Character.IsVehicled)
+                        {
+                            target.Character.RemoveVehicle();
+                        }
+                        Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
+                            ServerManager.Instance.AskPvpRevive(target.Character.CharacterId));
+                    }
                     else
                     {
                         hitRequest.Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateSay(
@@ -1585,7 +1609,6 @@ namespace OpenNos.Handler
                     {
                         switch(ski.Skill.SkillVNum)
                         {
-                            case 649:
                             case 657:
                                 if (Session.Character.UltimatePoints < 1000)
                                 {
@@ -1598,7 +1621,6 @@ namespace OpenNos.Handler
                                     Session.Character.RemoveUltimatePoints(1000);
                                 break;
 
-                            case 648:
                             case 656:
                                 if (Session.Character.UltimatePoints < 2000)
                                 {
@@ -1611,8 +1633,6 @@ namespace OpenNos.Handler
                                     Session.Character.RemoveUltimatePoints(2000);
                                 break;
 
-                            case 650:
-                            case 655:
                             case 658:
                             case 659:
                                 if (Session.Character.UltimatePoints < 3000)

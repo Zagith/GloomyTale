@@ -308,49 +308,61 @@ namespace OpenNos.GameObject
 
             switch (Item.Morph)
             {
+                // rubino piccolo
                 case 2:
                 case 6:
                 case 9:
                 case 12:
+                case 29:
                     stonevnum = 2514;
                     break;
 
+                // zaffiro piccolo
                 case 3:
                 case 4:
                 case 14:
+                case 31:
                     stonevnum = 2515;
                     break;
-
+            
+                // ossidiana piccola
                 case 5:
                 case 11:
                 case 15:
+                case 34:
                     stonevnum = 2516;
                     break;
 
+                // topazio piccolo
                 case 10:
                 case 13:
                 case 7:
+                case 33:
                     stonevnum = 2517;
                     break;
 
+                // rubino grande
                 case 17:
                 case 18:
                 case 19:
                     stonevnum = 2518;
                     break;
 
+                // zaffiro grande
                 case 20:
                 case 21:
                 case 22:
                     stonevnum = 2519;
                     break;
 
+                // ossidiana grande
                 case 23:
                 case 24:
                 case 25:
                     stonevnum = 2520;
                     break;
 
+                // topazio grande
                 case 26:
                 case 27:
                 case 28:

@@ -224,6 +224,10 @@
     <Compile Include="Migrations\202003261837052_OptimizeSecondaryAuth.designer.cs">
       <DependentUpon>202003261837052_OptimizeSecondaryAuth.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004151738363_PvpScoreCharacter.cs" />
+    <Compile Include="Migrations\202004151738363_PvpScoreCharacter.designer.cs">
+      <DependentUpon>202004151738363_PvpScoreCharacter.cs</DependentUpon>
+    </Compile>
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="Quest.cs" />
     <Compile Include="QuestLog.cs" />
@@ -386,6 +390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003261837052_OptimizeSecondaryAuth.resx">
       <DependentUpon>202003261837052_OptimizeSecondaryAuth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004151738363_PvpScoreCharacter.resx">
+      <DependentUpon>202004151738363_PvpScoreCharacter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -203,7 +203,7 @@ namespace OpenNos.GameObject
                                                 break;
                                             case 32:
                                                 //Side-effects of resurrecting
-                                                CardsToProtect.Add(44);
+                                                //CardsToProtect.Add(44);
                                                 break;
                                             case 85:
                                                 //Foggy Colossus' poison
@@ -260,6 +260,11 @@ namespace OpenNos.GameObject
                                             }
                                             else
                                                 session.AddBuff(buff, sender, x: x, y: y);
+
+                                            //Removing malus by 3rd MA sp
+                                            if (cardId != null && session.Character != null && cardId == 731)
+                                                foreach (Buff b in session.Character.Buff.Where(buff => buff.Card.BuffType == BuffType.Bad && buff.Card.Level <= 3))
+                                                    session.Character.RemoveBuff(b.Card.CardId);
                                         }
 
                                         if (SkillVNum != null && SkillVNum == 1610)

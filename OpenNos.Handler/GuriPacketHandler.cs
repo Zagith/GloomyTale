@@ -41,13 +41,30 @@ namespace OpenNos.Handler
             if (guriPacket != null)
             {
                 if (guriPacket.Data.HasValue && guriPacket.Type == 10 && guriPacket.Data.Value >= 973
-                    && guriPacket.Data.Value <= 999 && !Session.Character.EmoticonsBlocked)
+                    && guriPacket.Data.Value <= 1000 && !Session.Character.EmoticonsBlocked)
                 {
                     if (guriPacket.User == Session.Character.CharacterId)
                     {
-                        Session.CurrentMapInstance?.Broadcast(Session,
-                            StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId,
-                                guriPacket.Data.Value + 4099), ReceiverType.AllNoEmoBlocked);
+                        if (guriPacket.Data.Value == 1000)
+                        {
+                            DateTime cooldown = DateTime.Now;
+                            if (Session.Character.LastPvpEnabled.AddSeconds(30) < DateTime.Now)
+                            {
+                                Session.Character.LastPvpEnabled = DateTime.Now;
+                                Session.Character.PvpAllowed = !Session.Character.PvpAllowed;
+                                Session.SendPacket(Session.Character.GenerateSay($"pvp enabled: {Session.Character.PvpAllowed}", 10));
+                            }
+                            else
+                            {
+                                Session.SendPacket(Session.Character.GenerateSay($"Cooldown: { 30 - DateTime.Now.Subtract(Session.Character.LastPvpEnabled).Seconds}", 10));
+                            }
+                        }
+                        else
+                        {
+                            Session.CurrentMapInstance?.Broadcast(Session,
+                                StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId,
+                                    guriPacket.Data.Value + 4099), ReceiverType.AllNoEmoBlocked);
+                        }
                     }
                     else if (int.TryParse(guriPacket.User.ToString(), out int mateTransportId))
                     {

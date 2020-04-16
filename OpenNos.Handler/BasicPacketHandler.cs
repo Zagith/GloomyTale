@@ -2810,7 +2810,7 @@ namespace OpenNos.Handler
             foreach (CharacterDTO character in ServerManager.Instance.TopComplimented)
             {
                 clinit +=
-                    $" {character.CharacterId}|{character.Level}|{character.HeroLevel}|{character.Compliment}|{character.Name}";
+                    $" {character.CharacterId}|{character.Level}|{character.HeroLevel}|{character.PvpScore}|{character.Name}";
             }
 
             foreach (CharacterDTO character in ServerManager.Instance.TopReputation)

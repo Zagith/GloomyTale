@@ -76,6 +76,7 @@ namespace OpenNos.Mapper.Mappers
             output.TalentWin = input.TalentWin;
             output.WhisperBlocked = input.WhisperBlocked;
             output.Contributi = input.Contributi;
+            output.PvpScore = input.PvpScore;
 
             return true;
         }
@@ -148,6 +149,7 @@ namespace OpenNos.Mapper.Mappers
             output.TalentWin = input.TalentWin;
             output.WhisperBlocked = input.WhisperBlocked;
             output.Contributi = input.Contributi;
+            output.PvpScore = input.PvpScore;
 
             return true;
         }

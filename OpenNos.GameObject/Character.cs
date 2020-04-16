@@ -68,6 +68,7 @@ namespace OpenNos.GameObject
             LastMonsterAggro = DateTime.Now;
             LastPulse = DateTime.Now;
             LastFreeze = DateTime.Now;
+            LastTarget = DateTime.Now;
             MTListTargetQueue = new ConcurrentStack<MTListHitTarget>();
             MeditationDictionary = new Dictionary<short, DateTime>();
             PVELockObject = new object();
@@ -141,6 +142,7 @@ namespace OpenNos.GameObject
             TalentWin = input.TalentWin;
             WhisperBlocked = input.WhisperBlocked;
             Contributi = input.Contributi;
+            PvpScore = input.PvpScore;
         }
 
         #endregion
@@ -319,6 +321,9 @@ namespace OpenNos.GameObject
 
         public DateTime LastLoyalty { get; set; }
 
+        public DateTime LastPvpEnabled { get; set; }
+
+
         public short LastItemVNum { get; set; }
 
         public ClientSession LastPvPKiller { get; set; }
@@ -340,6 +345,8 @@ namespace OpenNos.GameObject
         public DateTime LastPotion { get; set; }
 
         public DateTime LastPulse { get; set; }
+
+        public DateTime LastTarget { get; set; }
 
         public DateTime LastFreeze { get; set; }
 
@@ -638,6 +645,8 @@ namespace OpenNos.GameObject
         #region BattleEntityProperties
 
         public BattleEntity BattleEntity { get; set; }
+
+        public bool PvpAllowed { get; set; }
 
         public void AddBuff(Buff indicator, BattleEntity sender, bool noMessage = false, short x = 0, short y = 0) => BattleEntity.AddBuff(indicator, sender, noMessage, x, y);
 
@@ -2090,6 +2099,29 @@ namespace OpenNos.GameObject
                     }
                 }
 
+                #endregion
+
+                #region Map Pvp System
+
+                if (Level >= 45 && PvpAllowed)
+                {
+                    if (!HasBuff(15))
+                    {
+                        AddBuff(new Buff(15, Level), BattleEntity);
+                    }
+                }
+                else
+                {
+                    if (HasBuff(15))
+                    {
+                        RemoveBuff(15);
+                    }
+                }
+                if (LastTarget.AddSeconds(2) <= DateTime.Now && HasBuff(15))
+                {
+                    Session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 3012));
+                    LastTarget = DateTime.Now;
+                }
                 #endregion
 
                 if (BubbleMessage != null && BubbleMessageEnd <= DateTime.Now)

@@ -209,6 +209,9 @@ namespace OpenNos.DAL.EF
         public bool WhisperBlocked { get; set; }
 
         public int Contributi { get; set; }
+
+        public int PvpScore { get; set; }
+
         #endregion
     }
 }

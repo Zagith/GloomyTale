@@ -206,8 +206,8 @@ namespace OpenNos.GameObject.Event
                             case 0:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
                                     30000));
-                                dropParameters.AddRange(GenerateDrop(map, 5948, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1363, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 5948, 10, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1363, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 3));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 1248, 5, 1));
@@ -216,8 +216,8 @@ namespace OpenNos.GameObject.Event
                             case 1:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
                                     40000));
-                                dropParameters.AddRange(GenerateDrop(map, 5949, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1364, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 5949, 10, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1364, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 4));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 1247, 5, 1));
@@ -226,7 +226,7 @@ namespace OpenNos.GameObject.Event
                             case 2:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
                                     60000));
-                                dropParameters.AddRange(GenerateDrop(map, 5950, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 5950, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 1218, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 5369, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 5));
@@ -239,8 +239,8 @@ namespace OpenNos.GameObject.Event
                                     65000));
                                 dropParameters.AddRange(GenerateDrop(map, 1218, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 5369, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1363, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1364, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1363, 10, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1364, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 6));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 4));
                                 break;
@@ -254,8 +254,8 @@ namespace OpenNos.GameObject.Event
                             case 0:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
                                     30000));
-                                dropParameters.AddRange(GenerateDrop(map, 5948, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1363, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 5948, 10, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1363, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 3));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 1248, 5, 1));
@@ -264,8 +264,8 @@ namespace OpenNos.GameObject.Event
                             case 1:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
                                     40000));
-                                dropParameters.AddRange(GenerateDrop(map, 5949, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1364, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 5949, 10, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1364, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 4));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 2));
                                 dropParameters.AddRange(GenerateDrop(map, 1247, 5, 1));
@@ -274,7 +274,7 @@ namespace OpenNos.GameObject.Event
                             case 2:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
                                     60000));
-                                dropParameters.AddRange(GenerateDrop(map, 5950, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 5950, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 1218, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 5369, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 5));
@@ -287,8 +287,8 @@ namespace OpenNos.GameObject.Event
                                     3000 * ServerManager.Instance.Configuration.RateGold / 4));
                                 dropParameters.AddRange(GenerateDrop(map, 1218, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 5369, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1363, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1364, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1363, 10, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1364, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 6));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 4));
                                 break;
@@ -302,8 +302,8 @@ namespace OpenNos.GameObject.Event
                             case 0:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
                                     30000));
-                                dropParameters.AddRange(GenerateDrop(map, 5948, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1363, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 5948, 10, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1363, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 3));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 1248, 5, 1));
@@ -312,8 +312,8 @@ namespace OpenNos.GameObject.Event
                             case 1:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
                                     40000));
-                                dropParameters.AddRange(GenerateDrop(map, 5949, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1364, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 5949, 10, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1364, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 4));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 2));
                                 dropParameters.AddRange(GenerateDrop(map, 1247, 5, 1));
@@ -322,11 +322,11 @@ namespace OpenNos.GameObject.Event
                             case 2:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
                                     60000));
-                                dropParameters.AddRange(GenerateDrop(map, 5950, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 5950, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 1218, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 5));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 3));
-                                dropParameters.AddRange(GenerateDrop(map, 1364, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1364, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 5369, 5, 1));
                                 break;
 
@@ -335,8 +335,8 @@ namespace OpenNos.GameObject.Event
                                     65000));
                                 dropParameters.AddRange(GenerateDrop(map, 1218, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 5369, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1363, 5, 1));
-                                dropParameters.AddRange(GenerateDrop(map, 1364, 5, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1363, 10, 1));
+                                dropParameters.AddRange(GenerateDrop(map, 1364, 10, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 2282, 5, 6));
                                 dropParameters.AddRange(GenerateDrop(map, 1030, 5, 4));
                                 break;
