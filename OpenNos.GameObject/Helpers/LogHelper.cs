@@ -97,6 +97,18 @@ namespace OpenNos.GameObject.Helpers
             DAOFactory.TimeSpaceLogDAO.Insert(log);
         }
 
+        public void InsertPVPLog(long characterId, long targetId, string ipAddress)
+        {
+            var log = new PvPLogDTO
+            {
+                CharacterId = characterId,
+                TargetId = targetId,
+                IpAddress = ipAddress,
+                Timestamp = DateTime.Now
+            };
+            DAOFactory.PvPLogDAO.Insert(log);
+        }
+
         #region Singleton
 
         private static LogHelper _instance;

@@ -2104,7 +2104,6 @@ namespace OpenNos.GameObject
                                         mapInstance.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("GLACERUS_GRRR"), 0));
 
                                         // SafeZone
-
                                         for (short effectSafeZone = 4280; effectSafeZone <= 4282; effectSafeZone++)
                                         {
 

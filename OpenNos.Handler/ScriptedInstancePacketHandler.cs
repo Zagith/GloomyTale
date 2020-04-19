@@ -465,6 +465,13 @@ namespace OpenNos.Handler
                             {
                                 if (portal.Id == TeamTimeSpace.Id)
                                 {
+                                    if(TeamTimeSpace.Id == 500 && Session.Character.Group!= null)
+                                    {
+                                        Session.SendPacket(
+                                            UserInterfaceHelper.GenerateMsg("Need to be alone to do this TimeSpace", 0));
+                                        return;
+                                    }
+
                                     if (Session.Character.Level < TeamTimeSpace.LevelMinimum)
                                     {
                                         Session.SendPacket(

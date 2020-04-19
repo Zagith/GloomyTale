@@ -44,6 +44,7 @@ namespace OpenNos.Mapper.Mappers
             output.Id = input.Id;
             output.IsEmpty = input.IsEmpty;
             output.IsFixed = input.IsFixed;
+            output.IsCarveRuneFixed = input.IsCarveRuneFixed;
             output.IsPartnerEquipment = input.IsPartnerEquipment;
             output.ItemDeleteTime = input.ItemDeleteTime;
             output.ItemVNum = input.ItemVNum;
@@ -74,6 +75,7 @@ namespace OpenNos.Mapper.Mappers
             output.WaterElement = input.WaterElement;
             output.WaterResistance = input.WaterResistance;
             output.XP = input.XP;
+            output.CarveRuneUpgrade = input.CarveRuneUpgrade;
 
             return true;
         }
@@ -114,6 +116,7 @@ namespace OpenNos.Mapper.Mappers
             output.Id = input.Id;
             output.IsEmpty = input.IsEmpty ?? false;
             output.IsFixed = input.IsFixed ?? false;
+            output.IsCarveRuneFixed = input.IsCarveRuneFixed ?? false;
             output.IsPartnerEquipment = input.IsPartnerEquipment ?? false;
             output.ItemDeleteTime = input.ItemDeleteTime;
             output.ItemVNum = input.ItemVNum;
@@ -144,6 +147,7 @@ namespace OpenNos.Mapper.Mappers
             output.WaterElement = input.WaterElement ?? 0;
             output.WaterResistance = input.WaterResistance ?? 0;
             output.XP = input.XP ?? 0;
+            output.CarveRuneUpgrade = input.CarveRuneUpgrade;
 
             return true;
         }

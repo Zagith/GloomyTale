@@ -47,6 +47,16 @@ namespace OpenNos.Handler
                     {
                         if (guriPacket.Data.Value == 1000)
                         {
+                            if (Session.CurrentMapInstance.Map?.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4)
+                                == false)
+                            {
+                                return;
+                            }
+                            if (Session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now)
+                            {
+                                Session.SendPacket(Session.Character.GenerateSay($"You are in battle", 10));
+                                return;
+                            }
                             DateTime cooldown = DateTime.Now;
                             if (Session.Character.LastPvpEnabled.AddSeconds(30) < DateTime.Now)
                             {

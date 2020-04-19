@@ -17,6 +17,8 @@ using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
+using OpenNos.GameObject;
+using OpenNos.GameObject.Networking;
 using OpenNos.Master.Library.Data;
 using OpenNos.Master.Library.Interface;
 using OpenNos.SCS.Communication.Scs.Communication.EndPoints.Tcp;
@@ -234,10 +236,10 @@ namespace OpenNos.Master.Server
 
         public bool IsCharacterConnected(string worldGroup, long characterId)
         {
-            if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
+           /* if (!MSManager.Instance.AuthentificatedClients.Any(s => s.Equals(CurrentClient.ClientId)))
             {
                 return false;
-            }
+            }*/
 
             return MSManager.Instance.ConnectedAccounts.Any(c => c.ConnectedWorld != null && c.ConnectedWorld.WorldGroup == worldGroup && c.CharacterId == characterId);
         }
@@ -737,7 +739,7 @@ namespace OpenNos.Master.Server
                     DAOFactory.MailDAO.InsertOrUpdate(ref mail);
                     return;
                 }
-
+                DAOFactory.MailDAO.InsertOrUpdate(ref mail);
                 account.ConnectedWorld.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().SendMail(mail);
             }
         }

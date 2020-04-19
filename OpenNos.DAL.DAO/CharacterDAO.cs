@@ -64,7 +64,7 @@ namespace OpenNos.DAL.DAO
             using (OpenNosContext context = DataAccessHelper.CreateContext())
             {
                 List<CharacterDTO> result = new List<CharacterDTO>();
-                foreach (Character entity in context.Character.Where(c => c.State == (byte)CharacterState.Active && c.Account.Authority == AuthorityType.User && !c.Account.PenaltyLog.Any(l => l.Penalty == PenaltyType.Banned && l.DateEnd > DateTime.Now)).OrderByDescending(c => c.PvpScore).Take(30))
+                foreach (Character entity in context.Character.Where(c => c.State == (byte)CharacterState.Active && c.Account.Authority == AuthorityType.User && !c.Account.PenaltyLog.Any(l => l.Penalty == PenaltyType.Banned && l.DateEnd > DateTime.Now)).OrderByDescending(c => c.PvpScoreTotal).Take(30))
                 {
                     CharacterDTO dto = new CharacterDTO();
                     Mapper.Mappers.CharacterMapper.ToCharacterDTO(entity, dto);

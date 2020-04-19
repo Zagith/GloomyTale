@@ -555,6 +555,11 @@ namespace OpenNos.GameObject.Networking
             ClientSession session = GetSessionByCharacterId(characterId);
             if (session?.Character != null && !session.Character.IsChangingMapInstance)
             {
+                if (session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now)
+                {
+                    session.SendPacket(session.Character.GenerateSay($"You are in battle", 10));
+                    return;
+                }
                 session.Character.IsChangingMapInstance = true;
 
                 session.Character.RemoveBuff(620);
@@ -1777,6 +1782,33 @@ namespace OpenNos.GameObject.Networking
             TopReputation = DAOFactory.CharacterDAO.GetTopReputation();
         }
 
+        public void ResetPointsDate()
+        {
+            DateTime now = DateTime.Now;
+            DateTime firstDay = new DateTime(now.Year, now.Month, 1);
+            TimeSpan time = new TimeSpan(firstDay.Hour, firstDay.Minute, firstDay.Second);
+            Observable.Timer(TimeSpan.FromSeconds(EventHelper.GetMilisecondsBeforeTime(time).TotalSeconds), TimeSpan.FromTicks(1)).Subscribe(e =>
+            {
+                if (DateTime.Now == firstDay)
+                {
+                    EventHelper.GenerateEvent(EventType.RESETPOINTS);
+                }
+            });
+        }
+
+        public void ResetPoints()
+        {
+            foreach (ClientSession session in Sessions)
+            {
+                session.Character.Act4Dead = 0;
+                session.Character.Act4Kill = 0;
+                session.Character.Act4Points = 0;
+                session.Character.PvpScoreTotal = 0;
+                session.Character.Save();
+            }
+            RefreshRanking();
+        }
+
         public void RelationRefresh(long relationId)
         {
             _inRelationRefreshMode = true;
@@ -2280,7 +2312,7 @@ namespace OpenNos.GameObject.Networking
                     Parallel.ForEach(map.Value.Monsters, monster => monster.StartLife());
                 });
             });
-
+            ResetPointsDate();
             CommunicationServiceClient.Instance.SessionKickedEvent += OnSessionKicked;
             CommunicationServiceClient.Instance.MessageSentToCharacter += OnMessageSentToCharacter;
             CommunicationServiceClient.Instance.FamilyRefresh += OnFamilyRefresh;

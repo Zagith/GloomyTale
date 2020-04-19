@@ -647,6 +647,8 @@ namespace OpenNos.GameObject
 
         public int ShadowResistance { get; set; }
 
+        public List<RuneEffectDTO> RuneEffects { get; set; }
+
         public List<ShellEffectDTO> ShellArmorEffects { get; }
 
         public List<ShellEffectDTO> ShellWeaponEffects { get; }

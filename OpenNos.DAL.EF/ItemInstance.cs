@@ -148,6 +148,8 @@ namespace OpenNos.DAL.EF
 
         public bool? IsFixed { get; set; }
 
+        public bool? IsCarveRuneFixed { get; set; }
+
         public bool? IsPartnerEquipment { get; set; }
 
         public byte? LightElement { get; set; }
@@ -165,6 +167,8 @@ namespace OpenNos.DAL.EF
         public short? WaterResistance { get; set; }
 
         public long? XP { get; set; }
+
+        public byte CarveRuneUpgrade { get; set; }
 
         #endregion
     }

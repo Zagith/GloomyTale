@@ -43,6 +43,16 @@ namespace OpenNos.GameObject
             {
                 return;
             }
+            if (session.Character.PvpAllowed && (DateTime.Now - session.Character.LastPotion).TotalMilliseconds < 30)
+            {
+                return;
+            }
+
+            if (session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now)
+            {
+                session.SendPacket(session.Character.GenerateSay($"You are in battle", 10));
+                return;
+            }
 
             if ((DateTime.Now - session.Character.LastPotion).TotalMilliseconds < (session.CurrentMapInstance.Map.MapTypes.OrderByDescending(s => s.PotionDelay).FirstOrDefault()?.PotionDelay ?? 750))
             {

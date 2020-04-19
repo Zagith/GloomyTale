@@ -364,17 +364,17 @@ namespace OpenNos.GameObject
                     }
                     MaxMp *= 5;
                 }
-                else
+               /* else
                 {
-                    MaxHp *= 3;
-                    MaxMp *= 3;
+                    MaxHp *= 2;
+                    MaxMp *= 2;
 
                     if (IsTarget)
                     {
-                        MaxHp *= 4;
-                        MaxMp *= 4;
+                        MaxHp *= 2;
+                        MaxMp *= 2;
                     }
-                }
+                }*/
                 // Huge Snowman Head
                 if (MonsterVNum == 533)
                 {
@@ -910,6 +910,8 @@ namespace OpenNos.GameObject
                 BattleEntity attackerBattleEntity = hitRequest.Mate == null
                     ? new BattleEntity(hitRequest.Session.Character, hitRequest.Skill)
                     : new BattleEntity(hitRequest.Mate);
+                if (attackerBattleEntity.Mate != null && !attackerBattleEntity.Mate.Skills.Any(skil => skil.CanBeUsed()))
+                    hitRequest.Skill = null;
                 int damage = DamageHelper.Instance.CalculateDamage(attackerBattleEntity, new BattleEntity(this),
                     hitRequest.Skill, ref hitmode, ref onyxWings);
 
@@ -1995,7 +1997,7 @@ namespace OpenNos.GameObject
             */
                     }
 
-                    public void MoveTest()
+        public void MoveTest()
         {
             double walkWaitTime = (Target == null && RunToX == 0 && RunToY == 0 ? ServerManager.RandomNumber(400, 3200) : 0) + (Speed / 1.5f) * 100 - (DateTime.Now - LastMove).TotalMilliseconds;
             double skillWaitTime = 0 /*800 - (DateTime.Now - LastSkill).TotalMilliseconds*/;
@@ -2138,9 +2140,10 @@ namespace OpenNos.GameObject
         /// <param name="npcMonsterSkill"></param>
         private void TargetHit(BattleEntity target, NpcMonsterSkill npcMonsterSkill)
         {
-            if (Monster != null && !HasBuff(CardType.SpecialAttack, (byte)AdditionalTypes.SpecialAttack.NoAttack))
+            if (Monster != null && !HasBuff(CardType.SpecialAttack, (byte)AdditionalTypes.SpecialAttack.NoAttack) && !target.HasBuff(569))
             {
                 int castTime = 0;
+
                 if (npcMonsterSkill != null)
                 {
                     if (CurrentMp < npcMonsterSkill.Skill.MpCost)

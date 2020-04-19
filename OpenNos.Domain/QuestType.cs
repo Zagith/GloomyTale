@@ -28,5 +28,7 @@
         Inspect = 24,
         WinRaid = 25,
         FlowerQuest = 26,
+        TalentArena = 27,
+        Act4kill = 28
     }
 }

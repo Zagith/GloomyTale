@@ -52,6 +52,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenNos.Crown", "OpenNos.Cr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GloomyTale.DiscordBot", "GloomyTale.DiscordBot\GloomyTale.DiscordBot.csproj", "{C7C0782A-52EE-4E98-A90F-5B7C326C4F72}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4F125C7F-CB5E-4D4B-87D1-8FB80AFA38CA}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		DE|Any CPU = DE|Any CPU

@@ -941,6 +941,7 @@ namespace OpenNos.Handler
         {
             if (packet != null && !Session.Character.IsSeal)
             {
+                ServerManager.Instance.ResetPoints();
                 Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(), $"[Lvl]Level: {packet.Level}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
                 if (packet.Level > 0)

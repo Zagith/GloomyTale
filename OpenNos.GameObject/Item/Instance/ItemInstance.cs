@@ -32,6 +32,7 @@ namespace OpenNos.GameObject
         private Item _item;
         private long _transportId;
         private List<CellonOptionDTO> _cellonOptions;
+        private List<RuneEffectDTO> _runeEffects;
         private List<ShellEffectDTO> _shellEffects;
 
         #endregion
@@ -81,6 +82,7 @@ namespace OpenNos.GameObject
             Id = input.Id;
             IsEmpty = input.IsEmpty;
             IsFixed = input.IsFixed;
+            IsCarveRuneFixed = input.IsCarveRuneFixed;
             IsPartnerEquipment = input.IsPartnerEquipment;
             ItemDeleteTime = input.ItemDeleteTime;
             ItemVNum = input.ItemVNum;
@@ -111,6 +113,7 @@ namespace OpenNos.GameObject
             WaterElement = input.WaterElement;
             WaterResistance = input.WaterResistance;
             XP = input.XP;
+            CarveRuneUpgrade = input.CarveRuneUpgrade;
         }
 
         #endregion
@@ -139,6 +142,7 @@ namespace OpenNos.GameObject
 
         public List<ShellEffectDTO> ShellEffects => _shellEffects ?? (_shellEffects = DAOFactory.ShellEffectDAO.LoadByEquipmentSerialId(EquipmentSerialId == Guid.Empty ? EquipmentSerialId = Guid.NewGuid() : EquipmentSerialId).ToList());
 
+        public List<RuneEffectDTO> RuneEffects => _runeEffects ?? (_runeEffects = DAOFactory.RuneEffectDAO.LoadByEquipmentSerialId(EquipmentSerialId == Guid.Empty ? EquipmentSerialId = Guid.NewGuid() : EquipmentSerialId).ToList());
 
         #endregion
 
@@ -153,7 +157,7 @@ namespace OpenNos.GameObject
             switch (Type)
             {
                 case InventoryType.Equipment:
-                    return $"ivn 0 {Slot}.{ItemVNum}.{Rare}.{(Item.IsColored ? Design : Upgrade)}.{SpStoneUpgrade}";
+                    return $"ivn 0 {Slot}.{ItemVNum}.{Rare}.{(Item.IsColored ? Design : Upgrade)}.{SpStoneUpgrade}.{CarveRuneUpgrade}";
 
                 case InventoryType.Main:
                     return $"ivn 1 {Slot}.{ItemVNum}.{Amount}.0";
@@ -793,7 +797,7 @@ namespace OpenNos.GameObject
                     switch (equipmentslot)
                     {
                         case EquipmentType.MainWeapon:
-                            return $"e_info {(itemClass == 4 ? 1 : itemClass == 8 ? 5 : 0)} {ItemVNum} {Rare} {Upgrade} {(IsFixed ? 1 : 0)} {Item.LevelMinimum} {Item.DamageMinimum + DamageMinimum} {Item.DamageMaximum + DamageMaximum} {Item.HitRate + HitRate} {Item.CriticalLuckRate + CriticalLuckRate} {Item.CriticalRate + CriticalRate} {Ammo} {Item.MaximumAmmo} {Item.SellToNpcPrice} {(IsPartnerEquipment ? $"{HoldingVNum}" : "-1")} {(ShellRarity == null ? "0" : $"{ShellRarity}")} {BoundCharacterId ?? 0} {ShellEffects.Count} {ShellEffects.Aggregate("", (result, effect) => result += $"{(byte)effect.EffectLevel}.{effect.Effect}.{(byte)effect.Value} ")}"; // Shell Rare, CharacterId, ShellEffectCount, ShellEffects
+                            return $"e_info {(itemClass == 4 ? 1 : itemClass == 8 ? 5 : 0)} {ItemVNum} {Rare} {Upgrade} {(IsFixed ? 1 : 0)} {Item.LevelMinimum} {Item.DamageMinimum + DamageMinimum} {Item.DamageMaximum + DamageMaximum} {Item.HitRate + HitRate} {Item.CriticalLuckRate + CriticalLuckRate} {Item.CriticalRate + CriticalRate} {Ammo} {Item.MaximumAmmo} {Item.SellToNpcPrice} {(IsPartnerEquipment ? $"{HoldingVNum}" : "-1")} {(ShellRarity == null ? "0" : $"{ShellRarity}")} {BoundCharacterId ?? 0} {ShellEffects.Count} {ShellEffects.Aggregate("", (result, effect) => result += $"{(byte)effect.EffectLevel}.{effect.Effect}.{(byte)effect.Value} ")} {CarveRuneUpgrade} {(CarveRuneUpgrade > 0 ? $"{(IsCarveRuneFixed ? 1 : 0)} {RuneEffects.Count}" : "")} {RuneEffects.OrderBy(o => o.EffectType).Aggregate(string.Empty, (result2, effect2) => result2 + $"{effect2.EffectType}.{effect2.Effect}.{effect2.Value}.{effect2.CardId}.{effect2.EffectUpgrade} ")}"; // Shell Rare, CharacterId, ShellEffectCount, ShellEffects
 
                         case EquipmentType.SecondaryWeapon:
                             return $"e_info {(itemClass <= 2 ? 1 : 0)} {ItemVNum} {Rare} {Upgrade} {(IsFixed ? 1 : 0)} {Item.LevelMinimum} {Item.DamageMinimum + DamageMinimum} {Item.DamageMaximum + DamageMaximum} {Item.HitRate + HitRate} {Item.CriticalLuckRate + CriticalLuckRate} {Item.CriticalRate + CriticalRate} {Ammo} {Item.MaximumAmmo} {Item.SellToNpcPrice} {(IsPartnerEquipment ? $"{HoldingVNum}" : "-1")} {(ShellRarity == null ? "0" : $"{ShellRarity}")} {BoundCharacterId ?? 0} {ShellEffects.Count} {ShellEffects.Aggregate("", (result, effect) => result += $"{(byte)effect.EffectLevel}.{effect.Effect}.{(byte)effect.Value} ")}";
@@ -1573,6 +1577,328 @@ namespace OpenNos.GameObject
             }
         }
 
+        public void UpgradeCarveRune(ClientSession session)
+        {
+            if (!session.HasCurrentMapInstance)
+            {
+                return;
+            }
+
+            if (CarveRuneUpgrade < 15)
+            {
+                byte[] upfail;
+                byte[] upruin;
+                int[] goldprice;
+                byte[] obsidian;
+                byte[] powder;
+                byte[] titanium;
+                byte[] crystal;
+                byte[] horn;
+                byte[] runestone;
+
+                upfail = new byte[] { 0, 10, 17, 30, 49, 68, 72, 76, 83, 81, 81, 83, 79, 78, 75 };
+                upruin = new byte[] { 0, 0, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 25 };
+                goldprice = new[] { 3000, 16000, 99000, 55000, 110000, 280000, 220000, 310000, 500000, 450000, 560000, 790000, 700000, 880000, 1100000 };
+                obsidian = new byte[] { 10, 12, 16, 14, 16, 20, 18, 20, 50, 44, 48, 60, 52, 56, 80 };
+                powder = new byte[] { 5, 7, 11, 9, 11, 15, 13, 15, 40, 34, 38, 50, 42, 46, 60 };
+                titanium = new byte[] { 0, 0, 10, 0, 0, 15, 0, 0, 40, 0, 0, 50, 0, 0, 60 };
+                crystal = new byte[] { 0, 0, 1, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0 };
+                horn = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 2 };
+                runestone = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2 };
+
+                const short obsidianVNum = 2416;
+                const short powderVNum = 2411;
+                const short titaniumVNum = 2430;
+                const short crystalVNum = 2475;
+                const short hornVNum = 2413;
+                const short runestonVNum = 2462;
+
+                if (IsCarveRuneFixed)
+                {
+                    session.SendPacket(session.Character.GenerateSay("Your Carve Rune is ruined", 10));
+                    session.SendPacket("shop_end 2");
+                    return;
+                }
+
+                if (session.Character.Inventory.CountItem(obsidianVNum) < obsidian[CarveRuneUpgrade])
+                {
+                    return;
+                }
+                if (session.Character.Gold < goldprice[CarveRuneUpgrade])
+                {
+                    session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("NOT_ENOUGH_MONEY"), 10));
+                    return;
+                }
+                if (session.Character.Inventory.CountItem(powderVNum) < powder[CarveRuneUpgrade])
+                {
+                    session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), ServerManager.GetItem(powderVNum).Name, 1), 10));
+                    return;
+                }
+                if (session.Character.Inventory.CountItem(titaniumVNum) < titanium[CarveRuneUpgrade])
+                {
+                    session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), ServerManager.GetItem(titaniumVNum).Name, 1), 10));
+                    return;
+                }
+                if (session.Character.Inventory.CountItem(crystalVNum) < crystal[CarveRuneUpgrade])
+                {
+                    session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), ServerManager.GetItem(crystalVNum).Name, 1), 10));
+                    return;
+                }
+                if (session.Character.Inventory.CountItem(hornVNum) < horn[CarveRuneUpgrade])
+                {
+                    session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), ServerManager.GetItem(hornVNum).Name, 1), 10));
+                    return;
+                }
+                if (session.Character.Inventory.CountItem(runestonVNum) < runestone[CarveRuneUpgrade])
+                {
+                    session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("NOT_ENOUGH_ITEMS"), ServerManager.GetItem(runestonVNum).Name, 1), 10));
+                    return;
+                }
+
+
+                session.Character.Inventory.RemoveItemAmount(obsidianVNum, obsidian[CarveRuneUpgrade]);
+                session.Character.Inventory.RemoveItemAmount(powderVNum, powder[CarveRuneUpgrade]);
+                session.Character.Inventory.RemoveItemAmount(titaniumVNum, titanium[CarveRuneUpgrade]);
+                session.Character.Inventory.RemoveItemAmount(crystalVNum, crystal[CarveRuneUpgrade]);
+                session.Character.Inventory.RemoveItemAmount(hornVNum, horn[CarveRuneUpgrade]);
+                session.Character.Inventory.RemoveItemAmount(runestonVNum, runestone[CarveRuneUpgrade]);
+                session.Character.Gold -= goldprice[CarveRuneUpgrade];
+                session.SendPacket(session.Character.GenerateGold());
+                session.SendPacket(GenerateInventoryAdd());
+
+                int rnd = ServerManager.RandomNumber();
+
+                if (rnd < upruin[CarveRuneUpgrade])
+                {
+                    session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 3004), session.Character.MapX, session.Character.MapY);
+                    IsCarveRuneFixed = true;
+                    session.SendPacket(session.Character.GenerateSay("Carve Rune Ruined!", 11));
+                    session.SendPacket(session.Character.GenerateSay("Carve Rune Ruined!", 0));
+                }
+                else if (rnd < upfail[CarveRuneUpgrade] + upruin[CarveRuneUpgrade])
+                {
+                    session.SendPacket(session.Character.GenerateSay("Carve Rune Upgrade Failed!", 11));
+                    session.SendPacket(UserInterfaceHelper.GenerateMsg("Carve Rune Upgrade Failed!", 0));
+                }
+                else
+                {
+                    session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, 3005), session.Character.MapX, session.Character.MapY);
+                    session.SendPacket(session.Character.GenerateSay("Carve Rune successfully Upgrade!", 12));
+                    session.SendPacket(UserInterfaceHelper.GenerateMsg("Carve Rune successfully Upgrade!", 0));
+                    CarveRuneUpgrade++;
+
+                    byte effectType = 0;
+                    byte effect = 0;
+                    short cardId = 0;
+                    CarveRune();
+
+                    void CarveRune()
+                    {
+                        RandomCarveRune();
+                        RuneEffectDTO runeEffect = RuneEffects.Find(r => r.EffectType == effectType && r.Effect == effect);
+
+                        if (runeEffect != null)
+                        {
+                            if (runeEffect.EffectUpgrade < 5)
+                            {
+                                if (effectType == 105 || effectType == 106)
+                                {
+                                    runeEffect.EffectUpgrade++;
+                                    runeEffect.Value = (short)(runeEffect.EffectUpgrade * 4);
+                                    runeEffect.CardId = (short)(CarveRuneValue(runeEffect.EffectUpgrade) * 4);
+                                }
+                                else
+                                {
+                                    runeEffect.EffectUpgrade++;
+                                    runeEffect.Value = (short)(CarveRuneValue(runeEffect.EffectUpgrade) * 4);
+                                    runeEffect.CardId = cardId;
+                                }
+                            }
+                            else
+                            {
+                                RandomCarveRune();
+                                CarveRune();
+                            }
+                        }
+                        else
+                        {
+                            RuneEffects.Add(new RuneEffectDTO
+                            {
+                                EffectType = effectType,
+                                Effect = effect,
+                                Value = (short)(effectType == 105 ? 4 : effectType == 106 ? 4 : CarveRuneValue(0) * 4),
+                                EffectUpgrade = 1,
+                                CardId = (short)(effectType == 105 ? CarveRuneValue(0) * 4 : effectType == 106 ? CarveRuneValue(0) * 4 : 0),
+                                EquipmentSerialId = EquipmentSerialId
+                            });
+                        }
+                    }
+                    //Carve modifica
+
+                    short CarveRuneValue(byte upgrade)
+                    {
+                        short value = 0;
+
+                        short[] value2 = new short[] { };
+
+                        switch (effectType)
+                        {
+                            case 3:
+                                value2 = new short[] { 20, 40, 80, 150, 200 };
+                                break;
+
+                            case 15:
+                                value2 = new short[] { 1, 2, 4, 7, 10 };
+                                break;
+
+                            case 9:
+                                value2 = new short[] { 20, 40, 80, 150, 200 };
+                                break;
+
+                            case 10:
+                                value2 = new short[] { 1, 2, 4, 7, 10 };
+                                break;
+
+                            case 4:
+                                {
+                                    if (Item.ItemType == ItemType.Weapon && Item.ItemSubType == 9)
+                                    {
+                                        value2 = new short[] { 1, 3, 5, 7, 15 };
+                                    }
+                                    else
+                                    {
+                                        value2 = new short[] { 20, 40, 70, 110, 150 };
+                                    }
+                                }
+                                break;
+
+
+                            case 102:
+                                value2 = new short[] { 1, 2, 4, 7, 10 };
+                                break;
+
+                            case 105:
+                                switch (effect)
+                                {
+                                    case 0:
+                                        value2 = new short[] { 1900, 1901, 1902, 1903, 1904 };
+                                        break;
+
+                                    case 1:
+                                        value2 = new short[] { 1905, 1906, 1907, 1908, 1909 };
+                                        break;
+
+                                    case 2:
+                                        value2 = new short[] { 1910, 1911, 1912, 1913, 1914 };
+                                        break;
+
+                                    case 3:
+                                        value2 = new short[] { 1915, 1916, 1917, 1918, 1919 };
+                                        break;
+
+                                    case 4:
+                                        value2 = new short[] { 1920, 1921, 1922, 1923, 1924 };
+                                        break;
+                                }
+                                break;
+
+                            case 106:
+                                switch (effect)
+                                {
+                                    case 0:
+                                        value2 = new short[] { 1925, 1926, 1927, 1928, 1929 };
+                                        break;
+
+                                    case 1:
+                                        value2 = new short[] { 1930, 1931, 1932, 1933, 1934 };
+                                        break;
+
+                                    case 2:
+                                        value2 = new short[] { 1935, 1936, 1937, 1938, 1939 };
+                                        break;
+
+                                    case 3:
+                                        value2 = new short[] { 1940, 1941, 1942, 1943, 1944 };
+                                        break;
+
+                                    case 4:
+                                        value2 = new short[] { 1945, 1946, 1947, 1948, 1949 };
+                                        break;
+                                }
+                                break;
+
+                            case 7:
+                                value2 = new short[] { 10, 15, 20, 30, 50 };
+                                break;
+
+                            case 14:
+                                value2 = new short[] { 3, 5, 7, 10, 15 };
+                                break;
+
+                            case 33:
+                                switch (effect)
+                                {
+                                    case 0:
+                                        value2 = new short[] { 200, 400, 800, 1300, 2000 };
+                                        break;
+
+                                    case 2:
+                                        value2 = new short[] { 1, 2, 4, 7, 10 };
+                                        break;
+
+                                    case 1:
+                                        value2 = new short[] { 200, 400, 800, 1300, 2000 };
+                                        break;
+
+                                    case 3:
+                                        value2 = new short[] { 1, 2, 4, 7, 10 };
+                                        break;
+                                }
+                                break;
+                        }
+
+                        value = value2[upgrade];
+
+                        return value;
+                    }
+
+                    void RandomCarveRune()
+                    {
+                        if (CarveRuneUpgrade == 3 || CarveRuneUpgrade == 6 || CarveRuneUpgrade == 9 || CarveRuneUpgrade == 12 || CarveRuneUpgrade == 15)
+                        {
+                            if (ServerManager.RandomNumber() < 50)
+                            {
+                                int rdn = ServerManager.RandomNumber(0, 2);
+                                byte[] effectType1 = new byte[] { 105, 106 };
+                                effectType = effectType1[rdn];
+                                effect = (byte)ServerManager.RandomNumber(0, 5);
+                            }
+                            else
+                            {
+                                int rdn = ServerManager.RandomNumber(0, 12);
+                                byte[] effectType1 = new byte[] { 3, 15, 9, 10, 4, 102, 7, 14, 33, 33, 33, 33 };
+                                byte[] effect1 = new byte[] { 0, 0, 0, 3, 0, 4, 4, 0, 0, 2, 1, 3 };
+
+                                effectType = effectType1[rdn];
+                                effect = effect1[rdn];
+                            }
+                        }
+                        else
+                        {
+                            int rdn = ServerManager.RandomNumber(0, 12);
+                            byte[] effectType1 = new byte[] { 3, 15, 9, 10, 4, 102, 7, 14, 33, 33, 33, 33 };
+                            byte[] effect1 = new byte[] { 0, 0, 0, 3, 0, 4, 4, 0, 0, 2, 1, 3 };
+
+                            effectType = effectType1[rdn];
+                            effect = effect1[rdn];
+                        }
+                    }
+                    session.SendPacket(GenerateInventoryAdd());
+                }
+            }
+            session.SendPacket("shop_end 2");
+        }
+
         public void UpgradeItem(ClientSession session, UpgradeMode mode, UpgradeProtection protection, bool isCommand = false)
         {
             if (!session.HasCurrentMapInstance)
@@ -1815,6 +2141,7 @@ namespace OpenNos.GameObject
 
                 IsPartnerEquipment = true;
                 ShellEffects.Clear();
+                RuneEffects.Clear();
                 ShellRarity = null;
                 DAOFactory.ShellEffectDAO.DeleteByEquipmentSerialId(EquipmentSerialId);
                 BoundCharacterId = null;

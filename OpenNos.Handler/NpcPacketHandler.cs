@@ -348,7 +348,7 @@ namespace OpenNos.Handler
                             }
                             else
                             {
-                                if (reputprice <= 0 || reputprice > Session.Character.Reputation)
+                                if (reputprice <= 0 || reputprice > Session.Character.PvpScore)
                                 {
                                     Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(3,
                                         Language.Instance.GetMessageFromKey("NOT_ENOUGH_REPUT")));
@@ -422,7 +422,7 @@ namespace OpenNos.Handler
                                     Session.SendPacket(UserInterfaceHelper.GenerateShopMemo(1,
                                         string.Format(Language.Instance.GetMessageFromKey("BUY_ITEM_VALID"),
                                             iteminfo.Name[Session.Account.Language], amount)));
-                                    Session.Character.Reputation -= reputprice;
+                                    Session.Character.PvpScore -= (int)reputprice;
                                     Session.SendPacket(Session.Character.GenerateFd());
                                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                                     Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateGidx(), ReceiverType.AllExceptMe);

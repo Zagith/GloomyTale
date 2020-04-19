@@ -182,6 +182,11 @@ namespace OpenNos.GameObject.Helpers
                         case EventType.TorF:
                             TorFEvent.GenerateTorF(QuestionType);
                             break;
+
+                        case EventType.RESETPOINTS:
+                            ServerManager.Instance.ResetPoints();
+                            ServerManager.Instance.StartedEvents.Remove(type);
+                            break;
                     }
                 });
             }
@@ -550,10 +555,17 @@ namespace OpenNos.GameObject.Helpers
                                                     }
 
                                                     if (s.Character.Level >= group.Raid.LevelMinimum)
-                                                    {
+                                                    {                                                       
                                                         if ((gift.MinTeamSize == 0 && gift.MaxTeamSize == 0) || (teamSize >= gift.MinTeamSize && teamSize <= gift.MaxTeamSize))
                                                         {
                                                             s.Character.GiftAdd(gift.VNum, gift.Amount, rare, 0, gift.Design, gift.IsRandomRare);
+                                                            if ((gift.VNum == 302 || gift.VNum == 15052 || gift.VNum == 15112 || gift.VNum == 15107 || gift.VNum == 15108) && s.Character.HasBuff(4018))
+                                                            {
+                                                                if (ServerManager.RandomNumber() < 20)
+                                                                {
+                                                                    s.Character.GiftAdd(gift.VNum, gift.Amount, (byte)ServerManager.RandomNumber(0,7), 0, gift.Design, gift.IsRandomRare);
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -683,7 +695,7 @@ namespace OpenNos.GameObject.Helpers
                                             }
                                             evt.MapInstance.Broadcast("dance 2");
 
-                                            Logger.LogEvent("FAMILYRAID_SUCCESS", $"[fam.Name]FamilyRaidId: {evt.MapInstance.MapInstanceType.ToString()}");
+                                            Logger.LogEvent("FAMILYRAID_SUCCESS", $"[fam.Name]FamilyRaidId: {evt.MapInstance.MapInstanceType}");
 
                                             CommunicationServiceClient.Instance.SendMessageToCharacter(new SCSCharacterMessage
                                             {
@@ -901,7 +913,8 @@ namespace OpenNos.GameObject.Helpers
                             if (cl?.Character != null)
                             {
                                 ServerManager.Instance.Broadcast(cl, cl.Character?.Group?.GeneraterRaidmbf(cl), ReceiverType.Group);
-                                ServerManager.Instance.Broadcast(cl, UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("NEW_MISSION"), 0), ReceiverType.Group);
+                                if(cl.CurrentMapInstance?.Map.MapId != 5005)
+                                    ServerManager.Instance.Broadcast(cl, UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("NEW_MISSION"), 0), ReceiverType.Group);
                             }
                             break;
 

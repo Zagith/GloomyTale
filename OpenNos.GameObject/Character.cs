@@ -72,6 +72,7 @@ namespace OpenNos.GameObject
             MTListTargetQueue = new ConcurrentStack<MTListHitTarget>();
             MeditationDictionary = new Dictionary<short, DateTime>();
             PVELockObject = new object();
+            RuneEffectMain = new ConcurrentBag<RuneEffectDTO>();
             SpeedLockObject = new object();
             ShellEffectArmor = new ConcurrentBag<ShellEffectDTO>();
             ShellEffectMain = new ConcurrentBag<ShellEffectDTO>();
@@ -298,6 +299,8 @@ namespace OpenNos.GameObject
         public DateTime LastAncelloan { get; set; }
 
         public DateTime LastDefence { get; set; }
+
+        public DateTime LastDefencePvp { get; set; }
 
         public DateTime LastDelay { get; set; }
 
@@ -544,6 +547,8 @@ namespace OpenNos.GameObject
         public byte ScPage { get; set; }
 
         public ClientSession Session { get; private set; }
+
+        public ConcurrentBag<RuneEffectDTO> RuneEffectMain { get; set; }
 
         public ConcurrentBag<ShellEffectDTO> ShellEffectArmor { get; set; }
 
@@ -1158,6 +1163,7 @@ namespace OpenNos.GameObject
             var characterQuest = new CharacterQuest(questId, CharacterId);
             if (Quests.Any(q => q.QuestId == questId) || characterQuest.Quest == null || (isMain && Quests.Any(q => q.IsMainQuest))
             || (Quests.Where(q => q.Quest.QuestType != (byte)QuestType.WinRaid).ToList().Count >= 5 && characterQuest.Quest.QuestType != (byte)QuestType.WinRaid && !isMain)
+            || (Quests.Where(q => q.Quest.QuestType != (byte)QuestType.TalentArena).ToList().Count >= 5 && characterQuest.Quest.QuestType != (byte)QuestType.TalentArena && !isMain)
             || ((QuestType)characterQuest.Quest.QuestType == QuestType.FlowerQuest && Quests.Any(s => (QuestType)s.Quest.QuestType == QuestType.FlowerQuest)))
             {
                 return;
@@ -1197,7 +1203,7 @@ namespace OpenNos.GameObject
                 }
                 else if (characterQuest.Quest.IsDaily && (QuestType)characterQuest.Quest.QuestType != QuestType.FlowerQuest)
                 {
-                    if (DAOFactory.QuestLogDAO.LoadByCharacterId(CharacterId).Any(s => s.QuestId == questId && s.LastDaily != null && s.LastDaily.Value.AddHours(24) >= DateTime.Now))
+                    if (DAOFactory.QuestLogDAO.LoadByCharacterId(CharacterId).Any(s => s.QuestId == questId && s.LastDaily != null && s.LastDaily.Value.Day == DateTime.Today.Day))
                     {
                         Session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("QUEST_ALREADY_DONE_TODAY"), 0));
                         return;
@@ -1205,6 +1211,10 @@ namespace OpenNos.GameObject
                 }
             }
 
+            if (characterQuest.Quest.StartDialogId != null)
+            {
+                Session.SendPacket(GenerateNpcDialog((int)characterQuest.Quest.StartDialogId));
+            }
             if (characterQuest.Quest.QuestType == (int)QuestType.TimesSpace && ServerManager.Instance.TimeSpaces.All(si => si.QuestTimeSpaceId != (characterQuest.Quest.QuestObjectives.FirstOrDefault()?.SpecialData ?? -1)
                 || characterQuest.Quest.QuestType == (int)QuestType.Product || characterQuest.Quest.QuestType == (int)QuestType.Collect3
                 || characterQuest.Quest.QuestType == (int)QuestType.TransmitGold || characterQuest.Quest.QuestType == (int)QuestType.TsPoint || characterQuest.Quest.QuestType == (int)QuestType.NumberOfKill
@@ -1577,6 +1587,10 @@ namespace OpenNos.GameObject
                                 return;
                             }
                         }
+                        break;
+                    case QuestType.Act4kill:
+                    case QuestType.TalentArena:
+                        quest.Quest.QuestObjectives.Where(o => o.Data == 1).ToList().ForEach(d => IncrementObjective(quest, d.ObjectiveIndex));
                         break;
 
                     //TODO : Later 
@@ -2117,9 +2131,10 @@ namespace OpenNos.GameObject
                         RemoveBuff(15);
                     }
                 }
-                if (LastTarget.AddSeconds(2) <= DateTime.Now && HasBuff(15))
+                if (LastTarget.AddSeconds(4) <= DateTime.Now && HasBuff(15))
                 {
-                    Session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 3012));
+                    Session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 3012), ReceiverType.AllExceptMe);
+                    Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 3013));
                     LastTarget = DateTime.Now;
                 }
                 #endregion
@@ -3102,6 +3117,18 @@ namespace OpenNos.GameObject
                                                 {
                                                     ShellEffectMain.Add(dto);
                                                 }
+
+                                                foreach (RuneEffectDTO dto in item.RuneEffects)
+                                                {
+                                                    EquipmentBCards.Add(new BCard
+                                                    {
+                                                        Type = dto.EffectType,
+                                                        SubType = (byte)(dto.Effect + 1),
+                                                        FirstData = dto.Value / 4,
+                                                        SecondData = dto.CardId,
+                                                        ItemVNum = item.ItemVNum
+                                                    });
+                                                }
                                                 break;
 
                                             case EquipmentType.SecondaryWeapon:
@@ -3115,7 +3142,7 @@ namespace OpenNos.GameObject
                                 }
                             }
 
-                            eqlist += $" {i}.{item.Item.VNum}.{item.Rare}.{(item.Item.IsColored ? item.Design : item.Upgrade)}.0";
+                            eqlist += $" {i}.{item.Item.VNum}.{item.Rare}.{(item.Item.IsColored ? item.Design : item.Upgrade)}.0.{item.CarveRuneUpgrade}";
                         }
                     }
 
@@ -4597,7 +4624,7 @@ namespace OpenNos.GameObject
                     }
                     if (packet.Filter == 0 || packet.Filter == Status)
                     {
-                        list += $"{bz.BazaarItem.BazaarItemId}|{bz.BazaarItem.SellerId}|{bz.Item.ItemVNum}|{soldedAmount}|{amount}|{(package ? 1 : 0)}|{price}|{Status}|{minutesLeft}|{(isNosbazar ? 1 : 0)}|0|{bz.Item.Rare}|{bz.Item.Upgrade}|{info} ";
+                        list += $"{bz.BazaarItem.BazaarItemId}|{bz.BazaarItem.SellerId}|{bz.Item.ItemVNum}|{soldedAmount}|{amount}|{(package ? 1 : 0)}|{price}|{Status}|{minutesLeft}|{(isNosbazar ? 1 : 0)}|0|{bz.Item.Rare}|{bz.Item.Upgrade}|{bz.Item.IsCarveRuneFixed}|{bz.Item.CarveRuneUpgrade}|{info} ";
                     }
                 }
             }
@@ -4632,7 +4659,7 @@ namespace OpenNos.GameObject
             isPvpSecondary |= weapon2?.Item.Name[Session.Account.Language].Contains(": ") == true;
             isPvpArmor |= armor?.Item.Name[Session.Account.Language].Contains(": ") == true;
 
-            return $"tc_info {Level} {Name} {fairy?.Item.Element ?? 0} {ElementRate} {(byte)Class} {(byte)Gender} {(Family != null ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {GetReputationIco()} {GetDignityIco()} {(weapon != null ? 1 : 0)} {weapon?.Rare ?? 0} {weapon?.Upgrade ?? 0} {(weapon2 != null ? 1 : 0)} {weapon2?.Rare ?? 0} {weapon2?.Upgrade ?? 0} {(armor != null ? 1 : 0)} {armor?.Rare ?? 0} {armor?.Upgrade ?? 0} {Act4Kill} {Act4Dead} {Reputation} 0 0 0 {(UseSp ? Morph : 0)} {TalentWin} {TalentLose} {TalentSurrender} {MasterPoints} {Contributi} {Compliment} {Act4Points} {(isPvpPrimary ? 1 : 0)} {(isPvpSecondary ? 1 : 0)} {(isPvpArmor ? 1 : 0)} {HeroLevel} {(string.IsNullOrEmpty(Biography) ? Language.Instance.GetMessageFromKey("NO_PREZ_MESSAGE") : Biography)}";
+            return $"tc_info {Level} {Name} {fairy?.Item.Element ?? 0} {ElementRate} {(byte)Class} {(byte)Gender} {(Family != null ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {GetReputationIco()} {GetDignityIco()} {(weapon != null ? 1 : 0)} {weapon?.Rare ?? 0} {weapon?.Upgrade ?? 0} {(weapon2 != null ? 1 : 0)} {weapon2?.Rare ?? 0} {weapon2?.Upgrade ?? 0} {(armor != null ? 1 : 0)} {armor?.Rare ?? 0} {armor?.Upgrade ?? 0} {Act4Kill} {Act4Dead} {Reputation} 0 0 0 {(UseSp ? Morph : 0)} {TalentWin} {TalentLose} {TalentSurrender} {PvpScore} {Contributi} {Compliment} {Act4Points} {(isPvpPrimary ? 1 : 0)} {(isPvpSecondary ? 1 : 0)} {(isPvpArmor ? 1 : 0)} {HeroLevel} {(string.IsNullOrEmpty(Biography) ? Language.Instance.GetMessageFromKey("NO_PREZ_MESSAGE") : Biography)}";
         }
 
         public string GenerateRest() => $"rest 1 {CharacterId} {(IsSitting ? 1 : 0)}";
@@ -4740,7 +4767,10 @@ namespace OpenNos.GameObject
                             }
                             else
                             {
-                                inv0 += $" {inv.Slot}.{inv.ItemVNum}.{inv.Rare}.{(inv.Item.IsColored ? inv.Design : inv.Upgrade)}.0";
+                                if(inv.Item.EquipmentSlot == EquipmentType.MainWeapon)
+                                    inv0 += $" {inv.Slot}.{inv.ItemVNum}.{inv.Rare}.{(inv.Item.IsColored ? inv.Design : inv.Upgrade)}.0.{inv.CarveRuneUpgrade}";
+                                else
+                                    inv0 += $" {inv.Slot}.{inv.ItemVNum}.{inv.Rare}.{(inv.Item.IsColored ? inv.Design : inv.Upgrade)}.0";
                             }
                             break;
 
@@ -5550,7 +5580,11 @@ namespace OpenNos.GameObject
                 return 11;
             }
 
-            return Reputation < (long)SideReputType.Side10 ? 12 : 13;
+            if (Reputation < (long)SideReputType.Side10)
+            {
+                return 12;
+            }
+            return Reputation < (long)SideReputType.Side11 ? 13 : 14;
         }
 
         /// <summary>
@@ -6344,6 +6378,8 @@ namespace OpenNos.GameObject
                                 s.EquipmentSerialId = instance.EquipmentSerialId;
                                 DAOFactory.CellonOptionDAO.InsertOrUpdate(s);
                             });
+
+                            DAOFactory.RuneEffectDAO.InsertOrUpdateFromList(itemInstance.RuneEffects, itemInstance.EquipmentSerialId);
                         }
                     }
                 }
@@ -7329,6 +7365,13 @@ namespace OpenNos.GameObject
             instance.LoadScript(MapInstanceType.TimeSpaceInstance, this);
             if (instance.FirstMap == null)
             {
+                return;
+            }
+
+            if (instance.Id == 500 && Session.Character.Group != null)
+            {
+                Session.SendPacket(
+                    UserInterfaceHelper.GenerateMsg("Need to be alone to do this TimeSpace", 0));
                 return;
             }
 

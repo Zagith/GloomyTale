@@ -97,6 +97,8 @@ namespace OpenNos.Data
 
         public bool IsFixed { get; set; }
 
+        public bool IsCarveRuneFixed { get; set; }
+
         public byte LightElement { get; set; }
 
         public short LightResistance { get; set; }
@@ -136,6 +138,8 @@ namespace OpenNos.Data
         public InventoryType Type { get; set; }
 
         public byte Upgrade { get; set; }
+
+        public byte CarveRuneUpgrade { get; set; }
 
         #endregion
     }

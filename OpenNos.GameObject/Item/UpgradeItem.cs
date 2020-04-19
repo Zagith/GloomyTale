@@ -69,6 +69,36 @@ namespace OpenNos.GameObject
                             bool isUsed = false;
                             switch (inv.ItemVNum)
                             {
+                                case 5811:
+                                    {
+                                        if (packetsplit != null && byte.TryParse(packetsplit[9], out byte islot))
+                                        {
+                                            ItemInstance wearInstance = session.Character.Inventory.LoadBySlotAndType(islot, InventoryType.Equipment);
+
+                                            if (wearInstance == null)
+                                            {
+                                                return;
+                                            }
+
+                                            if (wearInstance.Item.ItemType == ItemType.Weapon && wearInstance.Item.EquipmentSlot == EquipmentType.MainWeapon)
+                                            {
+                                                if (wearInstance.CarveRuneUpgrade > 0)
+                                                {
+                                                    if (wearInstance.IsCarveRuneFixed == true)
+                                                    {
+                                                        wearInstance.IsCarveRuneFixed = false;
+                                                        session.SendPacket(wearInstance.GenerateInventoryAdd());
+                                                        isUsed = true;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                return;
+                                            }
+                                        }
+                                    }
+                                    break;
                                 case 1219:
                                 case 9130:
                                     ItemInstance equip = session.Character.Inventory.LoadBySlotAndType(SlotEquip, (InventoryType)TypeEquip);

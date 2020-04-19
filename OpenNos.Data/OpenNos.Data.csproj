@@ -115,6 +115,7 @@
     <Compile Include="MaintenanceLogDTO.cs" />
     <Compile Include="MultiAccountExceptionDTO.cs" />
     <Compile Include="PartnerSkillDTO.cs" />
+    <Compile Include="PvPLogDTO.cs" />
     <Compile Include="QuestDTO.cs" />
     <Compile Include="QuestLogDTO.cs" />
     <Compile Include="QuestObjectiveDTO.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="RecipeItemDTO.cs" />
     <Compile Include="RespawnDTO.cs" />
     <Compile Include="RespawnMapTypeDTO.cs" />
+    <Compile Include="RuneEffectDTO.cs" />
     <Compile Include="ShellEffectDTO.cs" />
     <Compile Include="ShopItemDTO.cs" />
     <Compile Include="ShopDTO.cs" />

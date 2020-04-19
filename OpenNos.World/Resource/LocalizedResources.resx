@@ -406,7 +406,7 @@
     <value>Not enough space.</value>
   </data>
   <data name="NOT_ENOUGH_REPUT" xml:space="preserve">
-    <value>Insufficient reputation.</value>
+    <value>Insufficient PvP Points</value>
   </data>
   <data name="NOT_HUNGRY_FEMALE" xml:space="preserve">
     <value>I am not hungry!</value>
@@ -1783,7 +1783,7 @@
     <value>Your marriage request has been accepted</value>
   </data>
   <data name="REPUT_DECREASED" xml:space="preserve">
-    <value>Reputation decreased: -{0}</value>
+    <value>PvP Points decreased: -{0}</value>
   </data>
   <data name="CANT_CHANGE_PARTNER_NAME" xml:space="preserve">
     <value>You can't change the name of your couple.</value>

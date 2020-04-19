@@ -212,6 +212,8 @@ namespace OpenNos.DAL.EF
 
         public int PvpScore { get; set; }
 
+        public long PvpScoreTotal { get; set; }
+
         #endregion
     }
 }

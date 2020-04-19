@@ -70,6 +70,7 @@ namespace OpenNos.DAL
         private static IRespawnDAO _respawnDAO;
         private static IRespawnMapTypeDAO _respawnMapTypeDAO;
         private static IRollGeneratedItemDAO _rollGeneratedItemDAO;
+        private static IRuneEffectDAO _runeEffectDAO;
         private static IScriptedInstanceDAO _scriptedInstanceDAO;
         private static IShellEffectDAO _shellEffectDAO;
         private static IShopDAO _shopDAO;
@@ -89,6 +90,7 @@ namespace OpenNos.DAL
         private static ITimeSpaceLogDAO _timespacelogDAO;
         private static ITrueOrFalseDAO _trueOrFalseDAO;
         private static IMultiAccountExceptionDAO _multiAccountExceptionDAO;
+        private static IPvPLogDAO _pvpLogDAO;
         #endregion
 
         #region Properties
@@ -191,6 +193,8 @@ namespace OpenNos.DAL
 
         public static IRollGeneratedItemDAO RollGeneratedItemDAO => _rollGeneratedItemDAO ?? (_rollGeneratedItemDAO = new RollGeneratedItemDAO());
 
+        public static IRuneEffectDAO RuneEffectDAO => _runeEffectDAO ?? (_runeEffectDAO = new RuneEffectDAO());
+
         public static IScriptedInstanceDAO ScriptedInstanceDAO => _scriptedInstanceDAO ?? (_scriptedInstanceDAO = new ScriptedInstanceDAO());
 
         public static IShellEffectDAO ShellEffectDAO => _shellEffectDAO ?? (_shellEffectDAO = new ShellEffectDAO());
@@ -229,6 +233,7 @@ namespace OpenNos.DAL
 
         public static IMultiAccountExceptionDAO MultiAccountExceptionDAO => _multiAccountExceptionDAO ?? (_multiAccountExceptionDAO = new MultiAccountExceptionDAO());
 
+        public static IPvPLogDAO PvPLogDAO => _pvpLogDAO ?? (_pvpLogDAO = new PvPLogDAO());
         #endregion
     }
 }

@@ -146,6 +146,8 @@ namespace OpenNos.Data
 
         public int PvpScore { get; set; }
 
+        public long PvpScoreTotal { get; set; }
+
         #endregion
     }
 }

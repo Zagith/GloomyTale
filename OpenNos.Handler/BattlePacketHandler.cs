@@ -13,6 +13,7 @@
  */
 
 using OpenNos.Core;
+using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject;
@@ -935,6 +936,7 @@ namespace OpenNos.Handler
                         }
 
                         hitRequest.Session.Character.Act4Kill++;
+                        hitRequest.Session.Character.IncrementQuests(QuestType.Act4kill, 1);
                         target.Character.Act4Dead++;
                         target.Character.GetAct4Points(-1);
                         if (target.Character.Level + 10 >= hitRequest.Session.Character.Level
@@ -957,7 +959,7 @@ namespace OpenNos.Handler
                                     s.Character.GetContributi(250);
                                 }
                             }
-
+                            target.Character.LoseContributi(500);
                             /*int levelDifference = target.Character.Level - hitRequest.Session.Character.Level;
 
                             if (levelDifference < 30)
@@ -1103,17 +1105,37 @@ namespace OpenNos.Handler
                     }
                     else if (target.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance)
                     {
-                        hitRequest.Session.Character.PvpScore += 3;
-                        hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay("You received 3 pvp points.", 11));
-                        hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay($"Total pvp points: {hitRequest.Session.Character.PvpScore}", 10));
-                        target.Character.PvpScore -= 5;
-                        target.Character.Session.SendPacket(target.Character.GenerateSay("You have lost 5 pvp points", 12));
-                        
-                        if (target.Character.PvpScore < 0)
+                        if (target.Character.Session.CleanIpAddress != hitRequest.Session.CleanIpAddress)
                         {
-                            target.Character.PvpScore = 0;
+                            int count = DAOFactory.PvPLogDAO.LoadByCharacterId(hitRequest.Session.Character.CharacterId, target.Character.CharacterId).Where(s => s.Timestamp.Day == DateTime.Today.Day).Count();
+                            if (count <= 5)
+                            {
+                                hitRequest.Session.Character.PvpScore += 3;
+                                hitRequest.Session.Character.PvpScoreTotal += 3;
+                                hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay("You received 3 pvp points.", 12));
+                                hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay($"Current pvp points: {hitRequest.Session.Character.PvpScore}", 10));
+                                hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay($"Total pvp points this month: {hitRequest.Session.Character.PvpScoreTotal}", 10));
+                                target.Character.PvpScore -= 5;
+                                target.Character.Session.SendPacket(target.Character.GenerateSay("You have lost 5 pvp points", 11));
+
+                                if (target.Character.PvpScore < 0)
+                                {
+                                    target.Character.PvpScore = 0;
+                                }
+                                target.Character.Session.SendPacket(target.Character.GenerateSay($"Current pvp points: {target.Character.PvpScore}", 10));
+                                target.Character.Session.SendPacket(target.Character.GenerateSay($"Total pvp points this month: {target.Character.PvpScoreTotal}", 10));
+                                LogHelper.Instance.InsertPVPLog(hitRequest.Session.Character.CharacterId, target.Character.CharacterId, hitRequest.Session.IpAddress);
+                            }
+                            else
+                            {
+                                hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay($"You have already killed {target.Character.Name} 5 times today.", 11));
+                            }
+                            target.Character.PvpAllowed = false;
                         }
-                        target.Character.Session.SendPacket(target.Character.GenerateSay($"Total pvp points: {target.Character.PvpScore}", 10));
+                        else
+                        {
+                            hitRequest.Session.SendPacket(hitRequest.Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("TARGET_SAME_IP"), 11));
+                        }
                         hitRequest.Session.CurrentMapInstance?.Broadcast(Session.Character.GenerateSay(
                             string.Format(Language.Instance.GetMessageFromKey("PVP_KILL"),
                                 hitRequest.Session.Character.Name, target.Character.Name), 10));
@@ -1139,6 +1161,8 @@ namespace OpenNos.Handler
                     }
                 }
 
+                battleEntity.Character.LastDefencePvp = DateTime.Now;
+                target.Character.LastDefencePvp = DateTime.Now;
                 battleEntity.BCards.Where(s => s.CastType == 1).ForEach(s =>
                 {
                     if (s.Type != (byte)CardType.Buff)

@@ -14,6 +14,7 @@
 
 using OpenNos.Core;
 using OpenNos.Core.Handling;
+using OpenNos.DAL;
 using OpenNos.Data;
 using OpenNos.Domain;
 using OpenNos.GameObject;
@@ -2163,6 +2164,7 @@ namespace OpenNos.Handler
             }
 
             InventoryType inventoryType = upgradePacket.InventoryType;
+            InventoryType? inventoryType2 = upgradePacket.InventoryType2;
             byte uptype = upgradePacket.UpgradeType, slot = upgradePacket.Slot;
             Session.Character.LastDelay = DateTime.Now;
             ItemInstance inventory;
@@ -2424,6 +2426,38 @@ namespace OpenNos.Handler
                         {
                             inventory.UpgradeItem(Session, UpgradeMode.Reduced, UpgradeProtection.Protected);
                         }
+                    }
+                    break;
+
+                case 83:
+                    inventory = Session.Character.Inventory.LoadBySlotAndType((short)inventoryType2, 0);
+                    switch ((byte)inventoryType)
+                    {
+                        case 1:
+                            if (inventory != null && inventory.Item.EquipmentSlot == EquipmentType.MainWeapon && inventory.Item.ItemType != ItemType.Shell && inventory.Item.Type == InventoryType.Equipment)
+                            {
+                                inventory.UpgradeCarveRune(Session);
+                                Session.SendPacket("shop_end 2");
+                            }
+                            break;
+
+                        case 2:
+                            if (inventory != null && inventory.Item.EquipmentSlot == EquipmentType.MainWeapon && inventory.Item.ItemType != ItemType.Shell && inventory.Item.Type == InventoryType.Equipment)
+                            {
+                                if (inventory.CarveRuneUpgrade > 0 && Session.Character.Inventory.CountItem(5812) > 0)
+                                {
+                                    inventory.RuneEffects.Clear();
+                                    DAOFactory.RuneEffectDAO.DeleteByEquipmentSerialId(inventory.EquipmentSerialId);
+                                    if (inventory.EquipmentSerialId == Guid.Empty)
+                                    {
+                                        inventory.EquipmentSerialId = Guid.NewGuid();
+                                    }
+                                    inventory.CarveRuneUpgrade = 0;
+                                    Session.Character.Inventory.RemoveItemAmount(5812);
+                                    Session.SendPacket("shop_end 2");
+                                }
+                            }
+                            break;
                     }
                     break;
             }

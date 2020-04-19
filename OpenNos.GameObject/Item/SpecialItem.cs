@@ -349,7 +349,11 @@ namespace OpenNos.GameObject
                             {
                                 return;
                             }
-
+                            if (session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now || session.Character.PvpAllowed)
+                            {
+                                session.SendPacket(session.Character.GenerateSay($"You are in battle", 10));
+                                return;
+                            }
                             if (ServerManager.Instance.IsCharacterMemberOfGroup(session.Character.CharacterId))
                             {
                                 session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("RAID_OPEN_GROUP"), 12));
@@ -770,6 +774,11 @@ namespace OpenNos.GameObject
                      || session.CurrentMapInstance?.MapInstanceType == (MapInstanceType.IceBreakerInstance)
                      || session.Character.IsSeal || session.Character.IsMorphed)
                     {
+                        return;
+                    }
+                    if (session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now)
+                    {
+                        session.SendPacket(session.Character.GenerateSay($"You are in battle", 10));
                         return;
                     }
                     short morph = Morph;

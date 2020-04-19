@@ -1678,7 +1678,11 @@ namespace OpenNos.Handler
                     {
                         return;
                     }
-
+                    if (Session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now || Session.Character.PvpAllowed)
+                    {
+                        Session.SendPacket(Session.Character.GenerateSay($"You are in battle", 10));
+                        return;
+                    }
                     targetSession.Character.GroupSentRequestCharacterIds.Add(Session.Character.CharacterId);
 
                     GroupJoin(new PJoinPacket
@@ -1708,6 +1712,12 @@ namespace OpenNos.Handler
                     }
 
                     ClientSession target = ServerManager.Instance.GetSessionByCharacterId(rdPacket.CharacterId);
+                    if (target?.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now || target.Character.PvpAllowed)
+                    {
+                        Session.SendPacket(UserInterfaceHelper.GenerateMsg("Player is in battle", 0));
+                        target.SendPacket(target.Character.GenerateSay($"You are in battle", 10));
+                        return;
+                    }
                     if (rdPacket.Parameter == null && target?.Character?.Group == null && Session.Character.Group != null && Session.Character.Group.IsLeader(Session) && Session.Character.Group?.Sessions.FirstOrDefault() == Session)
                     {
                         GroupJoin(new PJoinPacket

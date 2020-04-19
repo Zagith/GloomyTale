@@ -228,7 +228,20 @@
     <Compile Include="Migrations\202004151738363_PvpScoreCharacter.designer.cs">
       <DependentUpon>202004151738363_PvpScoreCharacter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004180102235_PvpLog.cs" />
+    <Compile Include="Migrations\202004180102235_PvpLog.designer.cs">
+      <DependentUpon>202004180102235_PvpLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004181216223_pvp_total_score.cs" />
+    <Compile Include="Migrations\202004181216223_pvp_total_score.designer.cs">
+      <DependentUpon>202004181216223_pvp_total_score.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004181434498_RuneEff.cs" />
+    <Compile Include="Migrations\202004181434498_RuneEff.designer.cs">
+      <DependentUpon>202004181434498_RuneEff.cs</DependentUpon>
+    </Compile>
     <Compile Include="PartnerSkill.cs" />
+    <Compile Include="PvPLog.cs" />
     <Compile Include="Quest.cs" />
     <Compile Include="QuestLog.cs" />
     <Compile Include="QuestObjective.cs" />
@@ -236,6 +249,7 @@
     <Compile Include="RecipeList.cs" />
     <Compile Include="RollGeneratedItem.cs" />
     <Compile Include="Mate.cs" />
+    <Compile Include="RuneEffect.cs" />
     <Compile Include="ScriptedInstance.cs" />
     <Compile Include="BCard.cs" />
     <Compile Include="ShellEffect.cs" />
@@ -393,6 +407,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004151738363_PvpScoreCharacter.resx">
       <DependentUpon>202004151738363_PvpScoreCharacter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004180102235_PvpLog.resx">
+      <DependentUpon>202004180102235_PvpLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004181216223_pvp_total_score.resx">
+      <DependentUpon>202004181216223_pvp_total_score.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004181434498_RuneEff.resx">
+      <DependentUpon>202004181434498_RuneEff.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

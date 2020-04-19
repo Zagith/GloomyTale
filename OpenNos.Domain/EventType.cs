@@ -29,6 +29,7 @@ namespace OpenNos.Domain
         SHEEPGAME,
         RAINBOWBATTLE,
         BANDICOOTRUN,
-        TorF
+        TorF,
+        RESETPOINTS
     }
 }

@@ -3859,7 +3859,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Insufficient reputation..
+        ///   Looks up a localized string similar to Insufficient PvP Points.
         /// </summary>
         internal static string NOT_ENOUGH_REPUT {
             get {
@@ -4732,7 +4732,7 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reputation decreased: -{0}.
+        ///   Looks up a localized string similar to PvP Points decreased: -{0}.
         /// </summary>
         internal static string REPUT_DECREASED {
             get {

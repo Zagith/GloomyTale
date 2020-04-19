@@ -96,6 +96,7 @@
     <Compile Include="PenaltyLogDAO.cs" />
     <Compile Include="PortalDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PvPLogDAO.cs" />
     <Compile Include="QuestLogDAO.cs" />
     <Compile Include="QuestObjectiveDAO.cs" />
     <Compile Include="QuestRewardDAO.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="RespawnDAO.cs" />
     <Compile Include="RespawnMapTypeDAO.cs" />
     <Compile Include="RollGeneratedItemDAO.cs" />
+    <Compile Include="RuneEffectDAO.cs" />
     <Compile Include="ScriptedInstanceDAO.cs" />
     <Compile Include="QuestDAO.cs" />
     <Compile Include="ShellEffectDAO.cs" />

@@ -252,7 +252,9 @@ namespace OpenNos.GameObject.Helpers
                 1514, // Baron scratch ?
                 1515, // Amiral (le chat chelou) 
                 1516, // roi des pirates pussifer 
-                1524 // Miaou fou
+                1524, // Miaou fou
+                663  //Lontra sushi party
+                //664   Lontra Randella-Pesci
             };
         }
 
@@ -274,7 +276,9 @@ namespace OpenNos.GameObject.Helpers
                 { 844, 391 }, // COWBOY BUSHTAIL
                 { 2105, 383 }, // INFERNO
                 { 2709, 711 }, // OPOSSUM DELLA FORTUNA SFACCIATA
-                { 2704, 710 } // OPOSSUM DELLA FORTUNA
+                { 2704, 710 }, // OPOSSUM DELLA FORTUNA
+                { 3015, 4018 }, // GOLEM DELLE ROCCE
+                { 683, 742 } // LONTRA
             };
         }
 

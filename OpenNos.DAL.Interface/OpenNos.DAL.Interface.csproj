@@ -106,6 +106,7 @@
     <Compile Include="INpcMonsterSkillDAO.cs" />
     <Compile Include="IPartnerSkillDAO.cs" />
     <Compile Include="IPenaltyLogDAO.cs" />
+    <Compile Include="IPvPLogDAO.cs" />
     <Compile Include="IQuestLogDAO.cs" />
     <Compile Include="IQuestObjectiveDAO.cs" />
     <Compile Include="IQuestRewardDAO.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="IRespawnDAO.cs" />
     <Compile Include="IRespawnMapTypeDAO.cs" />
     <Compile Include="IQuestDAO.cs" />
+    <Compile Include="IRuneEffectDAO.cs" />
     <Compile Include="IShellEffectDAO.cs" />
     <Compile Include="IShopDAO.cs" />
     <Compile Include="IShopItemDAO.cs" />

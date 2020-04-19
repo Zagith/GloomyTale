@@ -133,6 +133,8 @@ namespace OpenNos.DAL.EF
 
         public virtual DbSet<RollGeneratedItem> RollGeneratedItem { get; set; }
 
+        public virtual DbSet<RuneEffect> RuneEffect { get; set; }
+
         public virtual DbSet<ScriptedInstance> ScriptedInstance { get; set; }
 
         public virtual DbSet<ShellEffect> ShellEffect { get; set; }
@@ -180,6 +182,8 @@ namespace OpenNos.DAL.EF
         public virtual DbSet<TrueOrFalse> TrueOrFalse { get; set; }
 
         public virtual DbSet<MultiAccountException> MultiAccountException { get; set; }
+
+        public virtual DbSet<PvPLog> PvPLog { get; set; }
 
         #endregion
 
