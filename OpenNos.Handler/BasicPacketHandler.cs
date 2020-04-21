@@ -1644,6 +1644,11 @@ namespace OpenNos.Handler
                     grp = Session.Character.Group;
                     Session.SendPacket(Session.Character.GenerateRaid(1, true));
                     Session.SendPacket(Session.Character.GenerateRaid(2, true));
+                    if (Session.Character.HasBuff(BCardType.CardType.FrozenDebuff, (byte)AdditionalTypes.FrozenDebuff.EternalIce))
+                    {
+                        Session.Character.RemoveBuff(569);
+                    }
+                    
                     if (grp != null)
                     {
                         grp.LeaveGroup(Session);
