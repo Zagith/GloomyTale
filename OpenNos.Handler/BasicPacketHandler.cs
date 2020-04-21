@@ -1376,123 +1376,11 @@ namespace OpenNos.Handler
                     }
                 }
 
-#warning TODO: optimize this shit
 
-                StaticBonusDTO vipBonus =
-                Session.Character.StaticBonusList.FirstOrDefault(s => s.StaticBonusType == StaticBonusType.VIP);
-                if (portal.PortalId == 583 && vipBonus == null)
+
+                if (SideHelper.SidePortalRequirement(Session, portal) == false)
                 {
-                    Session.SendPacket(Session.Character.GenerateSay($"This map requires the object: " + portal.NomeOggetto + "and VIP bonus!", 10));
                     return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side1 && portal.Side == (int)SideReputMapType.Side1)
-                {
-                    if (Session.Character.Level < 25)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 25", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 1", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side2 && portal.Side == (int)SideReputMapType.Side2)
-                {
-                    if (Session.Character.Level < 35)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 35", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 2", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side3 && portal.Side == (int)SideReputMapType.Side3)
-                {
-                    if (Session.Character.Level < 45)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 45", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 3", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side4 && portal.Side == (int)SideReputMapType.Side4)
-                {
-                    if (Session.Character.Level < 55)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 55", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 4", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side5 && portal.Side == (int)SideReputMapType.Side5)
-                {
-                    if (Session.Character.Level < 65)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 65", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 5", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side6 && portal.Side == (int)SideReputMapType.Side6)
-                {
-                    if (Session.Character.Level < 75)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 75", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 6", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side7 && portal.Side == (int)SideReputMapType.Side7)
-                {
-                    if (Session.Character.Level < 85)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 85", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 7", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side8 && portal.Side == (int)SideReputMapType.Side8)
-                {
-                    if (Session.Character.Level < 90)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 90", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 8", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side9 && portal.Side == (int)SideReputMapType.Side9)
-                {
-                    if (Session.Character.Level < 93)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 93", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 9", 10));
-                    return;
-                }
-                if (Session.Character.Reputation < (long)SideReputPortalType.Side10 && portal.Side == (int)SideReputMapType.Side10)
-                {
-                    if (Session.Character.Level < 93)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay($"You need the Level Set 93", 10));
-                        return;
-                    }
-                    Session.SendPacket(Session.Character.GenerateSay($"You need the Side Set 10", 10));
-                    return;
-                }
-                
-                if (portal.RequiredItem != 0)
-                {
-                    if (Session.Character.Inventory.CountItem(portal.RequiredItem) == 0)
-                    {
-                        Session.SendPacket(Session.Character.GenerateSay("This map requires the object: " + portal.NomeOggetto + "!", 10));
-                        return;
-                    }
                 }
                 Session.SendPacket(Session.CurrentMapInstance.GenerateRsfn());
 
@@ -2820,7 +2708,7 @@ namespace OpenNos.Handler
             foreach (CharacterDTO character in ServerManager.Instance.TopComplimented)
             {
                 clinit +=
-                    $" {character.CharacterId}|{character.Level}|{character.HeroLevel}|{character.PvpScore}|{character.Name}";
+                    $" {character.CharacterId}|{character.Level}|{character.HeroLevel}|{character.PvpScoreTotal}|{character.Name}";
             }
 
             foreach (CharacterDTO character in ServerManager.Instance.TopReputation)

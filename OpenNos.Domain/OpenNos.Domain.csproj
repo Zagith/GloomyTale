@@ -113,6 +113,7 @@
     <Compile Include="RainbowBattleTeamType.cs" />
     <Compile Include="ReceiverType.cs" />
     <Compile Include="RequestExchangeType.cs" />
+    <Compile Include="RuneEffectType.cs" />
     <Compile Include="ScriptedInstanceType.cs" />
     <Compile Include="ShellArmorEffectType.cs" />
     <Compile Include="ShellEffectLevelType.cs" />

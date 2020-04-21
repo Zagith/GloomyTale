@@ -776,7 +776,7 @@ namespace OpenNos.GameObject
                     {
                         return;
                     }
-                    if (session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now)
+                    if (session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now && session.Character.PvpAllowed)
                     {
                         session.SendPacket(session.Character.GenerateSay($"You are in battle", 10));
                         return;
@@ -1110,6 +1110,21 @@ namespace OpenNos.GameObject
                         {
                             CharacterId = session.Character.CharacterId,
                             DateEnd = DateTime.Now.AddYears(15),
+                            StaticBonusType = StaticBonusType.BigBackPack
+                        });
+                        session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                        session.SendPacket(session.Character.GenerateExts());
+                        session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("EFFECT_ACTIVATED"), Name[session.Account.Language]), 12));
+                    }
+                    break;
+
+                case 605:
+                    if (session.Character.StaticBonusList.All(s => s.StaticBonusType != StaticBonusType.BigBackPack))
+                    {
+                        session.Character.StaticBonusList.Add(new StaticBonusDTO
+                        {
+                            CharacterId = session.Character.CharacterId,
+                            DateEnd = DateTime.Now.AddDays(30),
                             StaticBonusType = StaticBonusType.BigBackPack
                         });
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);

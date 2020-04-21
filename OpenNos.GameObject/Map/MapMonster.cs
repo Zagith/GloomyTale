@@ -1560,7 +1560,7 @@ namespace OpenNos.GameObject
                         CharacterSkill ski = skills.FirstOrDefault(s => s.Skill?.CastId == hitRequest.Skill.CastId && (s.Skill?.UpgradeSkill == 0 || s.Skill?.SkillType == 1));
                         int[] fairyWings = attackerBattleEntity.GetBuff(CardType.EffectSummon, 11);
                         int random = ServerManager.RandomNumber();
-                        if (fairyWings[0] > random)
+                        if (fairyWings[0] > random && attackerBattleEntity.Character.LastFairySkillReset.AddSeconds(5) < DateTime.Now)
                         {
                             Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(o =>
                             {

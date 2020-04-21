@@ -12,6 +12,7 @@
         Side7,
         Side8,
         Side9,
-        Side10
+        Side10,
+        Side11
     }
 }

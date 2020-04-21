@@ -144,6 +144,7 @@ namespace OpenNos.GameObject
             WhisperBlocked = input.WhisperBlocked;
             Contributi = input.Contributi;
             PvpScore = input.PvpScore;
+            PvpScoreTotal = input.PvpScoreTotal;
         }
 
         #endregion
@@ -356,6 +357,8 @@ namespace OpenNos.GameObject
         public DateTime LastPVPRevive { get; set; }
 
         public DateTime LastQuestSummon { get; set; }
+
+        public DateTime LastFairySkillReset { get; set; }
 
         public DateTime LastSkillComboUse { get; set; }
 
@@ -5787,6 +5790,7 @@ namespace OpenNos.GameObject
             LastDelay = DateTime.Now.AddSeconds(-5);
             LastHealth = DateTime.Now;
             LastEffect = DateTime.Now;
+            LastFairySkillReset = DateTime.Now.AddSeconds(-5);
             Session = null;
             MailList = new Dictionary<int, MailDTO>();
             BattleEntity = new BattleEntity(this, null);
@@ -6361,6 +6365,15 @@ namespace OpenNos.GameObject
                             {
                                 continue;
                             }
+
+                            DAOFactory.RuneEffectDAO.InsertOrUpdateFromList(itemInstance.RuneEffects, itemInstance.EquipmentSerialId);
+
+                            instance.RuneEffects.ForEach(s =>
+                            {
+                                s.EquipmentSerialId = instance.EquipmentSerialId;
+                                DAOFactory.RuneEffectDAO.InsertOrUpdate(s);
+                            });
+
                             if (!instance.ShellEffects.Any())
                             {
                                 continue;
@@ -6378,8 +6391,6 @@ namespace OpenNos.GameObject
                                 s.EquipmentSerialId = instance.EquipmentSerialId;
                                 DAOFactory.CellonOptionDAO.InsertOrUpdate(s);
                             });
-
-                            DAOFactory.RuneEffectDAO.InsertOrUpdateFromList(itemInstance.RuneEffects, itemInstance.EquipmentSerialId);
                         }
                     }
                 }

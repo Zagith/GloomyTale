@@ -2038,7 +2038,8 @@ namespace OpenNos.GameObject
                         break;
                 }
                 ItemInstance wearable = session.Character.Inventory.GetItemInstanceById(Id);
-                int rnd = ServerManager.RandomNumber();
+                //bool costume_up_chance = session.Character.Inventory.LoadBySlotAndType(13,InventoryType.Wear).Item.VNum == 80000;
+                double rnd = ServerManager.RandomNumber()/* + (costume_up_chance? (100 - upfail[Upgrade] - upfix[Upgrade])*0.5 : 0)*/;
                 if (Rare == 8)
                 {
                     if (rnd < upfail[Upgrade])

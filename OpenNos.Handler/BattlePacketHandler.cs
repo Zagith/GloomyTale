@@ -506,9 +506,9 @@ namespace OpenNos.Handler
                 if (Session.Character.HasBuff(746))
                     Session.Character.RemoveBuff(746);
 
-                //2nd MA Sp
+                // 2/3nd MA Sp
 
-                if (hitRequest.Skill.SkillVNum == 1607 && target.Character.MapX != 0 && target.Character.MapY != 0)
+                if ((hitRequest.Skill.SkillVNum == 1607 || hitRequest.Skill.SkillVNum == 647) && target.Character.MapX != 0 && target.Character.MapY != 0)
                     Session.Character.TeleportOnMap(target.Character.PositionX, target.Character.PositionY);
 
                 if (hitRequest.Skill.SkillVNum == 1619)
@@ -1160,9 +1160,14 @@ namespace OpenNos.Handler
                             ServerManager.Instance.AskPvpRevive(target.Character.CharacterId));
                     }
                 }
-
-                battleEntity.Character.LastDefencePvp = DateTime.Now;
-                target.Character.LastDefencePvp = DateTime.Now;
+                if (battleEntity.Character.PvpAllowed)
+                {
+                    battleEntity.Character.LastDefencePvp = DateTime.Now;
+                }
+                if (target.Character.PvpAllowed)
+                {
+                    target.Character.LastDefencePvp = DateTime.Now;
+                }
                 battleEntity.BCards.Where(s => s.CastType == 1).ForEach(s =>
                 {
                     if (s.Type != (byte)CardType.Buff)
@@ -2716,7 +2721,7 @@ namespace OpenNos.Handler
 
                         int[] fairyWings = Session.Character.GetBuff(CardType.EffectSummon, 11);
                         int random = ServerManager.RandomNumber();
-                        if (fairyWings[0] > random)
+                        if (fairyWings[0] > random && Session.Character.LastFairySkillReset.AddSeconds(5) < DateTime.Now)
                         {
                             Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(o =>
                             {

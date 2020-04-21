@@ -48,7 +48,7 @@ namespace OpenNos.Handler
                         if (guriPacket.Data.Value == 1000)
                         {
                             if (Session.CurrentMapInstance.Map?.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4)
-                                == false)
+                                == true)
                             {
                                 return;
                             }

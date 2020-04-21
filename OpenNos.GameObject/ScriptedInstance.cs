@@ -182,7 +182,7 @@ namespace OpenNos.GameObject
                     DailyEntries = Model.Globals.DailyEntries?.Value ?? 0;
                     Gold = Model.Globals.Gold?.Value ?? 0;
                     Reputation = Model.Globals.Reputation?.Value ?? 0;
-                    FamExp = Model.Globals.FamExp?.Value ?? 0;
+                    FamExp = Model.Globals.FamExp?.Value ?? 1000;
                     StartX = Model.Globals.StartX?.Value ?? 0;
                     StartY = Model.Globals.StartY?.Value ?? 0;
                     Lives = Model.Globals.Lives?.Value ?? 0;

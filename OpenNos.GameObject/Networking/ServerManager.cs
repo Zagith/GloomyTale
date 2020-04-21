@@ -555,7 +555,7 @@ namespace OpenNos.GameObject.Networking
             ClientSession session = GetSessionByCharacterId(characterId);
             if (session?.Character != null && !session.Character.IsChangingMapInstance)
             {
-                if (session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now)
+                if (session.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now && session.Character.PvpAllowed)
                 {
                     session.SendPacket(session.Character.GenerateSay($"You are in battle", 10));
                     return;
