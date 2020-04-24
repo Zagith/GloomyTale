@@ -798,7 +798,7 @@ namespace OpenNos.Handler
                             }
                         }
                         return;
-                    case 1024:
+                    /*case 1024:
                         {
                             if (Session.Character.MapId == 1)
                             {
@@ -819,7 +819,7 @@ namespace OpenNos.Handler
                                 }
                             }
                         }
-                        return;
+                        return;*/
                 }
 
                 Item item = ServerManager.GetItem(recipe.ItemVNum);
