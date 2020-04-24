@@ -2055,4 +2055,7 @@
   <data name="TOO_MUCH_QUESTS" xml:space="preserve">
     <value>You have too many quests</value>
   </data>
+  <data name="MARTIAL_ARTIST_ALREADY_CREATED" xml:space="preserve">
+    <value>You have already created a Martial Artist this week</value>
+  </data>
 </root>

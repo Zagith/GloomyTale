@@ -376,7 +376,7 @@ namespace OpenNos.GameObject
                             inv.BoundCharacterId = session.Character.CharacterId;
                             if (inv.ItemDeleteTime > DateTime.Now || inv.DurabilityPoint > 0)
                             {
-                                session.Character.AddBuff(new Buff(62, session.Character.Level), session.Character.BattleEntity);
+                                session.Character.AddBuff(new Buff(Effect, session.Character.Level), session.Character.BattleEntity);
                             }
                         }
                     }

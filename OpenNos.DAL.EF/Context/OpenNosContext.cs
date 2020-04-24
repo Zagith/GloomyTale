@@ -185,6 +185,12 @@ namespace OpenNos.DAL.EF
 
         public virtual DbSet<PvPLog> PvPLog { get; set; }
 
+        public virtual DbSet<RaidLog> RaidLog { get; set; }
+
+        public virtual DbSet<LevelLog> LevelLog { get; set; }
+
+        public virtual DbSet<UpgradeLog> UpgradeLog { get; set; }
+
         #endregion
 
         #region Methods

@@ -286,7 +286,7 @@ namespace OpenNos.Handler
             }
 
             SpinWait.SpinUntil(() => !ServerManager.Instance.InBazaarRefreshMode);
-            Session.SendPacket(UserInterfaceHelper.GenerateRCBList(cbListPacket, Session.Account.Language));
+            Session.SendPacket(UserInterfaceHelper.GenerateRCBList(cbListPacket, Session.Account.Language, Session));
         }
 
         /// <summary>

@@ -108,6 +108,7 @@
     <Compile Include="I18N\II18NMapDto.cs" />
     <Compile Include="Interfaces\II18NDto.cs" />
     <Compile Include="Interfaces\IStaticDto.cs" />
+    <Compile Include="LevelLogDTO.cs" />
     <Compile Include="LogChatDTO.cs" />
     <Compile Include="LogCommandsDTO.cs" />
     <Compile Include="LogDropDTO.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="QuestLogDTO.cs" />
     <Compile Include="QuestObjectiveDTO.cs" />
     <Compile Include="QuestRewardDTO.cs" />
+    <Compile Include="RaidLogDTO.cs" />
     <Compile Include="RecipeListDTO.cs" />
     <Compile Include="RollGeneratedItemDTO.cs" />
     <Compile Include="CardDTO.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="ScriptedInstanceDTO.cs" />
     <Compile Include="TimeSpacesLogDTO.cs" />
     <Compile Include="TrueOrFalseDTO.cs" />
+    <Compile Include="UpgradeLogDTO.cs" />
     <Compile Include="UserDTO.cs" />
     <Compile Include="MinigameLogDTO.cs" />
   </ItemGroup>

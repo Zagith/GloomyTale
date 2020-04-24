@@ -593,11 +593,12 @@ namespace OpenNos.GameObject.Helpers
                                             Logger.LogUserEvent("RAID_SUCCESS", owner.Name, $"RaidId: {group.GroupId}");
 
                                             ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("RAID_SUCCEED"), group.Raid.Label, owner.Name), 0));
-
+                                            
                                             Parallel.ForEach(group.Sessions.GetAllItems(), s =>
                                             {
                                                 if (s.Account != null && s.Character?.Group?.Raid != null)
                                                 {
+                                                    LogHelper.Instance.InsertRaidLog(s.Character.CharacterId, s.Character.Group.Raid.Id, DateTime.Now);
                                                     s.Character.GeneralLogs?.Add(new GeneralLogDTO
                                                     {
                                                         AccountId = s.Account.AccountId,

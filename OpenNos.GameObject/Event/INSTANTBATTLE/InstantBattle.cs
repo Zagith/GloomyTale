@@ -131,7 +131,7 @@ namespace OpenNos.GameObject.Event
                                     cli.Character.GetReputation(cli.Character.Level * 50);
                                     cli.SendPacket(cli.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_REPUT"), cli.Character.Level * 50), 10));
                                 }*/
-                                cli.Character.Gold += cli.Character.Level * 1000;
+                                cli.Character.Gold += cli.Character.Level * 6000;
                                 cli.Character.Gold = cli.Character.Gold > maxGold ? maxGold : cli.Character.Gold;
                                 cli.Character.SpAdditionPoint += cli.Character.Level * 100;
 
@@ -284,7 +284,7 @@ namespace OpenNos.GameObject.Event
 
                             case 3:
                                 dropParameters.AddRange(GenerateDrop(map, 1046, 8,
-                                    3000 * ServerManager.Instance.Configuration.RateGold / 4));
+                                    65000));
                                 dropParameters.AddRange(GenerateDrop(map, 1218, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 5369, 5, 1));
                                 dropParameters.AddRange(GenerateDrop(map, 1363, 10, 1));

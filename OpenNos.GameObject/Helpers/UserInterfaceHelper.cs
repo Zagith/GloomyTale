@@ -190,7 +190,7 @@ namespace OpenNos.GameObject.Helpers
 
         public string GeneratePStashRemove(short slot) => $"pstash {GenerateRemovePacket(slot)}";
 
-        public static string GenerateRCBList(CBListPacket packet, RegionType language)
+        public static string GenerateRCBList(CBListPacket packet, RegionType language, ClientSession session)
         {
             if (packet == null || packet.ItemVNumFilter == null)
             {
@@ -354,7 +354,7 @@ namespace OpenNos.GameObject.Helpers
                             wear.ShellEffects.AddRange(DAOFactory.ShellEffectDAO.LoadByEquipmentSerialId(wear.EquipmentSerialId));
                         }
                         info = (bzlink.Item.Item.EquipmentSlot != EquipmentType.Sp ?
-                            bzlink.Item?.GenerateEInfo() : bzlink.Item.Item.SpType == 0 && bzlink.Item.Item.ItemSubType == 4 ?
+                            bzlink.Item?.GenerateEInfo(session) : bzlink.Item.Item.SpType == 0 && bzlink.Item.Item.ItemSubType == 4 ?
                             bzlink.Item?.GeneratePslInfo() : bzlink.Item?.GenerateSlInfo()).Replace(' ', '^').Replace("slinfo^", "").Replace("e_info^", "");
                     }
                     itembazar += $"{bzlink.BazaarItem.BazaarItemId}|{bzlink.BazaarItem.SellerId}|{bzlink.Owner}|{bzlink.Item.Item.VNum}|{bzlink.Item.Amount}|{(bzlink.BazaarItem.IsPackage ? 1 : 0)}|{bzlink.BazaarItem.Price}|{time}|2|0|{bzlink.Item.Rare}|{bzlink.Item.Upgrade}|{bzlink.Item.CarveRuneUpgrade}|{bzlink.Item.IsCarveRuneFixed}|{info} ";

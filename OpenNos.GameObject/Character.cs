@@ -3883,26 +3883,27 @@ namespace OpenNos.GameObject
                 }
 
                 #region Act4
-
-                if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4) && ServerManager.Instance.ChannelId == 51)
+                if (Session.CurrentMapInstance != null)
                 {
-                    if (ServerManager.Instance.Act4AngelStat.Mode == 0 &&
-                        ServerManager.Instance.Act4DemonStat.Mode == 0)
+                    if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4) && ServerManager.Instance.ChannelId == 51)
                     {
-                        switch (Faction)
+                        if (ServerManager.Instance.Act4AngelStat.Mode == 0 &&
+                            ServerManager.Instance.Act4DemonStat.Mode == 0)
                         {
-                            case FactionType.Angel:
-                                ServerManager.Instance.Act4AngelStat.Percentage += 10000 / (ServerManager.Instance.Configuration.GlacernonPercentRatePvm * 100);
-                                break;
-                            case FactionType.Demon:
-                                ServerManager.Instance.Act4DemonStat.Percentage += 10000 / (ServerManager.Instance.Configuration.GlacernonPercentRatePvm * 100);
-                                break;
-                        }
+                            switch (Faction)
+                            {
+                                case FactionType.Angel:
+                                    ServerManager.Instance.Act4AngelStat.Percentage += 10000 / (ServerManager.Instance.Configuration.GlacernonPercentRatePvm * 100);
+                                    break;
+                                case FactionType.Demon:
+                                    ServerManager.Instance.Act4DemonStat.Percentage += 10000 / (ServerManager.Instance.Configuration.GlacernonPercentRatePvm * 100);
+                                    break;
+                            }
 
-                        ServerManager.Instance.Act4Process();
+                            ServerManager.Instance.Act4Process();
+                        }
                     }
                 }
-
                 #endregion
 
                 #region EXP, Reputation and Dignity
@@ -3949,6 +3950,7 @@ namespace OpenNos.GameObject
 
         public string GenerateLevelUp()
         {
+            LogHelper.Instance.InsertLevelLog(CharacterId, Level, DateTime.Now);
             Logger.LogUserEvent("LEVELUP", Session.GenerateIdentity(), $"Level: {Level} JobLevel: {JobLevel} SPLevel: {Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear)?.SpLevel} HeroLevel: {HeroLevel} MapId: {Session.CurrentMapInstance?.Map.MapId} MapX: {PositionX} MapY: {PositionY}");
             return $"levelup {CharacterId}";
         }
@@ -4623,7 +4625,7 @@ namespace OpenNos.GameObject
                     {
                         bz.Item.ShellEffects.Clear();
                         bz.Item.ShellEffects.AddRange(DAOFactory.ShellEffectDAO.LoadByEquipmentSerialId(bz.Item.EquipmentSerialId));
-                        info = bz.Item?.GenerateEInfo().Replace(' ', '^').Replace("e_info^", "");
+                        info = bz.Item?.GenerateEInfo(Session).Replace(' ', '^').Replace("e_info^", "");
                     }
                     if (packet.Filter == 0 || packet.Filter == Status)
                     {
@@ -4683,7 +4685,7 @@ namespace OpenNos.GameObject
         {
             if (Inventory.LoadBySlotAndType(itemSlot, (InventoryType)itemInventory) is ItemInstance item)
             {
-                return $"sayitem {(ignoreNickname ? 2 : 1)} {CharacterId} {type} {message.Replace(' ', '^')} {(item.Item.EquipmentSlot == EquipmentType.Sp ? item.GenerateSlInfo() : item.GenerateEInfo())}";
+                return $"sayitem {(ignoreNickname ? 2 : 1)} {CharacterId} {type} {message.Replace(' ', '^')} {(item.Item.EquipmentSlot == EquipmentType.Sp ? item.GenerateSlInfo() : item.GenerateEInfo(Session))}";
             }
             return "";
         }

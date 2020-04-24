@@ -104,6 +104,21 @@ namespace OpenNos.DAL.DAO
             }
         }
 
+        public IEnumerable<RollGeneratedItemDTO> LoadByItemVNumAndDesign(short vnum, short design)
+        {
+            using (OpenNosContext context = DataAccessHelper.CreateContext())
+            {
+                List<RollGeneratedItemDTO> result = new List<RollGeneratedItemDTO>();
+                foreach (RollGeneratedItem item in context.RollGeneratedItem.Where(s => s.OriginalItemVNum == vnum && s.OriginalItemDesign == design))
+                {
+                    RollGeneratedItemDTO dto = new RollGeneratedItemDTO();
+                    Mapper.Mappers.RollGeneratedItemMapper.ToRollGeneratedItemDTO(item, dto);
+                    result.Add(dto);
+                }
+                return result;
+            }
+        }
+
         #endregion
     }
 }

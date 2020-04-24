@@ -680,7 +680,15 @@ namespace OpenNos.GameObject
         {
             if (!teamCheck)
             {
-                return MapInstance?.Monsters.Where(s => s?.Target?.MapEntityId == MapEntityId && s.Target.EntityType == EntityType).Select(s => s.BattleEntity).ToList();
+                try
+                {
+                    return MapInstance?.Monsters.Where(s => s?.Target != null && s?.Target.MapEntityId == MapEntityId && s.Target.EntityType == EntityType).Select(s => s.BattleEntity).ToList();
+                }
+                catch
+                {
+                    List<BattleEntity> nullableList = new List<BattleEntity>();
+                    return nullableList;
+                }
             }
             else
             {
@@ -780,6 +788,10 @@ namespace OpenNos.GameObject
         {
             if (indicator.Card != null)
             {
+                if (sender == null)
+                {
+                    sender = this;
+                }
                 indicator.Level = sender.MapMonster?.Owner?.Level ?? sender.Level;
 
                 indicator.Sender = sender;
@@ -1045,14 +1057,7 @@ namespace OpenNos.GameObject
                     {
                         buffTime = 400;
                     }
-                    indicator.RemainingTime = indicator.Card.Duration == 0 ? buffTime : indicator.Card.Duration;
-
-                    indicator.Card.BCards.ForEach(c => c.ApplyBCards(this, sender, x: x, y: y));
-                    if (BuffObservables.ContainsKey(indicator.Card.CardId))
-                    {
-                        BuffObservables[indicator.Card.CardId]?.Dispose();
-                        BuffObservables.Remove(indicator.Card.CardId);
-                    }
+                    indicator.RemainingTime = indicator.Card.Duration == 0 ? buffTime : indicator.Card.Duration;                   
 
                     // WTF???
                     /*BuffObservables[indicator.Card.CardId] = Observable.Timer(TimeSpan.FromMilliseconds(indicator.RemainingTime * 100))
@@ -1067,7 +1072,7 @@ namespace OpenNos.GameObject
                         });*/
 
                     // Amulet remaining time
-                    if (indicator.Card.CardId == 62)
+                    if (indicator.Card.CardId == 62 || indicator.Card.CardId == 4000 || indicator.Card.CardId == 4001 || indicator.Card.CardId == 4002)
                     {
                         ItemInstance amulet = Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Amulet, InventoryType.Wear);
                         if (amulet?.ItemDeleteTime != null)
@@ -1097,9 +1102,15 @@ namespace OpenNos.GameObject
                     {
                         Mate.Owner.Session.SendPackets(Mate.Owner.GeneratePst());
                     }
-                }              
+                }
 
-               
+                if (BuffObservables.ContainsKey(indicator.Card.CardId))
+                {
+                    BuffObservables[indicator.Card.CardId]?.Dispose();
+                    BuffObservables.Remove(indicator.Card.CardId);
+                }
+
+                indicator.Card.BCards.ForEach(c => c.ApplyBCards(this, sender, x: x, y: y));
 
                 if (indicator.Card.BCards.Any(s => s.Type == (byte)CardType.Move && !s.SubType.Equals((byte)AdditionalTypes.Move.MovementImpossible / 10)))
                 {

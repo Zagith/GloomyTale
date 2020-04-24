@@ -3094,6 +3094,15 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have already created a Martial Artist this week.
+        /// </summary>
+        internal static string MARTIAL_ARTIST_ALREADY_CREATED {
+            get {
+                return ResourceManager.GetString("MARTIAL_ARTIST_ALREADY_CREATED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The attack of the partner has changed: Attack +{0}.
         /// </summary>
         internal static string MATE_ATTACK_CHANGED {

@@ -21,6 +21,7 @@ using OpenNos.PathFinder;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Media.Media3D;
@@ -66,73 +67,74 @@ namespace OpenNos.GameObject
             {
                 Console.WriteLine($"BCardId: {BCardId} Type: {(BCardType.CardType)Type} SubType: {SubType} CardId: {CardId?.ToString() ?? "null"} ItemVNum: {ItemVNum?.ToString() ?? "null"} SkillVNum: {SkillVNum?.ToString() ?? "null"} SessionType: {session?.EntityType.ToString() ?? "null"} SenderType: {sender?.EntityType.ToString() ?? "null"}");
             }*/
-
-            int firstData = FirstData;
-            int senderLevel = sender.MapMonster?.Owner?.Level ?? sender.Level;
-
-            Card card = null;
-            Skill skill = null;
-            int delayTime = 0;
-            int duration = 0;
-            if (ItemVNum == 15282 || ItemVNum == 15283 || ItemVNum == 15284)
-            {
-                return;
-            }
-            if (CardId is short cardId2 && ServerManager.Instance.GetCardByCardId(cardId2) is Card BuffCard)
-            {
-                card = BuffCard;
-
-                if (CastType == 1)
+                if (sender == null)
                 {
-                    delayTime = card.Delay * 100;
+                    sender = session;
+                }
+                int firstData = FirstData;
+                int senderLevel = sender.MapMonster?.Owner?.Level ?? sender.Level;
+
+                Card card = null;
+                Skill skill = null;
+                int delayTime = 0;
+            try
+            {
+                int duration = 0;
+                if (ItemVNum == 15282 || ItemVNum == 15283 || ItemVNum == 15284)
+                {
+                    return;
+                }
+                if (CardId is short cardId2 && ServerManager.Instance.GetCardByCardId(cardId2) is Card BuffCard)
+                {
+                    card = BuffCard;
+
+                    if (CastType == 1)
+                    {
+                        delayTime = card.Delay * 100;
+                    }
+
+                    duration = card.Duration * 100 - delayTime;
                 }
 
-                duration = card.Duration * 100 - delayTime;
-            }
-
-            if (SkillVNum is short skillVNum && ServerManager.GetSkill(skillVNum) is Skill Skill)
-            {
-                skill = Skill;
-                if (sender.Character != null)
+                if (SkillVNum is short skillVNum && ServerManager.GetSkill(skillVNum) is Skill Skill)
                 {
-                    List<CharacterSkill> skills = sender.Character.GetSkills();
-
-                    if (skills != null)
+                    skill = Skill;
+                    if (sender.Character != null)
                     {
-                        firstData = skills.Find(s => s.SkillVNum == skill.SkillVNum)?.GetSkillBCards().OrderByDescending(s => s.SkillVNum).FirstOrDefault(b => b.Type == Type && b.SubType == SubType).FirstData ?? FirstData;
-                        //firstData = skills.Where(s => s.SkillVNum == skill.SkillVNum).Sum(s => s.GetSkillBCards().Where(b => b.Type == Type && b.SubType == SubType).Sum(b => b.FirstData));
-                        if (firstData == 0)
+                        List<CharacterSkill> skills = sender.Character.GetSkills();
+
+                        if (skills != null)
                         {
-                            firstData = FirstData;
+                            firstData = skills.Find(s => s.SkillVNum == skill.SkillVNum)?.GetSkillBCards().OrderByDescending(s => s.SkillVNum).FirstOrDefault(b => b.Type == Type && b.SubType == SubType).FirstData ?? FirstData;
+                            //firstData = skills.Where(s => s.SkillVNum == skill.SkillVNum).Sum(s => s.GetSkillBCards().Where(b => b.Type == Type && b.SubType == SubType).Sum(b => b.FirstData));
+                            if (firstData == 0)
+                            {
+                                firstData = FirstData;
+                            }
                         }
                     }
                 }
-            }
 
-            if (ForceDelay > 0)
-            {
-                delayTime = ForceDelay * 100;
-            }
-
-            if (session == null) 
-                return;
-
-            if (BCardId > 0)
-                if (session.BuffObservables != null && session.BCardDisposables[BCardId] != null) 
+                if (ForceDelay > 0)
                 {
-                    if (skill != null && skill.SkillVNum == 1098)
-                    {
-                        session.BCardDisposables[skill.SkillVNum * 1000]?.Dispose();
-                    }
-                    else
-                    {
-                        session.BCardDisposables[BCardId]?.Dispose();
-                    }
+                    delayTime = ForceDelay * 100;
                 }
 
-            if (session.MapInstance.MapInstanceType != MapInstanceType.EventGameInstance)
-                session.BCardDisposables[skill?.SkillVNum == 1098 ? skill.SkillVNum * 1000 : BCardId] = Observable.Timer(TimeSpan.FromMilliseconds(delayTime)).Subscribe(o =>
-                {
+                if (BCardId > 0)
+                    if (session.BuffObservables != null && session.BCardDisposables[BCardId] != null) 
+                    {
+                        if (skill != null && skill.SkillVNum == 1098)
+                        {
+                            session.BCardDisposables[skill.SkillVNum * 1000]?.Dispose();
+                        }
+                        else
+                        {
+                            session.BCardDisposables[BCardId]?.Dispose();
+                        }
+                    }
+            
+            session.BCardDisposables[skill?.SkillVNum == 1098 ? skill.SkillVNum * 1000 : BCardId] = Observable.Timer(TimeSpan.FromMilliseconds(delayTime)).Subscribe(o =>
+            {
                     switch ((BCardType.CardType)Type)
                     {
 
@@ -251,12 +253,12 @@ namespace OpenNos.GameObject
                                         }
                                         else
                                         {
-                                            if(buff.Card?.BuffType == BuffType.Bad && session.HasBuff(746))
+                                            if (buff.Card?.BuffType == BuffType.Bad && session.HasBuff(746))
                                                 return;
 
                                             if (cardId != null && (cardId == 118 || ItemVNum == 1248 || buff.Card?.CardId == 118) && session.HasBuff(155))
                                                 return;
-                                            
+
 
                                             //Overwriting BearSpirit buff on Energy pot buff
                                             if (cardId != null && session.Character != null && cardId == 155)
@@ -301,7 +303,7 @@ namespace OpenNos.GameObject
                                     session.Character.LoadSpeed();
                                     session.Character.Session?.SendPacket(session.Character.GenerateCond());
                                     if (session.Character is Character charact)
-                                        {
+                                    {
                                         switch (SubType)
                                         {
                                             case (byte)AdditionalTypes.Move.MoveSpeedDecreased:
@@ -2551,7 +2553,12 @@ namespace OpenNos.GameObject
                             break;
                     }
                 });
-
+            }
+            catch (NullReferenceException e)
+            {
+                File.AppendAllText("C:\\catch_bcard.txt", e.Message + "\n sender:" + sender.ToString() + "\n" + "\n card:" + card.ToString() + "\n skill:" + skill.ToString() + "\n session:" + session.ToString() + "\n firstData:" + firstData.ToString() + "\n");
+                return;
+            }
             void PushBackSession(int PushDistance, BattleEntity receiver, BattleEntity point)
             {
                 if (receiver.MapMonster != null

@@ -652,6 +652,7 @@ namespace OpenNos.Handler
             }
 
             short vNum = pdtsePacket.VNum;
+            short compItem = 0;
             Recipe recipe = ServerManager.Instance.GetAllRecipes().Find(s => s.ItemVNum == vNum);
             if (Session.CurrentMapInstance.GetNpc(Session.Character.LastNpcMonsterId)?.Recipes.Find(s => s.ItemVNum == vNum) is Recipe recipeNpc)
             {
@@ -708,6 +709,15 @@ namespace OpenNos.Handler
                             break;
                         case 1437:
                             npcVNum = 959;
+                            break;
+                        case 1072:
+                            compItem = 1072;
+                            break;
+                        case 1240:
+                            compItem = 1240;
+                            break;
+                        case 1238:
+                            compItem = 1238;
                             break;
                     }
                     if (npcVNum != 0 && ((Session.Character.BattleEntity.IsCampfire(npcVNum) && Session.CurrentMapInstance.GetNpc(Session.Character.LastNpcMonsterId) == null) || Session.CurrentMapInstance.GetNpc(Session.Character.LastNpcMonsterId)?.NpcVNum != npcVNum))
@@ -818,7 +828,8 @@ namespace OpenNos.Handler
                     return;
                 }
 
-                sbyte rare = 0;
+                sbyte rare = (sbyte)recipe.Rare;
+                byte upgrade = recipe.Upgrade;
                 if (item.EquipmentSlot == EquipmentType.Armor
                     || item.EquipmentSlot == EquipmentType.MainWeapon
                     || item.EquipmentSlot == EquipmentType.SecondaryWeapon)
@@ -834,7 +845,11 @@ namespace OpenNos.Handler
                     }
                 }
 
-                ItemInstance inv = Session.Character.Inventory.AddNewToInventory(recipe.ItemVNum, recipe.Amount, Rare: (sbyte)recipe.Rare, Upgrade: recipe.Upgrade)
+                if (item.ItemType == ItemType.Shell)
+                {
+                    upgrade = (byte)ServerManager.RandomNumber(70, 85);
+                }
+                ItemInstance inv = Session.Character.Inventory.AddNewToInventory(recipe.ItemVNum, recipe.Amount, Rare: rare, Upgrade: upgrade)
                     .FirstOrDefault();
                 if (inv != null)
                 {
@@ -849,7 +864,10 @@ namespace OpenNos.Handler
                             inv.BoundCharacterId = Session.Character.CharacterId;
                         }
                     }
-
+                    if (compItem != 0)
+                    { 
+                        Session.Character.Inventory.RemoveItemAmount(compItem);
+                    }
                     foreach (RecipeItemDTO ite in recipe.Items)
                     {
                         Session.Character.Inventory.RemoveItemAmount(ite.ItemVNum, ite.Amount);

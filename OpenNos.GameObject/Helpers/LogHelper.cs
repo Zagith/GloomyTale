@@ -109,6 +109,40 @@ namespace OpenNos.GameObject.Helpers
             DAOFactory.PvPLogDAO.Insert(log);
         }
 
+        public void InsertRaidLog(long characterId, long timespaceId, DateTime time)
+        {
+            var log = new RaidLogDTO
+            {
+                CharacterId = characterId,
+                RaidId = timespaceId,
+                Timestamp = time
+            };
+            DAOFactory.RaidLogDAO.Insert(log);
+        }
+
+        public void InsertLevelLog(long characterId, byte level, DateTime time)
+        {
+            var log = new LevelLogDTO
+            {
+                CharacterId = characterId,
+                Level = level,
+                Timestamp = time
+            };
+            DAOFactory.LevelLogDAO.Insert(log);
+        }
+
+        public void InsertUpgradeLog(long characterId, short upgrade, Guid serialId, DateTime time)
+        {
+            var log = new UpgradeLogDTO
+            {
+                CharacterId = characterId,
+                Upgrade = upgrade,
+                EquipmentSerialized = serialId,
+                Timestamp = time
+            };
+            DAOFactory.UpgradeLogDAO.Insert(log);
+        }
+
         #region Singleton
 
         private static LogHelper _instance;

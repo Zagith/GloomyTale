@@ -218,7 +218,7 @@ namespace OpenNos.World
             ServerManager.Instance.InShutdown = true;
             Logger.Error((Exception)e.ExceptionObject);
 
-            File.AppendAllText("C:\\WORLD_CRASHLOG.txt", e.ExceptionObject.ToString() + "\n");
+            File.AppendAllText("C:\\WORLD_CRASHLOG.txt", e.ExceptionObject.ToString() + "\n sender:" + sender.ToString() + "\n");
 
             Logger.Debug("Server crashed! Rebooting gracefully...");
             CommunicationServiceClient.Instance.UnregisterWorldServer(ServerManager.Instance.WorldId);

@@ -241,14 +241,14 @@ namespace OpenNos.GameObject
                     break;
 
                 case 69:
-                    if (EffectValue == 1 || EffectValue == 2)
+                    if (EffectValue == 1 || EffectValue == 2 || EffectValue == 5)
                     {
                         ItemInstance box = session.Character.Inventory.LoadBySlotAndType(inv.Slot, InventoryType.Equipment);
                         if (box != null)
                         {
                             if (box.HoldingVNum == 0)
                             {
-                                session.SendPacket($"wopen 44 {inv.Slot}");
+                                session.SendPacket($"wopen 44 {inv.Slot} {(EffectValue == 5 ? 1 : 0)}");
                             }
                             else
                             {

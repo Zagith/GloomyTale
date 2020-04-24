@@ -218,11 +218,11 @@ namespace OpenNos.Handler
                 {
                     if (inventory.IsEmpty || isNpcShopItem)
                     {
-                        Session.SendPacket(inventory.GenerateEInfo());
+                        Session.SendPacket(inventory.GenerateEInfo(Session));
                         return;
                     }
 
-                    Session.SendPacket(inventory.Item.EquipmentSlot != EquipmentType.Sp ? inventory.GenerateEInfo() :
+                    Session.SendPacket(inventory.Item.EquipmentSlot != EquipmentType.Sp ? inventory.GenerateEInfo(Session) :
                         inventory.Item.SpType == 0 && inventory.Item.ItemSubType == 4 ? inventory.GeneratePslInfo() :
                         inventory.GenerateSlInfo(Session));
                 }

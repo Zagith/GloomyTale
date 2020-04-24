@@ -91,6 +91,10 @@ namespace OpenNos.DAL
         private static ITrueOrFalseDAO _trueOrFalseDAO;
         private static IMultiAccountExceptionDAO _multiAccountExceptionDAO;
         private static IPvPLogDAO _pvpLogDAO;
+        private static IRaidLogDAO _raidLogDAO;
+        private static IUpgradeLogDAO _upgradeLogDAO;
+        private static ILevelLogDAO _levelLogDAO;
+
         #endregion
 
         #region Properties
@@ -234,6 +238,12 @@ namespace OpenNos.DAL
         public static IMultiAccountExceptionDAO MultiAccountExceptionDAO => _multiAccountExceptionDAO ?? (_multiAccountExceptionDAO = new MultiAccountExceptionDAO());
 
         public static IPvPLogDAO PvPLogDAO => _pvpLogDAO ?? (_pvpLogDAO = new PvPLogDAO());
+
+        public static IRaidLogDAO RaidLogDAO => _raidLogDAO ?? (_raidLogDAO = new RaidLogDAO());
+
+        public static ILevelLogDAO LevelLogDAO => _levelLogDAO ?? (_levelLogDAO = new LevelLogDAO());
+
+        public static IUpgradeLogDAO UpgradeLogDAO => _upgradeLogDAO ?? (_upgradeLogDAO = new UpgradeLogDAO());
         #endregion
     }
 }

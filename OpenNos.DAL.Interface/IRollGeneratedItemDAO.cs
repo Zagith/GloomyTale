@@ -29,6 +29,8 @@ namespace OpenNos.DAL.Interface
 
         IEnumerable<RollGeneratedItemDTO> LoadByItemVNum(short vnum);
 
+        IEnumerable<RollGeneratedItemDTO> LoadByItemVNumAndDesign(short vnum, short design);
+
         #endregion
     }
 }

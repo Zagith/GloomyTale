@@ -767,6 +767,7 @@ namespace OpenNos.GameObject
                 session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("UPGRADESP_SUCCESS"), 12));
                 session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("UPGRADESP_SUCCESS"), 0));
                 wearable.Upgrade++;
+                LogHelper.Instance.InsertUpgradeLog(CharacterId, wearable.Upgrade, wearable.EquipmentSerialId, DateTime.Now);
                 if (wearable.Upgrade > 8)
                 {
                     session.Character.Family?.InsertFamilyLog(FamilyLogType.ItemUpgraded, session.Character.Name, itemVNum: wearable.ItemVNum, upgrade: wearable.Upgrade);
@@ -778,7 +779,7 @@ namespace OpenNos.GameObject
             session.SendPacket("shop_end 1");
         }
 
-        public string GenerateEInfo()
+        public string GenerateEInfo(ClientSession Session)
         {
             EquipmentType equipmentslot = Item.EquipmentSlot;
             ItemType itemType = Item.ItemType;
@@ -868,8 +869,32 @@ namespace OpenNos.GameObject
                             return HoldingVNum == 0 ?
                                 $"e_info 12 {ItemVNum} 0" :
                                 $"e_info 12 {ItemVNum} 1 {HoldingVNum} {ElementRate + fairyitem.ElementRate}";
-
+                        case 6:
+                            PartnerSp partnerSp = new PartnerSp(this);
+                            return HoldingVNum == 0 ?
+                                $"e_info 13 {ItemVNum} 0" :
+                                $"e_info 13 {ItemVNum} 1 {HoldingVNum} 4 {(partnerSp != null ? partnerSp.GenerateSkills() : " 0 0 0")}";
                         default:
+                            /*IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.RollGeneratedItemDAO.LoadByItemVNumAndDesign(ItemVNum, Design);
+                            if (roll != null)
+                            {
+                                string recipelist = "m_list 2";
+                                foreach (RollGeneratedItemDTO rollitem in roll)
+                                {
+                                    recipelist += $" {rollitem.ItemGeneratedVNum}";
+                                }
+                                recipelist += " -100";
+                                Session.SendPacket("wopen 27 0");
+                                Session.SendPacket(recipelist);
+                            }*/
+                            string rece = $"m_list 3";
+                            IEnumerable<RollGeneratedItemDTO> rolls = DAOFactory.RollGeneratedItemDAO.LoadByItemVNumAndDesign(ItemVNum, Design);
+                            foreach (RollGeneratedItemDTO roll in rolls)
+                            {
+                                rece += $" {roll.ItemGeneratedAmount} -1";
+                            }
+                            Session.SendPacket("wopen 27 0");
+                            Session.SendPacket(rece);
                             return $"e_info 8 {ItemVNum} {Design} {Rare}";
                     }
 
@@ -2076,6 +2101,7 @@ namespace OpenNos.GameObject
                         session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("UPGRADE_SUCCESS"), 12));
                         session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("UPGRADE_SUCCESS"), 0));
                         wearable.Upgrade++;
+                        LogHelper.Instance.InsertUpgradeLog(CharacterId, wearable.Upgrade, wearable.EquipmentSerialId, DateTime.Now);
                         if (wearable.Upgrade > 4)
                         {
                             session.Character.Family?.InsertFamilyLog(FamilyLogType.ItemUpgraded, session.Character.Name, itemVNum: wearable.ItemVNum, upgrade: wearable.Upgrade);
@@ -2119,6 +2145,7 @@ namespace OpenNos.GameObject
                         session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("UPGRADE_SUCCESS"), 12));
                         session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("UPGRADE_SUCCESS"), 0));
                         wearable.Upgrade++;
+                        LogHelper.Instance.InsertUpgradeLog(CharacterId, wearable.Upgrade, wearable.EquipmentSerialId, DateTime.Now);
                         if (wearable.Upgrade > 4)
                         {
                             session.Character.Family?.InsertFamilyLog(FamilyLogType.ItemUpgraded, session.Character.Name, itemVNum: wearable.ItemVNum, upgrade: wearable.Upgrade);

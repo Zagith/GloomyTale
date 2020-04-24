@@ -19,6 +19,13 @@
         "Opennos.Master.Server": {}
       }
     },
+    "Worlds": {
+      "Projects": {
+        "GloomyTale.DiscordBot": {},
+        "Opennos.Crown": {},
+        "Opennos.World": {}
+      }
+    },
     "Without Crown": {
       "Projects": {
         "Opennos.World": {},

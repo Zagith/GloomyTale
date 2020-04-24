@@ -72,6 +72,12 @@ namespace OpenNos.Handler
                         return;
                     }
 
+                    if (DAOFactory.GeneralLogDAO.LoadByAccount(Session.Account.AccountId).Where(s => s.LogType == "MartialArtist" && s.Timestamp.Date.AddDays(7) >= DateTime.Now).Any())
+                    {
+                        Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("MARTIAL_ARTIST_ALREADY_CREATED")));
+                        return;
+                    }
+
                     if (characterDTOs.Any(s => s.Class == ClassType.MartialArtist))
                     {
                         Session.SendPacket(UserInterfaceHelper.GenerateInfo(Language.Instance.GetMessageFromKey("MARTIAL_ARTIST_ALREADY_EXISTING")));
@@ -137,6 +143,17 @@ namespace OpenNos.Handler
                 }
 
                 DAOFactory.CharacterDAO.InsertOrUpdate(ref characterDTO);
+
+                GeneralLogDTO charlog = new GeneralLogDTO
+                {
+                    AccountId = Session.Account.AccountId,
+                    CharacterId = null,
+                    IpAddress = Session.IpAddress,
+                    LogData = "CreateCharacter",
+                    LogType = "MartialArtist",
+                    Timestamp = DateTime.Now
+                };
+                DAOFactory.GeneralLogDAO.InsertOrUpdate(ref charlog);
 
                 if (classType == ClassType.MartialArtist)
                 {
@@ -550,7 +567,7 @@ namespace OpenNos.Handler
 
                         if (amulet?.ItemDeleteTime != null || amulet?.DurabilityPoint > 0)
                         {
-                            Session.Character.AddBuff(new Buff(62, Session.Character.Level), Session.Character.BattleEntity);
+                            Session.Character.AddBuff(new Buff(amulet.Item.Effect, Session.Character.Level), Session.Character.BattleEntity);
                         }
                     });
 
