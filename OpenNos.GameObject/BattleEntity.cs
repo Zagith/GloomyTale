@@ -1072,7 +1072,7 @@ namespace OpenNos.GameObject
                         });*/
 
                     // Amulet remaining time
-                    if (indicator.Card.CardId == 62 || indicator.Card.CardId == 4000 || indicator.Card.CardId == 4001 || indicator.Card.CardId == 4002)
+                    if (indicator.Card.CardId == 62)
                     {
                         ItemInstance amulet = Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Amulet, InventoryType.Wear);
                         if (amulet?.ItemDeleteTime != null)

@@ -2099,6 +2099,7 @@ namespace OpenNos.GameObject
             }
             else
             {
+                
                 #region Tart Hapendam's Martial Arts
 
                 if (Level >= 1 && Level < 81)
@@ -2113,6 +2114,39 @@ namespace OpenNos.GameObject
                     if (HasBuff(684))
                     {
                         RemoveBuff(684);
+                    }
+                }
+
+                #endregion
+
+                #region Trinkets
+                ItemInstance wearable = Inventory.LoadBySlotAndType((byte)EquipmentType.Amulet, InventoryType.Wear);
+
+                if (wearable != null)
+                {
+                    if (wearable.ItemVNum == 15049 && !HasBuff(4001))
+                    {
+                        AddBuff(new Buff(4001, Level), BattleEntity);
+                    }
+                    else if (wearable.ItemVNum != 15049 && HasBuff(4001))
+                    {
+                        RemoveBuff(4001);
+                    }
+                    if (wearable.ItemVNum == 15050 && !HasBuff(4000))
+                    {
+                        AddBuff(new Buff(4000, Level), BattleEntity);
+                    }
+                    else if (wearable.ItemVNum != 15050 && HasBuff(4000))
+                    {
+                        RemoveBuff(4000);
+                    }
+                    if (wearable.ItemVNum == 15051 && !HasBuff(4002))
+                    {
+                        AddBuff(new Buff(4002, Level), BattleEntity);
+                    }
+                    else if (wearable.ItemVNum != 15051 && HasBuff(4002))
+                    {
+                        RemoveBuff(4002);
                     }
                 }
 

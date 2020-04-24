@@ -70,7 +70,7 @@ namespace OpenNos.GameObject
                     {
                         return;
                     }
-                    if (ItemValidTime > 0 && !inv.IsBound)
+                    if (ItemValidTime > 0 && !inv.IsBound && inv.ItemVNum != 15049 && inv.ItemVNum != 15050 && inv.ItemVNum != 15051)
                     {
                         inv.ItemDeleteTime = DateTime.Now.AddSeconds(ItemValidTime);
                     }

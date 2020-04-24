@@ -565,7 +565,7 @@ namespace OpenNos.Handler
                     {
                         ItemInstance amulet = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Amulet, InventoryType.Wear);
 
-                        if (amulet?.ItemDeleteTime != null || amulet?.DurabilityPoint > 0)
+                        if (amulet?.ItemDeleteTime != null || amulet?.DurabilityPoint > 0 || amulet?.ItemVNum == 15049 || amulet?.ItemVNum == 15050 || amulet?.ItemVNum == 15051)
                         {
                             Session.Character.AddBuff(new Buff(amulet.Item.Effect, Session.Character.Level), Session.Character.BattleEntity);
                         }

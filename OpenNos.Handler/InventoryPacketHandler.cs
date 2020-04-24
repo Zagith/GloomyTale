@@ -1253,6 +1253,18 @@ namespace OpenNos.Handler
                             {
                                 Session.Character.RemoveBuff(62);
                             }
+                            if (Session.Character.Buff.ContainsKey(4000))
+                            {
+                                Session.Character.RemoveBuff(4000);
+                            }
+                            if (Session.Character.Buff.ContainsKey(4001))
+                            {
+                                Session.Character.RemoveBuff(4001);
+                            }
+                            if (Session.Character.Buff.ContainsKey(4003))
+                            {
+                                Session.Character.RemoveBuff(4003);
+                            }
 
                             Session.Character.EquipmentBCards.RemoveAll(o => o.ItemVNum == inventory.ItemVNum);
                         }
