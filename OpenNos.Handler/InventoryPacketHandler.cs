@@ -95,6 +95,7 @@ namespace OpenNos.Handler
         /// <param name="depositPacket"></param>
         public void Deposit(DepositPacket depositPacket)
         {
+            return;
             if (depositPacket != null)
             {
                 if (depositPacket.Inventory == InventoryType.Bazaar
@@ -1021,8 +1022,8 @@ namespace OpenNos.Handler
 
                     ItemInstance sourceItem =
                         Session.Character.Inventory.LoadBySlotAndType(mvePacket.Slot, mvePacket.InventoryType);
-                    if (sourceItem?.Item.ItemType == ItemType.Specialist
-                        || sourceItem?.Item.ItemType == ItemType.Fashion)
+                    if ((sourceItem?.Item.ItemType == ItemType.Specialist
+                        || sourceItem?.Item.ItemType == ItemType.Fashion) && mvePacket.DestinationInventoryType != InventoryType.Miniland)
                     {
                         ItemInstance inv = Session.Character.Inventory.MoveInInventory(mvePacket.Slot,
                             mvePacket.InventoryType, mvePacket.DestinationInventoryType, mvePacket.DestinationSlot,
@@ -1364,6 +1365,7 @@ namespace OpenNos.Handler
         /// <param name="reposPacket"></param>
         public void Repos(ReposPacket reposPacket)
         {
+            return;
             if (reposPacket != null)
             {
                 Logger.LogUserEvent("STASH_REPOS", Session.GenerateIdentity(),
@@ -2555,6 +2557,7 @@ namespace OpenNos.Handler
         /// <param name="withdrawPacket"></param>
         public void Withdraw(WithdrawPacket withdrawPacket)
         {
+            return;
             if (withdrawPacket != null)
             {
                 ItemInstance previousInventory = Session.Character.Inventory.LoadBySlotAndType(withdrawPacket.Slot,

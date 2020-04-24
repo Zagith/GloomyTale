@@ -3272,6 +3272,7 @@ namespace OpenNos.GameObject
 
         public List<string> GenerateFamilyWarehouseHist()
         {
+            return;
             if (Family != null)
             {
                 List<string> packetList = new List<string>();
@@ -3393,6 +3394,7 @@ namespace OpenNos.GameObject
 
         public string GenerateFStashAll()
         {
+            return "";
             string stash = $"f_stash_all {Family.WarehouseSize}";
             foreach (ItemInstance item in Family.Warehouse.GetAllItems())
             {

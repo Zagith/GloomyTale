@@ -779,7 +779,7 @@ namespace OpenNos.GameObject
             session.SendPacket("shop_end 1");
         }
 
-        public string GenerateEInfo(ClientSession Session)
+        public string GenerateEInfo(ClientSession Session, bool isBazar = false)
         {
             EquipmentType equipmentslot = Item.EquipmentSlot;
             ItemType itemType = Item.ItemType;
@@ -870,31 +870,22 @@ namespace OpenNos.GameObject
                                 $"e_info 12 {ItemVNum} 0" :
                                 $"e_info 12 {ItemVNum} 1 {HoldingVNum} {ElementRate + fairyitem.ElementRate}";
                         case 6:
-                            PartnerSp partnerSp = new PartnerSp(this);
+                            return $"e_info 13 {ItemVNum} 0";
+                            /*PartnerSp partnerSp = new PartnerSp(this);
                             return HoldingVNum == 0 ?
-                                $"e_info 13 {ItemVNum} 0" :
-                                $"e_info 13 {ItemVNum} 1 {HoldingVNum} 4 {(partnerSp != null ? partnerSp.GenerateSkills() : " 0 0 0")}";
+                                 :
+                                $"e_info 13 {ItemVNum} 1 {HoldingVNum} 4 {(partnerSp != null ? partnerSp.GenerateSkills() : " 0 0 0")}";*/
                         default:
-                            /*IEnumerable<RollGeneratedItemDTO> roll = DAOFactory.RollGeneratedItemDAO.LoadByItemVNumAndDesign(ItemVNum, Design);
-                            if (roll != null)
+                            if (Session != null && !isBazar)
                             {
-                                string recipelist = "m_list 2";
-                                foreach (RollGeneratedItemDTO rollitem in roll)
+                                string rece = $"";
+                                foreach (RollGeneratedItemDTO item in DAOFactory.RollGeneratedItemDAO.LoadByItemVNumAndDesign(ItemVNum, Design))
                                 {
-                                    recipelist += $" {rollitem.ItemGeneratedVNum}";
+                                    Item ite = ServerManager.GetItem(item.ItemGeneratedVNum);
+                                    rece += $"x{item.ItemGeneratedAmount} - {ite.Name[Session.Account.Language]}\n";
                                 }
-                                recipelist += " -100";
-                                Session.SendPacket("wopen 27 0");
-                                Session.SendPacket(recipelist);
-                            }*/
-                            string rece = $"m_list 3";
-                            IEnumerable<RollGeneratedItemDTO> rolls = DAOFactory.RollGeneratedItemDAO.LoadByItemVNumAndDesign(ItemVNum, Design);
-                            foreach (RollGeneratedItemDTO roll in rolls)
-                            {
-                                rece += $" {roll.ItemGeneratedAmount} -1";
+                                Session.SendPacket(UserInterfaceHelper.GenerateModal(rece, 1));
                             }
-                            Session.SendPacket("wopen 27 0");
-                            Session.SendPacket(rece);
                             return $"e_info 8 {ItemVNum} {Design} {Rare}";
                     }
 

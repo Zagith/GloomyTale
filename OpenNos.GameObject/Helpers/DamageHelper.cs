@@ -2009,10 +2009,12 @@ namespace OpenNos.GameObject.Helpers
             {
                 if (ReflectsMaximumDamageFrom[0] < 0)
                 {
-                    int maxReflectDamage = -ReflectsMaximumDamageFrom[0];
+                    /*int maxReflectDamage = -ReflectsMaximumDamageFrom[0];
 
                     int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
-                    totalDamage -= reflectedDamage;
+                    totalDamage -= reflectedDamage;*/
+
+                    int reflectedDamage = totalDamage;
 
                     if (!percentDamage)
                     {
@@ -2022,14 +2024,17 @@ namespace OpenNos.GameObject.Helpers
                             -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
 
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
+                        totalDamage = 0;
                     }
                 }
                 else if (ReflectsMaximumDamageFrom[0] > 0)
                 {
-                    int maxReflectDamage = ReflectsMaximumDamageFrom[0];
+                    /*int maxReflectDamage = ReflectsMaximumDamageFrom[0];
 
                     int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
-                    totalDamage -= reflectedDamage;
+                    totalDamage -= reflectedDamage;*/
+
+                    int reflectedDamage = totalDamage;
 
                     if (!percentDamage)
                     {
@@ -2039,9 +2044,10 @@ namespace OpenNos.GameObject.Helpers
                             -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
 
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
+                        totalDamage = 0;
                     }
                 }
-
+                
             }
 
             #endregion
@@ -2052,10 +2058,12 @@ namespace OpenNos.GameObject.Helpers
             {
                 if (ReflectMaximumReceivedDamage[0] > 0)
                 {
-                    int maxReflectDamage = ReflectMaximumReceivedDamage[0];
+                    /*int maxReflectDamage = ReflectsMaximumDamageFrom[0];
 
                     int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
-                    totalDamage -= reflectedDamage;
+                    totalDamage -= reflectedDamage;*/
+
+                    int reflectedDamage = totalDamage;
 
                     if (!percentDamage)
                     {
@@ -2065,8 +2073,10 @@ namespace OpenNos.GameObject.Helpers
                             -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
 
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
+                        totalDamage = 0;
                     }
                 }
+                
             }
 
             #endregion

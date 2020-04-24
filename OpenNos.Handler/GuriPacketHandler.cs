@@ -1066,7 +1066,7 @@ namespace OpenNos.Handler
                 {
                     if (Session.Character.StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.PetBasket))
                     {
-                        Session.SendPacket(Session.Character.GenerateStashAll());
+                        //Session.SendPacket(Session.Character.GenerateStashAll());
                     }
                 }
                 else if (guriPacket.Type == 202)

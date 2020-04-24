@@ -538,7 +538,7 @@ namespace OpenNos.Handler
                     }
                     else
                     {
-                        Session.SendPacket(Session.Character.GenerateStashAll());
+                        //Session.SendPacket(Session.Character.GenerateStashAll());
                     }
                 }
             }

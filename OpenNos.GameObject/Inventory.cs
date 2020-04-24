@@ -367,6 +367,7 @@ namespace OpenNos.GameObject
 
         public void DepositItem(InventoryType inventory, byte slot, short amount, byte NewSlot, ref ItemInstance item, ref ItemInstance itemdest, bool PartnerBackpack)
         {
+            return;
             if (item != null && amount <= item.Amount && amount > 0)
             {
                 MoveItem(inventory, PartnerBackpack ? InventoryType.PetWarehouse : InventoryType.Warehouse, slot, amount, NewSlot, out item, out itemdest);

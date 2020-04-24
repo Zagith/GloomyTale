@@ -1490,15 +1490,16 @@ namespace OpenNos.GameObject
                 case 1600:
                     {
 
-                        Session.SendPacket(Session.Character.OpenFamilyWarehouse());
+                        //Session.SendPacket(Session.Character.OpenFamilyWarehouse());
                     }
                     break;
 
                 case 1601:
-                    Session.SendPackets(Session.Character.OpenFamilyWarehouseHist());
+                    //Session.SendPackets(Session.Character.OpenFamilyWarehouseHist());
                     break;
 
                 case 1602:
+                    return;
                     if (Session.Character.Family?.FamilyLevel >= 2 && Session.Character.Family.WarehouseSize < 21)
                     {
                         if (Session.Character.FamilyCharacter.Authority == FamilyAuthority.Head)
