@@ -3272,8 +3272,7 @@ namespace OpenNos.GameObject
 
         public List<string> GenerateFamilyWarehouseHist()
         {
-            return;
-            if (Family != null)
+            /*if (Family != null)
             {
                 List<string> packetList = new List<string>();
                 string packet = "";
@@ -3297,7 +3296,7 @@ namespace OpenNos.GameObject
                 }
 
                 return packetList;
-            }
+            }*/
             return new List<string>();
         }
 

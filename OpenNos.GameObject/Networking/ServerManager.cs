@@ -1786,8 +1786,9 @@ namespace OpenNos.GameObject.Networking
         {
             DateTime now = DateTime.Now;
             DateTime firstDay = new DateTime(now.Year, now.Month, 1);
-            TimeSpan time = new TimeSpan(firstDay.Hour, firstDay.Minute, firstDay.Second);
-            Observable.Timer(TimeSpan.FromSeconds(EventHelper.GetMilisecondsBeforeTime(time).TotalSeconds), TimeSpan.FromTicks(1)).Subscribe(e =>
+            DateTime nextMonth = firstDay.AddMonths(1);
+            double text = (nextMonth - firstDay).TotalSeconds - (DateTime.Now - firstDay).TotalSeconds;
+            Observable.Timer(TimeSpan.FromSeconds(text)).Subscribe(e =>
             {
                 if (DateTime.Now == firstDay)
                 {
@@ -1798,14 +1799,34 @@ namespace OpenNos.GameObject.Networking
 
         public void ResetPoints()
         {
-            foreach (ClientSession session in Sessions)
+            IEnumerable<CharacterDTO> chars = DAOFactory.CharacterDAO.LoadAll();
+            foreach (CharacterDTO character in chars)
             {
-                session.Character.Act4Dead = 0;
-                session.Character.Act4Kill = 0;
-                session.Character.Act4Points = 0;
-                session.Character.PvpScoreTotal = 0;
-                session.Character.Save();
+                CharacterDTO chara = character;
+                chara.Act4Dead = 0;
+                chara.Act4Kill = 0;
+                chara.Act4Points = 0;
+                chara.PvpScoreTotal = 0;
+                DAOFactory.CharacterDAO.InsertOrUpdate(ref chara);
             }
+            /*List<CharacterDTO> top3 = TopComplimented.Take(3).ToList();
+            foreach (CharacterDTO top in top3)
+            {
+                var mail2 = new MailDTO
+                {
+                    AttachmentAmount = 1,
+                    IsOpened = false,
+                    Date = DateTime.Now,
+                    ReceiverId = top.CharacterId,
+                    SenderId = top.CharacterId,
+                    AttachmentRarity = 0,
+                    AttachmentUpgrade = 0,
+                    IsSenderCopy = false,
+                    Title = "RANKING",
+                    AttachmentVNum = 1
+                };
+                CommunicationServiceClient.Instance.SendMail(Instance.ServerGroup, mail2);
+            }*/
             RefreshRanking();
         }
 

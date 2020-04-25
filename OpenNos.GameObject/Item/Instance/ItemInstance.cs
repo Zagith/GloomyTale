@@ -869,14 +869,8 @@ namespace OpenNos.GameObject
                             return HoldingVNum == 0 ?
                                 $"e_info 12 {ItemVNum} 0" :
                                 $"e_info 12 {ItemVNum} 1 {HoldingVNum} {ElementRate + fairyitem.ElementRate}";
-                        case 6:
-                            return $"e_info 13 {ItemVNum} 0";
-                            /*PartnerSp partnerSp = new PartnerSp(this);
-                            return HoldingVNum == 0 ?
-                                 :
-                                $"e_info 13 {ItemVNum} 1 {HoldingVNum} 4 {(partnerSp != null ? partnerSp.GenerateSkills() : " 0 0 0")}";*/
                         default:
-                            if (Session != null && !isBazar)
+                            /*if (Session != null && !isBazar)
                             {
                                 string rece = $"";
                                 foreach (RollGeneratedItemDTO item in DAOFactory.RollGeneratedItemDAO.LoadByItemVNumAndDesign(ItemVNum, Design))
@@ -885,7 +879,7 @@ namespace OpenNos.GameObject
                                     rece += $"x{item.ItemGeneratedAmount} - {ite.Name[Session.Account.Language]}\n";
                                 }
                                 Session.SendPacket(UserInterfaceHelper.GenerateModal(rece, 1));
-                            }
+                            }*/
                             return $"e_info 8 {ItemVNum} {Design} {Rare}";
                     }
 

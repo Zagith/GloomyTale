@@ -1072,7 +1072,7 @@ namespace OpenNos.Handler
                 else if (guriPacket.Type == 202)
                 {
                     //Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("PARTNER_BACKPACK"), 10));
-                    Session.SendPacket(Session.Character.GeneratePStashAll());
+                    //Session.SendPacket(Session.Character.GeneratePStashAll());
                 }
                 else if (guriPacket.Type == 208 && guriPacket.Argument == 0)
                 {
