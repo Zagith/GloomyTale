@@ -2034,7 +2034,7 @@ namespace OpenNos.GameObject.Helpers
                     int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
                     //totalDamage -= reflectedDamage;
 
-                    if (!percentDamage)
+                    if (!percentDamage && realAttacker != null && defender != null)
                     {
                         reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
 
@@ -2062,7 +2062,7 @@ namespace OpenNos.GameObject.Helpers
                     int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
                     //totalDamage -= reflectedDamage;
 
-                    if (!percentDamage)
+                    if (!percentDamage && realAttacker != null && defender != null)
                     {
                         reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
 
