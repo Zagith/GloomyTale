@@ -705,7 +705,7 @@ namespace OpenNos.Handler
                     {
                         battleEntityDefender.MapMonster.AddToDamageList(attackerOwner.BattleEntity, damage);
                     }
-
+                    
                     bcards.ForEach(bcard =>
                     {
                         if (bcard.Type == Convert.ToByte(CardType.Buff) && new Buff(Convert.ToInt16(bcard.SecondData), battleEntityAttacker.Level).Card?.BuffType != BuffType.Bad)

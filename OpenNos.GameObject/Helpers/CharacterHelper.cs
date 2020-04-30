@@ -1297,7 +1297,7 @@ namespace OpenNos.GameObject.Helpers
         {
             switch (authority)
             {
-                case AuthorityType.GS:
+                case AuthorityType.EventMaster:
                     return 50;
                 case AuthorityType.TMOD:
                 case AuthorityType.MOD:
@@ -1321,7 +1321,7 @@ namespace OpenNos.GameObject.Helpers
         {
             switch (authority)
             {
-                case AuthorityType.GS:
+                case AuthorityType.EventMaster:
                     return 12;
                 case AuthorityType.TMOD:
                 case AuthorityType.MOD:

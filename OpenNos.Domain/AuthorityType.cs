@@ -21,7 +21,7 @@ namespace OpenNos.Domain
         Banned = -2,
         Unconfirmed = -1,
         User = 0,
-        GS = 20,
+        EventMaster = 20,
         TMOD = 30,
         MOD = 31,
         SMOD = 32,

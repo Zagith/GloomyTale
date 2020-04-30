@@ -152,6 +152,8 @@ namespace OpenNos.DAL.EF
 
         public bool? IsPartnerEquipment { get; set; }
 
+        public bool? IsHeroicShell { get; set; }
+
         public byte? LightElement { get; set; }
 
         public short? LightResistance { get; set; }

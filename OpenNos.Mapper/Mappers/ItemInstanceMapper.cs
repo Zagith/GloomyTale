@@ -46,6 +46,7 @@ namespace OpenNos.Mapper.Mappers
             output.IsFixed = input.IsFixed;
             output.IsCarveRuneFixed = input.IsCarveRuneFixed;
             output.IsPartnerEquipment = input.IsPartnerEquipment;
+            output.IsHeroicShell = input.IsHeroicShell;
             output.ItemDeleteTime = input.ItemDeleteTime;
             output.ItemVNum = input.ItemVNum;
             output.LightElement = input.LightElement;
@@ -118,6 +119,7 @@ namespace OpenNos.Mapper.Mappers
             output.IsFixed = input.IsFixed ?? false;
             output.IsCarveRuneFixed = input.IsCarveRuneFixed ?? false;
             output.IsPartnerEquipment = input.IsPartnerEquipment ?? false;
+            output.IsHeroicShell = input.IsHeroicShell ?? false;
             output.ItemDeleteTime = input.ItemDeleteTime;
             output.ItemVNum = input.ItemVNum;
             output.LightElement = input.LightElement ?? 0;

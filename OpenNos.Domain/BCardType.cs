@@ -1091,7 +1091,8 @@ namespace OpenNos.Domain
             ChanceSummonOnyxDragon = 31,
             ChanceSummonOnyxDragonNegated = 32,
             StealGoodEffect = 41,
-            StealGoodEffectNegated = 42
+            StealGoodEffectNegated = 42,
+            Arlecchino = 51
         }
 
         public enum EffectSummon : byte

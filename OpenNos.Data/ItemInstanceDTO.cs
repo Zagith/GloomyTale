@@ -25,6 +25,8 @@ namespace OpenNos.Data
 
         public bool IsPartnerEquipment { get; set; }
 
+        public bool IsHeroicShell { get; set; }
+
         public short SlDamage { get; set; }
 
         public short SlDefence { get; set; }

@@ -20,7 +20,7 @@ namespace OpenNos.Master.Server.controllers
             Dictionary<string, int> authorities = new Dictionary<string, int>();
             foreach (object i in Enum.GetValues(typeof(AuthorityType)))
             {
-                if ((int)(AuthorityType)i <= (int)AuthorityType.GS)
+                if ((int)(AuthorityType)i <= (int)AuthorityType.EventMaster)
                 {
                     authorities[i.ToString()] = (int)(AuthorityType)i;
                 }

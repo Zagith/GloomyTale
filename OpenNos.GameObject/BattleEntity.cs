@@ -1444,25 +1444,28 @@ namespace OpenNos.GameObject
             }
 
             List<Buff> buff = BuffsCopy.Where(s => (type == BuffType.All || s.Card.BuffType == type) && !s.StaticBuff && s.Card.Level < level && s.Card.CardId != 62).ToList();
-
+            
             buff.ForEach(s =>
             {
-                s.Card.BCards.ForEach(b =>
+                if (s.Card.CardId != 121)
                 {
-                    if (BCardDisposables?.ContainsKey(b.BCardId) == true && BCardDisposables[b.BCardId] != null)
+                    s.Card.BCards.ForEach(b =>
                     {
-                        BCardDisposables[b.BCardId]?.Dispose();
-                        BCardDisposables[b.BCardId] = null;
+                        if (BCardDisposables?.ContainsKey(b.BCardId) == true && BCardDisposables[b.BCardId] != null)
+                        {
+                            BCardDisposables[b.BCardId]?.Dispose();
+                            BCardDisposables[b.BCardId] = null;
+                        }
+                    });
+
+                    if (BuffObservables != null && BuffObservables.ContainsKey(s.Card.CardId))
+                    {
+                        BuffObservables[s.Card.CardId]?.Dispose();
+                        BuffObservables.Remove(s.Card.CardId);
                     }
-                });
 
-                if (BuffObservables != null && BuffObservables.ContainsKey(s.Card.CardId))
-                {
-                    BuffObservables[s.Card.CardId]?.Dispose();
-                    BuffObservables.Remove(s.Card.CardId);
+                    RemoveBuff(s.Card.CardId);
                 }
-
-                RemoveBuff(s.Card.CardId);
             });
 
             if (type == BuffType.All)

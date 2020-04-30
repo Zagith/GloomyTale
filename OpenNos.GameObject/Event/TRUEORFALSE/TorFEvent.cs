@@ -1,14 +1,22 @@
-﻿using OpenNos.Core;
+﻿using Mapster;
+using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.Data.Base;
+using OpenNos.Data.I18N;
+using OpenNos.Data.Interfaces;
 using OpenNos.Domain;
+using OpenNos.Domain.I18N;
 using OpenNos.GameObject.Helpers;
 using OpenNos.GameObject.Networking;
+using ServiceStack.Text.FastMember;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace OpenNos.GameObject.Event.TRUEORFALSE
 {
@@ -86,7 +94,31 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
             #endregion
 
             #region Questions preparing
-            Questions = DAOFactory.TrueOrFalseDAO.LoadByType(questionType).ToList();
+            TypeAdapterConfig.GlobalSettings
+                .ForDestinationType<I18NString>()
+                .BeforeMapping(s => s.Clear());
+            TypeAdapterConfig.GlobalSettings
+                .When(s => !s.SourceType.IsAssignableFrom(s.DestinationType) && typeof(IStaticDto).IsAssignableFrom(s.DestinationType))
+                .IgnoreMember((member, side) => typeof(I18NString).IsAssignableFrom(member.Type));
+            TypeAdapterConfig.GlobalSettings.Default.IgnoreAttribute(typeof(I18NFromAttribute));
+            var dic = new Dictionary<Type, Dictionary<string, Dictionary<RegionType, II18NDto>>>
+                    {
+                        {
+                            typeof(I18NTorFDto),
+                            DAOFactory.I18NTorFDAO.LoadAll().GroupBy(x => x.Key).ToDictionary(x => x.Key,
+                                x => x.ToList().ToDictionary(o => o.RegionType, o => (II18NDto) o))
+                        }
+                    };
+            var items = DAOFactory.TrueOrFalseDAO.LoadByType(questionType);
+            var props = StaticDtoExtension.GetI18NProperties(typeof(TrueOrFalseDTO));
+
+            var regions = Enum.GetValues(typeof(RegionType));
+            var accessors = TypeAccessor.Create(typeof(TrueOrFalseDTO));
+            OrderablePartitioner<TrueOrFalseDTO> itemPartitioner = Partitioner.Create(items, EnumerablePartitionerOptions.NoBuffering);
+            Parallel.ForEach(itemPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 4 }, itemDto =>
+            {
+                Questions.Add(itemDto);
+            });
             #endregion
 
             Thread.Sleep(20 * 1000);
@@ -103,12 +135,16 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
             byte wave = 0;
             while (TorFEvent._map.Sessions.Count() > 1 && wave < Questions.Count)
             {
-                byte roundCount = 1;
+               
                 foreach (TrueOrFalseDTO question in Questions)
-                {
-                    EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg($"Let's start with {roundCount} round!!", 0)));
+                {       
+                    EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg($"Let's start with {wave} round!!", 0)));
                     Thread.Sleep(5 * 1000);
-                    EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg($"{question.Question}", 0)));
+                    foreach (ClientSession s in TorFEvent._map.Sessions)
+                    {
+                        s.SendPacket(UserInterfaceHelper.GenerateMsg($"{question.Name[s.Account.Language]}", 0));
+                        s.SendPacket(s.Character.GenerateSay($"{question.Name[s.Account.Language]}", 12));
+                    }
                     Thread.Sleep(10 * 1000);
                     EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("10 secs reamining! Make your choise!!", 0)));
                     Thread.Sleep(10 * 1000);
@@ -117,7 +153,6 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
                     Thread.Sleep(3 * 1000);
                     KickLosers();
                     wave++;
-                    roundCount++;
                 }
             }
 
@@ -245,6 +280,7 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
             if (TorFEvent.answer)
             {
                 EventHelper.Instance.RunEvent(new EventContainer(TorFEvent._map, EventActionType.SENDPACKET, UserInterfaceHelper.GenerateMsg("TRUE", 0)));
+                Thread.Sleep(2 * 1000);
                 foreach (ClientSession s in TorFEvent._map.Sessions)
                     if (!TorFEvent._map.GetCharactersInRange(TorFEvent.True.MapX, TorFEvent.True.MapY, 3).Contains(s.Character))
                         ServerManager.Instance.ChangeMap(s.Character.CharacterId, 129, 65, 134);

@@ -122,6 +122,31 @@ namespace OpenNos.Handler
             }
         }
 
+        public void Act6Stat(Act6StatPacket packet)
+        {
+            if (packet != null)
+            {
+                Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
+                       $"[Act6Stat]Faction: {packet.Faction} Value: {packet.Value}");
+                switch (packet.Faction)
+                {
+                    case 1:
+                        ServerManager.Instance.Act6AngelStat.Percentage = packet.Value;
+                        break;
+
+                    case 2:
+                        ServerManager.Instance.Act6DemonStat.Percentage = packet.Value;
+                        break;
+                }
+                Parallel.ForEach(ServerManager.Instance.Sessions, sess => sess.SendPacket(sess.Character.GenerateAct6()));
+                Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("DONE"), 10));
+            }
+            else
+            {
+                Session.SendPacket(Session.Character.GenerateSay(AddMonsterPacket.ReturnHelp(), 10));
+            }
+        }
+
         public void Act4Stat(Act4StatPacket packet)
         {
             if (packet != null && ServerManager.Instance.ChannelId == 51)
@@ -1515,9 +1540,9 @@ namespace OpenNos.Handler
                                     newAuthority = AuthorityType.TGM;
                                     break;
                                 case AuthorityType.TGM:
-                                    newAuthority = AuthorityType.GS;
+                                    newAuthority = AuthorityType.EventMaster;
                                     break;
-                                case AuthorityType.GS:
+                                case AuthorityType.EventMaster:
                                     newAuthority = AuthorityType.User;
                                     break;
                                 default:
@@ -2600,9 +2625,9 @@ namespace OpenNos.Handler
                             switch (account.Authority)
                             {
                                 case AuthorityType.User:
-                                    newAuthority = AuthorityType.GS;
+                                    newAuthority = AuthorityType.EventMaster;
                                     break;
-                                case AuthorityType.GS:
+                                case AuthorityType.EventMaster:
                                     newAuthority = AuthorityType.GM;
                                     break;
                                 case AuthorityType.GM:

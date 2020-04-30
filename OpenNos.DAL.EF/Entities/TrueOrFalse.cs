@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OpenNos.DAL.EF.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace OpenNos.DAL.EF.Entities
 {
@@ -7,7 +8,9 @@ namespace OpenNos.DAL.EF.Entities
         [Key]
         public short TrueOrFalseId { get; set; }
 
-        public string Question { get; set; }
+        [MaxLength(255)]
+        [I18NString(typeof(I18NTorF))]
+        public string Name { get; set; }
 
         public bool Answer { get; set; }
 

@@ -104,6 +104,7 @@
     <Compile Include="Entities\I18NQuest.cs" />
     <Compile Include="Entities\I18NShopName.cs" />
     <Compile Include="Entities\I18NSkill.cs" />
+    <Compile Include="Entities\I18NTorF.cs" />
     <Compile Include="Entities\LevelLog.cs" />
     <Compile Include="Entities\MultiAccountException.cs" />
     <Compile Include="Entities\RaidLog.cs" />
@@ -246,6 +247,14 @@
     <Compile Include="Migrations\202004241157451_AddOtherLogs.cs" />
     <Compile Include="Migrations\202004241157451_AddOtherLogs.designer.cs">
       <DependentUpon>202004241157451_AddOtherLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004281111302_TorfMultiLanguage.cs" />
+    <Compile Include="Migrations\202004281111302_TorfMultiLanguage.designer.cs">
+      <DependentUpon>202004281111302_TorfMultiLanguage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004291123102_HeroicShells.cs" />
+    <Compile Include="Migrations\202004291123102_HeroicShells.designer.cs">
+      <DependentUpon>202004291123102_HeroicShells.cs</DependentUpon>
     </Compile>
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="PvPLog.cs" />
@@ -426,6 +435,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004241157451_AddOtherLogs.resx">
       <DependentUpon>202004241157451_AddOtherLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004281111302_TorfMultiLanguage.resx">
+      <DependentUpon>202004281111302_TorfMultiLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004291123102_HeroicShells.resx">
+      <DependentUpon>202004291123102_HeroicShells.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -110,7 +110,7 @@ namespace OpenNos.GameObject
                                                 rare = 7;
                                             }
                                             
-                                            upgrade = (byte)ServerManager.RandomNumber(70, 85);
+                                            upgrade = (byte)ServerManager.RandomNumber(65, 85);
                                         }
                                         if (rollitem.IsRareRandom)
                                         {

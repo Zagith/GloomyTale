@@ -2211,7 +2211,7 @@ namespace OpenNos.Handler
                 {
                     member = ServerManager.Instance.ArenaTeams.ToList().FirstOrDefault(s => s.Any(e => e.Session == Session));
                 }
-                if (Session.Character.Authority >= AuthorityType.GS)
+                if (Session.Character.Authority >= AuthorityType.EventMaster)
                 {
                     type = CharacterHelper.AuthorityChatColor(Session.Character.Authority);
                     if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
@@ -2229,7 +2229,7 @@ namespace OpenNos.Handler
                 if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
                 {
                     ArenaTeamMember member2 = member.FirstOrDefault(o => o.Session == Session);
-                    member.Where(s => s.ArenaTeamType == member2?.ArenaTeamType && s != member2).ToList().ForEach(o => o.Session.SendPacket(Session.Character.GenerateSay(message.Trim(), type, Session.Account.Authority >= AuthorityType.GS)));
+                    member.Where(s => s.ArenaTeamType == member2?.ArenaTeamType && s != member2).ToList().ForEach(o => o.Session.SendPacket(Session.Character.GenerateSay(message.Trim(), type, Session.Account.Authority >= AuthorityType.EventMaster)));
                 }
                 else if (ServerManager.Instance.ChannelId == 51 && Session.Account.Authority < AuthorityType.TMOD)
                 {
@@ -2237,7 +2237,7 @@ namespace OpenNos.Handler
                 }
                 else
                 {
-                    Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateSay(message.Trim(), type, Session.Character.Authority >= AuthorityType.GS), ReceiverType.AllExceptMe);
+                    Session.CurrentMapInstance?.Broadcast(Session, Session.Character.GenerateSay(message.Trim(), type, Session.Character.Authority >= AuthorityType.EventMaster), ReceiverType.AllExceptMe);
                 }
             }
 
@@ -2985,7 +2985,7 @@ namespace OpenNos.Handler
                         DestinationCharacterId = receiver.CharacterId,
                         SourceCharacterId = Session.Character.CharacterId,
                         SourceWorldId = ServerManager.Instance.WorldId,
-                        Message = Session.Character.Authority >= AuthorityType.GS
+                        Message = Session.Character.Authority >= AuthorityType.EventMaster
                             ? Session.Character.GenerateSay(
                                 $"(whisper)(From {Session.Character.Authority} {Session.Character.Name}):{message}", 11)
                             : Session.Character.GenerateSpk(message,

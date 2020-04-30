@@ -2145,6 +2145,14 @@ namespace OpenNos.Handler
                                     ChangeSp();
                                 }
                             }
+                            else if(spTransformPacket.Type == 2)
+                            {
+                                if (Session.Character.LastSpUsed)
+                                {
+                                    ChangeSp();
+                                    Session.Character.LastSpUsed = false;
+                                }
+                            }
                             else
                             {
                                 Session.Character.LastDelay = DateTime.Now;

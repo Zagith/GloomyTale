@@ -54,6 +54,7 @@
     <Compile Include="Mappers\I18NNpcMonsterMapper.cs" />
     <Compile Include="Mappers\I18NShopNameMapper.cs" />
     <Compile Include="Mappers\I18NSkillMapper.cs" />
+    <Compile Include="Mappers\I18NTorFMapper.cs" />
     <Compile Include="Mappers\ItemInstanceMapper.cs" />
     <Compile Include="Mappers\CardMapper.cs" />
     <Compile Include="Mappers\CellonOptionMapper.cs" />
@@ -122,11 +123,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenNos.DAL.EF\OpenNos.DAL.EF.csproj">
-      <Project>{4AECC47D-098A-4493-8E1E-D10EDBB7A189}</Project>
+      <Project>{4aecc47d-098a-4493-8e1e-d10edbb7a189}</Project>
       <Name>OpenNos.DAL.EF</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenNos.Data\OpenNos.Data.csproj">
-      <Project>{F1071DED-3D92-4416-9B9C-8664441ADE64}</Project>
+      <Project>{f1071ded-3d92-4416-9b9c-8664441ade64}</Project>
       <Name>OpenNos.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\OpenNos.Domain\OpenNos.Domain.csproj">

@@ -173,6 +173,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Act4Stat.cs" />
+    <Compile Include="Act6Stat.cs" />
+    <Compile Include="Event\Act6\Act6Raid.cs" />
     <Compile Include="ArenaMember.cs" />
     <Compile Include="ArenaTeamMember.cs" />
     <Compile Include="BandicootMember.cs" />
@@ -233,6 +235,7 @@
     <Compile Include="Packets\ClientPackets\ShPacket.cs" />
     <Compile Include="Packets\ClientPackets\TiteqPacket.cs" />
     <Compile Include="Packets\ClientPackets\UsePartnerSkillPacket.cs" />
+    <Compile Include="Packets\CommandPackets\Act6StatPacket.cs" />
     <Compile Include="Packets\CommandPackets\AddUserLogPacket.cs" />
     <Compile Include="Packets\CommandPackets\ChannelstartPacket.cs" />
     <Compile Include="Packets\CommandPackets\CHPacket.cs" />

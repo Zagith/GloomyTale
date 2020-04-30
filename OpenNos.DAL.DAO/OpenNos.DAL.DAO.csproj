@@ -74,6 +74,7 @@
     <Compile Include="I18NNpcMonsterDAO.cs" />
     <Compile Include="I18NShopNameDAO.cs" />
     <Compile Include="I18NSkillDAO.cs" />
+    <Compile Include="I18NTorFDAO.cs" />
     <Compile Include="LevelLogDAO.cs" />
     <Compile Include="ItemDAO.cs" />
     <Compile Include="ItemInstanceDAO.cs" />
@@ -155,7 +156,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

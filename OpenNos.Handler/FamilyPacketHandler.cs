@@ -285,7 +285,7 @@ namespace OpenNos.Handler
                         if (Session.HasCurrentMapInstance && session.HasCurrentMapInstance
                             && Session.CurrentMapInstance == session.CurrentMapInstance)
                         {
-                            if (Session.Account.Authority != AuthorityType.GS && !Session.Character.InvisibleGm)
+                            if (Session.Account.Authority != AuthorityType.EventMaster && !Session.Character.InvisibleGm)
                             {
                                 session.SendPacket(Session.Character.GenerateSay(msg, 6));
                             }

@@ -1448,6 +1448,135 @@ namespace OpenNos.GameObject
                     }
                     break;
 
+                //Shell Separator
+                case 15296:
+                    {
+                        if (EffectValue == 1 && byte.TryParse(packetsplit[9], out byte myslot))
+                        {
+                            ItemInstance wearInstance = session.Character.Inventory.LoadBySlotAndType(myslot, InventoryType.Equipment);
+                            ItemInstance shell = null;
+                            if (wearInstance != null && (wearInstance.Item.ItemType == ItemType.Weapon || wearInstance.Item.ItemType == ItemType.Armor) && wearInstance.ShellEffects.Count != 0)
+                            {
+                                switch (wearInstance.Item.ItemType)
+                                {
+                                    case ItemType.Weapon:
+                                        shell = session.Character.ShellBySeparator(571, 1, wearInstance.Item.IsHeroic ? (byte)wearInstance.Rare : (byte)wearInstance.ShellRarity, wearInstance.Item.LevelMinimum, isHeroic: wearInstance.Item.IsHeroic);
+                                        break;
+
+                                    case ItemType.Armor:
+                                        shell = session.Character.ShellBySeparator(583, 1, wearInstance.Item.IsHeroic ? (byte)wearInstance.Rare : (byte)wearInstance.ShellRarity, wearInstance.Item.LevelMinimum, isHeroic: wearInstance.Item.IsHeroic);
+                                        break;
+                                }
+
+                                if (shell != null)
+                                {
+                                    shell.ShellEffects.AddRange(wearInstance.ShellEffects);
+                                    DAOFactory.ShellEffectDAO.InsertOrUpdateFromList(shell.ShellEffects, shell.EquipmentSerialId);
+
+                                    wearInstance.ShellEffects.Clear();
+                                    wearInstance.ShellRarity = null;
+                                    DAOFactory.ShellEffectDAO.DeleteByEquipmentSerialId(wearInstance.EquipmentSerialId);
+                                    if (wearInstance.EquipmentSerialId == Guid.Empty)
+                                    {
+                                        wearInstance.EquipmentSerialId = Guid.NewGuid();
+                                    }
+                                    session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                                    session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("OPTION_DELETE"), 0));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            session.SendPacket("guri 18 0");
+                        }
+                    }
+                    break;
+                
+                //Max Gillion use
+                case 15297:
+                    {
+                        switch(EffectValue)
+                        {
+                            case 1:
+                                {
+                                    while (session.Character.Inventory.CountItem(1013) >= 1)
+                                    {
+                                        session.Character.Inventory.RemoveItemAmount(1013);
+                                        if (ServerManager.RandomNumber() < 25)
+                                        {
+                                            switch (ServerManager.RandomNumber(0, 17))
+                                            {
+                                                case 0:
+                                                case 1:
+                                                case 2:
+                                                case 3:
+                                                case 4:
+                                                    session.Character.GiftAdd(1017, 1);
+                                                    break;
+                                                case 5:
+                                                case 6:
+                                                case 7:
+                                                case 8:
+                                                    session.Character.GiftAdd(1018, 1);
+                                                    break;
+                                                case 9:
+                                                case 10:
+                                                case 11:
+                                                    session.Character.GiftAdd(1019, 1);
+                                                    break;
+                                                case 12:
+                                                case 13:
+                                                    session.Character.GiftAdd(1020, 1);
+                                                    break;
+                                                case 14:
+                                                    session.Character.GiftAdd(1021, 1);
+                                                    break;
+                                                case 15:
+                                                    session.Character.GiftAdd(1022, 1);
+                                                    break;
+                                                case 16:
+                                                    session.Character.GiftAdd(1023, 1);
+                                                    break;
+                                            }
+                                        }
+                                        session.Character.GiftAdd(1014, (byte)ServerManager.RandomNumber(5, 11));
+                                    }
+                                }
+                                break;
+
+                            case 2:
+                                {
+                                    while(session.Character.Inventory.CountItem(1013) >= 1)
+                                    {
+                                        session.Character.Inventory.RemoveItemAmount(1013);
+                                        if (ServerManager.RandomNumber() < 25)
+                                        {
+                                            switch (ServerManager.RandomNumber(0, 4))
+                                            {
+                                                case 0:
+                                                    session.Character.GiftAdd(1031, 1);
+                                                    break;
+                                                case 1:
+                                                    session.Character.GiftAdd(1032, 1);
+                                                    break;
+                                                case 2:
+                                                    session.Character.GiftAdd(1033, 1);
+                                                    break;
+                                                case 3:
+                                                    session.Character.GiftAdd(1034, 1);
+                                                    break;
+                                            }
+                                        }
+                                        session.Character.GiftAdd(1014, (byte)ServerManager.RandomNumber(5, 11));
+                                    }
+                                }
+                                break;
+                        }
+
+                        session.Character.Inventory.RemoveItemFromInventory(inv.Id);
+                    }
+                    break;
+
                 default:
                     switch (EffectValue)
                     {

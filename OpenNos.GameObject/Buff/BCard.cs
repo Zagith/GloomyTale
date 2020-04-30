@@ -2435,7 +2435,37 @@ namespace OpenNos.GameObject
                             break;
 
                         case BCardType.CardType.StealBuff:
-                            break;
+                        {
+                            if (SubType == (byte)AdditionalTypes.StealBuff.Arlecchino / 10)
+                            {
+                                if (session.Character != null)
+                                {
+                                    session.Character.NoAttack = true;
+                                    Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
+                                    {
+                                        session.Character.NoAttack = false;
+                                        if (session.Character.UseSp)
+                                        {
+                                            if (ServerManager.RandomNumber() <= FirstData)
+                                            {
+                                                ItemInstance specialist = session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Sp, InventoryType.Wear);
+                                                session.Character.LastSpUsed = true;
+                                                session.Character.RemoveSp(specialist.ItemVNum, true);
+
+                                                Observable.Timer(TimeSpan.FromSeconds(SecondData)).Subscribe(o =>
+                                                {
+                                                    if (session.Character.Hp > 0)
+                                                        session.Character.Session.ReceivePacket("sl 2");
+                                                    else
+                                                        session.Character.LastSpUsed = false;
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                        break;
 
                         case BCardType.CardType.Unknown:
                             break;

@@ -1362,7 +1362,7 @@ namespace OpenNos.Handler
                     Session.SendPacket($"npc_req 2 {npc.MapNpcId} {npcDialogQuest.Quest.DialogNpcId}");
                 }
                 else if ((npc.Npc.Drops.Any(s => s.MonsterVNum != null) || npc.NpcVNum == 856) && npc.Npc.Race == 8
-                                                                  && (npc.Npc.RaceType == 7 || npc.Npc.RaceType == 5))
+                                                                  && (npc.Npc.RaceType == 7 || npc.Npc.RaceType == 5 || npc.Npc.RaceType == 32))
                 {
                     if (npc.Npc.VNumRequired > 10 && Session.Character.Inventory.CountItem(npc.Npc.VNumRequired) < npc.Npc.AmountRequired)
                     {
@@ -1375,7 +1375,7 @@ namespace OpenNos.Handler
                     Session.SendPacket(UserInterfaceHelper.GenerateDelay(5000, 4, $"#guri^400^{npc.MapNpcId}"));
                 }
                 else if (npc.Npc.VNumRequired > 0 && npc.Npc.Race == 8
-                                                  && (npc.Npc.RaceType == 7 || npc.Npc.RaceType == 5))
+                                                  && (npc.Npc.RaceType == 7 || npc.Npc.RaceType == 5 || npc.Npc.RaceType == 32))
                 {
                     if (npc.Npc.VNumRequired > 10 && Session.Character.Inventory.CountItem(npc.Npc.VNumRequired) < npc.Npc.AmountRequired)
                     {

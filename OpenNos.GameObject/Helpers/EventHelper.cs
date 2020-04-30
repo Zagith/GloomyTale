@@ -563,7 +563,7 @@ namespace OpenNos.GameObject.Helpers
                                                             {
                                                                 if (ServerManager.RandomNumber() < 20)
                                                                 {
-                                                                    s.Character.GiftAdd(gift.VNum, gift.Amount, (byte)ServerManager.RandomNumber(0,7), 0, gift.Design, gift.IsRandomRare);
+                                                                    s.Character.GiftAdd(gift.VNum, gift.Amount, (byte)ServerManager.RandomNumber(5,7), 0, gift.Design, gift.IsRandomRare);
                                                                 }
                                                             }
                                                         }
@@ -686,7 +686,7 @@ namespace OpenNos.GameObject.Helpers
                                             {
                                                 if (sess?.Character != null)
                                                 {
-                                                    sess.Character.GiftAdd(rewardVNum, 1, forceRandom: true, minRare: 1, design: 255);
+                                                    sess.Character.GiftAdd(rewardVNum, 1, forceRandom: true, minRare: 5, design: 255);
                                                     sess.Character.GiftAdd(secondaryRewardVNum, 1);
                                                     if (sess.Character.GenerateFamilyXp(10000 / count))
                                                     {

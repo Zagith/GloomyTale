@@ -160,6 +160,42 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erenia audience is now closed!.
+        /// </summary>
+        internal static string ACT6_ERENIA_RAID_CLOSED {
+            get {
+                return ResourceManager.GetString("ACT6_ERENIA_RAID_CLOSED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erenia audience is now opened!.
+        /// </summary>
+        internal static string ACT6_ERENIA_RAID_OPEN {
+            get {
+                return ResourceManager.GetString("ACT6_ERENIA_RAID_OPEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zenas audience is now closed!.
+        /// </summary>
+        internal static string ACT6_ZENAS_RAID_CLOSED {
+            get {
+                return ResourceManager.GetString("ACT6_ZENAS_RAID_CLOSED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zenas audience is now started!.
+        /// </summary>
+        internal static string ACT6_ZENAS_RAID_OPEN {
+            get {
+                return ResourceManager.GetString("ACT6_ZENAS_RAID_OPEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to add an option over this? If the answer is yes, this item will be attached to you character..
         /// </summary>
         internal static string ADD_OPTION_ON_STUFF {
@@ -3900,6 +3936,15 @@ namespace OpenNos.World.Resource {
         internal static string NOT_FAMILY_HEAD {
             get {
                 return ResourceManager.GetString("NOT_FAMILY_HEAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You cannot use an Heroic shell on a Not-Heroic equipment..
+        /// </summary>
+        internal static string NOT_HEROIC_EQUIPE {
+            get {
+                return ResourceManager.GetString("NOT_HEROIC_EQUIPE", resourceCulture);
             }
         }
         

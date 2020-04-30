@@ -87,6 +87,7 @@
     <Compile Include="II18NNpcMonsterDAO.cs" />
     <Compile Include="II18NShopNameDAO.cs" />
     <Compile Include="II18NSkillDAO.cs" />
+    <Compile Include="II18NTorFDAO.cs" />
     <Compile Include="ILevelLogDAO.cs" />
     <Compile Include="ILogChatDAO.cs" />
     <Compile Include="ILogCommandsDAO.cs" />

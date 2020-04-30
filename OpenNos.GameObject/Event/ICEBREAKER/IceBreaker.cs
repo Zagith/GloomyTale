@@ -19,12 +19,12 @@ namespace OpenNos.GameObject.Event
 
         private static readonly int[] GoldRewards =
         {
-            100,
-            1000,
-            3000,
-            5000,
-            10000,
-            20000
+            250000,
+            500000,
+            1000000,
+            1750000,
+            2500000,
+            5000000
         };
 
         private static readonly Tuple<int, int>[] LevelBrackets =
@@ -165,7 +165,11 @@ namespace OpenNos.GameObject.Event
                                 {
                                     x.Character.Dignity = 100;
                                 }
-
+                                x.Character.GenerateFamilyXp(x.Character.Level * 4);
+                                if (x.Character.Family != null)
+                                {
+                                    x.SendPacket(x.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_FXP"), x.Character.Level * 4), 10));
+                                }
                                 x.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("ICEBREAKER_WIN"), 0));
                                 x.Character.Gold += GoldRewards[currentBracket];
                                 x.Character.Gold = x.Character.Gold > ServerManager.Instance.Configuration.MaxGold ? ServerManager.Instance.Configuration.MaxGold : x.Character.Gold;

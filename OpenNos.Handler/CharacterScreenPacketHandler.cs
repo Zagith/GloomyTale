@@ -144,27 +144,6 @@ namespace OpenNos.Handler
 
                 DAOFactory.CharacterDAO.InsertOrUpdate(ref characterDTO);
 
-                GeneralLogDTO charlog = new GeneralLogDTO
-                {
-                    AccountId = Session.Account.AccountId,
-                    CharacterId = null,
-                    IpAddress = Session.IpAddress,
-                    LogData = "CreateCharacter",
-                    LogType = "MartialArtist",
-                    Timestamp = DateTime.Now
-                };
-                DAOFactory.GeneralLogDAO.InsertOrUpdate(ref charlog);
-
-                if (classType == ClassType.MartialArtist)
-                {
-                    DAOFactory.CharacterQuestDAO.InsertOrUpdate(new CharacterQuestDTO
-                    {
-                        CharacterId = characterDTO.CharacterId,
-                        QuestId = 1548,
-                        IsMainQuest = true
-                    });
-                }
-
                 if (classType != ClassType.MartialArtist)
                 {
                     DAOFactory.CharacterQuestDAO.InsertOrUpdate(new CharacterQuestDTO
@@ -187,6 +166,24 @@ namespace OpenNos.Handler
                 }
                 else
                 {
+                    DAOFactory.CharacterQuestDAO.InsertOrUpdate(new CharacterQuestDTO
+                    {
+                        CharacterId = characterDTO.CharacterId,
+                        QuestId = 1548,
+                        IsMainQuest = true
+                    });
+
+                    GeneralLogDTO charlog = new GeneralLogDTO
+                    {
+                        AccountId = Session.Account.AccountId,
+                        CharacterId = null,
+                        IpAddress = Session.IpAddress,
+                        LogData = "CreateCharacter",
+                        LogType = "MartialArtist",
+                        Timestamp = DateTime.Now
+                    };
+                    DAOFactory.GeneralLogDAO.InsertOrUpdate(ref charlog);
+
                     for (short skillVNum = 1525; skillVNum <= 1539; skillVNum++)
                     {
                         DAOFactory.CharacterSkillDAO.InsertOrUpdate(new CharacterSkillDTO

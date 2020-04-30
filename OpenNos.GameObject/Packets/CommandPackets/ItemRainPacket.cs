@@ -22,7 +22,7 @@ namespace OpenNos.GameObject.CommandPackets
         [PacketIndex(3)]
         public int Time { get; set; }
 
-        public static string ReturnHelp() => "$ItemRain <VNum> <Amount> <Count> <Delay>";
+        public static string ReturnHelp() => "$ItemRain <VNum> <Amount> <COUNT IN MAP> <Delay>";
 
         #endregion
 

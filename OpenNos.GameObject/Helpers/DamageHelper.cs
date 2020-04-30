@@ -1948,7 +1948,7 @@ namespace OpenNos.GameObject.Helpers
             }*/
             #endregion
 
-            if (defender.Character != null && defender.HasBuff(CardType.NoDefeatAndNoDamage, (byte)AdditionalTypes.NoDefeatAndNoDamage.TransferAttackPower))
+            if (defender.Character != null && defender.HasBuff(CardType.NoDefeatAndNoDamage, (byte)AdditionalTypes.NoDefeatAndNoDamage.TransferAttackPower) && (defender.Character.Morph == 3 || defender.Character.Morph == 5 || defender.Character.Morph == 27))
             {
                 if (!percentDamage)
                 {
@@ -1957,7 +1957,8 @@ namespace OpenNos.GameObject.Helpers
                         new KeyValuePair<byte, byte>((byte)CardType.NoDefeatAndNoDamage, (byte)AdditionalTypes.NoDefeatAndNoDamage.TransferAttackPower)
                     });
                     defender.Character.ChargeValue = totalDamage;
-                    if (defender.Character.ChargeValue > 7000) defender.Character.ChargeValue = 7000;
+                    if (defender.Character.ChargeValue > 7000) 
+                        defender.Character.ChargeValue = 7000;
                     defender.AddBuff(new Buff(0, defender.Level), defender);
                 }
                 hitMode = 0;
@@ -2009,12 +2010,10 @@ namespace OpenNos.GameObject.Helpers
             {
                 if (ReflectsMaximumDamageFrom[0] < 0)
                 {
-                    /*int maxReflectDamage = -ReflectsMaximumDamageFrom[0];
+                    int maxReflectDamage = -ReflectsMaximumDamageFrom[0];
 
                     int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
-                    totalDamage -= reflectedDamage;*/
-
-                    int reflectedDamage = totalDamage;
+                    //totalDamage -= reflectedDamage;
 
                     if (!percentDamage)
                     {
@@ -2024,17 +2023,16 @@ namespace OpenNos.GameObject.Helpers
                             -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
 
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
-                        totalDamage = 0;
+                        if(realAttacker.Character.Morph != 20)
+                            totalDamage = 0;
                     }
                 }
                 else if (ReflectsMaximumDamageFrom[0] > 0)
                 {
-                    /*int maxReflectDamage = ReflectsMaximumDamageFrom[0];
+                    int maxReflectDamage = ReflectsMaximumDamageFrom[0];
 
                     int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
-                    totalDamage -= reflectedDamage;*/
-
-                    int reflectedDamage = totalDamage;
+                    //totalDamage -= reflectedDamage;
 
                     if (!percentDamage)
                     {
@@ -2044,7 +2042,8 @@ namespace OpenNos.GameObject.Helpers
                             -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
 
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
-                        totalDamage = 0;
+                        if (realAttacker.Character.Morph != 20)
+                            totalDamage = 0;
                     }
                 }
                 
@@ -2058,12 +2057,10 @@ namespace OpenNos.GameObject.Helpers
             {
                 if (ReflectMaximumReceivedDamage[0] > 0)
                 {
-                    /*int maxReflectDamage = ReflectsMaximumDamageFrom[0];
+                    int maxReflectDamage = ReflectMaximumReceivedDamage[0];
 
                     int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
-                    totalDamage -= reflectedDamage;*/
-
-                    int reflectedDamage = totalDamage;
+                    //totalDamage -= reflectedDamage;
 
                     if (!percentDamage)
                     {
@@ -2073,10 +2070,10 @@ namespace OpenNos.GameObject.Helpers
                             -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
 
                         defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
-                        totalDamage = 0;
+                        if (realAttacker.Character.Morph != 20)
+                            totalDamage = 0;
                     }
-                }
-                
+                }                
             }
 
             #endregion

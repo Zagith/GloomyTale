@@ -84,6 +84,7 @@ namespace OpenNos.GameObject
             IsFixed = input.IsFixed;
             IsCarveRuneFixed = input.IsCarveRuneFixed;
             IsPartnerEquipment = input.IsPartnerEquipment;
+            IsHeroicShell = input.IsHeroicShell;
             ItemDeleteTime = input.ItemDeleteTime;
             ItemVNum = input.ItemVNum;
             LightElement = input.LightElement;
@@ -779,7 +780,7 @@ namespace OpenNos.GameObject
             session.SendPacket("shop_end 1");
         }
 
-        public string GenerateEInfo(ClientSession Session, bool isBazar = false)
+        public string GenerateEInfo(ClientSession Session = null)
         {
             EquipmentType equipmentslot = Item.EquipmentSlot;
             ItemType itemType = Item.ItemType;
@@ -870,7 +871,7 @@ namespace OpenNos.GameObject
                                 $"e_info 12 {ItemVNum} 0" :
                                 $"e_info 12 {ItemVNum} 1 {HoldingVNum} {ElementRate + fairyitem.ElementRate}";
                         default:
-                            /*if (Session != null && !isBazar)
+                            if (Session != null)
                             {
                                 string rece = $"";
                                 foreach (RollGeneratedItemDTO item in DAOFactory.RollGeneratedItemDAO.LoadByItemVNumAndDesign(ItemVNum, Design))
@@ -879,12 +880,21 @@ namespace OpenNos.GameObject
                                     rece += $"x{item.ItemGeneratedAmount} - {ite.Name[Session.Account.Language]}\n";
                                 }
                                 Session.SendPacket(UserInterfaceHelper.GenerateModal(rece, 1));
-                            }*/
+                            }
                             return $"e_info 8 {ItemVNum} {Design} {Rare}";
                     }
 
                 case ItemType.Shell:
-                    return $"e_info 9 {ItemVNum} {Upgrade} {Rare} {Item.SellToNpcPrice} {ShellEffects.Count}{ShellEffects.Aggregate("", (current, option) => current + $" {((byte)option.EffectLevel > 12 ? (byte)option.EffectLevel - 12 : (byte)option.EffectLevel)}.{(option.Effect > 50 ? option.Effect - 50 : option.Effect)}.{option.Value}")}";
+                    string packet = $"e_info 9 {ItemVNum} {Upgrade} {Rare} {Item.SellToNpcPrice} {ShellEffects.Count}{ShellEffects.Aggregate("", (current, option) => current + $" {((byte)option.EffectLevel > 12 ? (byte)option.EffectLevel - 12 : (byte)option.EffectLevel)}.{(option.Effect > 50 ? option.Effect - 50 : option.Effect)}.{option.Value}")}";
+                    try
+                    {
+                        return packet;
+                    }
+                    catch (IndexOutOfRangeException ex)
+                    {
+                        Logger.Error($"e_info 9 failed. \n packet: {packet} \n", ex);
+                        return "";
+                    }
             }
             return "";
         }

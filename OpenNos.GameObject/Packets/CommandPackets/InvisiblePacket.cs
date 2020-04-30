@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$Invisible" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD, AuthorityType.GS } )]
+    [PacketHeader("$Invisible" , PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.TMOD, AuthorityType.EventMaster } )]
     public class InvisiblePacket : PacketDefinition
     {
         public static string ReturnHelp() => "$Invisible";

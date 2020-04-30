@@ -94,6 +94,7 @@ namespace OpenNos.DAL
         private static IRaidLogDAO _raidLogDAO;
         private static IUpgradeLogDAO _upgradeLogDAO;
         private static ILevelLogDAO _levelLogDAO;
+        private static II18NTorFDAO _I18NTorFDAO;
 
         #endregion
 
@@ -244,6 +245,8 @@ namespace OpenNos.DAL
         public static ILevelLogDAO LevelLogDAO => _levelLogDAO ?? (_levelLogDAO = new LevelLogDAO());
 
         public static IUpgradeLogDAO UpgradeLogDAO => _upgradeLogDAO ?? (_upgradeLogDAO = new UpgradeLogDAO());
+
+        public static II18NTorFDAO I18NTorFDAO => _I18NTorFDAO ?? (_I18NTorFDAO = new I18NTorFDAO());
         #endregion
     }
 }

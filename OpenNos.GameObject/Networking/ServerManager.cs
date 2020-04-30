@@ -115,6 +115,10 @@ namespace OpenNos.GameObject.Networking
 
         public DateTime Act4RaidStart { get; set; }
 
+        public Act6Stat Act6AngelStat { get; set; }
+
+        public Act6Stat Act6DemonStat { get; set; }
+
         public MapInstance ArenaInstance { get; private set; }
 
         public List<ArenaMember> ArenaMembers { get; set; } = new List<ArenaMember>();
@@ -1233,6 +1237,9 @@ namespace OpenNos.GameObject.Networking
             Act4RaidStart = DateTime.Now;
             Act4AngelStat = new Act4Stat();
             Act4DemonStat = new Act4Stat();
+
+            Act6AngelStat = new Act6Stat();
+            Act6DemonStat = new Act6Stat();
             LastFCSent = DateTime.Now;
             LoadBossEntities();
 
@@ -2130,7 +2137,7 @@ namespace OpenNos.GameObject.Networking
             {
                 MapMonster monster = new MapMonster
                 {
-                    MonsterVNum = 556,
+                    MonsterVNum = 3105,
                     MapY = (faction == 1 ? (short)92 : (short)95),
                     MapX = (faction == 1 ? (short)114 : (short)20),
                     MapId = (short)(131 + faction),
@@ -2192,7 +2199,7 @@ namespace OpenNos.GameObject.Networking
                 Parallel.ForEach(Sessions, sess => sess.SendPacket(sess.Character.GenerateFc()));
             }
 
-            if (Act4AngelStat.Mode == 1 && !angelMapInstance.Monsters.Any(s => s.MonsterVNum == 556))
+            if (Act4AngelStat.Mode == 1 && !angelMapInstance.Monsters.Any(s => s.MonsterVNum == 3105))
             {
                 Act4AngelStat.Mode = 3;
                 Act4AngelStat.TotalTime = 3600;
@@ -2228,7 +2235,7 @@ namespace OpenNos.GameObject.Networking
                 Parallel.ForEach(Sessions, sess => sess.SendPacket(sess.Character.GenerateFc()));
             }
 
-            if (Act4DemonStat.Mode == 1 && !demonMapInstance.Monsters.Any(s => s.MonsterVNum == 556))
+            if (Act4DemonStat.Mode == 1 && !demonMapInstance.Monsters.Any(s => s.MonsterVNum == 3105))
             {
                 Act4DemonStat.Mode = 3;
                 Act4DemonStat.TotalTime = 3600;
@@ -2260,6 +2267,35 @@ namespace OpenNos.GameObject.Networking
                 Parallel.ForEach(Sessions, sess => sess.SendPacket(sess.Character.GenerateFc()));
                 LastFCSent = DateTime.Now;
             }
+        }
+
+        private void Act6Process()
+        {
+            if (Act6AngelStat.Percentage >= 10000)
+            {
+                Act6AngelStat.TotalTime = 3600;
+                Act6AngelStat.IsBossZenas = true;
+                Act6AngelStat.Percentage = 0;
+                Act6Raid.GenerateRaid(FactionType.Angel);
+
+            }
+            if (Act6DemonStat.Percentage >= 10000)
+            {
+                Act6DemonStat.TotalTime = 3600;
+                Act6DemonStat.IsBossErenia = true;
+                Act6DemonStat.Percentage = 0;
+                Act6Raid.GenerateRaid(FactionType.Demon);
+            }
+            Parallel.ForEach(Sessions, sess =>
+            {
+                if (sess.CurrentMapInstance != null)
+                {
+                    if (sess.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act61 || s.MapTypeId == (short)MapTypeEnum.Act61a || s.MapTypeId == (short)MapTypeEnum.Act61d))
+                    {
+                        sess.SendPacket(sess.Character.GenerateAct6());
+                    }
+                }
+            });
         }
 
         // Server
@@ -2309,6 +2345,7 @@ namespace OpenNos.GameObject.Networking
 
             Observable.Interval(TimeSpan.FromMinutes(5)).Subscribe(x => SaveAllProcess());
             Observable.Interval(TimeSpan.FromSeconds(1)).Subscribe(x => Act4Process());
+            Observable.Interval(TimeSpan.FromSeconds(2)).Subscribe(x => Act6Process());
             Observable.Interval(TimeSpan.FromSeconds(2)).Subscribe(x => GroupProcess());
             Observable.Interval(TimeSpan.FromMinutes(1)).Subscribe(x => Act4FlowerProcess());
             //Observable.Interval(TimeSpan.FromHours(3)).Subscribe(x => BotProcess());
@@ -2590,6 +2627,7 @@ namespace OpenNos.GameObject.Networking
                 967, //Altar de los ángeles
                 968, //Altar de los diablo
                 533, // Huge Snowman Head
+                3105, // Spirit King's Messenger
             };
             MapBossVNums = new List<short>
             {

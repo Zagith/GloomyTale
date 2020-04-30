@@ -168,7 +168,7 @@ namespace OpenNos.GameObject.Helpers
 
         public void LoadHpData()
         {
-            HpData = new int[100];
+            HpData = new int[101];
 
             int baseHp = 150;
             int hpBaseUp = 40;

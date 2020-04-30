@@ -51,8 +51,8 @@ namespace OpenNos.GameObject.Event.ACT4
                     embed = new EmbedBuilder
                     {
                         Color = Color.DarkBlue,
-                        ImageUrl = "http://wiki.nostale.it/images/4/45/LordMukraju.png",
-                        Title = "Lord Mukraju Appear",
+                        ImageUrl = "https://nosapki.nostale.club/images/moby/3011.png",
+                        Title = "Spirit King's Messenger Appear",
                         Description = $"Faction {nameFaction}"
                     };
                 }

@@ -14,7 +14,7 @@ namespace OpenNos.Mapper.Mappers
                 return false;
             }
 
-            output.Question = input.Question;
+            output.Name = input.NameI18NKey;
             output.Answer = input.Answer;
             output.QuestionType = input.QuestionType;
 
@@ -28,7 +28,7 @@ namespace OpenNos.Mapper.Mappers
                 return false;
             }
 
-            output.Question = input.Question;
+            output.NameI18NKey = input.Name;
             output.Answer = input.Answer;
             output.QuestionType = input.QuestionType;
 

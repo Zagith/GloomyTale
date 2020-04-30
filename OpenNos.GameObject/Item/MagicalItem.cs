@@ -78,7 +78,7 @@ namespace OpenNos.GameObject
                         if (inv.ShellEffects.Count != 0 && packetsplit?.Length > 9 && byte.TryParse(packetsplit[9], out byte islot))
                         {
                             ItemInstance wearable = session.Character.Inventory.LoadBySlotAndType(islot, InventoryType.Equipment);
-                            if (wearable != null && (wearable.Item.ItemType == ItemType.Weapon || wearable.Item.ItemType == ItemType.Armor) && wearable.Item.LevelMinimum >= inv.Upgrade && wearable.Rare >= inv.Rare && !wearable.Item.IsHeroic)
+                            if (wearable != null && (wearable.Item.ItemType == ItemType.Weapon || wearable.Item.ItemType == ItemType.Armor) && wearable.Item.LevelMinimum >= inv.Upgrade && wearable.Rare >= inv.Rare)
                             {
                                 switch (requestType)
                                 {
@@ -124,6 +124,17 @@ namespace OpenNos.GameObject
                                         }
                                         if ((wearable.Item.ItemType == ItemType.Weapon && weapon) || (wearable.Item.ItemType == ItemType.Armor && !weapon))
                                         {
+
+                                            if (inv.IsHeroicShell && !wearable.Item.IsHeroic)
+                                            {
+                                                session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("NOT_HEROIC_EQUIPE"), 0));
+                                                return;
+                                            }
+                                            else if(inv.IsHeroicShell && wearable.Item.IsHeroic && wearable.Item.LevelMinimum < inv.Upgrade)
+                                            {
+                                                session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("SHELL_LEVEL_TOO_HIGH"), 0));
+                                                return;
+                                            }
                                             if (wearable.ShellEffects.Count > 0 && ServerManager.RandomNumber() < 50)
                                             {
                                                 session.Character.DeleteItemByItemInstanceId(inv.Id);
@@ -152,6 +163,8 @@ namespace OpenNos.GameObject
 
                     if (ItemType == ItemType.Event)
                     {
+                        if (VNum == 1134)
+                            return;
                         session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, session.Character.CharacterId, EffectValue));
                         if (MappingHelper.GuriItemEffects.ContainsKey(EffectValue))
                         {

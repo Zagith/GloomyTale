@@ -2058,4 +2058,19 @@
   <data name="MARTIAL_ARTIST_ALREADY_CREATED" xml:space="preserve">
     <value>You have already created a Martial Artist this week</value>
   </data>
+  <data name="ACT6_ERENIA_RAID_CLOSED" xml:space="preserve">
+    <value>Erenia audience is now closed!</value>
+  </data>
+  <data name="ACT6_ERENIA_RAID_OPEN" xml:space="preserve">
+    <value>Erenia audience is now opened!</value>
+  </data>
+  <data name="ACT6_ZENAS_RAID_CLOSED" xml:space="preserve">
+    <value>Zenas audience is now closed!</value>
+  </data>
+  <data name="ACT6_ZENAS_RAID_OPEN" xml:space="preserve">
+    <value>Zenas audience is now started!</value>
+  </data>
+  <data name="NOT_HEROIC_EQUIPE" xml:space="preserve">
+    <value>You cannot use an Heroic shell on a Not-Heroic equipment.</value>
+  </data>
 </root>

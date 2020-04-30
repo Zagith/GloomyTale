@@ -342,6 +342,8 @@ namespace OpenNos.GameObject
 
         public int LastNRunId { get; set; }
 
+        public bool LastSpUsed { get; set; }
+
         public DateTime LastPermBuffRefresh { get; set; }
 
         public double LastPortal { get; set; }
@@ -2933,7 +2935,14 @@ namespace OpenNos.GameObject
             });
         }
 
-        public static string GenerateAct() => "act 6";
+        public static string GenerateAct() => "act6";
+
+        public string GenerateAct6()
+        {
+            return $"act6 " +
+                $"{(byte)Faction} 0 {(ServerManager.Instance.Act6AngelStat.Percentage / 100)} {(ServerManager.Instance.Act6AngelStat.IsBossZenas ? 1 : 0)} {(ServerManager.Instance.Act6AngelStat.CurrentTimeZenas)} {(ServerManager.Instance.Act6AngelStat.TotalTime)}" +
+                   $" {(ServerManager.Instance.Act6DemonStat.Percentage / 100)} {(ServerManager.Instance.Act6DemonStat.IsBossErenia ? 1 : 0)} {(ServerManager.Instance.Act6DemonStat.CurrentTimeErenia)} {(ServerManager.Instance.Act6DemonStat.TotalTime)}";
+        }
 
         public string GenerateAt() => $"at {CharacterId} {MapInstance.Map.MapId} {PositionX} {PositionY} {Direction} 0 {MapInstance?.InstanceMusic ?? 0} 2 -1";
 
@@ -2949,7 +2958,7 @@ namespace OpenNos.GameObject
             return result;
         }
 
-        public string GenerateCInfo() => $"c_info {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + Name : Name : Authority == AuthorityType.BitchNiggerFaggot ? Name + "[BitchNiggerFaggot]" : Name)} - -1 {(Family != null && FamilyCharacter != null && !Undercover ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {CharacterId} {(Invisible && Authority >= AuthorityType.TMOD ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {(byte)HairColor} {(byte)Class} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(/*Authority > AuthorityType.User && !Undercover ? CharacterHelper.AuthorityColor(Authority) : */Compliment)} {(UseSp || IsVehicled ? Morph : 0)} {(Invisible ? 1 : 0)} {Family?.FamilyLevel ?? 0} {(UseSp ? MorphUpgrade : 0)} {ArenaWinner}";
+        public string GenerateCInfo() => $"c_info {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.EventMaster ? $"[{Authority}]" + Name : Name : Authority == AuthorityType.BitchNiggerFaggot ? Name + "[BitchNiggerFaggot]" : Name)} - -1 {(Family != null && FamilyCharacter != null && !Undercover ? $"{Family.FamilyId} {Family.Name}({Language.Instance.GetMessageFromKey(FamilyCharacter.Authority.ToString().ToUpper())})" : "-1 -")} {CharacterId} {(Invisible && Authority >= AuthorityType.TMOD ? 6 : 0)} {(byte)Gender} {(byte)HairStyle} {(byte)HairColor} {(byte)Class} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(/*Authority > AuthorityType.User && !Undercover ? CharacterHelper.AuthorityColor(Authority) : */Compliment)} {(UseSp || IsVehicled ? Morph : 0)} {(Invisible ? 1 : 0)} {Family?.FamilyLevel ?? 0} {(UseSp ? MorphUpgrade : 0)} {ArenaWinner}";
 
         public string GenerateCMap() => $"c_map 0 {MapInstance.Map.MapId} {(MapInstance.MapInstanceType != MapInstanceType.BaseMapInstance ? 1 : 0)}";
 
@@ -3480,7 +3489,7 @@ namespace OpenNos.GameObject
                 fairy = Inventory.LoadBySlotAndType((byte)EquipmentType.Fairy, InventoryType.Wear);
             }
 
-            return $"in 1 {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.GS ? $"[{Authority}]" + name : name : Authority == AuthorityType.BitchNiggerFaggot ? name + "[BitchNiggerFaggot]" : name)} - {CharacterId} {PositionX} {PositionY} {Direction} {(Undercover ? (byte)AuthorityType.User : Authority >= AuthorityType.TMOD ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {Math.Ceiling(Hp / HPLoad() * 100)} {Math.Ceiling(Mp / MPLoad() * 100)} {(IsSitting ? 1 : 0)} {(Group?.GroupType == GroupType.Group ? (Group?.GroupId ?? -1) : -1)} {(fairy != null && !Undercover ? 4 : 0)} {fairy?.Item.Element ?? 0} 0 {fairy?.Item.Morph ?? 0} {InEffect} {(UseSp || IsVehicled || IsMorphed ? Morph : 0)} {GenerateEqRareUpgradeForPacket()} {(!Undercover ? (foe ? -1 : Family?.FamilyId ?? -1) : -1)} {(!Undercover ? (foe ? name : Family?.Name ?? "-") : "-")} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(Invisible ? 1 : 0)} {(UseSp ? MorphUpgrade : 0)} {faction} {(UseSp ? MorphUpgrade2 : 0)} {Level} {Family?.FamilyLevel ?? 0} 0|0|0 {ArenaWinner} {Compliment} {Size} {HeroLevel}";
+            return $"in 1 {(Authority > AuthorityType.User && !Undercover ? Authority == AuthorityType.EventMaster ? $"[{Authority}]" + name : name : Authority == AuthorityType.BitchNiggerFaggot ? name + "[BitchNiggerFaggot]" : name)} - {CharacterId} {PositionX} {PositionY} {Direction} {(Undercover ? (byte)AuthorityType.User : Authority >= AuthorityType.TMOD ? 2 : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {Math.Ceiling(Hp / HPLoad() * 100)} {Math.Ceiling(Mp / MPLoad() * 100)} {(IsSitting ? 1 : 0)} {(Group?.GroupType == GroupType.Group ? (Group?.GroupId ?? -1) : -1)} {(fairy != null && !Undercover ? 4 : 0)} {fairy?.Item.Element ?? 0} 0 {fairy?.Item.Morph ?? 0} {InEffect} {(UseSp || IsVehicled || IsMorphed ? Morph : 0)} {GenerateEqRareUpgradeForPacket()} {(!Undercover ? (foe ? -1 : Family?.FamilyId ?? -1) : -1)} {(!Undercover ? (foe ? name : Family?.Name ?? "-") : "-")} {(GetDignityIco() == 1 ? GetReputationIco() : -GetDignityIco())} {(Invisible ? 1 : 0)} {(UseSp ? MorphUpgrade : 0)} {faction} {(UseSp ? MorphUpgrade2 : 0)} {Level} {Family?.FamilyLevel ?? 0} 0|0|0 {ArenaWinner} {Compliment} {Size} {HeroLevel}";
         }
 
         public string GenerateInvisible() => $"cl {CharacterId} {(Invisible ? 1 : 0)} {(InvisibleGm ? 1 : 0)}";
@@ -3493,7 +3502,7 @@ namespace OpenNos.GameObject
                 {
                     if (Session.HasCurrentMapInstance)
                     {
-                        if (CharacterId == dropOwner && StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.AutoLoot))
+                        if (CharacterId == dropOwner && StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.AutoLoot) || MapId == 9305)
                         {
                             double multiplier = 1 + (Session.Character.GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseEarnedGold)[0] / 100D);
                             multiplier += (Session.Character.ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreGold)?.Value ?? 0) / 100D;
@@ -3645,7 +3654,7 @@ namespace OpenNos.GameObject
                         }
                         FrozenCrownBot.RefreshAct4BotStat(ServerManager.Instance.Act4AngelStat.Percentage / 100, ServerManager.Instance.Act4DemonStat.Percentage / 100);
                     }
-                    if (monsterToAttack.MonsterVNum == 556)
+                    if (monsterToAttack.MonsterVNum == 3105)
                     {
                         if (ServerManager.Instance.Act4AngelStat.Mode == 1 && Faction != FactionType.Angel)
                         {
@@ -3781,7 +3790,7 @@ namespace OpenNos.GameObject
                                                 }
                                             }
                                         }
-                                        else if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4))
+                                        else if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4) || MapId == 9305)
                                         {
                                             List<long> alreadyGifted = new List<long>();
                                             List<Character> hitters;
@@ -3875,7 +3884,7 @@ namespace OpenNos.GameObject
                                                 double multiplier = 1 + (GetBuff(CardType.Item, (byte)AdditionalTypes.Item.IncreaseEarnedGold)[0] / 100D);
                                                 multiplier += (ShellEffectMain.FirstOrDefault(s => s.Effect == (byte)ShellWeaponEffectType.GainMoreGold)?.Value ?? 0) / 100D;
                                                 double divider = !divideRate ? 1D : levelDifference >= 20 ? (levelDifference - 19) * 1.2D : levelDifference <= -20 ? (levelDifference + 19) * 1.2D : 1D;
-                                                session.Character.Gold += (int)(drop2.Amount * multiplier);
+                                                session.Character.Gold += (int)((drop2.Amount * Level / 4) * multiplier);
                                                 if (session.Character.Gold > maxGold)
                                                 {
                                                     session.Character.Gold = maxGold;
@@ -3939,6 +3948,28 @@ namespace OpenNos.GameObject
                         }
                     }
                 }
+                #endregion
+
+                #region Act6
+
+                if (Session.CurrentMapInstance != null && 
+                    Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act61
+                      || s.MapTypeId == (short)MapTypeEnum.Act61a || s.MapTypeId == (short)MapTypeEnum.Act61d))
+                {
+                    if (ServerManager.Instance.Act6DemonStat.Mode == 0 && ServerManager.Instance.Act6AngelStat.Mode == 0)
+                    {
+                        if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act61a))
+                        {
+                            ServerManager.Instance.Act6AngelStat.Percentage += 50;
+                        }
+                        else if (Session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act61d))
+                        {
+                            ServerManager.Instance.Act6DemonStat.Percentage += 50;
+                        }
+                        Parallel.ForEach(ServerManager.Instance.Sessions.Where(s => s.CurrentMapInstance.Map.MapTypes.Any(mt => mt.MapTypeId == (short)MapTypeEnum.Act61a || mt.MapTypeId == (short)MapTypeEnum.Act61d || mt.MapTypeId == (short)MapTypeEnum.Act61)), sess => sess.SendPacket(sess.Character.GenerateAct6()));
+                    }
+                }
+
                 #endregion
 
                 #region EXP, Reputation and Dignity
@@ -4228,8 +4259,6 @@ namespace OpenNos.GameObject
                 Session.CurrentMapInstance?.Broadcast(GenerateEff(198), PositionX, PositionY);
                 ServerManager.Instance.UpdateGroup(CharacterId);
 
-                ClientSession session = ServerManager.Instance.GetSessionByCharacterId(CharacterId);
-
                 LevelRewards(Level);
             }
         }
@@ -4358,7 +4387,7 @@ namespace OpenNos.GameObject
             }
         }
 
-        public string GenerateParcel(MailDTO mail) => mail.AttachmentVNum != null ? $"parcel 1 1 {MailList.First(s => s.Value.MailId == mail.MailId).Key} {(mail.Title == "NOSMALL" ? 1 : 4)} 0 {mail.Date.ToString("yyMMddHHmm")} {mail.Title} {mail.AttachmentVNum} {mail.AttachmentAmount} {(byte)ServerManager.GetItem((short)mail.AttachmentVNum).Type}" : "";
+        public string GenerateParcel(MailDTO mail) => mail.AttachmentVNum != null ? $"parcel 1 1 {MailList.First(s => s.Value.MailId == mail.MailId).Key} {(mail.Title == "NOSMALL" ? 1 : 4)} 0 {mail.Date:yyMMddHHmm} {mail.Title} {mail.AttachmentVNum} {mail.AttachmentAmount} {(byte)ServerManager.GetItem((short)mail.AttachmentVNum).Type}" : "";
 
         public string GeneratePidx(bool isLeaveGroup = false)
         {
@@ -4660,7 +4689,7 @@ namespace OpenNos.GameObject
                     {
                         bz.Item.ShellEffects.Clear();
                         bz.Item.ShellEffects.AddRange(DAOFactory.ShellEffectDAO.LoadByEquipmentSerialId(bz.Item.EquipmentSerialId));
-                        info = bz.Item?.GenerateEInfo(Session).Replace(' ', '^').Replace("e_info^", "");
+                        info = bz.Item?.GenerateEInfo().Replace(' ', '^').Replace("e_info^", "");
                     }
                     if (packet.Filter == 0 || packet.Filter == Status)
                     {
@@ -5766,7 +5795,7 @@ namespace OpenNos.GameObject
 
                         if (newItem.Item.ItemType == ItemType.Shell)
                         {
-                            newItem.Upgrade = (byte)ServerManager.RandomNumber(50, 81);
+                            newItem.Upgrade = (byte)ServerManager.RandomNumber(75, 85);
                         }
 
                         if (newItem.Item.EquipmentSlot == EquipmentType.Gloves || newItem.Item.EquipmentSlot == EquipmentType.Boots)
@@ -5791,6 +5820,62 @@ namespace OpenNos.GameObject
                     }
                 }
             }
+        }
+
+        public ItemInstance ShellBySeparator(short itemVNum, short amount, byte rare = 0, byte upgrade = 0, short design = 0, bool forceRandom = false, bool isHeroic = false)
+        {
+            if (Inventory != null)
+            {
+                lock (Inventory)
+                {
+                    ItemInstance newItem = Inventory.InstantiateItemInstance(itemVNum, CharacterId, amount);
+                    if (newItem.Item == null)
+                    {
+                        Logger.LogEventError("GIFT_ADD_ERROR", $"Item VNum {itemVNum} doesn't exist");
+                    }
+                    if (newItem != null)
+                    {
+                        newItem.Design = design;
+
+                        if (newItem.Item.ItemType == ItemType.Armor || newItem.Item.ItemType == ItemType.Weapon || newItem.Item.ItemType == ItemType.Shell || forceRandom)
+                        {
+                            if (rare != 0 && !forceRandom)
+                            {
+                                try
+                                {
+                                    newItem.RarifyItem(Session, RarifyMode.Drop, RarifyProtection.None, forceRare: rare);
+                                    newItem.Upgrade = upgrade;
+                                    newItem.IsHeroicShell = isHeroic;
+                                }
+                                catch
+                                {
+                                    throw;
+                                }
+                            }
+                        }
+
+                        if (newItem.Item.Type.Equals(InventoryType.Equipment) && rare != 0 && !forceRandom)
+                        {
+                            newItem.Rare = (sbyte)rare;
+                            newItem.SetRarityPoint();
+                        }
+
+                        List<ItemInstance> newInv = Inventory.AddToInventory(newItem);
+                        if (newInv.Count > 0)
+                        {
+                            Session.SendPacket(GenerateSay($"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {newItem.Item.Name[Session.Account.Language]} x {amount}", 10));
+                            return newItem;
+                        }
+                        else if (MailList.Count(s => s.Value.AttachmentVNum != null) < 40)
+                        {
+                            SendGift(CharacterId, itemVNum, amount, newItem.Rare, newItem.Upgrade, newItem.Design, false);
+                            Session.SendPacket(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("PACKET_ARRIVED"), $"{newItem.Item.Name[Session.Account.Language]} x {amount}"), 0));
+                            return newItem;
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
         public bool HaveBackpack() => StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.BackPack);

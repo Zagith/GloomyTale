@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Mapster;
+using OpenNos.Data.Base;
+using OpenNos.Data.I18N;
+using System;
 
 namespace OpenNos.Data
 {
@@ -7,7 +10,10 @@ namespace OpenNos.Data
     {
         public short TrueOrFalseId { get; set; }
 
-        public string Question { get; set; }
+        [I18NFrom(typeof(I18NTorFDto))]
+        public I18NString Name { get; set; } = new I18NString();
+        [AdaptMember("Name")]
+        public string NameI18NKey { get; set; }
 
         public bool Answer { get; set; }
 
