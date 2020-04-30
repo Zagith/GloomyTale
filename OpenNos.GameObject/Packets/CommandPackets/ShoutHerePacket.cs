@@ -5,7 +5,7 @@ using OpenNos.Domain;
 
 namespace OpenNos.GameObject.CommandPackets
 {
-    [PacketHeader("$ShoutHere", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.EventMaster } )]
+    [PacketHeader("$ShoutHere", PassNonParseablePacket = true, Authorities = new AuthorityType[]{ AuthorityType.TGM, AuthorityType.EventMaster } )]
     public class ShoutHerePacket : PacketDefinition
     {
         #region Properties

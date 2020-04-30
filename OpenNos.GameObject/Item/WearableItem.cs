@@ -293,10 +293,12 @@ namespace OpenNos.GameObject
                         session.Character.EquipmentBCards.RemoveAll(o => o.ItemVNum == currentlyEquippedItem.ItemVNum);
                     }
 
-                    session.Character.Reputation += inv.Item.SideReputation;
-                    session.Character.SideReputationRemoveBuff();
-                    session.Character.SideReputationAddBuff();
-
+                    if (mate == null)
+                    {
+                        session.Character.Reputation += inv.Item.SideReputation;
+                        session.Character.SideReputationRemoveBuff();
+                        session.Character.SideReputationAddBuff();
+                    }
                     session.SendPackets(session.Character.GenerateStatChar());
                     session.CurrentMapInstance?.Broadcast(session.Character.GenerateEq());
                     session.SendPacket(session.Character.GenerateEquipment());
