@@ -92,6 +92,9 @@
     <Compile Include="CellonOption.cs" />
     <Compile Include="CharacterQuest.cs" />
     <Compile Include="CharacterTitle.cs" />
+    <Compile Include="Entities\Achievement.cs" />
+    <Compile Include="Entities\AchievementReward.cs" />
+    <Compile Include="Entities\CharacterAchievement.cs" />
     <Compile Include="Entities\FortuneWheel.cs" />
     <Compile Include="Entities\I18NActDesc.cs" />
     <Compile Include="Entities\I18NBCard.cs" />
@@ -255,6 +258,10 @@
     <Compile Include="Migrations\202004291123102_HeroicShells.cs" />
     <Compile Include="Migrations\202004291123102_HeroicShells.designer.cs">
       <DependentUpon>202004291123102_HeroicShells.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004301101098_Achievements.cs" />
+    <Compile Include="Migrations\202004301101098_Achievements.designer.cs">
+      <DependentUpon>202004301101098_Achievements.cs</DependentUpon>
     </Compile>
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="PvPLog.cs" />
@@ -441,6 +448,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004291123102_HeroicShells.resx">
       <DependentUpon>202004291123102_HeroicShells.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004301101098_Achievements.resx">
+      <DependentUpon>202004301101098_Achievements.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

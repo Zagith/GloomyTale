@@ -193,6 +193,12 @@ namespace OpenNos.DAL.EF
 
         public virtual DbSet<UpgradeLog> UpgradeLog { get; set; }
 
+        public virtual DbSet<Achievement> Achievement { get; set; }
+
+        public virtual DbSet<AchievementReward> AchievementRewards { get; set; }
+
+        public virtual DbSet<CharacterAchievement> CharacterAchievements { get; set; }
+
         #endregion
 
         #region Methods
