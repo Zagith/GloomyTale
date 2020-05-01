@@ -95,6 +95,8 @@ namespace OpenNos.DAL
         private static IUpgradeLogDAO _upgradeLogDAO;
         private static ILevelLogDAO _levelLogDAO;
         private static II18NTorFDAO _I18NTorFDAO;
+        private static IAchievementsDAO _IAchievementsDAO;
+        private static ICharacterAchievementDAO _ICharacterAchievementDAO;
 
         #endregion
 
@@ -247,6 +249,10 @@ namespace OpenNos.DAL
         public static IUpgradeLogDAO UpgradeLogDAO => _upgradeLogDAO ?? (_upgradeLogDAO = new UpgradeLogDAO());
 
         public static II18NTorFDAO I18NTorFDAO => _I18NTorFDAO ?? (_I18NTorFDAO = new I18NTorFDAO());
+
+        public static IAchievementsDAO AchievementsDAO => _IAchievementsDAO ?? (_IAchievementsDAO = new AchievementsDAO());
+
+        public static ICharacterAchievementDAO CharacterAchievementDAO => _ICharacterAchievementDAO ?? (_ICharacterAchievementDAO = new CharacterAchievementDAO());
         #endregion
     }
 }

@@ -17,6 +17,7 @@ using OpenNos.Core.ConcurrencyExtensions;
 using OpenNos.Core.Extensions;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.Data.Achievements;
 using OpenNos.Domain;
 using OpenNos.GameObject.Battle;
 using OpenNos.GameObject.Event;
@@ -441,6 +442,8 @@ namespace OpenNos.GameObject
         public object SpeedLockObject { get; set; }
 
         public ConcurrentBag<CharacterQuest> Quests { get; internal set; }
+
+        public ConcurrentBag<CharacterAchievements> Achievements { get; internal set; }
 
         public List<QuicklistEntryDTO> QuicklistEntries { get; private set; }
 
@@ -1610,6 +1613,21 @@ namespace OpenNos.GameObject
             }
         }
 
+        public void IncrementAchievements(QuestType type, int firstData = 0)
+        {
+            foreach (AchievementsDTO achievement in DAOFactory.AchievementsDAO.LoadByType((int)type))
+            {
+                switch ((AchievementType)achievement.AchievementType)
+                {
+                    case AchievementType.Raid:
+                    case AchievementType.Hunt:
+                        //achievement.Quest.QuestObjectives.Where(o => o.Data == firstData).ToList().ForEach(d => IncrementObjective(quest, d.ObjectiveIndex));
+                        break;
+
+                    
+                }
+            }
+        }
         private void IncrementGroupQuest(QuestType type, int firstData = 0, int secondData = 0, int thirdData = 0)
         {
             if (Group != null && Group.GroupType == GroupType.Group)

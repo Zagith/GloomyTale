@@ -16,6 +16,7 @@ using Mapster;
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.Data.Achievements;
 using OpenNos.Data.Base;
 using OpenNos.Data.I18N;
 using OpenNos.Data.Interfaces;
@@ -1131,6 +1132,8 @@ namespace OpenNos.GameObject.Networking
         public static Skill GetSkill(short skillVNum) => _skills.FirstOrDefault(m => m.SkillVNum.Equals(skillVNum));
 
         public Quest GetQuest(long questId) => Quests.FirstOrDefault(m => m.QuestId.Equals(questId));
+
+        public AchievementsDTO GetAchievement(long questId) => DAOFactory.AchievementsDAO.LoadById(questId);
 
         public void GroupLeave(ClientSession session)
         {

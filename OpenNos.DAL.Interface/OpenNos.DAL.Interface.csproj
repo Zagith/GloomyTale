@@ -67,10 +67,12 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IAchievementsDAO.cs" />
     <Compile Include="IBazaarItemDAO.cs" />
     <Compile Include="IBCardDAO.cs" />
     <Compile Include="IBoxItemDAO.cs" />
     <Compile Include="ICardDAO.cs" />
+    <Compile Include="ICharacterAchievementDAO.cs" />
     <Compile Include="ICharacterQuestDAO.cs" />
     <Compile Include="ICharacterTitlesDAO.cs" />
     <Compile Include="IFamilyCharacterDAO.cs" />

@@ -51,11 +51,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountDAO.cs" />
+    <Compile Include="AchievementsDAO.cs" />
     <Compile Include="BazaarItemDAO.cs" />
     <Compile Include="BCardDAO.cs" />
     <Compile Include="BoxItemDAO.cs" />
     <Compile Include="CardDAO.cs" />
     <Compile Include="CellonOptionDAO.cs" />
+    <Compile Include="CharacterAchievementDAO.cs" />
     <Compile Include="CharacterDAO.cs" />
     <Compile Include="CharacterQuestDAO.cs" />
     <Compile Include="CharacterRelationDAO.cs" />

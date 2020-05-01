@@ -42,6 +42,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappers\AchievementMapper.cs" />
+    <Compile Include="Mappers\CharacterAchievementMapper.cs" />
     <Compile Include="Mappers\FortuneWheelMapper.cs" />
     <Compile Include="Mappers\I18NMapMapper.cs" />
     <Compile Include="Mappers\BazaarItemMapper.cs" />

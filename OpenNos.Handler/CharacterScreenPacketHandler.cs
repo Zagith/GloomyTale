@@ -514,6 +514,9 @@ namespace OpenNos.Handler
                 DAOFactory.CharacterQuestDAO.LoadByCharacterId(Session.Character.CharacterId).ToList()
                     .ForEach(qst => Session.Character.Quests.Add(new CharacterQuest(qst)));
 
+                DAOFactory.CharacterAchievementDAO.LoadByCharacterId(Session.Character.CharacterId).ToList()
+                    .ForEach(qst => Session.Character.Achievements.Add(new CharacterAchievements(qst)));
+
                 #endregion
 
                 #region Fix Partner Slots

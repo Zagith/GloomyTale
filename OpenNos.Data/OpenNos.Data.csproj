@@ -90,6 +90,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Achievements\AchievementsDTO.cs" />
+    <Compile Include="Achievements\CharacterAchievementDTO.cs" />
     <Compile Include="Base\I18NFromAttribute.cs" />
     <Compile Include="Base\I18NString.cs" />
     <Compile Include="Base\StaticDtoExtension.cs" />
