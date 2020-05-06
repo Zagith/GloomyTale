@@ -1709,7 +1709,7 @@ namespace OpenNos.GameObject.Helpers
                 int Stiloso = GetDefenderBenefitingBuffs(CardType.EffectSummon, (byte)AdditionalTypes.EffectSummon.AddBuff)[0];
                 if (ServerManager.RandomNumber(0, 100) < Stiloso)
                 {
-                    if (defender.Character.Session.CurrentMapInstance.IsPVP)
+                    if (defender.Character.Session.CurrentMapInstance != null && defender.Character.Session.CurrentMapInstance.IsPVP)
                     {
                         if (defender.Character.Session.CurrentMapInstance.Map.MapTypes.Any(s =>
                                         s.MapTypeId == (short)MapTypeEnum.Act4))
@@ -2113,7 +2113,7 @@ namespace OpenNos.GameObject.Helpers
                         {
                             transferedDamage = TransferInflictedDamageSender.Hp - 1;
                         }
-                        defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)TransferInflictedDamageSender.UserType, TransferInflictedDamageSender.MapEntityId,
+                        defender.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)TransferInflictedDamageSender.UserType, TransferInflictedDamageSender.MapEntityId,
                                         skill?.SkillVNum ?? 0, skill?.Cooldown ?? 0,
                                         0, skill?.Effect ?? attacker.Mate?.Monster.BasicSkill ?? attacker.MapMonster?.Monster.BasicSkill ?? attacker.MapNpc?.Npc.BasicSkill ?? 0, defender.PositionX, defender.PositionY,
                                         TransferInflictedDamageSender.Hp > 0,
@@ -2144,7 +2144,7 @@ namespace OpenNos.GameObject.Helpers
 
                     defender.GetDamage(bonusDamage, realAttacker, true);
 
-                    defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)defender.UserType, defender.MapEntityId,
+                    defender.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)defender.UserType, defender.MapEntityId,
                         skill.SkillVNum, skill.Cooldown, 0, skill.Effect, defender.PositionX, defender.PositionY, defender.Hp > 0, (int)(defender.Hp / defender.HPLoad() * 100), bonusDamage, 0, 1));
 
                     defender.Character.Session.SendPacket(defender.Character.GenerateStat());
@@ -2153,7 +2153,7 @@ namespace OpenNos.GameObject.Helpers
                 {
                     defender.GetDamage(bonusDamage, realAttacker, true);
 
-                    defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)defender.UserType, defender.MapEntityId,
+                    defender.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)defender.UserType, defender.MapEntityId,
                         skill.SkillVNum, skill.Cooldown, 0, skill.Effect, defender.PositionX, defender.PositionY, defender.Hp > 0, (int)(defender.Hp / defender.HPLoad() * 100), bonusDamage, 0, 1));
                 }
 
@@ -2175,7 +2175,7 @@ namespace OpenNos.GameObject.Helpers
             {
                 defender.GetDamage(totalDamage, realAttacker, true);
 
-                defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)defender.UserType, defender.MapEntityId,
+                defender.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)defender.UserType, defender.MapEntityId,
                         skill.SkillVNum, skill.Cooldown, 0, skill.Effect, defender.PositionX, defender.PositionY, defender.Hp > 0, (int)(defender.Hp / defender.HPLoad() * 100), totalDamage, 0, 1));
 
                 defender.RemoveBuff(619);

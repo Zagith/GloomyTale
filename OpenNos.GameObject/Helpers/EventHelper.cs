@@ -248,39 +248,39 @@ namespace OpenNos.GameObject.Helpers
                             switch (even.Item1)
                             {
                                 case "OnCharacterDiscoveringMap":
-                                    even.Item2.ForEach(s => evt.MapInstance.OnCharacterDiscoveringMapEvents.Add(new Tuple<EventContainer, List<long>>(s, new List<long>())));
+                                    even.Item2.ForEach(s => evt.MapInstance?.OnCharacterDiscoveringMapEvents.Add(new Tuple<EventContainer, List<long>>(s, new List<long>())));
                                     break;
 
                                 case "OnMoveOnMap":
-                                    evt.MapInstance.OnMoveOnMapEvents.AddRange(even.Item2);
+                                    evt.MapInstance?.OnMoveOnMapEvents.AddRange(even.Item2);
                                     break;
 
                                 case "OnMapClean":
-                                    evt.MapInstance.OnMapClean.AddRange(even.Item2);
+                                    evt.MapInstance?.OnMapClean.AddRange(even.Item2);
                                     break;
 
                                 case "OnLockerOpen":
-                                    evt.MapInstance.UnlockEvents.AddRange(even.Item2);
+                                    evt.MapInstance?.UnlockEvents.AddRange(even.Item2);
                                     break;
                             }
                             break;
 
                         case EventActionType.REGISTERWAVE:
-                            evt.MapInstance.WaveEvents.Add((EventWave)evt.Parameter);
+                            evt.MapInstance?.WaveEvents.Add((EventWave)evt.Parameter);
                             break;
 
                         case EventActionType.SETAREAENTRY:
                             ZoneEvent even2 = (ZoneEvent)evt.Parameter;
-                            evt.MapInstance.OnAreaEntryEvents.Add(even2);
+                            evt.MapInstance?.OnAreaEntryEvents.Add(even2);
                             break;
 
                         case EventActionType.REMOVEMONSTERLOCKER:
                             EventContainer evt2 = (EventContainer)evt.Parameter;
-                            if (evt.MapInstance.InstanceBag.MonsterLocker.Current > 0)
+                            if (evt.MapInstance?.InstanceBag.MonsterLocker.Current > 0)
                             {
                                 evt.MapInstance.InstanceBag.MonsterLocker.Current--;
                             }
-                            if (evt.MapInstance.InstanceBag.MonsterLocker.Current == 0 && evt.MapInstance.InstanceBag.ButtonLocker.Current == 0)
+                            if (evt.MapInstance?.InstanceBag.MonsterLocker.Current == 0 && evt.MapInstance.InstanceBag.ButtonLocker.Current == 0)
                             {
                                 List<EventContainer> UnlockEventsCopy = evt.MapInstance.UnlockEvents.ToList();
                                 UnlockEventsCopy.ForEach(e => RunEvent(e));
@@ -290,11 +290,11 @@ namespace OpenNos.GameObject.Helpers
 
                         case EventActionType.REMOVEBUTTONLOCKER:
                             evt2 = (EventContainer)evt.Parameter;
-                            if (evt.MapInstance.InstanceBag.ButtonLocker.Current > 0)
+                            if (evt.MapInstance?.InstanceBag.ButtonLocker.Current > 0)
                             {
                                 evt.MapInstance.InstanceBag.ButtonLocker.Current--;
                             }
-                            if (evt.MapInstance.InstanceBag.MonsterLocker.Current == 0 && evt.MapInstance.InstanceBag.ButtonLocker.Current == 0)
+                            if (evt.MapInstance?.InstanceBag.MonsterLocker.Current == 0 && evt.MapInstance.InstanceBag.ButtonLocker.Current == 0)
                             {
                                 List<EventContainer> UnlockEventsCopy = evt.MapInstance.UnlockEvents.ToList();
                                 UnlockEventsCopy.ForEach(e => RunEvent(e));
@@ -314,11 +314,11 @@ namespace OpenNos.GameObject.Helpers
                                     if (monster != null)
                                     {
                                         monster.LastEffect = DateTime.Now;
-                                        evt.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, monster.MapMonsterId, effectId));
+                                        evt.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Monster, monster.MapMonsterId, effectId));
                                     }
                                     else
                                     {
-                                        evt.MapInstance.Sessions.Where(s => s?.Character != null).ToList()
+                                        evt.MapInstance?.Sessions.Where(s => s?.Character != null).ToList()
                                             .ForEach(s => s.SendPacket(StaticPacketHelper.GenerateEff(UserType.Player, s.Character.CharacterId, effectId)));
                                     }
                                 });
@@ -329,7 +329,7 @@ namespace OpenNos.GameObject.Helpers
                             if (monster != null)
                             {
                                 Tuple<short, byte, List<EventContainer>> evnt = (Tuple<short, byte, List<EventContainer>>)evt.Parameter;
-                                List<MapMonster> MapMonsters = evt.MapInstance.GetMonsterInRangeList(monster.MapX, monster.MapY, evnt.Item2);
+                                List<MapMonster> MapMonsters = evt.MapInstance?.GetMonsterInRangeList(monster.MapX, monster.MapY, evnt.Item2);
                                 if (evnt.Item1 != 0)
                                 {
                                     MapMonsters.RemoveAll(s => s.MonsterVNum != evnt.Item1);
@@ -369,9 +369,9 @@ namespace OpenNos.GameObject.Helpers
                             IDisposable spawnsDisposable = null;
                             spawnsDisposable = Observable.Interval(TimeSpan.FromSeconds(60)).Subscribe(s =>
                             {
-                                int count = evt.MapInstance.Sessions.Count();
+                                int? count = evt.MapInstance?.Sessions.Count();
 
-                                if (count <= 0)
+                                if (count <= 0 || count == null)
                                 {
                                     spawnsDisposable.Dispose();
                                     return;
@@ -384,7 +384,7 @@ namespace OpenNos.GameObject.Helpers
                                 List<MonsterToSummon> mobWave = new List<MonsterToSummon>();
                                 for (int i = 0; i < count; i++)
                                 {
-                                    switch (evt.MapInstance.MapInstanceType)
+                                    switch (evt.MapInstance?.MapInstanceType)
                                     {
                                         case MapInstanceType.Act4Viserion:
                                             mobWave.Add(new MonsterToSummon(1925, evt.MapInstance.Map.GetRandomPosition(), null, true));
@@ -431,7 +431,7 @@ namespace OpenNos.GameObject.Helpers
                                             break;
                                     }
                                 }
-                                evt.MapInstance.SummonMonsters(mobWave);
+                                evt.MapInstance?.SummonMonsters(mobWave);
                             });
                             break;
 

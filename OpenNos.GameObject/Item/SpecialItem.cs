@@ -70,7 +70,7 @@ namespace OpenNos.GameObject
                     if (!session.Character.Buff.Any(s => s.Card.CardId == 336))
                     {
                         session.Character.VehicleItem.BCards.ForEach(s => s.ApplyBCards(session.Character.BattleEntity, session.Character.BattleEntity));
-                        session.CurrentMapInstance.Broadcast($"eff 1 {session.Character.CharacterId} 885");
+                        session.CurrentMapInstance?.Broadcast($"eff 1 {session.Character.CharacterId} 885");
                         session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                     }
                 }
@@ -88,14 +88,14 @@ namespace OpenNos.GameObject
                 if (equipedMate != null)
                 {
                     equipedMate.RemoveTeamMember();
-                    session.Character.MapInstance.Broadcast(equipedMate.GenerateOut());
+                    session.Character.MapInstance?.Broadcast(equipedMate.GenerateOut());
                 }
 
                 Mate mate = new Mate(session.Character, ServerManager.GetNpcMonster(317), 24, MateType.Partner);
                 session.Character.Mates?.Add(mate);
                 mate.RefreshStats();
                 session.SendPacket($"ctl 2 {mate.PetId} 3");
-                session.Character.MapInstance.Broadcast(mate.GenerateIn());
+                session.Character.MapInstance?.Broadcast(mate.GenerateIn());
                 session.SendPacket(UserInterfaceHelper.GeneratePClear());
                 session.SendPackets(session.Character.GenerateScP());
                 session.SendPackets(session.Character.GenerateScN());
@@ -113,14 +113,14 @@ namespace OpenNos.GameObject
                 if (equipedMate != null)
                 {
                     equipedMate.RemoveTeamMember();
-                    session.Character.MapInstance.Broadcast(equipedMate.GenerateOut());
+                    session.Character.MapInstance?.Broadcast(equipedMate.GenerateOut());
                 }
 
                 Mate mate = new Mate(session.Character, ServerManager.GetNpcMonster(318), 31, MateType.Partner);
                 session.Character.Mates?.Add(mate);
                 mate.RefreshStats();
                 session.SendPacket($"ctl 2 {mate.PetId} 3");
-                session.Character.MapInstance.Broadcast(mate.GenerateIn());
+                session.Character.MapInstance?.Broadcast(mate.GenerateIn());
                 session.SendPacket(UserInterfaceHelper.GeneratePClear());
                 session.SendPackets(session.Character.GenerateScP());
                 session.SendPackets(session.Character.GenerateScN());
@@ -138,14 +138,14 @@ namespace OpenNos.GameObject
                 if (equipedMate != null)
                 {
                     equipedMate.RemoveTeamMember();
-                    session.Character.MapInstance.Broadcast(equipedMate.GenerateOut());
+                    session.Character.MapInstance?.Broadcast(equipedMate.GenerateOut());
                 }
 
                 Mate mate = new Mate(session.Character, ServerManager.GetNpcMonster(319), 48, MateType.Partner);
                 session.Character.Mates?.Add(mate);
                 mate.RefreshStats();
                 session.SendPacket($"ctl 2 {mate.PetId} 3");
-                session.Character.MapInstance.Broadcast(mate.GenerateIn());
+                session.Character.MapInstance?.Broadcast(mate.GenerateIn());
                 session.SendPacket(UserInterfaceHelper.GeneratePClear());
                 session.SendPackets(session.Character.GenerateScP());
                 session.SendPackets(session.Character.GenerateScN());
@@ -273,7 +273,7 @@ namespace OpenNos.GameObject
 
                 // TimeSpace Stones
                 case 140:
-                    if (session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance)
+                    if (session.CurrentMapInstance?.MapInstanceType == MapInstanceType.BaseMapInstance)
                     {
                         if (ServerManager.Instance.TimeSpaces.FirstOrDefault(s => s.Id == EffectValue) is ScriptedInstance timeSpace)
                         {
@@ -345,7 +345,7 @@ namespace OpenNos.GameObject
 
                         if (raid != null)
                         {
-                            if (ServerManager.Instance.ChannelId == 51 || session.CurrentMapInstance.MapInstanceType != MapInstanceType.BaseMapInstance)
+                            if (ServerManager.Instance.ChannelId == 51 || session.CurrentMapInstance?.MapInstanceType != MapInstanceType.BaseMapInstance)
                             {
                                 return;
                             }
@@ -427,7 +427,7 @@ namespace OpenNos.GameObject
                                 if (ServerManager.RandomNumber() < 30)
                                 {
                                     kenko.SetDeathStatement();
-                                    session.Character.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, kenko.MapMonsterId));
+                                    session.Character.MapInstance?.Broadcast(StaticPacketHelper.Out(UserType.Monster, kenko.MapMonsterId));
                                     session.Character.Inventory.AddNewToInventory(1174); // Kenko Bead
                                     session.Character.Inventory.RemoveItemFromInventory(inv.Id);
                                     session.SendPacket(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("KENKO_CATCHED"), 0));
@@ -589,7 +589,7 @@ namespace OpenNos.GameObject
                         {
                             return;
                         }
-                        if (session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance && new short[] { 1, 129 }.Contains(session.CurrentMapInstance.Map.MapId))
+                        if (session.CurrentMapInstance?.MapInstanceType == MapInstanceType.BaseMapInstance && new short[] { 1, 129 }.Contains(session.CurrentMapInstance.Map.MapId))
                         {
                             MapNpc signPost = new MapNpc
                             {
@@ -626,7 +626,7 @@ namespace OpenNos.GameObject
 
                 case 550: // Campfire and other craft npcs
                     {
-                        if (session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance)
+                        if (session.CurrentMapInstance?.MapInstanceType == MapInstanceType.BaseMapInstance)
                         {
                             short dialog = 10023;
                             switch (EffectValue)
@@ -873,13 +873,13 @@ namespace OpenNos.GameObject
                                     teamMate.PositionX =
                                         (short)(session.Character.PositionX + (teamMate.MateType == MateType.Partner ? -1 : 1));
                                     teamMate.PositionY = (short)(session.Character.PositionY + 1);
-                                    if (session.Character.MapInstance.Map.IsBlockedZone(teamMate.PositionX, teamMate.PositionY))
+                                    if (session.Character.MapInstance != null && session.Character.MapInstance.Map.IsBlockedZone(teamMate.PositionX, teamMate.PositionY))
                                     {
                                         teamMate.PositionX = session.Character.PositionX;
                                         teamMate.PositionY = session.Character.PositionY;
                                     }
                                     teamMate.UpdateBushFire();
-                                    Parallel.ForEach(session.CurrentMapInstance.Sessions.Where(s => s.Character != null), s =>
+                                    Parallel.ForEach(session.CurrentMapInstance?.Sessions.Where(s => s.Character != null), s =>
                                     {
                                         if (ServerManager.Instance.ChannelId != 51 || session.Character.Faction == s.Character.Faction)
                                         {
@@ -957,7 +957,7 @@ namespace OpenNos.GameObject
                             default:
                                 if (int.TryParse(packetsplit[6], out packetType))
                                 {
-                                    if (session.Character.MapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4))
+                                    if (session.Character.MapInstance != null && session.Character.MapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4))
                                     {
                                         return;
                                     }
@@ -969,7 +969,7 @@ namespace OpenNos.GameObject
                                             break;
 
                                         case 1:
-                                            if (session.HasCurrentMapInstance && (session.Character.MapInstance == session.Character.Miniland || session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance) && (session.Character.LastVessel.AddSeconds(1) <= DateTime.Now || session.Character.StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.FastVessels)))
+                                            if (session.HasCurrentMapInstance && (session.Character.MapInstance == session.Character.Miniland || session.CurrentMapInstance?.MapInstanceType == MapInstanceType.BaseMapInstance) && (session.Character.LastVessel.AddSeconds(1) <= DateTime.Now || session.Character.StaticBonusList.Any(s => s.StaticBonusType == StaticBonusType.FastVessels)))
                                             {
                                                 short[] vnums = { 1386, 1387, 1388, 1389, 1390, 1391, 1392, 1393, 1394, 1395, 1396, 1397, 1398, 1399, 1400, 1401, 1402, 1403, 1404, 1405 };
                                                 short vnum = vnums[ServerManager.RandomNumber(0, 20)];

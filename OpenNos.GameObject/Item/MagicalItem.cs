@@ -44,7 +44,7 @@ namespace OpenNos.GameObject
                 return;
             }
 
-            if (session.CurrentMapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance)
+            if (session.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance)
             {
                 return;
             }
@@ -176,7 +176,7 @@ namespace OpenNos.GameObject
 
                 //respawn objects
                 case 1:
-                    if (session.Character.MapInstance.MapInstanceType != MapInstanceType.BaseMapInstance || session.Character.IsSeal)
+                    if (session.Character.MapInstance?.MapInstanceType != MapInstanceType.BaseMapInstance || session.Character.IsSeal)
                     {
                         session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("CANT_USE_THAT"), 10));
                         return;
@@ -188,6 +188,10 @@ namespace OpenNos.GameObject
                         switch (EffectValue)
                         {
                             case 0:
+                                if(session.CurrentMapInstance == null)
+                                {
+                                    return;
+                                }
                                 if (inv.ItemVNum != 2070 && inv.ItemVNum != 10010 || (session.CurrentMapInstance.Map.MapTypes.Any(m => m.MapTypeId == (short)MapTypeEnum.Act51 || m.MapTypeId == (short)MapTypeEnum.Act52)))
                                 {
                                     return;
@@ -323,7 +327,7 @@ namespace OpenNos.GameObject
                                 break;
 
                             case 4:
-                                if (inv.ItemVNum != 2188 || session.Character.MapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4))
+                                if (inv.ItemVNum != 2188 || session.Character.MapInstance == null || session.Character.MapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4))
                                 {
                                     return;
                                 }
@@ -345,6 +349,10 @@ namespace OpenNos.GameObject
                                 }
                                 if (ServerManager.GetAllMapInstances().SelectMany(s => s.Monsters.ToList()).LastOrDefault(s => s.MonsterVNum == (short)session.Character.Faction + 964) is MapMonster flag)
                                 {
+                                    if (flag.MapInstance == null)
+                                    {
+                                        return;
+                                    }
                                     if (Option == 0)
                                     {
                                         session.SendPacket(UserInterfaceHelper.GenerateDelay(5000, 7, $"#u_i^{type}^{secondaryType}^{inventoryType}^{slot}^1"));
@@ -358,7 +366,7 @@ namespace OpenNos.GameObject
                                 break;
 
                             case 6:
-                                if (inv.ItemVNum != 2384 || ServerManager.Instance.ChannelId == 51 || session.CurrentMapInstance.MapInstanceType != MapInstanceType.BaseMapInstance)
+                                if (inv.ItemVNum != 2384 || ServerManager.Instance.ChannelId == 51 || session.CurrentMapInstance?.MapInstanceType != MapInstanceType.BaseMapInstance)
                                 {
                                     return;
                                 }
@@ -379,7 +387,7 @@ namespace OpenNos.GameObject
                                             break;
 
                                         case 3:
-                                            if (session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act51 || s.MapTypeId == (short)MapTypeEnum.Act52))
+                                            if (session.CurrentMapInstance != null && session.CurrentMapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act51 || s.MapTypeId == (short)MapTypeEnum.Act52))
                                             {
                                                 session.Character.SetReturnPoint(session.Character.MapId, session.Character.MapX, session.Character.MapY);
                                                 RespawnMapTypeDTO respawn = session.Character.Respawn;
@@ -498,7 +506,7 @@ namespace OpenNos.GameObject
                     {
                         if (session.Character.Timespace != null)
                         {
-                            session.Character.MapInstance.GetBattleEntitiesInRange(new MapCell { X = session.Character.PositionX, Y = session.Character.PositionY }, 6)
+                            session.Character.MapInstance?.GetBattleEntitiesInRange(new MapCell { X = session.Character.PositionX, Y = session.Character.PositionY }, 6)
                                 .Where(s => (s.MapNpc != null || (s.Mate != null && s.Mate.IsTemporalMate)) && !session.Character.BattleEntity.CanAttackEntity(s)).ToList()
                                 .ForEach(s =>
                                 {
@@ -610,7 +618,8 @@ namespace OpenNos.GameObject
                     break;
 
                 case 300:
-                    if (session.Character.Group != null && session.Character.Group.GroupType != GroupType.Group && session.Character.Group.IsLeader(session) && session.CurrentMapInstance.Portals.Any(s => s.Type == (short)PortalType.Raid))
+                    if (session.Character.Group != null && session.Character.Group.GroupType != GroupType.Group && session.Character.Group.IsLeader(session) && session.CurrentMapInstance != null &&
+                        session.CurrentMapInstance.Portals.Any(s => s.Type == (short)PortalType.Raid))
                     {
                         int delay = 0; 
                         bool hasSide = session.CurrentMapInstance.Map.Side != 0 ? true : false;

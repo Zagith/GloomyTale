@@ -374,7 +374,7 @@ namespace OpenNos.GameObject
                                 inv.ItemDeleteTime = DateTime.Now.AddHours(LevelMinimum);
                             }
                             session.Character.VehicleItem.BCards.ForEach(s => s.ApplyBCards(session.Character.BattleEntity, session.Character.BattleEntity));
-                            session.CurrentMapInstance.Broadcast($"eff 1 {session.Character.CharacterId} 885");
+                            session.CurrentMapInstance?.Broadcast($"eff 1 {session.Character.CharacterId} 885");
                         }
                     }
                     break;

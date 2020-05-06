@@ -43,7 +43,7 @@ namespace OpenNos.GameObject
                 return;
             }
 
-            if (session.CurrentMapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance)
+            if (session.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance)
             {
                 return;
             }
@@ -172,7 +172,7 @@ namespace OpenNos.GameObject
                             Mate mate = session.Character.Mates.Find(s => s.MateTransportId == mateTransportId && s.MateType == MateType.Pet);
                             if (mate?.CanPickUp == false)
                             {
-                                session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 5));
+                                session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 5));
                                 session.CurrentMapInstance.Broadcast(StaticPacketHelper.GenerateEff(UserType.Npc, mate.MateTransportId, 5002));
                                 mate.CanPickUp = true;
                                 session.SendPackets(session.Character.GenerateScP());

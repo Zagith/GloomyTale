@@ -54,7 +54,7 @@ namespace OpenNos.GameObject
                 return;
             }
 
-            if ((DateTime.Now - session.Character.LastPotion).TotalMilliseconds < (session.CurrentMapInstance.Map.MapTypes.OrderByDescending(s => s.PotionDelay).FirstOrDefault()?.PotionDelay ?? 750))
+            if ((DateTime.Now - session.Character.LastPotion).TotalMilliseconds < (session.CurrentMapInstance?.Map.MapTypes.OrderByDescending(s => s.PotionDelay).FirstOrDefault()?.PotionDelay ?? 750))
             {
                 return;
             }
@@ -75,7 +75,7 @@ namespace OpenNos.GameObject
                 && session.Character.MapId != 130
                 && session.Character.MapId != 131
                 && (session.Character.Group?.Raid == null || !session.Character.Group.Raid.InstanceBag.Lock)
-                && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Demetra
+                && session.Character.MapInstance?.MapInstanceType != MapInstanceType.Act4Demetra
                 && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Zanarkand
                 && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Orias
                 && session.Character.MapInstance.MapInstanceType != MapInstanceType.Act4Viserion

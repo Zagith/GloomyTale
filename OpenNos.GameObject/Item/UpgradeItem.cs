@@ -39,7 +39,7 @@ namespace OpenNos.GameObject
                 return;
             }
 
-            if (session.CurrentMapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance)
+            if (session.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance)
             {
                 return;
             }
