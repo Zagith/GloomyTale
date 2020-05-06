@@ -56,6 +56,30 @@ namespace OpenNos.DAL.DAO
             }
         }
 
+        public AchievementsDTO LoadByTypeAndData2(int type, int index)
+        {
+            try
+            {
+                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                {
+                    Achievement account = context.Achievement.FirstOrDefault(a => a.AchievementType == type && a.Data2.Equals(index));
+                    if (account != null)
+                    {
+                        AchievementsDTO accountDTO = new AchievementsDTO();
+                        if (Mapper.Mappers.AchievementMapper.ToAchievementDTO(account, accountDTO))
+                        {
+                            return accountDTO;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+            return null;
+        }
+
         public AchievementsDTO LoadByData2(int accountId)
         {
             try

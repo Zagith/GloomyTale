@@ -10,5 +10,6 @@ namespace OpenNos.Domain
     {
         Hunt = 0,
         Raid = 1,
+        Act4Raid = 2,
     }
 }

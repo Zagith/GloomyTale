@@ -323,7 +323,7 @@ namespace OpenNos.GameObject
                                         //Invisible 4th class 4th sp
                                         if (CardId == 746)
                                         {
-                                            if (charact.MapInstance.MapInstanceType != MapInstanceType.NormalInstance || charact.MapInstance.Map.MapId != 2004)
+                                            if (charact.MapInstance?.MapInstanceType != MapInstanceType.NormalInstance || charact.MapInstance?.Map.MapId != 2004)
                                             {
                                                 charact.Invisible = true;
                                                 charact.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => charact.Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
@@ -340,7 +340,7 @@ namespace OpenNos.GameObject
                             break;
 
                         case BCardType.CardType.Summons:
-                            if (sender == null || (sender.EntityType == EntityType.Monster && (sender.MapMonster == null || sender.MapMonster?.MonsterVNum == 154)))
+                            if (sender == null || sender.MapInstance == null || (sender.EntityType == EntityType.Monster && (sender.MapMonster == null || sender.MapMonster?.MonsterVNum == 154)))
                             {
                                 return;
                             }
@@ -356,7 +356,7 @@ namespace OpenNos.GameObject
                                 y = (short)(ServerManager.RandomNumber(-1, 1) + sender.PositionY);
                                 if (skill != null && sender.Character == null)
                                 {
-                                    MapCell randomCell = sender.MapInstance.Map.GetRandomPositionByDistance(sender.PositionX, sender.PositionY, skill.Range, true);
+                                    MapCell randomCell = sender.MapInstance?.Map.GetRandomPositionByDistance(sender.PositionX, sender.PositionY, skill.Range, true);
                                     if (randomCell != null)
                                     {
                                         x = randomCell.X;
@@ -617,9 +617,9 @@ namespace OpenNos.GameObject
                                         session.Hp -= amount;
                                         sender.Hp += amount;
 
-                                        sender.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(sender.UserType, sender.MapEntityId, 18));
-                                        sender.MapInstance.Broadcast(sender.GenerateRc(amount));
-                                        session.MapInstance.Broadcast(session.GenerateDm(amount));
+                                        sender.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(sender.UserType, sender.MapEntityId, 18));
+                                        sender.MapInstance?.Broadcast(sender.GenerateRc(amount));
+                                        session.MapInstance?.Broadcast(session.GenerateDm(amount));
                                         sender.Character?.Session?.SendPacket(sender.Character?.GenerateStat());
                                         session.Character?.Session?.SendPacket(session.Character?.GenerateStat());
                                     }
@@ -705,13 +705,13 @@ namespace OpenNos.GameObject
                                                 {
                                                     amount = session.GetDamage(amount, sender, true, true);
 
-                                                    session.MapInstance.Broadcast(session.GenerateDm(amount));
+                                                    session.MapInstance?.Broadcast(session.GenerateDm(amount));
                                                 }
                                                 else
                                                 {
                                                     session.Hp += amount;
 
-                                                    session.MapInstance.Broadcast(session.GenerateRc(amount));
+                                                    session.MapInstance?.Broadcast(session.GenerateRc(amount));
                                                 }
                                             }
                                         }
@@ -737,7 +737,7 @@ namespace OpenNos.GameObject
                                             {
                                                 amount = session.GetDamage(amount, sender, true, true);
 
-                                                session.MapInstance.Broadcast(session.GenerateDm(amount));
+                                                session.MapInstance?.Broadcast(session.GenerateDm(amount));
                                             }
                                         }
 
@@ -1051,7 +1051,7 @@ namespace OpenNos.GameObject
 
                                             void RemoveBadEffectsAction(bool health)
                                             {
-                                                session.MapInstance.GetBattleEntitiesInRange(new MapCell { X = session.PositionX, Y = session.PositionY }, skill.TargetRange)
+                                                session.MapInstance?.GetBattleEntitiesInRange(new MapCell { X = session.PositionX, Y = session.PositionY }, skill.TargetRange)
                                                 .Where(e => e.MapMonster == null && e.Hp > 0 && !session.CanAttackEntity(e)).ToList().ForEach(b =>
                                                 {
                                                     if (ServerManager.RandomNumber(0, 100) < 25)
@@ -1068,11 +1068,11 @@ namespace OpenNos.GameObject
                                                         if (healthAmount > 0)
                                                         {
                                                             b.Hp += healthAmount;
-                                                            b.MapInstance.Broadcast(b.GenerateRc(healthAmount));
+                                                            b.MapInstance?.Broadcast(b.GenerateRc(healthAmount));
                                                             b.Character?.Session.SendPacket(b.Character.GenerateStat());
                                                         }
                                                     }
-                                                    b.MapInstance.Broadcast(StaticPacketHelper.GenerateEff(b.UserType, b.MapEntityId, 4354));
+                                                    b.MapInstance?.Broadcast(StaticPacketHelper.GenerateEff(b.UserType, b.MapEntityId, 4354));
                                                 });
                                             }
                                         }
@@ -1084,7 +1084,7 @@ namespace OpenNos.GameObject
                         case BCardType.CardType.SpecialEffects:
                             if (SubType.Equals((byte)AdditionalTypes.SpecialEffects.ShadowAppears / 10))
                             {
-                                session.MapInstance.Broadcast($"guri 0 {(short)session.UserType} {session.MapEntityId} {firstData} {SecondData}");
+                                session.MapInstance?.Broadcast($"guri 0 {(short)session.UserType} {session.MapEntityId} {firstData} {SecondData}");
                             }
                             break;
 
@@ -1095,7 +1095,7 @@ namespace OpenNos.GameObject
                                 {
                                     if (ServerManager.GetNpcMonster(mapMonster.MonsterVNum) is NpcMonster mateNpc)
                                     {
-                                        if (mapMonster.Monster.Catch && (senderSession.Character.MapInstance.MapInstanceType == MapInstanceType.BaseMapInstance || senderSession.Character.MapInstance.MapInstanceType == MapInstanceType.TimeSpaceInstance))
+                                        if (mapMonster.Monster.Catch && (senderSession.Character.MapInstance?.MapInstanceType == MapInstanceType.BaseMapInstance || senderSession.Character.MapInstance?.MapInstanceType == MapInstanceType.TimeSpaceInstance))
                                         {
                                             if (mapMonster.Monster.Level < senderSession.Character.Level)
                                             {
@@ -1350,7 +1350,7 @@ namespace OpenNos.GameObject
                                 {
                                     if (session.Character is Character charact)
                                     {
-                                        if (charact.MapInstance.MapInstanceType != MapInstanceType.NormalInstance || charact.MapInstance.Map.MapId != 2004)
+                                        if (charact.MapInstance?.MapInstanceType != MapInstanceType.NormalInstance || charact.MapInstance?.Map.MapId != 2004)
                                         {
                                             charact.Invisible = true;
                                             charact.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => charact.Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
@@ -1373,11 +1373,14 @@ namespace OpenNos.GameObject
                                     {
                                         Observable.Timer(TimeSpan.FromMilliseconds(skill.CastTime * 100)).Subscribe(s =>
                                         {
-                                            if (!session.MapInstance.Map.isBlockedZone(session.PositionX, session.PositionY, sender.PositionX, sender.PositionY))
+                                            if (session.MapInstance != null)
                                             {
-                                                session.PositionX = sender.PositionX;
-                                                session.PositionY = sender.PositionY;
-                                                session.MapInstance.Broadcast($"guri 3 {(short)session.UserType} {session.MapEntityId} {session.PositionX} {session.PositionY} 3 {SecondData} 2 -1");
+                                                if (!session.MapInstance.Map.isBlockedZone(session.PositionX, session.PositionY, sender.PositionX, sender.PositionY))
+                                                {
+                                                    session.PositionX = sender.PositionX;
+                                                    session.PositionY = sender.PositionY;
+                                                    session.MapInstance.Broadcast($"guri 3 {(short)session.UserType} {session.MapEntityId} {session.PositionX} {session.PositionY} 3 {SecondData} 2 -1");
+                                                }
                                             }
                                         });
                                     }
@@ -1395,7 +1398,7 @@ namespace OpenNos.GameObject
                                         short RunToX = session.MapMonster.FirstX;
                                         short RunToY = session.MapMonster.FirstY;
 
-                                        MapCell RunToPos = session.MapInstance.Map.GetRandomPositionByDistance(session.PositionX, session.PositionY, 20);
+                                        MapCell RunToPos = session.MapInstance?.Map.GetRandomPositionByDistance(session.PositionX, session.PositionY, 20);
                                         if (RunToPos != null)
                                         {
                                             RunToX = RunToPos.X;
@@ -1436,10 +1439,10 @@ namespace OpenNos.GameObject
                             {
                                 if (sender.Character != null)
                                 {
-                                    MapCell randomCell = session.MapInstance.Map.GetRandomPosition();
+                                    MapCell randomCell = session.MapInstance?.Map.GetRandomPosition();
                                     session.PositionX = randomCell.X;
                                     session.PositionY = randomCell.Y;
-                                    session.MapInstance.Broadcast(session.GenerateTp());
+                                    session.MapInstance?.Broadcast(session.GenerateTp());
                                 }
                                 else
                                 {
@@ -1447,16 +1450,16 @@ namespace OpenNos.GameObject
 
                                     if (SecondData > 0)
                                     {
-                                        randomCell = sender.MapInstance.Map.GetRandomPositionByDistance(sender.PositionX, sender.PositionY, (short)SecondData, true);
+                                        randomCell = sender.MapInstance?.Map.GetRandomPositionByDistance(sender.PositionX, sender.PositionY, (short)SecondData, true);
                                     }
                                     else
                                     {
-                                        randomCell = sender.MapInstance.Map.GetRandomPosition();
+                                        randomCell = sender.MapInstance?.Map.GetRandomPosition();
                                     }
 
                                     sender.PositionX = randomCell.X;
                                     sender.PositionY = randomCell.Y;
-                                    sender.MapInstance.Broadcast(sender.GenerateTp());
+                                    sender.MapInstance?.Broadcast(sender.GenerateTp());
                                 }
                             }
                             else if (SubType == (byte)AdditionalTypes.SpecialBehaviour.InflictOnTeam / 10)
@@ -1473,7 +1476,7 @@ namespace OpenNos.GameObject
                                         return;
                                     }
 
-                                    session.MapInstance.GetBattleEntitiesInRange(new MapCell { X = session.PositionX, Y = session.PositionY }, (byte)FirstData)
+                                    session.MapInstance?.GetBattleEntitiesInRange(new MapCell { X = session.PositionX, Y = session.PositionY }, (byte)FirstData)
                                         .Where(s => s.EntityType != EntityType.Npc && (s.EntityType != session.EntityType || s.MapEntityId != session.MapEntityId) && !session.CanAttackEntity(s)).ToList()
                                         .ForEach(s => s.AddBuff(new Buff((short)SecondData, senderLevel), sender));
                                 }
@@ -1508,12 +1511,16 @@ namespace OpenNos.GameObject
                                 {
                                     x = SecondData == 945 ? session.PositionX : (short)(ServerManager.RandomNumber(-1, 1) + session.PositionX);
                                     y = SecondData == 945 ? session.PositionY : (short)(ServerManager.RandomNumber(-1, 1) + session.PositionY);
-                                    if (session.MapInstance.Map.IsBlockedZone(x, y))
+                                    if (session.MapInstance != null)
                                     {
-                                        x = session.PositionX;
-                                        y = session.PositionY;
+                                        if (session.MapInstance.Map.IsBlockedZone(x, y))
+                                        {
+                                            x = session.PositionX;
+                                            y = session.PositionY;
+                                        }
+                                        summonParameters2.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, true, isHostile: SecondData != 945, owner: session, aliveTime: aliveTime));
+
                                     }
-                                    summonParameters2.Add(new MonsterToSummon((short)SecondData, new MapCell { X = x, Y = y }, null, true, isHostile: SecondData != 945, owner: session, aliveTime: aliveTime));
                                 }
                                 if (ServerManager.RandomNumber() <= Math.Abs(ThirdData) || ThirdData == 0 || ThirdData < 0)
                                 {
@@ -1521,7 +1528,7 @@ namespace OpenNos.GameObject
                                     {
                                         case ((byte)AdditionalTypes.SecondSPCard.PlantBomb / 10):
                                             {
-                                                if (session.MapInstance.Monsters.Any(s => s.Owner != null && s.Owner.MapEntityId == session.MapEntityId && s.MonsterVNum == SecondData))
+                                                if (session.MapInstance != null && session.MapInstance.Monsters.Any(s => s.Owner != null && s.Owner.MapEntityId == session.MapEntityId && s.MonsterVNum == SecondData))
                                                 {
                                                     //Attack
                                                     session.MapInstance.Monsters.Where(s => s.Owner?.MapEntityId == session.MapEntityId && s.MonsterVNum == SecondData).ToList().ForEach(s =>
@@ -1532,7 +1539,7 @@ namespace OpenNos.GameObject
                                                     short NewCooldown = 300;
                                                     Observable.Timer(TimeSpan.FromMilliseconds(skill.Cooldown * 100 + 50)).Subscribe(s =>
                                                     {
-                                                        session.Character.Session.CurrentMapInstance.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player,
+                                                        session.Character.Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.SkillUsed(UserType.Player,
                                                             session.Character.CharacterId, 1, session.Character.CharacterId, skill.SkillVNum,
                                                             NewCooldown, 2, skill.Effect,
                                                             session.Character.PositionX, session.Character.PositionY, true,
@@ -1582,7 +1589,7 @@ namespace OpenNos.GameObject
                                     session.Mate?.Owner.Session.SendPacket(session.Mate.GenerateStatInfo());
                                     if (session.Hp <= 0)
                                     {
-                                        session.MapInstance.Broadcast(StaticPacketHelper.Die(session.UserType, session.MapEntityId, session.UserType, session.MapEntityId));
+                                        session.MapInstance?.Broadcast(StaticPacketHelper.Die(session.UserType, session.MapEntityId, session.UserType, session.MapEntityId));
                                         if (session.Character != null)
                                         {
                                             Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(obs =>
@@ -1745,7 +1752,7 @@ namespace OpenNos.GameObject
 
                                         if (skill != null && sender.Character == null)
                                         {
-                                            MapCell randomCell = sender.MapInstance.Map.GetRandomPositionByDistance(sender.PositionX, sender.PositionY, skill.Range, true);
+                                            MapCell randomCell = sender.MapInstance?.Map.GetRandomPositionByDistance(sender.PositionX, sender.PositionY, skill.Range, true);
 
                                             if (randomCell != null)
                                             {
@@ -1933,13 +1940,13 @@ namespace OpenNos.GameObject
                             {
                                 if (session.Character is Character chara)
                                 {
-                                    if (chara.MapInstance.MapInstanceType != MapInstanceType.NormalInstance || chara.MapInstance.Map.MapId != 2004)
+                                    if (chara.MapInstance?.MapInstanceType != MapInstanceType.NormalInstance || chara.MapInstance?.Map.MapId != 2004)
                                     {
                                         if (x != 0 || y != 0)
                                         {
                                             chara.PositionX = x;
                                             chara.PositionY = y;
-                                            chara.Session.CurrentMapInstance.Broadcast(chara.GenerateTp());
+                                            chara.Session.CurrentMapInstance?.Broadcast(chara.GenerateTp());
                                         }
                                         chara.Invisible = true;
                                         chara.Mates.Where(s => s.IsTeamMember).ToList().ForEach(s => chara.Session.CurrentMapInstance?.Broadcast(s.GenerateOut()));
@@ -1955,7 +1962,7 @@ namespace OpenNos.GameObject
                             {
                                 if (session.Character is Character chara)
                                 {
-                                    if (chara.Session.CurrentMapInstance != null)
+                                    if (chara.Session.CurrentMapInstance != null && chara.MapInstance != null)
                                     {
                                         ConcurrentBag<MapMonster> ownedMonsters = new ConcurrentBag<MapMonster>();
                                         ServerManager.GetAllMapInstances().ForEach(s => s.Monsters.Where(m => m.Owner?.MapEntityId == chara.CharacterId).ToList().ForEach(mon => ownedMonsters.Add(mon)));
@@ -2001,10 +2008,10 @@ namespace OpenNos.GameObject
                                 {
                                     sender.Character.BattleEntity.ClearOwnFalcon();
                                     sender.Character.BattleEntity.FalconFocusedEntityId = session.MapEntityId;
-                                    sender.MapInstance.Broadcast($"eff_ob  {(byte)session.UserType} {session.MapEntityId} 1 4269");
+                                    sender.MapInstance?.Broadcast($"eff_ob  {(byte)session.UserType} {session.MapEntityId} 1 4269");
                                     if (skill != null)
                                     {
-                                        session.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(sender.UserType, sender.MapEntityId, (byte)session.UserType, session.MapEntityId, skill.SkillVNum, skill.Cooldown, skill.AttackAnimation, skill.Effect, x, y, true, session.Hp * 100 / session.HpMax, 0, -1, 0));
+                                        session.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(sender.UserType, sender.MapEntityId, (byte)session.UserType, session.MapEntityId, skill.SkillVNum, skill.Cooldown, skill.AttackAnimation, skill.Effect, x, y, true, session.Hp * 100 / session.HpMax, 0, -1, 0));
                                     }
                                     sender.Character.BattleEntity.BCardDisposables[BCardId]?.Dispose();
                                     IDisposable bcardDisposable = null;
@@ -2247,7 +2254,7 @@ namespace OpenNos.GameObject
                                             short mapX = (short)(sender.PositionX + ServerManager.RandomNumber(-2, 2));
                                             short mapY = (short)(sender.PositionY + ServerManager.RandomNumber(-2, 2));
 
-                                            if (sender.MapInstance.Map.IsBlockedZone(mapX, mapY))
+                                            if (sender.MapInstance != null && sender.MapInstance.Map.IsBlockedZone(mapX, mapY))
                                             {
                                                 mapX = sender.PositionX;
                                                 mapY = sender.PositionY;
@@ -2319,7 +2326,7 @@ namespace OpenNos.GameObject
                                         && !morphVNums.Contains(session.Character.Morph)
                                         && ServerManager.RandomNumber() < 50)
                                     {
-                                        session.Character.MapInstance.Broadcast(session.Character.GenerateEff(4054));
+                                        session.Character.MapInstance?.Broadcast(session.Character.GenerateEff(4054));
                                         session.Character.IsMorphed = true;
                                         session.Character.PreviousMorph = session.Character.Morph;
                                         session.Character.Morph = morphVNums.OrderBy(rnd => ServerManager.RandomNumber()).First();
@@ -2334,12 +2341,12 @@ namespace OpenNos.GameObject
                                                 break;
                                         }
 
-                                        session.Character.MapInstance.Broadcast(session.Character.GenerateCMode());
+                                        session.Character.MapInstance?.Broadcast(session.Character.GenerateCMode());
                                     }
                                 }
                                 else if (SubType == (byte)AdditionalTypes.MeteoriteTeleport.TeleportForward / 10)
                                 {
-                                    session.TeleportTo(session.MapInstance.Map.GetRandomPositionByDistance(session.PositionX, session.PositionY, (short)FirstData));
+                                    session.TeleportTo(session.MapInstance?.Map.GetRandomPositionByDistance(session.PositionX, session.PositionY, (short)FirstData));
                                 }
                                 else if (SubType == (byte)AdditionalTypes.MeteoriteTeleport.CauseMeteoriteFall / 10)
                                 {
@@ -2415,18 +2422,20 @@ namespace OpenNos.GameObject
                                                     {
                                                         friendCharacters.AddRange(character.Family.FamilyCharacters.Select(fc => ServerManager.Instance.GetCharacterById(fc.CharacterId)).Where(c => c != null));
                                                     }*/
-
-                                                    if (!character.MapInstance.IsPVP)
-                                                        friendCharacters.AddRange(character.MapInstance.GetCharactersInRange(character.MapX, character.MapY, 3));
-
-                                                    if (character.Group?.Sessions != null && character.MapInstance.IsPVP)
+                                                    if (character.MapInstance != null)
                                                     {
-                                                        friendCharacters.AddRange(character.Group.Sessions.Where(s => s.Character != null).Select(s => s.Character));
-                                                    }
+                                                        if (!character.MapInstance.IsPVP)
+                                                            friendCharacters.AddRange(character.MapInstance.GetCharactersInRange(character.MapX, character.MapY, 3));
 
-                                                    friendCharacters.Where(c => c.CharacterId != character.CharacterId && c.MapInstanceId == character.MapInstanceId
-                                                        && Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom) <= skill.TargetRange).OrderBy(c => Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom)).Take(FirstData).ToList()
-                                                    .ForEach(c => c.BattleEntity.TeleportTo(mapCellTo, 3));
+                                                        if (character.Group?.Sessions != null && character.MapInstance.IsPVP)
+                                                        {
+                                                            friendCharacters.AddRange(character.Group.Sessions.Where(s => s.Character != null).Select(s => s.Character));
+                                                        }
+
+                                                        friendCharacters.Where(c => c.CharacterId != character.CharacterId && c.MapInstanceId == character.MapInstanceId
+                                                            && Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom) <= skill.TargetRange).OrderBy(c => Map.GetDistance(c.BattleEntity.GetPos(), mapCellFrom)).Take(FirstData).ToList()
+                                                        .ForEach(c => c.BattleEntity.TeleportTo(mapCellTo, 3));
+                                                    }
                                                 });
                                         }
                                     }
@@ -2612,7 +2621,7 @@ namespace OpenNos.GameObject
 
                 if (point.PositionX == receiver.PositionX && point.PositionY == receiver.PositionY)
                 {
-                    MapCell randomCell = receiver.MapInstance.Map.GetRandomPositionByDistance(point.PositionX, point.PositionY, (short)PushDistance);
+                    MapCell randomCell = receiver.MapInstance?.Map.GetRandomPositionByDistance(point.PositionX, point.PositionY, (short)PushDistance);
                     if (randomCell != null)
                     {
                         NewX = randomCell.X;
@@ -2624,14 +2633,17 @@ namespace OpenNos.GameObject
                     Point3D pointPosition = new Point3D(point.PositionX, point.PositionY, 0.0);
                     Point3D receiverPosition = new Point3D(receiver.PositionX, receiver.PositionY, 0.0);
                     Point3D newPosition = new Point3D(receiver.PositionX, receiver.PositionY, 0.0);
-                    for (int i = 0; i == 0 || (PushDistance - i >= 0 && receiver.MapInstance.Map.isBlockedZone(receiver.PositionX, receiver.PositionY, (int)Math.Round(newPosition.X), (int)Math.Round(newPosition.Y))); i++)
+                    if (receiver.MapInstance != null)
                     {
-                        Vector3D v = receiverPosition - pointPosition;
-                        double offset = PushDistance - i;
-                        newPosition = ExtendLine(receiverPosition, offset, v);
+                        for (int i = 0; i == 0 || (PushDistance - i >= 0 && receiver.MapInstance.Map.isBlockedZone(receiver.PositionX, receiver.PositionY, (int)Math.Round(newPosition.X), (int)Math.Round(newPosition.Y))); i++)
+                        {
+                            Vector3D v = receiverPosition - pointPosition;
+                            double offset = PushDistance - i;
+                            newPosition = ExtendLine(receiverPosition, offset, v);
+                        }
+                        NewX = (short)Math.Round(newPosition.X);
+                        NewY = (short)Math.Round(newPosition.Y);
                     }
-                    NewX = (short)Math.Round(newPosition.X);
-                    NewY = (short)Math.Round(newPosition.Y);
                 }
 
                 receiver.PositionX = NewX;
@@ -2639,11 +2651,11 @@ namespace OpenNos.GameObject
 
                 if (receiver == sender)
                 {
-                    receiver.MapInstance.Broadcast($"guri 3 {(short)receiver.UserType} {receiver.MapEntityId} {receiver.PositionX} {receiver.PositionY} 3 {SecondData / 4} 2 -1");
+                    receiver.MapInstance?.Broadcast($"guri 3 {(short)receiver.UserType} {receiver.MapEntityId} {receiver.PositionX} {receiver.PositionY} 3 {SecondData / 4} 2 -1");
                 }
                 else
                 {
-                    receiver.MapInstance.Broadcast($"guri 3 {(short)receiver.UserType} {receiver.MapEntityId} {receiver.PositionX} {receiver.PositionY} 3 {SecondData} 2 -1");
+                    receiver.MapInstance?.Broadcast($"guri 3 {(short)receiver.UserType} {receiver.MapEntityId} {receiver.PositionX} {receiver.PositionY} 3 {SecondData} 2 -1");
                 }
             }
         }

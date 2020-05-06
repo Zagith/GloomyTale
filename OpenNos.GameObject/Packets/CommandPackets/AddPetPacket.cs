@@ -16,6 +16,8 @@ namespace OpenNos.GameObject.CommandPackets
         [PacketIndex(1)]
         public byte Level { get; set; }
 
+        [PacketIndex(2)]
+        public byte? Type { get; set; }
         #endregion
 
         #region Methods

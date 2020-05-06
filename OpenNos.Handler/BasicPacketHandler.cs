@@ -499,7 +499,7 @@ namespace OpenNos.Handler
         {
             if (cspPacket.CharacterId == Session.Character.CharacterId && Session.Character.BubbleMessage != null)
             {
-                Session.Character.MapInstance.Broadcast(Session.Character.GenerateBubbleMessagePacket());
+                Session.Character.MapInstance?.Broadcast(Session.Character.GenerateBubbleMessagePacket());
             }
         }
 
@@ -636,7 +636,7 @@ namespace OpenNos.Handler
                 case 2:
                     if (Session.HasCurrentMapInstance)
                     {
-                        Session.CurrentMapInstance.Npcs.Where(n => n.MapNpcId == (int)ncifPacket.TargetId).ToList()
+                        Session.CurrentMapInstance?.Npcs.Where(n => n.MapNpcId == (int)ncifPacket.TargetId).ToList()
                             .ForEach(npc =>
                             {
                                 NpcMonster npcinfo = ServerManager.GetNpcMonster(npc.NpcVNum);
@@ -649,7 +649,7 @@ namespace OpenNos.Handler
                                 Session.SendPacket(
                                     $"st 2 {ncifPacket.TargetId} {npcinfo.Level} {npcinfo.HeroLevel} {(int)((float)npc.CurrentHp / (float)npc.MaxHp * 100)} {(int)((float)npc.CurrentMp / (float)npc.MaxMp * 100)} {npc.CurrentHp} {npc.CurrentMp}{npc.Buff.GetAllItems().Aggregate("", (current, buff) => current + $" {buff.Card.CardId}.{buff.Level}")}");
                             });
-                        Parallel.ForEach(Session.CurrentMapInstance.Sessions, session =>
+                        Parallel.ForEach(Session.CurrentMapInstance?.Sessions, session =>
                         {
                             Mate mate = session.Character.Mates.Find(
                                 s => s.MateTransportId == (int)ncifPacket.TargetId);
@@ -666,7 +666,7 @@ namespace OpenNos.Handler
                 case 3:
                     if (Session.HasCurrentMapInstance)
                     {
-                        Session.CurrentMapInstance.Monsters.Where(m => m.MapMonsterId == (int)ncifPacket.TargetId)
+                        Session.CurrentMapInstance?.Monsters.Where(m => m.MapMonsterId == (int)ncifPacket.TargetId)
                             .ToList().ForEach(monster =>
                             {
                                 NpcMonster monsterinfo = ServerManager.GetNpcMonster(monster.MonsterVNum);
@@ -1208,7 +1208,7 @@ namespace OpenNos.Handler
                 return;
             }
 
-            if (Session.CurrentMapInstance.Portals.Concat(Session.Character.GetExtraPortal())
+            if (Session.CurrentMapInstance?.Portals.Concat(Session.Character.GetExtraPortal())
                     .FirstOrDefault(s => Session.Character.PositionY >= s.SourceY - 1
                         && Session.Character.PositionY <= s.SourceY + 1
                         && Session.Character.PositionX >= s.SourceX - 1
@@ -1382,7 +1382,7 @@ namespace OpenNos.Handler
                 {
                     return;
                 }
-                Session.SendPacket(Session.CurrentMapInstance.GenerateRsfn());
+                Session.SendPacket(Session.CurrentMapInstance?.GenerateRsfn());
 
                 if (ServerManager.GetMapInstance(portal.SourceMapInstanceId).MapInstanceType
                     != MapInstanceType.BaseMapInstance
@@ -1594,7 +1594,7 @@ namespace OpenNos.Handler
             {
                 // Join Raid
                 case 1:
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.RaidInstance)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.RaidInstance)
                     {
                         return;
                     }
@@ -1662,7 +1662,7 @@ namespace OpenNos.Handler
 
                 // Kick from Raid
                 case 3:
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.RaidInstance)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.RaidInstance)
                     {
                         return;
                     }
@@ -1692,7 +1692,7 @@ namespace OpenNos.Handler
 
                 // Disolve Raid
                 case 4:
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.RaidInstance)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.RaidInstance)
                     {
                         return;
                     }
@@ -1820,7 +1820,7 @@ namespace OpenNos.Handler
                 }
                 else
                 {
-                    Session.CurrentMapInstance.Broadcast(Session.Character.Mates
+                    Session.CurrentMapInstance?.Broadcast(Session.Character.Mates
                         .Find(s => s.MateTransportId == (int)u.UserId)?.GenerateRest(sitpacket.Users[0] != u));
                 }
             });
@@ -1837,7 +1837,7 @@ namespace OpenNos.Handler
             {
                 // Join BaTeam
                 case 1:
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.BAInstance)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.BAInstance)
                     {
                         return;
                     }
@@ -1907,7 +1907,7 @@ namespace OpenNos.Handler
 
                 // Kick from BaTeam
                 case 3:
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.BAInstance)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.BAInstance)
                     {
                         return;
                     }
@@ -1950,7 +1950,7 @@ namespace OpenNos.Handler
 
                 // Disolve BaTeam
                 case 4:
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.BAInstance)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.BAInstance)
                     {
                         return;
                     }
@@ -2011,7 +2011,7 @@ namespace OpenNos.Handler
             switch (revivalPacket.Type)
             {
                 case 0:
-                    switch (Session.CurrentMapInstance.MapInstanceType)
+                    switch (Session.CurrentMapInstance?.MapInstanceType)
                     {
                         case MapInstanceType.LodInstance:
                             const int saver = 1211;
@@ -2114,7 +2114,7 @@ namespace OpenNos.Handler
 
                 case 1:
                     ServerManager.Instance.ReviveFirstPosition(Session.Character.CharacterId);
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.BaseMapInstance)
                     {
                         if (Session.Character.Level > 20)
                         {
@@ -2170,7 +2170,7 @@ namespace OpenNos.Handler
                 if (Session.Character.Gender == GenderType.Female)
                 {
                     ConcurrentBag<ArenaTeamMember> member = ServerManager.Instance.ArenaTeams.ToList().FirstOrDefault(s => s.Any(e => e.Session == Session));
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
                     {
                         var member2 = member.FirstOrDefault(o => o.Session == Session);
                         member.Replace(s => member2 != null && s.ArenaTeamType == member2.ArenaTeamType && s != member2).Replace(s => s.ArenaTeamType == member.FirstOrDefault(o => o.Session == Session)?.ArenaTeamType).ToList().ForEach(o => o.Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("MUTED_FEMALE"), 1)));
@@ -2186,7 +2186,7 @@ namespace OpenNos.Handler
                 else
                 {
                     ConcurrentBag<ArenaTeamMember> member = ServerManager.Instance.ArenaTeams.ToList().FirstOrDefault(s => s.Any(e => e.Session == Session));
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
                     {
                         var member2 = member.FirstOrDefault(o => o.Session == Session);
                         member.Replace(s => member2 != null && s.ArenaTeamType == member2.ArenaTeamType && s != member2).Replace(s => s.ArenaTeamType == member.FirstOrDefault(o => o.Session == Session)?.ArenaTeamType).ToList().ForEach(o => o.Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("MUTED_MALE"), 1)));
@@ -2214,7 +2214,7 @@ namespace OpenNos.Handler
                 if (Session.Character.Authority >= AuthorityType.EventMaster)
                 {
                     type = CharacterHelper.AuthorityChatColor(Session.Character.Authority);
-                    if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
+                    if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
                     {
                         ArenaTeamMember member2 = member.FirstOrDefault(o => o.Session == Session);
                         member.Replace(s => member2 != null && s.ArenaTeamType == member2.ArenaTeamType && s != member2).Replace(s => s.ArenaTeamType == member.FirstOrDefault(o => o.Session == Session)?.ArenaTeamType).ToList().ForEach(o => o.Session.SendPacket(Session.Character.GenerateSay(message.Trim(), 1)));
@@ -2226,7 +2226,7 @@ namespace OpenNos.Handler
                     message = $"[{Session.Character.Authority} {Session.Character.Name}]: " + message;
                 }
 
-                if (Session.CurrentMapInstance.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
+                if (Session.CurrentMapInstance?.MapInstanceType == MapInstanceType.TalentArenaMapInstance && member != null)
                 {
                     ArenaTeamMember member2 = member.FirstOrDefault(o => o.Session == Session);
                     member.Where(s => s.ArenaTeamType == member2?.ArenaTeamType && s != member2).ToList().ForEach(o => o.Session.SendPacket(Session.Character.GenerateSay(message.Trim(), type, Session.Account.Authority >= AuthorityType.EventMaster)));
@@ -2879,7 +2879,7 @@ namespace OpenNos.Handler
 
                         Session.Character.GetDir(Session.Character.PositionX, Session.Character.PositionY, nextCell.X, nextCell.Y);
 
-                        if (Session.Character.MapInstance.MapInstanceType == MapInstanceType.BaseMapInstance)
+                        if (Session.Character.MapInstance?.MapInstanceType == MapInstanceType.BaseMapInstance)
                         {
                             Session.Character.MapX = nextCell.X;
                             Session.Character.MapY = nextCell.Y;

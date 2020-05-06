@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using OpenNos.Core;
 using OpenNos.DAL;
 using OpenNos.Data;
+using OpenNos.Data.Achievements;
 using OpenNos.Domain;
 using OpenNos.GameObject;
 using OpenNos.GameObject.Networking;
@@ -744,7 +745,47 @@ namespace OpenNos.Master.Server
             }
         }
 
-
+        public void UpdateCharacterAchievement(string worldGroup, long characterId, long achievementId)
+        {
+            if (!IsCharacterConnected(worldGroup, characterId))
+            {
+                CharacterAchievementDTO load = DAOFactory.CharacterAchievementDAO.LoadByCharacterId(characterId).Where(s => s.AchievementId == achievementId).FirstOrDefault();
+                if (load != null)
+                {
+                    DAOFactory.CharacterAchievementDAO.Delete(characterId, achievementId);
+                    CharacterAchievementDTO ach = new CharacterAchievementDTO
+                    {
+                        CharacterId = characterId,
+                        AchievementId = load.AchievementId,
+                        FirstObjective = load.FirstObjective,
+                        IsMainAchievement = true
+                    };
+                    DAOFactory.CharacterAchievementDAO.InsertOrUpdate(ach);
+                }
+            }
+            else
+            {
+                AccountConnection account = MSManager.Instance.ConnectedAccounts.Find(a => a.CharacterId.Equals(characterId));
+                if (account?.ConnectedWorld == null)
+                {
+                    CharacterAchievementDTO load = DAOFactory.CharacterAchievementDAO.LoadByCharacterId(characterId).Where(s => s.AchievementId == achievementId).FirstOrDefault();
+                    if (load != null)
+                    {
+                        DAOFactory.CharacterAchievementDAO.Delete(characterId, achievementId);
+                        CharacterAchievementDTO ach = new CharacterAchievementDTO
+                        {
+                            CharacterId = characterId,
+                            AchievementId = load.AchievementId,
+                            FirstObjective = load.FirstObjective,
+                            IsMainAchievement = true
+                        };
+                        DAOFactory.CharacterAchievementDAO.InsertOrUpdate(ach);
+                    }
+                    return;
+                }
+                account.ConnectedWorld.CommunicationServiceClient.GetClientProxy<ICommunicationClient>().UpdateCharacterAchievement(characterId, achievementId);
+            }
+        }
         #endregion
     }
 }

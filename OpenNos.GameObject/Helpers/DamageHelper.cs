@@ -16,6 +16,7 @@ using OpenNos.Domain;
 using OpenNos.GameObject.Networking;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using static OpenNos.Domain.BCardType;
@@ -2010,41 +2011,55 @@ namespace OpenNos.GameObject.Helpers
             {
                 if (ReflectsMaximumDamageFrom[0] < 0)
                 {
-                    int maxReflectDamage = -ReflectsMaximumDamageFrom[0];
+                    /*try
+                    {*/
+                        int maxReflectDamage = -ReflectsMaximumDamageFrom[0];
 
-                    int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
-                    //totalDamage -= reflectedDamage;
+                        int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
+                        //totalDamage -= reflectedDamage;
 
-                    if (!percentDamage && realAttacker != null && defender != null)
+                        if (!percentDamage && realAttacker != null && defender != null)
+                        {
+                            reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
+
+                            defender.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)realAttacker.UserType, realAttacker.MapEntityId,
+                                -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
+
+                            defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
+                            if (realAttacker.Character?.Morph != 20)
+                                totalDamage = 0;
+                        }
+                    /*}
+                    catch (NullReferenceException e)
                     {
-                        reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
-
-                        defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)realAttacker.UserType, realAttacker.MapEntityId,
-                            -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
-
-                        defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
-                        if(realAttacker.Character.Morph != 20)
-                            totalDamage = 0;
-                    }
+                        File.AppendAllText("C:\\Damage_Helper.txt", e + "\n reflectedDamage:" + realAttacker.ToString() + "\n reflectedDamage:" + defender.ToString() + "\n");
+                    }*/
                 }
                 else if (ReflectsMaximumDamageFrom[0] > 0)
                 {
-                    int maxReflectDamage = ReflectsMaximumDamageFrom[0];
+                    /*try
+                    {*/
+                        int maxReflectDamage = ReflectsMaximumDamageFrom[0];
 
-                    int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
-                    //totalDamage -= reflectedDamage;
+                        int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
+                        //totalDamage -= reflectedDamage;
 
-                    if (!percentDamage && realAttacker != null && defender != null)
+                        if (!percentDamage && realAttacker != null && defender != null)
+                        {
+                            reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
+
+                            defender.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)realAttacker.UserType, realAttacker.MapEntityId,
+                                -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
+
+                            defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
+                            if (realAttacker.Character?.Morph != 20)
+                                totalDamage = 0;
+                        }
+                    /*}                    
+                    catch (NullReferenceException e)
                     {
-                        reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
-
-                        defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)realAttacker.UserType, realAttacker.MapEntityId,
-                            -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
-
-                        defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
-                        if (realAttacker.Character.Morph != 20)
-                            totalDamage = 0;
-                    }
+                        File.AppendAllText("C:\\Damage_Helper.txt", e + "\n reflectedDamage:" + realAttacker.ToString() + "\n reflectedDamage:" + defender.ToString() + "\n");
+                    }*/
                 }
                 
             }
@@ -2055,25 +2070,32 @@ namespace OpenNos.GameObject.Helpers
 
             if (defender.GetBuff(CardType.DamageConvertingSkill, (byte)AdditionalTypes.DamageConvertingSkill.ReflectMaximumReceivedDamage) is int[] ReflectMaximumReceivedDamage)
             {
-                if (ReflectMaximumReceivedDamage[0] > 0)
-                {
-                    int maxReflectDamage = ReflectMaximumReceivedDamage[0];
-
-                    int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
-                    //totalDamage -= reflectedDamage;
-
-                    if (!percentDamage && realAttacker != null && defender != null)
+                /*try
+                {*/
+                    if (ReflectMaximumReceivedDamage[0] > 0)
                     {
-                        reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
+                        int maxReflectDamage = ReflectMaximumReceivedDamage[0];
 
-                        defender.MapInstance.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)realAttacker.UserType, realAttacker.MapEntityId,
-                            -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
+                        int reflectedDamage = Math.Min(totalDamage, maxReflectDamage);
+                        //totalDamage -= reflectedDamage;
 
-                        defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
-                        if (realAttacker.Character.Morph != 20)
-                            totalDamage = 0;
+                        if (!percentDamage && realAttacker != null && defender != null)
+                        {
+                            reflectedDamage = realAttacker.GetDamage(reflectedDamage, defender, true);
+
+                            defender.MapInstance?.Broadcast(StaticPacketHelper.SkillUsed(realAttacker.UserType, realAttacker.MapEntityId, (byte)realAttacker.UserType, realAttacker.MapEntityId,
+                                -1, 0, 0, 0, 0, 0, realAttacker.Hp > 0, (int)(realAttacker.Hp / realAttacker.HPLoad() * 100), reflectedDamage, 0, 1));
+
+                            defender.Character?.Session?.SendPacket(defender.Character.GenerateStat());
+                            if (realAttacker.Character?.Morph != 20)
+                                totalDamage = 0;
+                        }
                     }
-                }                
+                /*}
+                catch (NullReferenceException e)
+                {
+                    File.AppendAllText("C:\\Damage_Helper.txt", e + "\n reflectedDamage:" + realAttacker.ToString() + "\n reflectedDamage:" + defender.ToString() + "\n");
+                }*/
             }
 
             #endregion

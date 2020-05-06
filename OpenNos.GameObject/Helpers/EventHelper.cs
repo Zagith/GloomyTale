@@ -578,6 +578,7 @@ namespace OpenNos.GameObject.Helpers
                                                 }
 
                                                 s.Character.IncrementQuests(QuestType.WinRaid, group.Raid.Id);
+                                                s.Character.IncrementAchievements(AchievementType.Raid, group.Raid.Id);
                                             });
 
                                             foreach (MapMonster mapMonster in evt.MapInstance.Monsters)
@@ -663,20 +664,24 @@ namespace OpenNos.GameObject.Helpers
                                             short destY = 130;
                                             short rewardVNum = 15107;
                                             short secondaryRewardVNum = 2440;
+                                            int index = 0;
                                             switch (evt.MapInstance.MapInstanceType)
                                             {
                                                 //Morcos is default
                                                 case MapInstanceType.Act4Orias:
+                                                    index = 1;
                                                     rewardVNum = 15052;
                                                     secondaryRewardVNum = 2443;
                                                     break;
 
                                                 case MapInstanceType.Act4Zanarkand:
+                                                    index = 2;
                                                     rewardVNum = 15108;
                                                     secondaryRewardVNum = 2441;
                                                     break;
 
                                                 case MapInstanceType.Act4Demetra:
+                                                    index = 3;
                                                     rewardVNum = 15112;
                                                     secondaryRewardVNum = 2442;
                                                     break;
@@ -686,6 +691,7 @@ namespace OpenNos.GameObject.Helpers
                                             {
                                                 if (sess?.Character != null)
                                                 {
+                                                    sess.Character.IncrementAchievements(AchievementType.Act4Raid, index);
                                                     sess.Character.GiftAdd(rewardVNum, 1, forceRandom: true, minRare: 5, design: 255);
                                                     sess.Character.GiftAdd(secondaryRewardVNum, 1);
                                                     if (sess.Character.GenerateFamilyXp(10000 / count))

@@ -48,6 +48,8 @@ namespace OpenNos.Master.Library.Interface
 
         void SendMail(MailDTO mail);
 
+        void UpdateCharacterAchievement(long characterId, long achievementId);
+
         void ChangeAuthority(long accountAccountId, AuthorityType authority);
 
         #endregion

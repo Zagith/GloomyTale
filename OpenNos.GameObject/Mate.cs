@@ -776,39 +776,47 @@ namespace OpenNos.GameObject
 
         public void GenerateRevive()
         {
-            if (Owner == null || IsAlive)
+            try
             {
-                return;
-            }
+                if (Owner == null || IsAlive)
+                {
+                    return;
+                }
 
-            Owner.MapInstance?.Broadcast(GenerateOut());
-            IsAlive = true;
-            Hp = MaxHp / 2;
-            Mp = MaxMp / 2;
-            PositionY = (short)(Owner.PositionY + 1);
-            PositionX = (short)(Owner.PositionX + 1);
-            if (Owner.MapInstance.Map.IsBlockedZone(PositionX, PositionY))
-            {
-                PositionY = Owner.PositionY;
-                PositionX = Owner.PositionX;
+                Owner.MapInstance?.Broadcast(GenerateOut());
+                IsAlive = true;
+                Hp = MaxHp / 2;
+                Mp = MaxMp / 2;
+                PositionY = (short)(Owner.PositionY + 1);
+                PositionX = (short)(Owner.PositionX + 1);
+                if (Owner.MapInstance.Map.IsBlockedZone(PositionX, PositionY))
+                {
+                    PositionY = Owner.PositionY;
+                    PositionX = Owner.PositionX;
+                }
+                Parallel.ForEach(Owner.Session.CurrentMapInstance?.Sessions.Where(s => s.Character != null), s =>
+                {
+                    if (ServerManager.Instance.ChannelId != 51 || Owner.Session.Character.Faction == s.Character.Faction)
+                    {
+                        s.SendPacket(GenerateIn(false, ServerManager.Instance.ChannelId == 51));
+                    }
+                    else
+                    {
+                        s.SendPacket(GenerateIn(true, ServerManager.Instance.ChannelId == 51, s.Account.Authority));
+                    }
+                });
+                //Owner.Session.SendPacket(GenerateCond());
+                Owner.Session.SendPacket(Owner.GeneratePinit());
+                Owner.Session.SendPackets(Owner.GeneratePst());
+                if (Loyalty <= 100)
+                {
+                    Owner.Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Npc, MateTransportId, 5003));
+                }
             }
-            Parallel.ForEach(Owner.Session.CurrentMapInstance.Sessions.Where(s => s.Character != null), s =>
+            catch (NullReferenceException e)
             {
-                if (ServerManager.Instance.ChannelId != 51 || Owner.Session.Character.Faction == s.Character.Faction)
-                {
-                    s.SendPacket(GenerateIn(false, ServerManager.Instance.ChannelId == 51));
-                }
-                else
-                {
-                    s.SendPacket(GenerateIn(true, ServerManager.Instance.ChannelId == 51, s.Account.Authority));
-                }
-            });
-            //Owner.Session.SendPacket(GenerateCond());
-            Owner.Session.SendPacket(Owner.GeneratePinit());
-            Owner.Session.SendPackets(Owner.GeneratePst());
-            if (Loyalty <= 100)
-            {
-                Owner.Session.SendPacket(StaticPacketHelper.GenerateEff(UserType.Npc, MateTransportId, 5003));
+                File.AppendAllText("C:\\WORLD_CRASHLOG.txt", e + "\n MapInstance:" + Owner.MapInstance.ToString() + "\n IsAlive:" + IsAlive.ToString() + "\n PositionY:" + Owner.PositionY.ToString()
+                    + "\n PositionX:" + Owner.PositionX.ToString() + "\n MaxMp:" + MaxMp.ToString() + "\n MapInstance:" + MaxHp.ToString() + "\n Map:" + Owner.MapInstance.Map.ToString() + "\n CurrentMapInstance:" + Owner.Session.CurrentMapInstance.ToString() + "\n");
             }
         }
 

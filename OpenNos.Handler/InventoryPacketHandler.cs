@@ -876,6 +876,7 @@ namespace OpenNos.Handler
                                         {
                                             characterDropperId = mapItemInstance.CharacterId;
                                         }
+                                        short OriginalAmount = mapItem.Amount;
                                         short amount = mapItem.Amount;
                                         ItemInstance inv = null;
                                         if (mapItem is MonsterMapItem)
@@ -939,6 +940,7 @@ namespace OpenNos.Handler
                                         }
                                         else
                                         {
+                                            mapItemInstance.Amount = OriginalAmount;
                                             Session.SendPacket(UserInterfaceHelper.GenerateMsg(
                                                 Language.Instance.GetMessageFromKey("NOT_ENOUGH_PLACE"), 0));
                                         }

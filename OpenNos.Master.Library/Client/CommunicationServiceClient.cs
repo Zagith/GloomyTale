@@ -94,6 +94,7 @@ namespace OpenNos.Master.Library.Client
 
         public event EventHandler AuthorityChange;
 
+        public event EventHandler UpdatedCharAchievement;
         #endregion
 
         #region Properties
@@ -212,7 +213,15 @@ namespace OpenNos.Master.Library.Client
 
         public void SendMail(string worldGroup, MailDTO mail) => _client.ServiceProxy.SendMail(worldGroup, mail);
 
+        public void UpdateCharacterAchievement(string worldGroup, long characterId, long achievementId) => _client.ServiceProxy.UpdateCharacterAchievement(worldGroup, characterId, achievementId);
+
         internal void OnSendMail(MailDTO mail) => MailSent?.Invoke(mail, null);
+
+        internal void OnUpdateCharacterAchievement(long characterId, long achievementId)
+        {
+            Tuple<long, long> tu = new Tuple<long, long>(characterId, achievementId);
+            UpdatedCharAchievement?.Invoke(tu, null);
+        }
 
         internal void OnAuthorityChange(long accountId, AuthorityType authority)
         {

@@ -33,6 +33,20 @@ namespace OpenNos.DAL.EF.Entities
 
         public int Data2 { get; set; }
 
+        public int FirstReward { get; set; }
+
+        [MaxLength(255)]
+        public string FirstRewardName { get; set; }
+
+        public int SecondReward { get; set; }
+
+        [MaxLength(255)]
+        public string SecondRewardName { get; set; }
+
+        public int ThirdReward { get; set; }
+
+        [MaxLength(255)]
+        public string ThirdRewardName { get; set; }
         #endregion
     }
 }

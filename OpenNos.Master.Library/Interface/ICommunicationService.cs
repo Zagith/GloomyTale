@@ -265,6 +265,7 @@ namespace OpenNos.Master.Library.Interface
 
         void SendMail(string worldGroup, MailDTO mail);
 
+        void UpdateCharacterAchievement(string worldGroup, long accountId, long achievementId);
         #endregion
     }
 }

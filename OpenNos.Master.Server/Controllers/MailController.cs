@@ -22,10 +22,14 @@ namespace OpenNos.Master.Server.Controllers
                 AttachmentRarity = (byte)mail.Rare,
                 AttachmentUpgrade = mail.Upgrade,
                 IsSenderCopy = false,
-                Title = mail.IsNosmall ? "NOSMALL" : mail.Title,
+                Title = mail.IsNosmall ? "NOSMALL" : "ACHIEVEMENT",
                 AttachmentVNum = mail.VNum
             };
-            Logger.Log.Info($"[{(mail.IsNosmall ? "NOSMALL" : "MAIL")}] Receiver ID : {mail2.ReceiverId}");
+            if (mail.IsAchievement && mail.AchievementId != null)
+            {
+                CommunicationServiceClient.Instance.UpdateCharacterAchievement(mail.WorldGroup, mail.CharacterId, mail.AchievementId.Value);
+            }
+            Logger.Log.Info($"[{(mail.IsNosmall ? "NOSMALL" : "ACHIEVEMENT")}] Receiver ID : {mail2.ReceiverId}");
             CommunicationServiceClient.Instance.SendMail(mail.WorldGroup, mail2);
         }
     }

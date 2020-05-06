@@ -2387,6 +2387,7 @@ namespace OpenNos.GameObject.Networking
             ConfigurationServiceClient.Instance.ConfigurationUpdate += OnConfiguratinEvent;
             CommunicationServiceClient.Instance.MailSent += OnMailSent;
             CommunicationServiceClient.Instance.AuthorityChange += OnAuthorityChange;
+            CommunicationServiceClient.Instance.UpdatedCharAchievement += OnUpdatedCharAchievement;
             _lastGroupId = 1;
         }
 
@@ -2441,6 +2442,25 @@ namespace OpenNos.GameObject.Networking
             account.Account.Authority = args.Item2;
             account.SendPacket(
                 $"say 1 0 10 ({Language.Instance.GetMessageFromKey("ADMINISTRATOR")}) You are now {account.Account.Authority.ToString()}");
+        }
+
+        private void OnUpdatedCharAchievement(object sender, EventArgs e)
+        {
+            if (sender == null)
+            {
+                return;
+            }
+
+            Tuple<long, long> args = (Tuple<long, long>)sender;
+            ClientSession character = Sessions.FirstOrDefault(s => s.Character.CharacterId == args.Item1);
+            if (character == null)
+            {
+                return;
+            }
+
+            CharacterAchievements ach = character.Character.Achievements.Where(s => s.AchievementId == args.Item2).FirstOrDefault();
+            ach.IsMainAchievement = true;
+            character.Character.Save();
         }
 
         private void OnMailSent(object sender, EventArgs e)

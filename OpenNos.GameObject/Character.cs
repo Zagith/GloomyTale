@@ -16,6 +16,7 @@ using OpenNos.Core;
 using OpenNos.Core.ConcurrencyExtensions;
 using OpenNos.Core.Extensions;
 using OpenNos.DAL;
+using OpenNos.DAL.Interface;
 using OpenNos.Data;
 using OpenNos.Data.Achievements;
 using OpenNos.Domain;
@@ -79,6 +80,7 @@ namespace OpenNos.GameObject
             ShellEffectMain = new ConcurrentBag<ShellEffectDTO>();
             ShellEffectSecondary = new ConcurrentBag<ShellEffectDTO>();
             Quests = new ConcurrentBag<CharacterQuest>();
+            Achievements = new ConcurrentBag<CharacterAchievements>();
         }
 
         public Character(CharacterDTO input) : this()
@@ -1613,20 +1615,67 @@ namespace OpenNos.GameObject
             }
         }
 
-        public void IncrementAchievements(QuestType type, int firstData = 0)
+        public void IncrementAchievements(AchievementType type, int index = 0)
         {
-            foreach (AchievementsDTO achievement in DAOFactory.AchievementsDAO.LoadByType((int)type))
+            if (Achievements.Where(q => q?.Achievements?.AchievementType == (int)type && q.Achievements.Data2 == index).Count > 0)
             {
-                switch ((AchievementType)achievement.AchievementType)
+                foreach (CharacterAchievements achievement in Achievements.Where(q => q?.Achievements?.AchievementType == (int)type && q.Achievements.Data2 == index))
                 {
-                    case AchievementType.Raid:
-                    case AchievementType.Hunt:
-                        //achievement.Quest.QuestObjectives.Where(o => o.Data == firstData).ToList().ForEach(d => IncrementObjective(quest, d.ObjectiveIndex));
-                        break;
-
-                    
+                    if (achievement.Achievements.Data > achievement.FirstObjective)
+                    {
+                        int amountFirstData = achievement.FirstObjective + 1;
+                        RemoveAchievement(achievement.AchievementId);
+                        CharacterAchievementDTO qstDTO = new CharacterAchievementDTO
+                        {
+                            CharacterId = achievement.CharacterId,
+                            AchievementId = achievement.AchievementId,
+                            FirstObjective = amountFirstData,
+                            IsMainAchievement = achievement.IsMainAchievement
+                        };
+                        var characterAchievement = new CharacterAchievements(qstDTO.AchievementId, CharacterId);
+                        if (characterAchievement.FirstObjective <= 0)
+                        {
+                            characterAchievement.FirstObjective = amountFirstData;
+                        }
+                        Achievements.Add(characterAchievement);
+                        Save();
+                    }
                 }
             }
+            else
+            {
+                AchievementsDTO ach = DAOFactory.AchievementsDAO.LoadByTypeAndData2((int)type, index);
+                if (ach != null)
+                {
+                    CharacterAchievementDTO qstDTO = new CharacterAchievementDTO
+                    {
+                        CharacterId = CharacterId,
+                        AchievementId = ach.AchievementId,
+                        FirstObjective = 1,
+                        IsMainAchievement = ach.IsDaily
+                    };
+                    DAOFactory.CharacterAchievementDAO.InsertOrUpdate(qstDTO);
+                    var characterAchievement = new CharacterAchievements(qstDTO.AchievementId, CharacterId);
+                    if (characterAchievement.FirstObjective <= 0)
+                    {
+                        characterAchievement.FirstObjective = 1;
+                    }
+                    Achievements.Add(characterAchievement);
+                }
+            }
+        }
+
+        public void RemoveAchievement(long questId)
+        {
+            CharacterAchievements questToRemove = Achievements.FirstOrDefault(q => q.AchievementId == questId);
+
+            if (questToRemove == null)
+            {
+                return;
+            }
+
+            Achievements.RemoveWhere(s => s.AchievementId != questId, out ConcurrentBag<CharacterAchievements> tmp);
+            Achievements = tmp;
         }
         private void IncrementGroupQuest(QuestType type, int firstData = 0, int secondData = 0, int thirdData = 0)
         {
@@ -3692,7 +3741,7 @@ namespace OpenNos.GameObject
 
                     List<DropDTO> droplist = monsterToAttack.Monster.Drops.Where(s => (!explodeMonsters.Contains(monsterToAttack.MonsterVNum) && Session.CurrentMapInstance.Map.MapTypes.Any(m => m.MapTypeId == s.MapTypeId)) || s.MapTypeId == null).ToList();
 
-                    int levelDifference = Session.Character.Level - monsterToAttack.Monster.Level;
+                    int levelDifference = Session.Character.Level - monsterToAttack.Monster.Level;                    
 
                     #region Quest
 
@@ -4018,6 +4067,10 @@ namespace OpenNos.GameObject
                     }
                 }
 
+                #endregion
+
+                #region Achievement
+                IncrementAchievements(AchievementType.Hunt, monsterToAttack.MonsterVNum);
                 #endregion
             }
         }
@@ -6619,6 +6672,22 @@ namespace OpenNos.GameObject
                         IsMainQuest = qst.IsMainQuest
                     };
                     DAOFactory.CharacterQuestDAO.InsertOrUpdate(qstDTO);
+                }
+
+                foreach (CharacterAchievementDTO q in DAOFactory.CharacterAchievementDAO.LoadByCharacterId(CharacterId).ToList())
+                {
+                    DAOFactory.CharacterAchievementDAO.Delete(CharacterId, q.AchievementId);
+                }
+                foreach (CharacterAchievements qst in Achievements.ToList())
+                {
+                    CharacterAchievementDTO qstDTO = new CharacterAchievementDTO
+                    {
+                        CharacterId = qst.CharacterId,
+                        AchievementId = qst.AchievementId,
+                        FirstObjective = qst.FirstObjective,
+                        IsMainAchievement = qst.IsMainAchievement
+                    };
+                    DAOFactory.CharacterAchievementDAO.InsertOrUpdate(qstDTO);
                 }
 
                 foreach (StaticBonusDTO bonus in StaticBonusList.ToArray())

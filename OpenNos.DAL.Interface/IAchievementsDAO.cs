@@ -11,5 +11,7 @@ namespace OpenNos.DAL.Interface
         AchievementsDTO LoadByData2(int accountId);
 
         IEnumerable<AchievementsDTO> LoadByType(int type);
+
+        AchievementsDTO LoadByTypeAndData2(int type, int index);
     }
 }

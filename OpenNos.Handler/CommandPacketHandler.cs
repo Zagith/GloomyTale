@@ -307,6 +307,11 @@ namespace OpenNos.Handler
                 Logger.LogUserEvent("GMCOMMAND", Session.GenerateIdentity(),
                     $"[AddPet]NpcMonsterVNum: {packet.MonsterVNum} Level: {packet.Level}");
                 LogHelper.Instance.InsertCommandLog(Session.Character.CharacterId, packet, Session.IpAddress);
+                if (packet.Type.Value == 1)
+                {
+                    AddMateWithSkill(packet.MonsterVNum, packet.Level, MateType.Pet);
+                    return;
+                }
                 AddMate(packet.MonsterVNum, packet.Level, MateType.Pet);
             }
             else
@@ -4496,6 +4501,21 @@ namespace OpenNos.Handler
             }
         }
 
+        private void AddMateWithSkill(short vnum, byte level, MateType mateType)
+        {
+            NpcMonster mateNpc = ServerManager.GetNpcMonster(vnum);
+            if (Session.CurrentMapInstance == Session.Character.Miniland && mateNpc != null)
+            {
+                level = level == 0 ? (byte)1 : level;
+                Mate mate = new Mate(Session.Character, mateNpc, level, mateType);
+                Session.Character.AddPetWithSkill(mate);
+            }
+            else
+            {
+                Session.SendPacket(
+                    UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("NOT_IN_MINILAND"), 0));
+            }
+        }
         /// <summary>
         /// $ReloadSI Command
         /// </summary>

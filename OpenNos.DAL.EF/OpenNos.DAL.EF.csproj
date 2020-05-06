@@ -263,6 +263,22 @@
     <Compile Include="Migrations\202004301101098_Achievements.designer.cs">
       <DependentUpon>202004301101098_Achievements.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005011152204_AchievementsPt2.cs" />
+    <Compile Include="Migrations\202005011152204_AchievementsPt2.designer.cs">
+      <DependentUpon>202005011152204_AchievementsPt2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005021753369_AchievementRewards.cs" />
+    <Compile Include="Migrations\202005021753369_AchievementRewards.designer.cs">
+      <DependentUpon>202005021753369_AchievementRewards.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005041052511_AchieveRewardRew.cs" />
+    <Compile Include="Migrations\202005041052511_AchieveRewardRew.designer.cs">
+      <DependentUpon>202005041052511_AchieveRewardRew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005041911534_AchieveRew.cs" />
+    <Compile Include="Migrations\202005041911534_AchieveRew.designer.cs">
+      <DependentUpon>202005041911534_AchieveRew.cs</DependentUpon>
+    </Compile>
     <Compile Include="PartnerSkill.cs" />
     <Compile Include="PvPLog.cs" />
     <Compile Include="Quest.cs" />
@@ -451,6 +467,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004301101098_Achievements.resx">
       <DependentUpon>202004301101098_Achievements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005011152204_AchievementsPt2.resx">
+      <DependentUpon>202005011152204_AchievementsPt2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005021753369_AchievementRewards.resx">
+      <DependentUpon>202005021753369_AchievementRewards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005041052511_AchieveRewardRew.resx">
+      <DependentUpon>202005041052511_AchieveRewardRew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005041911534_AchieveRew.resx">
+      <DependentUpon>202005041911534_AchieveRew.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

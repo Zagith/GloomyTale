@@ -670,7 +670,7 @@ namespace OpenNos.GameObject
             get
             {
                 return
-                    MapInstance.MapInstanceType != MapInstanceType.BaseMapInstance ||
+                    MapInstance?.MapInstanceType != MapInstanceType.BaseMapInstance ||
                     TargettedByMonstersList(false).Count < MaxTargetedByMonstersCount(false) &&
                     TargettedByMonstersList(true).Count < MaxTargetedByMonstersCount(true);
             }
@@ -700,7 +700,7 @@ namespace OpenNos.GameObject
                 else
                 {
 
-                    targettedByMonsters = MapInstance.Monsters.Where(s => s.Target != null &&  s.Target.MapEntityId == MapEntityId && s.Target.EntityType == EntityType).Select(s => s.BattleEntity).ToList();
+                    targettedByMonsters = MapInstance?.Monsters.Where(s => s.Target != null &&  s.Target.MapEntityId == MapEntityId && s.Target.EntityType == EntityType).Select(s => s.BattleEntity).ToList();
                     if (Character != null)
                     {
                         Character.Mates.Where(s => s.IsTeamMember).ToList().ForEach(m => targettedByMonsters.AddRange(MapInstance.Monsters.Where(s => s.Target?.MapEntityId == m.BattleEntity.MapEntityId && s.Target.EntityType == m.BattleEntity.EntityType).Select(s => s.BattleEntity).ToList()));
@@ -863,10 +863,11 @@ namespace OpenNos.GameObject
                             if (MapInstance?.MapInstanceType == MapInstanceType.RaidInstance
                                 && MapMonster?.MonsterVNum == 2326 /* Witch Laurena */)
                             {
+                                if (MapInstance != null)
                                 MapInstance.InstanceBag.LaurenaRound++;
 
-                                MapInstance.Broadcast(StaticPacketHelper.Say(3, MapEntityId, 1, Language.Instance.GetMessageFromKey("GET_OVER_HERE")));
-                                MapInstance.Broadcast($"npc_req 3 {MapEntityId} 9685");
+                                MapInstance?.Broadcast(StaticPacketHelper.Say(3, MapEntityId, 1, Language.Instance.GetMessageFromKey("GET_OVER_HERE")));
+                                MapInstance?.Broadcast($"npc_req 3 {MapEntityId} 9685");
 
                                 Observable.Timer(TimeSpan.FromSeconds(1))
                                     .Subscribe(observer =>
@@ -972,14 +973,14 @@ namespace OpenNos.GameObject
                         }
                         if (Buffs.Any(s => s.Card.CardId == 728))
                         {
-                            MapInstance.Broadcast(Character.GenerateBfePacket(728, 0));
+                            MapInstance?.Broadcast(Character.GenerateBfePacket(728, 0));
                         }
 
                         if (Buffs.Any(s => s.Card.CardId == 729))
                         {
-                            MapInstance.Broadcast(Character.GenerateBfePacket(729, 0));
+                            MapInstance?.Broadcast(Character.GenerateBfePacket(729, 0));
                         }
-                        MapInstance.Broadcast(Character.GenerateBfePacket(727, 1000));
+                        MapInstance?.Broadcast(Character.GenerateBfePacket(727, 1000));
                         break;
 
                     case 728:
@@ -989,14 +990,14 @@ namespace OpenNos.GameObject
                         }
                         if (Buffs.Any(s => s.Card.CardId == 727))
                         {
-                            MapInstance.Broadcast(Character.GenerateBfePacket(727, 0));
+                            MapInstance?.Broadcast(Character.GenerateBfePacket(727, 0));
                         }
 
                         if (Buffs.Any(s => s.Card.CardId == 729))
                         {
-                            MapInstance.Broadcast(Character.GenerateBfePacket(729, 0));
+                            MapInstance?.Broadcast(Character.GenerateBfePacket(729, 0));
                         }
-                        MapInstance.Broadcast(Character.GenerateBfePacket(728, 1000));
+                        MapInstance?.Broadcast(Character.GenerateBfePacket(728, 1000));
                         break;
 
                     case 729:
@@ -1006,14 +1007,14 @@ namespace OpenNos.GameObject
                         }
                         if (Buffs.Any(s => s.Card.CardId == 727))
                         {
-                            MapInstance.Broadcast(Character.GenerateBfePacket(727, 0));
+                            MapInstance?.Broadcast(Character.GenerateBfePacket(727, 0));
                         }
 
                         if (Buffs.Any(s => s.Card.CardId == 728))
                         {
-                            MapInstance.Broadcast(Character.GenerateBfePacket(728, 0));
+                            MapInstance?.Broadcast(Character.GenerateBfePacket(728, 0));
                         }
-                        MapInstance.Broadcast(Character.GenerateBfePacket(729, 1000));
+                        MapInstance?.Broadcast(Character.GenerateBfePacket(729, 1000));
                         break;
                 }
 
@@ -1400,7 +1401,7 @@ namespace OpenNos.GameObject
                                     break;
                                 }
 
-                                MapInstance.Broadcast(Character.GenerateBfePacket(indicator.Card.CardId, 0));
+                                MapInstance?.Broadcast(Character.GenerateBfePacket(indicator.Card.CardId, 0));
 
                                 Character.UltimatePoints = 0;
                                 Character.Session.SendPacket(Character.GenerateFtPtPacket());
@@ -1595,16 +1596,16 @@ namespace OpenNos.GameObject
                 {
                     if (ownedMonsters.LastOrDefault() is MapMonster first)
                     {
-                        first.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, first.MapMonsterId));
-                        first.MapInstance.RemoveMonster(first);
+                        first.MapInstance?.Broadcast(StaticPacketHelper.Out(UserType.Monster, first.MapMonsterId));
+                        first.MapInstance?.RemoveMonster(first);
                     }
                 }
                 else
                 {
                     ownedMonsters.ToList().ForEach(m =>
                     {
-                        m.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Monster, m.MapMonsterId));
-                        m.MapInstance.RemoveMonster(m);
+                        m.MapInstance?.Broadcast(StaticPacketHelper.Out(UserType.Monster, m.MapMonsterId));
+                        m.MapInstance?.RemoveMonster(m);
                     });
                 }
             }
@@ -1625,16 +1626,16 @@ namespace OpenNos.GameObject
                 {
                     if (ownedNpcs.LastOrDefault() is MapNpc first)
                     {
-                        first.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Npc, first.MapNpcId));
-                        first.MapInstance.RemoveNpc(first);
+                        first.MapInstance?.Broadcast(StaticPacketHelper.Out(UserType.Npc, first.MapNpcId));
+                        first.MapInstance?.RemoveNpc(first);
                     }
                 }
                 else
                 {
                     ownedNpcs.ToList().ForEach(m =>
                     {
-                        m.MapInstance.Broadcast(StaticPacketHelper.Out(UserType.Npc, m.MapNpcId));
-                        m.MapInstance.RemoveNpc(m);
+                        m.MapInstance?.Broadcast(StaticPacketHelper.Out(UserType.Npc, m.MapNpcId));
+                        m.MapInstance?.RemoveNpc(m);
                     });
                 }
             }
@@ -1642,7 +1643,7 @@ namespace OpenNos.GameObject
 
         public void ClearEnemyFalcon()
         {
-            MapInstance.BattleEntities.Where(s => s.FalconFocusedEntityId == MapEntityId).ToList().ForEach(s =>
+            MapInstance?.BattleEntities.Where(s => s.FalconFocusedEntityId == MapEntityId).ToList().ForEach(s =>
             {
                 s.ClearOwnFalcon();
             });
@@ -1652,9 +1653,9 @@ namespace OpenNos.GameObject
         {
             if (FalconFocusedEntityId != 0)
             {
-                if (MapInstance.BattleEntities.FirstOrDefault(s => s.MapEntityId == FalconFocusedEntityId) is BattleEntity FalconFocusedEntity)
+                if (MapInstance?.BattleEntities.FirstOrDefault(s => s.MapEntityId == FalconFocusedEntityId) is BattleEntity FalconFocusedEntity)
                 {
-                    MapInstance.Broadcast($"eff_ob  {(byte)FalconFocusedEntity.UserType} {FalconFocusedEntityId} 0 4269");
+                    MapInstance?.Broadcast($"eff_ob  {(byte)FalconFocusedEntity.UserType} {FalconFocusedEntityId} 0 4269");
                 }
                 FalconFocusedEntityId = 0;
             }
@@ -1781,7 +1782,7 @@ namespace OpenNos.GameObject
             {
                 X = PositionX,
                 Y = PositionY
-            }, MapInstance.Map.JaggedGrid);
+            }, MapInstance?.Map.JaggedGrid);
         }
 
         public int GetDamage(int damage, BattleEntity damager, bool dontKill = false, bool fromDebuff = false)
@@ -1882,9 +1883,9 @@ namespace OpenNos.GameObject
 
                     if (MapInstance != null)
                     {
-                        if (MapInstance.MapInstanceType != MapInstanceType.TalentArenaMapInstance)
+                        if (MapInstance?.MapInstanceType != MapInstanceType.TalentArenaMapInstance)
                         {
-                            Character.MapInstance.InstanceBag.DeadList.Add(Character.CharacterId);
+                            Character.MapInstance?.InstanceBag.DeadList.Add(Character.CharacterId);
                         }
                     }
                 }
@@ -2224,7 +2225,7 @@ namespace OpenNos.GameObject
                 {
                     return false;
                 }
-                if (MapInstance.InstanceBag?.EndState != 0)
+                if (MapInstance?.InstanceBag?.EndState != 0)
                 {
                     return false;
                 }
@@ -2237,15 +2238,15 @@ namespace OpenNos.GameObject
                                 return false;
                             }
                             // User in SafeZone
-                            if (MapInstance.MapInstanceId == ServerManager.Instance.ArenaInstance.MapInstanceId
-                             && ((MapInstance.Map.JaggedGrid[Character.PositionX][Character.PositionY]?.Value != 0 && (MapInstance.Map.JaggedGrid[Character.PositionX][Character.PositionY]?.Value != 16 || Character.PositionY == 35))
-                             || (receiver.MapInstance.Map.JaggedGrid[receiver.PositionX][receiver.PositionY]?.Value != 0 && (MapInstance.Map.JaggedGrid[receiver.PositionX][receiver.PositionY]?.Value != 16 || receiver.PositionY == 35))))
+                            if (MapInstance?.MapInstanceId == ServerManager.Instance.ArenaInstance.MapInstanceId
+                             && ((MapInstance?.Map.JaggedGrid[Character.PositionX][Character.PositionY]?.Value != 0 && (MapInstance?.Map.JaggedGrid[Character.PositionX][Character.PositionY]?.Value != 16 || Character.PositionY == 35))
+                             || (receiver.MapInstance?.Map.JaggedGrid[receiver.PositionX][receiver.PositionY]?.Value != 0 && (MapInstance?.Map.JaggedGrid[receiver.PositionX][receiver.PositionY]?.Value != 16 || receiver.PositionY == 35))))
                             {
                                 return false;
                             }
-                            if (MapInstance.MapInstanceId == ServerManager.Instance.FamilyArenaInstance.MapInstanceId
-                             && (MapInstance.Map.JaggedGrid[Character.PositionX][Character.PositionY]?.Value != 0
-                             || receiver.MapInstance.Map.JaggedGrid[receiver.PositionX][receiver.PositionY]?.Value != 0))
+                            if (MapInstance?.MapInstanceId == ServerManager.Instance.FamilyArenaInstance.MapInstanceId
+                             && (MapInstance?.Map.JaggedGrid[Character.PositionX][Character.PositionY]?.Value != 0
+                             || receiver.MapInstance?.Map.JaggedGrid[receiver.PositionX][receiver.PositionY]?.Value != 0))
                             {
                                 return false;
                             }
@@ -2254,15 +2255,15 @@ namespace OpenNos.GameObject
                             {
                                 case EntityType.Player:
                                     {
-                                        if (receiver.Character.InvisibleGm)
+                                        if (receiver.Character.InvisibleGm || MapInstance == null)
                                         {
                                             return false;
                                         }
                                         if (MapInstance.Map.MapTypes.Any(s => s.MapTypeId == (short)MapTypeEnum.Act4))
                                         {
                                             if (Character.Faction != receiver.Character.Faction
-                                                && MapInstance.Map.MapId != 130
-                                                && MapInstance.Map.MapId != 131)
+                                                && MapInstance?.Map.MapId != 130
+                                                && MapInstance?.Map.MapId != 131)
                                             {
                                                 return true;
                                             }

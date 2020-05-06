@@ -4,6 +4,7 @@ using OpenNos.DAL.EF.Entities;
 using OpenNos.DAL.EF.Helpers;
 using OpenNos.DAL.Interface;
 using OpenNos.Data.Achievements;
+using OpenNos.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,28 @@ namespace OpenNos.DAL.DAO
 {
     public class CharacterAchievementDAO : ICharacterAchievementDAO
     {
+        public DeleteResult Delete(long characterId, long questId)
+        {
+            try
+            {
+                using (OpenNosContext context = DataAccessHelper.CreateContext())
+                {
+                    CharacterAchievement charQuest = context.CharacterAchievements.FirstOrDefault(i => i.CharacterId == characterId && i.AchievementId == questId);
+                    if (charQuest != null)
+                    {
+                        context.CharacterAchievements.Remove(charQuest);
+                        context.SaveChanges();
+                    }
+                    return DeleteResult.Deleted;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+                return DeleteResult.Error;
+            }
+        }
+
         public CharacterAchievementDTO InsertOrUpdate(CharacterAchievementDTO charQuest)
         {
             try

@@ -65,10 +65,10 @@ namespace OpenNos.GameObject.Event
 
             Observable.Timer(TimeSpan.FromMinutes(60)).Subscribe(e =>
             {
-                if(bitoren != null)
+                if (bitoren != null)
                 {
                     Portal p = bitoren.Portals.Where(p => p.Type == (byte)PortalType.Raid).FirstOrDefault();
-                    if(p != null)
+                    if (p != null)
                     {
                         p.IsDisabled = true;
                         bitoren.Broadcast(p.GenerateGp());
@@ -80,7 +80,7 @@ namespace OpenNos.GameObject.Event
                         ServerManager.Instance.Act6AngelStat.Percentage = 0;
                         ServerManager.Instance.Act6AngelStat.IsBossZenas = false;
                         ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("ACT6_ZENAS_RAID_CLOSED"), 0));
-                    } 
+                    }
                     else
                     {
                         ServerManager.Instance.Act6DemonStat.Percentage = 0;
@@ -94,5 +94,6 @@ namespace OpenNos.GameObject.Event
         }
 
         #endregion
+
     }
 }

@@ -50,6 +50,7 @@ namespace OpenNos.Master.Library.Client
 
         public void SendMail(MailDTO mail) => Task.Run(() => CommunicationServiceClient.Instance.OnSendMail(mail));
 
+        public void UpdateCharacterAchievement(long characterId, long achievementId) => CommunicationServiceClient.Instance.OnUpdateCharacterAchievement(characterId, achievementId);
         public void ChangeAuthority(long accountId, AuthorityType authority) => Task.Run(() => CommunicationServiceClient.Instance.OnAuthorityChange(accountId, authority));
 
         #endregion
