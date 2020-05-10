@@ -116,6 +116,8 @@ namespace OpenNos.GameObject.Networking
 
         public DateTime Act4RaidStart { get; set; }
 
+        public DateTime Act6TsStart { get; set; }
+
         public Act6Stat Act6AngelStat { get; set; }
 
         public Act6Stat Act6DemonStat { get; set; }
@@ -459,7 +461,16 @@ namespace OpenNos.GameObject.Networking
                             else if (3 - save.Count(s => s == session.Character.CharacterId) > 0)
                             {
                                 session.SendPacket(UserInterfaceHelper.GenerateInfo(string.Format(Language.Instance.GetMessageFromKey("YOU_HAVE_LIFE"), 2 - session.CurrentMapInstance.InstanceBag.DeadList.Count(s => s == session.Character.CharacterId))));
-
+                                if (session.HasCurrentMapInstance && session.CurrentMapInstance.Map.MapId == 2605 && (session.Character.PositionX <= 176 && session.Character.PositionX >= 143) && (session.Character.PositionY <= 233 && session.Character.PositionY >= 200))
+                                {
+                                    session.Character.BattleEntity.TeleportTo(new MapCell { X = 160, Y = 175 });
+                                }
+                                if (session.HasCurrentMapInstance && session.CurrentMapInstance.Map.MapId == 2602
+                                    && (session.Character.PositionX <= 265 && session.Character.PositionX >= 201) 
+                                        && (session.Character.PositionY <= 132 && session.Character.PositionY >= 69))
+                                {
+                                    session.Character.BattleEntity.TeleportTo(new MapCell { X = 160, Y = 173 });
+                                }
                                 session.Character.Group?.Sessions.ForEach(grpSession =>
                                 {
                                     grpSession?.SendPacket(grpSession.Character.Group?.GeneraterRaidmbf(grpSession));
@@ -641,6 +652,20 @@ namespace OpenNos.GameObject.Networking
                         {
                             session.Character.Faction = (FactionType)session.Character.OriginalFaction;
                             session.SendPacket(session.Character.GenerateFaction());
+                        }
+                    }
+
+                    //Act6 TS faction
+                    if (gotoMapInstance.IsAct6Ts)
+                    {
+                        if (gotoMapInstance.Sessions.ToList().Count(s => s.Character?.Act6Faction == FactionType.Angel) >
+                            gotoMapInstance.Sessions.ToList().Count(s => s.Character?.Act6Faction == FactionType.Demon))
+                        {
+                            session.Character.Act6Faction = FactionType.Demon;
+                        }
+                        else
+                        {
+                            session.Character.Act6Faction = FactionType.Angel;
                         }
                     }
 

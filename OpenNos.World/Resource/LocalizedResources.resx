@@ -2073,4 +2073,10 @@
   <data name="NOT_HEROIC_EQUIPE" xml:space="preserve">
     <value>You cannot use an Heroic shell on a Not-Heroic equipment.</value>
   </data>
+  <data name="ACT6_TS_CLOSED" xml:space="preserve">
+    <value>Act6 Time Space closed.</value>
+  </data>
+  <data name="ACT6_TS_OPENED" xml:space="preserve">
+    <value>Act6 Time Space opened in {0}.</value>
+  </data>
 </root>

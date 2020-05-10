@@ -1144,8 +1144,16 @@ namespace OpenNos.Handler
                         {
                             target.Character.RemoveVehicle();
                         }
-                        Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
+
+                        if(target.CurrentMapInstance.IsAct6Ts)
+                        {
+                            Observable.Timer(TimeSpan.FromMilliseconds(2000)).Subscribe(o => target.Character.act6TsRevive());
+                        }
+                        else
+                        {
+                            Observable.Timer(TimeSpan.FromMilliseconds(1000)).Subscribe(o =>
                             ServerManager.Instance.AskPvpRevive(target.Character.CharacterId));
+                        }
                     }
                     else
                     {

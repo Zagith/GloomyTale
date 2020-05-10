@@ -26,6 +26,7 @@ namespace OpenNos.GameObject
             DeadList = new ConcurrentBag<long>();
             ButtonLocker = new Locker();
             MonsterLocker = new Locker();
+            StatueCounter = new Locker();
         }
 
         #endregion
@@ -60,6 +61,7 @@ namespace OpenNos.GameObject
 
         public int LaurenaRound { get; set; }
 
+        public Locker StatueCounter { get; set; }
         #endregion
 
         #region Methods

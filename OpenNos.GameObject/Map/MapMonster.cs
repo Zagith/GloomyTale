@@ -2155,6 +2155,46 @@ namespace OpenNos.GameObject
             {
                 int castTime = 0;
 
+                if (MapInstance.MapInstanceType == MapInstanceType.RaidInstance && Monster.NpcMonsterVNum == 2514)
+                {
+                    if (ServerManager.RandomNumber() < 30)
+                    {
+                        List<ClientSession> raidCharacters = target.Character?.Group?.Sessions.ToList().OrderBy(x => Guid.NewGuid()).Take(ServerManager.RandomNumber(1,4)).ToList();
+                        foreach(ClientSession charTeleporter in raidCharacters)
+                        {
+                            charTeleporter.Character.BattleEntity.TeleportTo(new MapCell { X = (short)ServerManager.RandomNumber(150, 170), Y = (short)ServerManager.RandomNumber(205, 228) });
+                            charTeleporter.Character.AddBuff(new Buff(455, BattleEntity.Level), BattleEntity);
+                            MapCell mapCell = new MapCell
+                            {
+                                X = (short)ServerManager.RandomNumber(150, 170),
+                                Y = (short)ServerManager.RandomNumber(205, 228),
+                            };
+                            MonsterToSummon monstersToSummon = new MonsterToSummon((short)ServerManager.RandomNumber(2516, 2519), mapCell, null, true);
+                            EventHelper.Instance.RunEvent(new EventContainer(MapInstance, EventActionType.SPAWNMONSTER, monstersToSummon));
+                        }
+                    }
+                }
+
+                if (MapInstance.MapInstanceType == MapInstanceType.RaidInstance && Monster.NpcMonsterVNum == 2504)
+                {
+                    if (ServerManager.RandomNumber() < 30)
+                    {
+                        List<ClientSession> raidCharacters = target.Character?.Group?.Sessions.ToList().OrderBy(x => Guid.NewGuid()).Take(ServerManager.RandomNumber(1, 4)).ToList();
+                        foreach (ClientSession charTeleporter in raidCharacters)
+                        {
+                            if (charTeleporter.Character.PositionX >= 135 && charTeleporter.Character.PositionY <= 175 &&
+                                charTeleporter.Character.PositionY >= 108 && charTeleporter.Character.PositionY <= 183)
+                            charTeleporter.Character.BattleEntity.TeleportTo(new MapCell { X = 227, Y = 131 });
+                            MapCell mapCell = new MapCell
+                            {
+                                X = (short)ServerManager.RandomNumber(237, 257),
+                                Y = (short)ServerManager.RandomNumber(86, 102),
+                            };
+                            MonsterToSummon monstersToSummon = new MonsterToSummon((short)ServerManager.RandomNumber(2516, 2519), mapCell, null, true);
+                            EventHelper.Instance.RunEvent(new EventContainer(MapInstance, EventActionType.SPAWNMONSTER, monstersToSummon));
+                        }
+                    }
+                }
                 if (npcMonsterSkill != null)
                 {
                     if (CurrentMp < npcMonsterSkill.Skill.MpCost)
@@ -2162,7 +2202,7 @@ namespace OpenNos.GameObject
                         FollowTarget(target);
                         return;
                     }
-
+                    
                     _previousSkillVNum = npcMonsterSkill.SkillVNum;
 
                     npcMonsterSkill.LastSkillUse = DateTime.Now;

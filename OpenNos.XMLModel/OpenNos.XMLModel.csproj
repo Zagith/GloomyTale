@@ -45,6 +45,7 @@
     <Compile Include="Events\End.cs" />
     <Compile Include="Events\GenerateClock.cs" />
     <Compile Include="Events\GenerateMapClock.cs" />
+    <Compile Include="Events\IncreaseCounter.cs" />
     <Compile Include="Events\Move.cs" />
     <Compile Include="Events\NpcDialog.cs" />
     <Compile Include="Events\OnAreaEntry.cs" />
@@ -57,6 +58,8 @@
     <Compile Include="Events\OnMapClean.cs" />
     <Compile Include="Events\OnMoveOnMap.cs" />
     <Compile Include="Events\OnNoticing.cs" />
+    <Compile Include="Events\OnStatueLockerOpen.cs" />
+    <Compile Include="Events\OnStatueOpen.cs" />
     <Compile Include="Events\OnStop.cs" />
     <Compile Include="Events\OnTarget.cs" />
     <Compile Include="Events\OnTimeout.cs" />

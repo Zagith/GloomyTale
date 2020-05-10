@@ -1227,6 +1227,10 @@ namespace OpenNos.Handler
                         break;
 
                     case (sbyte)PortalType.Raid:
+                        if (Session.Character.MapInstance.MapInstanceType == MapInstanceType.RaidInstance)
+                        {
+                            break;
+                        }
                         if (Session.Character.Group?.Raid != null)
                         {
                             if (Session.Character.Group.IsLeader(Session))
@@ -1317,6 +1321,16 @@ namespace OpenNos.Handler
                         }
 
                         return;
+
+                    case (sbyte)PortalType.TimeSpace:
+                        GameObject.MapInstance map = ServerManager.GetMapInstanceByMapId(portal.DestinationMapId);
+                        if(map == null || !map.IsAct6Ts)
+                        {
+                            Session.SendPacket(
+                            Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("PORTAL_BLOCKED"), 10));
+                            return;
+                        }
+                        break;
 
                     default:
                         Session.SendPacket(

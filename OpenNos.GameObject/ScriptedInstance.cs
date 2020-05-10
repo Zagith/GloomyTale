@@ -330,7 +330,7 @@ namespace OpenNos.GameObject
                     evts.AddRange(SpawnButton(mapInstance, createMap.SpawnButton));
 
                     // OnCharacterDiscoveringMap
-                    evts.AddRange(OnCharacterDiscoveringMap(mapInstance, createMap));
+                    evts.AddRange(OnCharacterDiscoveringMap(mapInstance, createMap));                    
 
                     // GenerateClock
                     if (createMap.GenerateClock != null)
@@ -356,6 +356,11 @@ namespace OpenNos.GameObject
                         evts.AddRange(OnLockerOpen(mapInstance, createMap.OnLockerOpen));
                     }
 
+                    // OnSatueOpen
+                    if (createMap.OnStatueLockerOpen != null)
+                    {
+                        evts.AddRange(OnStatueLockerOpen(mapInstance, createMap.OnStatueLockerOpen));
+                    }
                     // OnAreaEntry
                     if (createMap.OnAreaEntry != null)
                     {
@@ -381,7 +386,38 @@ namespace OpenNos.GameObject
                     {
                         evts.Add(new EventContainer(mapInstance, EventActionType.SETMONSTERLOCKERS, createMap.SetMonsterLockers.Value));
                     }
+
+                    if (createMap.SetStatueLockers != null)
+                    {
+                        evts.Add(new EventContainer(mapInstance, EventActionType.INCREASECOUNTERS, createMap.SetStatueLockers.Value));
+                    }                    
                 });
+            }
+
+            return evts;
+        }
+
+        private List<EventContainer> OnStatueLockerOpen(MapInstance mapInstance, XMLModel.Events.OnStatueOpen onLockerOpen)
+        {
+            List<EventContainer> evts = new List<EventContainer>();
+
+            if (onLockerOpen != null)
+            {
+                List<EventContainer> onLockerOpenEvents = new List<EventContainer>();
+                                
+                // Set Statue Lockers
+                if (onLockerOpen.SetStatueLockers != null)
+                {
+                    onLockerOpenEvents.Add(new EventContainer(mapInstance, EventActionType.INCREASECOUNTERS, onLockerOpen.SetStatueLockers.Value));
+                }
+
+                // SummonMonster
+                onLockerOpenEvents.AddRange(SummonMonster(mapInstance, onLockerOpen.SummonMonster, true));
+
+                // RefreshOnLockerOpen
+                onLockerOpenEvents.AddRange(OnStatueLockerOpen(mapInstance, onLockerOpen.RefreshOnStatueLockerOpen));
+
+                evts.Add(new EventContainer(mapInstance, EventActionType.REGISTEREVENT, new Tuple<string, List<EventContainer>>(nameof(XMLModel.Events.OnStatueOpen), onLockerOpenEvents)));
             }
 
             return evts;
@@ -457,6 +493,13 @@ namespace OpenNos.GameObject
                 {
                     onLockerOpenEvents.Add(new EventContainer(mapInstance, EventActionType.SETMONSTERLOCKERS, onLockerOpen.SetMonsterLockers.Value));
                 }
+
+                // Set Statue Lockers
+                if (onLockerOpen.SetStatueLockers != null)
+                {
+                    onLockerOpenEvents.Add(new EventContainer(mapInstance, EventActionType.INCREASECOUNTERS, onLockerOpen.SetStatueLockers.Value));
+                }
+
                 // Set Button Lockers
                 if (onLockerOpen.SetButtonLockers != null)
                 {
@@ -600,6 +643,13 @@ namespace OpenNos.GameObject
                 {
                     onDiscoverEvents.Add(new EventContainer(mapInstance, EventActionType.SETMONSTERLOCKERS, createMap.OnCharacterDiscoveringMap.SetMonsterLockers.Value));
                 }
+
+                // Set Statue Lockers
+                if (createMap.OnCharacterDiscoveringMap.SetStatueLockers != null)
+                {
+                    onDiscoverEvents.Add(new EventContainer(mapInstance, EventActionType.INCREASECOUNTERS, createMap.OnCharacterDiscoveringMap.SetStatueLockers.Value));
+                }
+
                 // Set Button Lockers
                 if (createMap.OnCharacterDiscoveringMap.SetButtonLockers != null)
                 {
@@ -708,6 +758,10 @@ namespace OpenNos.GameObject
                 // SummonMonster
                 onMapCleanEvents.AddRange(SummonMonster(mapInstance, onMapClean.SummonMonster));
 
+
+                // SpawnPortal
+                onMapCleanEvents.AddRange(SpawnPortal(mapInstance, onMapClean.SpawnPortal));
+
                 // RefreshOnMapClean
                 onMapCleanEvents.AddRange(OnMapClean(mapInstance, onMapClean.RefreshOnMapClean));
 
@@ -801,6 +855,13 @@ namespace OpenNos.GameObject
                 {
                     onMoveOnMapEvents.Add(new EventContainer(mapInstance, EventActionType.SETMONSTERLOCKERS, onMoveOnMap.SetMonsterLockers.Value));
                 }
+
+                // Set Statue Lockers
+                if (onMoveOnMap.SetStatueCounters != null)
+                {
+                    onMoveOnMapEvents.Add(new EventContainer(mapInstance, EventActionType.INCREASECOUNTERS, onMoveOnMap.SetStatueCounters.Value));
+                }
+
                 // Set Button Lockers
                 if (onMoveOnMap.SetButtonLockers != null)
                 {
@@ -1105,7 +1166,7 @@ namespace OpenNos.GameObject
             return evts;
         }
 
-        private List<EventContainer> SpawnPortal(MapInstance mapInstance, XMLModel.Events.SpawnPortal[] spawnPortal)
+        private List<EventContainer> SpawnPortal(MapInstance mapInstance, XMLModel.Events.SpawnPortal[] spawnPortal, long monster = 0)
         {
             List<EventContainer> evts = new List<EventContainer>();
 
@@ -1142,6 +1203,10 @@ namespace OpenNos.GameObject
                         }
                     }
 
+                    if (portal.SourceX == 160 && portal.SourceY == 202)
+                    {
+                        evts.Add(new EventContainer(mapInstance, EventActionType.CUTSCENE, 9784));
+                    }
                     evts.Add(new EventContainer(mapInstance, EventActionType.SPAWNPORTAL, portal));
                 }
             }
@@ -1194,6 +1259,12 @@ namespace OpenNos.GameObject
                             }
                         }
 
+                        // IncreaseCounter
+                        if (summon.OnDeath.IncreaseCounters != null)
+                        {
+                            monster.DeathEvents.Add(new EventContainer(mapInstance, EventActionType.REMOVESTATUELOCKER, null));
+                        }
+
                         // AddClockTime
                         if (summon.OnDeath.AddClockTime != null)
                         {
@@ -1222,6 +1293,12 @@ namespace OpenNos.GameObject
                         if (summon.OnDeath.ChangePortalType != null)
                         {
                             monster.DeathEvents.AddRange(ChangePortalType(mapInstance, summon.OnDeath.ChangePortalType));
+                        }
+
+                        // ChangePortalType
+                        if (summon.OnDeath.SpawnPortal != null)
+                        {
+                            monster.DeathEvents.AddRange(SpawnPortal(mapInstance, summon.OnDeath.SpawnPortal, monster.VNum));
                         }
 
                         // SendMessage
@@ -1357,6 +1434,14 @@ namespace OpenNos.GameObject
                         monster.SpawnEvents.Add(new EventContainer(mapInstance, EventActionType.MOVE, new ZoneEvent { X = summon.Roam.FirstX, Y = summon.Roam.FirstY }));
                     }
 
+                    if (monster.VNum == 2514)
+                    {
+                        evts.Add(new EventContainer(mapInstance, EventActionType.CUTSCENE, 9786));
+                    }
+                    if (monster.VNum == 2504)
+                    {
+                        evts.Add(new EventContainer(mapInstance, EventActionType.CUTSCENE, 9783));
+                    }
                     evts.Add(new EventContainer(mapInstance, EventActionType.SPAWNMONSTER, monster));
                 }
             }

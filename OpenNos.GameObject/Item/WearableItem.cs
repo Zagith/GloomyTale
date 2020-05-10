@@ -202,13 +202,49 @@ namespace OpenNos.GameObject
                         {
                             case EquipmentType.MainWeapon:
                                 {
-                                    if (partnerEquipment.ItemSubType != 12)
+                                    if (ItemSubType == 12)
                                     {
-                                        isBadEquipment = true;
+                                        switch (VNum)
+                                        {
+                                            case 990:
+                                                if (mate.Monster.AttackClass == (byte)AttackType.Melee)
+                                                {
+                                                    mate.WeaponInstance = inv;
+                                                }
+                                                else
+                                                {
+                                                    session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("BAD_EQUIPMENT"), 10));
+                                                    return;
+                                                }
+                                                break;
+                                            case 991:
+                                                if (mate.Monster.AttackClass == (byte)AttackType.Range)
+                                                {
+                                                    mate.WeaponInstance = inv;
+                                                }
+                                                else
+                                                {
+                                                    session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("BAD_EQUIPMENT"), 10));
+                                                    return;
+                                                }
+                                                break;
+                                            case 992:
+                                                if (mate.Monster.AttackClass == (byte)AttackType.Magical)
+                                                {
+                                                    mate.WeaponInstance = inv;
+                                                }
+                                                else
+                                                {
+                                                    session.SendPacket(session.Character.GenerateSay(Language.Instance.GetMessageFromKey("BAD_EQUIPMENT"), 10));
+                                                    return;
+                                                }
+                                                break;
+                                        }
+                                        break;
                                     }
                                     else
                                     {
-                                        mate.WeaponInstance = inv;
+                                        isBadEquipment = true;
                                     }
                                 }
                                 break;

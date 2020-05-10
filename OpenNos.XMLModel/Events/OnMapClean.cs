@@ -27,6 +27,9 @@ namespace OpenNos.XMLModel.Events
         public SummonMonster[] SummonMonster { get; set; }
 
         [XmlElement]
+        public SpawnPortal[] SpawnPortal { get; set; }
+
+        [XmlElement]
         public OnMapClean RefreshOnMapClean { get; set; }
 
         [XmlElement]

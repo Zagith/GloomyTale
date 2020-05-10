@@ -227,6 +227,8 @@ namespace OpenNos.GameObject
 
         public Family Family { get; set; }
 
+        public FactionType Act6Faction { get; set; } = FactionType.Angel;
+
         public FamilyCharacterDTO FamilyCharacter => Family?.FamilyCharacters.Find(s => s.CharacterId == CharacterId);
 
         public ThreadSafeGenericList<long> FamilyInviteCharacters { get; set; }
@@ -356,6 +358,8 @@ namespace OpenNos.GameObject
         public DateTime LastPulse { get; set; }
 
         public DateTime LastTarget { get; set; }
+
+        public DateTime Act6Target { get; set; }
 
         public DateTime LastFreeze { get; set; }
 
@@ -2245,6 +2249,23 @@ namespace OpenNos.GameObject
                 }
                 #endregion
 
+                #region Act6 TS effect
+                if (Act6Target.AddSeconds(4) <= DateTime.Now && MapInstance.IsAct6Ts)
+                {
+                    switch(Act6Faction)
+                    {
+                        case FactionType.Angel:
+                            Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, Session.Character.CharacterId, 3013));
+                            break;
+
+                        case FactionType.Demon:
+                                Session.CurrentMapInstance?.Broadcast(StaticPacketHelper.GenerateEff(UserType.Player, CharacterId, 3012));
+                            break;
+                    }
+                    Act6Target = DateTime.Now;
+                }
+                #endregion
+
                 if (BubbleMessage != null && BubbleMessageEnd <= DateTime.Now)
                 {
                     BubbleMessage = null;
@@ -2954,6 +2975,14 @@ namespace OpenNos.GameObject
             }
         }
 
+        public void act6TsRevive()
+        {
+            ServerManager.Instance.ChangeMap(CharacterId, 228, 73, 116);
+            MapInstance?.Broadcast(Session, GenerateTp());
+            MapInstance?.Broadcast(GenerateRevive());
+            Session.SendPacket(GenerateStat());
+        }
+
         public void SetSeal()
         {
             Hp = 0;
@@ -3618,7 +3647,19 @@ namespace OpenNos.GameObject
                     return;
                 }
                 monsterToAttack.RunDeathEvent();
-
+                if (Session.HasCurrentMapInstance && Session.CurrentMapInstance.Map.MapId == 2605 && 
+                    (Session.Character.PositionX <= 176 && Session.Character.PositionX >= 143) && 
+                        (Session.Character.PositionY <= 233 && Session.Character.PositionY >= 200))
+                {
+                    RemoveBuff(455);
+                    BattleEntity.TeleportTo(new MapCell { X = 160, Y = 175 });
+                }
+                if (Session.HasCurrentMapInstance && Session.CurrentMapInstance.Map.MapId == 2602 &&
+                    (Session.Character.PositionX <= 265 && Session.Character.PositionX >= 201) &&
+                        (Session.Character.PositionY <= 132 && Session.Character.PositionY >= 69))
+                {
+                    BattleEntity.TeleportTo(new MapCell { X = 160, Y = 173 });
+                }
                 if (monsterToAttack.GetBuff(CardType.SpecialEffects, (byte)AdditionalTypes.SpecialEffects.DecreaseKillerHP) is int[] DecreaseKillerHp)
                 {
                     bool EffectResistance = false;
@@ -3740,6 +3781,17 @@ namespace OpenNos.GameObject
                     short[] explodeMonsters = new short[] { 1348, 1906 };
 
                     List<DropDTO> droplist = monsterToAttack.Monster.Drops.Where(s => (!explodeMonsters.Contains(monsterToAttack.MonsterVNum) && Session.CurrentMapInstance.Map.MapTypes.Any(m => m.MapTypeId == s.MapTypeId)) || s.MapTypeId == null).ToList();
+
+                    if(monsterToAttack.MapInstance.IsAct6Ts)
+                    {
+                        droplist.Add(new DropDTO()
+                        {
+                            ItemVNum = (short)(monsterToAttack.MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act61a) ? 5883 : 5977),
+                            Amount = 1,
+                            MonsterVNum = monsterToAttack.MonsterVNum,
+                            DropChance = 2500 // Approx
+                        });
+                    }
 
                     int levelDifference = Session.Character.Level - monsterToAttack.Monster.Level;                    
 
@@ -7330,7 +7382,7 @@ namespace OpenNos.GameObject
                 partySize = 1;
             }
 
-            double sharedHXp = npcMonster.HeroXp / partySize;
+            double sharedHXp = npcMonster.HeroXp * (partySize == 3 ? 2 : 1);
 
             double memberHXp = sharedHXp * CharacterHelper.ExperiencePenalty(Level, npcMonster.Level) * ServerManager.Instance.Configuration.RateHeroicXP;
 
@@ -7369,7 +7421,7 @@ namespace OpenNos.GameObject
                 partySize = 1;
             }
 
-            double sharedJXp = (double)npcMonster.JobXP / partySize;
+            double sharedJXp = (double)npcMonster.JobXP * (partySize == 3 ? 2 : 1);
 
             double memberJxp = sharedJXp * CharacterHelper.ExperiencePenalty(Level, npcMonster.Level) * (ServerManager.Instance.Configuration.RateXP + MapInstance.XpRate);
 

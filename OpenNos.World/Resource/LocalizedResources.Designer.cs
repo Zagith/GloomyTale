@@ -178,6 +178,24 @@ namespace OpenNos.World.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Act6 Time Space closed..
+        /// </summary>
+        internal static string ACT6_TS_CLOSED {
+            get {
+                return ResourceManager.GetString("ACT6_TS_CLOSED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Act6 Time Space opened in {0}..
+        /// </summary>
+        internal static string ACT6_TS_OPENED {
+            get {
+                return ResourceManager.GetString("ACT6_TS_OPENED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zenas audience is now closed!.
         /// </summary>
         internal static string ACT6_ZENAS_RAID_CLOSED {

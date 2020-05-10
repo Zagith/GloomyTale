@@ -110,8 +110,10 @@ namespace OpenNos.GameObject
             DroppedList = new ThreadSafeSortedList<long, MapItem>();
             Portals = new List<Portal>();
             UnlockEvents = new List<EventContainer>();
+            UnlockStatueEvents = new List<EventContainer>();
             UserShops = new Dictionary<long, MapShop>();
             RemovedMobNpcList = new List<object>();
+            IsAct6Ts = false;
             StartLife();
         }
 
@@ -140,6 +142,8 @@ namespace OpenNos.GameObject
         public int Side { get; set; }
 
         public bool IsPVP { get; set; }
+
+        public bool IsAct6Ts { get; set; }
 
         public bool IsScriptedInstance => MapInstanceType == MapInstanceType.TimeSpaceInstance || MapInstanceType == MapInstanceType.RaidInstance;
 
@@ -230,6 +234,8 @@ namespace OpenNos.GameObject
         public byte GoldMapRate { get; set; }
 
         public List<EventContainer> UnlockEvents { get; set; }
+
+        public List<EventContainer> UnlockStatueEvents { get; set; }
 
         public Dictionary<long, MapShop> UserShops { get; }
 

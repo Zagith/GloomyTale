@@ -27,6 +27,9 @@ namespace OpenNos.XMLModel.Events
         public SetMonsterLockers SetMonsterLockers { get; set; }
 
         [XmlElement]
+        public IncreaseCounter SetStatueLockers { get; set; }
+
+        [XmlElement]
         public SummonMonster[] SummonMonster { get; set; }
 
         [XmlElement]

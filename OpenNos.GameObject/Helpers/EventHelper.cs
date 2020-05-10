@@ -28,6 +28,7 @@ using OpenNos.PathFinder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
@@ -262,6 +263,9 @@ namespace OpenNos.GameObject.Helpers
                                 case "OnLockerOpen":
                                     evt.MapInstance?.UnlockEvents.AddRange(even.Item2);
                                     break;
+                                case "OnStatueOpen":
+                                    evt.MapInstance?.UnlockStatueEvents.AddRange(even.Item2);
+                                    break;
                             }
                             break;
 
@@ -299,6 +303,20 @@ namespace OpenNos.GameObject.Helpers
                                 List<EventContainer> UnlockEventsCopy = evt.MapInstance.UnlockEvents.ToList();
                                 UnlockEventsCopy.ForEach(e => RunEvent(e));
                                 evt.MapInstance.UnlockEvents.RemoveAll(s => s != null && UnlockEventsCopy.Contains(s));
+                            }
+                            break;
+
+                        case EventActionType.REMOVESTATUELOCKER:
+                            evt2 = (EventContainer)evt.Parameter;
+                            if (evt.MapInstance?.InstanceBag.StatueCounter.Current > 0)
+                            {
+                                evt.MapInstance.InstanceBag.StatueCounter.Current--;
+                            }
+                            if (evt.MapInstance?.InstanceBag.StatueCounter.Current == 0)
+                            {
+                                List<EventContainer> UnlockEventsCopy = evt.MapInstance.UnlockStatueEvents.ToList();
+                                UnlockEventsCopy.ForEach(e => RunEvent(e));
+                                evt.MapInstance.UnlockStatueEvents.RemoveAll(s => s != null && UnlockEventsCopy.Contains(s));
                             }
                             break;
 
@@ -840,6 +858,28 @@ namespace OpenNos.GameObject.Helpers
                             });
                             break;
 
+                        case EventActionType.CUTSCENE:
+                            Observable.Timer(TimeSpan.FromSeconds(1))
+                                   .Subscribe(observer =>
+                                   {
+                                        MapMonster raidmonster = evt.MapInstance?.Monsters.Where(s => s.MonsterVNum == 2514 || s.MonsterVNum == 2504).FirstOrDefault();
+                                        if (raidmonster != null)
+                                        {
+                                            evt.MapInstance?.Broadcast($"npc_req 3 {raidmonster.BattleEntity.MapEntityId} {evt.Parameter}");
+                                            Observable.Timer(TimeSpan.FromSeconds(1))
+                                                .Subscribe(observer =>
+                                                {
+                                                    evt.MapInstance.Broadcast($"ca_t {raidmonster.BattleEntity.MapEntityId} 2000");
+                                                    evt.MapInstance.Broadcast($"guri 11 3 {raidmonster.BattleEntity.MapEntityId}");
+                                                });
+                                        }
+                                   });
+                            Observable.Timer(TimeSpan.FromSeconds(5))
+                                    .Subscribe(observer =>
+                                    {
+                                        evt.MapInstance?.Broadcast("npc_req -1 -1");
+                                    });
+                            break;
                         case EventActionType.SPAWNPORTAL:
                             evt.MapInstance.CreatePortal((Portal)evt.Parameter);
                             break;
@@ -944,6 +984,11 @@ namespace OpenNos.GameObject.Helpers
                                 parameters = new Tuple<int, short, byte, int, int, short>(monster.MapMonsterId, parameters.Item2, parameters.Item3, parameters.Item4, parameters.Item5, parameters.Item6);
                             }
                             evt.MapInstance.ThrowItems(parameters);
+                            break;
+
+                        case EventActionType.INCREASECOUNTERS:
+                            evt.MapInstance.InstanceBag.StatueCounter.Current = Convert.ToByte(evt.Parameter);
+                            evt.MapInstance.InstanceBag.StatueCounter.Initial = Convert.ToByte(evt.Parameter);
                             break;
 
                         case EventActionType.SPAWNONLASTENTRY:

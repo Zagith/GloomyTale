@@ -39,7 +39,7 @@ namespace OpenNos.GameObject
                 return;
             }
 
-            MapNpc npc = Session.CurrentMapInstance.Npcs.Find(s => s.MapNpcId == packet.NpcId);
+            MapNpc npc = Session.CurrentMapInstance?.Npcs.Find(s => s.MapNpcId == packet.NpcId);
 
             TeleporterDTO tp;
 
@@ -197,7 +197,7 @@ namespace OpenNos.GameObject
                             break;
 
                         case 9:
-                            if (mate != null && mate.IsSummonable && Session.Character.MapInstance.MapInstanceType != MapInstanceType.TalentArenaMapInstance)
+                            if (mate != null && mate.IsSummonable && Session.Character.MapInstance?.MapInstanceType != MapInstanceType.TalentArenaMapInstance)
                             {
                                 if (Session.Character.Level >= mate.Level)
                                 {
@@ -328,7 +328,7 @@ namespace OpenNos.GameObject
                     break;
 
                 case 17:
-                    if (Session.Character.MapInstance.MapInstanceType != MapInstanceType.BaseMapInstance)
+                    if (Session.Character.MapInstance?.MapInstanceType != MapInstanceType.BaseMapInstance)
                     {
                         return;
                     }
@@ -340,7 +340,7 @@ namespace OpenNos.GameObject
                     {
                         double currentRunningSeconds = (DateTime.Now - Process.GetCurrentProcess().StartTime.AddSeconds(-50)).TotalSeconds;
                         double timeSpanSinceLastPortal = currentRunningSeconds - Session.Character.LastPortal;
-                        if (!(timeSpanSinceLastPortal >= 4) || !Session.HasCurrentMapInstance || ServerManager.Instance.ChannelId == 51 || Session.CurrentMapInstance.MapInstanceId == ServerManager.Instance.ArenaInstance.MapInstanceId || Session.CurrentMapInstance.MapInstanceId == ServerManager.Instance.FamilyArenaInstance.MapInstanceId)
+                        if (!(timeSpanSinceLastPortal >= 4) || !Session.HasCurrentMapInstance || ServerManager.Instance.ChannelId == 51 || Session.CurrentMapInstance?.MapInstanceId == ServerManager.Instance.ArenaInstance.MapInstanceId || Session.CurrentMapInstance.MapInstanceId == ServerManager.Instance.FamilyArenaInstance.MapInstanceId)
                         {
                             Session.SendPacket(Session.Character.GenerateSay(Language.Instance.GetMessageFromKey("CANT_MOVE"), 10));
                             return;
@@ -1452,7 +1452,7 @@ namespace OpenNos.GameObject
 
                 case 301:
                     tp = npc?.Teleporters?.FirstOrDefault(s => s.Index == packet.Type);
-                    if (Session.Character.Level > 87 && tp != null)
+                    if (Session.Character.Level == 99 && tp != null)
                     {
                         ServerManager.Instance.ChangeMap(Session.Character.CharacterId, tp.MapId, tp.MapX, tp.MapY);
                     }

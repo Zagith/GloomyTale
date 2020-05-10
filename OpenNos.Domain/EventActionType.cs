@@ -62,6 +62,9 @@ namespace OpenNos.Domain
         ONSTOP,
         ONTIMEOUT,
         REMOVEAFTER,
-        REMOVELAURENABUFF
+        REMOVELAURENABUFF,
+        INCREASECOUNTERS,
+        REMOVESTATUELOCKER,
+        CUTSCENE
     }
 }

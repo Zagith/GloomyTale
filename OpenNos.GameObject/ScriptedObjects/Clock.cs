@@ -81,6 +81,7 @@ namespace OpenNos.GameObject
                 {
                     TimeoutEvents.ForEach(ev => EventHelper.Instance.RunEvent(ev));
                     TimeoutEvents.RemoveAll(s => s != null);
+                    Enabled = false;
                 }
             }
         }

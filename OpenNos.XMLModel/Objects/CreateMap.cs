@@ -31,6 +31,9 @@ namespace OpenNos.XMLModel.Objects
         public OnLockerOpen OnLockerOpen { get; set; }
 
         [XmlElement]
+        public OnStatueOpen OnStatueLockerOpen { get; set; }
+
+        [XmlElement]
         public OnMoveOnMap[] OnMoveOnMap { get; set; }
 
         [XmlElement]
@@ -38,6 +41,9 @@ namespace OpenNos.XMLModel.Objects
 
         [XmlElement]
         public SetMonsterLockers SetMonsterLockers { get; set; }
+
+        [XmlElement]
+        public IncreaseCounter SetStatueLockers { get; set; }
 
         [XmlElement]
         public SpawnButton[] SpawnButton { get; set; }

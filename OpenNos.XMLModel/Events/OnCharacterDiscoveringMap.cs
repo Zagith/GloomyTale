@@ -40,6 +40,9 @@ namespace OpenNos.XMLModel.Events
         public SetMonsterLockers SetMonsterLockers { get; set; }
 
         [XmlElement]
+        public IncreaseCounter SetStatueLockers { get; set; }
+
+        [XmlElement]
         public StartClock StartClock { get; set; }
 
         [XmlElement]

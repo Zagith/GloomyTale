@@ -1338,6 +1338,8 @@ namespace OpenNos.Handler
                             }
                             mate.BattleEntity.BCards.RemoveAll(o => o.ItemVNum == inventory.HoldingVNum);
                             Session.SendPacket(mate.GenerateScPacket());
+                            Session.SendPackets(Session.Character.GenerateScN());
+                            Session.SendPacket(Session.Character.GenerateEquipment());
                         }
                         ItemInstance ring = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Ring, InventoryType.Wear);
                         ItemInstance bracelet = Session.Character.Inventory.LoadBySlotAndType((byte)EquipmentType.Bracelet, InventoryType.Wear);
@@ -1355,7 +1357,7 @@ namespace OpenNos.Handler
                         {
                             Session.Character.CellonOptions.AddRange(necklace.CellonOptions);
                         }
-                        Session.SendPacket(Session.Character.GenerateStat());
+                        //Session.SendPacket(Session.Character.GenerateStat());
                     }
                 }
             }

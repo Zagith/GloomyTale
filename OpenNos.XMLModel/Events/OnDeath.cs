@@ -25,6 +25,9 @@ namespace OpenNos.XMLModel.Events
         public SendPacket[] SendPacket { get; set; }
 
         [XmlElement]
+        public SpawnPortal[] SpawnPortal { get; set; }
+
+        [XmlElement]
         public End End { get; set; }
 
         [XmlElement]
@@ -59,6 +62,9 @@ namespace OpenNos.XMLModel.Events
 
         [XmlElement]
         public ThrowItem[] ThrowItem { get; set; }
+
+        [XmlElement]
+        public object IncreaseCounters { get; set; }
 
         [XmlElement]
         public Wave[] Wave { get; set; }

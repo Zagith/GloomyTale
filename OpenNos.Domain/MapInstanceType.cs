@@ -33,6 +33,8 @@ namespace OpenNos.Domain
         IceBreakerInstance,
         TalentArenaMapInstance,
         SheepGameInstance,
-        BAInstance
+        BAInstance,
+        Act6Erenia,
+        Act6Zenas
     }
 }
