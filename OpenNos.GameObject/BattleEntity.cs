@@ -2255,7 +2255,7 @@ namespace OpenNos.GameObject
                             {
                                 case EntityType.Player:
                                     {
-                                        if (receiver.Character.InvisibleGm || MapInstance == null)
+                                        if (receiver.Character.InvisibleGm || MapInstance == null || (receiver.Character.Act6Faction == Character.Act6Faction && receiver.Character.MapInstance.IsAct6Ts))
                                         {
                                             return false;
                                         }

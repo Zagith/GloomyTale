@@ -890,7 +890,7 @@ namespace OpenNos.GameObject
                     {
                         return packet;
                     }
-                    catch (IndexOutOfRangeException ex)
+                    catch (Exception ex)
                     {
                         Logger.Error($"e_info 9 failed. \n packet: {packet} \n", ex);
                         return "";
@@ -1311,6 +1311,11 @@ namespace OpenNos.GameObject
 
                     case RarifyMode.HeroEquipmentDowngrade:
                         {
+                            if(session.Character.Gold < 100000000)
+                            {
+                                session.SendPacket(session.Character.GenerateSay("Not enough money. Needed 50M!", 10));
+                                return;
+                            }
                             rarify(7, true);
                             return;
                         }
@@ -1334,7 +1339,9 @@ namespace OpenNos.GameObject
                 }
                 SetRarityPoint();
 
-                if (!isHeroEquipmentDowngrade)
+                if (!isHeroEquipmentDowngrade && 
+                    (session?.Character.Inventory.LoadBySlotAndType((short)EquipmentType.Amulet, InventoryType.Wear) == null ||
+                    session?.Character.Inventory.LoadBySlotAndType((short)EquipmentType.Amulet, InventoryType.Wear).ItemVNum != 4264))
                 {
                     GenerateHeroicShell(protection);
                 }

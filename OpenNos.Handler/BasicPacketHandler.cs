@@ -1614,7 +1614,7 @@ namespace OpenNos.Handler
                     }
 
                     ClientSession target = ServerManager.Instance.GetSessionByCharacterId(rdPacket.CharacterId);
-                    if (target?.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now || target.Character.PvpAllowed)
+                    if (target != null && (target?.Character.LastDefencePvp.AddSeconds(20) > DateTime.Now || target.Character.PvpAllowed))
                     {
                         Session.SendPacket(UserInterfaceHelper.GenerateMsg("Player is in battle", 0));
                         target.SendPacket(target.Character.GenerateSay($"You are in battle", 10));

@@ -401,6 +401,13 @@ namespace OpenNos.GameObject.Networking
                                 session.Character.Dignity = -1000;
                                 session.SendPacket(session.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("LOSE_DIGNITY"), (short)(session.Character.Level < 50 ? session.Character.Level : 50)), 11));
                             }
+                            if(session.Character.MapInstance != null && session.Character.MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (short)MapTypeEnum.Act61a || m.MapTypeId == (short)MapTypeEnum.Act61d))
+                            {
+                                session.Character.HeroXp -= (long)((3 * CharacterHelper.HeroXpData[session.Character.HeroLevel - 1]) / 100D);
+                                if (session.Character.HeroXp < 0)
+                                    session.Character.HeroXp = 0;
+                                session.SendPacket(session.Character.GenerateStat());
+                            }
                             session.SendPacket(session.Character.GenerateFd());
                             session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateIn(InEffect: 1), ReceiverType.AllExceptMe);
                             session.CurrentMapInstance?.Broadcast(session, session.Character.GenerateGidx(), ReceiverType.AllExceptMe);
@@ -1953,10 +1960,18 @@ namespace OpenNos.GameObject.Networking
                         session.Character.Mp = 1;
                         if (session.CurrentMapInstance.MapInstanceType == MapInstanceType.BaseMapInstance)
                         {
-                            RespawnMapTypeDTO resp = session.Character.Respawn;
-                            short x = (short)(resp.DefaultX + RandomNumber(-3, 3));
-                            short y = (short)(resp.DefaultY + RandomNumber(-3, 3));
-                            ChangeMap(session.Character.CharacterId, resp.DefaultMapId, x, y);
+                            if(session.Character.MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (short)MapTypeEnum.Act61a || m.MapTypeId == (short)MapTypeEnum.Act61d))
+                            {
+                                ChangeMap(session.Character.CharacterId, 228, 69, 101);
+                            }
+                            else
+                            {
+                                RespawnMapTypeDTO resp = session.Character.Respawn;
+                                short x = (short)(resp.DefaultX + RandomNumber(-3, 3));
+                                short y = (short)(resp.DefaultY + RandomNumber(-3, 3));
+                                ChangeMap(session.Character.CharacterId, resp.DefaultMapId, x, y);
+                            }
+                            
                         }
                         else
                         {

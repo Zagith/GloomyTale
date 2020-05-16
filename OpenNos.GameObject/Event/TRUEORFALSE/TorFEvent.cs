@@ -94,6 +94,7 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
             #endregion
 
             #region Questions preparing
+            Questions = new List<TrueOrFalseDTO>();
             TypeAdapterConfig.GlobalSettings
                 .ForDestinationType<I18NString>()
                 .BeforeMapping(s => s.Clear());
@@ -117,6 +118,7 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
             OrderablePartitioner<TrueOrFalseDTO> itemPartitioner = Partitioner.Create(items, EnumerablePartitionerOptions.NoBuffering);
             Parallel.ForEach(itemPartitioner, new ParallelOptions { MaxDegreeOfParallelism = 4 }, itemDto =>
             {
+                itemDto.InjectI18N(props, dic, regions, accessors);
                 Questions.Add(itemDto);
             });
             #endregion
@@ -133,7 +135,19 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
             EventHelper.Instance.RunEvent(new EventContainer(ServerManager.GetMapInstanceByMapId(129), EventActionType.CHANGEPORTALTYPE, new Tuple<int, PortalType>(p.PortalId, PortalType.Closed)));
 
             byte wave = 0;
-            while (TorFEvent._map.Sessions.Count() > 1 && wave < Questions.Count)
+            if (TorFEvent._map.Sessions.Count() > 0)
+            {
+                ItemDTO item = ServerManager.GetItem(1134);
+                foreach (ClientSession s in TorFEvent._map.Sessions)
+                {
+                    s.Character.GiftAdd(item.VNum, 1);
+                    s.SendPacket(s.Character.GenerateSay(
+                                                $"{Language.Instance.GetMessageFromKey("ITEM_ACQUIRED")}: {item.Name[s.Account.Language]} x 1",
+                                                12));
+                }
+            }
+            
+            while (TorFEvent._map.Sessions.Count() > 0 && wave < Questions.Count)
             {
                
                 foreach (TrueOrFalseDTO question in Questions)
@@ -179,7 +193,7 @@ namespace OpenNos.GameObject.Event.TRUEORFALSE
                     s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_MONEY"), s.Character.Level * 1000), 10));
                     
                     if (s.Character.Family != null)
-                    {
+                    {true of false 
                         s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_FXP"), s.Character.Level * 4), 10));
                     }
                     s.SendPacket(s.Character.GenerateSay(string.Format(Language.Instance.GetMessageFromKey("WIN_SP_POINT"), s.Character.Level * 100), 10));

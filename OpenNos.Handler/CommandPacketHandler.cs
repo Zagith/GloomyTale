@@ -3232,12 +3232,12 @@ namespace OpenNos.Handler
                     Session.Character.IsCustomSpeed = true;
                     Session.SendPacket(Session.Character.GenerateCond());
                 }
-                if (packet.Value == 0)
+                /*if (packet.Value == 0)
                 {
                     Session.Character.IsCustomSpeed = false;
                     Session.Character.LoadSpeed();
                     Session.SendPacket(Session.Character.GenerateCond());
-                }
+                }*/
             }
             else
             {

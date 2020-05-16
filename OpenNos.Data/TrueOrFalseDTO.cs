@@ -1,12 +1,13 @@
 ﻿using Mapster;
 using OpenNos.Data.Base;
 using OpenNos.Data.I18N;
+using OpenNos.Data.Interfaces;
 using System;
 
 namespace OpenNos.Data
 {
     [Serializable]
-    public class TrueOrFalseDTO
+    public class TrueOrFalseDTO : IStaticDto
     {
         public short TrueOrFalseId { get; set; }
 

@@ -1094,11 +1094,11 @@ namespace OpenNos.GameObject.Helpers
         {
             _speedData = new byte[5];
             _speedData[(int)ClassType.Adventurer] = 11;
-            _speedData[(int)ClassType.Swordsman] = 11;
-            _speedData[(int)ClassType.Archer] = 12;
-            _speedData[(int)ClassType.Magician] = 10;
+            _speedData[(int)ClassType.Swordsman] = 15;
+            _speedData[(int)ClassType.Archer] = 16;
+            _speedData[(int)ClassType.Magician] = 14;
 
-            _speedData[(int)ClassType.MartialArtist] = 11;
+            _speedData[(int)ClassType.MartialArtist] = 15;
         }
 
         private static void loadSPXPData()

@@ -72,7 +72,7 @@ namespace OpenNos.GameObject.Event
                     ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(message, 0));
                 }
             }
-            Observable.Timer(TimeSpan.FromMinutes(60)).Subscribe(e =>
+            Observable.Timer(TimeSpan.FromMinutes(1)).Subscribe(e =>
             {
                 if (bitoren != null)
                 {
@@ -90,7 +90,7 @@ namespace OpenNos.GameObject.Event
                         ServerManager.Instance.Act6AngelStat.Percentage = 0;
                         ServerManager.Instance.Act6AngelStat.IsBossZenas = false;
                         ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("ACT6_ZENAS_RAID_CLOSED"), 0));
-                        Observable.Timer(TimeSpan.FromMinutes(3)).Subscribe(e =>
+                        Observable.Timer(TimeSpan.FromMinutes(1)).Subscribe(e =>
                         {
                             Act6TS raidThread = new Act6TS();
                             Observable.Timer(TimeSpan.FromMinutes(0)).Subscribe(X => raidThread.Run(FactionType.Angel));
@@ -102,7 +102,7 @@ namespace OpenNos.GameObject.Event
                         ServerManager.Instance.Act6DemonStat.Percentage = 0;
                         ServerManager.Instance.Act6DemonStat.IsBossErenia = false;
                         ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(Language.Instance.GetMessageFromKey("ACT6_ERENIA_RAID_CLOSED"), 0));
-                        Observable.Timer(TimeSpan.FromMinutes(3)).Subscribe(e =>
+                        Observable.Timer(TimeSpan.FromMinutes(1)).Subscribe(e =>
                         {
                             Act6TS raidThread = new Act6TS();
                             Observable.Timer(TimeSpan.FromMinutes(0)).Subscribe(X => raidThread.Run(FactionType.Demon));
@@ -137,8 +137,8 @@ namespace OpenNos.GameObject.Event
             {
                 initializeTime();
                 TSMap.IsAct6Ts = true;
-                Parallel.ForEach(TSMap.Sessions, s => s.SendPacket(s.CurrentMapInstance.Clock.GetClock()));
                 TSMap.Clock.StartClock();
+                Parallel.ForEach(TSMap.Sessions, s => s.SendPacket(s.CurrentMapInstance?.Clock.GetClock()));
                 ServerManager.Instance.Broadcast(UserInterfaceHelper.GenerateMsg(string.Format(Language.Instance.GetMessageFromKey("ACT6_TS_OPENED"), maps.FirstOrDefault(m => m.Item1 == TSMap).Item2), 0));
                 TSMap.Clock.GetClock();
                 ServerManager.GetMapInstanceByMapId(228)?.CreatePortal(new Portal
@@ -158,6 +158,7 @@ namespace OpenNos.GameObject.Event
                     Thread.Sleep(1000);
                 }
                 TSMap.Clock.GetClock();
+                TSMap.Clock.StopClock();
                 TSMap.IsAct6Ts = false;
                 TSMap.IsPVP = false;
                 Parallel.ForEach(TSMap.Sessions, s => s.SendPacket(s.CurrentMapInstance.Clock.GetClock()));
@@ -175,7 +176,7 @@ namespace OpenNos.GameObject.Event
         public void initializeTime()
         {
             TSMap.Clock = new Clock(3);
-            TSMap.Clock.AddTime(900);
+            TSMap.Clock.AddTime(60);
         }
 
         public void initializeMaps()

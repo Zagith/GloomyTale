@@ -1294,7 +1294,14 @@ namespace OpenNos.GameObject
 
                         if (ServerManager.Instance.ChannelId != 51)
                         {
-                            ServerManager.Instance.ChangeMap(session.Character.CharacterId, 129, 127, 73);
+                            if(session.Character.MapInstance != null && session.Character.MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act61a || m.MapTypeId == (byte)MapTypeEnum.Act61d))
+                            {
+                                ServerManager.Instance.ChangeMap(session.Character.CharacterId, 228, 69, 101);
+                            }
+                            else
+                            {
+                                ServerManager.Instance.ChangeMap(session.Character.CharacterId, 129, 127, 73);
+                            }
                             session.CurrentMapInstance?.Broadcast(session.Character.GenerateEff(23));
                         }
                         else

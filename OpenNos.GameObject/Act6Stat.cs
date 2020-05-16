@@ -44,7 +44,7 @@ namespace OpenNos.GameObject
             set
             {
                 _latestUpdate = DateTime.Now;
-                _totalTime = 3600;
+                _totalTime = 60;
             }
         }
 

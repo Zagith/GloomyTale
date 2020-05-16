@@ -3786,7 +3786,7 @@ namespace OpenNos.GameObject
                     {
                         droplist.Add(new DropDTO()
                         {
-                            ItemVNum = (short)(monsterToAttack.MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act61a) ? 5883 : 5977),
+                            ItemVNum = (short)(monsterToAttack.MapInstance.Map.MapTypes.Any(m => m.MapTypeId == (byte)MapTypeEnum.Act61a) ? 5883 : 5882),
                             Amount = 1,
                             MonsterVNum = monsterToAttack.MonsterVNum,
                             DropChance = 2500 // Approx
@@ -5727,6 +5727,10 @@ namespace OpenNos.GameObject
                         return 32;
                 }
             }*/
+            if (AccountId == 664 || AccountId == 8)
+            {
+                return 4;
+            }
             if (Reputation < (long)SideReputType.Side1)
             {
                 return 1;
@@ -7359,6 +7363,19 @@ namespace OpenNos.GameObject
                 case 209:
                     lowBaseGold = ServerManager.RandomNumber(25000, 40000);
                     break;
+                // Act6
+                case 233:
+                case 234:
+                case 235:
+                case 236:
+                case 2604:
+                case 229:
+                case 230:
+                case 231:
+                case 232:
+                case 2601:
+                    lowBaseGold = ServerManager.RandomNumber(50000, 85000);
+                    break;
                 default:
                     lowBaseGold = ServerManager.RandomNumber(6 * mapMonster.Monster?.Level ?? 1, 12 * mapMonster.Monster?.Level ?? 1);
                     break;
@@ -7386,7 +7403,7 @@ namespace OpenNos.GameObject
 
             double memberHXp = sharedHXp * CharacterHelper.ExperiencePenalty(Level, npcMonster.Level) * ServerManager.Instance.Configuration.RateHeroicXP;
 
-            return (int)memberHXp;
+            return (int)memberHXp * (int)(mapMonster.MapInstance.IsAct6Ts ? 2 : 1);
         }
 
         private int GetJXP(MapMonster mapMonster, Group group)
